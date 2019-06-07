@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    input[type="text"] {
+      font-family: inherit;
+      font-size: inherit;
+      text-align: center;
+    }
+
+    input:focus, button:focus {
+      outline: 1px solid black;
+    }
+
+    body {
+      font-family: monospace;
+      font-size: 16px;
+      color: black; 
+      background-color: white;
+      user-select: none;
+      box-sizing: border-box;
+    }
+
+    .options {
+      display: grid; 
+      grid-template-columns: 1fr 1fr 1fr;
+      justify-items: center;
+      /* width: 500px; */
+    }
+    .options > div {
+      padding: 5px;
+      width: 50px;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .selected {
+      background-color: #335566; 
+      color: white; 
+    }
+
+    #speed-input {
+
+    }
+
+    .custom {
+      margin-top: 10px;
+      display: grid; 
+      grid-template-columns: 1fr 1fr 60px 1fr 1fr;
+      grid-column-gap: 5px;
+      grid-template-rows: 20px;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="options">
+    <div>0.25</div>
+    <div>0.50</div>
+    <div>0.75</div>
+    <div>0.90</div>
+    <div class="selected">1.00</div>
+    <div>1.10</div>
+    <div>1.25</div>
+    <div>1.50</div>
+    <div>1.75</div>
+    <div>2.00</div>
+    <div>2.50</div>
+    <div>3.00</div>
+    <div>5.00</div>
+    <div>10.0</div>
+    <div>15.0</div>
+  </div>
+  <!-- <hr> -->
+  <div class="custom">
+    <button id="dec5">&lt&lt</button>
+    <button id="dec1">&lt</button>
+    <input id="speed-input" type="text" step="0.05" value="1">
+    <button id="inc1">&gt</button>
+    <button id="inc5">&gt&gt</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

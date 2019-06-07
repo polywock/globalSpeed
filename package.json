@@ -1,0 +1,14 @@
+{
+  "name": "globalspeed",
+  "version": "1.0.0",
+  "description": "",
+  "main": "background.js",
+  "scripts": {
+    "build": "rm -rf build; mkdir -p build/unpacked && cp -a src/ build/unpacked && zip -r build/packed.zip build/unpacked"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/chrome": "0.0.82"
+  }
+}

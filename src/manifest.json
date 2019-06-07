@@ -1,0 +1,23 @@
+{
+  "name": "Global Speed (Youtube, Netflix, Reddit, etc)",
+  "short_name": "Global Speed",
+  "version": "1.1",
+  "description": "Set a default speed for all videos on Youtube, Netflix, Twitch, Reddit, Hulu, Prime Video, etc.",
+  "manifest_version": 2,
+  "permissions": ["storage"],
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["contentScript.js"],
+    "all_frames": true
+  }],
+  "icons": { 
+    "48": "icon48.png",
+    "128": "icon128.png" 
+  },
+  "background": {
+    "scripts": ["background.js"]
+  }
+}
