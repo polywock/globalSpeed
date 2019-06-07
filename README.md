@@ -1,6 +1,5 @@
 # globalSpeed 
 Repo for chrome extension that sets a default speed for video and audio elements.  
-[Published](https://chrome.google.com/webstore/detail/global-speed-youtube-netf/jpbjcnkcffbooppibceonlgknpkniiff?hl=en) in Chrome web store. 
 
 To use, install [here](https://chrome.google.com/webstore/detail/global-speed-youtube-netf/jpbjcnkcffbooppibceonlgknpkniiff?hl=en).
 
