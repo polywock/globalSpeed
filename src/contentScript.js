@@ -23,4 +23,4 @@ setInterval(async () => {
   for (let elem of document.getElementsByTagName("audio")) {
     elem.playbackRate = speed
   }
-}, 300)
+}, 100)
