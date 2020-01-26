@@ -9,7 +9,6 @@ To use, install [Chrome](https://chrome.google.com/webstore/detail/global-speed-
 - Embed support (useful for sites like Reddit). 
 - Hotkeys (and way to customize them). 
 - Pinning (set a custom playback rate for a specific tab).
-- Open source (https://github.com/polywock/globalSpeed)
 
 ## Build 
 1. `npm run build:dev` build unpacked version. 
