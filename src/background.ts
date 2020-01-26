@@ -1,18 +1,26 @@
 import 'regenerator-runtime/runtime'
-import { setBadgeText, getStorage, getConfigOrDefault, getSpeed, getActiveTabId } from "./utils"
+import { setBadgeText, getStorage, getConfigOrDefault, getSpeed, getActiveTabIds, getPin } from "./utils"
 import { getDefaultConfig } from './defaults'
 
-chrome.storage.onChanged.addListener(updateBadge)
-chrome.tabs.onActivated.addListener(updateBadge)
+chrome.storage.onChanged.addListener(updateBadges)
+chrome.tabs.onActivated.addListener(updateBadges)
 chrome.runtime.onMessage.addListener(handleOnMessage)
 
 migrateSchema()
-updateBadge()
+updateBadges()
 
-async function updateBadge() {
+async function updateBadges() {
   const config = await getConfigOrDefault()
-  const speed = getSpeed(config, await getActiveTabId())
-  setBadgeText(speed.toString().slice(0, 4) + "x")
+  const tabIds = await getActiveTabIds()
+
+  // set universal badge text. 
+  setBadgeText(config.speed.toString().slice(0, 4) + "x", undefined)
+
+  // override for each active tab.
+  for (let tabId of tabIds) {
+    const speed = getSpeed(config, tabId)
+    setBadgeText(speed.toString().slice(0, 4) + "x", tabId)
+  }
 }
 
 function handleOnMessage(msg: any, sender: chrome.runtime.MessageSender, reply: (msg: any) => any) {
@@ -31,9 +39,6 @@ async function migrateSchema() {
     const config = {...getDefaultConfig(), speed: storage.speed}
     chrome.storage.local.set({config, speed: undefined})
   }
-
-  // update badge.
-  updateBadge()
 }
 
 

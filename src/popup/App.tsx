@@ -21,10 +21,8 @@ export function App(props: {}) {
       chrome.storage.onChanged.addListener(handleStorageChange)
 
       // get pin state of current tab.
-      chrome.tabs.query({active: true, currentWindow: true}, tabs => {
-        if (tabs.length > 0) {
-          setTabId(tabs[0].id)
-        }
+      getActiveTabId().then(tabId => {
+        setTabId(tabId)
       })
     })
   }, [])

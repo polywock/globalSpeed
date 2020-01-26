@@ -1,6 +1,6 @@
 
 import 'regenerator-runtime/runtime'
-import { roundToStep, getConfigOrDefault, persistSpeed, getSpeed, getActiveTabId, conformSpeed } from "../utils"
+import { roundToStep, getConfigOrDefault, persistSpeed, getSpeed, requestTabId, conformSpeed } from "../utils"
 import { Indicator } from "./Indicator"
 
 const INPUT_TAGS = ["INPUT", "TEXTAREA"]
@@ -21,7 +21,7 @@ function main() {
 
 async function handleInterval(){
   const config = await getConfigOrDefault()
-  const tabId = await getActiveTabId()
+  const tabId = await requestTabId()
   const speed = getSpeed(config, tabId)
 
   for (let tag of MEDIA_TAGS) {
@@ -41,7 +41,7 @@ async function handleKeyDown(e: KeyboardEvent) {
   }
 
   const config = await getConfigOrDefault()
-  const tabId = await getActiveTabId()
+  const tabId = await requestTabId()
   const speed = getSpeed(config, tabId)
 
   if (e.code === config.incrementKey) {

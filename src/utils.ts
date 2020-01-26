@@ -83,31 +83,40 @@ export function conformSpeed(speed: number) {
 
 
 // set badge text.
-export function setBadgeText(text: string, color = "#a64646") {
+export function setBadgeText(text: string, tabId: number, color = "#a64646") {
   chrome.browserAction.setBadgeText({
-    text
+    text,
+    tabId
   })
   chrome.browserAction.setBadgeBackgroundColor({
-    color
+    color,
+    tabId
   }) 
 }
 
-export function getActiveTabId(currentWindow?: boolean): Promise<number> {
+export function getActiveTabIds(): Promise<number[]> {
   return new Promise((res, rej) => {
-    if (chrome.tabs) {
-      chrome.tabs.query({active: true, currentWindow}, tabs => {
-        if (tabs.length > 0) {
-          return res(tabs[0].id)
-        } 
-        return rej(null)
-      })
-    } else {
-      chrome.runtime.sendMessage({
-        type: "REQUEST_TAB_ID"
-      }, id => {
-        res(id)
-      })
-    }
+    chrome.tabs.query({active: true, currentWindow: undefined, windowType: "normal"}, tabs => {
+      res(tabs.map(v => v.id)) 
+    })
+  })
+}
+
+export function getActiveTabId(): Promise<number> {
+  return new Promise((res, rej) => {
+    chrome.tabs.query({active: true, currentWindow: true, windowType: "normal"}, tabs => {
+      res(tabs[0]?.id)
+    })
+  })
+}
+
+export function requestTabId(): Promise<number> {
+  return new Promise((res, rej) => {
+    chrome.runtime.sendMessage({
+      type: "REQUEST_TAB_ID"
+    }, id => {
+      res(id)
+    })
   })
 }
 
