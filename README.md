@@ -8,7 +8,7 @@ To use, install [Chrome](https://chrome.google.com/webstore/detail/global-speed-
 - Non-intrusive controls that don't clutter the webpage. 
 - Embed support (useful for sites like Reddit). 
 - Hotkeys (and way to customize them). 
-- Pinning (set a custom playback rate for a specific tab).
+- Pinning (apply custom playback rate to a specific tab).
 
 ## Build 
 1. `npm run build:dev` build unpacked version. 
