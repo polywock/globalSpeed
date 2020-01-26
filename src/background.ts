@@ -11,7 +11,7 @@ updateBadge()
 
 async function updateBadge() {
   const config = await getConfigOrDefault()
-  const speed = await getSpeed(config, await getActiveTabId())
+  const speed = getSpeed(config, await getActiveTabId())
   setBadgeText(speed.toString().slice(0, 4) + "x")
 }
 
