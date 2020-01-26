@@ -1,0 +1,17 @@
+.KeyPicker {
+  padding: 5px; 
+  background-color: inherit;
+  border: 1px solid #aaa;
+  color: inherit;
+  text-align: center;
+  user-select: none;
+  cursor: pointer;
+
+  &:focus {
+    outline: 1px solid black;
+  }
+
+  &:active {
+    background-color: darken(#aaa, 10%)
+  }
+}

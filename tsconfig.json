@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "es2018"],
+    "types": ["@types/chrome", "@types/react", "@types/react-dom"],
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "module": "commonjs", 
+    "target": "es2018",
+    "allowJs": true,
+    "sourceMap": false,
+    "jsx": "react",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": ["./node_modules/**/*"]
+}

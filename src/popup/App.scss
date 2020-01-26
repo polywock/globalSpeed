@@ -1,0 +1,81 @@
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+}
+
+input, button {
+  font-family: inherit;
+  font-size: inherit;
+  text-align: center;
+  background-color: inherit;
+  color: inherit;
+  border: 1px solid #ccc;
+}
+
+input:focus, button:focus {
+  outline: 1px solid black;
+}
+
+input.invalid {
+  background-color: #fee;
+}
+
+
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#App {
+  font-family: monospace;
+  font-size: 16px;
+  color: black; 
+  background-color: #fafafa; 
+  user-select: none;
+
+  & > .header {
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+    justify-items: right;
+    align-items: center;
+    grid-column-gap: 10px;
+    padding: 3px 10px;
+    border-bottom: 1px solid #aaa;
+
+
+    & > div {
+      color: #777;
+      border: none;
+
+      &:focus {
+        outline: none;
+
+        & > svg {
+          stroke: black;
+          stroke-opacity: 0.5;
+          stroke-width: 0.5px;
+        }
+      }
+
+      &:hover {
+        color: #555;
+      }
+
+      &.pin.active {
+        color: #d00;
+      }
+    }
+  }
+
+  & > .SpeedControl {
+    padding: 8px;
+    background-color: white;
+  }
+}
+
+

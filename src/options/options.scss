@@ -1,0 +1,54 @@
+
+input[type="text"] {
+  padding: 5px;
+  font-size: inherit;
+  font-family: inherit;
+  border: 1px solid #aaa;
+  text-align: center;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.NumericInput.invalid {
+  background-color: #fee;
+}
+
+body {
+  background-color: #ddd;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: grid;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+
+
+.App {
+  background-color: white;
+  padding: 100px 0;
+  font-family: monospace;
+  font-size: 16px;
+  padding: 25px;
+
+  & > h1 {
+    margin-top: 0;
+  }
+
+  & > .field {
+    display: grid;
+    grid-template-columns: 250px 300px;
+    grid-column-gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

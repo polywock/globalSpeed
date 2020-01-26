@@ -1,0 +1,38 @@
+
+.SpeedControl {
+  & > .options {
+    display: grid; 
+    grid-template-columns: repeat(3, 80px);
+    justify-items: center;
+    grid-gap: 3px;
+  
+    & > div {
+      width: 100%;
+      text-align: center;
+  
+      &.selected {
+        background-color: black;
+        color: white;
+      }
+    }
+  
+  }
+  
+  & > .controls {
+    margin-top: 10px;
+    width: 248px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) 65px repeat(2, 1fr);
+    grid-column-gap: 5px;
+    align-items: stretch;
+
+    & > button {
+      font-size: 0.75em;
+    }
+  
+    & > button, input {
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
