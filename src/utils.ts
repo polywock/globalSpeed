@@ -120,6 +120,41 @@ export function requestTabId(): Promise<number> {
   })
 }
 
+export async function clearPins() {
+  let storage = await getStorage()
+  if (storage.config?.pins?.length > 0) {
+    const newConfig = produce(storage.config as Config, d => {
+      d.pins = []
+    })
+    chrome.storage.local.set({config: newConfig})
+  }
+}
+
+export async function updateBadges() {
+  const config = await getConfigOrDefault()
+  const tabIds = await getActiveTabIds()
+
+  // set universal badge text. 
+  setBadgeText(config.speed.toString().slice(0, 4) + "x", undefined)
+
+  // override for each active tab.
+  for (let tabId of tabIds) {
+    const speed = getSpeed(config, tabId)
+    setBadgeText(speed.toString().slice(0, 4) + "x", tabId)
+  }
+}
+
+export async function migrateSchema() {
+  let storage = await getStorage()
+
+  // v1.x to v2.0.x: we no longer use the "speed" property; need to migrate them to new schema.
+  if (!storage.config && storage.speed) {
+    const config = {...getDefaultConfig(), speed: storage.speed}
+    chrome.storage.local.set({config, speed: undefined})
+  }
+}
+
+
 // round to nearest step.
 export function roundToStep(value: number, step: number) {
   return Math.round(value / step) * step
