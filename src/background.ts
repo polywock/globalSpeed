@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime'
-import { updateBadges, clearPins, migrateSchema } from "./utils"
+import { updateBadges, clearPins, migrateSchema, getConfig, setPin } from "./utils"
 
 
 chrome.runtime.onStartup.addListener(handleStartup) 
@@ -7,9 +7,10 @@ chrome.runtime.onInstalled.addListener(handleInstalled)
 
 chrome.storage.onChanged.addListener(updateBadges)
 chrome.tabs.onActivated.addListener(updateBadges)
+chrome.tabs.onUpdated.addListener(updateBadges)
 
 chrome.runtime.onMessage.addListener(handleOnMessage)
-
+chrome.tabs.onCreated.addListener(handleTabCreated)
 
 async function handleStartup() {
   await migrateSchema()
@@ -22,6 +23,14 @@ async function handleInstalled() {
   await updateBadges()
 }
 
+async function handleTabCreated(tab: chrome.tabs.Tab) {
+  const config = await getConfig()
+  if (config?.pinByDefault) {
+    await setPin(config, tab.id)
+    updateBadges()
+  }
+}
+
 // Content scripts cannot access chrome.tabs property.
 // To get tabId they need to request it from background script. 
 function handleOnMessage(msg: any, sender: chrome.runtime.MessageSender, reply: (msg: any) => any) {
@@ -29,3 +38,4 @@ function handleOnMessage(msg: any, sender: chrome.runtime.MessageSender, reply: 
     reply(sender.tab.id)
   }
 }
+

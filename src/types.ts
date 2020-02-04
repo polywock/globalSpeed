@@ -5,8 +5,12 @@ export type Config = {
   defaultSpeed: number
   incrementKey: string,
   decrementKey: string,
+  stepValue: number,
   resetKey: string,
-  pins: Pin[]
+  pinKey: string,
+  pins: Pin[],
+  pinByDefault: boolean,
+  hotkeys:  "enabled" | "ifVideo" | "disabled"
 }
 
 export type Pin = {tabId: number, speed: number}

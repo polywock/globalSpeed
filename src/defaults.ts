@@ -3,13 +3,17 @@ import { Config } from "./types"
 
 export function getDefaultConfig(): Config {
   return {
-    version: 1,
+    version: 2,
     speed: 1,
     defaultSpeed: 1,
     decrementKey: "KeyA",
-    resetKey: "KeyS",
     incrementKey: "KeyD",
-    pins: []
+    stepValue: 0.1,
+    resetKey: "KeyS",
+    pinKey: "KeyQ",
+    pins: [],
+    pinByDefault: false,
+    hotkeys: "enabled"
   }
 }
 

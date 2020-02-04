@@ -26,10 +26,14 @@ export async function getConfigOrDefault(): Promise<Config> {
 }
 
 export function persistConfig(config: Config) {
-  chrome.storage.local.set({config})
+  return new Promise((res, rej) => {
+    chrome.storage.local.set({config}, () => {
+      res()
+    })
+  })
 }
 
-export function persistSpeed(config: Config, newSpeed: number, tabId: number) {
+export async function persistSpeed(config: Config, newSpeed: number, tabId: number) {
   newSpeed = conformSpeed(newSpeed)
   let pin = getPin(config, tabId)
   let newConfig: Config 
@@ -42,21 +46,25 @@ export function persistSpeed(config: Config, newSpeed: number, tabId: number) {
       d.speed = newSpeed
     })
   }
-  persistConfig(newConfig)
+  await persistConfig(newConfig)
 }
 
 export function getPin(config: Config, tabId: number) {
   return config?.pins.find(v => v.tabId === tabId)
 }
 
-export function togglePin(config: Config, tabId: number) {
+export async function togglePin(config: Config, tabId: number) {
   let pin = getPin(config, tabId)
-  pin ? clearPin(config, tabId) : setPin(config, tabId)
+  if (pin) {
+    await clearPin(config, tabId)
+  } else {
+    await setPin(config, tabId)
+  }
 }
 
-function setPin(config: Config, tabId: number) {
+export async function setPin(config: Config, tabId: number) {
   const anchorSpeed = getSpeed(config, tabId)
-  persistConfig(produce(config, d => {
+  await persistConfig(produce(config, d => {
     d.pins = d.pins.filter(v => v.tabId !== tabId)
     d.pins.push({
       tabId: tabId,
@@ -65,8 +73,8 @@ function setPin(config: Config, tabId: number) {
   }))
 }
 
-function clearPin(config: Config, tabId: number) {
-  persistConfig(produce(config, d => {
+async function clearPin(config: Config, tabId: number) {
+  await persistConfig(produce(config, d => {
     d.pins = d.pins.filter(v => v.tabId !== tabId)
   }))
 }
@@ -81,6 +89,13 @@ export function conformSpeed(speed: number) {
   return clamp(0.07, 16, round(speed, 2))
 }
 
+export function formatSpeed(speed: number, isPinned: boolean) {
+  return `${speed.toFixed(2)}${isPinned ? "i" : ""}`
+}
+
+export function formatSpeedForBadge(speed: number, isPinned: boolean) {
+  return `${speed.toFixed(2).slice(0, 4)}${isPinned ? "i" : ""}`
+}
 
 // set badge text.
 export function setBadgeText(text: string, tabId: number, color = "#a64646") {
@@ -135,23 +150,30 @@ export async function updateBadges() {
   const tabIds = await getActiveTabIds()
 
   // set universal badge text. 
-  setBadgeText(config.speed.toString().slice(0, 4) + "x", undefined)
+  setBadgeText(formatSpeedForBadge(config.speed, false), undefined)
 
   // override for each active tab.
   for (let tabId of tabIds) {
     const speed = getSpeed(config, tabId)
-    setBadgeText(speed.toString().slice(0, 4) + "x", tabId)
+    const isPinned = !!getPin(config, tabId)
+    setBadgeText(formatSpeedForBadge(speed, isPinned), tabId)
   }
 }
 
 export async function migrateSchema() {
   let storage = await getStorage()
+  let config = storage.config as Config
+  const defaultConfig = getDefaultConfig()
 
-  // v1.x to v2.0.x: we no longer use the "speed" property; need to migrate them to new schema.
-  if (!storage.config && storage.speed) {
-    const config = {...getDefaultConfig(), speed: storage.speed}
-    chrome.storage.local.set({config, speed: undefined})
+  // since extension is getting more complex; I added a "config" object to represent all the options/state. 
+  // extension version 1.x used a speed property directly on local storage; need to move it under "config". 
+  if (!config && storage.speed) {
+    config = {...getDefaultConfig(), speed: storage.speed}
   }
+
+  config = {...defaultConfig, ...config, version: defaultConfig.version}
+  
+  chrome.storage.local.set({config, speed: undefined})
 }
 
 

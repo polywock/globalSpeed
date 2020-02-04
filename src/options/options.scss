@@ -1,8 +1,34 @@
 
-input[type="text"] {
-  padding: 5px;
+select, input, select {
   font-size: inherit;
   font-family: inherit;
+}
+
+input[type="checkbox"] {
+  width: 25px;
+  height: 25px;
+
+  &:focus {
+    outline: 1px solid rgb(12, 12, 12);
+  }
+}
+
+button {
+  background-color: white;
+  color: black;
+  padding: 8px;
+
+  &:focus {
+    outline: 1px solid black;
+  }
+
+  &:active {
+    background-color: #eee;
+  }
+}
+
+input[type="text"] {
+  padding: 5px;
   border: 1px solid #aaa;
   text-align: center;
 
@@ -33,7 +59,7 @@ body {
   background-color: white;
   padding: 100px 0;
   font-family: monospace;
-  font-size: 16px;
+  font-size: 14px;
   padding: 25px;
 
   & > h1 {
@@ -49,6 +75,10 @@ body {
 
     &:last-child {
       margin-bottom: 0;
+    }
+
+    & > input[type="checkbox"] {
+      justify-self: center;
     }
   }
 }
