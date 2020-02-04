@@ -170,9 +170,8 @@ export async function migrateSchema() {
   if (!config && storage.speed) {
     config = {...getDefaultConfig(), speed: storage.speed}
   }
-
-  config = {...defaultConfig, ...config, version: defaultConfig.version}
   
+  config = {...defaultConfig, ...config, version: defaultConfig.version}
   chrome.storage.local.set({config, speed: undefined})
 }
 
