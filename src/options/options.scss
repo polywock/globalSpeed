@@ -1,44 +1,8 @@
 
-select, input, select {
-  font-size: inherit;
-  font-family: inherit;
-}
+@import "../common.scss";
 
-input[type="checkbox"] {
-  width: 25px;
-  height: 25px;
-
-  &:focus {
-    outline: 1px solid rgb(12, 12, 12);
-  }
-}
-
-button {
-  background-color: white;
-  color: black;
-  padding: 8px;
-
-  &:focus {
-    outline: 1px solid black;
-  }
-
-  &:active {
-    background-color: #eee;
-  }
-}
-
-input[type="text"] {
-  padding: 5px;
-  border: 1px solid #aaa;
-  text-align: center;
-
-  &:focus {
-    outline: 0;
-  }
-}
-
-.NumericInput.invalid {
-  background-color: #fee;
+h2 {
+  margin-top: 40px;
 }
 
 body {
@@ -50,35 +14,63 @@ body {
 #root {
   display: grid;
   justify-content: center;
-  margin-top: 100px;
 }
-
-
 
 .App {
   background-color: white;
-  padding: 100px 0;
+  padding: 0px 20px 80px 20px;
   font-family: monospace;
   font-size: 14px;
-  padding: 25px;
+  width: 900px;
+  min-height: 100vh;
 
-  & > h1 {
-    margin-top: 0;
-  }
-
-  & > .field {
+  .labelWithTooltip {
     display: grid;
-    grid-template-columns: 250px 300px;
-    grid-column-gap: 10px;
+    grid-template-columns: max-content max-content;
     align-items: center;
-    margin-bottom: 10px;
+    grid-column-gap: 10px;
+  }
 
-    &:last-child {
-      margin-bottom: 0;
-    }
+  .keyBindControls {
 
-    & > input[type="checkbox"] {
-      justify-self: center;
+    & > div {
+      margin-top: 5px;
+
+      &:first-child {
+        margin-top: 0;
+      }
     }
   }
+
+  & > div:last-child {
+    display: grid;
+    grid-template-columns: max-content;
+    justify-content: center;
+  }
+
+  & > .add {
+    margin-top: 20px;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: left;
+    align-items: stretch;
+    grid-column-gap: 10px;
+
+    & > button {
+      border-radius: 5px;
+    }
+  }
+
+  & > .fields {
+    margin-top: 20px;
+    
+    & > div {
+      display: grid;
+      grid-template-columns: 200px max-content;
+      grid-column-gap: 10px;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+  }
+
 }

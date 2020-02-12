@@ -1,9 +1,15 @@
 import React, { useEffect, useState, useCallback } from "react"
-import { getConfigOrDefault, persistSpeed, getSpeed, togglePin, getPin, getActiveTabId } from "../utils"
+import { getConfigOrDefault, getPin, getContext, setContext, conformSpeed } from "../utils/configUtils"
+import { getActiveTabId } from "../utils/browserUtils"
 import { Config} from "../types"
-import { SpeedControl } from "../options/SpeedControl"
-import { GoPin, GoGear, GoMarkGithub } from "react-icons/go"
+import { SpeedControl } from "./SpeedControl"
+import produce from "immer"
 import "./App.scss"
+import { FxPanal } from "./FxPanal"
+import { ConfigContext } from "../ConfigContext"
+import { Header } from "./Header"
+
+
 
 export function App(props: {}) {
   const [config, setConfig] = useState(null as Config)
@@ -11,52 +17,42 @@ export function App(props: {}) {
 
   const handleStorageChange = useCallback(async () => {
     const config = await getConfigOrDefault()
-    setConfig(config)
+    setConfig(config);
   }, [])
 
   
   useEffect(() => {
-    getConfigOrDefault().then(config => {
-      setConfig(config)
-      chrome.storage.onChanged.addListener(handleStorageChange)
-
-      // get pin state of current tab.
-      getActiveTabId().then(tabId => {
-        setTabId(tabId)
-      })
+    chrome.storage.onChanged.addListener(handleStorageChange)
+    handleStorageChange()
+    
+    getActiveTabId().then(tabId => {
+      setTabId(tabId)
     })
   }, [])
-
-
+ 
   
-  if (!config ){
+  if (!config || tabId == null){
     return <div>Loading...</div>
   }
 
+  const pin = getPin(config, tabId)
+  const ctx = getContext(config, tabId)
+
+
   return (
     <div id="App">
-      <div className="header">
-        {tabId && (
-          <div 
-            className={`pin ${getPin(config, tabId) ? "active" : ""}`}
-            onClick={() => togglePin(config, tabId)}
-          >
-            <GoPin size="20px"/>
-          </div>
+      <ConfigContext.Provider value={{config, tabId, pin, ctx}}>
+        <Header/>
+        {config.fxPanal ? (
+          <FxPanal/>
+        ) : (
+          <SpeedControl speed={ctx.speed} onChange={v => {
+            setContext(config, produce(ctx, d => {
+              d.speed = conformSpeed(v)
+            }), tabId)
+          }}/>
         )}
-        <div onClick={e => {
-          chrome.runtime.openOptionsPage()
-        }}>
-          <GoGear size="20px"/>
-        </div>
-        <div onClick={e => {
-          window.open("https://github.com/polywock/globalSpeed", "_blank")
-        }}>
-          <GoMarkGithub size="18px"/>
-        </div>
-
-      </div>
-      <SpeedControl speed={getSpeed(config, tabId)} onChange={v => persistSpeed(config, v, tabId)}/>
+      </ConfigContext.Provider>
     </div>
   )
 }

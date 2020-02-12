@@ -29,6 +29,5 @@ module.exports = {
   },
   resolve: {
     extensions: [ '.ts', '.js', '.tsx']
-  },
-  devtool: false
+  }
 }

@@ -2,5 +2,6 @@ const common = require("./webpack.common.js")
 
 module.exports = {
   ...common,
-  mode: "development"
+  mode: "development",
+  devtool: false  // "eval-source-map"
 }

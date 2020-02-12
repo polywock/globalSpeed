@@ -1,44 +1,69 @@
 import React, { useState, useEffect, useMemo } from "react"
-import { round } from "../utils"
+import { round } from "../utils/helper"
+
+const NUMERIC_REGEX = /^-?(?=[\d\.])\d*(\.\d+)?$/
 
 type NumericInputProps = {
   value: number,
   onChange: (newValue: number) => any,
+  placeholder?: string,
+  noNull?: boolean
   displayRound?: number,
   min?: number,
   max?: number
 }
 
+
 export const NumericInput = (props: NumericInputProps) => {
-  const [inputValue, setInputValue] = useState("")
+  const [ghostValue, setGhostValue] = useState("")
+  const [isValid, setIsValid] = useState(true)
 
   useEffect(() => {
-    setInputValue(round(props.value, props.displayRound ?? 2).toString())
+    if (props.value == null) {
+      setGhostValue("")
+    } else {
+      setGhostValue(round(props.value, props.displayRound ?? 2).toString())
+    }
   }, [props.value])
   
-  const isValid = useMemo(() => {
-    if (/^-?(?=[\d\.])\d*(\.\d+)?$/.test(inputValue.trim())) {
-      const parsed = parseFloat(inputValue.trim())
-      if (props.min != null && parsed < props.min) {
-        return false 
-      } 
-      if (props.max != null && parsed > props.max) {
-        return false 
-      } 
-      props.onChange(parsed)
-      return true 
-    } else {
-      return false 
+  
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setGhostValue(e.target.value)
+    const value = e.target.value.trim()
+    if (!value) {
+      if (props.noNull) {
+        setIsValid(false)
+      } else {
+        setIsValid(true)
+        props.onChange(null)
+      }
+      return 
     }
-  }, [inputValue])
-
+    
+    if (NUMERIC_REGEX.test(value)) {
+      const parsed = parseFloat(value)
+      if (props.min != null && parsed < props.min) {
+        setIsValid(false)
+        return 
+      }
+      if (props.max != null && parsed > props.max) {
+        setIsValid(false)
+        return
+      }
+      if (parsed !== props.value) {
+        props.onChange(parsed)
+      }
+      setIsValid(true)
+    } else {
+      setIsValid(false) 
+    }
+  }
 
   return (
     <input 
+      placeholder={props.placeholder}
       type="text" 
-      className={`NumericInput ${isValid ? "" : "invalid"}`} 
-      onChange={e => {
-        setInputValue(e.target.value)
-      }} value={inputValue}/>
+      className={`NumericInput ${isValid ? "" : "red"}`} 
+      onChange={handleOnChange} value={ghostValue}/>
   )
 }

@@ -1,5 +1,7 @@
 
 .SpeedControl {
+  user-select: none;
+
   & > .options {
     display: grid; 
     grid-template-columns: repeat(3, 80px);
@@ -9,30 +11,25 @@
     & > div {
       width: 100%;
       text-align: center;
+      
+      &:focus {
+        outline: 1px solid var(--focus-color);
+      }
   
       &.selected {
-        background-color: black;
+        background-color: #24a;
         color: white;
       }
     }
   
   }
   
-  & > .controls {
+  & > .NumericControl {
     margin-top: 10px;
     width: 248px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr) 65px repeat(2, 1fr);
-    grid-column-gap: 5px;
-    align-items: stretch;
 
-    & > button {
-      font-size: 0.75em;
-    }
-  
-    & > button, input {
+    button, input[type="text"] {
       padding: 0;
-      margin: 0;
     }
   }
 }

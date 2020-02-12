@@ -1,0 +1,46 @@
+
+.FilterControl {
+  margin-bottom: 5px;
+  background-color: #f0f0f0;
+  padding: 5px;
+  border: 1px solid #aaa;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-column-gap: 10px;
+
+  & > .move {
+    display: grid;
+
+    & > button {
+      color: #bbbbbb;
+      padding: 0;
+      background-color: inherit;
+      border: none;
+
+      &:hover {
+        color: #666;
+      }
+
+      &:focus {
+        outline: 1px solid var(--focus-color);
+      }
+    }
+  }
+
+  & > .core {
+    & > .header {
+      display: grid;
+      grid-template-columns: 1fr max-content;
+      grid-column-gap: 5px;
+      margin-bottom: 2px;
+
+      button {
+        padding: 0px 5px;
+      }
+    }
+  
+    & .NumericControl {
+
+    }
+  }
+}

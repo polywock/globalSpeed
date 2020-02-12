@@ -1,0 +1,41 @@
+
+.Tooltip {
+  display: inline-block;
+
+  & > span {
+    padding: 0px 2px;
+    background-color: white;
+    color: black;
+    border: 1px solid #aaa;
+
+    &:focus {
+      border: 1px solid black;
+      outline: none;
+    }
+
+    &:active {
+      background-color: #ddd;
+    }
+  }
+
+  & > .fg, .bg {
+    position: fixed;
+    z-index: 2;
+  }
+
+  & > .bg {
+    width: 100vw;
+    height: 100vh;
+    left: 0px;
+    top: 0px;
+    z-index: 2;
+  }
+
+  & > .fg {
+    display: inline-block;
+    background-color: black;
+    color: white;
+    padding: 10px;
+    max-width: 300px;
+  }
+}

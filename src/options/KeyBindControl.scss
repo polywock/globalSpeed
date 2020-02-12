@@ -1,0 +1,43 @@
+
+.KeyBindControl {
+  display: grid;
+  grid-template-columns: repeat(2, max-content) minmax(150px, 1.5fr) minmax(200px, 1fr) repeat(2, max-content) 150px max-content;
+  grid-column-gap: 10px;
+  align-items: center;
+  background-color: #f8f8f8;
+  border: 1px solid #aaa;
+  padding: 0px 5px;
+  
+
+
+  & > .move {
+    display: grid;
+
+    & > button {
+      color: #bbbbbb;
+      padding: 0;
+      background-color: inherit;
+      border: none;
+
+      &:hover {
+        color: #666;
+      }
+
+      &:focus {
+        outline: 1px solid var(--focus-color);
+      }
+    }
+  }
+
+  & > button:nth-child(3) {
+    margin-left: -5px;
+  }
+
+  & .Tooltip {
+    margin-left: 10px;
+  }
+
+  & > .close {
+    background-color: #ddd;
+  }
+}

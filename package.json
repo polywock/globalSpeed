@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "build:dev": "rm -rf build && webpack --config webpack.dev.js && cp -r static/. build/unpacked",
-    "build:prod": "npm run build:dev && cd build/unpacked && zip -r ../packed.zip ."
+    "build:prod": "rm -rf build && webpack --config webpack.prod.js && cp -r static/. build/unpacked && cd build/unpacked && zip -r ../packed.zip ."
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "@types/react-dom": "^16.9.5",
     "babel-loader": "^8.0.6",
     "babel-polyfill": "^6.26.0",
+    "babel-preset-minify": "^0.5.1",
     "css-loader": "^3.4.2",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2",
@@ -29,8 +30,10 @@
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
-    "@types/chrome": "0.0.92",
+    "@types/chrome": "0.0.93",
+    "@types/lodash.debounce": "^4.0.6",
     "immer": "^5.3.2",
+    "lodash.debounce": "^4.0.8",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-icons": "^3.8.0",

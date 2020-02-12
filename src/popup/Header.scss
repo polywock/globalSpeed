@@ -1,0 +1,52 @@
+
+.Header {
+  display: grid;
+  grid-template-columns: repeat(3, max-content) 1fr repeat(2, max-content);
+  justify-items: right;
+  align-items: center;
+  grid-column-gap: 10px;
+  padding: 3px 10px 0px 10px;
+  border-bottom: 1px solid #aaa;
+
+
+  & > div {
+    color: #777;
+    border: none;
+
+    &:focus {
+      outline: none;
+
+      & > svg {
+        stroke: black;
+        stroke-opacity: 0.5;
+        stroke-width: 0.5px;
+      }
+    }
+
+    &:hover {
+      color: #555;
+    }
+
+
+    &.toggle.active {
+      color: #24a;
+
+      &:hover {
+        color: #46c;
+      }
+    }
+
+    &.toggle {
+      color: #aaa;
+
+      &:hover {
+        color: #888;
+      }
+    }
+
+
+    & > svg {
+      vertical-align: baseline;
+    }
+  }
+}

@@ -1,43 +1,49 @@
 import React, { useState } from "react"
 import "./KeyPicker.scss"
+import { Hotkey, extractHotkey, formatHotkey } from "../utils/keys"
+
+
 
 type KeyPickerProps = {
-  onChange: (key: string) => void
-  value: string
+  onChange: (key: Hotkey) => void
+  value: Hotkey
 }
+
+const MODIFIER_KEYS = ["Control", "Alt", "Shift", "Meta"]
 
 export const KeyPicker = (props: KeyPickerProps) => {
   const [enterState, setEnterState] = useState(false)
-  const [viaEnterKeyFlag, setviaEnterKeyFlag] = useState(false) 
 
   const handleOnKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !viaEnterKeyFlag) {
+    if (e.key === "Enter") {
       setEnterState(!enterState)
-      setviaEnterKeyFlag(true)
       return 
     }
 
-    if (enterState === true) {
-      if (e.nativeEvent.code) {
-        props.onChange && props.onChange(e.nativeEvent.code)
-        setEnterState(false)
-      }
+    if (!enterState) {
+      return 
     }
-  }
 
-  const handleOnKeyUp= (e: React.KeyboardEvent) => {
-    e.key === "Enter" && viaEnterKeyFlag === true && setviaEnterKeyFlag(false)
+
+    // skip if modifier fear is target.
+    if (MODIFIER_KEYS.includes(e.key)) {
+      return 
+    }
+
+    e.preventDefault()
+
+    props.onChange && props.onChange(extractHotkey(e.nativeEvent))
+    setEnterState(false)
   }
 
   return (
     <div 
       onBlur={() => setEnterState(false)} 
       onKeyDown={handleOnKeyDown} 
-      onKeyUp={handleOnKeyUp}
       onClick={e => setEnterState(!enterState)} 
       tabIndex={0} 
       className="KeyPicker">
-      {enterState ? "..." : props.value}
+      {enterState ? "..." : formatHotkey(props.value)}
     </div>
   )
 }

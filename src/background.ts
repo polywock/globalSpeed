@@ -1,6 +1,9 @@
 import 'regenerator-runtime/runtime'
-import { updateBadges, clearPins, migrateSchema, getConfig, setPin } from "./utils"
+import { updateBadges, getConfig, setPin, startupCleanUp } from "./utils/configUtils"
+import { migrateSchema } from "./utils/migrateSchema"
+import { isFirefox } from './utils/helper'
 
+const URL_PATTERNS = ["http://*/*", "https://*/*", "file:///*"]
 
 chrome.runtime.onStartup.addListener(handleStartup) 
 chrome.runtime.onInstalled.addListener(handleInstalled) 
@@ -12,16 +15,35 @@ chrome.tabs.onUpdated.addListener(updateBadges)
 chrome.runtime.onMessage.addListener(handleOnMessage)
 chrome.tabs.onCreated.addListener(handleTabCreated)
 
+
 async function handleStartup() {
   await migrateSchema()
-  await clearPins()
+  await startupCleanUp()
   await updateBadges()
 }
 
-async function handleInstalled() {
+
+async function handleInstalled(e: chrome.runtime.InstalledDetails) {
   await migrateSchema()
   await updateBadges()
+
+  // Firefox reinjects automatically. 
+  if (isFirefox()) {
+    return 
+  }
+
+  URL_PATTERNS.forEach(pattern => {
+    chrome.tabs.query({url: pattern}, tabs => {
+      tabs.forEach(tab => {
+        chrome.tabs.executeScript(tab.id, {
+          file: "contentScript.js",
+          allFrames: true 
+        })
+      }) 
+    })
+  })
 }
+
 
 async function handleTabCreated(tab: chrome.tabs.Tab) {
   const config = await getConfig()
@@ -31,11 +53,20 @@ async function handleTabCreated(tab: chrome.tabs.Tab) {
   }
 }
 
-// Content scripts cannot access chrome.tabs property.
-// To get tabId they need to request it from background script. 
 function handleOnMessage(msg: any, sender: chrome.runtime.MessageSender, reply: (msg: any) => any) {
-  if (msg.type === "REQUEST_TAB_ID") {
-    reply(sender.tab.id)
-  }
+  
+  if (msg.type === "REQUEST_SENDER_INFO") {
+    reply({
+      tabId: sender.tab.id,
+      frameId: sender.frameId
+    })
+  } else if (msg.type === "REQUEST_CREATE_TAB") {
+    chrome.tabs.create({
+      url: msg.url
+    })
+  } 
 }
 
+
+// Need this, otherwise ports instantly close.
+chrome.runtime.onConnect.addListener(async port => {})

@@ -1,0 +1,16 @@
+
+.NumericControl {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) 65px repeat(2, 1fr);
+  grid-column-gap: 5px;
+  align-items: stretch;
+
+  & > button {
+    font-size: 0.75em;
+  }
+
+  & > button, & > input[type="text"] {
+    padding: 2px;
+    text-align: center;
+  }
+}

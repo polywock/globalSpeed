@@ -8,7 +8,7 @@
   cursor: pointer;
 
   &:focus {
-    outline: 1px solid black;
+    outline: 1px solid var(--focus-color);
   }
 
   &:active {
