@@ -3,6 +3,7 @@ import { getDefaultConfig, standardIcons, grayscaleIcons } from "../defaults";
 import { setBadgeText, getActiveTabIds, setBadgeIcon } from "./browserUtils";
 import { clamp, round } from "./helper";
 import { filterInfos, getDefaultFilterValues, FilterName } from "../defaults/filters";
+import produce from "immer";
 
 // get storage using promise.
 export function getStorage(): Promise<any> {
@@ -46,7 +47,7 @@ export function setPin(config: Config, state: SetState, tabId: number) {
   } else if (!pin) {
     config.pins.push({
       tabId: tabId,
-      ctx: config.common
+      ctx: produce(config.common, d => {})
     })
   }
 }
