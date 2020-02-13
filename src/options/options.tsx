@@ -54,12 +54,12 @@ function Options(props: {}) {
   }
 
   const handleKeyBindMove = (id: string, down: boolean) => {
-    persistConfig(produce(config, d => {
-      let idx = d.keybinds.findIndex(v => v.id === id)
-      let kb = d.keybinds[idx]
-      let newIdx = clamp(0, d.keybinds.length - 1, idx + (down ? 1 : -1))
-      d.keybinds.splice(idx, 1)
-      d.keybinds.splice(newIdx, 0, kb)
+    persistConfig(produce(config, dConfig => {
+      let idx = dConfig.keybinds.findIndex(v => v.id === id)
+      let kb = dConfig.keybinds[idx]
+      let newIdx = clamp(0, dConfig.keybinds.length - 1, idx + (down ? 1 : -1))
+      dConfig.keybinds.splice(idx, 1)
+      dConfig.keybinds.splice(newIdx, 0, kb)
     }))
   }
   

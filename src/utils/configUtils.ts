@@ -1,5 +1,4 @@
 import { Config, Context, FilterValue, FilterTarget, SetState } from "../types";
-import produce from "immer";
 import { getDefaultConfig, standardIcons, grayscaleIcons } from "../defaults";
 import { setBadgeText, getActiveTabIds, setBadgeIcon } from "./browserUtils";
 import { clamp, round } from "./helper";
@@ -40,30 +39,15 @@ export function persistConfig(config: Config) {
 export function getPin(config: Config, tabId: number) {
   return config.pins.find(v => v.tabId === tabId)
 }
-
-export async function setPin(config: Config, tabId: number) {
+export function setPin(config: Config, state: SetState, tabId: number) {
   let pin = getPin(config, tabId)
-  if (pin) { return }
-  await persistConfig(produce(config, d => {
-    d.pins.push({
+  if (state === "off" || (state === "toggle" && pin)) {
+    config.pins = config.pins.filter(pin => pin.tabId !== tabId)
+  } else if (!pin) {
+    config.pins.push({
       tabId: tabId,
       ctx: config.common
     })
-  }))
-}
-
-export async function clearPin(config: Config, tabId: number) {
-  await persistConfig(produce(config, d => {
-    d.pins = d.pins.filter(v => v.tabId !== tabId)
-  }))
-}
-
-export async function togglePin(config: Config, tabId: number) {
-  let pin = getPin(config, tabId)
-  if (pin) {
-    await clearPin(config, tabId)
-  } else {
-    await setPin(config, tabId)
   }
 }
 
@@ -73,16 +57,15 @@ export function getContext(config: Config, tabId: number) {
   return pin?.ctx || config.common
 }
 
-export async function setContext(config: Config, newCtx: Context, tabId: number) {
-  await persistConfig(produce(config, d => {
-    const dPin = getPin(d, tabId)
-    if (dPin) {
-      dPin.ctx = newCtx
-    } else {
-      d.common = newCtx
-    }
-  }))
-}
+// export function setContext(config: Config, newCtx: Context, tabId: number) {
+//   const pin = getPin(config, tabId)
+//   if (pin) {
+//     pin.ctx = newCtx
+//   } else {
+//     config.common = newCtx
+//   }
+// }
+
 
 export async function startupCleanUp() {
   let config = await getConfigOrDefault()
@@ -192,15 +175,6 @@ export function copyInto(backdropTab: boolean, ctx: Context) {
   } else {
     ctx.elementFilterValues = ctx.backdropFilterValues
     ctx.elementFx = ctx.backdropFx
-  }
-}
-
-export function toggleFx(target: FilterTarget, ctx: Context) {
-  if (target === "backdrop" || target === "both" || (target === "enabled" && ctx.backdropFx)) {
-    ctx.backdropFx = !ctx.backdropFx
-  }
-  if (target === "element" || target === "both" || (target === "enabled" && ctx.elementFx)) {
-    ctx.elementFx = !ctx.elementFx
   }
 }
 

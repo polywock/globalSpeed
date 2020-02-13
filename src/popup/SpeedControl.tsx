@@ -1,7 +1,6 @@
 
 import React from "react"
 import { SPEED_PRESETS } from "../defaults"
-import { NumericInput } from "../comps/NumericInput"
 import "./SpeedControl.scss"
 import { NumericControl } from "../comps/NumericControl"
 
@@ -29,7 +28,7 @@ export function SpeedControl(props: SpeedControlProps) {
       largeStep={0.05}
       min={0.07}
       max={16}
-      inputNoEmpty={true}
+      inputNoNull={true}
     />
   </div>
 }

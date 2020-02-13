@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime'
-import { updateBadges, getConfig, setPin, startupCleanUp } from "./utils/configUtils"
+import { updateBadges, getConfig, setPin, startupCleanUp, persistConfig } from "./utils/configUtils"
 import { migrateSchema } from "./utils/migrateSchema"
 import { isFirefox } from './utils/helper'
 
@@ -48,7 +48,8 @@ async function handleInstalled(e: chrome.runtime.InstalledDetails) {
 async function handleTabCreated(tab: chrome.tabs.Tab) {
   const config = await getConfig()
   if (config?.pinByDefault) {
-    await setPin(config, tab.id)
+    setPin(config, "on", tab.id)
+    persistConfig(config)
     updateBadges()
   }
 }

@@ -16,7 +16,7 @@
     "scripts": ["background.js"]
   },
   "content_scripts": [{
-    "matches": ["<all_urls>"],
+    "matches": ["https://*/*", "http://*/*", "file://*/*"],
     "js": ["contentScript.js"],
     "all_frames": true
   }],

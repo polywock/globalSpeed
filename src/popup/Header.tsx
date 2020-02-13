@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { togglePin, setContext, persistConfig } from "../utils/configUtils"
+import { persistConfig, setPin, getContext } from "../utils/configUtils"
 import { GoPin, GoGear, GoMarkGithub, GoVersions, GoZap, GoArrowLeft} from "react-icons/go"
 import { FaPowerOff } from "react-icons/fa"
 import produce from "immer"
@@ -16,9 +16,10 @@ export function Header(props: {}) {
         title="Suspend most functionality."
         className={`toggle ${ctx.enabled ? "active" : ""}`}
         onClick={() => {
-          setContext(config, produce(ctx, d => {
-            d.enabled = !d.enabled
-          }), tabId)
+          persistConfig(produce(config, dConfig => {
+            const dCtx = getContext(dConfig, tabId)
+            dCtx.enabled = !dCtx.enabled
+          }))
         }}
       >
         <FaPowerOff size="17px"/>
@@ -26,7 +27,11 @@ export function Header(props: {}) {
       <div 
         title="Pinning (or Local Speed): Apply custom settings only to this tab."
         className={`pin toggle ${pin ? "active" : ""}`}
-        onClick={() => togglePin(config, tabId)}
+        onClick={() => {
+          persistConfig(produce(config, dConfig => {
+            setPin(dConfig, "toggle", tabId)
+          }))
+        }}
       >
         <GoPin size="20px"/>
       </div>
@@ -34,21 +39,28 @@ export function Header(props: {}) {
         title="Recursive, slightly slower, but compatible with more sites like Apple TV+."
         className={`toggle ${ctx.recursive ? "active" : ""}`}
         onClick={() => {
-          setContext(config, produce(ctx, d => {
-            d.recursive = !d.recursive
-          }), tabId)
+          persistConfig(produce(config, dConfig => {
+            const dCtx = getContext(dConfig, tabId)
+            dCtx.recursive = !dCtx.recursive
+          }))
         }}
       >
         <GoVersions size="20px"/>
       </div>
       {config.fxPanal ? (
         <div title="Go back to speed panal." onClick={() => {
-          persistConfig(produce(config, d => {d.fxPanal = !d.fxPanal}))
+          persistConfig(produce(config, dConfig => {
+            dConfig.fxPanal = !dConfig.fxPanal 
+          }))
         }}>
           <GoArrowLeft size="20px"/>
         </div>
       ) : (
-        <div title="Open FX panal." onClick={() => persistConfig(produce(config, d => {d.fxPanal = !d.fxPanal}))}>
+        <div title="Open FX panal." onClick={() => {
+          persistConfig(produce(config, dConfig => {
+            dConfig.fxPanal = !dConfig.fxPanal 
+          }))
+        }}>
           <GoZap size="20px"/>
         </div>
       )}

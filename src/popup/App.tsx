@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react"
-import { getConfigOrDefault, getPin, getContext, setContext, conformSpeed } from "../utils/configUtils"
+import { getConfigOrDefault, getPin, getContext, conformSpeed, persistConfig } from "../utils/configUtils"
 import { getActiveTabId } from "../utils/browserUtils"
 import { Config} from "../types"
 import { SpeedControl } from "./SpeedControl"
@@ -47,9 +47,10 @@ export function App(props: {}) {
           <FxPanal/>
         ) : (
           <SpeedControl speed={ctx.speed} onChange={v => {
-            setContext(config, produce(ctx, d => {
-              d.speed = conformSpeed(v)
-            }), tabId)
+            persistConfig(produce(config, d => {
+              const ctx = getContext(d, tabId)
+              ctx.speed = conformSpeed(v)
+            }))
           }}/>
         )}
       </ConfigContext.Provider>

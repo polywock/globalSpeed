@@ -1,12 +1,11 @@
 
 import 'regenerator-runtime/runtime'
 import { requestSenderInfo, requestCreateTab } from "../utils/browserUtils"
-import { getConfigOrDefault, getContext, setContext, getPin, togglePin, clearPin, formatSpeed, conformSpeed, formatFilters, getTargetSets, resetFx, flipFx, setFx, setPin } from "../utils/configUtils"
+import { getConfigOrDefault, getContext, getPin, formatSpeed, conformSpeed, formatFilters, getTargetSets, resetFx, flipFx, setFx, setPin, persistConfig } from "../utils/configUtils"
 import { checkIfMedia, setMediaCurrentTime, setMediaSpeed, setMediaPause, setMediaMute, setMark, seekMark, setElemFilter, clearElemFilter } from "./utils"
 import { roundToStep, clamp } from '../utils/helper'
 import { ShadowHost } from "./ShadowHost"
 import { compareHotkeys, extractHotkey, Hotkey } from '../utils/keys'
-import produce from 'immer'
 import { Context, KeyBind, Pin, Config } from '../types'
 import { CommandName } from "../defaults/commands"
 import { filterInfos } from '../defaults/filters'
@@ -21,7 +20,7 @@ let enabled = true
 main()
 
 // Chrome orphans contentScripts. Need to listen to a disconnect event for cleanup. 
-const port = chrome.runtime.connect()
+const port = chrome.runtime.connect({name: "contentScript"})
 port.onDisconnect.addListener(() => {
   cleanUp()
 })
@@ -130,10 +129,10 @@ async function handleKeyDown(e: KeyboardEvent) {
   const eventHotkey = extractHotkey(e)
   e = null
 
-  const config = await getConfigOrDefault()
-  const {tabId} = await requestSenderInfo()
-  const pin = getPin(config, tabId)
-  const ctx = getContext(config, tabId)
+  let config = await getConfigOrDefault()
+  let {tabId} = await requestSenderInfo()
+  let pin = getPin(config, tabId)
+  let ctx = getContext(config, tabId)
 
   // if extension is suspended, only listen to "toggleState" hotkeys. 
   let keyBinds = ctx.enabled ? config.keybinds : config.keybinds.filter(v => v.command === "setState")
@@ -155,8 +154,11 @@ async function handleKeyDown(e: KeyboardEvent) {
       continue
     }
 
+    pin = getPin(config, tabId)
+    ctx = getContext(config, tabId)
     commandHandlers[keyBind.command](keyBind, config, tabId, pin, ctx)
   }
+  persistConfig(config)
 }
 
 const commandHandlers: {
@@ -166,65 +168,42 @@ const commandHandlers: {
     
   },
   adjustSpeed: async function (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) {
-    const newSpeed = conformSpeed(roundToStep(ctx.speed + (keyBind.valueNumber ?? 0.1), keyBind.valueNumber ?? 0.1) )
-    await setContext(config, produce(ctx, d => {
-      d.speed = newSpeed
-    }), tabId)
-  
+    ctx.speed = conformSpeed(ctx.speed + (keyBind.valueNumber ?? 0.1))
+
     if (!config.hideIndicator) {
-      shadowHost.show(formatSpeed(newSpeed, !!pin))
+      shadowHost.show(formatSpeed(ctx.speed, !!pin))
     }
   },
   setSpeed: async function (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) {
-    const newSpeed = conformSpeed(keyBind.valueNumber ?? 1.0)
-    await setContext(config, produce(ctx, d => {
-      d.speed = newSpeed
-    }), tabId)
+    ctx.speed = conformSpeed(keyBind.valueNumber ?? 1.0)
   
     if (!config.hideIndicator) {
-      shadowHost.show(formatSpeed(newSpeed, !!pin))
+      shadowHost.show(formatSpeed(ctx.speed, !!pin))
     }
   },
   setPin: async function (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) {
-    const state = keyBind.valueState
-    let newCtx = ctx 
-    let newIsPinned = !!pin 
-
-    if (state === "off" || (state === "toggle" && pin)) {
-      await clearPin(config, tabId)
-      newCtx = config.common
-      newIsPinned = false 
-    } else {
-      newIsPinned = true 
-      if (!pin) {
-        await setPin(config, tabId)
-      }
-    }
-  
+    setPin(config, keyBind.valueState, tabId)
     if (!config.hideIndicator) {
-      shadowHost.show(formatSpeed(newCtx.speed, newIsPinned))
+      const pin = getPin(config, tabId)
+      const ctx = getContext(config, tabId)
+      shadowHost.show(formatSpeed(ctx.speed, !!pin))
     }
   },
   setRecursive: async function (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) {
     const state = keyBind.valueState
-    await setContext(config, produce(ctx, d => {
-      d.recursive = state === "toggle" ? !d.recursive : state === "on" ? true : false 
+    ctx.recursive = state === "toggle" ? !ctx.recursive : state === "on" ? true : false 
 
-      if (!config.hideIndicator) {
-        shadowHost.showSmall(d.recursive ? "recursive on" : "recursive off")
-      }
-    }), tabId)
-  
+    if (!config.hideIndicator) {
+      shadowHost.showSmall(ctx.recursive ? "recursive on" : "recursive off")
+    }
   },
   setState: async function (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) {
     const state = keyBind.valueState
-    await setContext(config, produce(ctx, d => {
-      d.enabled = state === "toggle" ? !d.enabled : state === "on" ? true : false 
+    ctx.enabled = state === "toggle" ? !ctx.enabled : state === "on" ? true : false 
       
-      if (!config.hideIndicator) {
-        shadowHost.showSmall(d.enabled ? "on" : "off")
-      }
-    }), tabId)
+    if (!config.hideIndicator) {
+      shadowHost.showSmall(ctx.enabled ? "on" : "off")
+    }
   },
   seek: async function (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) {
     setMediaCurrentTime(ctx.recursive, keyBind.valueNumber ?? 10, true)
@@ -258,49 +237,39 @@ const commandHandlers: {
     requestCreateTab(keyBind.valueString)
   },
   setFx: async function (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) {
-    setContext(config, produce(ctx, d => {
-      setFx(keyBind.filterTarget, keyBind.valueState, d)
-      shadowHost.showSmall(`${d.elementFx ? "on" : "off"} / ${d.backdropFx ? "on" : "off"}`)
-    }), tabId)
+    setFx(keyBind.filterTarget, keyBind.valueState, ctx)
+    shadowHost.showSmall(`${ctx.elementFx ? "on" : "off"} / ${ctx.backdropFx ? "on" : "off"}`)
   },
   resetFx: async function (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) {
-    setContext(config, produce(ctx, d => {
-      resetFx(keyBind.filterTarget, d)
-    }), tabId)
+    resetFx(keyBind.filterTarget, ctx)
   },
   flipFx: async function (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) {
-    setContext(config, produce(ctx, d => {
-      flipFx(d)
-    }), tabId)
+    flipFx(ctx)
   },
   adjustFilter: async function (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) {
     const filterInfo = filterInfos[keyBind.filterOption]
 
-    setContext(config, produce(ctx, d => {
-      setFx(keyBind.filterTarget, "on", d)
-      const dSets = getTargetSets(keyBind.filterTarget, d)
+    setFx(keyBind.filterTarget, "on", ctx)
+    const sets = getTargetSets(keyBind.filterTarget, ctx)
 
-      for (let dSet of dSets) {
-        const fValue = dSet.find(v => v.filter === keyBind.filterOption)
-        let newValue = clamp(filterInfo.min, filterInfo.max, fValue.value + (keyBind.valueNumber ?? filterInfo.largeStep))
-        fValue.value = newValue
-        shadowHost.showSmall(`${filterInfo.name} = ${newValue}`)
-      }
-    }), tabId)
+    for (let set of sets) {
+      const fValue = set.find(v => v.filter === keyBind.filterOption)
+      let newValue = clamp(filterInfo.min, filterInfo.max, fValue.value + (keyBind.valueNumber ?? filterInfo.largeStep))
+      fValue.value = newValue
+      shadowHost.showSmall(`${filterInfo.name} = ${newValue}`)
+    }
   },
   setFilter: async function (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) {
     const filterInfo = filterInfos[keyBind.filterOption]
 
-    setContext(config, produce(ctx, d => {
-      setFx(keyBind.filterTarget, "on", d)
-      const dSets = getTargetSets(keyBind.filterTarget, d)
-      for (let dSet of dSets) {
-        const fValue = dSet.find(v => v.filter === keyBind.filterOption)
-        const newValue = clamp(filterInfo.min, filterInfo.max, keyBind.valueNumber ?? filterInfo.default)
-        fValue.value = newValue
-        shadowHost.showSmall(`${filterInfo.name} = ${newValue}`)
-      }
-    }), tabId)
+    setFx(keyBind.filterTarget, "on", ctx)
+    const sets = getTargetSets(keyBind.filterTarget, ctx)
+    for (let set of sets) {
+      const fValue = set.find(v => v.filter === keyBind.filterOption)
+      const newValue = clamp(filterInfo.min, filterInfo.max, keyBind.valueNumber ?? filterInfo.default)
+      fValue.value = newValue
+      shadowHost.showSmall(`${filterInfo.name} = ${newValue}`)
+    }
   },
   cycleFilterValue: async function (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) {
     const filterInfo = filterInfos[keyBind.filterOption]
@@ -310,22 +279,16 @@ const commandHandlers: {
     let newValue = clamp(filterInfo.min, filterInfo.max, cycle[newIncrement % cycle.length])
 
     
-
-    config = produce(config, d => {
-      const dKeyBind = d.keybinds.find(v => v.id === keyBind.id)
-      dKeyBind.cycleIncrement = newIncrement
-    })
+    keyBind.cycleIncrement = newIncrement
     
-    await setContext(config, produce(ctx, d => {
-      setFx(keyBind.filterTarget, "on", d)
-      const dSets = getTargetSets(keyBind.filterTarget, d)
+    setFx(keyBind.filterTarget, "on", ctx)
+    const sets = getTargetSets(keyBind.filterTarget, ctx)
 
-      for (let dSet of dSets) {
-        const fValue = dSet.find(v => v.filter === keyBind.filterOption)
-        fValue.value = newValue 
-        shadowHost.showSmall(`${filterInfo.name} = ${newValue}`)
-      }
-    }), tabId)
+    for (let set of sets) {
+      const fValue = set.find(v => v.filter === keyBind.filterOption)
+      fValue.value = newValue 
+      shadowHost.showSmall(`${filterInfo.name} = ${newValue}`)
+    }
   }
 }
 

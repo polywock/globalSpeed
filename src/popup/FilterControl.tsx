@@ -48,7 +48,7 @@ export function FilterControl(props: FilterControlProps) {
         smallStep={filterInfo.smallStep}
         min={filterInfo.min}
         max={filterInfo.max}
-        inputNoEmpty={true}
+        inputNoNull={true}
       />
     </div>
   </div>

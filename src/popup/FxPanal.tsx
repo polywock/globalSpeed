@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useContext, useRef } from "react"
-import { setContext, flipFx, copyInto, resetFx, toggleFx, handleMove } from "../utils/configUtils"
+import React, { useState, useContext } from "react"
+import { flipFx, copyInto, resetFx, handleMove, persistConfig, getContext, setFx } from "../utils/configUtils"
 import produce from "immer"
 import { FilterName } from "../defaults/filters"
 import { FilterControl } from "./FilterControl"
@@ -19,9 +19,10 @@ export function FxPanal(props: {}) {
 
 
   const handleFilterMove = (backdrop: boolean, filterName: FilterName, down: boolean) => {
-    setContext(config, produce(ctx, d => {
-      handleMove(backdrop ? "backdrop" : "element", filterName, d, down)
-    }), tabId)
+    persistConfig(produce(config, dConfig => {
+      const dCtx = getContext(dConfig, tabId)
+      handleMove(backdrop ? "backdrop" : "element", filterName, dCtx, down)
+    }))
   }
 
 
@@ -48,43 +49,49 @@ export function FxPanal(props: {}) {
       )}
       <div className="controls">
         <button className={(backdropTab && ctx.backdropFx) || (!backdropTab && ctx.elementFx) ? "blue" : ""} onClick={e => {
-          setContext(config, produce(ctx, d => {
-            toggleFx(backdropTab ? "backdrop" : "element", d)
-          }), tabId)
+          persistConfig(produce(config, dConfig => {
+            const dCtx = getContext(dConfig, tabId)
+            setFx(backdropTab ? "backdrop" : "element", "toggle", dCtx) 
+          }))
         }}>enabled</button>
         <button onClick={e => {
-          setContext(config, produce(ctx, d => {
-            resetFx(backdropTab ? "backdrop" : "element", d)
-          }), tabId)
+          persistConfig(produce(config, dConfig => {
+            const dCtx = getContext(dConfig, tabId)
+            resetFx(backdropTab ? "backdrop" : "element", dCtx) 
+          }))
         }}>reset</button>
         <button title="copy fx values from other tab." onClick={e => {
-          setContext(config, produce(ctx, d => {
-            copyInto(backdropTab, d)
-          }), tabId)
+          persistConfig(produce(config, dConfig => {
+            const dCtx = getContext(dConfig, tabId)
+            copyInto(backdropTab, dCtx)
+          }))
         }}>copy into</button>
         <button title={"swap element and backdrop fx values"} onClick={e => {
-          setContext(config, produce(ctx, d => {
-            flipFx(d)
-          }), tabId)
+          persistConfig(produce(config, dConfig => {
+            const dCtx = getContext(dConfig, tabId)
+            flipFx(dCtx)
+          }))
         }}>flip</button>
       </div>
       {!backdropTab && (
         <div className="query">
           <span>query <Tooltip tooltip="CSS selector used to find elements to filter. For basic usage, enter a comma separated list of tagNames you want to select. Eg. 'video, img' will query for both videos and images. For advanced usage, view documentation online about CSS selectors. Warning, generic selectors can cause performance problems."/></span>
           <ThrottledTextInput pass={{placeholder: "defaults to 'video'"}} value={ctx.elementQuery || ""} onChange={v => {
-            setContext(config, produce(ctx, d => {
-              d.elementQuery = v
-            }), tabId)
+            persistConfig(produce(config, dConfig => {
+              const dCtx = getContext(dConfig, tabId)
+              dCtx.elementQuery = v
+            }))
           }}/>
         </div>
       )}
       {ctx[backdropTab ? "backdropFilterValues" : "elementFilterValues"].map(filterValue => (
         <FilterControl onMove={(name, down) => handleFilterMove(backdropTab, name, down)} key={filterValue.filter} filterValue={filterValue} onChange={newFilter => {
-          setContext(config, produce(ctx, d => {
-            let dFilterValues = d[backdropTab ? "backdropFilterValues" : "elementFilterValues"]
+          persistConfig(produce(config, dConfig => {
+            const dCtx = getContext(dConfig, tabId)
+            let dFilterValues = dCtx[backdropTab ? "backdropFilterValues" : "elementFilterValues"]
             const idx = dFilterValues.findIndex(v => v.filter === filterValue.filter)
             dFilterValues[idx] = newFilter
-          }), tabId)
+          }))
         }}/>
       ))}
     </div>

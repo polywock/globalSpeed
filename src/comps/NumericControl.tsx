@@ -9,7 +9,7 @@ type NumericControlProps = {
   largeStep: number,
   min?: number,
   max?: number,
-  inputNoEmpty?: boolean,
+  inputNoNull?: boolean,
   inputPlaceholder?: string,
   default?: number  
 }
@@ -27,7 +27,7 @@ export function NumericControl(props: NumericControlProps) {
     <div className="NumericControl">
       <button onClick={() =>  handleAddDelta(-(props.largeStep ?? 0))}>&lt;&lt;</button>
       <button onClick={() =>  handleAddDelta(-(props.smallStep ?? 0))}>&lt;</button>
-      <NumericInput placeholder={props.inputPlaceholder} noNull={props.inputNoEmpty} min={props.min} max={props.max} value={props.value} onChange={v => {
+      <NumericInput placeholder={props.inputPlaceholder} noNull={props.inputNoNull} min={props.min} max={props.max} value={props.value} onChange={v => {
         props.onChange(v)
       }}/>
       <button onClick={() =>  handleAddDelta(props.smallStep ?? 0)}>&gt;</button>
