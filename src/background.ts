@@ -2,6 +2,7 @@ import 'regenerator-runtime/runtime'
 import { updateBadges, getConfig, setPin, startupCleanUp, persistConfig } from "./utils/configUtils"
 import { migrateSchema } from "./utils/migrateSchema"
 import { isFirefox } from './utils/helper'
+import produce from 'immer'
 
 const URL_PATTERNS = ["http://*/*", "https://*/*", "file:///*"]
 
@@ -48,8 +49,9 @@ async function handleInstalled(e: chrome.runtime.InstalledDetails) {
 async function handleTabCreated(tab: chrome.tabs.Tab) {
   const config = await getConfig()
   if (config?.pinByDefault) {
-    setPin(config, "on", tab.id)
-    persistConfig(config)
+    persistConfig(produce(config, d => {
+      setPin(d, "on", tab.id)
+    }))
     updateBadges()
   }
 }

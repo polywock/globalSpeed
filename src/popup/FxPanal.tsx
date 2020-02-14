@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react"
-import { flipFx, copyInto, resetFx, handleMove, persistConfig, getContext, setFx } from "../utils/configUtils"
+import { flipFx, copyInto, resetFx, moveFilter, persistConfig, getContext, setFx } from "../utils/configUtils"
 import produce from "immer"
 import { FilterName } from "../defaults/filters"
 import { FilterControl } from "./FilterControl"
@@ -21,7 +21,7 @@ export function FxPanal(props: {}) {
   const handleFilterMove = (backdrop: boolean, filterName: FilterName, down: boolean) => {
     persistConfig(produce(config, dConfig => {
       const dCtx = getContext(dConfig, tabId)
-      handleMove(backdrop ? "backdrop" : "element", filterName, dCtx, down)
+      moveFilter(backdrop ? "backdrop" : "element", filterName, dCtx, down)
     }))
   }
 

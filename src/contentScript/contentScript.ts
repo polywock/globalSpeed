@@ -3,12 +3,13 @@ import 'regenerator-runtime/runtime'
 import { requestSenderInfo, requestCreateTab } from "../utils/browserUtils"
 import { getConfigOrDefault, getContext, getPin, formatSpeed, conformSpeed, formatFilters, getTargetSets, resetFx, flipFx, setFx, setPin, persistConfig } from "../utils/configUtils"
 import { checkIfMedia, setMediaCurrentTime, setMediaSpeed, setMediaPause, setMediaMute, setMark, seekMark, setElemFilter, clearElemFilter } from "./utils"
-import { roundToStep, clamp } from '../utils/helper'
+import { clamp, round } from '../utils/helper'
 import { ShadowHost } from "./ShadowHost"
-import { compareHotkeys, extractHotkey, Hotkey } from '../utils/keys'
+import { compareHotkeys, extractHotkey } from '../utils/keys'
 import { Context, KeyBind, Pin, Config } from '../types'
 import { CommandName } from "../defaults/commands"
 import { filterInfos } from '../defaults/filters'
+import produce from 'immer'
 
 
 let shadowHost: ShadowHost
@@ -131,7 +132,6 @@ async function handleKeyDown(e: KeyboardEvent) {
 
   let config = await getConfigOrDefault()
   let {tabId} = await requestSenderInfo()
-  let pin = getPin(config, tabId)
   let ctx = getContext(config, tabId)
 
   // if extension is suspended, only listen to "toggleState" hotkeys. 
@@ -153,10 +153,13 @@ async function handleKeyDown(e: KeyboardEvent) {
     if (keyBind.ifMedia && !pageHasMedia) {
       continue
     }
-
-    pin = getPin(config, tabId)
-    ctx = getContext(config, tabId)
-    commandHandlers[keyBind.command](keyBind, config, tabId, pin, ctx)
+    
+    config = produce(config, dConfig => {
+      const dPin = getPin(dConfig, tabId)
+      const dCtx = getContext(dConfig, tabId)
+      const dKeybind = dConfig.keybinds.find(v => v.id === keyBind.id)
+      commandHandlers[keyBind.command](dKeybind, dConfig, tabId, dPin, dCtx)
+    })
   }
   persistConfig(config)
 }
@@ -256,7 +259,7 @@ const commandHandlers: {
       const fValue = set.find(v => v.filter === keyBind.filterOption)
       let newValue = clamp(filterInfo.min, filterInfo.max, fValue.value + (keyBind.valueNumber ?? filterInfo.largeStep))
       fValue.value = newValue
-      shadowHost.showSmall(`${filterInfo.name} = ${newValue}`)
+      shadowHost.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
     }
   },
   setFilter: async function (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) {
@@ -268,7 +271,7 @@ const commandHandlers: {
       const fValue = set.find(v => v.filter === keyBind.filterOption)
       const newValue = clamp(filterInfo.min, filterInfo.max, keyBind.valueNumber ?? filterInfo.default)
       fValue.value = newValue
-      shadowHost.showSmall(`${filterInfo.name} = ${newValue}`)
+      shadowHost.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
     }
   },
   cycleFilterValue: async function (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) {
@@ -278,7 +281,6 @@ const commandHandlers: {
     let cycle = (keyBind.valueCycle == null || keyBind.valueCycle.length === 0) ? [0, 1] : keyBind.valueCycle 
     let newValue = clamp(filterInfo.min, filterInfo.max, cycle[newIncrement % cycle.length])
 
-    
     keyBind.cycleIncrement = newIncrement
     
     setFx(keyBind.filterTarget, "on", ctx)
@@ -287,14 +289,10 @@ const commandHandlers: {
     for (let set of sets) {
       const fValue = set.find(v => v.filter === keyBind.filterOption)
       fValue.value = newValue 
-      shadowHost.showSmall(`${filterInfo.name} = ${newValue}`)
+      shadowHost.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
     }
   }
 }
-
-
-
-
 
 
 

@@ -47,7 +47,7 @@ export function setPin(config: Config, state: SetState, tabId: number) {
   } else if (!pin) {
     config.pins.push({
       tabId: tabId,
-      ctx: produce(config.common, d => {})
+      ctx: config.common
     })
   }
 }
@@ -57,16 +57,6 @@ export function getContext(config: Config, tabId: number) {
   const pin = getPin(config, tabId)
   return pin?.ctx || config.common
 }
-
-// export function setContext(config: Config, newCtx: Context, tabId: number) {
-//   const pin = getPin(config, tabId)
-//   if (pin) {
-//     pin.ctx = newCtx
-//   } else {
-//     config.common = newCtx
-//   }
-// }
-
 
 export async function startupCleanUp() {
   let config = await getConfigOrDefault()
@@ -137,11 +127,9 @@ export function getTargetSets(target: FilterTarget, ctx: Context) {
   const targetSets: FilterValue[][] = [] 
   if (target === "backdrop" || target === "both" || (target === "enabled" && ctx.backdropFx)) {
     targetSets.push(ctx.backdropFilterValues);
-    ctx.backdropFx = true
   }
   if (target === "element" || target === "both" || (target === "enabled" && ctx.elementFx)) {
     targetSets.push(ctx.elementFilterValues);
-    ctx.elementFx = true
   }
   return targetSets 
 }
@@ -189,15 +177,13 @@ export function setFx(target: FilterTarget, state: SetState, ctx: Context) {
   }
 }
 
-
-
-export function handleMove(target: FilterTarget, filterName: FilterName, ctx: Context, down: boolean) {
-  for (let dSet of getTargetSets(target, ctx)) {
-      let idx = dSet.findIndex(v => v.filter === filterName)
-      let dVal = dSet[idx]
-      let newIdx = clamp(0, dSet.length - 1, idx + (down ? 1 : -1))
-      dSet.splice(idx, 1)
-      dSet.splice(newIdx, 0, dVal)
+export function moveFilter(target: FilterTarget, filterName: FilterName, ctx: Context, down: boolean) {
+  for (let set of getTargetSets(target, ctx)) {
+      let filterIdx = set.findIndex(v => v.filter === filterName)
+      let filterVal = set[filterIdx]
+      let newFilterIdx = clamp(0, set.length - 1, filterIdx + (down ? 1 : -1))
+      set.splice(filterIdx, 1)
+      set.splice(newFilterIdx, 0, filterVal)
   }
 }
   
