@@ -1,7 +1,7 @@
 {
   "name": "Global Speed",
   "short_name": "Global Speed",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Set a default speed for all videos.",
   "manifest_version": 2,
   "permissions": ["storage", "https://*/*", "http://*/*", "file://*/*"],
