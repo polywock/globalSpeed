@@ -2,84 +2,25 @@ import { cachedThrottle } from "../utils/helper"
 import { SetState } from "../types"
 
 
-const getShadowHostsThrottled = cachedThrottle(getShadowHosts, 5000)
-const querySelectorThrottled = cachedThrottle(querySelector, 500)
 
-
-function querySelector(recursive: boolean, query: string) {
-  let elems: Element[] = []
-  let docs: (Document | ShadowRoot)[] = [document] 
-
-  if (recursive) {
-    docs.push(...getShadowHostsThrottled(document))
-  }
-
-  docs.forEach(doc => {
-    elems.push(...doc.querySelectorAll(query))
-  })
-
-  return elems 
-}
-
-
-export function getShadowHosts(doc: Document | ShadowRoot) {
-  let roots: ShadowRoot[] = []
-
-  doc.querySelectorAll("*").forEach(node => {
-    if (node.shadowRoot && node.shadowRoot.mode === "open") {
-      roots.push(node.shadowRoot)
-      roots.push(...getShadowHosts(node.shadowRoot))
-    }
-  })
-  return roots 
-}
-
-
-function getMedia(recursive: boolean) {
-  if (recursive) {
-    return querySelector(true, "video, audio") as HTMLMediaElement[]
-  } else {
-    const vids = Array.from(document.getElementsByTagName("video")) as HTMLMediaElement[]
-    const auds = Array.from(document.getElementsByTagName("audio")) as HTMLMediaElement[]
-    return vids.concat(auds)
-  }
-}
-
-
-export function checkIfMedia(recursive: boolean) {
-  return getMedia(recursive).length > 0
-}
-
-export function setMediaSpeed(recursive: boolean, playbackRate: number) {
-  return getMedia(recursive).forEach(v => {
-    v.playbackRate = playbackRate
-  })
-}
-
-export function setMediaCurrentTime(recursive: boolean, value: number, relative: boolean) {
-  return getMedia(recursive).forEach(v => {
+export function setMediaCurrentTime(elems: HTMLMediaElement[], value: number, relative: boolean) {
+  return elems.forEach(v => {
     v.currentTime = relative ? v.currentTime + value : value 
   })
 }
 
-export function setMediaPause(recursive: boolean, state: SetState) {
-  return getMedia(recursive).forEach(v => {
-    if (state === "on" && !v.paused) {
+export function setMediaPause(elems: HTMLMediaElement[], state: SetState) {
+  return elems.forEach(v => {
+    if (state === "on" || (state === "toggle" && !v.paused)) {
       v.pause()
-    } else if (state === "off" && v.paused) {
+    } else {
       v.play()
-    } else if (state === "toggle") {
-      if (v.paused) {
-        v.play()
-      } else {
-        v.pause()
-      }
     }
   })
 }
 
-export function setMediaMute(recursive: boolean, state: SetState) {
-  return getMedia(recursive).forEach(v => {
+export function setMediaMute(elems: HTMLMediaElement[], state: SetState) {
+  return elems.forEach(v => {
     v.muted = state === "on" ? true : state === "off" ? false : !v.muted
   })
 }
@@ -88,7 +29,7 @@ export function setMediaMute(recursive: boolean, state: SetState) {
 
 
 type HTMLMediaElementSuper = HTMLMediaElement & {
-  marks: {
+  marks?: {
     [key: string]: {
       time: number,
       created: number
@@ -96,10 +37,10 @@ type HTMLMediaElementSuper = HTMLMediaElement & {
   }
 }
 
-export function setMark(recursive: boolean, key: string) {
+export function setMark(elems: HTMLMediaElementSuper[], key: string) {
   let marksMade: {}[] = [];
 
-  (getMedia(recursive) as HTMLMediaElementSuper[]).forEach(v => {
+  elems.forEach(v => {
     if (v.ended && !v.isConnected) {
       return 
     }
@@ -117,9 +58,9 @@ export function setMark(recursive: boolean, key: string) {
   return marksMade
 }
 
-export function seekMark(recursive: boolean, key: string) {
+export function seekMark(elems: HTMLMediaElementSuper[], key: string) {
   let saughtMark = false;
-  (getMedia(recursive) as HTMLMediaElementSuper[]).forEach(v => {
+  elems.forEach(v => {
     if (!v.isConnected) {
       return 
     }
@@ -137,12 +78,7 @@ export function seekMark(recursive: boolean, key: string) {
 
 let hotElems: Set<HTMLElement> = new Set()
 
-export function setElemFilter(recursive: boolean, filter: string, query: string) {
-  let elems: HTMLElement[] = []
-  try {
-    elems = (querySelectorThrottled(recursive, query) as HTMLElement[])
-  } catch (err) {}
-
+export function setElemFilter(elems: HTMLElement[], filter: string, query: string) {  
   // clear any non-reinforced elements.
   hotElems.forEach(hot => {
     if (!elems.includes(hot)) {
@@ -166,5 +102,3 @@ export function clearElemFilter() {
   })  
   hotElems.clear()
 }
-
-

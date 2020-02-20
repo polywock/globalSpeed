@@ -7,7 +7,6 @@ To use, install the [Chrome](https://chrome.google.com/webstore/detail/global-sp
 ## Features
 - Hotkeys (and way to customize them). 
 - Pinning (apply custom playback rate to a specific tab).
-- Recursive Mode (slower, but compatible with more sites like AppleTV+) 
 - Fx: apply filters (invert, grayscale, etc) on the entire page or select elements. 
 
 ## Build 

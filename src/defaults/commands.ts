@@ -1,10 +1,9 @@
 
 import { Command, KeyBind } from "../types"
 import { uuidLowerAlpha } from "../utils/helper"
-import { filterInfos } from "./filters"
 
 
-export type CommandName = "nothing" | "adjustSpeed" | "setSpeed" | "setPin" | "setRecursive" | "setState" | 
+export type CommandName = "nothing" | "adjustSpeed" | "setSpeed" | "setPin" | "setState" | 
   "seek" | "setPause" | "setMute" | "setMark" | "seekMark" | "openUrl" | 
   "setFx" | "resetFx" | "flipFx" | "adjustFilter" | "setFilter" | "cycleFilterValue"
 
@@ -52,16 +51,6 @@ export const commandInfos: {
     generate: () => ({
       id: uuidLowerAlpha(16),
       command: "setPin",
-      enabled: true,
-      valueState: "toggle"
-    })
-  },
-  setRecursive: {
-    name: "set recursion",
-    valueType: "state",
-    generate: () => ({
-      id: uuidLowerAlpha(16),
-      command: "setRecursive",
       enabled: true,
       valueState: "toggle"
     })

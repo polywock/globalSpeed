@@ -8,7 +8,6 @@ const URL_PATTERNS = ["http://*/*", "https://*/*", "file:///*"]
 
 chrome.runtime.onStartup.addListener(handleStartup) 
 chrome.runtime.onInstalled.addListener(handleInstalled) 
-
 chrome.storage.onChanged.addListener(updateBadges)
 chrome.tabs.onActivated.addListener(updateBadges)
 chrome.tabs.onUpdated.addListener(updateBadges)

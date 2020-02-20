@@ -13,7 +13,8 @@
     "128": "icon128.png" 
   },
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js"],
+    "persistent": false 
   },
   "content_scripts": [{
     "matches": ["https://*/*", "http://*/*", "file://*/*"],
@@ -24,5 +25,6 @@
   "options_ui": {
     "open_in_tab": true,
     "page": "options.html"
-  }
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }

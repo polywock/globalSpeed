@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { persistConfig, setPin, getContext } from "../utils/configUtils"
-import { GoPin, GoGear, GoMarkGithub, GoVersions, GoZap, GoArrowLeft} from "react-icons/go"
+import { GoPin, GoGear, GoMarkGithub, GoZap, GoArrowLeft} from "react-icons/go"
 import { FaPowerOff } from "react-icons/fa"
 import produce from "immer"
 import { ConfigContext } from "../ConfigContext"
@@ -34,18 +34,6 @@ export function Header(props: {}) {
         }}
       >
         <GoPin size="20px"/>
-      </div>
-      <div 
-        title="Recursive, slightly slower, but compatible with more sites like Apple TV+."
-        className={`toggle ${ctx.recursive ? "active" : ""}`}
-        onClick={() => {
-          persistConfig(produce(config, dConfig => {
-            const dCtx = getContext(dConfig, tabId)
-            dCtx.recursive = !dCtx.recursive
-          }))
-        }}
-      >
-        <GoVersions size="20px"/>
       </div>
       {config.fxPanal ? (
         <div title="Go back to speed panal." onClick={() => {

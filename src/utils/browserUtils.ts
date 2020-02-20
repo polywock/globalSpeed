@@ -84,3 +84,33 @@ export function requestPermissions(permission: chrome.permissions.Permissions): 
     chrome.permissions.request(permission, has => res(has))
   })
 }
+
+export type StorageItems = {[key: string]: any}
+
+export type StorageChanges =  {[key: string]: chrome.storage.StorageChange}
+
+export function getStorage(): Promise<StorageItems> {
+  return new Promise((res, rej) => {
+    chrome.storage.local.get(items => {
+      if (chrome.runtime.lastError) {
+        rej(chrome.runtime.lastError)
+      } else {
+        res(items)
+      }
+      return 
+    })
+  })
+}
+
+export function setStorage(items: StorageItems): Promise<StorageItems> {
+  return new Promise((res, rej) => {
+    chrome.storage.local.set(items, () => {
+      if (chrome.runtime.lastError) {
+        rej(chrome.runtime.lastError)
+      } else {
+        res()
+      }
+      return 
+    })
+  })
+}

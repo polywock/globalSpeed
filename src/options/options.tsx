@@ -140,7 +140,6 @@ function Options(props: {}) {
     <div>  
       <p><code>State <FaPowerOff color="#35b" size="17px"/></code>: You can suspend the extension for all tabs, or a specific tab (if pinned). Speed will no longer set. And all hotkeys except <code>set state</code> will cease to work.</p>
       <p><code>Pin <GoPin color="#35b" size="20px"/></code>: Pinning a tab allows it to have it's own context (speed, filters, etc). A global context applies to all tabs unless tab is pinned (has it's own local context). </p>
-      <p><code>Recursive Mode <GoVersions color="#35b" size="20px"/></code>: A bit slower, but applies speed to HTML media nested within shadow documents. This is useful for some sites like Apple TV+. </p>
       <p><code>FX <GoZap color="#35b" size="20px"/></code>: You can enable filters (contrast, invert, grayscale, etc) on elements (by default, only video elements) or even the whole page with backdrop. </p>
       <p><code>Double Invert</code> is useful trick to simulate dark theme. Invert the entire page with backdrop, and also invert videos, which will cause them to invert back into their original color, while the UI remains dark.</p>
       <p>For the extension to work with <code>File URLs</code> or on <code>Incognito mode</code>, they need to be enabled at the extension page -> <a onClick={e => {e.preventDefault(); requestCreateTab(`chrome://extensions/?id=${chrome.runtime.id}`)}}>Chrome/Edge</a> or <a onClick={e => {e.preventDefault(); requestCreateTab(`https://support.mozilla.org/en-US/kb/extensions-private-browsing`)}}>Firefox</a>.</p>

@@ -11,13 +11,15 @@ export type Config = {
   hideIndicator?: boolean,
   hideBadge?: boolean,
   keybinds: KeyBind[],
-  fxPanal?: boolean
+  fxPanal?: boolean,
+  usePolling?: boolean,
+  pollRate?: number 
+  shadowPollRate?: number 
 }
 
 export type Context = {
   speed: number, 
   enabled: boolean,
-  recursive?: boolean,
   elementFx?: boolean,
   backdropFx?: boolean,
   elementFilterValues: FilterValue[],

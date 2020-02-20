@@ -43,6 +43,8 @@ export class ShadowHost {
     `)
     this.wrapper.shadowRoot.appendChild(this.indicator)
     this.wrapper.shadowRoot.appendChild(this.backdrop)
+
+    document.body.appendChild(this.wrapper)
   }
   showIndicator(text: string, duration: number, fontSize = "40px") {
     this.indicator.innerText = text

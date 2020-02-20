@@ -1,23 +1,9 @@
 import { Config, Context, FilterValue, FilterTarget, SetState } from "../types";
 import { getDefaultConfig, standardIcons, grayscaleIcons } from "../defaults";
-import { setBadgeText, getActiveTabIds, setBadgeIcon } from "./browserUtils";
+import { setBadgeText, getActiveTabIds, setBadgeIcon, getStorage, setStorage } from "./browserUtils";
 import { clamp, round } from "./helper";
 import { filterInfos, getDefaultFilterValues, FilterName } from "../defaults/filters";
-import produce from "immer";
-
-// get storage using promise.
-export function getStorage(): Promise<any> {
-  return new Promise((res, rej) => {
-    chrome.storage.local.get(items => {
-      if (chrome.runtime.lastError) {
-        rej(chrome.runtime.lastError)
-      } else {
-        res(items)
-      }
-      return 
-    })
-  })
-}
+import cloneDeep from "lodash.clonedeep"
 
 export async function getConfig(): Promise<Config> {
   const storage = await getStorage()
@@ -30,11 +16,7 @@ export async function getConfigOrDefault(): Promise<Config> {
 
 
 export function persistConfig(config: Config) {
-  return new Promise(res => {
-    chrome.storage.local.set({config}, () => {
-      res()
-    })
-  })
+  return setStorage({config})
 }
 
 export function getPin(config: Config, tabId: number) {
@@ -47,7 +29,7 @@ export function setPin(config: Config, state: SetState, tabId: number) {
   } else if (!pin) {
     config.pins.push({
       tabId: tabId,
-      ctx: config.common
+      ctx: cloneDeep(config.common)
     })
   }
 }
