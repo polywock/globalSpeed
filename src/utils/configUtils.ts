@@ -45,7 +45,6 @@ export async function startupCleanUp() {
   if (config.pins?.length > 0) {
     config.pins = []
   }
-  delete config.fxPanal
   persistConfig(config)
 }
 

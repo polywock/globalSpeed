@@ -13,10 +13,12 @@ import { GoPin, GoVersions, GoZap } from "react-icons/go"
 import { FaPowerOff } from "react-icons/fa"
 import "./options.scss"
 import { requestCreateTab } from "../utils/browserUtils"
+import { NumericInput } from "../comps/NumericInput"
 
 function Options(props: {}) {
   const [config, setConfig] = useState(null as Config)
   const [commandOption, setCommandOption] = useState("adjustSpeed")
+  const [showAdvanced, setShowAdvanced] = useState(false)
 
   const handleStorageChange = useCallback(async () => {
     const config = await getConfigOrDefault()
@@ -134,6 +136,37 @@ function Options(props: {}) {
           }))
         }}/>
       </div>
+      {!showAdvanced && (
+        <button onClick={e => setShowAdvanced(!showAdvanced)}>Show Advanced</button>
+      )}
+      {showAdvanced && (
+        <>
+          <div>
+            <div className="labelWithTooltip">
+              <span>use polling</span>
+              <Tooltip tooltip="Global Speed supports two ways of efficiently querying elements. The default way is keeping track of changes using the MutationObserver API.  This is usually more efficient in the long run. The alternative way is polling. In which, the entire page will be periodically checked for target elements. The benefit of polling is that computation cost is steady and spread out."/>
+            </div>
+            <input type="checkbox" checked={config.usePolling} onChange={e => {
+              persistConfig(produce(config, d => {
+                d.usePolling = e.target.checked
+              }))
+            }}/>
+          </div>
+          {config.usePolling && (
+            <div>
+              <div className="labelWithTooltip">
+                <span>polling rate</span>
+                <Tooltip tooltip="In ms (or milliseconds). For reference, 1000 ms == 1 second."/>
+              </div>
+              <NumericInput value={config.pollRate} placeholder={"defaults to 1000ms"} onChange={v => {
+                persistConfig(produce(config, d => {
+                  d.pollRate = v
+                }))
+              }}/>
+            </div>
+          )}
+        </>
+      )}
     </div>
     <h2>Help</h2>
     <div className="card">Have issues or a suggestion? Create a <a href="https://github.com/polywock/globalSpeed/issues">new issue</a> on the <a href="https://github.com/polywock/globalSpeed">Github page</a>.</div>

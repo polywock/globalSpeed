@@ -1,24 +1,24 @@
 import { PollShadowRoots } from "./PollShadowRoots"
 
 export class PollQuery<T extends Element = Element> {
-  elems: T[]
+  elems: T[] = []
   intervalId: number
   tagNames: string[] = []
-  elapsed = 0
   psr = PollShadowRoots.getCommon()
   released = false 
-  constructor(public query: string, public visibleDelay: number) {
-    document.addEventListener("visibilitychange", this.handleVisibilityChange)
-    this.handleVisibilityChange()
+  query: string 
+  constructor(query: string, public delay: number) {
+    this.intervalId = setInterval(this.handleInterval, this.delay)
     this.psr?.listeners.add(this.handleInterval)
+    this.setQuery(query)
   }
   release() {
     if (this.released) return 
     this.released = true 
+    clearInterval(this.intervalId)
     this.psr?.listeners.delete(this.handleInterval)
     PollShadowRoots.releaseCommon()
-    document.removeEventListener("visibilitychange", this.handleVisibilityChange)
-    this.elems = []
+    delete this.elems
   }
   setQuery(query: string) {
     if (query === this.query)  {
@@ -26,18 +26,9 @@ export class PollQuery<T extends Element = Element> {
     }
     this.query = query 
     this.tagNames = extractTagNames(query?.toUpperCase())
-  }
-  handleVisibilityChange() {
-    if (document.visibilityState === "visible") {
-      if (this.intervalId == null) {
-        this.intervalId = setInterval(this.handleInterval, this.visibleDelay)
-      }
-    } else {
-      clearInterval(this.intervalId)
-    }
+    this.handleInterval()
   }
   handleInterval = () => {
-    const oldTime = new Date().getTime()
     this.elems = []
     if (this.tagNames?.length > 0) {
     this.tagNames.forEach(tag => {
@@ -50,10 +41,8 @@ export class PollQuery<T extends Element = Element> {
     this.psr?.shadowRoots.forEach(root => {
       this.elems = [...this.elems, ...root.querySelectorAll(this.query)] as T[]
     })
-    this.elapsed += new Date().getTime() - oldTime
   }
 }
-
 
 const CSS_NAME = /^[_a-z]+[_a-z0-9-]*$/i
  

@@ -7,7 +7,6 @@ export class LazyQuery<T extends Element = Element> {
   elems: T[] = []
   query: string
   tagNames: string[] = []
-  elapsed = 0
   psr = PollShadowRoots.getCommon()
   dmo = DeepMutationObserver.getCommon()
   released = false 
@@ -26,39 +25,33 @@ export class LazyQuery<T extends Element = Element> {
     delete this.elems
   }
   handleDmoChange = (muts: MutationRecord[]) => {
-    const oldTime = new Date().getTime()
     muts.forEach(mut => {
       mut.addedNodes.forEach(node => {
         if (!isElement(node)) {
           return 
         }
-        this.elems = [...this.elems, ...findDescendantMatches(node, this.query, this.tagNames) as T[]]
+        this.elems = [...new Set([...this.elems, ...findDescendantMatches(node, this.query, this.tagNames) as T[]])]
       })
       
       if (mut.removedNodes?.length > 0) {
         this.elems = [...this.elems].filter(v => v.isConnected)
       }
     })
-    this.elapsed += new Date().getTime() - oldTime
   }
   handlePsrChange = (added: ShadowRoot[], removed: ShadowRoot[]) => {
-    const oldTime = new Date().getTime()
     this.elems = [...this.elems].filter(v => v.isConnected)
     
     added.forEach(doc => {
       this.elems = [...this.elems, ...doc.querySelectorAll(this.query)] as T[]
     })
-    this.elapsed += new Date().getTime() - oldTime
 
   }
   init = () => {
-    const oldTime = new Date().getTime()
     const docs = [document, ...(this.psr?.shadowRoots || [])];
     this.elems = []
     docs.forEach(doc => {
       this.elems = [...this.elems, ...doc.querySelectorAll(this.query)] as T[]
     })
-    this.elapsed += new Date().getTime() - oldTime
   }
   setQuery = (query: string) => {
     if (this.query === query) {

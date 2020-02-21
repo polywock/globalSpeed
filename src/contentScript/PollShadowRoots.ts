@@ -6,31 +6,19 @@ export class PollShadowRoots {
   shadowRoots: ShadowRoot[] = []
   intervalId: number 
   listeners: Set<(added: ShadowRoot[], removed: ShadowRoot[]) => void> = new Set()
-  elapsed = 0
   released = false 
   constructor() {
-    document.addEventListener("visibilitychange", this.handleVisibilityChange)
-    this.handleVisibilityChange()
+    this.intervalId = setInterval(this.handleInterval, 5000)
+    this.handleInterval()
   }
   release = () => {
     if (this.released) return 
     this.released = true 
-    document.removeEventListener("visibilitychange", this.handleVisibilityChange)
     clearInterval(this.intervalId)
     delete this.shadowRoots
     delete this.listeners
   }
-  handleVisibilityChange = () => {
-    if (document.visibilityState === "visible") {
-      if (this.intervalId == null) {
-        this.intervalId = setInterval(this.handleInterval, 5000)
-      }
-    } else {
-      clearInterval(this.intervalId)
-    }
-  }
   handleInterval = () => {
-    const oldTime = new Date().getTime()
     const newShadowRoots = getShadowRoots(document)
     
     const removed: ShadowRoot[] = []
@@ -57,9 +45,6 @@ export class PollShadowRoots {
         listener(added, removed)
       })
     }
-
-    this.elapsed += new Date().getTime() - oldTime
-
   }
   
   static common: PollShadowRoots

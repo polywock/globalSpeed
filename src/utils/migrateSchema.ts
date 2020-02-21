@@ -1,7 +1,6 @@
 import { persistConfig } from "./configUtils"
 import { getDefaultConfig } from "../defaults"
 import { getStorage } from "./browserUtils"
-import { KeyBind } from "../types"
 
 export async function migrateSchema() {
   let currentStorage = await getStorage()
@@ -31,13 +30,12 @@ export async function migrateSchema() {
     return 
   }
 
-  // remove any since removed keybind commands. 
-  if ((currentConfig.keybinds as any[]).some(v => v.command === "setRecursive")) {
+  if (currentConfig.version === 3) {
+    currentConfig.version = 4
     currentConfig.keybinds = (currentConfig.keybinds as any[]).filter(v => v.command !== "setRecursive") 
+    delete currentConfig.common.recursive
+    delete currentConfig.fxPanal 
     persistConfig(currentConfig)
     return 
   }
-
-  
-  return 
 }

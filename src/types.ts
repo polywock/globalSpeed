@@ -11,7 +11,6 @@ export type Config = {
   hideIndicator?: boolean,
   hideBadge?: boolean,
   keybinds: KeyBind[],
-  fxPanal?: boolean,
   usePolling?: boolean,
   pollRate?: number 
   shadowPollRate?: number 

@@ -4,14 +4,9 @@ export class ShadowHost {
   indicator = document.createElement("div")
   backdrop = document.createElement("div")
   timeoutId: number
+  released = false 
   constructor() {
-  
-    // On update, chrome orphans contentScripts (we can listen to disconnect and clean up).
-    // Firefox nukes the contentScript, no need to clean up except removing any DOM elements. 
-    let existing = document.getElementById("GlobalSpeedShadowHost")
-    existing?.parentElement.removeChild(existing)
-
-
+    this.removeFromDOM()
     this.wrapper.id = "GlobalSpeedShadowHost"
     this.wrapper.setAttribute("style", `
       display: block;
@@ -45,6 +40,16 @@ export class ShadowHost {
     this.wrapper.shadowRoot.appendChild(this.backdrop)
 
     document.body.appendChild(this.wrapper)
+  }
+  release() {
+    if (this.released) return 
+    this.released = true 
+    this.removeFromDOM()
+    delete this.wrapper
+  }
+  removeFromDOM() {
+    let existing = document.getElementById("GlobalSpeedShadowHost")
+    existing?.parentElement.removeChild(existing)
   }
   showIndicator(text: string, duration: number, fontSize = "40px") {
     this.indicator.innerText = text

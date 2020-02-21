@@ -6,8 +6,12 @@ import produce from "immer"
 import { ConfigContext } from "../ConfigContext"
 import "./Header.scss"
 
+type HeaderProps = {
+  fxPanal: boolean
+  setFxPanal: (newValue: boolean) => void 
+}
 
-export function Header(props: {}) {
+export function Header(props: HeaderProps) {
   const {config, tabId, pin, ctx} = useContext(ConfigContext)
 
   return (
@@ -35,19 +39,15 @@ export function Header(props: {}) {
       >
         <GoPin size="20px"/>
       </div>
-      {config.fxPanal ? (
+      {props.fxPanal ? (
         <div title="Go back to speed panal." onClick={() => {
-          persistConfig(produce(config, dConfig => {
-            dConfig.fxPanal = !dConfig.fxPanal 
-          }))
+          props.setFxPanal(!props.fxPanal)
         }}>
           <GoArrowLeft size="20px"/>
         </div>
       ) : (
         <div title="Open FX panal." onClick={() => {
-          persistConfig(produce(config, dConfig => {
-            dConfig.fxPanal = !dConfig.fxPanal 
-          }))
+          props.setFxPanal(!props.fxPanal)
         }}>
           <GoZap size="20px"/>
         </div>

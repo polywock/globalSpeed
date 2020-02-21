@@ -57,23 +57,6 @@ export function randomInt(min: number, max: number) {
   return Math.floor(min + Math.random() * (max - min))
 }
 
-/** return function with same shape that returns a cached value if called within a duration and if arguments are strictly equal.*/
-export function cachedThrottle<F extends (...args: any) => any>(func: F, duration: number): (...args: Parameters<F>) => ReturnType<F> {
-  var oldTime = -Infinity
-  let memoized: ReturnType<F>
-  let memoizedArgs: any[]
-  return (...args: any) => {
-    const newTime = new Date().getTime() 
-    if (newTime - oldTime > duration || oldTime === -Infinity || !compareArrays(memoizedArgs, args)) {
-      oldTime = newTime
-      memoized = func(...args)
-      memoizedArgs = args 
-      return memoized
-    }
-    return memoized
-  } 
-}
-
 export function compareArrays(a: any[], b: any[]) {
   if (a?.length === b?.length) {
     for (let i = 0; i < a.length; i++) {
@@ -106,3 +89,4 @@ export function stringDropWhileEnd(text: string, predicate: (v: string) => boole
 export function isFirefox() {
   return navigator.userAgent.includes("Firefox/")
 }
+

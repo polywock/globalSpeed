@@ -1,11 +1,11 @@
-import { cachedThrottle } from "../utils/helper"
 import { SetState } from "../types"
 
 
 
 export function setMediaCurrentTime(elems: HTMLMediaElement[], value: number, relative: boolean) {
   return elems.forEach(v => {
-    v.currentTime = relative ? v.currentTime + value : value 
+    const newPosition = relative ? v.currentTime + value : value 
+    seekTo(v, newPosition)
   })
 }
 
@@ -67,7 +67,7 @@ export function seekMark(elems: HTMLMediaElementSuper[], key: string) {
 
     const mark = v.marks?.[key]
     if (mark) {
-      v.currentTime = mark.time
+      seekTo(v, mark.time)
       saughtMark = true 
     } 
   })
@@ -101,4 +101,14 @@ export function clearElemFilter() {
     }
   })  
   hotElems.clear()
+}
+
+export const NETFLIX_URL = /^https?:\/\/[\w\d]+\.netflix\.[\d\w]+/i
+
+function seekTo(elem: HTMLMediaElement, position: number) {
+  if (NETFLIX_URL.test(document.URL)) {
+    window.postMessage({type: "SEEK_NETFLIX", position}, "*")
+  } else {
+    elem.currentTime = position
+  }
 }
