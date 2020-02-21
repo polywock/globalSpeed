@@ -16,3 +16,20 @@ To use, install the [Chrome](https://chrome.google.com/webstore/detail/global-sp
    1. Chrome: open extensions page, enable dev mode, load unpacked. 
    1. Edge: open extensions page, load unpacked.
 
+## Release Notes
+
+### V2.4.0 
+- Performance: Suspend extension if tab is not visible. 
+- Performance: Switched to Mutation Observer API. 
+- Performance: Improved support for shadow documents. 
+   - Now the default behavior, formally was an optional feature called recursive mode. 
+- Bug Fix: Seeking hotkeys will now work on Netflix. 
+
+### V2.3.X 
+- Feature: Full hotkey editor.  
+- Feature: Recursive mode, apply speed to videos inside of shadow documents. Slower, but compatible with more sites like AppleTV+. 
+- Feature: Fx support, apply fillters (invert, grayscale, etc) to the entire page or select elements (video, img, etc).  
+
+### V2.0
+- Added basic hotkey support. 
+- Added pin support (each tab can have it's own speed.)
