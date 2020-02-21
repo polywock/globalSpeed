@@ -21,7 +21,7 @@ To use, install the [Chrome](https://chrome.google.com/webstore/detail/global-sp
 ### V2.4.0 
 - Performance: Suspend extension if tab is not visible. 
 - Performance: Switched to Mutation Observer API. 
-- Performance: Improved support for shadow documents. 
+- Performance: Improved performance for shadow documents. 
    - Now the default behavior, formally was an optional feature called recursive mode. 
 - Bug Fix: Seeking hotkeys will now work on Netflix. 
 
@@ -31,5 +31,5 @@ To use, install the [Chrome](https://chrome.google.com/webstore/detail/global-sp
 - Feature: Fx support, apply fillters (invert, grayscale, etc) to the entire page or select elements (video, img, etc).  
 
 ### V2.0
-- Added basic hotkey support. 
-- Added pin support (each tab can have it's own speed.)
+- Feature: basic hotkey support. 
+- Feature: pinning (each tab can have it's own speed.)
