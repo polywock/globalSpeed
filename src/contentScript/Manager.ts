@@ -1,7 +1,7 @@
 
 import { requestSenderInfo, requestCreateTab, StorageChanges } from "../utils/browserUtils"
 import { getConfigOrDefault, getContext, getPin, formatSpeed, conformSpeed, formatFilters, getTargetSets, resetFx, flipFx, setFx, setPin, persistConfig } from "../utils/configUtils"
-import { setMediaCurrentTime, setMediaPause, setMediaMute, setMark, seekMark, setElemFilter, clearElemFilter } from "./utils"
+import { setMediaCurrentTime, setMediaPause, setMediaMute, setMark, seekMark, setElemFilter, clearElemFilter, clearElemTransform, setElemTransform, setDocumentTransform, clearDocumentTransform } from "./utils"
 import { clamp, round } from '../utils/helper'
 import { ShadowHost } from "./ShadowHost"
 import { compareHotkeys, extractHotkey } from '../utils/keys'
@@ -73,7 +73,7 @@ export class Manager {
     
 
     const elemFilter = formatFilters(ctx.elementFilterValues)
-    if (ctx.elementFx && elemFilter) {
+    if (ctx.elementFx && (elemFilter || ctx.elementFlipX || ctx.elementFlipY)) {
       const query = ctx.elementQuery || "video"
       this.fxQuery = this.fxQuery || (this.config.usePolling ? new PollQuery(query, this.config.pollRate ?? 1E3) : new LazyQuery(query))
       this.fxQuery.setQuery(query)
@@ -98,9 +98,15 @@ export class Manager {
     // elem filter 
     const elemFilter = formatFilters(ctx.elementFilterValues)
     if (ctx.elementFx && elemFilter) {
-      setElemFilter(this.fxQuery?.elems || [], elemFilter, ctx.elementQuery || "video")
+      setElemFilter(this.fxQuery?.elems || [], elemFilter)
     } else {
       clearElemFilter()
+    }
+
+    if (ctx.elementFx && (ctx.elementFlipX || ctx.elementFlipY)) {
+      setElemTransform(this.fxQuery?.elems || [], ctx.elementFlipX, ctx.elementFlipY)
+    } else {
+      clearElemTransform()
     }
 
     // backdrop filter 
@@ -109,6 +115,12 @@ export class Manager {
       this.shadowHost.showBackdrop(backdropFilter)
     } else {
       this.shadowHost?.hideBackdrop()
+    }
+
+    if (ctx.backdropFx && ctx.backdropFlipX) {
+      setDocumentTransform()
+    } else {
+      clearDocumentTransform()
     }
   }
   handleKeyDownGreedy = (e: KeyboardEvent) => {

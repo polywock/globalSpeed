@@ -23,7 +23,10 @@ export type Context = {
   backdropFx?: boolean,
   elementFilterValues: FilterValue[],
   backdropFilterValues: FilterValue[],
-  elementQuery?: string
+  elementQuery?: string,
+  elementFlipX?: boolean
+  elementFlipY?: boolean
+  backdropFlipX?: boolean
 }
 
 export type Pin = {tabId: number, ctx: Context}

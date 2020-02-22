@@ -15,6 +15,8 @@ export class PollShadowRoots {
   release = () => {
     if (this.released) return 
     this.released = true 
+    this.handleIntervalDebounced?.cancel()
+    delete this.handleIntervalDebounced
     clearInterval(this.intervalId)
     delete this.shadowRoots
     delete this.listeners
@@ -78,7 +80,7 @@ export function walkTreeForShadowRoots(ctx: Element | DocumentFragment, arr: Sha
    walkTreeForShadowRoots((ctx as Element).shadowRoot, arr)
   }
   ctx = ctx.firstElementChild
-  if (!ctx) return 
+  if (!ctx) return arr 
   walkTreeForShadowRoots(ctx, arr)
   while (ctx = ctx.nextElementSibling) {
     walkTreeForShadowRoots(ctx, arr)

@@ -75,33 +75,86 @@ export function seekMark(elems: HTMLMediaElementSuper[], key: string) {
 }
 
 
-
-let hotElems: Set<HTMLElement> = new Set()
-
-export function setElemFilter(elems: HTMLElement[], filter: string, query: string) {  
+//#region -- SET ELEM FILTER
+let filteredElems: Set<HTMLElement> = new Set()
+export function setElemFilter(elems: HTMLElement[], filter: string) {  
   // clear any non-reinforced elements.
-  hotElems.forEach(hot => {
+  filteredElems.forEach(hot => {
     if (!elems.includes(hot)) {
-      hot.style.filter = "none"
+      hot.style.filter = "initial"
     }
   })
 
   elems.forEach(v => {
     if (v.style) {
-      hotElems.add(v)
-      v.style.filter = filter 
+      filteredElems.add(v)
+      v.style.filter = filter || ""
     }
   })
 }
-
 export function clearElemFilter() {
-  (hotElems as Set<HTMLElement>).forEach(v => {
+  (filteredElems as Set<HTMLElement>).forEach(v => {
     if (v.style) {
       v.style.filter = "none"
     }
   })  
-  hotElems.clear()
+  filteredElems.clear()
 }
+//#endregion
+
+//#region -- SET ELEM TRANSFORM
+let transformedElems: Set<HTMLElement> = new Set()
+export function setElemTransform(elems: HTMLElement[], flipX: boolean, flipY: boolean) {  
+  // clear any non-reinforced elements.
+  transformedElems.forEach(hot => {
+    if (!elems.includes(hot)) {
+      hot.style.transformOrigin = "initial"
+      hot.style.transform = "initial"
+    }
+  })
+
+  elems.forEach(v => {
+    if (v.style) {
+      transformedElems.add(v)
+      
+      let transforms: string[] = []
+      flipX && transforms.push("rotateY(180deg)")
+      flipY && transforms.push("rotateX(180deg)")
+      v.style.transformOrigin = "center center"
+
+      v.style.transform = transforms.join(" ")
+    }
+  })
+}
+export function clearElemTransform() {
+  (transformedElems as Set<HTMLElement>).forEach(v => {
+    if (v.style) {
+      v.style.transformOrigin = "initial"
+      v.style.transform = "initial"
+    }
+  })  
+  transformedElems.clear()
+}
+//#endregion
+
+//#region -- SET DOCUMENT TRANSFORM  
+let clearedDocTransform = true 
+export function setDocumentTransform() {
+  clearedDocTransform = false 
+  if (document.documentElement.style.transform !== "rotateY(180deg)") {
+    document.documentElement.style.transform = "rotateY(180deg)"
+  }
+  if (document.documentElement.style.transformOrigin !== "center 0px") {
+    document.documentElement.style.transformOrigin = "center 0px"
+  }
+}
+export function clearDocumentTransform() {
+  if (clearedDocTransform) return 
+  clearedDocTransform = true 
+  document.documentElement.style.transform = "initial"
+  document.documentElement.style.transformOrigin = "initial"
+}
+//#endregion
 
 export const NETFLIX_URL = /^https?:\/\/[\w\d]+\.netflix\.[\d\w]+/i
 

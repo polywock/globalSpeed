@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react"
-import { flipFx, copyInto, resetFx, moveFilter, persistConfig, getContext, setFx } from "../utils/configUtils"
+import { flipFx, copyInto, resetFx, moveFilter, persistConfig, getContext, setFx, autoFxState } from "../utils/configUtils"
 import produce from "immer"
 import { FilterName } from "../defaults/filters"
 import { FilterControl } from "./FilterControl"
@@ -71,11 +71,38 @@ export function FxPanal(props: {}) {
             const dCtx = getContext(dConfig, tabId)
             flipFx(dCtx)
           }))
-        }}>flip</button>
+        }}>swap</button>
+        {!backdropTab && (
+          <>
+            <button style={{marginTop: "10px"}} className={ctx.elementFlipX ? "blue" : ""} onClick={e => {
+              persistConfig(produce(config, dConfig => {
+                const dCtx = getContext(dConfig, tabId)
+                dCtx.elementFlipX = !dCtx.elementFlipX
+                autoFxState(dCtx, backdropTab)
+              }))
+            }}>flipX</button>
+            <button style={{marginTop: "10px"}} className={ctx.elementFlipY ? "blue" : ""} onClick={e => {
+              persistConfig(produce(config, dConfig => {
+                const dCtx = getContext(dConfig, tabId)
+                dCtx.elementFlipY = !dCtx.elementFlipY
+                autoFxState(dCtx, backdropTab)
+              }))
+            }}>flipY</button>
+          </>
+        )}
+        {backdropTab && (
+          <button style={{marginTop: "10px"}} className={ctx.backdropFlipX ? "blue" : ""} onClick={e => {
+            persistConfig(produce(config, dConfig => {
+              const dCtx = getContext(dConfig, tabId)
+              dCtx.backdropFlipX = !dCtx.backdropFlipX
+              autoFxState(dCtx, backdropTab)
+            }))
+          }}>flipX</button>
+        )}
       </div>
       {!backdropTab && (
         <div className="query">
-          <span>query <Tooltip tooltip="CSS selector used to find elements to filter. For basic usage, enter a comma separated list of tagNames you want to select. Eg. 'video, img' will query for both videos and images. For advanced usage, view documentation online about CSS selectors. Warning, generic selectors can cause performance problems."/></span>
+          <span>query <Tooltip tooltip="CSS selector used to find elements to filter. Eg. 'video, img' will query for both videos and images. For advanced usage, view documentation online about CSS selectors. Warning, generic selectors can cause performance problems."/></span>
           <ThrottledTextInput pass={{placeholder: "defaults to 'video'"}} value={ctx.elementQuery || ""} onChange={v => {
             persistConfig(produce(config, dConfig => {
               const dCtx = getContext(dConfig, tabId)
@@ -91,6 +118,7 @@ export function FxPanal(props: {}) {
             let dFilterValues = dCtx[backdropTab ? "backdropFilterValues" : "elementFilterValues"]
             const idx = dFilterValues.findIndex(v => v.filter === filterValue.filter)
             dFilterValues[idx] = newFilter
+            autoFxState(dCtx, backdropTab)
           }))
         }}/>
       ))}

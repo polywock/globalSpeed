@@ -40,6 +40,22 @@ export function getContext(config: Config, tabId: number) {
   return pin?.ctx || config.common
 }
 
+export function autoFxState(ctx: Context, backdrop: boolean) {
+  if (backdrop) {
+    if (hasFilters(ctx.backdropFilterValues) || ctx.backdropFlipX) {
+      ctx.backdropFx = true 
+    } else {
+      ctx.backdropFx = false 
+    }
+  } else {
+    if (hasFilters(ctx.elementFilterValues) || ctx.elementFlipX || ctx.elementFlipY) {
+      ctx.elementFx = true 
+    } else {
+      ctx.elementFx = false 
+    }
+  }
+}
+
 export async function startupCleanUp() {
   let config = await getConfigOrDefault()
   if (config.pins?.length > 0) {
@@ -104,6 +120,16 @@ export function formatFilters(filterValues: FilterValue[]) {
   return parts.join(" ")
 }
 
+export function hasFilters(filterValues: FilterValue[]) {
+  for (let v of filterValues) {
+    const filterInfo = filterInfos[v.filter]
+    if (v.value != null && v.value !== filterInfo.default) {
+      return true  
+    }
+  }
+}
+
+
 export function getTargetSets(target: FilterTarget, ctx: Context) {
   const targetSets: FilterValue[][] = [] 
   if (target === "backdrop" || target === "both" || (target === "enabled" && ctx.backdropFx)) {
@@ -118,24 +144,31 @@ export function getTargetSets(target: FilterTarget, ctx: Context) {
 export function resetFx(target: FilterTarget, ctx: Context) {
   if (target === "backdrop" || target === "both" || (target === "enabled" && ctx.backdropFx)) {
     ctx.backdropFilterValues = getDefaultFilterValues()
-    ctx.backdropFx = false
+    delete ctx.backdropFx
+    delete ctx.backdropFlipX
   }
   if (target === "element" || target === "both" || (target === "enabled" && ctx.elementFx)) {
     ctx.elementFilterValues = getDefaultFilterValues()
-    ctx.elementFx = false
+    delete ctx.elementFx
     delete ctx.elementQuery
+    delete ctx.elementFlipX
+    delete ctx.elementFlipY
   }
 }
 
 export function flipFx(ctx: Context) {
   let backdropVals = ctx.backdropFilterValues
   let backdropFx = ctx.backdropFx
+  let backdropFlipX = ctx.backdropFlipX
 
   ctx.backdropFilterValues = ctx.elementFilterValues
   ctx.backdropFx = ctx.elementFx
+  ctx.backdropFlipX = ctx.elementFlipX
 
   ctx.elementFilterValues = backdropVals
   ctx.elementFx = backdropFx
+  ctx.elementFlipX = backdropFlipX
+  delete ctx.elementFlipY 
 }
 
 export function copyInto(backdropTab: boolean, ctx: Context) {
