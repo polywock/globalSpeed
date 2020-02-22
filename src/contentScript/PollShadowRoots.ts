@@ -1,5 +1,5 @@
 
-
+import debounce from "lodash.debounce"
 
 /** Used to maintain a reference to all shadow roots */
 export class PollShadowRoots {
@@ -8,8 +8,9 @@ export class PollShadowRoots {
   listeners: Set<(added: ShadowRoot[], removed: ShadowRoot[]) => void> = new Set()
   released = false 
   constructor() {
-    this.intervalId = setInterval(this.handleInterval, 5000)
+    this.intervalId = setInterval(this.handleInterval, 15E3) 
     this.handleInterval()
+    window.addEventListener("message", this.handleMessage)
   }
   release = () => {
     if (this.released) return 
@@ -18,8 +19,14 @@ export class PollShadowRoots {
     delete this.shadowRoots
     delete this.listeners
   }
+  handleMessage = ({data}: MessageEvent) => {
+    if (data.type === "ATTACHED_SHADOW") {
+      this.handleIntervalDebounced()
+      this.handleIntervalDebounced()
+    }
+  }
   handleInterval = () => {
-    const newShadowRoots = getShadowRoots(document)
+    const newShadowRoots = walkTreeForShadowRoots(document.body)
     
     const removed: ShadowRoot[] = []
     this.shadowRoots = this.shadowRoots.filter(root => {
@@ -46,6 +53,7 @@ export class PollShadowRoots {
       })
     }
   }
+  handleIntervalDebounced = debounce(this.handleInterval, 1000, {leading: true, trailing: true, maxWait: 3000})
   
   static common: PollShadowRoots
   static referenceCount = 0
@@ -63,14 +71,17 @@ export class PollShadowRoots {
   }
 }
 
-export function getShadowRoots(doc: Document | ShadowRoot, arr: ShadowRoot[] = []) {
-  
-  doc.querySelectorAll("*").forEach(node => {
-    if (node.shadowRoot?.mode === "open") {
-      arr.push(node.shadowRoot)
-      getShadowRoots(node.shadowRoot, arr)
-    }
-  })
+
+export function walkTreeForShadowRoots(ctx: Element | DocumentFragment, arr: ShadowRoot[] = []) {
+  if ((ctx as Element).shadowRoot?.mode === "open") {
+   arr.push((ctx as Element).shadowRoot) 
+   walkTreeForShadowRoots((ctx as Element).shadowRoot, arr)
+  }
+  ctx = ctx.firstElementChild
+  if (!ctx) return 
+  walkTreeForShadowRoots(ctx, arr)
+  while (ctx = ctx.nextElementSibling) {
+    walkTreeForShadowRoots(ctx, arr)
+  }
   return arr 
 }
-

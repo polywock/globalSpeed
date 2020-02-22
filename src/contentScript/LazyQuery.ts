@@ -24,13 +24,24 @@ export class LazyQuery<T extends Element = Element> {
     PollShadowRoots.releaseCommon()
     delete this.elems
   }
+  walkTreePredicate = (elem: Element) => {
+    if (this.tagNames?.length > 0) {
+      if (this.tagNames.includes(elem.tagName)) {
+        return true 
+      }
+    } else {
+      if (elem.matches(this.query || "")) {
+        return true 
+      }
+    }
+  }
   handleDmoChange = (muts: MutationRecord[]) => {
     muts.forEach(mut => {
       mut.addedNodes.forEach(node => {
         if (!isElement(node)) {
           return 
         }
-        this.elems = [...new Set([...this.elems, ...findDescendantMatches(node, this.query, this.tagNames) as T[]])]
+        this.elems = [...new Set([...this.elems, ...walkTree(node, this.walkTreePredicate)] as T[])]
       })
       
       if (mut.removedNodes?.length > 0) {
@@ -63,29 +74,20 @@ export class LazyQuery<T extends Element = Element> {
   }
 }
 
-
-
-function findDescendantMatches(ctx: Element, query: string, tagNames: string[], arr: Element[] = []) {
-  if (tagNames?.length > 0) {
-    if (tagNames.includes(ctx.tagName)) {
-      arr.push(ctx)
-    }
-  } else {
-    if (ctx.matches(query)) {
-      arr.push(ctx)
-    }
+export function walkTree(ctx: Element, predicate: (elem: Element) => boolean, arr: Element[] = []) {
+  if (predicate(ctx)) {
+    arr.push(ctx)
   }
 
-  let node = ctx.firstElementChild
-  if (!node) return arr
-  findDescendantMatches(node, query, tagNames, arr)
-
-  while (node = node.nextElementSibling) {
-    findDescendantMatches(node, query, tagNames, arr)
+  ctx = ctx.firstElementChild
+  if (!ctx) return arr
+  walkTree(ctx, predicate, arr)
+  while (ctx = ctx.nextElementSibling) {
+    walkTree(ctx, predicate, arr)
   }
-
-  return arr
+  return arr 
 }
+
 
 function isElement(v: Node): v is Element {
   return v.nodeType === 1

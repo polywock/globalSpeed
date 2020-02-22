@@ -1,7 +1,7 @@
 import 'regenerator-runtime/runtime'
 import { uuidLowerAlpha } from '../utils/helper'
 import { Manager } from './Manager'
-import { NETFLIX_URL } from './utils'
+import { NETFLIX_URL, injectScript } from './utils'
 
 declare global {
   interface Window {
@@ -9,7 +9,6 @@ declare global {
   }
 }
 
-// performance 
 handleVisibilityChange()
 document.addEventListener("visibilitychange", handleVisibilityChange)
 function handleVisibilityChange() {
@@ -45,21 +44,52 @@ window.addEventListener("message", ({data}) => {
 })
 
 
+
+// For seeking Netflix.
 if (NETFLIX_URL.test(document.URL)) {
-  const injectTag = document.createElement("script")
-  injectTag.type = "text/javascript"
-  injectTag.text = `
-    window.addEventListener("message", ({data}) => {
-      if (data.type === "SEEK_NETFLIX") {
-        try {
-          const videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer
-          const sessionIds = videoPlayer.getAllPlayerSessionIds()
-          for (let sessionId of sessionIds) {
-            videoPlayer.getVideoPlayerBySessionId(sessionId).seek(data.position * 1000)
-          }
-        } catch (err) {}
-      }
-  })
-  `
-  document.body.appendChild(injectTag)
+  injectScript(`
+    if (!window.globalSpeedAddedNetflix) {
+      window.globalSpeedAddedNetflix = true 
+
+      window.addEventListener("message", ({data}) => {
+        if (data.type === "SEEK_NETFLIX") {
+          try {
+            const videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer
+            const sessionIds = videoPlayer.getAllPlayerSessionIds()
+            for (let sessionId of sessionIds) {
+              videoPlayer.getVideoPlayerBySessionId(sessionId).seek(data.position * 1000)
+            }
+          } catch (err) {}
+        }
+      })
+    }
+  `)
 }
+
+// For reacting to Shadow DOM changes. 
+injectScript(`
+  if (!window.globalSpeedAddedShadow) {
+    window.globalSpeedAddedShadow = true 
+
+    const ogCreateShadowRoot = Element.prototype.createShadowRoot
+    if (ogCreateShadowRoot) {
+      Element.prototype.createShadowRoot = function(...args) {
+        sendMessage()
+        ogCreateShadowRoot.apply(this, args) 
+      }
+    }
+
+    const ogAttachShadow = Element.prototype.attachShadow
+    if (ogAttachShadow) {
+      Element.prototype.attachShadow = function(...args) {
+        sendMessage()
+        ogAttachShadow.apply(this, args) 
+      }
+    }
+
+    function sendMessage() {
+      window.postMessage({type: "ATTACHED_SHADOW"}, "*")
+    }  
+  }
+`)
+

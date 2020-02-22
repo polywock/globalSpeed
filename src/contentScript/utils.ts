@@ -112,3 +112,12 @@ function seekTo(elem: HTMLMediaElement, position: number) {
     elem.currentTime = position
   }
 }
+
+export function injectScript(code: string) {
+  const injectTag = document.createElement("script")
+  injectTag.type = "text/javascript"
+  injectTag.text = code 
+  document.body.appendChild(injectTag)
+}
+
+

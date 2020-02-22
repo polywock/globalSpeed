@@ -108,7 +108,7 @@ export class Manager {
     if (ctx.backdropFx && backdropFilter) {
       this.shadowHost.showBackdrop(backdropFilter)
     } else {
-      this.shadowHost.hideBackdrop()
+      this.shadowHost?.hideBackdrop()
     }
   }
   handleKeyDownGreedy = (e: KeyboardEvent) => {
