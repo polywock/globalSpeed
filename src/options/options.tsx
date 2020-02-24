@@ -108,7 +108,7 @@ function Options(props: {}) {
           <span>{chrome.i18n.getMessage("options__pinByDefault")}</span>
           <Tooltip tooltip={chrome.i18n.getMessage("options__pinByDefaultTooltip")}/>
         </div>
-        <input type="checkbox" checked={config.pinByDefault} onChange={e => {
+        <input type="checkbox" checked={config.pinByDefault || false} onChange={e => {
           persistConfig(produce(config, d => {
             d.pinByDefault = e.target.checked
           }))
@@ -119,7 +119,7 @@ function Options(props: {}) {
           <span>{chrome.i18n.getMessage("options__hideIndicator")}</span>
           <Tooltip tooltip={chrome.i18n.getMessage("options__hideIndicatorTooltip")}/>
         </div>
-        <input type="checkbox" checked={config.hideIndicator} onChange={e => {
+        <input type="checkbox" checked={config.hideIndicator || false} onChange={e => {
           persistConfig(produce(config, d => {
             d.hideIndicator = e.target.checked
           }))
@@ -130,7 +130,7 @@ function Options(props: {}) {
           <span>{chrome.i18n.getMessage("options__hideBadge")}</span>
           <Tooltip tooltip={chrome.i18n.getMessage("options__hideBadgeTooltip")}/>
         </div>
-        <input type="checkbox" checked={config.hideBadge} onChange={e => {
+        <input type="checkbox" checked={config.hideBadge || false} onChange={e => {
           persistConfig(produce(config, d => {
             d.hideBadge = e.target.checked
           }))
@@ -146,7 +146,7 @@ function Options(props: {}) {
               <span>{chrome.i18n.getMessage("options__usePolling")}</span>
               <Tooltip tooltip={chrome.i18n.getMessage("options__usePollingTooltip")}/>
             </div>
-            <input type="checkbox" checked={config.usePolling} onChange={e => {
+            <input type="checkbox" checked={config.usePolling || false} onChange={e => {
               persistConfig(produce(config, d => {
                 d.usePolling = e.target.checked
               }))
