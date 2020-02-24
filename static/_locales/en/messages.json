@@ -1,0 +1,236 @@
+{
+  "appName": {
+    "message": "Global Speed"
+  },
+  "appDesc": {
+    "message": "Set a default speed for video and audio."
+  },
+  "common__default": {
+    "message": "default"
+  },
+  "common__firefoxBackdropWarning": {
+    "message": "Warning: For backdrop filters, Firefox users need to enable 'gfx.webrender.all' and 'layout.css.backdrop-filter.enabled' by going to 'about:page'. Restart Firefox after enabling the two flags."
+  },
+  "fxPanal__elementTab": {
+    "message": "element"
+  },
+  "fxPanal__backdropTab": {
+    "message": "backdrop"
+  },
+  "fxPanal__enabledButton": {
+    "message": "enabled"
+  },
+  "fxPanal__resetButton": {
+    "message": "reset"
+  },
+  "fxPanal__copyIntoButton": {
+    "message": "copy into"
+  },
+  "fxPanal__copyIntoButtonTooltip": {
+    "message": "copy fx values from other tab."
+  },
+  "fxPanal__swapButton": {
+    "message": "swap"
+  },
+  "fxPanal__swapButtonTooltip": {
+    "message": "swap element and backdrop fx values"
+  },
+  "fxPanal__flipXButton": {
+    "message": "flipX"
+  },
+  "fxPanal__flipYButton": {
+    "message": "flipY"
+  },
+  "fxPanal__queryLabel": {
+    "message": "query"
+  },
+  "fxPanal__queryLabelTooltip": {
+    "message": "CSS selector used to find elements to filter. For example. 'video, img' will query for both videos and images. For advanced usage, view documentation online about CSS selectors. Warning, generic selectors can cause performance problems."
+  },
+  "filterInfo__Grayscale": {
+    "message": "grayscale"
+  },
+  "filterInfo__Sepia": {
+    "message": "sepia"
+  },
+  "filterInfo__hueRotate": {
+    "message": "hue-rotate"
+  },
+  "filterInfo__contrast": {
+    "message": "contrast"
+  },
+  "filterInfo__brightness": {
+    "message": "brightness"
+  },
+  "filterInfo__saturate": {
+    "message": "saturate"
+  },
+  "filterInfo__invert": {
+    "message": "invert"
+  },
+  "filterInfo__blur": {
+    "message": "blur"
+  },
+  "filterInfo__opacity": {
+    "message": "opacity"
+  },
+  "commandInfo__nothingName": {
+    "message": "do nothing"
+  },
+  "commandInfo__nothingTooltip": {
+    "message": "Can come in handy in combination with (G) greedy mode to block certain keys."
+  },
+  "commandInfo__adjustSpeedName": {
+    "message": "adjust speed"
+  },
+  "commandInfo__setSpeedName": {
+    "message": "set speed"
+  },
+  "commandInfo__setPinName": {
+    "message": "set pin"
+  },
+  "commandInfo__setStateName": {
+    "message": "set state"
+  },
+  "commandInfo__seekName": {
+    "message": "seek"
+  },
+  "commandInfo__seekTooltip": {
+    "message": "Adjust current video/audio time by adding a positive or negative value in seconds."
+  },
+  "commandInfo__setPauseName": {
+    "message": "set pause"
+  },
+  "commandInfo__setMuteName": {
+    "message": "set mute"
+  },
+  "commandInfo__setMarkName": {
+    "message": "set mark"
+  },
+  "commandInfo__setMarkTooltip": {
+    "message": "Mark the current video/audio location for future reference. You can have multiple keybinds to set different marks."
+  },
+  "commandInfo__seekMarkName": {
+    "message": "seek mark"
+  },
+  "commandInfo__seekMarkTooltip": {
+    "message": "Go to a marked video/audio location. If no mark exists, it will set a mark."
+  },
+  "commandInfo__openUrlName": {
+    "message": "open url"
+  },
+  "commandInfo__openUrlTooltip": {
+    "message": "Open a URL in a new tab."
+  },
+  "commandInfo__setFxName": {
+    "message": "set fx state"
+  },
+  "commandInfo__resetFxName": {
+    "message": "reset fx"
+  },
+  "commandInfo__flipFxName": {
+    "message": "swap fx"
+  },
+  "commandInfo__adjustFilterName": {
+    "message": "adjust filter"
+  },
+  "commandInfo__adjustFilterShortName": {
+    "message": "adjust"
+  },
+  "commandInfo__setFilterName": {
+    "message": "set filter"
+  },
+  "commandInfo__setFilterShortName": {
+    "message": "set"
+  },
+  "commandInfo__cycleFilterValueName": {
+    "message": "cycle filter value"
+  },
+  "commandInfo__cycleFilterValueShortName": {
+    "message": "cycle"
+  },
+  "commandInfo__cycleFilterValueTooltip": {
+    "message": "cycle between provided values. Can be used to toggle invert, grayscale, sepia, etc."
+  },
+  "options__shortcutsHeader": {
+    "message": "Shortcut Keys"
+  },
+  "options__optionsHeader": {
+    "message": "Options"
+  },
+  "options__helpHeader": {
+    "message": "Help"
+  },
+  "options__mediaToggleDesc": {
+    "message": "media mode will ignore key press unless page has video or audio."
+  },
+  "options__greedyToggleDesc": {
+    "message": "greedy mode will try to block event propogation and default behaviors."
+  },
+  "options__addButton": {
+    "message": "add"
+  },
+  "options__resetButton": {
+    "message": "reset"
+  },
+  "options__showAdvancedButton": {
+    "message": "show advanced"
+  },
+  "options__pinByDefault": {
+    "message": "pin by default" 
+  },
+  "options__pinByDefaultTooltip": {
+    "message": "Each tab will be pinned by default." 
+  },
+  "options__hideIndicator": {
+    "message": "hide indicator" 
+  },
+  "options__hideIndicatorTooltip": {
+    "message": "Some hotkey commands show a feedback indicator on the top-left of the page." 
+  },
+  "options__hideBadge": {
+    "message": "hide badge" 
+  },
+  "options__hideBadgeTooltip": {
+    "message": "The badge is the text on the extension icon." 
+  },
+  "options__usePolling": {
+    "message": "use polling" 
+  },
+  "options__usePollingTooltip": {
+    "message": "Global Speed supports two ways of efficiently querying elements. The default way is keeping track of changes using the MutationObserver API. This is usually more efficient in the long run. The alternative way is polling. In which, the entire page will be periodically checked for target elements. The benefit of polling is that computation cost is steady and spread out." 
+  },
+  "options__issuePrompt": {
+    "message": "Have issues or a suggestion?"
+  },
+  "options__issueDirective": {
+    "message": "Create a new issue on the Github page."
+  },
+  "options__help__stateLabel": {
+    "message": "State"
+  },
+  "options__help__stateDesc": {
+    "message": "You can suspend the extension for all tabs, or a specific tab (if pinned). Speed will no longer set. And all hotkeys except set state will cease to work."
+  },
+  "options__help__pinLabel": {
+    "message": "Pin"
+  },
+  "options__help__pinDesc": {
+    "message": "Pinning a tab allows it to have it's own context (speed, filters, etc). A global context applies to all tabs unless tab is pinned (has it's own local context)."
+  },
+  "options__help__fxLabel": {
+    "message": "Fx"
+  },
+  "options__help__fxDesc": {
+    "message": "You can enable filters (contrast, invert, grayscale, etc) on elements (by default, only video elements) or even the whole page with backdrop."
+  },
+  "options__help__localPrompt": {
+    "message": "For the extension to work on local files or on incognito mode."
+  },
+  "options__help__localDirective": {
+    "message": "They need to be enabled at the extension page."
+  },
+  "options__help__resetToDefaultButton": {
+    "message": "Reset to Default"
+  }
+}

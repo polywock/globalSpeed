@@ -30,7 +30,7 @@ export class LazyQuery<T extends Element = Element> {
         return true 
       }
     } else {
-      if (elem.matches(this.query || "")) {
+      if (elem.matches(this.query || "video")) {
         return true 
       }
     }

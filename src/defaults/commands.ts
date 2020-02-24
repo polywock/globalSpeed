@@ -11,8 +11,8 @@ export const commandInfos: {
   [key in CommandName]: Command
 } = {
   nothing: {
-    name: "do nothing",
-    tooltip: "No nothing, can come in handy in combination with greedy enabled to block certain keys.",
+    name: chrome.i18n.getMessage("commandInfo__nothingName"),
+    tooltip: chrome.i18n.getMessage("commandInfo__nothingTooltip"),
     generate: () => ({
       id: uuidLowerAlpha(16),
       command: "nothing",
@@ -20,8 +20,7 @@ export const commandInfos: {
     })
   },
   adjustSpeed: {
-    name: "adjust speed",
-    tooltip: "Adjust speed by adding a positive or negative value.",
+    name: chrome.i18n.getMessage("commandInfo__adjustSpeedName"),
     valueType: "number",
     valueMin: -5,
     valueMax: 5,
@@ -33,8 +32,7 @@ export const commandInfos: {
     })
   },
   setSpeed: {
-    name: "set speed",
-    tooltip: "Set the speed to the provided value.",
+    name: chrome.i18n.getMessage("commandInfo__setSpeedName"),
     valueType: "number",
     valueMin: 0.07,
     valueMax: 16,
@@ -46,7 +44,7 @@ export const commandInfos: {
     })
   },
   setPin: {
-    name: "set pin",
+    name: chrome.i18n.getMessage("commandInfo__setPinName"),
     valueType: "state",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -56,7 +54,7 @@ export const commandInfos: {
     })
   },
   setState: {
-    name: "set state",
+    name: chrome.i18n.getMessage("commandInfo__setStateName"),
     valueType: "state",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -66,8 +64,8 @@ export const commandInfos: {
     })
   },
   seek: {
-    name: "seek",
-    tooltip: "Adjust current video/audio time by adding a positive or negative value in seconds.",
+    name: chrome.i18n.getMessage("commandInfo__seekName"),
+    tooltip: chrome.i18n.getMessage("commandInfo__seekTooltip"),
     valueType: "number",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -77,7 +75,7 @@ export const commandInfos: {
     })
   },
   setPause: {
-    name: "set pause",
+    name: chrome.i18n.getMessage("commandInfo__setPauseName"),
     valueType: "state",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -87,7 +85,7 @@ export const commandInfos: {
     })
   },
   setMute: {
-    name: "set mute",
+    name: chrome.i18n.getMessage("commandInfo__setMuteName"),
     valueType: "state",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -97,8 +95,8 @@ export const commandInfos: {
     })
   },
   setMark: {
-    name: "set mark",
-    tooltip: "Mark the current video/audio location for future reference. You can have multiple keybinds to set different marks.",
+    name: chrome.i18n.getMessage("commandInfo__setMarkName"),
+    tooltip: chrome.i18n.getMessage("commandInfo__setMarkTooltip"),
     valueType: "string",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -108,8 +106,8 @@ export const commandInfos: {
     })
   },
   seekMark: {
-    name: "seek mark",
-    tooltip: "Go to a marked video/audio location. If no mark exists, it will create a mark.",
+    name: chrome.i18n.getMessage("commandInfo__seekMarkName"),
+    tooltip: chrome.i18n.getMessage("commandInfo__seekMarkTooltip"),
     valueType: "string",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -119,8 +117,8 @@ export const commandInfos: {
     })
   },
   openUrl: {
-    name: "open url",
-    tooltip: "Open a URL in a new tab.",
+    name: chrome.i18n.getMessage("commandInfo__openUrlName"),
+    tooltip: chrome.i18n.getMessage("commandInfo__openUrlTooltip"),
     valueType: "string",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -130,10 +128,9 @@ export const commandInfos: {
     })
   },
   setFx: {
-    name: "set fx state",
+    name: chrome.i18n.getMessage("commandInfo__setFxName"),
     withFilterTarget: true,
     valueType: "state",
-    tooltip: "enable or disable fx.",
     generate: () => ({
       id: uuidLowerAlpha(16),
       command: "setFx",
@@ -143,9 +140,8 @@ export const commandInfos: {
     })
   },
   resetFx: {
-    name: "reset fx",
+    name: chrome.i18n.getMessage("commandInfo__resetFxName"),
     withFilterTarget: true,
-    tooltip: "reset fx values to default",
     generate: () => ({
       id: uuidLowerAlpha(16),
       command: "resetFx",
@@ -154,8 +150,7 @@ export const commandInfos: {
     })
   },
   flipFx: {
-    name: "flip fx",
-    tooltip: "swap values of element fx and backdrop fx.",
+    name: chrome.i18n.getMessage("commandInfo__flipFxName"),
     generate: () => ({
       id: uuidLowerAlpha(16),
       command: "flipFx",
@@ -163,8 +158,8 @@ export const commandInfos: {
     })
   },
   adjustFilter: {
-    name: "adjust filter",
-    shortName: "adjust",
+    name: chrome.i18n.getMessage("commandInfo__adjustFilterName"),
+    shortName: chrome.i18n.getMessage("commandInfo__adjustFilterShortName"),
     valueType: "filterNumber",
     withFilterOption: true,
     withFilterTarget: true,
@@ -177,8 +172,8 @@ export const commandInfos: {
     })
   },
   setFilter: {
-    name: "set filter",
-    shortName: "set",
+    name: chrome.i18n.getMessage("commandInfo__setFilterName"),
+    shortName: chrome.i18n.getMessage("commandInfo__setFilterShortName"),
     valueType: "filterNumber",
     withFilterOption: true,
     withFilterTarget: true,
@@ -191,9 +186,9 @@ export const commandInfos: {
     })
   },
   cycleFilterValue: {
-    name: "cycle filter value",
-    shortName: "cycle",
-    tooltip: "cycle between provided values. Can be used to toggle invert, grayscale, sepia, etc.",
+    name: chrome.i18n.getMessage("commandInfo__cycleFilterValueName"),
+    shortName: chrome.i18n.getMessage("commandInfo__cycleFilterValueShortName"),
+    tooltip: chrome.i18n.getMessage("commandInfo__cycleFilterValueTooltip"),
     withFilterTarget: true,
     withFilterOption: true,
     valueType: "cycle",

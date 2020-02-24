@@ -22,7 +22,7 @@ export class PollShadowRoots {
     delete this.listeners
   }
   handleMessage = ({data}: MessageEvent) => {
-    if (data.type === "ATTACHED_SHADOW") {
+    if (data.type === "GS_ATTACHED_SHADOW") {
       this.handleIntervalDebounced()
       this.handleIntervalDebounced()
     }

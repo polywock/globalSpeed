@@ -2,7 +2,7 @@ import { SetState } from "../types"
 
 
 
-export function setMediaCurrentTime(elems: HTMLMediaElement[], value: number, relative: boolean) {
+export function seekMedia(elems: HTMLMediaElement[], value: number, relative: boolean) {
   return elems.forEach(v => {
     const newPosition = relative ? v.currentTime + value : value 
     seekTo(v, newPosition)
@@ -41,7 +41,7 @@ export function setMark(elems: HTMLMediaElementSuper[], key: string) {
   let marksMade: {}[] = [];
 
   elems.forEach(v => {
-    if (v.ended && !v.isConnected) {
+    if (!v.readyState) {
       return 
     }
 
@@ -58,20 +58,23 @@ export function setMark(elems: HTMLMediaElementSuper[], key: string) {
   return marksMade
 }
 
-export function seekMark(elems: HTMLMediaElementSuper[], key: string) {
-  let saughtMark = false;
+export function seekMark(elems: HTMLMediaElementSuper[], key: string, set = true) {
+  let setFlag = false 
   elems.forEach(v => {
-    if (!v.isConnected) {
+    if (!v.readyState) {
       return 
     }
 
     const mark = v.marks?.[key]
     if (mark) {
       seekTo(v, mark.time)
-      saughtMark = true 
-    } 
+    } else if (set) {
+      if (setMark([v], key).length > 0) {
+        setFlag = true 
+      }
+    }
   })
-  return saughtMark
+  return setFlag
 }
 
 
@@ -158,11 +161,11 @@ export function clearDocumentTransform() {
 
 export const NETFLIX_URL = /^https?:\/\/[\w\d]+\.netflix\.[\d\w]+/i
 
-function seekTo(elem: HTMLMediaElement, position: number) {
+function seekTo(elem: HTMLMediaElement, value: number) {
   if (NETFLIX_URL.test(document.URL)) {
-    window.postMessage({type: "SEEK_NETFLIX", position}, "*")
+    window.postMessage({type: "GS_SEEK_NETFLIX", value}, "*")
   } else {
-    elem.currentTime = position
+    elem.currentTime = value
   }
 }
 
@@ -170,7 +173,7 @@ export function injectScript(code: string) {
   const injectTag = document.createElement("script")
   injectTag.type = "text/javascript"
   injectTag.text = code 
-  document.body.appendChild(injectTag)
+  document.documentElement.appendChild(injectTag)
 }
 
 

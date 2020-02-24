@@ -19,12 +19,13 @@ To use, install the [Chrome](https://chrome.google.com/webstore/detail/global-sp
 
 ## Release Notes
 
-### V2.4.0 
+### V2.4.X
 - Performance: Suspend extension if tab is not visible. 
 - Performance: Switched to Mutation Observer API. 
 - Performance: Improved performance for shadow documents. 
    - Now the default behavior, formally was an optional feature called recursive mode. 
-- Bug Fix: Seeking hotkeys will now work on Netflix. 
+- Feature: Seeking hotkeys will now work on Netflix. 
+- Feature: Support for Spotify, Amazon Music, NPR, and many other music and podcast streaming sites.
 
 ### V2.3.X 
 - Feature: Full hotkey editor.  

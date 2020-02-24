@@ -1,8 +1,8 @@
 {
-  "name": "Global Speed",
-  "short_name": "Global Speed",
-  "version": "2.4.2",
-  "description": "Set a default speed for all videos.",
+  "name": "__MSG_appName__",
+  "version": "2.4.4",
+  "default_locale": "en",
+  "description": "__MSG_appDesc__",
   "manifest_version": 2,
   "permissions": ["storage", "https://*/*", "http://*/*", "file://*/*"],
   "browser_action": {
@@ -18,7 +18,8 @@
   "content_scripts": [{
     "matches": ["https://*/*", "http://*/*", "file://*/*"],
     "js": ["contentScript.js"],
-    "all_frames": true
+    "all_frames": true,
+    "run_at": "document_start"
   }],
   "options_ui": {
     "open_in_tab": true,

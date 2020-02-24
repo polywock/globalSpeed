@@ -35,7 +35,7 @@ export function FilterControl(props: FilterControlProps) {
           props.onChange(produce(filterValue, d => {
             d.value = filterInfo.default
           }))
-        }}>{"reset"}</button>
+        }}>{chrome.i18n.getMessage("fxPanal__resetButton")}</button>
       </div>
       <NumericControl 
         value={filterValue.value}

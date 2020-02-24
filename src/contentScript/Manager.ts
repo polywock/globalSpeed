@@ -1,7 +1,7 @@
 
 import { requestSenderInfo, requestCreateTab, StorageChanges } from "../utils/browserUtils"
 import { getConfigOrDefault, getContext, getPin, formatSpeed, conformSpeed, formatFilters, getTargetSets, resetFx, flipFx, setFx, setPin, persistConfig } from "../utils/configUtils"
-import { setMediaCurrentTime, setMediaPause, setMediaMute, setMark, seekMark, setElemFilter, clearElemFilter, clearElemTransform, setElemTransform, setDocumentTransform, clearDocumentTransform } from "./utils"
+import { seekMedia, setMediaPause, setMediaMute, setMark, seekMark, setElemFilter, clearElemFilter, clearElemTransform, setElemTransform, setDocumentTransform, clearDocumentTransform } from "./utils"
 import { clamp, round } from '../utils/helper'
 import { ShadowHost } from "./ShadowHost"
 import { compareHotkeys, extractHotkey } from '../utils/keys'
@@ -112,7 +112,7 @@ export class Manager {
     // backdrop filter 
     const backdropFilter = formatFilters(ctx.backdropFilterValues)
     if (ctx.backdropFx && backdropFilter) {
-      this.shadowHost.showBackdrop(backdropFilter)
+      this.shadowHost?.showBackdrop(backdropFilter)
     } else {
       this.shadowHost?.hideBackdrop()
     }
@@ -157,8 +157,8 @@ export class Manager {
   
     // if extension is suspended, only listen to "toggleState" hotkeys. 
     let keyBinds = ctx.enabled ? this.config.keybinds : this.config.keybinds.filter(v => v.command === "setState")
-    
   
+    let flags = {changed: false}
     for (let keyBind of keyBinds) {
       if (!keyBind.enabled) {
         continue
@@ -173,90 +173,95 @@ export class Manager {
       const pin = getPin(this.config, this.tabId)
       const ctx = getContext(this.config, this.tabId)
       const _keyBind = this.config.keybinds.find(v => v.id === keyBind.id)
-      this.commandHandlers[_keyBind.command](_keyBind, this.config, this.tabId, pin, ctx)
+      this.commandHandlers[_keyBind.command](_keyBind, this.config, this.tabId, pin, ctx, flags)
     }
-    persistConfig(this.config)
+
+    if (flags.changed) {
+      persistConfig(this.config)
+    }
   }
 
 
   commandHandlers: {
-    [key in CommandName]: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => void
+    [key in CommandName]: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => void
   } = {
-    nothing: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
+    nothing: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       
     },
-    adjustSpeed: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
+    adjustSpeed: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       ctx.speed = conformSpeed(ctx.speed + (keyBind.valueNumber ?? 0.1))
+      flags.changed = true 
 
       if (!config.hideIndicator) {
-        this.shadowHost.show(formatSpeed(ctx.speed, !!pin))
+        this.shadowHost?.show(formatSpeed(ctx.speed, !!pin))
       }
     },
-    setSpeed: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
+    setSpeed: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       ctx.speed = conformSpeed(keyBind.valueNumber ?? 1.0)
+      flags.changed = true 
     
       if (!config.hideIndicator) {
-        this.shadowHost.show(formatSpeed(ctx.speed, !!pin))
+        this.shadowHost?.show(formatSpeed(ctx.speed, !!pin))
       }
     },
-    setPin: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
+    setPin: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       setPin(config, keyBind.valueState, tabId)
+      flags.changed = true 
       if (!config.hideIndicator) {
         const pin = getPin(config, tabId)
         const ctx = getContext(config, tabId)
-        this.shadowHost.show(formatSpeed(ctx.speed, !!pin))
+        this.shadowHost?.show(formatSpeed(ctx.speed, !!pin))
       }
     },
-    setState: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
+    setState: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       const state = keyBind.valueState
       ctx.enabled = state === "toggle" ? !ctx.enabled : state === "on" ? true : false 
+      flags.changed = true 
         
       if (!config.hideIndicator) {
-        this.shadowHost.showSmall(ctx.enabled ? "on" : "off")
+        this.shadowHost?.showSmall(ctx.enabled ? "on" : "off")
       }
     },
-    seek: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
-      setMediaCurrentTime(this.mediaQuery.elems as HTMLMediaElement[], keyBind.valueNumber ?? 10, true)
+    seek: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
+      seekMedia(this.mediaQuery.elems as HTMLMediaElement[], keyBind.valueNumber ?? 10, true)
     },
-    setPause: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
+    setPause: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       setMediaPause(this.mediaQuery.elems as HTMLMediaElement[], keyBind.valueState)
     },
-    setMute: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
+    setMute: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       setMediaMute(this.mediaQuery.elems as HTMLMediaElement[], keyBind.valueState)
     },
-    setMark: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
+    setMark: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       let marks = setMark(this.mediaQuery.elems as HTMLMediaElement[], keyBind.valueString)
       if (marks.length === 0) {
-        this.shadowHost.showSmall(`no media`)  
+        this.shadowHost?.showSmall(`no media`)  
       } else {
-        this.shadowHost.showSmall(`setting "${keyBind.valueString}"`)
+        this.shadowHost?.showSmall(`setting "${keyBind.valueString}"`)
       }
     },
-    seekMark: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
-      let saughtMark = seekMark(this.mediaQuery.elems as HTMLMediaElement[], keyBind.valueString)
-      if (!saughtMark) {
-        let marks = setMark(this.mediaQuery.elems as HTMLMediaElement[], keyBind.valueString)
-        if (marks.length === 0) {
-          this.shadowHost.showSmall(`no media`)  
-        } else {
-          this.shadowHost.showSmall(`setting "${keyBind.valueString}"`)
-        }
+    seekMark: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
+      let setFlag = seekMark(this.mediaQuery.elems as HTMLMediaElement[], keyBind.valueString)
+      if (setFlag) {
+        this.shadowHost?.showSmall(`setting "${keyBind.valueString}"`)
       }
     },
-    openUrl: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
+    openUrl: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       requestCreateTab(keyBind.valueString)
     },
-    setFx: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
+    setFx: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       setFx(keyBind.filterTarget, keyBind.valueState, ctx)
-      this.shadowHost.showSmall(`${ctx.elementFx ? "on" : "off"} / ${ctx.backdropFx ? "on" : "off"}`)
+      flags.changed = true 
+      this.shadowHost?.showSmall(`${ctx.elementFx ? "on" : "off"} / ${ctx.backdropFx ? "on" : "off"}`)
     },
-    resetFx: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
+    resetFx: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       resetFx(keyBind.filterTarget, ctx)
+      flags.changed = true 
     },
-    flipFx: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
+    flipFx: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       flipFx(ctx)
+      flags.changed = true 
     },
-    adjustFilter: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
+    adjustFilter: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       const filterInfo = filterInfos[keyBind.filterOption]
 
       setFx(keyBind.filterTarget, "on", ctx)
@@ -266,10 +271,11 @@ export class Manager {
         const fValue = set.find(v => v.filter === keyBind.filterOption)
         let newValue = clamp(filterInfo.min, filterInfo.max, fValue.value + (keyBind.valueNumber ?? filterInfo.largeStep))
         fValue.value = newValue
-        this.shadowHost.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
+        this.shadowHost?.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
       }
+      flags.changed = true 
     },
-    setFilter: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
+    setFilter: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       const filterInfo = filterInfos[keyBind.filterOption]
 
       setFx(keyBind.filterTarget, "on", ctx)
@@ -278,10 +284,12 @@ export class Manager {
         const fValue = set.find(v => v.filter === keyBind.filterOption)
         const newValue = clamp(filterInfo.min, filterInfo.max, keyBind.valueNumber ?? filterInfo.default)
         fValue.value = newValue
-        this.shadowHost.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
+        this.shadowHost?.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
       }
+
+      flags.changed = true 
     },
-    cycleFilterValue: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context) => {
+    cycleFilterValue: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       const filterInfo = filterInfos[keyBind.filterOption]
       
       let newIncrement = (keyBind.cycleIncrement ?? 0) + 1 
@@ -296,8 +304,10 @@ export class Manager {
       for (let set of sets) {
         const fValue = set.find(v => v.filter === keyBind.filterOption)
         fValue.value = newValue 
-        this.shadowHost.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
+        this.shadowHost?.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
       }
+
+      flags.changed = true 
     }
   }
 }

@@ -6,17 +6,8 @@ export type FilterName = "blur" | "brightness" | "contrast" | "grayscale" | "hue
 
 
 export const filterInfos: {[key in FilterName]: FilterInfo} = {
-  grayscale: {
-    name: "grayscale",
-    min: 0,
-    max: 1,
-    smallStep: 0.1,
-    largeStep: 0.25,
-    default: 0,
-    format: v => `grayscale(${v})`
-  },
   sepia: {
-    name: "sepia",
+    name: chrome.i18n.getMessage("filterInfo__sepia"),
     min: 0,
     max: 1,
     smallStep: 0.1,
@@ -25,14 +16,23 @@ export const filterInfos: {[key in FilterName]: FilterInfo} = {
     format: v => `sepia(${v})`
   },
   "hue-rotate": {
-    name: "hue-rotate",
+    name: chrome.i18n.getMessage("filterInfo__hueRotate"),
     smallStep: 8,
     largeStep: 32,
     default: 0,
     format: v => `hue-rotate(${v}deg)`
   },
+  grayscale: {
+    name: chrome.i18n.getMessage("filterInfo__grayscale"),
+    min: 0,
+    max: 1,
+    smallStep: 0.1,
+    largeStep: 0.25,
+    default: 0,
+    format: v => `grayscale(${v})`
+  },
   contrast: {
-    name: "contrast",
+    name: chrome.i18n.getMessage("filterInfo__contrast"),
     min: 0,
     smallStep: 0.1,
     largeStep: 1,
@@ -40,7 +40,7 @@ export const filterInfos: {[key in FilterName]: FilterInfo} = {
     format: v => `contrast(${v})`
   },
   brightness: {
-    name: "brightness",
+    name: chrome.i18n.getMessage("filterInfo__brightness"),
     min: 0,
     smallStep: 0.1,
     largeStep: 1,
@@ -48,7 +48,7 @@ export const filterInfos: {[key in FilterName]: FilterInfo} = {
     format: v => `brightness(${v})`
   },
   saturate: {
-    name: "saturate",
+    name: chrome.i18n.getMessage("filterInfo__saturate"),
     min: 0,
     smallStep: 0.1,
     largeStep: 1,
@@ -56,7 +56,7 @@ export const filterInfos: {[key in FilterName]: FilterInfo} = {
     format: v => `saturate(${v})`
   },
   invert: {
-    name: "invert",
+    name: chrome.i18n.getMessage("filterInfo__invert"),
     min: 0,
     max: 1,
     smallStep: 0.1,
@@ -65,7 +65,7 @@ export const filterInfos: {[key in FilterName]: FilterInfo} = {
     format: v => `invert(${v})`
   },
   blur: {
-    name: "blur",
+    name: chrome.i18n.getMessage("filterInfo__blur"),
     min: 0,
     smallStep: 0.1,
     largeStep: 1,
@@ -73,7 +73,7 @@ export const filterInfos: {[key in FilterName]: FilterInfo} = {
     format: v => `blur(${v}px)`
   },
   opacity: {
-    name: "opacity",
+    name: chrome.i18n.getMessage("filterInfo__opacity"),
     min: 0,
     max: 1,
     smallStep: 0.1,
