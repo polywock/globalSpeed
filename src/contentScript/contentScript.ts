@@ -1,6 +1,6 @@
 
-import { NETFLIX_URL, injectScript } from './utils'
 import 'regenerator-runtime/runtime'
+import { NETFLIX_URL, injectScript } from './utils'
 import { uuidLowerAlpha } from '../utils/helper'
 import { Manager } from './Manager'
 
@@ -10,28 +10,50 @@ declare global {
   }
 }
 
-function main() {
-  injectScript(`
-    if (!window.globalSpeedAddedCtx) {
-      window.globalSpeedAddedCtx = true 
-    
-      const ogPlay = HTMLAudioElement.prototype.play
-      HTMLAudioElement.prototype.play = function(...args) {
-        if (!this.isConnected) {
-          this.hidden = true 
-          document.documentElement.appendChild(this)
-        }
-        const output = ogPlay.apply(this, args)
-        return output 
-      }
-    }
-  `)
+main()
 
-  window.addEventListener("DOMContentLoaded", handleLoad)
+function main() {
+  if (document.readyState === "loading") {
+    injectCtx()
+    window.addEventListener("DOMContentLoaded", handleDOMLoaded)
+  } else {
+    handleDOMLoaded()
+  }
 }
 
+function handleDOMLoaded(e?: Event) {
+  document.addEventListener("visibilitychange", handleVisibilityChange)
+  handleVisibilityChange()
 
-main()
+  // Chromium orphans contentScripts. Need to listen to a disconnect event for cleanup. 
+  const port = chrome.runtime.connect({name: "contentScript"})
+  port.onDisconnect.addListener(() => {
+    handleRelease()
+  })
+
+  // The above should handle it, but a backup to avoid two active content scripts.
+  let key = uuidLowerAlpha(16)
+  window.postMessage({type: "GS_NEW_CONTENT_SCRIPT", key}, "*")
+  window.addEventListener("message", ({data}) => {
+    if (data.type === "GS_NEW_CONTENT_SCRIPT" && data.key !== key) {
+      handleRelease()
+    }
+  })
+  
+  // For seeking Netflix.
+  if (e && NETFLIX_URL.test(document.URL)) {
+    injectNetflix()
+  }
+
+  // For reacting to Shadow DOM changes. 
+  e && injectShadow()
+}
+
+function handleRelease() {
+  document.removeEventListener("visibilitychange", handleVisibilityChange)
+  window.mgr?.release()
+  window.mgr = undefined 
+}
 
 function handleVisibilityChange() {
   if (document.visibilityState === "visible") {
@@ -46,34 +68,8 @@ function handleVisibilityChange() {
   }
 }
 
-function handleLoad() {
-  handleVisibilityChange()
-  document.addEventListener("visibilitychange", handleVisibilityChange)
-
-  // Chromium orphans contentScripts. Need to listen to a disconnect event for cleanup. 
-  const port = chrome.runtime.connect({name: "contentScript"})
-  port.onDisconnect.addListener(() => {
-    document.removeEventListener("visibilitychange", handleVisibilityChange)
-    window.mgr?.release()
-    window.mgr = undefined 
-  })
-
-  // The above should handle it, but a backup to avoid two active content scripts.
-  let key = uuidLowerAlpha(16)
-  window.postMessage({type: "GS_NEW_CONTENT_SCRIPT", key}, "*")
-  window.addEventListener("message", ({data}) => {
-    if (data.type === "GS_NEW_CONTENT_SCRIPT" && data.key !== key) {
-      document.removeEventListener("visibilitychange", handleVisibilityChange)
-      window.mgr?.release()      
-      window.mgr = undefined
-    }
-  })
-
-
-
-  // For seeking Netflix.
-  if (NETFLIX_URL.test(document.URL)) {
-    injectScript(`
+function injectNetflix() {
+  injectScript(`
       if (!window.globalSpeedAddedNetflix) {
         window.globalSpeedAddedNetflix = true 
       
@@ -91,9 +87,9 @@ function handleLoad() {
         })
       }
     `)
-  }
+}
 
-  // For reacting to Shadow DOM changes. 
+function injectShadow() {
   injectScript(`
     if (!window.globalSpeedAddedShadow) {
       window.globalSpeedAddedShadow = true 
@@ -102,7 +98,7 @@ function handleLoad() {
       if (ogCreateShadowRoot) {
         Element.prototype.createShadowRoot = function(...args) {
           sendMessage()
-          ogCreateShadowRoot.apply(this, args) 
+          return ogCreateShadowRoot.apply(this, args) 
         }
       }
     
@@ -110,7 +106,7 @@ function handleLoad() {
       if (ogAttachShadow) {
         Element.prototype.attachShadow = function(...args) {
           sendMessage()
-          ogAttachShadow.apply(this, args) 
+          return ogAttachShadow.apply(this, args) 
         }
       }
     
@@ -121,3 +117,28 @@ function handleLoad() {
   `)
 }
 
+function injectCtx() {
+  injectScript(`
+    if (!window.globalSpeedAddedCtx) {
+      window.globalSpeedAddedCtx = true 
+    
+      const ogAudioPlay = HTMLAudioElement.prototype.play
+      HTMLAudioElement.prototype.play = function(...args) {
+        if (!this.isConnected) {
+          this.hidden = true 
+          document.documentElement.appendChild(this)
+        }
+        return ogAudioPlay.apply(this, args)
+      }
+    
+      const ogVideoPlay = HTMLVideoElement.prototype.play
+      HTMLVideoElement.prototype.play = function(...args) {
+        if (!this.isConnected) {
+          this.hidden = true 
+          document.documentElement.appendChild(this)
+        }
+        return ogVideoPlay.apply(this, args)
+      }
+    }
+  `)
+}

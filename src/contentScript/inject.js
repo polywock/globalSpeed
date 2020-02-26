@@ -26,7 +26,7 @@ if (!window.globalSpeedAddedShadow) {
   if (ogCreateShadowRoot) {
     Element.prototype.createShadowRoot = function(...args) {
       sendMessage()
-      ogCreateShadowRoot.apply(this, args) 
+      return ogCreateShadowRoot.apply(this, args) 
     }
   }
 
@@ -34,7 +34,7 @@ if (!window.globalSpeedAddedShadow) {
   if (ogAttachShadow) {
     Element.prototype.attachShadow = function(...args) {
       sendMessage()
-      ogAttachShadow.apply(this, args) 
+      return ogAttachShadow.apply(this, args) 
     }
   }
 
