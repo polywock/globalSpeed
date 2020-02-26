@@ -41,17 +41,17 @@ export class ShadowHost {
 
     document.body.appendChild(this.wrapper)
   }
-  release() {
+  release = () => {
     if (this.released) return 
     this.released = true 
     this.removeFromDOM()
     delete this.wrapper
   }
-  removeFromDOM() {
+  removeFromDOM = () => {
     let existing = document.getElementById("GlobalSpeedShadowHost")
     existing?.parentElement.removeChild(existing)
   }
-  showIndicator(text: string, duration: number, fontSize = "40px") {
+  showIndicator = (text: string, duration: number, fontSize = "40px") => {
     this.indicator.innerText = text
     this.indicator.style.fontSize = fontSize
     this.indicator.style.display = "inline-block"
@@ -60,13 +60,13 @@ export class ShadowHost {
       this.indicator.style.display = "none"
     }, duration)
   }
-  show(text: string) {
+  show = (text: string) => {
     this.showIndicator(text, 2000, "35px")
   }
-  showSmall(text: string) {
+  showSmall = (text: string) => {
     this.showIndicator(text, 2000, "25px")
   }
-  showBackdrop(filter: string) {
+  showBackdrop = (filter: string) => {
     if (filter) {
       this.backdrop.style.display = "block";
       (this.backdrop.style as any).backdropFilter = filter 
@@ -74,7 +74,7 @@ export class ShadowHost {
       this.hideBackdrop()
     }
   } 
-  hideBackdrop() {
+  hideBackdrop = () => {
     this.backdrop.style.display = "none"
   } 
 }

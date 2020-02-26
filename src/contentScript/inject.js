@@ -23,8 +23,6 @@ if (!window.globalSpeedAddedShadow) {
   window.globalSpeedAddedShadow = true 
 
   const ogCreateShadowRoot = Element.prototype.createShadowRoot
-
-  const ogCreateShadowRoot = Element.prototype.createShadowRoot
   if (ogCreateShadowRoot) {
     Element.prototype.createShadowRoot = function(...args) {
       sendMessage()
@@ -51,13 +49,21 @@ if (!window.globalSpeedAddedShadow) {
 if (!window.globalSpeedAddedCtx) {
   window.globalSpeedAddedCtx = true 
 
-  const ogPlay = HTMLAudioElement.prototype.play
+  const ogAudioPlay = HTMLAudioElement.prototype.play
   HTMLAudioElement.prototype.play = function(...args) {
     if (!this.isConnected) {
       this.hidden = true 
       document.documentElement.appendChild(this)
     }
-    const output = ogPlay.apply(this, args)
-    return output 
+    return ogAudioPlay.apply(this, args)
+  }
+
+  const ogVideoPlay = HTMLVideoElement.prototype.play
+  HTMLVideoElement.prototype.play = function(...args) {
+    if (!this.isConnected) {
+      this.hidden = true 
+      document.documentElement.appendChild(this)
+    }
+    return ogVideoPlay.apply(this, args)
   }
 }

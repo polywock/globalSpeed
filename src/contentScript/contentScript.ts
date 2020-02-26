@@ -99,8 +99,6 @@ function handleLoad() {
       window.globalSpeedAddedShadow = true 
     
       const ogCreateShadowRoot = Element.prototype.createShadowRoot
-    
-      const ogCreateShadowRoot = Element.prototype.createShadowRoot
       if (ogCreateShadowRoot) {
         Element.prototype.createShadowRoot = function(...args) {
           sendMessage()
