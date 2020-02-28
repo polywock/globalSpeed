@@ -22,7 +22,11 @@ export const NumericInput = (props: NumericInputProps) => {
     if (props.value == null) {
       setGhostValue("")
     } else {
-      setGhostValue(round(props.value, props.displayRound ?? 2).toString())
+      let parsedGhostValue = parseFloat(ghostValue)
+      const newValue = round(props.value, props.displayRound ?? 4)
+      if (parsedGhostValue !== newValue) {
+        setGhostValue(newValue.toString())
+      }
     }
   }, [props.value])
   
