@@ -19,8 +19,9 @@ To use, install the [Chrome](https://chrome.google.com/webstore/detail/global-sp
 
 ## Release Notes
 
-### V2.5
-- Feature: Support for hidden audio elements, which means Global Speed will now work with Spotify, Amazon Music, NPR, and many other music and podcast streaming sites.
+### V2.5.X
+- Feature: Support for hidden audio elements. 
+   - Support for Spotify, Amazon Music, NPR, and many other music and podcast streaming sites.
 
 ### V2.4.X
 - Performance: Suspend extension if tab is not visible. 
