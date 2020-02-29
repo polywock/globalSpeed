@@ -12,7 +12,7 @@ export type Config = {
   hideBadge?: boolean,
   keybinds: KeyBind[],
   usePolling?: boolean,
-  pollRate?: number 
+  pollRate?: number,
   shadowPollRate?: number 
 }
 

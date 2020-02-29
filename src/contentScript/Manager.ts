@@ -1,7 +1,7 @@
 
 import { requestSenderInfo, requestCreateTab, StorageChanges } from "../utils/browserUtils"
 import { getConfigOrDefault, getContext, getPin, formatSpeed, conformSpeed, formatFilters, getTargetSets, resetFx, flipFx, setFx, setPin, persistConfig } from "../utils/configUtils"
-import { seekMedia, setMediaPause, setMediaMute, setMark, seekMark, setElemFilter, clearElemFilter, clearElemTransform, setElemTransform, setDocumentTransform, clearDocumentTransform } from "./utils"
+import { seekMedia, setMediaPause, setMediaMute, setMark, seekMark, setElemFilter, clearElemFilter, clearElemTransform, setElemTransform, setDocumentTransform, clearDocumentTransform, setPlaybackRate } from "./utils"
 import { clamp, round } from '../utils/helper'
 import { ShadowHost } from "./ShadowHost"
 import { compareHotkeys, extractHotkey } from '../utils/keys'
@@ -92,8 +92,10 @@ export class Manager {
 
     // speed 
     this.mediaQuery?.elems.forEach(elem => {
-      elem.playbackRate = ctx.speed
+      setPlaybackRate(elem, ctx.speed)
     })
+
+    window.postMessage({type: "GS_SET_PLAYBACK_RATE", value: ctx.speed}, "*")
 
     // elem filter 
     const elemFilter = formatFilters(ctx.elementFilterValues)
@@ -223,27 +225,44 @@ export class Manager {
       }
     },
     seek: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
-      seekMedia(this.mediaQuery.elems as HTMLMediaElement[], keyBind.valueNumber ?? 10, true)
+      const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
+      const value = keyBind.valueNumber ?? 10
+      elems.forEach(elem => seekMedia(elem, value, true))
+      window.postMessage({type: "GS_SEEK", value: value, relative: true}, "*")
+
+      if (value > 0) {
+        this.shadowHost?.show(`>>`)  
+      } else if (value < 0) {
+        this.shadowHost?.show(`<<`)  
+      }
     },
     setPause: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
-      setMediaPause(this.mediaQuery.elems as HTMLMediaElement[], keyBind.valueState)
+      const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
+      elems.forEach(elem => setMediaPause(elem, keyBind.valueState))
+      window.postMessage({type: "GS_SET_PAUSE", state: keyBind.valueState}, "*")
+
+      this.shadowHost?.showSmall(`${keyBind.valueState} pause`)
     },
     setMute: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
-      setMediaMute(this.mediaQuery.elems as HTMLMediaElement[], keyBind.valueState)
+      const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
+      elems.forEach(elem => setMediaMute(elem, keyBind.valueState))
+      window.postMessage({type: "GS_SET_MUTE", state: keyBind.valueState}, "*")
+
+      this.shadowHost?.showSmall(`${keyBind.valueState} mute`)
     },
     setMark: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
-      let marks = setMark(this.mediaQuery.elems as HTMLMediaElement[], keyBind.valueString)
-      if (marks.length === 0) {
-        this.shadowHost?.showSmall(`no media`)  
-      } else {
-        this.shadowHost?.showSmall(`setting "${keyBind.valueString}"`)
-      }
+      const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
+      elems.forEach(elem => setMark(elem, keyBind.valueString))
+      window.postMessage({type: "GS_SET_MARK", key: keyBind.valueString}, "*")
+      
+      this.shadowHost?.showSmall(`set "${keyBind.valueString}"`)
     },
     seekMark: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
-      let setFlag = seekMark(this.mediaQuery.elems as HTMLMediaElement[], keyBind.valueString)
-      if (setFlag) {
-        this.shadowHost?.showSmall(`setting "${keyBind.valueString}"`)
-      }
+      const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
+      elems.forEach(elem => seekMark(elem, keyBind.valueString))
+      window.postMessage({type: "GS_SEEK_MARK", key: keyBind.valueString}, "*")
+
+      this.shadowHost?.showSmall(`seek "${keyBind.valueString}"`)
     },
     openUrl: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       requestCreateTab(keyBind.valueString)

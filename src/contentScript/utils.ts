@@ -1,31 +1,25 @@
 import { SetState } from "../types"
 
-
-
-export function seekMedia(elems: HTMLMediaElement[], value: number, relative: boolean) {
-  return elems.forEach(v => {
-    const newPosition = relative ? v.currentTime + value : value 
-    seekTo(v, newPosition)
-  })
+export function setPlaybackRate(elem: HTMLMediaElement, value: number) {
+  elem.playbackRate = value 
 }
 
-export function setMediaPause(elems: HTMLMediaElement[], state: SetState) {
-  return elems.forEach(v => {
-    if (state === "on" || (state === "toggle" && !v.paused)) {
-      v.pause()
-    } else {
-      v.play()
-    }
-  })
+export function seekMedia(elem: HTMLMediaElement, value: number, relative: boolean) {
+  const newPosition = relative ? elem.currentTime + value : value 
+  seekTo(elem, newPosition)
 }
 
-export function setMediaMute(elems: HTMLMediaElement[], state: SetState) {
-  return elems.forEach(v => {
-    v.muted = state === "on" ? true : state === "off" ? false : !v.muted
-  })
+export function setMediaPause(elem: HTMLMediaElement, state: SetState) {
+  if (state === "on" || (state === "toggle" && !elem.paused)) {
+    elem.pause()
+  } else {
+    elem.play()
+  }
 }
 
-
+export function setMediaMute(elem: HTMLMediaElement, state: SetState) {
+  elem.muted = state === "on" ? true : state === "off" ? false : !elem.muted
+}
 
 
 type HTMLMediaElementSuper = HTMLMediaElement & {
@@ -37,44 +31,23 @@ type HTMLMediaElementSuper = HTMLMediaElement & {
   }
 }
 
-export function setMark(elems: HTMLMediaElementSuper[], key: string) {
-  let marksMade: {}[] = [];
+export function setMark(elem: HTMLMediaElementSuper, key: string) {
+  if (!elem.readyState) return 
 
-  elems.forEach(v => {
-    if (!v.readyState) {
-      return 
-    }
-
-    v.marks = v.marks || {}
-    let newMark = {
-      time: v.currentTime,
-      created: new Date().getTime()
-    }
-
-    v.marks[key] = newMark
-    marksMade.push(marksMade)
-  })
-
-  return marksMade
+  elem.marks = elem.marks || {}
+  elem.marks[key] = {
+    time: elem.currentTime,
+    created: new Date().getTime()
+  }
 }
 
-export function seekMark(elems: HTMLMediaElementSuper[], key: string, set = true) {
-  let setFlag = false 
-  elems.forEach(v => {
-    if (!v.readyState) {
-      return 
-    }
-
-    const mark = v.marks?.[key]
-    if (mark) {
-      seekTo(v, mark.time)
-    } else if (set) {
-      if (setMark([v], key).length > 0) {
-        setFlag = true 
-      }
-    }
-  })
-  return setFlag
+export function seekMark(elem: HTMLMediaElementSuper, key: string) {
+  const mark = elem.marks && elem.marks[key]
+  if (mark) {
+    seekTo(elem, mark.time)
+  } else {
+    setMark(elem, key)
+  }
 }
 
 
@@ -175,5 +148,6 @@ export function injectScript(code: string) {
   injectTag.text = code 
   document.documentElement.appendChild(injectTag)
 }
+
 
 

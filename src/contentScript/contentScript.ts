@@ -121,24 +121,91 @@ function injectCtx() {
   injectScript(`
     if (!window.globalSpeedAddedCtx) {
       window.globalSpeedAddedCtx = true 
+      const mediaReferences = []
+    
+      const handleMedia = media => {
+        if (!mediaReferences.includes(media)) {
+          mediaReferences.push(media)
+        }
+      }
     
       const ogAudioPlay = HTMLAudioElement.prototype.play
       HTMLAudioElement.prototype.play = function(...args) {
-        if (!this.isConnected) {
-          this.hidden = true 
-          document.documentElement.appendChild(this)
-        }
+        handleMedia(this)
         return ogAudioPlay.apply(this, args)
       }
     
       const ogVideoPlay = HTMLVideoElement.prototype.play
       HTMLVideoElement.prototype.play = function(...args) {
-        if (!this.isConnected) {
-          this.hidden = true 
-          document.documentElement.appendChild(this)
-        }
+        handleMedia(this)
         return ogVideoPlay.apply(this, args)
       }
+    
+    
+    
+      //#region 
+      function setPlaybackRate(elem, value) {
+        elem.playbackRate = value 
+      }
+    
+      function seekMedia(elem, value, relative) {
+        elem.currentTime = relative ? elem.currentTime + value : value 
+      }
+      
+      function setMediaPause(elem, state) {
+        if (state === "on" || (state === "toggle" && !elem.paused)) {
+          elem.pause()
+        } else {
+          elem.play()
+        }
+      }
+      
+      function setMediaMute(elem, state) {
+        elem.muted = state === "on" ? true : state === "off" ? false : !elem.muted
+      }
+      
+      function setMark(elem, key) {
+        if (!elem.readyState) return 
+      
+        elem.marks = elem.marks || {}
+        elem.marks[key] = {
+          time: elem.currentTime,
+          created: new Date().getTime()
+        }
+      }
+      
+      function seekMark(elem, key) {
+        const mark = elem.marks && elem.marks[key]
+        if (mark) {
+          elem.currentTime = mark.time
+        } else {
+          setMark(elem, key)
+        }
+      }
+      
+      //#endregion 
+    
+    
+      window.addEventListener("message", ({data}) => {
+        if (!data) return
+        const elems = mediaReferences.filter(v => v.readyState && !v.isConnected)
+        
+        if (data.type === "GS_SET_MARK") {
+          elems.forEach(elem => setMark(elem, data.key))
+        } else if (data.type === "GS_SEEK_MARK") {
+          elems.forEach(elem => seekMark(elem, data.key))
+        } else if (data.type === "GS_SEEK") {
+          elems.forEach(elem => seekMedia(elem, data.value, data.relative))
+        } else if (data.type === "GS_SET_MUTE") {
+          elems.forEach(elem => setMediaMute(elem, data.state))
+        } else if (data.type === "GS_SET_PAUSE") {
+          elems.forEach(elem => setMediaPause(elem, data.state))
+        } else if (data.type === "GS_SET_PLAYBACK_RATE") {
+          elems.forEach(elem => {
+            setPlaybackRate(elem, data.value)
+          })
+        }
+      })
     }
   `)
 }
