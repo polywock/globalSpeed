@@ -9,54 +9,48 @@ import { commandInfos, CommandName, getDefaultKeyBinds } from "../defaults/comma
 import { KeyBindControl } from "./KeyBindControl"
 import produce from "immer"
 import { Tooltip } from "../comps/Tooltip"
-import { GoPin, GoVersions, GoZap } from "react-icons/go"
+import { GoPin, GoZap } from "react-icons/go"
 import { FaPowerOff } from "react-icons/fa"
-import "./options.scss"
 import { requestCreateTab } from "../utils/browserUtils"
 import { NumericInput } from "../comps/NumericInput"
+import "./options.scss"
 
 function Options(props: {}) {
   const [config, setConfig] = useState(null as Config)
   const [commandOption, setCommandOption] = useState("adjustSpeed")
   const [showAdvanced, setShowAdvanced] = useState(false)
-
-  const handleStorageChange = useCallback(async () => {
-    const config = await getConfigOrDefault()
-    setConfig(config)
-  }, [])
   
   useEffect(() => {
     getConfigOrDefault().then(config => {
       setConfig(config)
-      chrome.storage.onChanged.addListener(handleStorageChange)
     })
   }, [])
 
+  const setAndPersistConfig = useCallback((config: Config) => {
+    setConfig(config)
+    persistConfig(config)
+  }, [])
+
   if (!config) {
-    return <div>
-      <span>Loading...</span>
-      <button onClick={e => {
-        persistConfig(getDefaultConfig())
-      }}>Default</button>
-    </div>
+    return <span>Loading...</span>
   }
 
   const handleKeyBindChange = (id: string, newKb: KeyBind) => {
-    persistConfig(produce(config, d => {
+    setAndPersistConfig(produce(config, d => {
       const idx = d.keybinds.findIndex(v => v.id === id)
       d.keybinds[idx] = newKb
     }))
   }
 
   const handleKeyBindRemove = (id: string) => {
-    persistConfig(produce(config, d => {
+    setAndPersistConfig(produce(config, d => {
       const idx = d.keybinds.findIndex(v => v.id === id)
       d.keybinds.splice(idx, 1)
     }))
   }
 
   const handleKeyBindMove = (id: string, down: boolean) => {
-    persistConfig(produce(config, dConfig => {
+    setAndPersistConfig(produce(config, dConfig => {
       let idx = dConfig.keybinds.findIndex(v => v.id === id)
       let kb = dConfig.keybinds[idx]
       let newIdx = clamp(0, dConfig.keybinds.length - 1, idx + (down ? 1 : -1))
@@ -72,7 +66,7 @@ function Options(props: {}) {
       <p><code>M</code>: {chrome.i18n.getMessage("options__mediaToggleDesc")}</p>
       <p><code>G</code>: {chrome.i18n.getMessage("options__greedyToggleDesc")}</p>
     </div>
-    
+
     <div className="keyBindControls">
       {(config.keybinds || []).map(bind => (
         <KeyBindControl key={bind.id} value={bind} 
@@ -91,12 +85,12 @@ function Options(props: {}) {
         ))}
       </select>
       <button onClick={e => {
-        persistConfig(produce(config, d => {
+        setAndPersistConfig(produce(config, d => {
           d.keybinds.push(commandInfos[commandOption as CommandName].generate())
         }))
       }}>{chrome.i18n.getMessage("options__addButton")}</button>
       <button onClick={e => {
-        persistConfig(produce(config, d => {
+        setAndPersistConfig(produce(config, d => {
           d.keybinds = getDefaultKeyBinds()
         }))
       }}>{chrome.i18n.getMessage("options__resetButton")}</button>
@@ -109,7 +103,7 @@ function Options(props: {}) {
           <Tooltip tooltip={chrome.i18n.getMessage("options__pinByDefaultTooltip")}/>
         </div>
         <input type="checkbox" checked={config.pinByDefault || false} onChange={e => {
-          persistConfig(produce(config, d => {
+          setAndPersistConfig(produce(config, d => {
             d.pinByDefault = e.target.checked
           }))
         }}/>
@@ -120,7 +114,7 @@ function Options(props: {}) {
           <Tooltip tooltip={chrome.i18n.getMessage("options__hideIndicatorTooltip")}/>
         </div>
         <input type="checkbox" checked={config.hideIndicator || false} onChange={e => {
-          persistConfig(produce(config, d => {
+          setAndPersistConfig(produce(config, d => {
             d.hideIndicator = e.target.checked
           }))
         }}/>
@@ -131,7 +125,7 @@ function Options(props: {}) {
           <Tooltip tooltip={chrome.i18n.getMessage("options__hideBadgeTooltip")}/>
         </div>
         <input type="checkbox" checked={config.hideBadge || false} onChange={e => {
-          persistConfig(produce(config, d => {
+          setAndPersistConfig(produce(config, d => {
             d.hideBadge = e.target.checked
           }))
         }}/>
@@ -147,7 +141,7 @@ function Options(props: {}) {
               <Tooltip tooltip={chrome.i18n.getMessage("options__usePollingTooltip")}/>
             </div>
             <input type="checkbox" checked={config.usePolling || false} onChange={e => {
-              persistConfig(produce(config, d => {
+              setAndPersistConfig(produce(config, d => {
                 d.usePolling = e.target.checked
               }))
             }}/>
@@ -159,7 +153,7 @@ function Options(props: {}) {
                 <Tooltip tooltip="In ms (or milliseconds). For reference, 1000 ms == 1 second."/>
               </div>
               <NumericInput value={config.pollRate} placeholder={"defaults to 1000ms"} onChange={v => {
-                persistConfig(produce(config, d => {
+                setAndPersistConfig(produce(config, d => {
                   d.pollRate = v
                 }))
               }}/>
@@ -188,7 +182,7 @@ function Options(props: {}) {
     )}
     <div>
       <button style={{marginTop: "40px"}} className="large red" onClick={e => {
-        persistConfig(getDefaultConfig())
+        setAndPersistConfig(getDefaultConfig())
       }}>{chrome.i18n.getMessage("options__help__resetToDefaultButton")}</button>
     </div>
   </div>

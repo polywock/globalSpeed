@@ -1,18 +1,24 @@
-import React, { useContext } from "react"
-import { persistConfig, setPin, getContext } from "../utils/configUtils"
+import React from "react"
+import { setPin, getContext, getPin } from "../utils/configUtils"
 import { GoPin, GoGear, GoMarkGithub, GoZap, GoArrowLeft} from "react-icons/go"
 import { FaPowerOff } from "react-icons/fa"
 import produce from "immer"
-import { ConfigContext } from "../ConfigContext"
+import { Config } from "../types"
 import "./Header.scss"
 
 type HeaderProps = {
   fxPanal: boolean
-  setFxPanal: (newValue: boolean) => void 
+  setFxPanal: (newValue: boolean) => void,
+  config: Config,
+  tabId: number,
+  setConfig: (newConfig: Config) => void 
 }
 
 export function Header(props: HeaderProps) {
-  const {config, tabId, pin, ctx} = useContext(ConfigContext)
+  const {config, tabId, setConfig} = props 
+
+  const pin = getPin(config, tabId)
+  const ctx = getContext(config, tabId)
 
   return (
     <div className="Header">
@@ -20,7 +26,7 @@ export function Header(props: HeaderProps) {
         title="Suspend most functionality."
         className={`toggle ${ctx.enabled ? "active" : ""}`}
         onClick={() => {
-          persistConfig(produce(config, dConfig => {
+          setConfig(produce(config, dConfig => {
             const dCtx = getContext(dConfig, tabId)
             dCtx.enabled = !dCtx.enabled
           }))
@@ -32,7 +38,7 @@ export function Header(props: HeaderProps) {
         title="Pinning (or Local Speed): Apply custom settings only to this tab."
         className={`pin toggle ${pin ? "active" : ""}`}
         onClick={() => {
-          persistConfig(produce(config, dConfig => {
+          setConfig(produce(config, dConfig => {
             setPin(dConfig, "toggle", tabId)
           }))
         }}

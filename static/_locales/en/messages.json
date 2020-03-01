@@ -80,6 +80,12 @@
   "commandInfo__nothingTooltip": {
     "message": "Can come in handy in combination with (G) greedy mode to block certain keys."
   },
+  "commandInfo__runCodeName": {
+    "message": "run code"
+  },
+  "commandInfo__runCodeTooltip": {
+    "message": "Execute javascript when you press a shortcut."
+  },
   "commandInfo__adjustSpeedName": {
     "message": "adjust speed"
   },

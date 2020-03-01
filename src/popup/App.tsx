@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useCallback } from "react"
-import { getConfigOrDefault, getPin, getContext, conformSpeed, persistConfig } from "../utils/configUtils"
+import { getConfigOrDefault, getContext, conformSpeed, persistConfig } from "../utils/configUtils"
 import { getActiveTabId } from "../utils/browserUtils"
 import { Config} from "../types"
 import { SpeedControl } from "./SpeedControl"
 import produce from "immer"
 import { FxPanal } from "./FxPanal"
-import { ConfigContext } from "../ConfigContext"
 import { Header } from "./Header"
 import "./App.scss"
 
@@ -15,45 +14,41 @@ export function App(props: {}) {
   const [tabId, setTabId] = useState(null as number)
   const [fxPanal, setFxPanal] = useState(false)
 
-  const handleStorageChange = useCallback(async () => {
-    const config = await getConfigOrDefault()
-    setConfig(config);
-  }, [])
-
-  
   useEffect(() => {
-    chrome.storage.onChanged.addListener(handleStorageChange)
-    handleStorageChange()
+    getConfigOrDefault().then(config => {
+      setConfig(config)
+    })
     
     getActiveTabId().then(tabId => {
       setTabId(tabId)
     })
   }, [])
- 
+
+  const setAndPersistConfig = useCallback((config: Config) => {
+    setConfig(config)
+    persistConfig(config)
+  }, [])
   
   if (!config || tabId == null){
     return <div>Loading...</div>
   }
 
-  const pin = getPin(config, tabId)
   const ctx = getContext(config, tabId)
 
 
   return (
     <div id="App">
-      <ConfigContext.Provider value={{config, tabId, pin, ctx}}>
-        <Header fxPanal={fxPanal} setFxPanal={setFxPanal}/>
-        {fxPanal ? (
-          <FxPanal/>
-        ) : (
-          <SpeedControl speed={ctx.speed} onChange={v => {
-            persistConfig(produce(config, d => {
-              const ctx = getContext(d, tabId)
-              ctx.speed = conformSpeed(v)
-            }))
-          }}/>
-        )}
-      </ConfigContext.Provider>
+      <Header fxPanal={fxPanal} setFxPanal={setFxPanal} config={config} tabId={tabId} setConfig={setAndPersistConfig}/>
+      {fxPanal ? (
+        <FxPanal config={config} tabId={tabId} setConfig={setAndPersistConfig}/>
+      ) : (
+        <SpeedControl speed={ctx.speed} onChange={v => {
+          setAndPersistConfig(produce(config, d => {
+            const ctx = getContext(d, tabId)
+            ctx.speed = conformSpeed(v)
+          }))
+        }}/>
+      )}
     </div>
   )
 }

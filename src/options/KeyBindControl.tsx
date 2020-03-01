@@ -9,6 +9,7 @@ import { commandInfos } from "../defaults/commands"
 import { filterInfos, FilterName, filterTargets  } from "../defaults/filters"
 import { GoArrowUp, GoArrowDown, GoArrowBoth } from "react-icons/go"
 import { CycleInput } from "../comps/CycleInput"
+import { ModalText } from "../comps/ModalText"
 
 type KeyBindControlProps = {
   onChange: (id: string, newValue: KeyBind) => void,
@@ -112,6 +113,13 @@ export const KeyBindControl = (props: KeyBindControlProps) => {
       <input type="text" value={value.valueString} onChange={e => {
         props.onChange(value.id, produce(value, d => {
           d.valueString = e.target.value
+        }))
+      }}/>
+    )}
+    {commandInfo.valueType === "modalString" && (
+      <ModalText label="edit code" value={value.valueString} onChange={v => {
+        props.onChange(value.id, produce(value, d => {
+          d.valueString = v
         }))
       }}/>
     )}

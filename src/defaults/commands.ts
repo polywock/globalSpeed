@@ -2,8 +2,7 @@
 import { Command, KeyBind } from "../types"
 import { uuidLowerAlpha } from "../utils/helper"
 
-
-export type CommandName = "nothing" | "adjustSpeed" | "setSpeed" | "setPin" | "setState" | 
+export type CommandName = "nothing" | "runCode" | "adjustSpeed" | "setSpeed" | "setPin" | "setState" | 
   "seek" | "setPause" | "setMute" | "setMark" | "seekMark" | "openUrl" | 
   "setFx" | "resetFx" | "flipFx" | "adjustFilter" | "setFilter" | "cycleFilterValue"
 
@@ -17,6 +16,17 @@ export const commandInfos: {
       id: uuidLowerAlpha(16),
       command: "nothing",
       enabled: true
+    })
+  },
+  runCode: {
+    name: chrome.i18n.getMessage("commandInfo__runCodeName"),
+    tooltip: chrome.i18n.getMessage("commandInfo__runCodeTooltip"),
+    valueType: "modalString",
+    generate: () => ({
+      id: uuidLowerAlpha(16),
+      command: "runCode",
+      enabled: true,
+      valueString: `const text = "Global Speed is awesome."\nspeechSynthesis.speak(new SpeechSynthesisUtterance(text))`
     })
   },
   adjustSpeed: {
@@ -240,6 +250,20 @@ export function getDefaultKeyBinds(): KeyBind[] {
       key: "KeyX",
       enabled: true,
       valueNumber: 5,
+      greedy: true
+    },
+    {
+      ...commandInfos.seek.generate(),
+      key: {code: "KeyZ", shiftKey: true},
+      enabled: true,
+      valueNumber: -0.04,
+      greedy: true
+    },
+    {
+      ...commandInfos.seek.generate(),
+      key: {code: "KeyX", shiftKey: true},
+      enabled: true,
+      valueNumber: 0.04,
       greedy: true
     },
     {

@@ -38,7 +38,7 @@ export type Command = {
   tooltip?: string,
   withFilterTarget?: boolean,
   withFilterOption?: boolean,
-  valueType?: "number" | "string" | "filterNumber" | "cycle" | "state",
+  valueType?: "number" | "string" | "modalString" | "filterNumber" | "cycle" | "state",
   valueMin?: number,
   valueMax?: number,
   generate: () => KeyBind 

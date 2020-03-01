@@ -1,0 +1,24 @@
+
+.ModalText {
+  & > .fg {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh; 
+    z-index: 9999999999;
+
+    background-color: #00000066;
+
+    display: grid;
+    justify-content: center;
+    align-content: center;
+
+    & > textarea {
+      width: 50vw;
+      height: 75vh;
+      padding: 20px;
+      border-radius: 10px;
+    }
+  }
+}

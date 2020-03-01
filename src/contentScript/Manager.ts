@@ -1,7 +1,7 @@
 
 import { requestSenderInfo, requestCreateTab, StorageChanges } from "../utils/browserUtils"
 import { getConfigOrDefault, getContext, getPin, formatSpeed, conformSpeed, formatFilters, getTargetSets, resetFx, flipFx, setFx, setPin, persistConfig } from "../utils/configUtils"
-import { seekMedia, setMediaPause, setMediaMute, setMark, seekMark, setElemFilter, clearElemFilter, clearElemTransform, setElemTransform, setDocumentTransform, clearDocumentTransform, setPlaybackRate } from "./utils"
+import { seekMedia, setMediaPause, setMediaMute, setMark, seekMark, setElemFilter, clearElemFilter, clearElemTransform, setElemTransform, setDocumentTransform, clearDocumentTransform, setPlaybackRate, injectScript } from "./utils"
 import { clamp, round } from '../utils/helper'
 import { ShadowHost } from "./ShadowHost"
 import { compareHotkeys, extractHotkey } from '../utils/keys'
@@ -190,6 +190,12 @@ export class Manager {
     nothing: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       
     },
+    runCode: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
+      injectScript(keyBind.valueString)
+      if (!config.hideIndicator) {
+        this.shadowHost?.showSmall("running code")
+      }
+    },
     adjustSpeed: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       ctx.speed = conformSpeed(ctx.speed + (keyBind.valueNumber ?? 0.1))
       flags.changed = true 
@@ -230,10 +236,12 @@ export class Manager {
       elems.forEach(elem => seekMedia(elem, value, true))
       window.postMessage({type: "GS_SEEK", value: value, relative: true}, "*")
 
-      if (value > 0) {
-        this.shadowHost?.show(`>>`)  
-      } else if (value < 0) {
-        this.shadowHost?.show(`<<`)  
+      if (!config.hideIndicator) {
+        if (value > 0) {
+          this.shadowHost?.show(`>>`)  
+        } else if (value < 0) {
+          this.shadowHost?.show(`<<`)  
+        }
       }
     },
     setPause: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
@@ -241,28 +249,36 @@ export class Manager {
       elems.forEach(elem => setMediaPause(elem, keyBind.valueState))
       window.postMessage({type: "GS_SET_PAUSE", state: keyBind.valueState}, "*")
 
-      this.shadowHost?.showSmall(`${keyBind.valueState} pause`)
+      if (!config.hideIndicator) {
+        this.shadowHost?.showSmall(`${keyBind.valueState} pause`)
+      }
     },
     setMute: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
       elems.forEach(elem => setMediaMute(elem, keyBind.valueState))
       window.postMessage({type: "GS_SET_MUTE", state: keyBind.valueState}, "*")
 
-      this.shadowHost?.showSmall(`${keyBind.valueState} mute`)
+      if (!config.hideIndicator) {
+        this.shadowHost?.showSmall(`${keyBind.valueState} mute`)
+      }
     },
     setMark: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
       elems.forEach(elem => setMark(elem, keyBind.valueString))
       window.postMessage({type: "GS_SET_MARK", key: keyBind.valueString}, "*")
-      
-      this.shadowHost?.showSmall(`set "${keyBind.valueString}"`)
+
+      if (!config.hideIndicator) {
+        this.shadowHost?.showSmall(`set "${keyBind.valueString}"`)
+      }
     },
     seekMark: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
       elems.forEach(elem => seekMark(elem, keyBind.valueString))
       window.postMessage({type: "GS_SEEK_MARK", key: keyBind.valueString}, "*")
 
-      this.shadowHost?.showSmall(`seek "${keyBind.valueString}"`)
+      if (!config.hideIndicator) {
+        this.shadowHost?.showSmall(`seek "${keyBind.valueString}"`)
+      }
     },
     openUrl: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       requestCreateTab(keyBind.valueString)
@@ -270,7 +286,10 @@ export class Manager {
     setFx: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       setFx(keyBind.filterTarget, keyBind.valueState, ctx)
       flags.changed = true 
-      this.shadowHost?.showSmall(`${ctx.elementFx ? "on" : "off"} / ${ctx.backdropFx ? "on" : "off"}`)
+
+      if (!config.hideIndicator) {
+        this.shadowHost?.showSmall(`${ctx.elementFx ? "on" : "off"} / ${ctx.backdropFx ? "on" : "off"}`)
+      }
     },
     resetFx: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       resetFx(keyBind.filterTarget, ctx)
@@ -290,7 +309,10 @@ export class Manager {
         const fValue = set.find(v => v.filter === keyBind.filterOption)
         let newValue = clamp(filterInfo.min, filterInfo.max, fValue.value + (keyBind.valueNumber ?? filterInfo.largeStep))
         fValue.value = newValue
-        this.shadowHost?.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
+
+        if (!config.hideIndicator) {
+          this.shadowHost?.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
+        }
       }
       flags.changed = true 
     },
@@ -303,7 +325,9 @@ export class Manager {
         const fValue = set.find(v => v.filter === keyBind.filterOption)
         const newValue = clamp(filterInfo.min, filterInfo.max, keyBind.valueNumber ?? filterInfo.default)
         fValue.value = newValue
-        this.shadowHost?.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
+        if (!config.hideIndicator) {
+          this.shadowHost?.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
+        }
       }
 
       flags.changed = true 
@@ -323,7 +347,9 @@ export class Manager {
       for (let set of sets) {
         const fValue = set.find(v => v.filter === keyBind.filterOption)
         fValue.value = newValue 
-        this.shadowHost?.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
+        if (!config.hideIndicator) {
+          this.shadowHost?.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
+        }
       }
 
       flags.changed = true 
