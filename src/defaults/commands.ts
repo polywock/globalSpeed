@@ -26,7 +26,7 @@ export const commandInfos: {
       id: uuidLowerAlpha(16),
       command: "runCode",
       enabled: true,
-      valueString: `const text = "Global Speed is awesome."\nspeechSynthesis.speak(new SpeechSynthesisUtterance(text))`
+      valueString: `speechSynthesis.speak(new SpeechSynthesisUtterance("Global Speed is awesome."))`
     })
   },
   adjustSpeed: {
