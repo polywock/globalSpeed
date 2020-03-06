@@ -28,7 +28,9 @@ type HTMLMediaElementSuper = HTMLMediaElement & {
       time: number,
       created: number
     }
-  }
+  },
+  gsLoopTimeUpdateHandler?: () => void,
+  gsLoopSeekingHandler?: () => void
 }
 
 export function setMark(elem: HTMLMediaElementSuper, key: string) {
@@ -48,6 +50,43 @@ export function seekMark(elem: HTMLMediaElementSuper, key: string) {
   } else {
     setMark(elem, key)
   }
+}
+
+export function toggleLoop(elem: HTMLMediaElementSuper, key: string) {
+  const mark = elem.marks && elem.marks[key]
+
+  const handleRemove = () => {
+    elem.removeEventListener("timeupdate", elem.gsLoopTimeUpdateHandler)
+    elem.removeEventListener("seeking", elem.gsLoopSeekingHandler)
+    delete elem.gsLoopTimeUpdateHandler
+    delete elem.gsLoopSeekingHandler
+  }
+
+  if (elem.gsLoopTimeUpdateHandler) {
+    handleRemove()
+    return 
+  }
+
+  if (!mark) {
+    return 
+  } 
+
+  const endTime = elem.currentTime
+
+  elem.gsLoopTimeUpdateHandler = () => {
+    if (elem.currentTime > endTime) {
+      seekTo(elem, mark.time)
+    }
+  }
+
+  elem.gsLoopSeekingHandler = () => {
+    if (elem.currentTime < mark.time || elem.currentTime > endTime) {
+      handleRemove()
+    }
+  }
+
+  elem.addEventListener("timeupdate", elem.gsLoopTimeUpdateHandler)
+  elem.addEventListener("seeking", elem.gsLoopSeekingHandler)
 }
 
 

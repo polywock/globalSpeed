@@ -1,43 +1,66 @@
 
 .KeyBindControl {
   display: grid;
-  grid-template-columns: repeat(2, max-content) minmax(150px, 1.5fr) minmax(200px, 1fr) repeat(2, max-content) 150px max-content;
+  grid-template-columns: repeat(2, max-content) minmax(200px, 1.5fr) 150px repeat(2, max-content) 200px repeat(2, max-content);
   grid-column-gap: 10px;
   align-items: center;
   background-color: #f8f8f8;
   border: 1px solid #aaa;
-  padding: 0px 5px;
+  padding: 5px;
+  border-radius: 5px;
+
+  &.spacing {
+    margin-bottom: 25px;
+  }
+  &.doubleSpacing {
+    margin-bottom: 40px;
+  }
+
+  // @media only screen and (min-width: 1000px) {
+  //   grid-template-columns: repeat(2, max-content) minmax(200px, 1.5fr) 150px repeat(2, max-content) 200px repeat(2, max-content);
+  // }
+
+  & .icon {
+    color: #aaa;
+    padding: 0;
+    background-color: inherit;
+    border: none;
+
+    &:hover {
+      color: #666;
+    }
+
+    &:focus {
+      outline: 1px solid var(--focus-color);
+    }
+  }
   
-
-
   & > .move {
     display: grid;
-
-    & > button {
-      color: #bbbbbb;
-      padding: 0;
-      background-color: inherit;
-      border: none;
-
-      &:hover {
-        color: #666;
-      }
-
-      &:focus {
-        outline: 1px solid var(--focus-color);
-      }
-    }
   }
 
   & > button:nth-child(3) {
     margin-left: -5px;
   }
 
-  & .Tooltip {
-    margin-left: 10px;
-  }
+  & > .command {
+    display: grid;
+    grid-row-gap: 5px;
 
-  & > .close {
-    background-color: #ddd;
+    & > div {
+      display: grid;
+      grid-column-gap: 5px;
+    }
+
+    & > .name {
+      grid-template-columns: max-content max-content;
+    }
+
+    & > .support {
+      grid-auto-flow: column;
+      justify-content: left;
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
   }
 }

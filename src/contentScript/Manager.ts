@@ -1,12 +1,13 @@
 
 import { requestSenderInfo, requestCreateTab, StorageChanges } from "../utils/browserUtils"
 import { getConfigOrDefault, getContext, getPin, formatSpeed, conformSpeed, formatFilters, getTargetSets, resetFx, flipFx, setFx, setPin, persistConfig } from "../utils/configUtils"
-import { seekMedia, setMediaPause, setMediaMute, setMark, seekMark, setElemFilter, clearElemFilter, clearElemTransform, setElemTransform, setDocumentTransform, clearDocumentTransform, setPlaybackRate, injectScript } from "./utils"
+import { seekMedia, setMediaPause, setMediaMute, setMark, seekMark, setElemFilter, clearElemFilter, clearElemTransform, setElemTransform, setDocumentTransform, clearDocumentTransform, setPlaybackRate, injectScript, toggleLoop } from "./utils"
 import { clamp, round } from '../utils/helper'
 import { ShadowHost } from "./ShadowHost"
 import { compareHotkeys, extractHotkey } from '../utils/keys'
+import { SetStateMap } from '../utils/i18'
 import { Context, KeyBind, Pin, Config } from '../types'
-import { CommandName } from "../defaults/commands"
+import { CommandName, commandInfos } from "../defaults/commands"
 import { filterInfos } from '../defaults/filters'
 import { LazyQuery } from './LazyQuery'
 import { PollQuery } from './PollQuery'
@@ -138,7 +139,7 @@ export class Manager {
     const eventHotkey = extractHotkey(e)
     
     let validKeyBinds = ctx.enabled ? greedyKeyBinds : greedyKeyBinds.filter(v => v.command === "setState")
-    if (validKeyBinds.some(v => (v.ifMedia ? pageHasMedia : true) && compareHotkeys(v.key, eventHotkey))) {
+    if (validKeyBinds.some(v => v.enabled && (!v.ifMedia || pageHasMedia) && compareHotkeys(v.key, eventHotkey))) {
       e.preventDefault()
       e.stopImmediatePropagation()
       this.handleKeyDown(e)
@@ -156,22 +157,14 @@ export class Manager {
   
     let ctx = getContext(this.config, this.tabId)
     let pageHasMedia = this.mediaQuery?.elems.length > 0
-  
-    // if extension is suspended, only listen to "toggleState" hotkeys. 
-    let keyBinds = ctx.enabled ? this.config.keybinds : this.config.keybinds.filter(v => v.command === "setState")
+
+
+    let validKeybinds = ctx.enabled ? this.config.keybinds : this.config.keybinds.filter(v => v.command === "setState")
+    validKeybinds = validKeybinds.filter(v => v.enabled && (!v.ifMedia || pageHasMedia) && compareHotkeys(v.key, eventHotkey))
+    
   
     let flags = {changed: false}
-    for (let keyBind of keyBinds) {
-      if (!keyBind.enabled) {
-        continue
-      }
-      if (!compareHotkeys(keyBind.key, eventHotkey)) {
-        continue 
-      }
-      if (keyBind.ifMedia && !pageHasMedia) {
-        continue
-      }
-      
+    for (let keyBind of validKeybinds) {
       const pin = getPin(this.config, this.tabId)
       const ctx = getContext(this.config, this.tabId)
       const _keyBind = this.config.keybinds.find(v => v.id === keyBind.id)
@@ -193,7 +186,7 @@ export class Manager {
     runCode: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       injectScript(keyBind.valueString)
       if (!config.hideIndicator) {
-        this.shadowHost?.showSmall("running code")
+        this.shadowHost?.showSmall(chrome.i18n.getMessage("commandInfo__runCodeName"))
       }
     },
     adjustSpeed: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
@@ -227,7 +220,7 @@ export class Manager {
       flags.changed = true 
         
       if (!config.hideIndicator) {
-        this.shadowHost?.showSmall(ctx.enabled ? "on" : "off")
+        this.shadowHost?.showSmall(SetStateMap[ctx.enabled ? "on" : "off"])
       }
     },
     seek: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
@@ -250,7 +243,7 @@ export class Manager {
       window.postMessage({type: "GS_SET_PAUSE", state: keyBind.valueState}, "*")
 
       if (!config.hideIndicator) {
-        this.shadowHost?.showSmall(`${keyBind.valueState} pause`)
+        this.shadowHost?.showSmall(`${SetStateMap[keyBind.valueState]} pause`)
       }
     },
     setMute: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
@@ -263,21 +256,33 @@ export class Manager {
       }
     },
     setMark: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
+      const key = keyBind.valueString.trim()
       const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
-      elems.forEach(elem => setMark(elem, keyBind.valueString))
-      window.postMessage({type: "GS_SET_MARK", key: keyBind.valueString}, "*")
+      elems.forEach(elem => setMark(elem, key))
+      window.postMessage({type: "GS_SET_MARK", key}, "*")
 
       if (!config.hideIndicator) {
-        this.shadowHost?.showSmall(`set "${keyBind.valueString}"`)
+        this.shadowHost?.showSmall(`set "${key}"`)
       }
     },
     seekMark: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
+      const key = keyBind.valueString.trim()
       const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
-      elems.forEach(elem => seekMark(elem, keyBind.valueString))
-      window.postMessage({type: "GS_SEEK_MARK", key: keyBind.valueString}, "*")
+      elems.forEach(elem => seekMark(elem, key))
+      window.postMessage({type: "GS_SEEK_MARK", key}, "*")
 
       if (!config.hideIndicator) {
-        this.shadowHost?.showSmall(`seek "${keyBind.valueString}"`)
+        this.shadowHost?.showSmall(`seek "${key}"`)
+      }
+    },
+    toggleLoop: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
+      const key = keyBind.valueString.trim()
+      const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
+      elems.forEach(elem => toggleLoop(elem, key))
+      window.postMessage({type: "GS_TOGGLE_LOOP", key}, "*")
+
+      if (!config.hideIndicator) {
+        this.shadowHost?.showSmall(commandInfos.toggleLoop.name)
       }
     },
     openUrl: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {

@@ -110,7 +110,7 @@ export function FxPanal(props: FxPanalProps) {
       {!backdropTab && (
         <div className="query">
           <span>{chrome.i18n.getMessage("fxPanal__queryLabel")} <Tooltip tooltip={chrome.i18n.getMessage("fxPanal__queryLabelTooltip")}/></span>
-          <ThrottledTextInput pass={{placeholder: `${chrome.i18n.getMessage("common__default")} 'video'`}} value={ctx.elementQuery || ""} onChange={v => {
+          <ThrottledTextInput pass={{placeholder: `${chrome.i18n.getMessage("token__default")} 'video'`}} value={ctx.elementQuery || ""} onChange={v => {
             setConfig(produce(config, dConfig => {
               const dCtx = getContext(dConfig, tabId)
               dCtx.elementQuery = v

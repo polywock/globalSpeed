@@ -7,9 +7,10 @@ import { Tooltip } from "../comps/Tooltip"
 import { NumericInput } from "../comps/NumericInput"
 import { commandInfos } from "../defaults/commands"
 import { filterInfos, FilterName, filterTargets  } from "../defaults/filters"
-import { GoArrowUp, GoArrowDown, GoArrowBoth } from "react-icons/go"
+import { GoArrowUp, GoArrowDown, GoChevronDown, GoChevronUp, GoX, GoTriangleDown } from "react-icons/go"
 import { CycleInput } from "../comps/CycleInput"
 import { ModalText } from "../comps/ModalText"
+
 
 type KeyBindControlProps = {
   onChange: (id: string, newValue: KeyBind) => void,
@@ -27,12 +28,12 @@ export const KeyBindControl = (props: KeyBindControlProps) => {
   
 
 
-  return <div className="KeyBindControl">
+  return <div className={`KeyBindControl ${value.spacing === 1 ? "spacing" : value.spacing === 2 ? "doubleSpacing" : ""}`}>
     <div className="move">
-      <button onClick={() => props.onMove(value.id, false)}>
+      <button className="icon" onClick={() => props.onMove(value.id, false)}>
         <GoArrowUp size="20px"/>
       </button> 
-      <button onClick={() => props.onMove(value.id, true)}>
+      <button className="icon" onClick={() => props.onMove(value.id, true)}>
         <GoArrowDown size="20px"/>
       </button>
     </div>
@@ -41,37 +42,39 @@ export const KeyBindControl = (props: KeyBindControlProps) => {
         d.enabled = !value.enabled
       }))
     }}/>
-    <div>
-      <span>{commandInfo.shortName ?? commandInfo.name}</span>
-      {commandInfo.withFilterTarget && (
-        <select 
-          value={value.filterTarget} 
-          onChange={e => {
-            props.onChange(value.id, produce(value, d => {
-              d.filterTarget = e.target.value as FilterTarget
-            }))
-          }}
-          style={{marginLeft: "10px"}}
-        >{filterTargets.map(v => {
-          return <option key={v} value={v}>{v}</option>
-        })}</select>
-      )}
-      {commandInfo.withFilterOption && (
-        <select 
-          style={{marginLeft: "10px"}}
-          value={value.filterOption} 
-          onChange={e => {
-            props.onChange(value.id, produce(value, d => {
-              d.filterOption = e.target.value as FilterName
-            }))
-          }}
-        >{Object.entries(filterInfos).map(([k, v]) => {
-          return <option key={k} value={k}>{v.name}</option>
-        })}</select>
-      )}
-      {commandInfo.tooltip && (
-        <Tooltip label="?" tooltip={commandInfo.tooltip}/>
-      )}
+    <div className="command">
+      <div className="name">
+        <span>{commandInfo.name}</span>
+        {commandInfo.tooltip && (
+          <Tooltip label="?" tooltip={commandInfo.tooltip}/>
+        )}
+      </div>
+      <div className="support">
+        {commandInfo.withFilterTarget && (
+          <select 
+            value={value.filterTarget} 
+            onChange={e => {
+              props.onChange(value.id, produce(value, d => {
+                d.filterTarget = e.target.value as FilterTarget
+              }))
+            }}
+          >{filterTargets.map(v => {
+            return <option key={v} value={v}>{v}</option>
+          })}</select>
+        )}
+        {commandInfo.withFilterOption && (
+          <select 
+            value={value.filterOption} 
+            onChange={e => {
+              props.onChange(value.id, produce(value, d => {
+                d.filterOption = e.target.value as FilterName
+              }))
+            }}
+          >{Object.entries(filterInfos).map(([k, v]) => {
+            return <option key={k} value={k}>{v.name}</option>
+          })}</select>
+        )}
+      </div>
     </div>
     <KeyPicker value={value.key} onChange={newKey => {
       props.onChange(value.id, produce(value, d => {
@@ -135,7 +138,24 @@ export const KeyBindControl = (props: KeyBindControlProps) => {
         return <option key={v} value={v}>{v}</option>
       })}</select>
     )}
+    <button className="icon" onClick={e => {
+       props.onChange(value.id, produce(value, d => {
+        d.spacing = ((value.spacing || 0) + 1) % 3
+      }))
+    }}>
+      {!value.spacing && (
+        <GoChevronDown size="20px"/>
+      )} 
+      {value.spacing === 1 && (
+        <GoTriangleDown size="20px"/>
+      )} 
+      {value.spacing === 2 && (
+        <GoChevronUp size="20px"/>
+      )} 
+    </button>
     {!commandInfo.valueType && <div/>}
-    <button className="close" onClick={e => props.onRemove(value.id)}>x</button>
+    <button className="icon" onClick={e => props.onRemove(value.id)}>
+      <GoX size="20px"/>
+    </button>
   </div>
 }

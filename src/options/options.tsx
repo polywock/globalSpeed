@@ -61,7 +61,7 @@ function Options(props: {}) {
   
 
   return <div className="App">
-    <h2 style={{marginTop: "40px"}}>{chrome.i18n.getMessage("options__shortcutsHeader")}</h2>
+    <h2>{chrome.i18n.getMessage("options__shortcutsHeader")}</h2>
     <div>
       <p><code>M</code>: {chrome.i18n.getMessage("options__mediaToggleDesc")}</p>
       <p><code>G</code>: {chrome.i18n.getMessage("options__greedyToggleDesc")}</p>
@@ -178,7 +178,7 @@ function Options(props: {}) {
       }}>{chrome.i18n.getMessage("options__help__localDirective")}</a></p>
     </div>
     {isFirefox() && (
-      <div className="card red">{chrome.i18n.getMessage("common__firefoxBackdropWarning")}</div>
+      <div className="card red">{chrome.i18n.getMessage("firefoxBackdropWarning")}</div>
     )}
     <div>
       <button style={{marginTop: "40px"}} className="large red" onClick={e => {

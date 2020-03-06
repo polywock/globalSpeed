@@ -3,7 +3,7 @@ import { Command, KeyBind } from "../types"
 import { uuidLowerAlpha } from "../utils/helper"
 
 export type CommandName = "nothing" | "runCode" | "adjustSpeed" | "setSpeed" | "setPin" | "setState" | 
-  "seek" | "setPause" | "setMute" | "setMark" | "seekMark" | "openUrl" | 
+  "seek" | "setPause" | "setMute" | "setMark" | "seekMark" | "toggleLoop" | "openUrl" | 
   "setFx" | "resetFx" | "flipFx" | "adjustFilter" | "setFilter" | "cycleFilterValue"
 
 export const commandInfos: {
@@ -15,7 +15,8 @@ export const commandInfos: {
     generate: () => ({
       id: uuidLowerAlpha(16),
       command: "nothing",
-      enabled: true
+      enabled: true,
+      greedy: true
     })
   },
   runCode: {
@@ -26,6 +27,7 @@ export const commandInfos: {
       id: uuidLowerAlpha(16),
       command: "runCode",
       enabled: true,
+      greedy: true,
       valueString: `speechSynthesis.speak(new SpeechSynthesisUtterance("Global Speed is awesome."))`
     })
   },
@@ -38,6 +40,7 @@ export const commandInfos: {
       id: uuidLowerAlpha(16),
       command: "adjustSpeed",
       enabled: true,
+      greedy: true,
       valueNumber: 0.1
     })
   },
@@ -50,6 +53,7 @@ export const commandInfos: {
       id: uuidLowerAlpha(16),
       command: "setSpeed",
       enabled: true,
+      greedy: true,
       valueNumber: 1
     })
   },
@@ -60,6 +64,7 @@ export const commandInfos: {
       id: uuidLowerAlpha(16),
       command: "setPin",
       enabled: true,
+      greedy: true,
       valueState: "toggle"
     })
   },
@@ -70,6 +75,7 @@ export const commandInfos: {
       id: uuidLowerAlpha(16),
       command: "setState",
       enabled: true,
+      greedy: true,
       valueState: "toggle"
     })
   },
@@ -81,6 +87,7 @@ export const commandInfos: {
       id: uuidLowerAlpha(16),
       command: "seek",
       enabled: true,
+      greedy: true,
       valueNumber: 5
     })
   },
@@ -91,6 +98,7 @@ export const commandInfos: {
       id: uuidLowerAlpha(16),
       command: "setPause",
       enabled: true,
+      greedy: true,
       valueState: "toggle"
     })
   },
@@ -101,6 +109,7 @@ export const commandInfos: {
       id: uuidLowerAlpha(16),
       command: "setMute",
       enabled: true,
+      greedy: true,
       valueState: "toggle"
     })
   },
@@ -112,6 +121,7 @@ export const commandInfos: {
       id: uuidLowerAlpha(16),
       command: "setMark",
       enabled: true,
+      greedy: true,
       valueString: "mark1"
     })
   },
@@ -123,7 +133,20 @@ export const commandInfos: {
       id: uuidLowerAlpha(16),
       command: "seekMark",
       enabled: true,
+      greedy: true,
       valueString: "mark1"
+    })
+  },
+  toggleLoop: {
+    name: chrome.i18n.getMessage("commandInfo__toggleLoopName"),
+    tooltip: chrome.i18n.getMessage("commandInfo__toggleLoopTooltip"),
+    valueType: "string",
+    generate: () => ({
+      id: uuidLowerAlpha(16),
+      command: "toggleLoop",
+      enabled: true,
+      greedy: true,
+      valueString: "mark1, mark2"
     })
   },
   openUrl: {
@@ -134,6 +157,7 @@ export const commandInfos: {
       id: uuidLowerAlpha(16),
       command: "openUrl",
       enabled: true,
+      greedy: true,
       valueString: "https://www.google.com/"
     })
   },
@@ -145,6 +169,7 @@ export const commandInfos: {
       id: uuidLowerAlpha(16),
       command: "setFx",
       enabled: true,
+      greedy: true,
       filterTarget: "backdrop",
       valueState: "toggle"
     })
@@ -156,6 +181,7 @@ export const commandInfos: {
       id: uuidLowerAlpha(16),
       command: "resetFx",
       enabled: true,
+      greedy: true,
       filterTarget: "backdrop"
     })
   },
@@ -164,7 +190,8 @@ export const commandInfos: {
     generate: () => ({
       id: uuidLowerAlpha(16),
       command: "flipFx",
-      enabled: true
+      enabled: true,
+      greedy: true
     })
   },
   adjustFilter: {
@@ -178,7 +205,8 @@ export const commandInfos: {
       command: "adjustFilter",
       filterOption: "hue-rotate",
       filterTarget: "enabled",
-      enabled: true
+      enabled: true,
+      greedy: true
     })
   },
   setFilter: {
@@ -192,7 +220,8 @@ export const commandInfos: {
       command: "setFilter",
       filterOption: "hue-rotate",
       filterTarget: "enabled",
-      enabled: true
+      enabled: true,
+      greedy: true
     })
   },
   cycleFilterValue: {
@@ -208,7 +237,8 @@ export const commandInfos: {
       filterOption: "invert",
       filterTarget: "enabled",
       valueCycle: [0, 1],
-      enabled: true
+      enabled: true,
+      greedy: true
     })
   }
 }
@@ -219,72 +249,69 @@ export function getDefaultKeyBinds(): KeyBind[] {
     {
       ...commandInfos.adjustSpeed.generate(),
       key: "KeyA",
-      valueNumber: -0.1,
-      greedy: true
+      valueNumber: -0.1
     },
     {
       ...commandInfos.setSpeed.generate(),
-      key: "KeyS",
-      greedy: true
+      key: "KeyS"
     },
     {
       ...commandInfos.adjustSpeed.generate(),
       key: "KeyD",
       valueNumber: 0.1,
-      greedy: true
+      spacing: 1
     },
     {
       ...commandInfos.setPin.generate(),
       key: "KeyQ",
-      greedy: true
+      spacing: 2
     },
     {
       ...commandInfos.seek.generate(),
       key: "KeyZ",
       enabled: true,
-      valueNumber: -5,
-      greedy: true
+      valueNumber: -5
     },
     {
       ...commandInfos.seek.generate(),
       key: "KeyX",
       enabled: true,
       valueNumber: 5,
-      greedy: true
+      spacing: 1
     },
     {
       ...commandInfos.seek.generate(),
       key: {code: "KeyZ", shiftKey: true},
       enabled: true,
-      valueNumber: -0.04,
-      greedy: true
+      valueNumber: -0.04
     },
     {
       ...commandInfos.seek.generate(),
       key: {code: "KeyX", shiftKey: true},
       enabled: true,
       valueNumber: 0.04,
-      greedy: true
+      spacing: 2
     },
     {
       ...commandInfos.setMark.generate(),
       key: {shiftKey: true, code: "KeyW"},
-      enabled: true,
-      greedy: true,
       valueString: "mark1"
     },
     {
       ...commandInfos.seekMark.generate(),
       key: "KeyW",
-      enabled: true,
-      greedy: true,
-      valueString: "mark1"
+      valueString: "mark1",
+      spacing: 1
+    },
+    {
+      ...commandInfos.toggleLoop.generate(),
+      key: "KeyR",
+      valueString: "mark1",
+      spacing: 2
     },
     {
       ...commandInfos.cycleFilterValue.generate(),
       key: {code: "KeyE"},
-      enabled: true,
-      greedy: true,
       filterOption: "invert",
       filterTarget: "both",
       valueCycle: [0, 1]
@@ -292,8 +319,6 @@ export function getDefaultKeyBinds(): KeyBind[] {
     {
       ...commandInfos.cycleFilterValue.generate(),
       key: {shiftKey: true, code: "KeyE"},
-      enabled: true,
-      greedy: true,
       filterOption: "grayscale",
       filterTarget: "element",
       valueCycle: [0, 1]

@@ -57,7 +57,8 @@ export type KeyBind = {
   valueState?: SetState
   filterOption?: FilterName,
   filterTarget?: FilterTarget,
-  cycleIncrement?: number
+  cycleIncrement?: number,
+  spacing?: number
 }
 
 export type FilterTarget = "element" | "backdrop" | "both" | "enabled"

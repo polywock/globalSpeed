@@ -5,10 +5,7 @@
   "appDesc": {
     "message": "Set a default speed for video and audio."
   },
-  "common__default": {
-    "message": "default"
-  },
-  "common__firefoxBackdropWarning": {
+  "firefoxBackdropWarning": {
     "message": "Warning: For backdrop filters, Firefox users need to enable 'gfx.webrender.all' and 'layout.css.backdrop-filter.enabled' by going to 'about:page'. Restart Firefox after enabling the two flags."
   },
   "fxPanal__elementTab": {
@@ -16,7 +13,7 @@
   },
   "fxPanal__backdropTab": {
     "message": "backdrop"
-  },
+  },  
   "fxPanal__enabledButton": {
     "message": "enabled"
   },
@@ -33,7 +30,7 @@
     "message": "swap"
   },
   "fxPanal__swapButtonTooltip": {
-    "message": "swap element and backdrop fx values"
+    "message": "swap element and backdrop values"
   },
   "fxPanal__flipXButton": {
     "message": "flipX"
@@ -45,7 +42,7 @@
     "message": "query"
   },
   "fxPanal__queryLabelTooltip": {
-    "message": "CSS selector used to find elements to filter. For example. 'video, img' will query for both videos and images. For advanced usage, view documentation online about CSS selectors. Warning, generic selectors can cause performance problems."
+    "message": "CSS selector used to find elements to filter. For example. 'video, img' will query for both videos and images. For advanced usage, view documentation online about CSS selectors."
   },
   "filterInfo__Grayscale": {
     "message": "grayscale"
@@ -93,7 +90,7 @@
     "message": "set speed"
   },
   "commandInfo__setPinName": {
-    "message": "set pin"
+    "message": "set pin 📌"
   },
   "commandInfo__setStateName": {
     "message": "set state"
@@ -102,7 +99,7 @@
     "message": "seek"
   },
   "commandInfo__seekTooltip": {
-    "message": "Adjust current video/audio time by adding a positive or negative value in seconds."
+    "message": "Adjust video/audio time position. "
   },
   "commandInfo__setPauseName": {
     "message": "set pause"
@@ -114,13 +111,19 @@
     "message": "set mark"
   },
   "commandInfo__setMarkTooltip": {
-    "message": "Mark the current video/audio location for future reference. You can have multiple keybinds to set different marks."
+    "message": "Mark the current video/audio time position for future reference."
   },
   "commandInfo__seekMarkName": {
     "message": "seek mark"
   },
   "commandInfo__seekMarkTooltip": {
-    "message": "Go to a marked video/audio location. If no mark exists, it will set a mark."
+    "message": "Go to a marked video/audio time position. If no mark exists, it will set a mark."
+  },
+  "commandInfo__toggleLoopName": {
+    "message": "toggle loop"
+  },
+  "commandInfo__toggleLoopTooltip": {
+    "message": "Set loop between the marked position and the current position."
   },
   "commandInfo__openUrlName": {
     "message": "open url"
@@ -192,7 +195,7 @@
     "message": "hide indicator" 
   },
   "options__hideIndicatorTooltip": {
-    "message": "Some hotkey commands show a feedback indicator on the top-left of the page." 
+    "message": "Some shortcuts show a feedback indicator on the top-left of the page." 
   },
   "options__hideBadge": {
     "message": "hide badge" 
@@ -216,7 +219,7 @@
     "message": "State"
   },
   "options__help__stateDesc": {
-    "message": "You can suspend the extension for all tabs, or a specific tab (if pinned). Speed will no longer set. And all hotkeys except set state will cease to work."
+    "message": "You can suspend the extension for all tabs, or a specific tab (if pinned). Speed will no longer set. All shortcuts except set state will cease to work."
   },
   "options__help__pinLabel": {
     "message": "Pin"
@@ -238,5 +241,23 @@
   },
   "options__help__resetToDefaultButton": {
     "message": "Reset to Default"
+  },
+  "token__on": {
+    "message": "on"
+  },
+  "token__off": {
+    "message": "off"
+  },
+  "token__toggle": {
+    "message": "toggle"
+  },
+  "token__seek": {
+    "message": "seek"
+  },
+  "token__pause": {
+    "message": "pause"
+  },
+  "token__default": {
+    "message": "default"
   }
 }

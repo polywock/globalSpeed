@@ -5,6 +5,7 @@ h2 {
   margin-top: 40px;
 }
 
+
 body {
   background-color: #ddd;
   margin: 0;
@@ -12,17 +13,24 @@ body {
 }
 
 #root {
-  display: grid;
-  justify-content: center;
+  @media only screen and (min-width: 900px) {
+    display: grid;
+    justify-content: center;
+  }
 }
 
 .App {
-  background-color: white;
-  padding: 0px 20px 80px 20px;
+  margin: 0px;
+  background-color: #fcfcfc;
+  padding: 20px;
   font-family: monospace;
   font-size: 14px;
-  width: 900px;
-  min-height: 100vh;
+  min-width: 700px;
+  max-width: 900px;
+
+  & > h2:first-child {
+    margin-top: 0;
+  }
 
   .labelWithTooltip {
     display: grid;
@@ -34,7 +42,7 @@ body {
   .keyBindControls {
 
     & > div {
-      margin-top: 5px;
+      margin-top: 10px;
 
       &:first-child {
         margin-top: 0;
