@@ -50,7 +50,7 @@ export function FxPanal(props: FxPanalProps) {
           }
         }} className="card red">
           {expandWarning ? (
-            <span>For backdrop filters, Firefox users need to enable <code>gfx.webrender.all</code> and <code>layout.css.backdrop-filter.enabled</code> by going to the <code>about:page</code> url. Restart Firefox after enabling the two flags.</span>
+            <span>{window.gsm["firefoxBackdropWarning"] || ""}</span>
           ) : <span>Warning, click me...</span>}
         </div>
       )}
