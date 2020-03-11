@@ -4,9 +4,11 @@ Web extension that sets a default speed for HTML media elements (video and audio
 To use, install the [Chrome](https://chrome.google.com/webstore/detail/global-speed-youtube-netf/jpbjcnkcffbooppibceonlgknpkniiff?hl=en), [Firefox](https://addons.mozilla.org/en-US/firefox/addon/global-speed/), or [Edge](https://microsoftedge.microsoft.com/addons/detail/mjhlabbcmjflkpjknnicihkfnmbdfced) extension. 
 
 ## Features
-- Hotkeys (and way to customize them). 
-- Pinning (apply custom playback rate to a specific tab).
-- Fx: apply filters (invert, grayscale, etc) on the entire page or select elements. 
+- Compatible with nearly all video and audio streaming sites including Youtube, Netflix, Twitch, Spotify, podcasts, etc.  
+- Apply a custom speed to a specific tab.  
+- Optional hotkeys for adjusting speed, rewinding/forwarding, frame by frame analysis, and even running javascript.  
+- Apply filters (invert, grayscale, etc) on select elements like videos, or even the entire page.  
+
 
 <img src="https://github.com/polywock/globalSpeed/blob/master/assets/screenshot_a.jpg?raw=true" width="600">
 
