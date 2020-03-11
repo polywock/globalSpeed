@@ -6,8 +6,8 @@ To use, install the [Chrome](https://chrome.google.com/webstore/detail/global-sp
 ## Features
 - Compatible with nearly all video and audio streaming sites including Youtube, Netflix, Twitch, Spotify, podcasts, etc.  
 - Apply a custom speed to a specific tab.  
-- Optional hotkeys for adjusting speed, rewinding/forwarding, frame by frame analysis, and even running javascript.  
-- Apply filters (invert, grayscale, etc) on select elements like videos, or even the entire page.  
+- Optional hotkeys for adjusting speed, rewinding/forwarding, looping, frame by frame analysis, and even running javascript.  
+- Apply filters (invert, grayscale, mirroring, etc) on select elements like videos, or even the entire page.  
 
 
 <img src="https://github.com/polywock/globalSpeed/blob/master/assets/screenshot_a.jpg?raw=true" width="600">
@@ -24,6 +24,8 @@ To use, install the [Chrome](https://chrome.google.com/webstore/detail/global-sp
 ### V2.5.X
 - Feature: Support for hidden audio elements. 
    - Now compatible with Spotify, Amazon Music, NPR, and many other music and podcast streaming sites.
+- Feature: Added loop shortcut: when pressed it will set a loop from a marked position and the current video/audio time. 
+- Feature: Added localization for a few languages (bad translations and thus optional).
 
 ### V2.4.X
 - Performance: Suspend extension if tab is not visible. 

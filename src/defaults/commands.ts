@@ -301,7 +301,8 @@ export function getDefaultKeyBinds(): KeyBind[] {
       ...commandInfos.toggleLoop.generate(),
       key: "KeyR",
       valueString: "mark1",
-      spacing: 2
+      spacing: 2,
+      enabled: false
     },
     {
       ...commandInfos.cycleFilterValue.generate(),
