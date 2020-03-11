@@ -12,7 +12,7 @@ import { GoPin, GoZap } from "react-icons/go"
 import { FaPowerOff } from "react-icons/fa"
 import { requestCreateTab } from "../utils/browserUtils"
 import { NumericInput } from "../comps/NumericInput"
-import { SUPPORTED_LANGS, ensureGsmLoaded } from "../utils/i18"
+import { LOCALE_MAP, ensureGsmLoaded } from "../utils/i18"
 import produce from "immer"
 import "./options.scss"
 
@@ -33,7 +33,7 @@ function Options(props: {}) {
   }, [])
 
   if (!config) {
-    return <span>Loading...</span>
+    return <span></span>
   }
 
   const handleKeyBindChange = (id: string, newKb: KeyBind) => {
@@ -77,8 +77,8 @@ function Options(props: {}) {
             window.location.reload()
           }, 50) 
         }}>
-          {Object.keys(SUPPORTED_LANGS).map(key => (
-            <option key={key} value={key} title={SUPPORTED_LANGS[key].title}>{SUPPORTED_LANGS[key].display}</option>
+          {Object.keys(LOCALE_MAP).map(key => (
+            <option key={key} value={key} title={LOCALE_MAP[key].title}>{LOCALE_MAP[key].display}</option>
           ))}
         </select>
       </div>

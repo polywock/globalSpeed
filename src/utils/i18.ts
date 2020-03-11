@@ -8,7 +8,7 @@ declare global {
 }
 
 
-export const SUPPORTED_LANGS: {
+export const LOCALE_MAP: {
   [key: string]: {
     display: string,
     title: string
@@ -26,17 +26,18 @@ export const SUPPORTED_LANGS: {
   "zh_TW": { display: "中文 (繁體)", title: "Chinese (Traditional)" }
 }
 
+export const AVAILABLE_LOCALES = ["ar", "en", "es", "hi", "ja", "ko", "ru", "zh_CN", "zh_TW"]
+
 
 export async function ensureGsmLoaded(): Promise<void> {
   const config = await getConfigOrDefault()
   if (!window.gsm) {
-    if (chrome.runtime.getPackageDirectoryEntry) {
-      window.gsm = await getMessages(config.language)
-    } else {
+    return new Promise((res, rej) => {
       chrome.runtime.sendMessage({type: "REQUEST_GSM", language: config.language}, gsm => {
         window.gsm = gsm 
+        res()
       })
-    }
+    })
   }
 }
 
@@ -48,49 +49,20 @@ type Messages = {
 
 export async function getMessages(overrideLang: string): Promise<Messages> {
   let systemLangs = await getAcceptLanguages()
-  let langs = [overrideLang, ...navigator.languages, ...systemLangs, "en"].map(lang => (lang || "").replace("-", "_").toLowerCase())
+  let prefLangs = [overrideLang, ...navigator.languages, ...systemLangs, "en"].map(lang => (lang || "").replace("-", "_").toLowerCase())
 
-  let localNameEntries = await getLocaleNameEntries()
-
-  for (let lang of langs) {
-    for (let pair of localNameEntries) {
-      if (pair.name === lang) {
-        let rawMessages = JSON.parse(await readFileEntryAsText(pair.entry))
-        let outMessages: Messages = {}
-
-        Object.keys(rawMessages).forEach(key => {
-          outMessages[key] = rawMessages[key]?.message || ""
-        })
-
-        return outMessages
-      }
+  for (let lang of prefLangs) {
+    const localeIdx = AVAILABLE_LOCALES.findIndex(v => v.toLowerCase() === lang)
+    if (localeIdx < 0) {
+      continue
     }
+
+    try {
+      return readLocaleFile(AVAILABLE_LOCALES[localeIdx])
+    } catch (err) { }
   }
-}
 
-type LocaleNameEntry = {name: string, entry: FileEntry}
-
-function getLocaleNameEntry(localeEntry: DirectoryEntry): Promise<LocaleNameEntry> {
-  return new Promise((res, rej) => {
-    localeEntry.getFile("messages.json", undefined, entry => {
-      res({name: localeEntry.name.replace("-", "_").toLowerCase(), entry})
-    }, err => rej(err))
-  })
-}
-
-function getLocaleNameEntries(): Promise<LocaleNameEntry[]> {
-  return new Promise((res, rej) => {
-    chrome.runtime.getPackageDirectoryEntry(root => {
-      root.getDirectory("_locales", undefined, locales => {
-        let reader = locales.createReader()
-        reader.readEntries(entries => {
-          Promise.all(
-            entries.filter(entry => entry.isDirectory).map(localeEntry => getLocaleNameEntry(localeEntry as DirectoryEntry))
-          ).then(out => res(out), err => rej(err))
-        }, err => rej(err))
-      }, err => rej(err))
-    })
-  })
+  return readLocaleFile("en")
 }
 
 
@@ -100,21 +72,13 @@ function getAcceptLanguages(): Promise<string[]> {
   })
 }
 
-function readFileEntryAsText(fileEntry: FileEntry): Promise<string> {
-  return new Promise((res, rej) => {
-    let reader = new FileReader()
-    reader.addEventListener("loadend", () => {
-      if (reader.error) {
-        rej(reader.error)
-      } else {
-        res(reader.result as string)
-      }
-    })
-
-    fileEntry.file(file => {
-      reader.readAsText(file)
-    }, err => {
-      rej(err)
-    })
-  })
+async function readLocaleFile(locale: string): Promise<Messages> {
+  const fetched = await fetch(chrome.runtime.getURL(`_locales/${locale}/messages.json`))
+  const json = await fetched.json()
+  const messages: Messages = {}
+  for (let key in json) {
+    messages[key] = json[key].message
+  }
+  return messages
 }
+
