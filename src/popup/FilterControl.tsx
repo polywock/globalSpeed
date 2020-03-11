@@ -6,6 +6,7 @@ import { clamp } from "../utils/helper"
 import "./FilterControl.scss"
 import { NumericControl } from "../comps/NumericControl"
 import { GoArrowUp, GoArrowDown } from "react-icons/go"
+import { GiAnticlockwiseRotation } from "react-icons/gi"
 
 
 type FilterControlProps = {
@@ -30,12 +31,12 @@ export function FilterControl(props: FilterControlProps) {
     </div>
     <div className="core">
       <div className="header">
-        <span>{filterInfo.name}</span>
+        <span>{window.gsm[filterInfo.name] || ""}</span>
         <button onClick={e => {
           props.onChange(produce(filterValue, d => {
             d.value = filterInfo.default
           }))
-        }}>{chrome.i18n.getMessage("fxPanal__resetButton")}</button>
+        }}><GiAnticlockwiseRotation size="14px"/></button>
       </div>
       <NumericControl 
         value={filterValue.value}

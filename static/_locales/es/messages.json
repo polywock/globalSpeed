@@ -1,0 +1,259 @@
+{
+  "appName": {
+    "message": "Global Speed - Velocidad global"
+  },
+  "appDesc": {
+    "message": "Establezca una velocidad predeterminada para video y audio."
+  },
+  "firefoxBackdropWarning": {
+    "message": "Advertencia: para los filtros de fondo, los usuarios de Firefox deben habilitar 'gfx.webrender.all' y 'layout.css.backdrop-filter.enabled' yendo a la URL 'about: config'. Reinicie Firefox después de habilitar las dos banderas."
+  },
+  "token_language": {
+    "message": "idioma"
+  },
+  "token_create": {
+    "message": "crear"
+  },
+  "token_on": {
+    "message": "activar"
+  },
+  "token_off": {
+    "message": "desactivar"
+  },
+  "token_toggle": {
+    "message": "alternar"
+  },
+  "token_default": {
+    "message": "defecto"
+  },
+  "token_pause": {
+    "message": "pausa"
+  },
+  "token_mute": {
+    "message": "silenciar"
+  },
+  "token_setting": {
+    "message": "ajuste"
+  },
+  "token_goTo": {
+    "message": "buscando"
+  },
+  "token_enabled": {
+    "message": "activado"
+  },
+  "token_element": {
+    "message": "elemento"
+  },
+  "token_backdrop": {
+    "message": "fondo"
+  },
+  "token_both": {
+    "message": "ambos"
+  },
+  "token_reset": {
+    "message": "restablecer"
+  },
+  "token_copyInto": {
+    "message": "pegar en"
+  },
+  "token_swap": {
+    "message": "intercambiar"
+  },
+  "token_flipX": {
+    "message": "espejoX"
+  },
+  "token_flipY": {
+    "message": "espejoY"
+  },
+  "token_query": {
+    "message": "selector"
+  },
+  "filter_grayscale": {
+    "message": "escala de grises"
+  },
+  "filter_sepia": {
+    "message": "sepia"
+  },
+  "filter_hueRotate": {
+    "message": "matiz rotar"
+  },
+  "filter_contrast": {
+    "message": "contraste"
+  },
+  "filter_brightness": {
+    "message": "brillo"
+  },
+  "filter_saturate": {
+    "message": "saturar"
+  },
+  "filter_invert": {
+    "message": "invertir"
+  },
+  "filter_blur": {
+    "message": "desenfoque"
+  },
+  "filter_opacity": {
+    "message": "opacidad"
+  },
+  "fxPanal_copyIntoTooltip": {
+    "message": "copiar valores de otra pestaña."
+  },
+  "fxPanal_swapTooltip": {
+    "message": "intercambiar elementos y valores de fondo"
+  },
+  "fxPanal_queryTooltip": {
+    "message": "El selector CSS se usa para buscar elementos para filtrar. Por ejemplo. 'video, img' consultará tanto videos como imágenes. Para uso avanzado, vea la documentación en línea sobre los selectores CSS."
+  },
+
+
+  "command_nothing": {
+    "message": "ninguna acción"
+  },
+  "command_nothingTooltip": {
+    "message": "Puede ser útil en combinación con el modo codicioso (G) para bloquear ciertas teclas."
+  },
+  "command_runCode": {
+    "message": "Ejecutar código"
+  },
+  "command_adjustSpeed": {
+    "message": "ajustar la velocidad"
+  },
+  "command_setSpeed": {
+    "message": "velocidad fijada"
+  },
+  "command_pinTab": {
+    "message": "Anclar pestaña"
+  },
+  "command_setState": {
+    "message": "establecer estado"
+  },
+  "command_seek": {
+    "message": "buscar"
+  },
+  "command_seekTooltip": {
+    "message": "Ajuste la posición del tiempo de video / audio."
+  },
+  "command_setMark": {
+    "message": "crear marcador"
+  },
+  "command_setMarkTooltip": {
+    "message": "Marque la posición actual del tiempo de video / audio para referencia futura."
+  },
+  "command_seekMark": {
+    "message": "ir al marcador"
+  },
+  "command_seekMarkTooltip": {
+    "message": "Vaya a una posición marcada de tiempo de video / audio. Si no existe un marcador, establecerá un marcador."
+  },
+  "command_toggleLoop": {
+    "message": "bucle de palanca"
+  },
+  "command_toggleLoopTooltip": {
+    "message": "Establecer bucle entre la posición marcada y la posición actual."
+  },
+  "command_openUrl": {
+    "message": "enlace abierto"
+  },
+  "command_setFx": {
+    "message": "establecer el estado de FX"
+  },
+  "command_resetFx": {
+    "message": "restablecer valores FX"
+  },
+  "command_flipFx": {
+    "message": "intercambiar valores FX"
+  },
+  "command_adjustFilter": {
+    "message": "ajustar el filtro"
+  },
+  "command_setFilter": {
+    "message": "establecer filtro"
+  },
+  "command_cycleFilterValue": {
+    "message": "valor del filtro de ciclo"
+  },
+  "command_cycleFilterValueTooltip": {
+    "message": "ciclo entre los valores proporcionados. Se puede usar para alternar inversión, escala de grises, sepia, etc."
+  },
+
+
+  "options_shortcutsHeader": {
+    "message": "Editor de accesos directos"
+  },
+  "options_optionsHeader": {
+    "message": "Opciones"
+  },
+  "options_helpHeader": {
+    "message": "Ayuda"
+  },
+
+
+  "options_mediaToggleDesc": {
+    "message": "el modo multimedia ignorará la pulsación de teclas a menos que la página tenga video o audio."
+  },
+  "options_greedyToggleDesc": {
+    "message": "El modo codicioso intentará bloquear la propagación de eventos y los comportamientos predeterminados."
+  },
+
+
+  "options_showAdvancedButton": {
+    "message": "Mostrar avanzado"
+  },
+  "options_languageTooltip": {
+    "message": "Todos los idiomas, excepto el inglés, se tradujeron utilizando herramientas en línea. Actualizar pestaña para ver los cambios." 
+  },
+  "options_pinByDefault": {
+    "message": "pin por defecto" 
+  },
+  "options_pinByDefaultTooltip": {
+    "message": "Cada pestaña se fijará de forma predeterminada." 
+  },
+  "options_hideIndicator": {
+    "message": "ocultar indicador" 
+  },
+  "options_hideIndicatorTooltip": {
+    "message": "Algunos accesos directos muestran un indicador de comentarios en la parte superior izquierda de la página." 
+  },
+  "options_hideBadge": {
+    "message": "ocultar insignia" 
+  },
+  "options_hideBadgeTooltip": {
+    "message": "La insignia es el texto en el icono de extensión." 
+  },
+  "options_usePolling": {
+    "message": "intervalo de uso" 
+  },
+  "options_usePollingTooltip": {
+    "message": "Dos formas de consultar elementos. La forma predeterminada es realizar un seguimiento de los cambios utilizando la API MutationObserver. Esto es más eficiente a largo plazo. Un método alternativo es encontrar periódicamente elementos objetivo." 
+  },
+  "options_pollingRate": {
+    "message": "tasa de intervalo" 
+  },
+  "options_pollingRateTooltip": {
+    "message": "Como referencia, 1000 milisegundos es 1 segundo." 
+  },
+  "options_issuePrompt": {
+    "message": "¿Tienes problemas o alguna sugerencia?"
+  },
+  "options_issueDirective": {
+    "message": "Crea un nuevo problema en la página de Github."
+  },
+  "options_help_stateDesc": {
+    "message": "Suspender la extensión para el contexto actual."
+  },
+  "options_help_pinDesc": {
+    "message": "Anclar una pestaña le permite tener su propio contexto (velocidad, activación, filtros, etc.)."
+  },
+  "options_help_fxDesc": {
+    "message": "Puede habilitar filtros (contraste, inversión, escala de grises, etc.) en elementos (por defecto, solo videos) o incluso en toda la página con fondo."
+  },
+  "options_help_localPrompt": {
+    "message": "Para que la extensión funcione en archivos locales o en modo incógnito."
+  },
+  "options_help_localDirective": {
+    "message": "Deben estar habilitados en la página de extensión."
+  },
+  "options_help_resetToDefaultButton": {
+    "message": "Restablecen a los predeterminados"
+  }
+}

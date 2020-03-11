@@ -6,12 +6,11 @@ export type CommandName = "nothing" | "runCode" | "adjustSpeed" | "setSpeed" | "
   "seek" | "setPause" | "setMute" | "setMark" | "seekMark" | "toggleLoop" | "openUrl" | 
   "setFx" | "resetFx" | "flipFx" | "adjustFilter" | "setFilter" | "cycleFilterValue"
 
-export const commandInfos: {
-  [key in CommandName]: Command
-} = {
+
+export let commandInfos: {[key in CommandName]: Command} = {
   nothing: {
-    name: chrome.i18n.getMessage("commandInfo__nothingName"),
-    tooltip: chrome.i18n.getMessage("commandInfo__nothingTooltip"),
+    name: "command_nothing",
+    tooltip: "command_nothingTooltip",
     generate: () => ({
       id: uuidLowerAlpha(16),
       command: "nothing",
@@ -20,19 +19,18 @@ export const commandInfos: {
     })
   },
   runCode: {
-    name: chrome.i18n.getMessage("commandInfo__runCodeName"),
-    tooltip: chrome.i18n.getMessage("commandInfo__runCodeTooltip"),
+    name: "command_runCode",
     valueType: "modalString",
     generate: () => ({
       id: uuidLowerAlpha(16),
       command: "runCode",
       enabled: true,
       greedy: true,
-      valueString: `speechSynthesis.speak(new SpeechSynthesisUtterance("Global Speed is awesome."))`
+      valueString: `// your code here\n\nspeechSynthesis.speak(new SpeechSynthesisUtterance("Global Speed"))`
     })
   },
   adjustSpeed: {
-    name: chrome.i18n.getMessage("commandInfo__adjustSpeedName"),
+    name: "command_adjustSpeed",
     valueType: "number",
     valueMin: -5,
     valueMax: 5,
@@ -45,7 +43,7 @@ export const commandInfos: {
     })
   },
   setSpeed: {
-    name: chrome.i18n.getMessage("commandInfo__setSpeedName"),
+    name: "command_setSpeed",
     valueType: "number",
     valueMin: 0.07,
     valueMax: 16,
@@ -58,7 +56,7 @@ export const commandInfos: {
     })
   },
   setPin: {
-    name: chrome.i18n.getMessage("commandInfo__setPinName"),
+    name: "command_pinTab",
     valueType: "state",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -69,7 +67,7 @@ export const commandInfos: {
     })
   },
   setState: {
-    name: chrome.i18n.getMessage("commandInfo__setStateName"),
+    name: "command_setState",
     valueType: "state",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -80,8 +78,8 @@ export const commandInfos: {
     })
   },
   seek: {
-    name: chrome.i18n.getMessage("commandInfo__seekName"),
-    tooltip: chrome.i18n.getMessage("commandInfo__seekTooltip"),
+    name: "command_seek",
+    tooltip: "command_seekTooltip",
     valueType: "number",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -92,7 +90,7 @@ export const commandInfos: {
     })
   },
   setPause: {
-    name: chrome.i18n.getMessage("commandInfo__setPauseName"),
+    name: "token_pause",
     valueType: "state",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -103,7 +101,7 @@ export const commandInfos: {
     })
   },
   setMute: {
-    name: chrome.i18n.getMessage("commandInfo__setMuteName"),
+    name: "token_mute",
     valueType: "state",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -114,8 +112,8 @@ export const commandInfos: {
     })
   },
   setMark: {
-    name: chrome.i18n.getMessage("commandInfo__setMarkName"),
-    tooltip: chrome.i18n.getMessage("commandInfo__setMarkTooltip"),
+    name: "command_setMark",
+    tooltip: "command_setMarkTooltip",
     valueType: "string",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -126,8 +124,8 @@ export const commandInfos: {
     })
   },
   seekMark: {
-    name: chrome.i18n.getMessage("commandInfo__seekMarkName"),
-    tooltip: chrome.i18n.getMessage("commandInfo__seekMarkTooltip"),
+    name: "command_seekMark",
+    tooltip: "command_seekMarkTooltip",
     valueType: "string",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -138,8 +136,8 @@ export const commandInfos: {
     })
   },
   toggleLoop: {
-    name: chrome.i18n.getMessage("commandInfo__toggleLoopName"),
-    tooltip: chrome.i18n.getMessage("commandInfo__toggleLoopTooltip"),
+    name: "command_toggleLoop",
+    tooltip: "command_toggleLoopTooltip",
     valueType: "string",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -150,8 +148,7 @@ export const commandInfos: {
     })
   },
   openUrl: {
-    name: chrome.i18n.getMessage("commandInfo__openUrlName"),
-    tooltip: chrome.i18n.getMessage("commandInfo__openUrlTooltip"),
+    name: "command_openUrl",
     valueType: "string",
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -162,7 +159,7 @@ export const commandInfos: {
     })
   },
   setFx: {
-    name: chrome.i18n.getMessage("commandInfo__setFxName"),
+    name: "command_setFx",
     withFilterTarget: true,
     valueType: "state",
     generate: () => ({
@@ -175,7 +172,7 @@ export const commandInfos: {
     })
   },
   resetFx: {
-    name: chrome.i18n.getMessage("commandInfo__resetFxName"),
+    name: "command_resetFx",
     withFilterTarget: true,
     generate: () => ({
       id: uuidLowerAlpha(16),
@@ -186,7 +183,7 @@ export const commandInfos: {
     })
   },
   flipFx: {
-    name: chrome.i18n.getMessage("commandInfo__flipFxName"),
+    name: "command_flipFx",
     generate: () => ({
       id: uuidLowerAlpha(16),
       command: "flipFx",
@@ -195,8 +192,7 @@ export const commandInfos: {
     })
   },
   adjustFilter: {
-    name: chrome.i18n.getMessage("commandInfo__adjustFilterName"),
-    shortName: chrome.i18n.getMessage("commandInfo__adjustFilterShortName"),
+    name: "command_adjustFilter",
     valueType: "filterNumber",
     withFilterOption: true,
     withFilterTarget: true,
@@ -210,8 +206,7 @@ export const commandInfos: {
     })
   },
   setFilter: {
-    name: chrome.i18n.getMessage("commandInfo__setFilterName"),
-    shortName: chrome.i18n.getMessage("commandInfo__setFilterShortName"),
+    name: "command_setFilter",
     valueType: "filterNumber",
     withFilterOption: true,
     withFilterTarget: true,
@@ -225,9 +220,8 @@ export const commandInfos: {
     })
   },
   cycleFilterValue: {
-    name: chrome.i18n.getMessage("commandInfo__cycleFilterValueName"),
-    shortName: chrome.i18n.getMessage("commandInfo__cycleFilterValueShortName"),
-    tooltip: chrome.i18n.getMessage("commandInfo__cycleFilterValueTooltip"),
+    name: "command_cycleFilterValue",
+    tooltip: "command_cycleFilterValueTooltip",
     withFilterTarget: true,
     withFilterOption: true,
     valueType: "cycle",
@@ -320,7 +314,7 @@ export function getDefaultKeyBinds(): KeyBind[] {
       ...commandInfos.cycleFilterValue.generate(),
       key: {shiftKey: true, code: "KeyE"},
       filterOption: "grayscale",
-      filterTarget: "element",
+      filterTarget: "backdrop",
       valueCycle: [0, 1]
     }
   ]

@@ -25,8 +25,7 @@ body {
   padding: 20px;
   font-family: monospace;
   font-size: 14px;
-  min-width: 700px;
-  max-width: 900px;
+  width: 900px;
 
   & > h2:first-child {
     margin-top: 0;
@@ -72,9 +71,9 @@ body {
   & > .fields {
     margin-top: 20px;
     
-    & > div {
+    & > .field {
       display: grid;
-      grid-template-columns: 200px max-content;
+      grid-template-columns: 300px max-content;
       grid-column-gap: 10px;
       margin-bottom: 10px;
       align-items: center;

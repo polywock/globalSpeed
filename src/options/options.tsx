@@ -7,12 +7,13 @@ import { clamp, isFirefox } from "../utils/helper"
 import { getDefaultConfig } from "../defaults"
 import { commandInfos, CommandName, getDefaultKeyBinds } from "../defaults/commands"
 import { KeyBindControl } from "./KeyBindControl"
-import produce from "immer"
 import { Tooltip } from "../comps/Tooltip"
 import { GoPin, GoZap } from "react-icons/go"
 import { FaPowerOff } from "react-icons/fa"
 import { requestCreateTab } from "../utils/browserUtils"
 import { NumericInput } from "../comps/NumericInput"
+import { SUPPORTED_LANGS, ensureGsmLoaded } from "../utils/i18"
+import produce from "immer"
 import "./options.scss"
 
 function Options(props: {}) {
@@ -61,10 +62,95 @@ function Options(props: {}) {
   
 
   return <div className="App">
-    <h2>{chrome.i18n.getMessage("options__shortcutsHeader")}</h2>
+    <h2 style={{marginTop: "40px"}}>{window.gsm["options_optionsHeader"] || ""}</h2>
+    <div className="fields">
+      <div className="field">
+        <div className="labelWithTooltip">
+          <span>{window.gsm["token_language"] || ""}</span>
+          <Tooltip tooltip={window.gsm["options_languageTooltip"] || ""}/>
+        </div>
+        <select value={config.language || "detect"} onChange={e => {
+          setAndPersistConfig(produce(config, d => {
+            d.language = e.target.value 
+          }))
+          setTimeout(() => {
+            window.location.reload()
+          }, 50) 
+        }}>
+          {Object.keys(SUPPORTED_LANGS).map(key => (
+            <option key={key} value={key} title={SUPPORTED_LANGS[key].title}>{SUPPORTED_LANGS[key].display}</option>
+          ))}
+        </select>
+      </div>
+      <div className="field">
+        <div className="labelWithTooltip">
+          <span>{window.gsm["options_pinByDefault"] || ""}</span>
+          <Tooltip tooltip={window.gsm["options_pinByDefaultTooltip"] || ""}/>
+        </div>
+        <input type="checkbox" checked={config.pinByDefault || false} onChange={e => {
+          setAndPersistConfig(produce(config, d => {
+            d.pinByDefault = e.target.checked
+          }))
+        }}/>
+      </div>
+      <div className="field">
+        <div className="labelWithTooltip">
+          <span>{window.gsm["options_hideIndicator"] || ""}</span>
+          <Tooltip tooltip={window.gsm["options_hideIndicatorTooltip"] || ""}/>
+        </div>
+        <input type="checkbox" checked={config.hideIndicator || false} onChange={e => {
+          setAndPersistConfig(produce(config, d => {
+            d.hideIndicator = e.target.checked
+          }))
+        }}/>
+      </div>
+      <div className="field">
+        <div className="labelWithTooltip">
+          <span>{window.gsm["options_hideBadge"] || ""}</span>
+          <Tooltip tooltip={window.gsm["options_hideBadgeTooltip"] || ""}/>
+        </div>
+        <input type="checkbox" checked={config.hideBadge || false} onChange={e => {
+          setAndPersistConfig(produce(config, d => {
+            d.hideBadge = e.target.checked
+          }))
+        }}/>
+      </div>
+      {!showAdvanced && (
+        <button onClick={e => setShowAdvanced(!showAdvanced)}>{window.gsm["options_showAdvancedButton"] || ""}</button>
+      )}
+      {showAdvanced && (
+        <>
+          <div className="field">
+            <div className="labelWithTooltip">
+              <span>{window.gsm["options_usePolling"] || ""}</span>
+              <Tooltip tooltip={window.gsm["options_usePollingTooltip"] || ""}/>
+            </div>
+            <input type="checkbox" checked={config.usePolling || false} onChange={e => {
+              setAndPersistConfig(produce(config, d => {
+                d.usePolling = e.target.checked
+              }))
+            }}/>
+          </div>
+          {config.usePolling && (
+            <div className="field">
+              <div className="labelWithTooltip">
+                <span>{window.gsm["options_pollingRate"] || ""}</span>
+                <Tooltip tooltip={window.gsm["options_pollingRateTooltip"] || ""}/>
+              </div>
+              <NumericInput value={config.pollRate} placeholder={`${window.gsm["token_default"] || ""} 1000ms`} onChange={v => {
+                setAndPersistConfig(produce(config, d => {
+                  d.pollRate = v
+                }))
+              }}/>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+    <h2>{window.gsm["options_shortcutsHeader"] || ""}</h2>
     <div>
-      <p><code>M</code>: {chrome.i18n.getMessage("options__mediaToggleDesc")}</p>
-      <p><code>G</code>: {chrome.i18n.getMessage("options__greedyToggleDesc")}</p>
+      <p><code>M</code>: {window.gsm["options_mediaToggleDesc"] || ""}</p>
+      <p><code>G</code>: {window.gsm["options_greedyToggleDesc"] || ""}</p>
     </div>
 
     <div className="keyBindControls">
@@ -81,111 +167,49 @@ function Options(props: {}) {
         setCommandOption(e.target.value)
       }}>
         {Object.keys(commandInfos).map(v => (
-          <option key={v} value={v}>{commandInfos[v as CommandName].name}</option>
+          <option key={v} value={v}>{window.gsm[commandInfos[v as CommandName].name] || ""}</option>
         ))}
       </select>
       <button onClick={e => {
         setAndPersistConfig(produce(config, d => {
           d.keybinds.push(commandInfos[commandOption as CommandName].generate())
         }))
-      }}>{chrome.i18n.getMessage("options__addButton")}</button>
+      }}>{window.gsm["token_create"] || ""}</button>
       <button onClick={e => {
         setAndPersistConfig(produce(config, d => {
           d.keybinds = getDefaultKeyBinds()
         }))
-      }}>{chrome.i18n.getMessage("options__resetButton")}</button>
+      }}>{window.gsm["token_reset"] || ""}</button>
     </div>
-    <h2 style={{marginTop: "40px"}}>{chrome.i18n.getMessage("options__optionsHeader")}</h2>
-    <div className="fields">
-      <div>
-        <div className="labelWithTooltip">
-          <span>{chrome.i18n.getMessage("options__pinByDefault")}</span>
-          <Tooltip tooltip={chrome.i18n.getMessage("options__pinByDefaultTooltip")}/>
-        </div>
-        <input type="checkbox" checked={config.pinByDefault || false} onChange={e => {
-          setAndPersistConfig(produce(config, d => {
-            d.pinByDefault = e.target.checked
-          }))
-        }}/>
-      </div>
-      <div>
-        <div className="labelWithTooltip">
-          <span>{chrome.i18n.getMessage("options__hideIndicator")}</span>
-          <Tooltip tooltip={chrome.i18n.getMessage("options__hideIndicatorTooltip")}/>
-        </div>
-        <input type="checkbox" checked={config.hideIndicator || false} onChange={e => {
-          setAndPersistConfig(produce(config, d => {
-            d.hideIndicator = e.target.checked
-          }))
-        }}/>
-      </div>
-      <div>
-        <div className="labelWithTooltip">
-          <span>{chrome.i18n.getMessage("options__hideBadge")}</span>
-          <Tooltip tooltip={chrome.i18n.getMessage("options__hideBadgeTooltip")}/>
-        </div>
-        <input type="checkbox" checked={config.hideBadge || false} onChange={e => {
-          setAndPersistConfig(produce(config, d => {
-            d.hideBadge = e.target.checked
-          }))
-        }}/>
-      </div>
-      {!showAdvanced && (
-        <button onClick={e => setShowAdvanced(!showAdvanced)}>{chrome.i18n.getMessage("options__showAdvancedButton")}</button>
-      )}
-      {showAdvanced && (
-        <>
-          <div>
-            <div className="labelWithTooltip">
-              <span>{chrome.i18n.getMessage("options__usePolling")}</span>
-              <Tooltip tooltip={chrome.i18n.getMessage("options__usePollingTooltip")}/>
-            </div>
-            <input type="checkbox" checked={config.usePolling || false} onChange={e => {
-              setAndPersistConfig(produce(config, d => {
-                d.usePolling = e.target.checked
-              }))
-            }}/>
-          </div>
-          {config.usePolling && (
-            <div>
-              <div className="labelWithTooltip">
-                <span>polling rate</span>
-                <Tooltip tooltip="In ms (or milliseconds). For reference, 1000 ms == 1 second."/>
-              </div>
-              <NumericInput value={config.pollRate} placeholder={"defaults to 1000ms"} onChange={v => {
-                setAndPersistConfig(produce(config, d => {
-                  d.pollRate = v
-                }))
-              }}/>
-            </div>
-          )}
-        </>
-      )}
-    </div>
-    <h2>{chrome.i18n.getMessage("options__HelpHeader")}</h2>
-      <div className="card">{chrome.i18n.getMessage("options__issuePrompt")} <a href="https://github.com/polywock/globalSpeed/issues">{chrome.i18n.getMessage("options__issueDirective")}</a></div>
+    <h2>{window.gsm["options_helpHeader"] || ""}</h2>
+      <div className="card">{window.gsm["options_issuePrompt"] || ""} <a href="https://github.com/polywock/globalSpeed/issues">{window.gsm["options_issueDirective"] || ""}</a></div>
     <div>  
-      <p><code>{chrome.i18n.getMessage("options__help__stateLabel")} <FaPowerOff color="#35b" size="17px"/></code>: {chrome.i18n.getMessage("options__help__stateDesc")}</p>
-      <p><code>{chrome.i18n.getMessage("options__help__pinLabel")} <GoPin color="#35b" size="20px"/></code>: {chrome.i18n.getMessage("options__help__pinDesc")}</p>
-      <p><code>{chrome.i18n.getMessage("options__help__fxLabel")} <GoZap color="#35b" size="20px"/></code>: {chrome.i18n.getMessage("options__help__fxDesc")}</p>
-      <p>{chrome.i18n.getMessage("options__help__localPrompt")} <a onClick={e => {
+      <p><code><FaPowerOff color="#35b" size="17px"/></code>: {window.gsm["options_help_stateDesc"] || ""}</p>
+      <p><code><GoPin color="#35b" size="20px"/></code>: {window.gsm["options_help_pinDesc"] || ""}</p>
+      <p><code><GoZap color="#35b" size="20px"/></code>: {window.gsm["options_help_fxDesc"] || ""}</p>
+      <p>{window.gsm["options_help_localPrompt"] || ""} <a onClick={e => {
         e.preventDefault()
         if (isFirefox()) {
           requestCreateTab(`https://support.mozilla.org/en-US/kb/extensions-private-browsing`)
         } else {
           requestCreateTab(`chrome://extensions/?id=${chrome.runtime.id}`)
         }
-      }}>{chrome.i18n.getMessage("options__help__localDirective")}</a></p>
+      }}>{window.gsm["options_help_localDirective"] || ""}</a></p>
     </div>
     {isFirefox() && (
-      <div className="card red">{chrome.i18n.getMessage("firefoxBackdropWarning")}</div>
+      <div className="card red">{window.gsm["firefoxBackdropWarning"] || ""}</div>
     )}
     <div>
-      <button style={{marginTop: "40px"}} className="large red" onClick={e => {
+      <button style={{margin: "40px 0px"}} className="large red" onClick={e => {
         setAndPersistConfig(getDefaultConfig())
-      }}>{chrome.i18n.getMessage("options__help__resetToDefaultButton")}</button>
+      }}>{window.gsm["options_help_resetToDefaultButton"] || ""}</button>
     </div>
   </div>
 }
 
-ReactDOM.render(<Options/>, document.querySelector("#root"))
+ensureGsmLoaded().then(() => {
+  ReactDOM.render(<Options/>, document.querySelector("#root"))
+})
+
+
+

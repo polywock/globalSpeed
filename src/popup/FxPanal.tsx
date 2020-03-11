@@ -38,10 +38,10 @@ export function FxPanal(props: FxPanalProps) {
       <div className="tabs">
         <button className={`${!backdropTab ? "active" : ""} ${ctx.elementFx ? "enabled" : ""}`} onClick={e => {
           setBackdropTab(false)
-        }}>{chrome.i18n.getMessage("fxPanal__elementTab")}</button>
+        }}>{window.gsm["token_element"] || ""}</button>
         <button className={`${backdropTab ? "active" : ""} ${ctx.backdropFx ? "enabled" : ""}`} onClick={e => {
           setBackdropTab(true)
-        }}>{chrome.i18n.getMessage("fxPanal__backdropTab")}</button>
+        }}>{window.gsm["token_backdrop"] || ""}</button>
       </div>
       {(backdropTab && isFirefox()) && (
         <div onClick={e => {
@@ -60,25 +60,25 @@ export function FxPanal(props: FxPanalProps) {
             const dCtx = getContext(dConfig, tabId)
             setFx(backdropTab ? "backdrop" : "element", "toggle", dCtx) 
           }))
-        }}>{chrome.i18n.getMessage("fxPanal__enabledButton")}</button>
+        }}>{window.gsm["token_enabled"] || ""}</button>
         <button onClick={e => {
           setConfig(produce(config, dConfig => {
             const dCtx = getContext(dConfig, tabId)
             resetFx(backdropTab ? "backdrop" : "element", dCtx) 
           }))
-        }}>{chrome.i18n.getMessage("fxPanal__resetButton")}</button>
-        <button title={chrome.i18n.getMessage("fxPanal__copyIntoButtonTooltip")} onClick={e => {
+        }}>{window.gsm["token_reset"] || ""}</button>
+        <button title={window.gsm["fxPanal_copyIntoTooltip"] || ""} onClick={e => {
           setConfig(produce(config, dConfig => {
             const dCtx = getContext(dConfig, tabId)
             copyInto(backdropTab, dCtx)
           }))
-        }}>{chrome.i18n.getMessage("fxPanal__copyIntoButton")}</button>
-        <button title={chrome.i18n.getMessage("fxPanal__swapButtonTooltip")} onClick={e => {
+        }}>{window.gsm["token_copyInto"] || ""}</button>
+        <button title={window.gsm["fxPanal_swapTooltip"] || ""} onClick={e => {
           setConfig(produce(config, dConfig => {
             const dCtx = getContext(dConfig, tabId)
             flipFx(dCtx)
           }))
-        }}>{chrome.i18n.getMessage("fxPanal__swapButton")}</button>
+        }}>{window.gsm["token_swap"] || ""}</button>
         {!backdropTab && (
           <>
             <button style={{marginTop: "10px"}} className={ctx.elementFlipX ? "blue" : ""} onClick={e => {
@@ -87,14 +87,14 @@ export function FxPanal(props: FxPanalProps) {
                 dCtx.elementFlipX = !dCtx.elementFlipX
                 autoFxState(dCtx, backdropTab)
               }))
-            }}>{chrome.i18n.getMessage("fxPanal__flipXButton")}</button>
+            }}>{window.gsm["token_flipX"] || ""}</button>
             <button style={{marginTop: "10px"}} className={ctx.elementFlipY ? "blue" : ""} onClick={e => {
               setConfig(produce(config, dConfig => {
                 const dCtx = getContext(dConfig, tabId)
                 dCtx.elementFlipY = !dCtx.elementFlipY
                 autoFxState(dCtx, backdropTab)
               }))
-            }}>{chrome.i18n.getMessage("fxPanal__flipYButton")}</button>
+            }}>{window.gsm["token_flipY"] || ""}</button>
           </>
         )}
         {backdropTab && (
@@ -104,13 +104,13 @@ export function FxPanal(props: FxPanalProps) {
               dCtx.backdropFlipX = !dCtx.backdropFlipX
               autoFxState(dCtx, backdropTab)
             }))
-          }}>{chrome.i18n.getMessage("fxPanal__flipXButton")}</button>
+          }}>{window.gsm["token_flipX"] || ""}</button>
         )}
       </div>
       {!backdropTab && (
         <div className="query">
-          <span>{chrome.i18n.getMessage("fxPanal__queryLabel")} <Tooltip tooltip={chrome.i18n.getMessage("fxPanal__queryLabelTooltip")}/></span>
-          <ThrottledTextInput pass={{placeholder: `${chrome.i18n.getMessage("token__default")} 'video'`}} value={ctx.elementQuery || ""} onChange={v => {
+          <span>{window.gsm["token_query"] || ""} <Tooltip tooltip={window.gsm["fxPanal_queryTooltip"] || ""}/></span>
+          <ThrottledTextInput pass={{placeholder: `${window.gsm["token_default"] || ""} 'video'`}} value={ctx.elementQuery || ""} onChange={v => {
             setConfig(produce(config, dConfig => {
               const dCtx = getContext(dConfig, tabId)
               dCtx.elementQuery = v

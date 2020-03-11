@@ -13,7 +13,8 @@ export type Config = {
   keybinds: KeyBind[],
   usePolling?: boolean,
   pollRate?: number,
-  shadowPollRate?: number 
+  shadowPollRate?: number,
+  language?: string
 }
 
 export type Context = {
@@ -34,7 +35,6 @@ export type Pin = {tabId: number, ctx: Context}
 
 export type Command = {
   name: string,
-  shortName?: string,
   tooltip?: string,
   withFilterTarget?: boolean,
   withFilterOption?: boolean,

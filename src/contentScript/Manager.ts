@@ -5,7 +5,6 @@ import { seekMedia, setMediaPause, setMediaMute, setMark, seekMark, setElemFilte
 import { clamp, round } from '../utils/helper'
 import { ShadowHost } from "./ShadowHost"
 import { compareHotkeys, extractHotkey } from '../utils/keys'
-import { SetStateMap } from '../utils/i18'
 import { Context, KeyBind, Pin, Config } from '../types'
 import { CommandName, commandInfos } from "../defaults/commands"
 import { filterInfos } from '../defaults/filters'
@@ -186,7 +185,7 @@ export class Manager {
     runCode: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       injectScript(keyBind.valueString)
       if (!config.hideIndicator) {
-        this.shadowHost?.showSmall(chrome.i18n.getMessage("commandInfo__runCodeName"))
+        this.shadowHost?.showSmall(window.gsm["command_runCode"] || "")
       }
     },
     adjustSpeed: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
@@ -220,7 +219,7 @@ export class Manager {
       flags.changed = true 
         
       if (!config.hideIndicator) {
-        this.shadowHost?.showSmall(SetStateMap[ctx.enabled ? "on" : "off"])
+        this.shadowHost?.showSmall(window.gsm[`token_${ctx.enabled ? "on" : "off"}`])
       }
     },
     seek: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
@@ -243,7 +242,7 @@ export class Manager {
       window.postMessage({type: "GS_SET_PAUSE", state: keyBind.valueState}, "*")
 
       if (!config.hideIndicator) {
-        this.shadowHost?.showSmall(`${SetStateMap[keyBind.valueState]} pause`)
+        this.shadowHost?.showSmall(`${window.gsm["token_pause"] || ""} = ${window.gsm[`token_${keyBind.valueState}`] || ""}`)
       }
     },
     setMute: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
@@ -252,7 +251,7 @@ export class Manager {
       window.postMessage({type: "GS_SET_MUTE", state: keyBind.valueState}, "*")
 
       if (!config.hideIndicator) {
-        this.shadowHost?.showSmall(`${keyBind.valueState} mute`)
+        this.shadowHost?.showSmall(`${window.gsm["token_mute"] || ""} = ${window.gsm[`token_${keyBind.valueState}`] || ""}`)
       }
     },
     setMark: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
@@ -262,7 +261,7 @@ export class Manager {
       window.postMessage({type: "GS_SET_MARK", key}, "*")
 
       if (!config.hideIndicator) {
-        this.shadowHost?.showSmall(`set "${key}"`)
+        this.shadowHost?.showSmall(`${window.gsm["token_setting"] || ""} "${key}"`)
       }
     },
     seekMark: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
@@ -272,7 +271,7 @@ export class Manager {
       window.postMessage({type: "GS_SEEK_MARK", key}, "*")
 
       if (!config.hideIndicator) {
-        this.shadowHost?.showSmall(`seek "${key}"`)
+        this.shadowHost?.showSmall(`${window.gsm["token_goTo"] || ""} "${key}"`)
       }
     },
     toggleLoop: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
@@ -282,7 +281,7 @@ export class Manager {
       window.postMessage({type: "GS_TOGGLE_LOOP", key}, "*")
 
       if (!config.hideIndicator) {
-        this.shadowHost?.showSmall(commandInfos.toggleLoop.name)
+        this.shadowHost?.showSmall(window.gsm[commandInfos.toggleLoop.name] || "")
       }
     },
     openUrl: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
@@ -293,7 +292,7 @@ export class Manager {
       flags.changed = true 
 
       if (!config.hideIndicator) {
-        this.shadowHost?.showSmall(`${ctx.elementFx ? "on" : "off"} / ${ctx.backdropFx ? "on" : "off"}`)
+        this.shadowHost?.showSmall(`FX (${window.gsm[`token_${keyBind.filterTarget}`] || ""}) = ${window.gsm[`token_${keyBind.valueState}`] || ""}`)
       }
     },
     resetFx: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
@@ -316,7 +315,7 @@ export class Manager {
         fValue.value = newValue
 
         if (!config.hideIndicator) {
-          this.shadowHost?.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
+          this.shadowHost?.showSmall(`${window.gsm[filterInfo.name] || ""} = ${round(newValue, 2)}`)
         }
       }
       flags.changed = true 
@@ -331,7 +330,7 @@ export class Manager {
         const newValue = clamp(filterInfo.min, filterInfo.max, keyBind.valueNumber ?? filterInfo.default)
         fValue.value = newValue
         if (!config.hideIndicator) {
-          this.shadowHost?.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
+          this.shadowHost?.showSmall(`${window.gsm[filterInfo.name] || ""} = ${round(newValue, 2)}`)
         }
       }
 
@@ -353,7 +352,7 @@ export class Manager {
         const fValue = set.find(v => v.filter === keyBind.filterOption)
         fValue.value = newValue 
         if (!config.hideIndicator) {
-          this.shadowHost?.showSmall(`${filterInfo.name} = ${round(newValue, 2)}`)
+          this.shadowHost?.showSmall(`${window.gsm[filterInfo.name] || ""} = ${round(newValue, 2)}`)
         }
       }
 

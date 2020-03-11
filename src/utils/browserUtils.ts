@@ -114,3 +114,4 @@ export function setStorage(items: StorageItems): Promise<StorageItems> {
     })
   })
 }
+

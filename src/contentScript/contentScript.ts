@@ -3,6 +3,7 @@ import 'regenerator-runtime/runtime'
 import { NETFLIX_URL, injectScript } from './utils'
 import { uuidLowerAlpha } from '../utils/helper'
 import { Manager } from './Manager'
+import { ensureGsmLoaded } from '../utils/i18'
 
 declare global {
   interface Window {
@@ -13,12 +14,14 @@ declare global {
 main()
 
 function main() {
-  if (document.readyState === "loading") {
-    injectCtx()
-    window.addEventListener("DOMContentLoaded", handleDOMLoaded)
-  } else {
-    handleDOMLoaded()
-  }
+  ensureGsmLoaded().then(() => {
+    if (document.readyState === "loading") {
+      injectCtx()
+      window.addEventListener("DOMContentLoaded", handleDOMLoaded)
+    } else {
+      handleDOMLoaded()
+    }
+  })
 }
 
 function handleDOMLoaded(e?: Event) {
@@ -182,6 +185,44 @@ function injectCtx() {
           setMark(elem, key)
         }
       }
+
+      function toggleLoop(elem, key) {
+        const mark = elem.marks && elem.marks[key]
+      
+        const handleRemove = () => {
+          elem.removeEventListener("timeupdate", elem.gsLoopTimeUpdateHandler)
+          elem.removeEventListener("seeking", elem.gsLoopSeekingHandler)
+          delete elem.gsLoopTimeUpdateHandler
+          delete elem.gsLoopSeekingHandler
+        }
+      
+        if (elem.gsLoopTimeUpdateHandler) {
+          handleRemove()
+          return 
+        }
+      
+        if (!mark) {
+          return 
+        } 
+      
+        const endTime = elem.currentTime
+      
+        elem.gsLoopTimeUpdateHandler = () => {
+          if (elem.currentTime > endTime) {
+            elem.currentTime = mark.time
+          }
+        }
+      
+        elem.gsLoopSeekingHandler = () => {
+          if (elem.currentTime < mark.time || elem.currentTime > endTime) {
+            handleRemove()
+          }
+        }
+      
+        elem.addEventListener("timeupdate", elem.gsLoopTimeUpdateHandler)
+        elem.addEventListener("seeking", elem.gsLoopSeekingHandler)
+      }
+      
       
       //#endregion 
     
@@ -203,6 +244,10 @@ function injectCtx() {
         } else if (data.type === "GS_SET_PLAYBACK_RATE") {
           elems.forEach(elem => {
             setPlaybackRate(elem, data.value)
+          })
+        } else if (data.type === "GS_TOGGLE_LOOP") {
+          elems.forEach(elem => {
+            toggleLoop(elem, data.key)
           })
         }
       })

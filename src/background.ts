@@ -1,7 +1,8 @@
 import 'regenerator-runtime/runtime'
-import { updateBadges, getConfig, setPin, startupCleanUp, persistConfig } from "./utils/configUtils"
+import { updateBadges, getConfig, setPin, startupCleanUp, persistConfig, getConfigOrDefault } from "./utils/configUtils"
 import { migrateSchema } from "./utils/migrateSchema"
 import { isFirefox } from './utils/helper'
+import { getMessages } from "./utils/i18"
 
 const URL_PATTERNS = ["http://*/*", "https://*/*", "file:///*"]
 
@@ -64,7 +65,12 @@ function handleOnMessage(msg: any, sender: chrome.runtime.MessageSender, reply: 
     chrome.tabs.create({
       url: msg.url
     })
-  } 
+  } else if (msg.type === "REQUEST_GSM") {
+    getMessages(msg.language).then(gsm => {
+      reply(gsm)
+    })
+    return true 
+  }
 }
 
 

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build:dev": "rm -rf build && webpack --config webpack.dev.js && cp -r static/. build/unpacked",
-    "build:prod": "rm -rf build && webpack --config webpack.prod.js && cp -r static/. build/unpacked && cd build/unpacked && zip -r ../packed.zip ."
+    "build:dev": "rm -rf build && webpack --config webpack.dev.js && cp -r static/. build/unpacked && find build -name '.DS_Store' -type f -delete",
+    "build:prod": "npm run build:dev && cd build/unpacked && zip -r ../packed.zip ."
   },
   "author": "",
   "license": "ISC",

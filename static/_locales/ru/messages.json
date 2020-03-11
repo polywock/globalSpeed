@@ -1,0 +1,259 @@
+{
+  "appName": {
+    "message": "Global Speed - Глобальная скорость"
+  },
+  "appDesc": {
+    "message": "Установите скорость по умолчанию для видео и аудио."
+  },
+  "firefoxBackdropWarning": {
+    "message": "Предупреждение: Для фоновых фильтров пользователи Firefox должны включить «gfx.webrender.all» и «layout.css.backdrop-filter.enabled», перейдя по URL «about:config». Перезапустите Firefox после включения двух флагов."
+  },
+  "token_language": {
+    "message": "язык"
+  },
+  "token_create": {
+    "message": "создать"
+  },
+  "token_on": {
+    "message": "вкл"
+  },
+  "token_off": {
+    "message": "выкл"
+  },
+  "token_toggle": {
+    "message": "переключить"
+  },
+  "token_default": {
+    "message": "дефолт"
+  },
+  "token_pause": {
+    "message": "пауза"
+  },
+  "token_mute": {
+    "message": "немой"
+  },
+  "token_setting": {
+    "message": "установить"
+  },
+  "token_goTo": {
+    "message": "стремиться"
+  },
+  "token_enabled": {
+    "message": "включен"
+  },
+  "token_element": {
+    "message": "элемент"
+  },
+  "token_backdrop": {
+    "message": "фон"
+  },
+  "token_both": {
+    "message": "и то и другое"
+  },
+  "token_reset": {
+    "message": "сброс настроек"
+  },
+  "token_copyInto": {
+    "message": "вставить"
+  },
+  "token_swap": {
+    "message": "обмен"
+  },
+  "token_flipX": {
+    "message": "зеркалоX"
+  },
+  "token_flipY": {
+    "message": "зеркалоY"
+  },
+  "token_query": {
+    "message": "селектор"
+  },
+  "filter_grayscale": {
+    "message": "полутоновой"
+  },
+  "filter_sepia": {
+    "message": "сепия"
+  },
+  "filter_hueRotate": {
+    "message": "сдвиг оттенка"
+  },
+  "filter_contrast": {
+    "message": "контраст"
+  },
+  "filter_brightness": {
+    "message": "яркость"
+  },
+  "filter_saturate": {
+    "message": "насыщение"
+  },
+  "filter_invert": {
+    "message": "инвертировать"
+  },
+  "filter_blur": {
+    "message": "пятно"
+  },
+  "filter_opacity": {
+    "message": "прозрачный"
+  },
+  "fxPanal_copyIntoTooltip": {
+    "message": "Скопируйте значения из другой вкладки."
+  },
+  "fxPanal_swapTooltip": {
+    "message": "поменять значения элемента и фона"
+  },
+  "fxPanal_queryTooltip": {
+    "message": "CSS селектор, используемый для поиска элементов для фильтрации. Например, «video, img» будет запрашивать видео и изображения. Для расширенного использования, смотрите документацию онлайн о CSS селекторах."
+  },
+
+
+  "command_nothing": {
+    "message": "бездействие"
+  },
+  "command_nothingTooltip": {
+    "message": "Может пригодиться в сочетании с жадным режимом (G) для блокировки определенных клавиш."
+  },
+  "command_runCode": {
+    "message": "запустить код"
+  },
+  "command_adjustSpeed": {
+    "message": "отрегулируйте скорость"
+  },
+  "command_setSpeed": {
+    "message": "установить скорость"
+  },
+  "command_pinTab": {
+    "message": "Закрепить вкладку"
+  },
+  "command_setState": {
+    "message": "Задать состояние"
+  },
+  "command_seek": {
+    "message": "стремиться"
+  },
+  "command_seekTooltip": {
+    "message": "Отрегулируйте видео / аудио положение времени."
+  },
+  "command_setMark": {
+    "message": "установить отметку"
+  },
+  "command_setMarkTooltip": {
+    "message": "Отметьте текущую позицию видео / аудио для дальнейшего использования."
+  },
+  "command_seekMark": {
+    "message": "перейти к маркеру"
+  },
+  "command_seekMarkTooltip": {
+    "message": "Перейти к отмеченной видео / аудио временной позиции. Если отметка не существует, она установит отметку."
+  },
+  "command_toggleLoop": {
+    "message": "петля"
+  },
+  "command_toggleLoopTooltip": {
+    "message": "Установите петлю между отмеченной позицией и текущей позицией."
+  },
+  "command_openUrl": {
+    "message": "открыть ссылку"
+  },
+  "command_setFx": {
+    "message": "установить статус FX"
+  },
+  "command_resetFx": {
+    "message": "сбросить значения FX"
+  },
+  "command_flipFx": {
+    "message": "своп значения FX"
+  },
+  "command_adjustFilter": {
+    "message": "ннастроить значение фильтра"
+  },
+  "command_setFilter": {
+    "message": "установить значение фильтра"
+  },
+  "command_cycleFilterValue": {
+    "message": "значение фильтра цикла"
+  },
+  "command_cycleFilterValueTooltip": {
+    "message": "цикл между предоставленными значениями. Может использоваться для переключения инвертирования, оттенков серого, сепии и т. Д."
+  },
+
+
+  "options_shortcutsHeader": {
+    "message": "Редактор ярлыков"
+  },
+  "options_optionsHeader": {
+    "message": "Параметры"
+  },
+  "options_helpHeader": {
+    "message": "Помогите"
+  },
+
+
+  "options_mediaToggleDesc": {
+    "message": "Режим мультимедиа будет игнорировать нажатие клавиш, если на странице нет видео или аудио."
+  },
+  "options_greedyToggleDesc": {
+    "message": "жадный режим попытается заблокировать распространение событий и поведение по умолчанию."
+  },
+
+
+  "options_showAdvancedButton": {
+    "message": "показать продвинутый"
+  },
+  "options_languageTooltip": {
+    "message": "Все языки, кроме английского, были переведены с помощью онлайн-инструментов. Обновить вкладку, чтобы увидеть изменения." 
+  },
+  "options_pinByDefault": {
+    "message": "закрепить по умолчанию" 
+  },
+  "options_pinByDefaultTooltip": {
+    "message": "Каждая вкладка будет закреплена по умолчанию." 
+  },
+  "options_hideIndicator": {
+    "message": "скрыть индикатор" 
+  },
+  "options_hideIndicatorTooltip": {
+    "message": "Некоторые ярлыки показывают индикатор обратной связи в верхнем левом углу страницы." 
+  },
+  "options_hideBadge": {
+    "message": "спрятать значок" 
+  },
+  "options_hideBadgeTooltip": {
+    "message": "Значок - это текст на значке расширения." 
+  },
+  "options_usePolling": {
+    "message": "использовать интервал" 
+  },
+  "options_usePollingTooltip": {
+    "message": "Два способа запроса товаров. По умолчанию отслеживание изменений выполняется с помощью API MutationObserver. Это более эффективно в долгосрочной перспективе. Альтернативный метод заключается в периодическом поиске целевых элементов." 
+  },
+  "options_pollingRate": {
+    "message": "интервал" 
+  },
+  "options_pollingRateTooltip": {
+    "message": "Для справки, 1000 миллисекунд это 1 секунда." 
+  },
+  "options_issuePrompt": {
+    "message": "Есть вопросы или предложения?"
+  },
+  "options_issueDirective": {
+    "message": "Отправить отчет на Github."
+  },
+  "options_help_stateDesc": {
+    "message": "Приостановить расширение для текущего контекста."
+  },
+  "options_help_pinDesc": {
+    "message": "Закрепление вкладки позволяет ей иметь собственный контекст (скорость, активация, фильтры и т. Д.)."
+  },
+  "options_help_fxDesc": {
+    "message": "Вы можете включить фильтры (контрастность, инвертирование, оттенки серого и т. Д.) Для элементов (по умолчанию только видео) или даже всей страницы с фоном."
+  },
+  "options_help_localPrompt": {
+    "message": "Чтобы расширение работало с локальными файлами или в режиме инкогнито."
+  },
+  "options_help_localDirective": {
+    "message": "Их нужно включить на странице расширения."
+  },
+  "options_help_resetToDefaultButton": {
+    "message": "Восстановление значений по умолчанию"
+  }
+}

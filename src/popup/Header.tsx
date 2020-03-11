@@ -23,7 +23,7 @@ export function Header(props: HeaderProps) {
   return (
     <div className="Header">
       <div 
-        title="Suspend most functionality."
+        title={window.gsm["options_help_stateDesc"] || ""}
         className={`toggle ${ctx.enabled ? "active" : ""}`}
         onClick={() => {
           setConfig(produce(config, dConfig => {
@@ -35,7 +35,7 @@ export function Header(props: HeaderProps) {
         <FaPowerOff size="17px"/>
       </div>
       <div 
-        title="Pinning (or Local Speed): Apply custom settings only to this tab."
+        title={window.gsm["options_help_pinDesc"] || ""}
         className={`pin toggle ${pin ? "active" : ""}`}
         onClick={() => {
           setConfig(produce(config, dConfig => {
@@ -46,13 +46,13 @@ export function Header(props: HeaderProps) {
         <GoPin size="20px"/>
       </div>
       {props.fxPanal ? (
-        <div title="Go back to speed panal." onClick={() => {
+        <div onClick={() => {
           props.setFxPanal(!props.fxPanal)
         }}>
           <GoArrowLeft size="20px"/>
         </div>
       ) : (
-        <div title="Open FX panal." onClick={() => {
+        <div title={window.gsm["options_help_fxDesc"] || ""} onClick={() => {
           props.setFxPanal(!props.fxPanal)
         }}>
           <GoZap size="20px"/>

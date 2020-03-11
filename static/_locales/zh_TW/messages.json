@@ -1,0 +1,259 @@
+{
+  "appName": {
+    "message": "Global Speed - 全球速度"
+  },
+  "appDesc": {
+    "message": "設置視頻和音頻的默認速度。"
+  },
+  "firefoxBackdropWarning": {
+    "message": "警告：對於背景幕過濾器，Firefox用戶需要通過轉到 \"about:config\" URL 啟用 \"gfx.webrender.all\" 和 \"layout.css.backdrop-filter.enabled\"。啟用兩個標誌後，重新啟動Firefox。"
+  },
+  "token_language": {
+    "message": "語言"
+  },
+  "token_create": {
+    "message": "建立"
+  },
+  "token_on": {
+    "message": "開啟"
+  },
+  "token_off": {
+    "message": "關閉"
+  },
+  "token_toggle": {
+    "message": "切換"
+  },
+  "token_default": {
+    "message": "預設"
+  },
+  "token_pause": {
+    "message": "暫停"
+  },
+  "token_mute": {
+    "message": "靜音"
+  },
+  "token_setting": {
+    "message": "設定"
+  },
+  "token_goTo": {
+    "message": "搜尋"
+  },
+  "token_enabled": {
+    "message": "已啟用"
+  },
+  "token_element": {
+    "message": "元素"
+  },
+  "token_backdrop": {
+    "message": "背景"
+  },
+  "token_both": {
+    "message": "兩者"
+  },
+  "token_reset": {
+    "message": "重置"
+  },
+  "token_copyInto": {
+    "message": "貼上"
+  },
+  "token_swap": {
+    "message": "交換"
+  },
+  "token_flipX": {
+    "message": "翻轉X"
+  },
+  "token_flipY": {
+    "message": "翻轉Y"
+  },
+  "token_query": {
+    "message": "選取器"
+  },
+  "filter_grayscale": {
+    "message": "灰階"
+  },
+  "filter_sepia": {
+    "message": "復古"
+  },
+  "filter_hueRotate": {
+    "message": "色調旋轉"
+  },
+  "filter_contrast": {
+    "message": "對比"
+  },
+  "filter_brightness": {
+    "message": "亮度"
+  },
+  "filter_saturate": {
+    "message": "飽和度"
+  },
+  "filter_invert": {
+    "message": "顏色反轉"
+  },
+  "filter_blur": {
+    "message": "模糊"
+  },
+  "filter_opacity": {
+    "message": "不透明度"
+  },
+  "fxPanal_copyIntoTooltip": {
+    "message": "從其他選項卡複製值。"
+  },
+  "fxPanal_swapTooltip": {
+    "message": "交換元素和背景值。"
+  },
+  "fxPanal_queryTooltip": {
+    "message": "CSS選擇器，用於查找要過濾的元素。例如，“ video，img ”將同時查詢視頻和圖像。有關高級用法，請在線查看有關CSS選擇器的文檔。"
+  },
+
+
+  "command_nothing": {
+    "message": "沒有行動"
+  },
+  "command_nothingTooltip": {
+    "message": "可以與（G）貪婪模式結合使用以阻止某些鍵。"
+  },
+  "command_runCode": {
+    "message": "運行JavaScript"
+  },
+  "command_adjustSpeed": {
+    "message": "調整速度"
+  },
+  "command_setSpeed": {
+    "message": "設定速度"
+  },
+  "command_pinTab": {
+    "message": "固定选项卡"
+  },
+  "command_setState": {
+    "message": "設定狀態"
+  },
+  "command_seek": {
+    "message": "尋求"
+  },
+  "command_seekTooltip": {
+    "message": "調整視頻/音頻時間位置。"
+  },
+  "command_setMark": {
+    "message": "標記點"
+  },
+  "command_setMarkTooltip": {
+    "message": "標記當前的視頻/音頻時間位置，以備將來參考。"
+  },
+  "command_seekMark": {
+    "message": "轉到標記點"
+  },
+  "command_seekMarkTooltip": {
+    "message": "轉到標記的視頻/音頻時間位置。如果未標記，它將標記當前點。"
+  },
+  "command_toggleLoop": {
+    "message": "切換循環"
+  },
+  "command_toggleLoopTooltip": {
+    "message": "在標記位置和當前位置之間設置循環。"
+  },
+  "command_openUrl": {
+    "message": "打開網址。"
+  },
+  "command_setFx": {
+    "message": "設置FX狀態"
+  },
+  "command_resetFx": {
+    "message": "重置FX值"
+  },
+  "command_flipFx": {
+    "message": "交換FX值"
+  },
+  "command_adjustFilter": {
+    "message": "調整過濾器值"
+  },
+  "command_setFilter": {
+    "message": "設置過濾器值"
+  },
+  "command_cycleFilterValue": {
+    "message": "循環過濾器值"
+  },
+  "command_cycleFilterValueTooltip": {
+    "message": "在提供的值之間循環。可用於切換反轉，灰度，棕褐色等。"
+  },
+
+
+  "options_shortcutsHeader": {
+    "message": "熱鍵編輯器"
+  },
+  "options_optionsHeader": {
+    "message": "選件"
+  },
+  "options_helpHeader": {
+    "message": "救命"
+  },
+
+
+  "options_mediaToggleDesc": {
+    "message": "除非頁面上有視頻或音頻，否則媒體模式將忽略按鍵。"
+  },
+  "options_greedyToggleDesc": {
+    "message": "貪婪模式將嘗試阻止事件傳播和默認行為。"
+  },
+
+
+  "options_showAdvancedButton": {
+    "message": "顯示高級"
+  },
+  "options_languageTooltip": {
+    "message": "除英語以外的所有語言均使用在線工具進行了翻譯。刷新選項卡以查看更改。" 
+  },
+  "options_pinByDefault": {
+    "message": "默認固定" 
+  },
+  "options_pinByDefaultTooltip": {
+    "message": "每個選項卡將默認固定。" 
+  },
+  "options_hideIndicator": {
+    "message": "隱藏反饋指示器" 
+  },
+  "options_hideIndicatorTooltip": {
+    "message": "一些熱鍵在頁面的左上方顯示一個反饋指示器。" 
+  },
+  "options_hideBadge": {
+    "message": "隱藏徽章" 
+  },
+  "options_hideBadgeTooltip": {
+    "message": "徽章是擴展圖標上的文字。" 
+  },
+  "options_usePolling": {
+    "message": "使用間隔" 
+  },
+  "options_usePollingTooltip": {
+    "message": "兩種查詢元素的方式。默認方法是使用MutationObserver API跟踪更改。從長遠來看，這將更有效率。替代算法是定期檢查目標元素。" 
+  },
+  "options_pollingRate": {
+    "message": "間隔率" 
+  },
+  "options_pollingRateTooltip": {
+    "message": "1000毫秒== 1秒。" 
+  },
+  "options_issuePrompt": {
+    "message": "有問題或建議嗎？"
+  },
+  "options_issueDirective": {
+    "message": "在Github上提交報告。"
+  },
+  "options_help_stateDesc": {
+    "message": "暫停當前上下文的程序。"
+  },
+  "options_help_pinDesc": {
+    "message": "固定選項卡使其具有自己的上下文（速度，激活，過濾器等）。"
+  },
+  "options_help_fxDesc": {
+    "message": "您可以在元素（默認情況下，僅視頻）或什至整個帶有背景的頁面上啟用濾鏡（對比度，反色，灰度等）。"
+  },
+  "options_help_localPrompt": {
+    "message": "為了使擴展名可以在本地文件或隱身模式下使用。"
+  },
+  "options_help_localDirective": {
+    "message": "需要在擴展頁面上啟用它們。"
+  },
+  "options_help_resetToDefaultButton": {
+    "message": "重置為默認"
+  }
+}

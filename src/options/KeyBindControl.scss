@@ -9,6 +9,11 @@
   padding: 5px;
   border-radius: 5px;
 
+  &.disabled {
+    opacity: 0.75;
+    border-color: #7f7f7f;
+  }
+
   &.spacing {
     margin-bottom: 25px;
   }
@@ -16,9 +21,8 @@
     margin-bottom: 40px;
   }
 
-  // @media only screen and (min-width: 1000px) {
-  //   grid-template-columns: repeat(2, max-content) minmax(200px, 1.5fr) 150px repeat(2, max-content) 200px repeat(2, max-content);
-  // }
+  
+
 
   & .icon {
     color: #aaa;
@@ -34,9 +38,16 @@
       outline: 1px solid var(--focus-color);
     }
   }
+
+  
   
   & > .move {
     display: grid;
+  }
+
+
+  & > .close:hover {
+    color: #d55;
   }
 
   & > button:nth-child(3) {
@@ -44,23 +55,28 @@
   }
 
   & > .command {
-    display: grid;
-    grid-row-gap: 5px;
-
-    & > div {
-      display: grid;
-      grid-column-gap: 5px;
-    }
 
     & > .name {
-      grid-template-columns: max-content max-content;
+      display: flex;
+      align-items: center;
+
+      & > svg {
+        margin-left: 10px;
+        color: #24a;
+      }
+
+      & > .Tooltip {
+        margin-left: 10px;
+      }
     }
 
     & > .support {
-      grid-auto-flow: column;
-      justify-content: left;
-      font-size: 0.9em;
-      opacity: 0.8;
+      margin-top: 5px; 
+      display: flex;
+      & > *:nth-child(1n+2) {
+        margin-left: 3px;
+      }
     }
   }
+
 }
