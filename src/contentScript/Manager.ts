@@ -19,6 +19,7 @@ export class Manager {
   mediaQuery: LazyQuery<HTMLMediaElement> | PollQuery<HTMLMediaElement>
   fxQuery: LazyQuery<HTMLElement> | PollQuery<HTMLElement>
   released = false 
+  blockNext = false 
   constructor() {
     this.startup()
   }
@@ -29,6 +30,7 @@ export class Manager {
     chrome.storage.onChanged.addListener(this.handleStorageChange)
     window.addEventListener("keydown", this.handleKeyDown)
     window.addEventListener("keydown", this.handleKeyDownGreedy, true)
+    window.addEventListener("keyup", this.handleKeyUpGreedy, true)
   }
   release() {
     if (this.released) return 
@@ -41,6 +43,7 @@ export class Manager {
     chrome.storage.onChanged.removeListener(this.handleStorageChange)
     window.removeEventListener("keydown", this.handleKeyDown)
     window.removeEventListener("keydown", this.handleKeyDownGreedy, true)
+    window.removeEventListener("keyup", this.handleKeyUpGreedy, true)
   }
   suspend = () => {
     clearInterval(this.intervalId)
@@ -125,7 +128,16 @@ export class Manager {
       clearDocumentTransform()
     }
   }
+  handleKeyUpGreedy = (e: KeyboardEvent) => {
+    if (this.blockNext) {
+      e.stopImmediatePropagation()
+      e.preventDefault()
+      this.blockNext = false 
+    }
+  }
   handleKeyDownGreedy = (e: KeyboardEvent) => {
+    this.blockNext = false 
+
     // stop if input fields 
     const target = e.target as HTMLElement
     if (["INPUT", "TEXTAREA"].includes(target.tagName) || target.isContentEditable) {
@@ -139,6 +151,7 @@ export class Manager {
     
     let validKeyBinds = ctx.enabled ? greedyKeyBinds : greedyKeyBinds.filter(v => v.command === "setState")
     if (validKeyBinds.some(v => v.enabled && (!v.ifMedia || pageHasMedia) && compareHotkeys(v.key, eventHotkey))) {
+      this.blockNext = true 
       e.preventDefault()
       e.stopImmediatePropagation()
       this.handleKeyDown(e)

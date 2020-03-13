@@ -14,17 +14,17 @@ declare global {
 main()
 
 function main() {
-  ensureGsmLoaded().then(() => {
-    if (document.readyState === "loading") {
-      injectCtx()
-      window.addEventListener("DOMContentLoaded", handleDOMLoaded)
-    } else {
-      handleDOMLoaded()
-    }
-  })
+  if (document.readyState === "loading") {
+    injectCtx()
+    window.addEventListener("DOMContentLoaded", handleDOMLoaded)
+  } else {
+    handleDOMLoaded()
+  }
 }
 
-function handleDOMLoaded(e?: Event) {
+async function handleDOMLoaded(e?: Event) {
+  await ensureGsmLoaded()
+
   document.addEventListener("visibilitychange", handleVisibilityChange)
   handleVisibilityChange()
 
