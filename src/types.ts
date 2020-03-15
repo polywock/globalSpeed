@@ -1,6 +1,7 @@
 import { Hotkey } from "./utils/keys"
 import { CommandName } from "./defaults/commands"
 import { FilterName } from "./defaults/filters"
+import { TabFrameInfo } from "./utils/browserUtils"
 
 
 export type Config = {
@@ -14,7 +15,8 @@ export type Config = {
   usePolling?: boolean,
   pollRate?: number,
   shadowPollRate?: number,
-  language?: string
+  language?: string,
+  pipInfo?: TabFrameInfo
 }
 
 export type Context = {

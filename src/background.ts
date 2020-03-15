@@ -14,6 +14,7 @@ chrome.tabs.onUpdated.addListener(updateBadges)
 
 chrome.runtime.onMessage.addListener(handleOnMessage)
 chrome.tabs.onCreated.addListener(handleTabCreated)
+chrome.tabs.onRemoved.addListener(handleTabRemoved)
 
 
 async function handleStartup() {
@@ -46,11 +47,19 @@ async function handleInstalled(e: chrome.runtime.InstalledDetails) {
 
 
 async function handleTabCreated(tab: chrome.tabs.Tab) {
-  const config = await getConfig()
+  const config = await getConfigOrDefault()
   if (config?.pinByDefault) {
     setPin(config, "on", tab.id)
     persistConfig(config)
     updateBadges()
+  }
+}
+
+async function handleTabRemoved(tabId: number, removeInfo: chrome.tabs.TabRemoveInfo) {
+  const config = await getConfigOrDefault()
+  if (config.pipInfo?.tabId === tabId) {
+    delete config.pipInfo
+    persistConfig(config)
   }
 }
 
@@ -70,6 +79,23 @@ function handleOnMessage(msg: any, sender: chrome.runtime.MessageSender, reply: 
       reply(gsm)
     })
     return true 
+  } else if (msg.type === "PIP_ENTER") {
+    getConfigOrDefault().then(config => {
+      config.pipInfo = {
+        tabId: sender.tab.id,
+        frameId: sender.frameId
+      }
+      persistConfig(config)
+    })
+  } else if (msg.type === "PIP_LEAVE") {
+    getConfigOrDefault().then(config => {
+      delete config.pipInfo
+      persistConfig(config)
+    })
+  }  else if (msg.type === "PIP_FEED") {
+    getConfigOrDefault().then(config => {
+      chrome.tabs.sendMessage(config.pipInfo.tabId, {type: "APPLY_MEDIA_EVENT", value: msg.msg})
+    })
   }
 }
 

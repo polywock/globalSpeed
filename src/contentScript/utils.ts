@@ -90,6 +90,39 @@ export function toggleLoop(elem: HTMLMediaElementSuper, key: string) {
 }
 
 
+export type MediaEventPlaybackRate = {type: "SET_PLAYBACK_RATE", value: number}
+export type MediaEventSeek = {type: "SEEK", value: number, relative: boolean}
+export type MediaEventPause = {type: "PAUSE", state: SetState}
+export type MediaEventMute = {type: "MUTE", state: SetState}
+export type MediaEventSetMark = {type: "SET_MARK", key: string}
+export type MediaEventSeekMark = {type: "SEEK_MARK", key: string}
+export type MediaEventToggleLoop = {type: "TOGGLE_LOOP", key: string}
+
+export type MediaEvent = 
+  MediaEventPlaybackRate | MediaEventSeek | 
+  MediaEventPause | MediaEventMute | 
+  MediaEventSetMark | MediaEventSeekMark | MediaEventToggleLoop
+
+
+export function applyMediaEvent(elems: HTMLMediaElement[], e: MediaEvent) {
+  if (e.type === "SET_PLAYBACK_RATE") {
+    elems.forEach(elem => setPlaybackRate(elem, e.value))
+  } else if (e.type === "SEEK") {
+    elems.forEach(elem => seekMedia(elem, e.value, e.relative))
+  } else if (e.type === "PAUSE") {
+    elems.forEach(elem => setMediaPause(elem, e.state))
+  } else if (e.type === "MUTE") {
+    elems.forEach(elem => setMediaMute(elem, e.state))
+  } else if (e.type === "SET_MARK") {
+    elems.forEach(elem => setMark(elem, e.key))
+  } else if (e.type === "SEEK_MARK") {
+    elems.forEach(elem => seekMark(elem, e.key))
+  } else if (e.type === "TOGGLE_LOOP") {
+    elems.forEach(elem => toggleLoop(elem, e.key))
+  }
+}
+
+
 //#region -- SET ELEM FILTER
 let filteredElems: Set<HTMLElement> = new Set()
 export function setElemFilter(elems: HTMLElement[], filter: string) {  

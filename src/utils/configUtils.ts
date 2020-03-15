@@ -58,9 +58,8 @@ export function autoFxState(ctx: Context, backdrop: boolean) {
 
 export async function startupCleanUp() {
   let config = await getConfigOrDefault()
-  if (config.pins?.length > 0) {
-    config.pins = []
-  }
+  config.pins = []
+  delete config.pipInfo
   persistConfig(config)
 }
 

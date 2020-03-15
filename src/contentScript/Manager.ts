@@ -1,7 +1,7 @@
 
 import { requestSenderInfo, requestCreateTab, StorageChanges } from "../utils/browserUtils"
 import { getConfigOrDefault, getContext, getPin, formatSpeed, conformSpeed, formatFilters, getTargetSets, resetFx, flipFx, setFx, setPin, persistConfig } from "../utils/configUtils"
-import { seekMedia, setMediaPause, setMediaMute, setMark, seekMark, setElemFilter, clearElemFilter, clearElemTransform, setElemTransform, setDocumentTransform, clearDocumentTransform, setPlaybackRate, injectScript, toggleLoop } from "./utils"
+import { setElemFilter, clearElemFilter, clearElemTransform, setElemTransform, setDocumentTransform, clearDocumentTransform, injectScript, MediaEventSeek, MediaEventPause, MediaEventMute, MediaEventSetMark, MediaEventSeekMark, MediaEventToggleLoop, applyMediaEvent, MediaEventPlaybackRate } from "./utils"
 import { clamp, round } from '../utils/helper'
 import { ShadowHost } from "./ShadowHost"
 import { compareHotkeys, extractHotkey } from '../utils/keys'
@@ -28,9 +28,13 @@ export class Manager {
     this.config = await getConfigOrDefault()
     this.handleConfigChange()
     chrome.storage.onChanged.addListener(this.handleStorageChange)
+    chrome.runtime.onMessage.addListener(this.handleMessage)
     window.addEventListener("keydown", this.handleKeyDown)
     window.addEventListener("keydown", this.handleKeyDownGreedy, true)
     window.addEventListener("keyup", this.handleKeyUpGreedy, true)
+
+    window.addEventListener("enterpictureinpicture", this.handleEnterPIP)
+    window.addEventListener("leavepictureinpicture", this.handleLeavePIP)
   }
   release() {
     if (this.released) return 
@@ -41,19 +45,40 @@ export class Manager {
 
     this.suspend()
     chrome.storage.onChanged.removeListener(this.handleStorageChange)
+    chrome.runtime.onMessage.removeListener(this.handleMessage)
     window.removeEventListener("keydown", this.handleKeyDown)
     window.removeEventListener("keydown", this.handleKeyDownGreedy, true)
     window.removeEventListener("keyup", this.handleKeyUpGreedy, true)
+    window.removeEventListener("enterpictureinpicture", this.handleEnterPIP)
+    window.removeEventListener("leavepictureinpicture", this.handleLeavePIP)
   }
   suspend = () => {
     clearInterval(this.intervalId)
     this.mediaQuery?.release()
     delete this.mediaQuery
 
+    clearElemTransform()
+    clearDocumentTransform()
+
     this.shadowHost?.hideBackdrop()
     clearElemFilter()
     this.fxQuery?.release()
     delete this.fxQuery
+  }
+  handleEnterPIP = (e: Event) => {
+    chrome.runtime.sendMessage({type: "PIP_ENTER"})
+    window.pipMode = true
+  }
+  handleLeavePIP = (e: Event) => {
+    chrome.runtime.sendMessage({type: "PIP_LEAVE"})
+    delete window.pipMode
+  }
+  handleMessage = (msg: any) => {
+    let pip = (document as any).pictureInPictureElement as HTMLVideoElement
+    if (!pip) return 
+    if (msg.type === "APPLY_MEDIA_EVENT") {
+      applyMediaEvent([pip], msg.value)
+    }
   }
   handleStorageChange = async (changes: StorageChanges) => {
     const newConfig = changes?.config?.newValue
@@ -94,11 +119,9 @@ export class Manager {
     }
 
     // speed 
-    this.mediaQuery?.elems.forEach(elem => {
-      setPlaybackRate(elem, ctx.speed)
-    })
-
-    window.postMessage({type: "GS_SET_PLAYBACK_RATE", value: ctx.speed}, "*")
+    const msg: MediaEventPlaybackRate = {type: "SET_PLAYBACK_RATE", value: ctx.speed}
+    applyMediaEvent(this.mediaQuery?.elems || [], msg)
+    window.postMessage({type: "GS_APPLY_MEDIA_EVENT", value: msg}, "*")
 
     // elem filter 
     const elemFilter = formatFilters(ctx.elementFilterValues)
@@ -145,7 +168,7 @@ export class Manager {
     }
     
     const ctx = getContext(this.config, this.tabId)
-    let pageHasMedia = this.mediaQuery?.elems.length > 0 
+    let pageHasMedia = (this.mediaQuery?.elems.length > 0) || this.config.pipInfo
     const greedyKeyBinds = this.config.keybinds.filter(v => v.greedy)
     const eventHotkey = extractHotkey(e)
     
@@ -168,7 +191,7 @@ export class Manager {
     e = null
   
     let ctx = getContext(this.config, this.tabId)
-    let pageHasMedia = this.mediaQuery?.elems.length > 0
+    let pageHasMedia = (this.mediaQuery?.elems.length > 0) || this.config.pipInfo
 
 
     let validKeybinds = ctx.enabled ? this.config.keybinds : this.config.keybinds.filter(v => v.command === "setState")
@@ -236,10 +259,17 @@ export class Manager {
       }
     },
     seek: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
-      const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
+      
       const value = keyBind.valueNumber ?? 10
-      elems.forEach(elem => seekMedia(elem, value, true))
-      window.postMessage({type: "GS_SEEK", value: value, relative: true}, "*")
+      const msg: MediaEventSeek = {type: "SEEK", value: value, relative: true}
+
+      if (config.pipInfo) {
+        chrome.runtime.sendMessage({type: "PIP_FEED", msg})
+      } else {
+        const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
+        applyMediaEvent(elems, msg)
+        window.postMessage({type: "GS_APPLY_MEDIA_EVENT", value: msg}, "*")
+      }
 
       if (!config.hideIndicator) {
         if (value > 0) {
@@ -250,18 +280,28 @@ export class Manager {
       }
     },
     setPause: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
-      const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
-      elems.forEach(elem => setMediaPause(elem, keyBind.valueState))
-      window.postMessage({type: "GS_SET_PAUSE", state: keyBind.valueState}, "*")
+      const msg: MediaEventPause = {type: "PAUSE", state: keyBind.valueState}
+      if (config.pipInfo) {
+        chrome.runtime.sendMessage({type: "PIP_FEED", msg})
+      } else {
+        const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
+        applyMediaEvent(elems, msg)
+        window.postMessage({type: "GS_APPLY_MEDIA_EVENT", value: msg}, "*")
+      }
 
       if (!config.hideIndicator) {
         this.shadowHost?.showSmall(`${window.gsm["token_pause"] || ""} = ${window.gsm[`token_${keyBind.valueState}`] || ""}`)
       }
     },
     setMute: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
-      const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
-      elems.forEach(elem => setMediaMute(elem, keyBind.valueState))
-      window.postMessage({type: "GS_SET_MUTE", state: keyBind.valueState}, "*")
+      const msg: MediaEventMute = {type: "MUTE", state: keyBind.valueState}
+      if (config.pipInfo) {
+        chrome.runtime.sendMessage({type: "PIP_FEED", msg})
+      } else {
+        const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
+        applyMediaEvent(elems, msg)
+        window.postMessage({type: "GS_APPLY_MEDIA_EVENT", value: msg}, "*")
+      }
 
       if (!config.hideIndicator) {
         this.shadowHost?.showSmall(`${window.gsm["token_mute"] || ""} = ${window.gsm[`token_${keyBind.valueState}`] || ""}`)
@@ -269,9 +309,14 @@ export class Manager {
     },
     setMark: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       const key = keyBind.valueString.trim()
-      const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
-      elems.forEach(elem => setMark(elem, key))
-      window.postMessage({type: "GS_SET_MARK", key}, "*")
+      const msg: MediaEventSetMark = {type: "SET_MARK", key}
+      if (config.pipInfo) {
+        chrome.runtime.sendMessage({type: "PIP_FEED", msg})
+      } else {
+        const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
+        applyMediaEvent(elems, msg)
+        window.postMessage({type: "GS_APPLY_MEDIA_EVENT", value: msg}, "*")
+      }
 
       if (!config.hideIndicator) {
         this.shadowHost?.showSmall(`${window.gsm["token_setting"] || ""} "${key}"`)
@@ -279,9 +324,14 @@ export class Manager {
     },
     seekMark: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       const key = keyBind.valueString.trim()
-      const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
-      elems.forEach(elem => seekMark(elem, key))
-      window.postMessage({type: "GS_SEEK_MARK", key}, "*")
+      const msg: MediaEventSeekMark = {type: "SEEK_MARK", key}
+      if (config.pipInfo) {
+        chrome.runtime.sendMessage({type: "PIP_FEED", msg})
+      } else {
+        const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
+        applyMediaEvent(elems, msg)
+        window.postMessage({type: "GS_APPLY_MEDIA_EVENT", value: msg}, "*")
+      }
 
       if (!config.hideIndicator) {
         this.shadowHost?.showSmall(`${window.gsm["token_goTo"] || ""} "${key}"`)
@@ -289,9 +339,14 @@ export class Manager {
     },
     toggleLoop: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
       const key = keyBind.valueString.trim()
-      const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
-      elems.forEach(elem => toggleLoop(elem, key))
-      window.postMessage({type: "GS_TOGGLE_LOOP", key}, "*")
+      const msg: MediaEventToggleLoop = {type: "TOGGLE_LOOP", key}
+      if (config.pipInfo) {
+        chrome.runtime.sendMessage({type: "PIP_FEED", msg})
+      } else {
+        const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
+        applyMediaEvent(elems, msg)
+        window.postMessage({type: "GS_APPLY_MEDIA_EVENT", value: msg}, "*")
+      }
 
       if (!config.hideIndicator) {
         this.shadowHost?.showSmall(window.gsm[commandInfos.toggleLoop.name] || "")

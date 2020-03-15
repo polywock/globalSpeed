@@ -44,7 +44,9 @@ export function getActiveTabId(): Promise<number> {
   })
 }
 
-export function requestSenderInfo(): Promise<{tabId: number, frameId: number}> {
+export type TabFrameInfo = {tabId: number, frameId: number}
+
+export function requestSenderInfo(): Promise<TabFrameInfo> {
   return new Promise((res, rej) => {
     chrome.runtime.sendMessage({
       type: "REQUEST_SENDER_INFO"
