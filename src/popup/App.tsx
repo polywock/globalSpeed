@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react"
+import React, { useEffect, useState, useCallback, useMemo } from "react"
 import { getConfigOrDefault, getContext, conformSpeed, persistConfig } from "../utils/configUtils"
 import { getActiveTabId } from "../utils/browserUtils"
 import { Config} from "../types"
@@ -13,6 +13,7 @@ export function App(props: {}) {
   const [config, setConfig] = useState(null as Config)
   const [tabId, setTabId] = useState(null as number)
   const [fxPanal, setFxPanal] = useState(false)
+  const ref = useMemo(() => ({} as any), [])
 
   useEffect(() => {
     getConfigOrDefault().then(config => {
@@ -22,10 +23,18 @@ export function App(props: {}) {
     getActiveTabId().then(tabId => {
       setTabId(tabId)
     })
+
+    chrome.storage.onChanged.addListener(changes => {
+      if (new Date().getTime() - ref.lastGuidedPersist < 500) return 
+      const newConfig = changes?.config?.newValue
+      if (!newConfig) return 
+      setConfig(newConfig)
+    })
   }, [])
 
   const setAndPersistConfig = useCallback((config: Config) => {
     setConfig(config)
+    ref.lastGuidedPersist = new Date().getTime()
     persistConfig(config)
   }, [])
   

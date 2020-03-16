@@ -1,5 +1,5 @@
 import "regenerator-runtime/runtime"
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback, useMemo } from "react"
 import ReactDOM from "react-dom"
 import { Config, KeyBind } from "../types"
 import { getConfigOrDefault, persistConfig } from "../utils/configUtils"
@@ -10,7 +10,7 @@ import { KeyBindControl } from "./KeyBindControl"
 import { Tooltip } from "../comps/Tooltip"
 import { GoPin, GoZap } from "react-icons/go"
 import { FaPowerOff } from "react-icons/fa"
-import { requestCreateTab } from "../utils/browserUtils"
+import { requestCreateTab, StorageChanges } from "../utils/browserUtils"
 import { NumericInput } from "../comps/NumericInput"
 import { LOCALE_MAP, ensureGsmLoaded } from "../utils/i18"
 import produce from "immer"
@@ -20,15 +20,24 @@ function Options(props: {}) {
   const [config, setConfig] = useState(null as Config)
   const [commandOption, setCommandOption] = useState("adjustSpeed")
   const [showAdvanced, setShowAdvanced] = useState(false)
+  const ref = useMemo(() => ({} as any), [])
   
   useEffect(() => {
     getConfigOrDefault().then(config => {
       setConfig(config)
     })
+
+    chrome.storage.onChanged.addListener(changes => {
+      if (new Date().getTime() - ref.lastGuidedPersist < 500) return 
+      const newConfig = changes?.config?.newValue
+      if (!newConfig) return 
+      setConfig(newConfig)
+    })
   }, [])
 
   const setAndPersistConfig = useCallback((config: Config) => {
     setConfig(config)
+    ref.lastGuidedPersist = new Date().getTime()
     persistConfig(config)
   }, [])
 
