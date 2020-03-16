@@ -188,7 +188,7 @@ function injectCtx() {
       }
     
       elem.gsLoopSeekingHandler = () => {
-        if (elem.currentTime < mark.time || elem.currentTime > endTime) {
+        if (elem.currentTime < mark.time - 1 || elem.currentTime > endTime + 1) {
           handleRemove()
         }
       }
