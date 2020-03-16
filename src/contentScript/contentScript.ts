@@ -1,7 +1,6 @@
 
 import 'regenerator-runtime/runtime'
 import { injectScript } from './utils'
-import { uuidLowerAlpha } from '../utils/helper'
 import { Manager } from './Manager'
 import { ensureGsmLoaded } from '../utils/i18'
 

@@ -15,9 +15,10 @@ export class PollShadowRoots {
   release = () => {
     if (this.released) return 
     this.released = true 
+    clearInterval(this.intervalId)
+    window.removeEventListener("message", this.handleMessage)
     this.handleIntervalDebounced?.cancel()
     delete this.handleIntervalDebounced
-    clearInterval(this.intervalId)
     delete this.shadowRoots
     delete this.listeners
   }

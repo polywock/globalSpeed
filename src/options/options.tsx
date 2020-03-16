@@ -15,12 +15,27 @@ import { NumericInput } from "../comps/NumericInput"
 import { LOCALE_MAP, ensureGsmLoaded } from "../utils/i18"
 import produce from "immer"
 import "./options.scss"
+import debounce from "lodash.debounce"
+
+
 
 function Options(props: {}) {
   const [config, setConfig] = useState(null as Config)
   const [commandOption, setCommandOption] = useState("adjustSpeed")
   const [showAdvanced, setShowAdvanced] = useState(false)
   const ref = useMemo(() => ({} as any), [])
+
+  const persistConfigDebounced = useCallback((
+    debounce((config: Config) => {
+      ref.lastGuidedPersist = new Date().getTime()
+      return persistConfig(config)
+    }, 2000, {trailing: true, maxWait: 3000}
+  )), [])
+  
+  const setAndPersistConfig = useCallback((config: Config) => {
+    setConfig(config)
+    persistConfigDebounced(config)
+  }, [])
   
   useEffect(() => {
     getConfigOrDefault().then(config => {
@@ -28,18 +43,21 @@ function Options(props: {}) {
     })
 
     chrome.storage.onChanged.addListener(changes => {
-      if (new Date().getTime() - ref.lastGuidedPersist < 500) return 
       const newConfig = changes?.config?.newValue
       if (!newConfig) return 
+      if (new Date().getTime() - ref.lastGuidedPersist < 500) return 
       setConfig(newConfig)
+    })
+
+    window.addEventListener("beforeunload", () => {
+      persistConfigDebounced?.flush()
+    })
+
+    document.addEventListener("visibilitychange", () => {
+      persistConfigDebounced?.flush()
     })
   }, [])
 
-  const setAndPersistConfig = useCallback((config: Config) => {
-    setConfig(config)
-    ref.lastGuidedPersist = new Date().getTime()
-    persistConfig(config)
-  }, [])
 
   if (!config) {
     return <span></span>
