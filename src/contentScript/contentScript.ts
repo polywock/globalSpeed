@@ -140,6 +140,23 @@ function injectCtx() {
     function setMediaMute(elem, state) {
       elem.muted = state === "on" ? true : state === "off" ? false : !elem.muted
     }
+
+    let audioCtx; 
+
+    function adjustGain(elem, value) {
+      audioCtx = audioCtx || new AudioContext()
+      elem.gsMediaElemSrc = elem.gsMediaElemSrc || audioCtx.createMediaElementSource(elem)
+      elem.gsGainNode = elem.gsGainNode || audioCtx.createGain()
+      elem.gsGainNode.gain.value = Math.max(0, Math.abs(elem.gsGainNode.gain.value) + value )
+    
+      elem.gsMediaElemSrc.connect(elem.gsGainNode)
+      elem.gsGainNode.connect(audioCtx.destination)
+    }
+    
+    function adjustVolume(elem, value) {
+      elem.volume = Math.min(1, Math.max(0, elem.volume + value)) 
+    }
+    
     
     function setMark(elem, key) {
       if (!elem.readyState) return 
@@ -206,6 +223,10 @@ function injectCtx() {
         elems.forEach(elem => setMediaPause(elem, e.state))
       } else if (e.type === "MUTE") {
         elems.forEach(elem => setMediaMute(elem, e.state))
+      } else if (e.type === "ADJUST_VOLUME") {
+        elems.forEach(elem => adjustVolume(elem, e.value))
+      } else if (e.type === "ADJUST_GAIN") {
+        elems.forEach(elem => adjustGain(elem, e.value))
       } else if (e.type === "SET_MARK") {
         elems.forEach(elem => setMark(elem, e.key))
       } else if (e.type === "SEEK_MARK") {

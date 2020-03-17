@@ -133,6 +133,12 @@
   "command_seekTooltip": {
     "message": "ضبط الفيديو / موقف الوقت الصوت."
   },
+  "command_adjustVolume": {
+    "message": "ضبط مستوى الصوت"
+  },
+  "command_adjustGain": {
+    "message": "ضبط الزيادة"
+  },
   "command_setMark": {
     "message": "تعيين المرجع"
   },

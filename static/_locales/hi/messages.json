@@ -133,6 +133,12 @@
   "command_seekTooltip": {
     "message": "वीडियो / ऑडियो समय की स्थिति को समायोजित करें।"
   },
+  "command_adjustVolume": {
+    "message": "मात्रा समायोजित करें"
+  },
+  "command_adjustGain": {
+    "message": "मात्रा लाभ समायोजित करें"
+  },
   "command_setMark": {
     "message": "संदर्भ सेट करें"
   },

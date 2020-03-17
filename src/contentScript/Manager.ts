@@ -1,7 +1,7 @@
 
 import { requestSenderInfo, requestCreateTab, StorageChanges } from "../utils/browserUtils"
 import { getConfigOrDefault, getContext, getPin, formatSpeed, conformSpeed, formatFilters, getTargetSets, resetFx, flipFx, setFx, setPin, persistConfig } from "../utils/configUtils"
-import { setElemFilter, clearElemFilter, clearElemTransform, setElemTransform, setDocumentTransform, clearDocumentTransform, injectScript, MediaEventSeek, MediaEventPause, MediaEventMute, MediaEventSetMark, MediaEventSeekMark, MediaEventToggleLoop, applyMediaEvent, MediaEventPlaybackRate } from "./utils"
+import { setElemFilter, clearElemFilter, clearElemTransform, setElemTransform, setDocumentTransform, clearDocumentTransform, injectScript, MediaEventSeek, MediaEventPause, MediaEventMute, MediaEventSetMark, MediaEventSeekMark, MediaEventToggleLoop, applyMediaEvent, MediaEventPlaybackRate, MediaEventAdjustVolume, MediaEventAdjustGain } from "./utils"
 import { clamp, round } from '../utils/helper'
 import { ShadowHost } from "./ShadowHost"
 import { compareHotkeys, extractHotkey } from '../utils/keys'
@@ -305,6 +305,26 @@ export class Manager {
 
       if (!config.hideIndicator) {
         this.shadowHost?.showSmall(`${window.gsm["token_mute"] || ""} = ${window.gsm[`token_${keyBind.valueState}`] || ""}`)
+      }
+    },
+    adjustVolume: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
+      const msg: MediaEventAdjustVolume = {type: "ADJUST_VOLUME", value: keyBind.valueNumber}
+      if (config.pipInfo) {
+        chrome.runtime.sendMessage({type: "PIP_FEED", msg})
+      } else {
+        const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
+        applyMediaEvent(elems, msg)
+        window.postMessage({type: "GS_APPLY_MEDIA_EVENT", value: msg}, "*")
+      }
+    },
+    adjustGain: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {
+      const msg: MediaEventAdjustGain = {type: "ADJUST_GAIN", value: keyBind.valueNumber}
+      if (config.pipInfo) {
+        chrome.runtime.sendMessage({type: "PIP_FEED", msg})
+      } else {
+        const elems = this.mediaQuery.elems.filter(v => v.isConnected && v.readyState)
+        applyMediaEvent(elems, msg)
+        window.postMessage({type: "GS_APPLY_MEDIA_EVENT", value: msg}, "*")
       }
     },
     setMark: (keyBind: KeyBind, config: Config, tabId: number, pin: Pin, ctx: Context, flags: {changed: boolean}) => {

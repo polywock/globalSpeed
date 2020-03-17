@@ -133,6 +133,12 @@
   "command_seekTooltip": {
     "message": "ビデオ/オーディオの時間位置を調整します。"
   },
+  "command_adjustVolume": {
+    "message": "音量を調整する"
+  },
+  "command_adjustGain": {
+    "message": "ゲイン調整"
+  },
   "command_setMark": {
     "message": "セットマーク"
   },

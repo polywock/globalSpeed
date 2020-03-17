@@ -133,6 +133,12 @@
   "command_seekTooltip": {
     "message": "Adjust video/audio time position."
   },
+  "command_adjustVolume": {
+    "message": "adjust volume"
+  },
+  "command_adjustGain": {
+    "message": "adjust gain"
+  },
   "command_setMark": {
     "message": "set mark"
   },

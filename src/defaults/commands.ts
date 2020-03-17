@@ -3,7 +3,7 @@ import { Command, KeyBind } from "../types"
 import { uuidLowerAlpha } from "../utils/helper"
 
 export type CommandName = "nothing" | "runCode" | "adjustSpeed" | "setSpeed" | "setPin" | "setState" | 
-  "seek" | "setPause" | "setMute" | "setMark" | "seekMark" | "toggleLoop" | "openUrl" | 
+  "seek" | "setPause" | "setMute" | "adjustVolume" | "adjustGain" | "setMark" | "seekMark" | "toggleLoop" | "openUrl" | 
   "setFx" | "resetFx" | "flipFx" | "adjustFilter" | "setFilter" | "cycleFilterValue"
 
 
@@ -109,6 +109,28 @@ export let commandInfos: {[key in CommandName]: Command} = {
       enabled: true,
       greedy: true,
       valueState: "toggle"
+    })
+  },
+  adjustVolume: {
+    name: "command_adjustVolume",
+    valueType: "number",
+    generate: () => ({
+      id: uuidLowerAlpha(16),
+      command: "adjustVolume",
+      enabled: true,
+      greedy: true,
+      valueNumber: 0.1
+    })
+  },
+  adjustGain: {
+    name: "command_adjustGain",
+    valueType: "number",
+    generate: () => ({
+      id: uuidLowerAlpha(16),
+      command: "adjustGain",
+      enabled: true,
+      greedy: true,
+      valueNumber: 0.1
     })
   },
   setMark: {

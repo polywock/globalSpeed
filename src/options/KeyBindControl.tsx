@@ -7,10 +7,10 @@ import { Tooltip } from "../comps/Tooltip"
 import { NumericInput } from "../comps/NumericInput"
 import { commandInfos } from "../defaults/commands"
 import { filterInfos, FilterName, filterTargets  } from "../defaults/filters"
-import { GoArrowUp, GoArrowDown, GoChevronDown, GoChevronUp, GoX, GoTriangleDown, GoCode, GoLink, GoLocation, GoMute, GoPin, GoZap } from "react-icons/go"
+import { GoArrowUp, GoArrowDown, GoChevronDown, GoChevronUp, GoX, GoTriangleDown, GoCode, GoPin, GoZap } from "react-icons/go"
 import { CycleInput } from "../comps/CycleInput"
 import { ModalText } from "../comps/ModalText"
-import { FaPowerOff, FaPause, FaAngleDoubleRight, FaAngleDoubleLeft, FaStepBackward, FaStepForward, FaEquals, FaFilter, FaBookmark, FaLink, FaInfinity } from "react-icons/fa"
+import { FaPowerOff, FaPause, FaAngleDoubleRight, FaAngleDoubleLeft, FaStepBackward, FaStepForward, FaEquals, FaBookmark, FaLink, FaInfinity, FaVolumeDown, FaVolumeUp, FaVolumeMute } from "react-icons/fa"
 
 
 type KeyBindControlProps = {
@@ -61,7 +61,11 @@ export const KeyBindControl = (props: KeyBindControlProps) => {
         {value.command === "setPin" && <GoPin size="15px"/>}
         {["setFx", "resetFx", "flipFx", "setFilter", "adjustFilter", "cycleFilterValue"].includes(value.command)&& <GoZap size="18px"/>}
         {value.command === "setPause" && <FaPause size="13px"/>}
-        {value.command === "setMute" && <GoMute size="15px"/>}
+        {value.command === "setMute" && <FaVolumeMute size="15px"/>}
+        {["adjustVolume", "adjustGain"].includes(value.command) && <>
+            {value.valueNumber < 0 && <FaVolumeDown size="15px"/>}
+            {value.valueNumber > 0 && <FaVolumeUp size="15px"/>}
+        </>}
         {value.command === "setState" && <FaPowerOff size="14px"/>}
         {["setMark", "seekMark"].includes(value.command) && <FaBookmark size="13px"/>}
         {value.command === "toggleLoop" && <FaInfinity size="14px"/>}

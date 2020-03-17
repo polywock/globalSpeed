@@ -133,6 +133,12 @@
   "command_seekTooltip": {
     "message": "調整視頻/音頻時間位置。"
   },
+  "command_adjustVolume": {
+    "message": "調整音量"
+  },
+  "command_adjustGain": {
+    "message": "調整音量增益"
+  },
   "command_setMark": {
     "message": "標記點"
   },
