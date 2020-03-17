@@ -145,7 +145,9 @@ function injectCtx() {
 
     function adjustGain(elem, value) {
       audioCtx = audioCtx || new AudioContext()
-      elem.gsMediaElemSrc = elem.gsMediaElemSrc || audioCtx.createMediaElementSource(elem)
+      try {
+        elem.gsMediaElemSrc = elem.gsMediaElemSrc || audioCtx.createMediaElementSource(elem)
+      } catch (err) { return }
       elem.gsGainNode = elem.gsGainNode || audioCtx.createGain()
       elem.gsGainNode.gain.value = Math.max(0, Math.abs(elem.gsGainNode.gain.value) + value )
     

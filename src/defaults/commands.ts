@@ -119,7 +119,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
       command: "adjustVolume",
       enabled: true,
       greedy: true,
-      valueNumber: 0.1
+      valueNumber: 0.05
     })
   },
   adjustGain: {
@@ -130,7 +130,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
       command: "adjustGain",
       enabled: true,
       greedy: true,
-      valueNumber: 0.1
+      valueNumber: 0.05
     })
   },
   setMark: {
