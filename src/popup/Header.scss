@@ -1,7 +1,7 @@
 
 .Header {
   display: grid;
-  grid-template-columns: repeat(2, max-content) 1fr repeat(2, max-content);
+  grid-template-columns: repeat(3, max-content) 1fr repeat(2, max-content);
   justify-items: right;
   align-items: center;
   grid-column-gap: 10px;

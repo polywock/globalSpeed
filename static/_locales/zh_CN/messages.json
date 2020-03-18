@@ -136,9 +136,6 @@
   "command_adjustVolume": {
     "message": "调整音量"
   },
-  "command_adjustGain": {
-    "message": "增益调节"
-  },
   "command_setMark": {
     "message": "标记点"
   },

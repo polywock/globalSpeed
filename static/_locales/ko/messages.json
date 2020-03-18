@@ -136,9 +136,6 @@
   "command_adjustVolume": {
     "message": "볼륨 조절"
   },
-  "command_adjustGain": {
-    "message": "게인 조정"
-  },
   "command_setMark": {
     "message": "마크 설정"
   },

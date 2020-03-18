@@ -62,7 +62,7 @@ export const KeyBindControl = (props: KeyBindControlProps) => {
         {["setFx", "resetFx", "flipFx", "setFilter", "adjustFilter", "cycleFilterValue"].includes(value.command)&& <GoZap size="18px"/>}
         {value.command === "setPause" && <FaPause size="13px"/>}
         {value.command === "setMute" && <FaVolumeMute size="15px"/>}
-        {["adjustVolume", "adjustGain"].includes(value.command) && <>
+        {value.command === "adjustVolume" && <>
             {value.valueNumber < 0 && <FaVolumeDown size="15px"/>}
             {value.valueNumber > 0 && <FaVolumeUp size="15px"/>}
         </>}

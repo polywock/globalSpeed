@@ -1,10 +1,10 @@
 {
   "name": "__MSG_appName__",
-  "version": "2.5.6",
+  "version": "2.5.7",
   "default_locale": "en",
   "description": "__MSG_appDesc__",
   "manifest_version": 2,
-  "permissions": ["storage", "https://*/*", "http://*/*", "file://*/*"],
+  "permissions": ["tabCapture", "storage", "https://*/*", "http://*/*", "file://*/*"],
   "browser_action": {
     "default_popup": "popup.html"
   },

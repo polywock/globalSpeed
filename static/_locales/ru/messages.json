@@ -136,9 +136,6 @@
   "command_adjustVolume": {
     "message": "отрегулировать громкость"
   },
-  "command_adjustGain": {
-    "message": "настройка усиления звука"
-  },
   "command_setMark": {
     "message": "установить отметку"
   },

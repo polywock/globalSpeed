@@ -136,9 +136,6 @@
   "command_adjustVolume": {
     "message": "मात्रा समायोजित करें"
   },
-  "command_adjustGain": {
-    "message": "मात्रा लाभ समायोजित करें"
-  },
   "command_setMark": {
     "message": "संदर्भ सेट करें"
   },

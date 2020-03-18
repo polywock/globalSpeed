@@ -1,8 +1,6 @@
 import { SetState } from "../types"
 import { clamp } from "../utils/helper"
 
-let audioCtx: AudioContext
-
 type HTMLMediaElementSuper = HTMLMediaElement & {
   marks?: {
     [key: string]: {
@@ -11,9 +9,7 @@ type HTMLMediaElementSuper = HTMLMediaElement & {
     }
   },
   gsLoopTimeUpdateHandler?: () => void,
-  gsLoopSeekingHandler?: () => void,
-  gsMediaElemSrc?: MediaElementAudioSourceNode,
-  gsGainNode?: GainNode
+  gsLoopSeekingHandler?: () => void
 }
 
 export function setPlaybackRate(elem: HTMLMediaElement, value: number) {
@@ -35,18 +31,6 @@ export function setMediaPause(elem: HTMLMediaElement, state: SetState) {
 
 export function setMediaMute(elem: HTMLMediaElement, state: SetState) {
   elem.muted = state === "on" ? true : state === "off" ? false : !elem.muted
-}
-
-export function adjustGain(elem: HTMLMediaElementSuper, value: number) {
-  audioCtx = audioCtx || new AudioContext()
-  try {
-    elem.gsMediaElemSrc = elem.gsMediaElemSrc || audioCtx.createMediaElementSource(elem)
-  } catch (err) { return }
-  elem.gsGainNode = elem.gsGainNode || audioCtx.createGain()
-  elem.gsGainNode.gain.value = Math.max(0, Math.abs(elem.gsGainNode.gain.value) + value )
-
-  elem.gsMediaElemSrc.connect(elem.gsGainNode)
-  elem.gsGainNode.connect(audioCtx.destination)
 }
 
 export function adjustVolume(elem: HTMLMediaElement, value: number) {
@@ -116,14 +100,13 @@ export type MediaEventSeek = {type: "SEEK", value: number, relative: boolean}
 export type MediaEventPause = {type: "PAUSE", state: SetState}
 export type MediaEventMute = {type: "MUTE", state: SetState}
 export type MediaEventAdjustVolume = {type: "ADJUST_VOLUME", value: number}
-export type MediaEventAdjustGain = {type: "ADJUST_GAIN", value: number}
 export type MediaEventSetMark = {type: "SET_MARK", key: string}
 export type MediaEventSeekMark = {type: "SEEK_MARK", key: string}
 export type MediaEventToggleLoop = {type: "TOGGLE_LOOP", key: string}
 
 export type MediaEvent = 
   MediaEventPlaybackRate | MediaEventSeek | 
-  MediaEventPause | MediaEventMute | MediaEventAdjustVolume | MediaEventAdjustGain |
+  MediaEventPause | MediaEventMute | MediaEventAdjustVolume |
   MediaEventSetMark | MediaEventSeekMark | MediaEventToggleLoop
 
 
@@ -138,8 +121,6 @@ export function applyMediaEvent(elems: HTMLMediaElement[], e: MediaEvent) {
     elems.forEach(elem => setMediaMute(elem, e.state))
   } else if (e.type === "ADJUST_VOLUME") {
     elems.forEach(elem => adjustVolume(elem, e.value))
-  } else if (e.type === "ADJUST_GAIN") {
-    elems.forEach(elem => adjustGain(elem, e.value))
   } else if (e.type === "SET_MARK") {
     elems.forEach(elem => setMark(elem, e.key))
   } else if (e.type === "SEEK_MARK") {

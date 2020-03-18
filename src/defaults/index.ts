@@ -7,7 +7,7 @@ export const SPEED_PRESETS = [0.25, 0.5, 0.75, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2, 
 
 export function getDefaultConfig(): Config {
   return {
-    version: 4,
+    version: 5,
     pins: [],
     common: {
       speed: 1,

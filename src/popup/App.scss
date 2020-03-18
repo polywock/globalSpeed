@@ -13,11 +13,29 @@ body {
   color: black; 
   background-color: #fafafa; 
 
-
-  & > .SpeedControl {
+  & > .mainPanal {
     padding: 8px;
-    background-color: white;
+    background-color: white;  
+
+    & > .volume {
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      grid-column-gap: 10px;
+      margin-top: 10px;
+
+      & > input[type="range"] {
+        &:focus {
+          outline: none;
+        }
+      }
+      
+      & > .NumericInput {
+        text-align: center;
+        font-size: 0.9em;
+      }
+    }
   }
+
 }
 
 

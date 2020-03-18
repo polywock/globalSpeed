@@ -22,8 +22,9 @@ To use, install the [Chrome](https://chrome.google.com/webstore/detail/global-sp
 ## Release Notes
 
 ### V2.5.6 
-- Feature: Added optional hotkeys for adjusting volume and gain. 
+- Feature: Added optional hotkeys for adjusting volume.
 - Feature: Added hotkey support for Picture-In-Picture mode (Chrome and Edge only).
+- Feature: Optional volume amplifier for pinned tabs. 
 
 ### V2.5.X
 - Feature: Support for hidden audio elements. 

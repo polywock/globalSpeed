@@ -136,9 +136,6 @@
   "command_adjustVolume": {
     "message": "Ajusta el volúmen"
   },
-  "command_adjustGain": {
-    "message": "ajustar ganancia"
-  },
   "command_setMark": {
     "message": "crear marcador"
   },

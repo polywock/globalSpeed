@@ -1,7 +1,7 @@
 import React from "react"
 import { setPin, getContext, getPin } from "../utils/configUtils"
 import { GoPin, GoGear, GoMarkGithub, GoZap, GoArrowLeft} from "react-icons/go"
-import { FaPowerOff } from "react-icons/fa"
+import { FaPowerOff, FaVolumeUp } from "react-icons/fa"
 import produce from "immer"
 import { Config } from "../types"
 import "./Header.scss"
@@ -45,6 +45,22 @@ export function Header(props: HeaderProps) {
       >
         <GoPin size="20px"/>
       </div>
+      {!pin ? <div/> : (
+        <div 
+          className={`toggle ${ctx.volume == null ? "" : "active"}`}
+          onClick={e => {
+            setConfig(produce(config, d => {
+              let dCtx = getContext(d, tabId)
+              dCtx.volume = dCtx.volume == null ? 1 : null
+              if (dCtx.volume != null) {
+                chrome.runtime.sendMessage({type: "CAPTURE_TAB", tabId})
+              }
+            }))
+          }}
+        >
+          <FaVolumeUp size="17px"/>
+        </div>
+      )}
       {props.fxPanal ? (
         <div onClick={() => {
           props.setFxPanal(!props.fxPanal)
