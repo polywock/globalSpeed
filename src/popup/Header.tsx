@@ -5,6 +5,7 @@ import { FaPowerOff, FaVolumeUp } from "react-icons/fa"
 import produce from "immer"
 import { Config } from "../types"
 import "./Header.scss"
+import { isFirefox } from "../utils/helper"
 
 type HeaderProps = {
   fxPanal: boolean
@@ -45,7 +46,7 @@ export function Header(props: HeaderProps) {
       >
         <GoPin size="20px"/>
       </div>
-      {!pin ? <div/> : (
+      {(!isFirefox() && pin) ? (
         <div 
           className={`toggle ${ctx.volume == null ? "" : "active"}`}
           onClick={e => {
@@ -60,7 +61,7 @@ export function Header(props: HeaderProps) {
         >
           <FaVolumeUp size="17px"/>
         </div>
-      )}
+      ) : <div/>}
       {props.fxPanal ? (
         <div onClick={() => {
           props.setFxPanal(!props.fxPanal)

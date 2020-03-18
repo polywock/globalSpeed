@@ -86,8 +86,13 @@ export function stringDropWhileEnd(text: string, predicate: (v: string) => boole
   return dropWhileEnd(text.split(""), predicate).join("")
 }
 
+let isFirefoxResult: boolean
+
 export function isFirefox() {
-  return navigator.userAgent.includes("Firefox/")
+  if (isFirefoxResult == null) {
+    isFirefoxResult = navigator.userAgent.includes("Firefox/")
+  }
+  return isFirefoxResult
 }
 
 

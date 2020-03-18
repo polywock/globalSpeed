@@ -8,6 +8,7 @@ import { FxPanal } from "./FxPanal"
 import { Header } from "./Header"
 import "./App.scss"
 import { NumericInput } from "../comps/NumericInput"
+import { isFirefox } from "../utils/helper"
 
 
 export function App(props: {}) {
@@ -20,7 +21,7 @@ export function App(props: {}) {
     getConfigOrDefault().then(config => {
       setConfig(config)
     })
-    
+
     getActiveTabId().then(tabId => {
       setTabId(tabId)
     })
@@ -59,7 +60,7 @@ export function App(props: {}) {
               ctx.speed = conformSpeed(v)
             }))
           }}/>
-          {pin && ctx.volume != null && (
+          {!isFirefox() && pin && ctx.volume != null && (
             <div className="volume">
               <NumericInput noNull={true} min={0} value={ctx.volume} onChange={v => {
                  setAndPersistConfig(produce(config, d => {
