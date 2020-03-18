@@ -4,7 +4,8 @@
   "default_locale": "en",
   "description": "__MSG_appDesc__",
   "manifest_version": 2,
-  "permissions": ["tabCapture", "storage", "https://*/*", "http://*/*", "file://*/*"],
+  "optional_permissions": ["tabCapture"],
+  "permissions": ["storage", "https://*/*", "http://*/*", "file://*/*"],
   "browser_action": {
     "default_popup": "popup.html"
   },

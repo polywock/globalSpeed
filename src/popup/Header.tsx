@@ -6,6 +6,7 @@ import produce from "immer"
 import { Config } from "../types"
 import "./Header.scss"
 import { isFirefox } from "../utils/helper"
+import { hasPermissions, requestPermissions } from "../utils/browserUtils"
 
 type HeaderProps = {
   fxPanal: boolean
@@ -50,13 +51,17 @@ export function Header(props: HeaderProps) {
         <div 
           className={`toggle ${ctx.volume == null ? "" : "active"}`}
           onClick={e => {
-            setConfig(produce(config, d => {
-              let dCtx = getContext(d, tabId)
-              dCtx.volume = dCtx.volume == null ? 1 : null
-              if (dCtx.volume != null) {
-                chrome.runtime.sendMessage({type: "CAPTURE_TAB", tabId})
+            requestPermissions({permissions: ["tabCapture"]}).then(got => {
+              if (got) {
+                setConfig(produce(config, d => {
+                  let dCtx = getContext(d, tabId)
+                  dCtx.volume = dCtx.volume == null ? 1 : null
+                  if (dCtx.volume != null) {
+                    chrome.runtime.sendMessage({type: "CAPTURE_TAB", tabId})
+                  }
+                }))
               }
-            }))
+            })
           }}
         >
           <FaVolumeUp size="17px"/>
