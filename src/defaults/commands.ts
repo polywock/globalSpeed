@@ -320,14 +320,16 @@ export function getDefaultKeyBinds(): KeyBind[] {
       key: {code: "KeyE"},
       filterOption: "invert",
       filterTarget: "both",
-      valueCycle: [0, 1]
+      valueCycle: [0, 1],
+      enabled: false
     },
     {
       ...commandInfos.cycleFilterValue.generate(),
       key: {shiftKey: true, code: "KeyE"},
       filterOption: "grayscale",
       filterTarget: "backdrop",
-      valueCycle: [0, 1]
+      valueCycle: [0, 1],
+      enabled: false
     }
   ]
 }

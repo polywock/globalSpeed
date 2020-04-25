@@ -5,14 +5,16 @@ export async function migrateSchema() {
   const currentConfig = await getConfig()
   const newConfig = getDefaultConfig()
   
-  if (currentConfig == null || currentConfig.version == null || currentConfig.version <= 3) {
+  if (currentConfig == null || currentConfig.version == null || currentConfig.version <= 4) {
     persistConfig(newConfig)
     return 
   }
 
-  if (currentConfig.version === 4) {
-    currentConfig.keybinds = ((currentConfig.keybinds || []) as any[]).filter(v => v.command !== "adjustGain") 
-    currentConfig.version = 5
+  // some users have been accidently clicking the toggle invert key, need to reset em.
+  if (currentConfig.version === 5) {
+    currentConfig.version = 6
+    currentConfig.common.backdropFx = false
+    currentConfig.common.elementFx = false 
     persistConfig(currentConfig)
     return 
   }
