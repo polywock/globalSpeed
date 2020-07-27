@@ -1,18 +1,18 @@
 {
   "appName": {
-    "message": "Global Speed - 全球速度"
+    "message": "Global Speed - 全局速度"
   },
   "appDesc": {
     "message": "设置视频和音频的默认速度。"
   },
   "firefoxBackdropWarning": {
-    "message": "警告：对于背景幕过滤器，Firefox用户需要通过转到 \"about:config\" URL 启用 \"gfx.webrender.all\" 和 \"layout.css.backdrop-filter.enabled\"。启用两个标志后，重新启动Firefox。"
+    "message": "警告：对于背景过滤器功能，Firefox用户需要转到 \"about:config\" URL 启用 \"gfx.webrender.all\" 和 \"layout.css.backdrop-filter.enabled\"。启用这两个标志后，重新启动Firefox。"
   },
   "token_language": {
     "message": "语言"
   },
   "token_create": {
-    "message": "创建"
+    "message": "添加"
   },
   "token_on": {
     "message": "打开"
@@ -36,7 +36,7 @@
     "message": "设置"
   },
   "token_goTo": {
-    "message": "寻求"
+    "message": "移动时间轴"
   },
   "token_enabled": {
     "message": "已启用"
@@ -60,10 +60,10 @@
     "message": "交换"
   },
   "token_flipX": {
-    "message": "翻转X"
+    "message": "左右翻转"
   },
   "token_flipY": {
-    "message": "翻转Y"
+    "message": "上下翻转"
   },
   "token_query": {
     "message": "选择器"
@@ -99,18 +99,18 @@
     "message": "从其他选项卡复制值。"
   },
   "fxPanal_swapTooltip": {
-    "message": "交换元素和背景值。"
+    "message": "交换元素值和背景值。"
   },
   "fxPanal_queryTooltip": {
-    "message": "CSS選擇器，用於查找要過濾的元素。例如，“ video，img ”將同時查詢視頻和圖像。有關高級用法，請在線查看有關CSS選擇器的文檔。"
+    "message": "CSS选择器，用于查找要过滤的元素。例如，“video, img”将会同时查询视频和图像。相关高级用法，请在线查阅CSS选择器的相关文档。"
   },
 
 
   "command_nothing": {
-    "message": "没有行动"
+    "message": "无动作"
   },
   "command_nothingTooltip": {
-    "message": "可以与（G）贪婪模式结合使用以阻止某些键。"
+    "message": "可与（G）贪婪模式结合使用以阻止某些按键。"
   },
   "command_runCode": {
     "message": "运行JavaScript"
@@ -125,10 +125,10 @@
     "message": "固定选项卡"
   },
   "command_setState": {
-    "message": "设置状态"
+    "message": "设置扩展状态"
   },
   "command_seek": {
-    "message": "寻求"
+    "message": "移动时间轴"
   },
   "command_seekTooltip": {
     "message": "调整视频/音频时间位置。"
@@ -137,16 +137,16 @@
     "message": "调整音量"
   },
   "command_setMark": {
-    "message": "标记点"
+    "message": "设置标记点"
   },
   "command_setMarkTooltip": {
-    "message": "标记当前的视频/音频时间位置，以备将来参考。"
+    "message": "标记当前视频/音频的时间位置，以备将来引用。"
   },
   "command_seekMark": {
     "message": "转到标记点"
   },
   "command_seekMarkTooltip": {
-    "message": "转到标记的视频/音频时间位置。如果未标记，它将标记当前点。"
+    "message": "转到视频/音频标记的时间位置。没有标记时，则标记当前点。"
   },
   "command_toggleLoop": {
     "message": "切换循环"
@@ -155,7 +155,7 @@
     "message": "在标记位置和当前位置之间设置循环。"
   },
   "command_openUrl": {
-    "message": "打开网址。"
+    "message": "打开网址"
   },
   "command_setFx": {
     "message": "设置FX状态"
@@ -184,10 +184,10 @@
     "message": "热键编辑器"
   },
   "options_optionsHeader": {
-    "message": "选件"
+    "message": "选项"
   },
   "options_helpHeader": {
-    "message": "救命"
+    "message": "帮助"
   },
 
 
@@ -195,15 +195,15 @@
     "message": "除非页面上有视频或音频，否则媒体模式将忽略按键。"
   },
   "options_greedyToggleDesc": {
-    "message": "贪婪模式将尝试阻止事件传播和默认行为。"
+    "message": "贪婪模式将尝试阻止事件的传播和默认行为。"
   },
 
 
   "options_showAdvancedButton": {
-    "message": "显示高级"
+    "message": "显示高级选项"
   },
   "options_languageTooltip": {
-    "message": "除英语以外的所有语言均使用在线工具进行了翻译。刷新选项卡以查看更改。" 
+    "message": "除英语以外的所有语言均使用在线工具进行翻译（liangjiancang对部分中文翻译作出调整）。刷新选项卡以查看更改。" 
   },
   "options_pinByDefault": {
     "message": "默认固定" 
@@ -215,7 +215,7 @@
     "message": "隐藏反馈指示器" 
   },
   "options_hideIndicatorTooltip": {
-    "message": "一些热键在页面的左上方显示一个反馈指示器。" 
+    "message": "使用某些热键时，在页面左上方显示反馈指示器。" 
   },
   "options_hideBadge": {
     "message": "隐藏徽章" 
@@ -224,34 +224,34 @@
     "message": "徽章是扩展图标上的文字。" 
   },
   "options_usePolling": {
-    "message": "使用间隔" 
+    "message": "使用轮询" 
   },
   "options_usePollingTooltip": {
-    "message": "两种查询元素的方式。默认方法是使用MutationObserver API跟踪更改。从长远来看，这将更有效率。另一种算法是定期检查目标元素。" 
+    "message": "两种查询元素的方式。默认方式是使用MutationObserver API跟踪更改。从长期来看，这将更有效率。另一种算法是定期检查目标元素。" 
   },
   "options_pollingRate": {
-    "message": "间隔率" 
+    "message": "轮询间隔" 
   },
   "options_pollingRateTooltip": {
-    "message": "1000毫秒== 1秒。" 
+    "message": "提示：1秒等于1000毫秒。" 
   },
   "options_issuePrompt": {
     "message": "有问题或建议吗？"
   },
   "options_issueDirective": {
-    "message": "在Github上提交报告。"
+    "message": "在Github上提供反馈。"
   },
   "options_help_stateDesc": {
     "message": "暂停当前​​上下文的程序。"
   },
   "options_help_pinDesc": {
-    "message": "固定选项卡使其具有自己的上下文（速度，激活，过滤器等）。"
+    "message": "固定选项卡使其拥有自己的上下文（速度，激活状态，过滤器等）。"
   },
   "options_help_fxDesc": {
-    "message": "您可以在元素（默认情况下，仅视频）或什至整个带有背景的页面上启用滤镜（对比度，反色，灰度等）。"
+    "message": "您可以在特定元素（默认只有视频），甚至在整个页面上启用滤镜（对比度，反色，灰度等）。"
   },
   "options_help_localPrompt": {
-    "message": "为了使扩展名可以在本地文件或隐身模式下使用。"
+    "message": "为了使扩展可以在本地文件或隐私模式下使用。"
   },
   "options_help_localDirective": {
     "message": "需要在扩展页面上启用它们。"
