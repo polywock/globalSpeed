@@ -1,0 +1,19 @@
+
+
+@import "../common.scss";
+
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--fg-color);
+}
+
+#App {
+  & > .panel {
+    width: 300px;
+    padding: 8px;
+    min-height: 150px;
+  }
+}
+

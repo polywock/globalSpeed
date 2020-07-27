@@ -1,0 +1,54 @@
+
+.AudioPanel {
+  font-size: 13px;
+  background-color: var(--fg-color);
+  padding-right: 20px;
+
+  & > * {
+    margin-bottom: 10px;
+  }
+
+  & > .capture {
+    width: 100%;
+    font-size: 1.3em;
+    padding: 5px; 
+    margin-top: 10px;
+    border-width: 3px;
+    background-color: var(--mg-color);
+    border-style: dashed;
+    border-radius: 5px;
+
+    &.active {
+      border-color: var(--focus-color);
+      border-style: solid;
+      color: var(--focus-color);
+    }
+  }
+
+  & > .SliderPlus {
+    margin-bottom: 20px;
+  }
+
+  & > .audioTab {
+
+    & > .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 10px;
+  
+      & > button {
+        color: var(--header-icon-color);
+        &.active {
+          color: var(--header-icon-active-color);
+        } 
+        &.muted {
+          color: var(--header-icon-muted-color);
+        } 
+      }
+    }
+
+    & .SliderPlus {
+      margin-top: 10px;
+    }
+  }
+}

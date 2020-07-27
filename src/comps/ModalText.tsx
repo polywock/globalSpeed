@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react"
+import { ThrottledTextInput } from "./ThrottledTextInput"
 import "./ModalText.scss"
 
 type ModalTextProps = {
@@ -18,8 +19,8 @@ export function ModalText(props: ModalTextProps) {
           setModal(false)
         }
       }}>
-        <textarea value={props.value} onChange={e => {
-          props.onChange(e.target.value)
+        <ThrottledTextInput textArea={true} value={props.value} onChange={v => {
+          props.onChange(v)
         }}/>
       </div>
     ) : (

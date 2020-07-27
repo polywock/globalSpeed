@@ -1,0 +1,60 @@
+.SliderPlus {
+  background-color: var(--fg-color);
+  --label-color: var(--text-color);
+  --reset-color: var(--icon-color);
+  --font-weight: 400;
+  --opacity: 0.5;
+
+  display: grid;
+  grid-template-columns: max-content 1fr;
+
+  &.highlight {
+    --label-color: var(--header-icon-active-color);
+    --reset-color: var(--header-icon-active-color);
+    --font-weight: 600;
+    --opacity: 1;
+  }
+
+  & > .Move {
+    margin-right: 5px;
+  }
+  
+  & > .core {
+    & > .header {
+      display: grid;
+      grid-template-columns: 1fr 60px max-content;
+      grid-column-gap: 5px;
+      margin-bottom: 2px;
+      align-items: center;
+
+    
+      & > span {
+        align-self: center;
+        font-weight: var(--font-weight);
+        color: var(--label-color);
+      }
+
+      & > .button {
+        color: var(--icon-color);
+        user-select: none;
+
+        &.reset {
+          color: var(--reset-color);
+          border: 1px solid var(--reset-color);
+          padding: 2px;
+          box-sizing: content-box;
+          opacity: var(--opacity);
+          border-radius: 5px;
+        }
+      }
+
+      & > .NumericInput > input {
+        text-align: center;
+      }
+    }
+
+    & > input[type="range"] {
+      width: 100%;
+    }
+  }
+}

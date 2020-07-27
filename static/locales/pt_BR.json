@@ -1,0 +1,112 @@
+{
+  "audio": {
+    "captureTab": "capturar",
+    "releaseTab": "libertar",
+    "equalizer": "equalizador",
+    "compressor": "compressor"
+  },
+  "warnings": {
+    "backdropFirefox": "Firefox users need to enable \"gfx.webrender.all\" and \"layout.css.backdrop-filter.enabled\" by accessing the \"about:config\" URL. Restart Firefox after enabling both flags.",
+    "unusedGlobal": "Solte as teclas de atalho globais não utilizadas"
+  },
+  "token": {
+    "create": "crio",
+    "reset": "redefinir",
+    
+    "on": "ligado",
+    "off": "desligado",
+    "toggle": "alternancia",
+    
+    "element": "elemento",
+    "backdrop": "fundo",
+    "both": "ambos",
+    
+    "query": "seletor",
+    "warning": "aviso",
+    "filters": "filtros",
+    "transforms": "transformar"
+  },
+  "filter": {
+    "grayscale": "escala de cinza",
+    "sepia": "sépia",
+    "hueRotate": "matiz",
+    "contrast": "contraste",
+    "brightness": "brilho",
+    "saturate": "saturação",
+    "invert": "inverter",
+    "blur": "desfoque",
+    "opacity": "opacidade",
+    "scaleX": "escala X",
+    "scaleY": "escala Y",
+    "translateX": "transladar X",
+    "translateY": "transladar Y",
+    "rotateX": "girar X",
+    "rotateY": "girar Y",
+    "rotateZ": "girar Z"
+  },
+  "fxPanel": {
+    "queryTooltip": "Seletor de CSS usado para encontrar elementos para filtrar. Por exemplo, 'video, img' selecionará vídeos e imagens. Para uso avançado, consulte a documentação online sobre seletores de CSS.",
+    "intoPane": "criar janela"
+  },
+  "command": {
+    "nothing": "nenhuma ação",
+    "runCode": "javascript",
+    "openUrl": "Abrir URL",
+    "adjustSpeed": "velocidade",
+    "setPin": "fixar guia",
+    "setState": "estado",
+    "seek": "ajustar posição",
+    "setPause": "pausa",
+    "setMute": "ativar mudo",
+    "adjustVolume": "volume",
+    "setMark": "definir marcador",
+    "seekMark": "vá para o marcador",
+    "toggleLoop": "repita AB",
+    "toggleLoopTooltip": "Repita o vídeo da posição marcada para a posição atual.",
+    "setFx": "estado FX",
+    "resetFx": "redefinir FX",
+    "flipFx": "trocar FX",
+    "adjustFilter": "filtro FX",
+    "adjustPitch": "tom de som",
+    "adjustGain": "volume+",
+    "adjustDelay": "atraso",
+    "tabCapture": "capturar"
+  },
+  "options": {
+    "flags": {
+      "header": "Opções",
+      "language": "língua",
+      "languageTooltip": "Todos os idiomas, exceto o inglês, foram traduzidos usando ferramentas online. Eles geralmente são lixo.",
+      "darkTheme": "tema escuro",
+      "pinByDefault": "fixar por padrão",
+      "pinByDefaultTooltip": "Novas guias serão automaticamente fixadas.",
+      "hideIndicator": "esconder indicador",
+      "hideIndicatorTooltip": "Alguns atalhos mostram um indicador de feedback no canto superior esquerdo da página.",
+      "hideBadge": "esconder emblema",
+      "hideBadgeTooltip": "O emblema é o texto no ícone de extensão.",
+      "fullscreenSupport": "suporte de tela cheia",
+      "feedbackVolume": "feedback de volume",
+      "ghostMode": "modo fantasma",
+      "ghostModeTooltip": "Tente impedir que o site mude de velocidade. Desabilitado por padrão, pois pode quebrar alguns sites."
+    },
+    "editor": {
+      "header": "Editor de Atalhos",
+      "toggleMode": "Você pode usar teclas de atalho locais ou globais.",
+      "toggleModeTooltip": "Atalhos globais são úteis quando você deseja controlar vídeo ou áudio enquanto usa outro programa.",
+      "greedyMode": "Tentará bloquear o comportamento padrão das teclas de atalho."
+    },
+    "rules": {
+      "header": "Regras de URL",
+      "startsWith": "começa com",
+      "contains": "contém",
+      "regex": "regex",
+      "LAX": "Aplique apenas uma vez por guia.",
+      "ILO": "Verifique apenas durante o carregamento da página inicial."
+    },
+    "help": {
+      "header": "Socorro",
+      "issuePrompt": "Tem problemas ou uma sugestão?",
+      "issueDirective": "Crie um novo relatório na página do Github."
+    }
+  }
+}

@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from "react"
+import React, { useState, useEffect } from "react"
+import { FloatTooltip } from "./FloatTooltip"
 import { round } from "../utils/helper"
 
 const NUMERIC_REGEX = /^-?(?=[\d\.])\d*(\.\d+)?$/
@@ -8,24 +9,24 @@ type NumericInputProps = {
   onChange: (newValue: number) => any,
   placeholder?: string,
   noNull?: boolean
-  displayRound?: number,
   min?: number,
-  max?: number
+  max?: number,
+  rounding?: number
 }
 
 
 export const NumericInput = (props: NumericInputProps) => {
   const [ghostValue, setGhostValue] = useState("")
-  const [isValid, setIsValid] = useState(true)
+  const [problem, setProblem] = useState(null as string)
 
   useEffect(() => {
+    setProblem(null)
     if (props.value == null) {
-      setGhostValue("")
+      ghostValue !== "" && setGhostValue("")
     } else {
       let parsedGhostValue = parseFloat(ghostValue)
-      const newValue = round(props.value, props.displayRound ?? 4)
-      if (parsedGhostValue !== newValue) {
-        setGhostValue(newValue.toString())
+      if (parsedGhostValue !== props.value) {
+        setGhostValue(round(props.value, props.rounding ?? 4).toString())
       }
     }
   }, [props.value])
@@ -36,38 +37,52 @@ export const NumericInput = (props: NumericInputProps) => {
     const value = e.target.value.trim()
     if (!value) {
       if (props.noNull) {
-        setIsValid(false)
+        setProblem("empty")
       } else {
-        setIsValid(true)
+        setProblem(null)
         props.onChange(null)
       }
       return 
     }
     
-    if (NUMERIC_REGEX.test(value)) {
-      const parsed = parseFloat(value)
+    const parsed = round(parseFloat(value), props.rounding ?? 4)
+    if (NUMERIC_REGEX.test(value) && !isNaN(parsed)) {
       if (props.min != null && parsed < props.min) {
-        setIsValid(false)
+        setProblem(`>= ${props.min}`)
         return 
       }
       if (props.max != null && parsed > props.max) {
-        setIsValid(false)
+        setProblem(`<=  ${props.max}`)
         return
       }
-      if (parsed !== props.value) {
+      if (parsed !== round(props.value, props.rounding ?? 4)) {
         props.onChange(parsed)
       }
-      setIsValid(true)
+      setProblem(null)
     } else {
-      setIsValid(false) 
+      setProblem(`NaN`) 
     }
   }
 
   return (
-    <input 
-      placeholder={props.placeholder}
-      type="text" 
-      className={`NumericInput ${isValid ? "" : "red"}`} 
-      onChange={handleOnChange} value={ghostValue}/>
+    <div className={`NumericInput`} style={{position: "relative"}}>
+      <input 
+        onBlur={e => {
+          setProblem(null)
+          setGhostValue(props.value == null ? "" : round(props.value, props.rounding ?? 4).toString())
+        }}
+        className={problem ? "error" : ""}
+        placeholder={props.placeholder}
+        type="text" 
+        onChange={handleOnChange} value={ghostValue}
+      />
+      {problem && (
+        <FloatTooltip value={problem}/>
+      )}
+    </div>
   )
 }
+
+
+
+

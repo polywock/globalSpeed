@@ -1,0 +1,15 @@
+
+.EqualizerControl {
+  & > .preset {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-column-gap: 5px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+
+    select {
+      width: inherit;
+    }
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "audio": {
+    "captureTab": "capturar",
+    "releaseTab": "soltar",
+    "equalizer": "ecualizador",
+    "compressor": "compresor"
+  },
+  "warnings": {
+    "backdropFirefox": "Los usuarios de Firefox deben habilitar \"gfx.webrender.all\" y \"layout.css.backdrop-filter.enabled\" yendo a la URL \"about:config\". Reinicie Firefox después de habilitar las dos banderas.",
+    "unusedGlobal": "Suelte las teclas de acceso directo global no utilizadas."
+  },
+  "token": {
+    "create": "crear",
+    "reset": "restablecer",
+
+    "on": "encendido",
+    "off": "apagado",
+    "toggle": "alternar",
+
+    "element": "elemento",
+    "backdrop": "fondo",
+    "both": "ambos",
+
+    "query": "selector",
+    "warning": "advertencia",
+    "filters": "filtros",
+    "transforms": "transforma"
+  },
+  "filter": {
+    "grayscale": "escala de grises",
+    "sepia": "sepia",
+    "hueRotate": "matiz rotar",
+    "contrast": "contraste",
+    "brightness": "brillo",
+    "saturate": "saturación",
+    "invert": "invertir",
+    "blur": "desenfoque",
+    "opacity": "opacidad",
+    "scaleX": "escalar X",
+    "scaleY": "escalar Y",
+    "translateX": "trasladar  X",
+    "translateY": "trasladar Y",
+    "rotateX": "rotar X",
+    "rotateY": "rotar Y",
+    "rotateZ": "rotar Z"
+  },
+  "fxPanel": {
+    "queryTooltip": "El selector CSS se utiliza para buscar elementos para filtrar. Por ejemplo, \"video, img\" seleccionará videos e imágenes. Para uso avanzado, vea la documentación en línea sobre los selectores CSS.",
+    "intoPane": "crear ventana"
+  },
+  "command": {
+    "nothing": "ninguna acción",
+    "runCode": "javascript",
+    "openUrl": "URL",
+    "adjustSpeed": "velocidad",
+    "setPin": "pestaña pin",
+    "setState": "estado",
+    "seek": "buscar",
+    "setPause": "pausa",
+    "setMute": "silenciar",
+    "adjustVolume": "volumen",
+    "setMark": "crear marca",
+    "seekMark": "ir al marca",
+    "toggleLoop": "repetir AB",
+    "toggleLoopTooltip": "Establecer bucle entre la posición marcada y la posición actual.",
+    "setFx": "Estado FX",
+    "resetFx": " restablecer FX",
+    "flipFx": "intercambiar FX",
+    "adjustFilter": "Filtro FX",
+    "adjustPitch": "tono",
+    "adjustGain": "volumen+",
+    "adjustDelay": "retrasar",
+    "tabCapture": "capturar"
+  },
+  "options": {
+    "flags": {
+      "header": "Opciones",
+      "language": "idioma",
+      "languageTooltip": "Todos los idiomas, excepto el inglés, se tradujeron utilizando herramientas en línea. Actualizar pestaña para ver los cambios.",
+      "darkTheme": "tema oscuro",
+      "pinByDefault": "pin automático",
+      "pinByDefaultTooltip": "Las nuevas pestañas se fijarán automáticamente.",
+      "hideIndicator": "ocultar indicador",
+      "hideIndicatorTooltip": "Algunos accesos directos muestran un indicador de comentarios en la parte superior izquierda de la página.",
+      "hideBadge": "ocultar insignia",
+      "hideBadgeTooltip": "La insignia es el texto en el icono de extensión.",
+      "fullscreenSupport": "soporte de pantalla completa",
+      "feedbackVolume": "retroalimentación de audio",
+      "ghostMode": "modo fantasma",
+      "ghostModeTooltip": "Intenta bloquear el sitio web para que no cambie de velocidad. Deshabilitado de forma predeterminada porque podría romper algunos sitios web."
+    },
+    "editor": {
+      "header": "Editor de accesos directos",
+      "toggleMode": "Puede usar teclas de acceso directo locales o globales.",
+      "toggleModeTooltip": "Los accesos directos globales son útiles cuando desea controlar video o audio mientras usa otro programa.",
+      "greedyMode": "El modo codicioso intentará bloquear la propagación de eventos y los comportamientos predeterminados."
+    },
+    "rules": {
+      "header": "Reglas de URL",
+      "startsWith": "comienza con",
+      "contains": "contiene",
+      "regex": "regex",
+      "LAX": "Solo aplique una vez por pestaña.",
+      "ILO": "Solo verifique durante la carga inicial de la página."
+    },
+    "help": {
+      "header": "Ayuda",
+      "issuePrompt": "¿Tienes problemas o alguna sugerencia?",
+      "issueDirective": "Crea un nuevo problema en la página de Github."
+    }
+  }  
+}

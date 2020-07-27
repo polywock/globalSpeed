@@ -1,0 +1,112 @@
+{
+  "audio": {
+    "captureTab": "capture",
+    "releaseTab": "release",
+    "equalizer": "equalizer",
+    "compressor": "compressor"
+  },
+  "warnings": {
+    "backdropFirefox": "Firefox users need to enable \"gfx.webrender.all\" and \"layout.css.backdrop-filter.enabled\" by going to the \"about:config\" URL. Restart Firefox after enabling the two flags.",
+    "unusedGlobal": "Release the unused global shortcut keys"
+  },
+  "token": {
+    "create": "create",
+    "reset": "reset",
+    
+    "on": "on",
+    "off": "off",
+    "toggle": "toggle",
+    
+    "element": "element",
+    "backdrop": "backdrop",
+    "both": "both",
+    
+    "query": "query",
+    "warning": "warning",
+    "filters": "filters",
+    "transforms": "transforms"
+  },
+  "filter": {
+    "grayscale": "grayscale",
+    "sepia": "sepia",
+    "hueRotate": "hue-rotate",
+    "contrast": "contrast",
+    "brightness": "brightness",
+    "saturate": "saturation",
+    "invert": "invert",
+    "blur": "blur",
+    "opacity": "opacity",
+    "scaleX": "scaleX",
+    "scaleY": "scaleY",
+    "translateX": "translateX",
+    "translateY": "translateY",
+    "rotateX": "rotateX",
+    "rotateY": "rotateY",
+    "rotateZ": "rotateZ"
+  },
+  "fxPanel": {
+    "queryTooltip": "CSS selector used to find elements to filter. For example, 'video, img' will select both videos and images. For advanced usage, view documentation online about CSS selectors.",
+    "intoPane": "into pane"
+  },
+  "command": {
+    "nothing": "no action",
+    "runCode": "javascript",
+    "openUrl": "open URL",
+    "adjustSpeed": "speed",
+    "setPin": "pin tab",
+    "setState": "state",
+    "seek": "seek",
+    "setPause": "pause",
+    "setMute": "mute",
+    "adjustVolume": "volume",
+    "setMark": "set mark",
+    "seekMark": "seek mark",
+    "toggleLoop": "AB loop",
+    "toggleLoopTooltip": "Repeat the video from the marked position to the current position.",
+    "setFx": "FX state",
+    "resetFx": "FX reset",
+    "flipFx": "FX swap",
+    "adjustFilter": "filter",
+    "adjustPitch": "pitch",
+    "adjustGain": "gain",
+    "adjustDelay": "delay",
+    "tabCapture": "tab capture"
+  },
+  "options": {
+    "flags": {
+      "header": "Options",
+      "language": "language",
+      "languageTooltip": "All languages except English were translated using online tools.",
+      "darkTheme": "dark theme",
+      "pinByDefault": "pin by default",
+      "pinByDefaultTooltip": "New tabs will automatically be pinned.",
+      "hideIndicator": "hide indicator",
+      "hideIndicatorTooltip": "Some shortcuts show a feedback indicator on the top-left of the page.",
+      "hideBadge": "hide badge",
+      "hideBadgeTooltip": "The badge is the text on the extension icon.",
+      "fullscreenSupport": "fullscreen support",
+      "feedbackVolume": "feedback volume",
+      "ghostMode": "ghost mode",
+      "ghostModeTooltip": "Try to block website from changing speed. Disabled by default because it might break some websites."
+    },
+    "editor": {
+      "header": "Shortcut Editor",
+      "toggleMode": "You can use local or global shortcut keys.",
+      "toggleModeTooltip": "Global shortcuts are useful when you want to control video or audio while using another program.",
+      "greedyMode": "Will try to block event propagation and default behaviors."
+    },
+    "rules": {
+      "header": "URL Rules",
+      "startsWith": "starts with",
+      "contains": "contains",
+      "regex": "regex",
+      "LAX": "Only apply once per tab.",
+      "ILO": "Only check during the initial page load."
+    },
+    "help": {
+      "header": "Help",
+      "issuePrompt": "Have issues or a suggestion?",
+      "issueDirective": "Create a new issue on the Github page."
+    }
+  }
+}

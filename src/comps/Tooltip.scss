@@ -1,20 +1,17 @@
 
 .Tooltip {
   display: inline-block;
-
+  
   & > span {
+    user-select: none;
     padding: 0px 2px;
-    background-color: white;
-    color: black;
-    border: 1px solid #aaa;
+    background-color: var(--fg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
 
     &:focus {
-      border: 1px solid black;
+      border-color: var(--focus-color);
       outline: none;
-    }
-
-    &:active {
-      background-color: #ddd;
     }
   }
 
@@ -33,9 +30,9 @@
 
   & > .fg {
     display: inline-block;
-    background-color: black;
-    color: white;
+    background-color: var(--fg-color);
+    color: var(--text-color);
     padding: 10px;
-    max-width: 300px;
+    filter: invert(1);
   }
 }

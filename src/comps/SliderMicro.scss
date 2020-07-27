@@ -1,0 +1,54 @@
+
+
+.SliderMicro {
+  background-color: var(--fg-color);
+  // padding: 5px;
+  // border: 1px solid var(--border-color);
+  --label-color: var(--text-color);
+  --reset-color: var(--icon-color);
+  --font-weight: 400;
+  --opacity: 0.5;
+
+  &.highlight {
+    --label-color: var(--header-icon-active-color);
+    --reset-color: var(--header-icon-active-color);
+    --font-weight: 600;
+    --opacity: 1;
+  }
+
+
+  
+  display: grid;
+  grid-template-columns: 80px 1fr max-content;
+  grid-column-gap: 5px;
+  margin-bottom: 2px;
+  align-items: center;
+
+  &.withInput {
+    grid-template-columns: 80px 1fr 60px max-content;
+  }
+
+
+  // & > span {
+  //   align-self: center;
+  //   font-weight: var(--font-weight);
+  //   color: var(--label-color);
+  // }
+
+  & > .button {
+    color: var(--icon-color);
+    user-select: none;
+
+    &.reset {
+      color: var(--reset-color);
+      border: 1px solid var(--reset-color);
+      padding: 2px;
+      box-sizing: content-box;
+      opacity: var(--opacity);
+      border-radius: 5px;
+    }
+  }
+  & > input[type="range"] {
+    width: 100%;
+  }
+}

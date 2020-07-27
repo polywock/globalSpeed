@@ -1,0 +1,112 @@
+{
+  "audio": {
+    "captureTab": "捕获",
+    "releaseTab": "释放",
+    "equalizer": "等化器",
+    "compressor": "动态范围压缩"
+  },
+  "warnings": {
+    "backdropFirefox": "警告：对于背景过滤器功能，Firefox用户需要转到 \"about:config\" URL 启用 \"gfx.webrender.all\" 和 \"layout.css.backdrop-filter.enabled\"。启用这两个标志后，重新启动Firefox。",
+    "unusedGlobal": "释放未使用的全局快捷键。"
+  },
+  "token": {
+    "create": "创建",
+    "reset": "重置",
+
+    "on": "打开",
+    "off": "关闭",
+    "toggle": "切换",
+
+    "element": "元素",
+    "backdrop": "背景",
+    "both": "两者",
+
+    "query": "选择器",
+    "warning": "警告",
+    "filters": "滤镜",
+    "transforms": "变换"
+  },
+  "filter": {
+    "grayscale": "灰度",
+    "sepia": "棕褐",
+    "hueRotate": "色相旋转",
+    "contrast": "对比度",
+    "brightness": "亮度",
+    "saturate": "饱和度",
+    "invert": "颜色反转",
+    "blur": "模糊",
+    "opacity": "不透明度",
+    "scaleX": "标度 X",
+    "scaleY": "标度 Y",
+    "translateX": "移 X",
+    "translateY": "移 Y",
+    "rotateX": "旋转 X",
+    "rotateY": "旋转 Y",
+    "rotateZ": "旋转 Z"
+  },
+  "fxPanel": {
+    "queryTooltip": "CSS选择器，用于查找要过滤的元素。例如，“video, img”将会同时查询视频和图像。相关高级用法，请在线查阅CSS选择器的相关文档。",
+    "intoPane": "制作窗格"
+  },
+  "command": {
+    "nothing": "无动作",
+    "runCode": "javaScript",
+    "openUrl": "打开网址",
+    "adjustSpeed": "速度",
+    "setPin": "固定标签",
+    "setState": "状态",
+    "seek": "移动时间轴",
+    "setPause": "暂停",
+    "setMute": "静音",
+    "adjustVolume": "音量",
+    "setMark": "设置标记点",
+    "seekMark": "去标记",
+    "toggleLoop": "AB循环",
+    "toggleLoopTooltip": "从标记位置到当前位置重复播放视频。",
+    "setFx": "FX状态",
+    "resetFx": "FX重置",
+    "flipFx": "FX交换",
+    "adjustFilter": "FX过滤器",
+    "adjustPitch": "音高",
+    "adjustGain": "音量+",
+    "adjustDelay": "延遲",
+    "tabCapture": "捕获"
+  },
+  "options": {
+    "flags": {
+      "header": "选项",
+      "language": "语言",
+      "languageTooltip": "除英语以外的所有语言均使用在线工具进行翻译（liangjiancang对部分中文翻译作出调整）。",
+      "darkTheme": "深色主题",
+      "pinByDefault": "默认固定",
+      "pinByDefaultTooltip": "每个选项卡将默认固定。",
+      "hideIndicator": "隐藏反馈指示器",
+      "hideIndicatorTooltip": "使用某些热键时，在页面左上方显示反馈指示器。",
+      "hideBadge": "隐藏徽章",
+      "hideBadgeTooltip": "徽章是扩展图标上的文字。",
+      "fullscreenSupport": "全屏支持",
+      "feedbackVolume": "反馈音量",
+      "ghostMode": "鬼模",
+      "ghostModeTooltip": "尝试阻止网站更改速度。 默认情况下处于禁用状态，因为它可能会破坏某些网站。"
+    },
+    "editor": {
+      "header": "热键编辑器",
+      "toggleMode": "您可以使用本地或全局快捷键。",
+      "toggleModeTooltip": "当您想在使用其他程序时控制视频或音频时，全局快捷方式很有用。",
+      "greedyMode": "贪婪模式将尝试阻止事件的传播和默认行为。"
+    },
+    "rules": {
+      "header": "网址规则",
+      "startsWith": "开始于",
+      "contains": "包含",
+      "regex": "regex",
+      "LAX": "每个标签一次。",
+      "ILO": "仅在初始页面加载期间检查。"
+    },
+    "help": {
+      "header": "帮助",
+      "issuePrompt": "有问题或建议吗？",
+      "issueDirective": "在Github上提供反馈。"
+    }
+  }
+}

@@ -1,88 +1,156 @@
-import { FilterInfo, FilterTarget } from "../types"
+import { FilterInfo, TargetFx } from "../types"
 
-export const filterTargets: FilterTarget[] = ["enabled", "element", "backdrop", "both"] 
+export const filterTargets: TargetFx[] = ["element", "backdrop", "both"] 
 
-export type FilterName = "blur" | "brightness" | "contrast" | "grayscale" | "hue-rotate" | "invert" | "opacity" | "sepia" | "saturate"
+export type FilterName = 
+  "blur" | "brightness" | "contrast" | "grayscale" | "hueRotate" | "invert" | "opacity" | "sepia" | "saturate" | 
+  "scaleX" | "scaleY" | "translateX" | "translateY" | "rotateX" | "rotateY" | "rotateZ"
 
 
 export const filterInfos: {[key in FilterName]: FilterInfo} = {
   sepia: {
-    name: "filter_sepia",
     min: 0,
     max: 1,
-    smallStep: 0.1,
-    largeStep: 0.25,
+    step: 0.1,
+    sliderMin: 0,
+    sliderMax: 1,
     default: 0,
     format: v => `sepia(${v})`
   },
-  "hue-rotate": {
-    name: "filter_hueRotate",
-    smallStep: 8,
-    largeStep: 32,
+  hueRotate: {
+    step: 8,
+    sliderMin: -180,
+    sliderMax: 180,
+    sliderStep: 1,
     default: 0,
     format: v => `hue-rotate(${v}deg)`
   },
   grayscale: {
-    name: "filter_grayscale",
     min: 0,
     max: 1,
-    smallStep: 0.1,
-    largeStep: 0.25,
+    step: 0.1,
+    sliderMin: 0,
+    sliderMax: 1,
     default: 0,
     format: v => `grayscale(${v})`
   },
   contrast: {
-    name: "filter_contrast",
     min: 0,
-    smallStep: 0.1,
-    largeStep: 1,
+    step: 0.1,
+    sliderMin: 0,
+    sliderMax: 5,
     default: 1,
     format: v => `contrast(${v})`
   },
   brightness: {
-    name: "filter_brightness",
     min: 0,
-    smallStep: 0.1,
-    largeStep: 1,
+    step: 0.1,
+    sliderMin: 0,
+    sliderMax: 5,
+    sliderStep: 0.05,
     default: 1,
     format: v => `brightness(${v})`
   },
   saturate: {
-    name: "filter_saturate",
     min: 0,
-    smallStep: 0.1,
-    largeStep: 1,
+    step: 0.1,
+    sliderMin: 0,
+    sliderMax: 5,
+    sliderStep: 0.05,
     default: 1,
     format: v => `saturate(${v})`
   },
   invert: {
-    name: "filter_invert",
     min: 0,
     max: 1,
-    smallStep: 0.1,
-    largeStep: 1,
+    step: 0.1,
+    sliderMin: 0,
+    sliderMax: 1,
     default: 0,
     format: v => `invert(${v})`
   },
   blur: {
-    name: "filter_blur",
     min: 0,
-    smallStep: 0.1,
-    largeStep: 1,
+    step: 0.1,
+    sliderMin: 0,
+    sliderMax: 10,
+    sliderStep: 0.1,
     default: 0,
     format: v => `blur(${v}px)`
   },
   opacity: {
-    name: "filter_opacity",
     min: 0,
     max: 1,
-    smallStep: 0.1,
-    largeStep: 0.25,
+    step: 0.1,
+    sliderMin: 0,
+    sliderMax: 1,
     default: 1,
     format: v => `opacity(${v})`
+  },
+
+  scaleX: {
+    isTransform: true,
+    step: 0.1,
+    sliderMin: -1,
+    sliderMax: 3,
+    sliderStep: 0.04,
+    default: 1,
+    format: v => `scaleX(${v})`
+  },
+  scaleY: {
+    isTransform: true,
+    step: 0.1,
+    sliderMin: -1,
+    sliderMax: 3,
+    sliderStep: 0.04,
+    default: 1,
+    format: v => `scaleY(${v})`
+  },
+  translateX: {
+    isTransform: true,
+    step: 1,
+    sliderMin: -300,
+    sliderMax: 300,
+    sliderStep: 5,
+    default: 0,
+    format: v => `translateX(${v}px)`
+  },
+  translateY: {
+    isTransform: true,
+    step: 1,
+    sliderMin: -300,
+    sliderMax: 300,
+    sliderStep: 5,
+    default: 0,
+    format: v => `translateY(${v}px)`
+  },
+  rotateX: {
+    isTransform: true,
+    step: 1,
+    sliderMin: -180,
+    sliderMax: 180,
+    sliderStep: 1,
+    default: 0,
+    format: v => `rotateX(${v}deg)`
+  },
+  rotateY: {
+    isTransform: true,
+    step: 1,
+    sliderMin: -180,
+    sliderMax: 180,
+    sliderStep: 1,
+    default: 0,
+    format: v => `rotateY(${v}deg)`
+  },
+  rotateZ: {
+    isTransform: true,
+    step: 1,
+    sliderMin: -180,
+    sliderMax: 180,
+    sliderStep: 1,
+    default: 0,
+    format: v => `rotateZ(${v}deg)`
   }
 }
 
-export function getDefaultFilterValues() {
-  return Object.entries(filterInfos).map(([k, v]) => ({filter: k as FilterName, value: v.default}))
-}
+

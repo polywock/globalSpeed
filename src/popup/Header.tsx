@@ -1,85 +1,65 @@
-import React from "react"
-import { setPin, getContext, getPin } from "../utils/configUtils"
+import React, { useMemo } from "react"
+import { checkFilterDeviation } from "../utils/configUtils"
 import { GoPin, GoGear, GoMarkGithub, GoZap, GoArrowLeft} from "react-icons/go"
 import { FaPowerOff, FaVolumeUp } from "react-icons/fa"
-import produce from "immer"
-import { Config } from "../types"
+import { useStateView } from "../hooks/useStateView"
+import { pushView } from "../background/GlobalState"
+import { getDefaultFx } from "../defaults"
 import "./Header.scss"
-import { isFirefox } from "../utils/helper"
-import { hasPermissions, requestPermissions } from "../utils/browserUtils"
+import produce from "immer"
+
+const SUPPORTS_TAB_CAPTURE = !!chrome.tabCapture?.capture
 
 type HeaderProps = {
-  fxPanal: boolean
-  setFxPanal: (newValue: boolean) => void,
-  config: Config,
-  tabId: number,
-  setConfig: (newConfig: Config) => void 
+  panel: number
+  setPanel: (newPanel: number) => void
 }
 
 export function Header(props: HeaderProps) {
-  const {config, tabId, setConfig} = props 
+  const [view, setView] = useStateView({enabled: true, isPinned: true})
 
-  const pin = getPin(config, tabId)
-  const ctx = getContext(config, tabId)
+  if (!view) return <div></div>
 
   return (
     <div className="Header">
       <div 
-        title={window.gsm["options_help_stateDesc"] || ""}
-        className={`toggle ${ctx.enabled ? "active" : ""}`}
+        className={view.enabled ? "active" : "muted"}
         onClick={() => {
-          setConfig(produce(config, dConfig => {
-            const dCtx = getContext(dConfig, tabId)
-            dCtx.enabled = !dCtx.enabled
+          setView(produce(view, d => {
+            d.enabled = !d.enabled
           }))
         }}
       >
         <FaPowerOff size="17px"/>
       </div>
       <div 
-        title={window.gsm["options_help_pinDesc"] || ""}
-        className={`pin toggle ${pin ? "active" : ""}`}
+        className={`pin ${view.isPinned ? "active" : "muted"}`}
         onClick={() => {
-          setConfig(produce(config, dConfig => {
-            setPin(dConfig, "toggle", tabId)
+          setView(produce(view, d => {
+            d.isPinned = !d.isPinned
           }))
         }}
       >
         <GoPin size="20px"/>
       </div>
-      {(!isFirefox() && pin) ? (
+      {(props.panel === 0 && SUPPORTS_TAB_CAPTURE) ? (
         <div 
-          className={`toggle ${ctx.volume == null ? "" : "active"}`}
-          onClick={e => {
-            requestPermissions({permissions: ["tabCapture"]}).then(got => {
-              if (got) {
-                setConfig(produce(config, d => {
-                  let dCtx = getContext(d, tabId)
-                  dCtx.volume = dCtx.volume == null ? 1 : null
-                  if (dCtx.volume != null) {
-                    chrome.runtime.sendMessage({type: "CAPTURE_TAB", tabId})
-                  }
-                }))
-              }
-            })
-          }}
+          className={`${false ? "active" : ""}`}
+          onClick={e => props.setPanel(2)}
         >
           <FaVolumeUp size="17px"/>
         </div>
-      ) : <div/>}
-      {props.fxPanal ? (
-        <div onClick={() => {
-          props.setFxPanal(!props.fxPanal)
-        }}>
+      ) : <div className="noPadding"/>}
+      {props.panel === 0 ? (
+        <FxIcon enabled={view?.enabled} onClick={() => props.setPanel(1)}/>
+      ) : <div className="noPadding"/>}
+      {props.panel !== 0 ? (
+        <div 
+          onClick={e => props.setPanel(0)}
+        >
           <GoArrowLeft size="20px"/>
         </div>
-      ) : (
-        <div title={window.gsm["options_help_fxDesc"] || ""} onClick={() => {
-          props.setFxPanal(!props.fxPanal)
-        }}>
-          <GoZap size="20px"/>
-        </div>
-      )}
+      ) : <div className="noPadding"/>}
       <div title="open options page." onClick={e => {
         chrome.runtime.openOptionsPage()
       }}>
@@ -90,6 +70,38 @@ export function Header(props: HeaderProps) {
       }}>
         <GoMarkGithub size="18px"/>
       </div>
+    </div>
+  )
+}
+
+
+
+type FxIconProps = {
+  onClick: () => void,
+  enabled: boolean 
+}
+
+export function FxIcon(props: FxIconProps) {
+  const [view, setView] = useStateView({elementFx: true, backdropFx: true})
+
+  const fxActive = useMemo(() => {
+    if (view && props.enabled) {
+      if (view.backdropFx.enabled && (checkFilterDeviation(view.backdropFx.filters) ||checkFilterDeviation(view.backdropFx.transforms))) return true 
+      if (view.elementFx.enabled && (checkFilterDeviation(view.elementFx.filters) ||checkFilterDeviation(view.elementFx.transforms))) return true 
+    }
+    return false 
+  }, [props.enabled, view])
+
+  return (
+    <div 
+      className={`beat ${fxActive ? "active" : ""}`} 
+      onClick={e => props.onClick()}
+      onContextMenu={e => {
+        e.preventDefault()
+        pushView({override: {elementFx: getDefaultFx(), backdropFx: getDefaultFx()}, tabId: window.tabInfo.tabId})
+      }}
+    >
+      <GoZap size="20px"/>
     </div>
   )
 }

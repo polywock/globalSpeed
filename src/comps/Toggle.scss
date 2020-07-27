@@ -1,0 +1,31 @@
+
+.Toggle {
+  display: inline-block;
+  width: 45px;
+  height: 22px; 
+  border-radius: 50px;
+  background-color: var(--icon-color);
+  border: 2px solid  var(--icon-color);
+
+  &::after {
+    content: "";
+    display: inline-block;
+    background-color: white;
+    border: 1px solid #aaa;
+    border-radius: inherit;
+    box-sizing: border-box;
+    width: 18px;
+    height: 18px;
+    transition: transform 0.05s linear;
+    transform: translateX(0px);
+  }
+
+  &.active {
+    background-color: var(--icon-vibrant-color);
+    border-color: var(--icon-vibrant-color);
+
+    &::after {
+      transform: translateX(23px);
+    }
+  }
+}

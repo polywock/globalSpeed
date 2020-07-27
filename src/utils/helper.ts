@@ -1,8 +1,4 @@
 
-// round to nearest step.
-export function roundToStep(value: number, step: number) {
-  return Math.round(value / step) * step
-}
 
 export function clamp(min: number, max: number, value: number) {
   let clamped = value 
@@ -20,71 +16,19 @@ export function round(value: number, precision: number): number {
 	return Math.round(value * scalar) / scalar
 }
 
-const lowerAlpha = range(97, 97 + 26).map(n => String.fromCharCode(n))
-const upperAlpha = range(65, 65 + 26).map(n => String.fromCharCode(n))
-const numeric = range(10)
-
-export function uuid(n: number, opts: {
-  lowerAlpha?: boolean,
-  upperAlpha?: boolean,
-  numeric?: number
-} = { lowerAlpha: true }) {
-  let pool = [
-    ...(opts.lowerAlpha ? lowerAlpha : []),
-    ...(opts.upperAlpha ? upperAlpha : []),
-    ...(opts.numeric ? numeric : [])
-  ]
-  return range(n).map(() => pool[randomInt(0, pool.length)]).join("")
+export function randomId() {
+  return Math.ceil(Math.random() * 1E10).toString()
 }
 
-export function uuidLowerAlpha(n: number) {
-  return uuid(n, {lowerAlpha: true})
-}
-
-export function range(rb: number): number[];
-
-export function range(lb: number, rb: number): number[] ;
-
-export function range(lb: number, rb?: number): number[] {
-  if (rb === null || rb === undefined) {
-    rb = lb 
-    lb = 0 
+export function findAndRemove<T>(arr: T[], test: (v: T) => boolean) {
+  const idx = arr.findIndex(v => test(v))
+  if (idx >= 0) {
+    arr.splice(idx, 1)
+    return arr[idx]
   }
-  return Array(rb - lb).fill(0).map((v, i) => lb + i)  
+  return null
 }
 
-export function randomInt(min: number, max: number) {
-  return Math.floor(min + Math.random() * (max - min))
-}
-
-export function compareArrays(a: any[], b: any[]) {
-  if (a?.length === b?.length) {
-    for (let i = 0; i < a.length; i++) {
-      if (a[i] !== b[i]) {
-        return false 
-      }
-    }
-    return true 
-  }
-  return false 
-}
-
-
-export function dropWhileEnd<T>(arr: T[], predicate: (v: T) => boolean): T[] {
-  let dropCount = 0
-  for (let i = arr.length - 1; i >= 0; i--) {
-    if (predicate(arr[i])) {
-      dropCount++
-    } else {
-      break 
-    }
-  }
-  return dropCount === 0 ? arr.slice() : arr.slice(0, -dropCount)
-}
-
-export function stringDropWhileEnd(text: string, predicate: (v: string) => boolean): string {
-  return dropWhileEnd(text.split(""), predicate).join("")
-}
 
 let isFirefoxResult: boolean
 
@@ -95,4 +39,64 @@ export function isFirefox() {
   return isFirefoxResult
 }
 
+export function chunkByPredicate<T>(arr: T[], predicate: (v: T) => boolean) {
+  let passed: T[] = []
+  let failed: T[] = [] 
+  arr.forEach(v => {
+    if (predicate(v)) {
+      passed.push(v)
+    } else {
+      failed.push(v)
+    }
+  })
+  return [passed, failed] 
+}
 
+
+export function formatDomain(domain: string) {
+  let separated = domain.split(/\./g)
+  if (separated.length < 3) return domain 
+  let [sd, d, tld] = separated
+  
+  let parts: string[] = [d, tld]
+  if (sd !== "www") {
+    parts.unshift(sd)
+  } 
+  return parts.join(".")
+}
+
+export function formatDuration(secs: number) {
+  const mins = secs / 60  
+  const hours = mins / 60 
+
+  if (hours >= 100) {
+    return ""
+  } else if (hours > 1) {
+    return `${Math.floor(hours)}:${Math.floor((mins % 60)).toString().padStart(2, "0")}:${Math.floor((secs % 60)).toString().padStart(2, "0")}`
+  } else {
+    return `${Math.floor(mins).toString().padStart(1, "0")}:${Math.floor((secs % 60)).toString().padStart(2, "0")}`
+  } 
+}
+
+export function formatFreq(value: number) {
+  if (value >= 1000) {
+    return `${round(value / 1000, 1)}kHz`
+  }
+  return `${Math.round(value)}hz`
+}
+
+export function moveItem<T>(list: T[], test: (v: T) => boolean, down?: boolean) {
+  let idx = list.findIndex(test)
+  let item = list[idx]
+  let newIdx = clamp(0, list.length - 1, idx + (down ? 1 : -1))
+  list.splice(idx, 1)
+  list.splice(newIdx, 0, item)
+}
+
+export function lerp(lb: number, rb: number, normal: number) {
+  return lb + normal * (rb - lb)
+}
+
+export function inverseLerp(lb: number, rb: number, value: number) {
+  return (value - lb) / (rb - lb)
+}

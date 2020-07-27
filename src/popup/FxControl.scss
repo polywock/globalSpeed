@@ -1,0 +1,43 @@
+
+.FxControl {
+  font-size: 14px;
+  background-color: var(--fg-color);
+  padding-right: 20px;
+
+  & > * {
+    margin-bottom: 10px;
+  }
+
+  & > .controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 10px;
+
+    & > button {
+      color: var(--header-icon-color);
+      &.active {
+        color: var(--header-icon-active-color);
+      } 
+      &.muted {
+        color: var(--header-icon-muted-color);
+      } 
+    }
+  }
+
+  & > .intoPane {
+    display: block;
+    width: 100%;
+  }
+
+  & > .query {
+    margin-top: 10px;
+    display: grid;
+    grid-row-gap: 5px;
+  }
+
+  & > .origin {
+    display: grid;
+    grid-template-columns: 1fr max-content max-content;
+    grid-column-gap: 10px;
+  }
+}

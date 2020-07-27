@@ -1,0 +1,24 @@
+
+.DropdownWarning {
+  background-color: var(--error-color);
+  color: var(--error-text-color);
+  border: 1px solid var(--error-border-color);
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 10px;
+
+  & > .header {
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+    grid-column-gap: 10px;
+    font-size: 1.1em;
+    align-items: center;
+
+    & > svg {
+      color: var(--error-text-color);
+    }
+  }
+
+  & > .body {
+    margin-top: 10px;
+  }
+}

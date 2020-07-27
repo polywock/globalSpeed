@@ -1,46 +1,56 @@
 
 .Header {
   display: grid;
-  grid-template-columns: repeat(3, max-content) 1fr repeat(2, max-content);
+  grid-template-columns: repeat(2, max-content) 1fr repeat(4, max-content);
   justify-items: right;
   align-items: center;
-  grid-column-gap: 10px;
-  padding: 3px 10px 0px 10px;
-  border-bottom: 1px solid #aaa;
+  // grid-column-gap: 10px;
+  padding: 3px 5px 0px 5px;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--fg-color);
 
 
   & > div {
-    color: #777;
+    padding: 0 5px;
+    color: var(--header-icon-color);
     border: none;
+
+    &.noPadding {
+      padding: 0;
+    }
 
     &:focus {
       outline: none;
-
-      & > svg {
-        stroke: black;
-        stroke-opacity: 0.5;
-        stroke-width: 0.5px;
-      }
     }
 
     &:hover {
-      color: #555;
+      opacity: 0.9;
+    }
+
+    @keyframes beat {
+      0% {transform: scale(1)}
+      90% {transform: scale(0.8)}
+      95% {transform: scale(1.1)}
     }
 
 
-    &.toggle.active {
-      color: #24a;
+    &.active {
+      color: var(--header-icon-active-color);
+
+      &.beat {
+        animation: 1s ease-in beat infinite;
+      }
 
       &:hover {
-        color: #46c;
+        opacity: 0.9;
       }
     }
 
-    &.toggle {
-      color: #aaa;
+    &.muted {
+      color: var(--header-icon-muted-color);
 
       &:hover {
-        color: #888;
+        opacity: 0.9;
       }
     }
 

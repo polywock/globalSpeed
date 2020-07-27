@@ -1,0 +1,18 @@
+
+.SectionHelp {
+  & > .card {
+    margin-bottom: 10px;
+  }
+
+  & > .controls {
+    margin-top: 20px;
+
+    button {
+      text-transform: uppercase;
+
+      &:last-child {
+        margin-left: 10px;
+      }
+    }
+  }
+}

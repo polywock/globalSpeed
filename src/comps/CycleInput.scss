@@ -1,0 +1,43 @@
+
+
+.CycleInput {
+
+  & .close {
+    opacity: 0;
+  }
+
+  &:hover .close {
+    opacity: 0.9;
+  }
+
+
+  & > .values {
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    grid-gap: 8px;
+    
+    & > .value {
+      position: relative;
+      width: 44px;
+
+      & > .NumericInput > input {
+        text-align: center;
+      }
+
+      & > .close {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        width: 10px;
+        height: 10px;
+        background-color: #d99;
+        border: 1px solid #d66;
+        border-radius: 5px;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  } 
+}

@@ -1,21 +1,49 @@
-import { persistConfig, getConfig } from "./configUtils"
-import { getDefaultConfig } from "../defaults"
+import { StateView, Keybind, State, AdjustMode } from "../types"
+import { getDefaultState } from "../defaults"
+import { commandInfos } from "../defaults/commands";
+import { filterInfos } from "../defaults/filters";
 
-export async function migrateSchema() {
-  const currentConfig = await getConfig()
-  const newConfig = getDefaultConfig()
-  
-  if (currentConfig == null || currentConfig.version == null || currentConfig.version <= 4) {
-    persistConfig(newConfig)
-    return 
-  }
+export function migrateGrainData(state: State) {
+  if (state.version < 5) {
+    return getDefaultState()
+  } else if (state.version === 6 || state.version === 5) {
+    const newState = getDefaultState()
+    // newState.keybinds = state.keybinds || [];
+    newState.hideBadge = state.hideBadge
+    newState.hideIndicator = state.hideIndicator
+    newState.language = state.language
+    newState.pinByDefault = state.pinByDefault
+    newState.version = 7
+    newState.keybinds = [];
 
-  // some users have been accidently clicking the toggle invert key, need to reset em.
-  if (currentConfig.version === 5) {
-    currentConfig.version = 6
-    currentConfig.common.backdropFx = false
-    currentConfig.common.elementFx = false 
-    persistConfig(currentConfig)
-    return 
+    const noUpdate = ["adjustFilter", "setFilter", "cycleFilterValue"]
+
+    for (let kb of (state.keybinds as any[]))  {
+      if (kb.command === "adjustSpeed") {
+        newState.keybinds.push({command: "adjustSpeed", key: kb.key, enabled: kb.enabled, greedy: kb.greedy, id: kb.id, valueNumberAlt: kb.valueNumber, adjustMode: AdjustMode.ADD})
+        continue
+      }
+
+      if (kb.command === "setSpeed") {
+        newState.keybinds.push({command: "adjustSpeed", key: kb.key, enabled: kb.enabled, greedy: kb.greedy, id: kb.id, valueNumber: kb.valueNumber, adjustMode: AdjustMode.SET})
+        continue 
+      }
+
+      if (noUpdate.includes(kb.command)) continue 
+
+      newState.keybinds.push(kb)
+    }
+
+    newState.keybinds = newState.keybinds.filter(kb => {
+      const info = commandInfos[kb.command]
+      if (!info) return
+      if (info.withFilterOption && !filterInfos[kb.filterOption]) return 
+      return true 
+    })
+    return newState 
   }
+  return state 
 }
+
+
+

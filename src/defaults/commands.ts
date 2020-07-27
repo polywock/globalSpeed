@@ -1,65 +1,63 @@
 
-import { Command, KeyBind } from "../types"
-import { uuidLowerAlpha } from "../utils/helper"
+import { Command, Keybind, AdjustMode } from "../types"
+import { randomId } from "../utils/helper"
 
-export type CommandName = "nothing" | "runCode" | "adjustSpeed" | "setSpeed" | "setPin" | "setState" | 
+export type CommandName = "nothing" | "runCode" | "adjustSpeed" | "setPin" | "setState" | 
   "seek" | "setPause" | "setMute" | "adjustVolume" | "setMark" | "seekMark" | "toggleLoop" | "openUrl" | 
-  "setFx" | "resetFx" | "flipFx" | "adjustFilter" | "setFilter" | "cycleFilterValue"
+  "setFx" | "resetFx" | "flipFx" | "adjustFilter" |
+  "adjustGain" | "adjustPitch" | "adjustDelay" | "tabCapture"
 
 
 export let commandInfos: {[key in CommandName]: Command} = {
+  // safe for update
   nothing: {
-    name: "command_nothing",
-    tooltip: "command_nothingTooltip",
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
       command: "nothing",
       enabled: true,
       greedy: true
     })
   },
+  // safe for update 
   runCode: {
-    name: "command_runCode",
     valueType: "modalString",
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
       command: "runCode",
       enabled: true,
       greedy: true,
       valueString: `// your code here\n\nspeechSynthesis.speak(new SpeechSynthesisUtterance("Global Speed"))`
     })
   },
-  adjustSpeed: {
-    name: "command_adjustSpeed",
-    valueType: "number",
-    valueMin: -5,
-    valueMax: 5,
+  // safe for update
+  openUrl: {
+    valueType: "string",
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
+      command: "openUrl",
+      enabled: true,
+      greedy: true,
+      valueString: "https://www.google.com/"
+    })
+  },
+  adjustSpeed: {
+    valueType: "adjustMode",
+    valueMin: 0.0625,
+    valueMax: 16,
+    valueStep: 0.1,
+    valueDefault: 1,
+    generate: () => ({
+      id: randomId(),
       command: "adjustSpeed",
       enabled: true,
       greedy: true,
-      valueNumber: 0.1
-    })
-  },
-  setSpeed: {
-    name: "command_setSpeed",
-    valueType: "number",
-    valueMin: 0.07,
-    valueMax: 16,
-    generate: () => ({
-      id: uuidLowerAlpha(16),
-      command: "setSpeed",
-      enabled: true,
-      greedy: true,
-      valueNumber: 1
+      adjustMode: AdjustMode.SET
     })
   },
   setPin: {
-    name: "command_pinTab",
     valueType: "state",
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
       command: "setPin",
       enabled: true,
       greedy: true,
@@ -67,10 +65,9 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   setState: {
-    name: "command_setState",
     valueType: "state",
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
       command: "setState",
       enabled: true,
       greedy: true,
@@ -78,11 +75,10 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   seek: {
-    name: "command_seek",
-    tooltip: "command_seekTooltip",
     valueType: "number",
+    requiresMedia: true,
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
       command: "seek",
       enabled: true,
       greedy: true,
@@ -90,10 +86,10 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   setPause: {
-    name: "token_pause",
     valueType: "state",
+    requiresMedia: true,
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
       command: "setPause",
       enabled: true,
       greedy: true,
@@ -101,10 +97,10 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   setMute: {
-    name: "token_mute",
     valueType: "state",
+    requiresMedia: true,
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
       command: "setMute",
       enabled: true,
       greedy: true,
@@ -112,22 +108,21 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   adjustVolume: {
-    name: "command_adjustVolume",
     valueType: "number",
+    requiresMedia: true,
+    valueDefault: 0.05,
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
       command: "adjustVolume",
       enabled: true,
-      greedy: true,
-      valueNumber: 0.05
+      greedy: true
     })
   },
   setMark: {
-    name: "command_setMark",
-    tooltip: "command_setMarkTooltip",
     valueType: "string",
+    requiresMedia: true,
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
       command: "setMark",
       enabled: true,
       greedy: true,
@@ -135,11 +130,10 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   seekMark: {
-    name: "command_seekMark",
-    tooltip: "command_seekMarkTooltip",
     valueType: "string",
+    requiresMedia: true,
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
       command: "seekMark",
       enabled: true,
       greedy: true,
@@ -147,128 +141,147 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   toggleLoop: {
-    name: "command_toggleLoop",
-    tooltip: "command_toggleLoopTooltip",
     valueType: "string",
+    requiresMedia: true,
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
       command: "toggleLoop",
       enabled: true,
       greedy: true,
-      valueString: "mark1, mark2"
-    })
-  },
-  openUrl: {
-    name: "command_openUrl",
-    valueType: "string",
-    generate: () => ({
-      id: uuidLowerAlpha(16),
-      command: "openUrl",
-      enabled: true,
-      greedy: true,
-      valueString: "https://www.google.com/"
+      valueString: "mark1"
     })
   },
   setFx: {
-    name: "command_setFx",
     withFilterTarget: true,
     valueType: "state",
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
       command: "setFx",
       enabled: true,
       greedy: true,
-      filterTarget: "backdrop",
-      valueState: "toggle"
+      valueState: "toggle",
+      filterTarget: "element"
     })
   },
   resetFx: {
-    name: "command_resetFx",
     withFilterTarget: true,
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
       command: "resetFx",
       enabled: true,
       greedy: true,
-      filterTarget: "backdrop"
+      filterTarget: "element"
     })
   },
   flipFx: {
-    name: "command_flipFx",
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
       command: "flipFx",
       enabled: true,
       greedy: true
     })
   },
   adjustFilter: {
-    name: "command_adjustFilter",
-    valueType: "filterNumber",
+    valueType: "adjustMode",
     withFilterOption: true,
     withFilterTarget: true,
     generate: () => ({
-      id: uuidLowerAlpha(16),
+      id: randomId(),
       command: "adjustFilter",
-      filterOption: "hue-rotate",
-      filterTarget: "enabled",
+      filterOption: "hueRotate",
       enabled: true,
-      greedy: true
+      greedy: true,
+      filterTarget: "element",
+      adjustMode: AdjustMode.ADD
     })
   },
-  setFilter: {
-    name: "command_setFilter",
-    valueType: "filterNumber",
-    withFilterOption: true,
-    withFilterTarget: true,
+  adjustGain: {
+    valueType: "adjustMode",
+    requiresTabCapture: true,
+    valueMin: 0,
+    valueMax: 16,
+    valueStep: 0.05,
+    valueDefault: 1,
     generate: () => ({
-      id: uuidLowerAlpha(16),
-      command: "setFilter",
-      filterOption: "hue-rotate",
-      filterTarget: "enabled",
+      id: randomId(),
+      command: "adjustGain",
       enabled: true,
-      greedy: true
+      greedy: true,
+      adjustMode: AdjustMode.ADD
     })
   },
-  cycleFilterValue: {
-    name: "command_cycleFilterValue",
-    tooltip: "command_cycleFilterValueTooltip",
-    withFilterTarget: true,
-    withFilterOption: true,
-    valueType: "cycle",
+  adjustPitch: {
+    valueType: "adjustMode",
+    requiresTabCapture: true,
+    valueMin: -2,
+    valueMax: 2,
+    valueStep: 0.05,
+    valueDefault: 0,
     generate: () => ({
-      id: uuidLowerAlpha(16),
-      command: "cycleFilterValue",
-      filterOption: "invert",
-      filterTarget: "enabled",
-      valueCycle: [0, 1],
+      id: randomId(),
+      command: "adjustPitch",
       enabled: true,
-      greedy: true
+      greedy: true,
+      adjustMode: AdjustMode.ADD
     })
-  }
+  },
+  adjustDelay: {
+    valueType: "adjustMode",
+    requiresTabCapture: true,
+    valueMin: 0,
+    valueMax: 60,
+    valueStep: 0.05,
+    valueDefault: 0,
+    generate: () => ({
+      id: randomId(),
+      command: "adjustDelay",
+      enabled: true,
+      greedy: true,
+      adjustMode: AdjustMode.ADD
+    })
+  },
+  tabCapture: {
+    valueType: "state",
+    requiresTabCapture: true,
+    generate: () => ({
+      id: randomId(),
+      command: "tabCapture",
+      enabled: true,
+      greedy: true,
+      valueState: "toggle"
+    })
+  },
 }
 
 
-export function getDefaultKeyBinds(): KeyBind[] {
+export function getDefaultKeybinds(): Keybind[] {
   return [
     {
       ...commandInfos.adjustSpeed.generate(),
       key: "KeyA",
-      valueNumber: -0.1
+      adjustMode: AdjustMode.ADD,
+      valueNumberAlt: -0.1
     },
     {
-      ...commandInfos.setSpeed.generate(),
-      key: "KeyS"
+      ...commandInfos.adjustSpeed.generate(),
+      key: "KeyS",
+      valueNumber: 1,
+      adjustMode: AdjustMode.SET
     },
     {
       ...commandInfos.adjustSpeed.generate(),
       key: "KeyD",
-      valueNumber: 0.1,
+      adjustMode: AdjustMode.ADD,
+      valueNumberAlt: 0.1,
       spacing: 1
     },
     {
       ...commandInfos.setPin.generate(),
-      key: "KeyQ",
+      key: "KeyQ"
+    },
+    {
+      ...commandInfos.setState.generate(),
+      key: {code: "KeyQ", shiftKey: true},
       spacing: 2
     },
     {
@@ -286,16 +299,16 @@ export function getDefaultKeyBinds(): KeyBind[] {
     },
     {
       ...commandInfos.seek.generate(),
-      key: {code: "KeyZ", shiftKey: true},
+      key: {shiftKey: true, code: "KeyZ"},
       enabled: true,
       valueNumber: -0.04
     },
     {
       ...commandInfos.seek.generate(),
-      key: {code: "KeyX", shiftKey: true},
+      key: {shiftKey: true, code: "KeyX"},
       enabled: true,
       valueNumber: 0.04,
-      spacing: 2
+      spacing: 1
     },
     {
       ...commandInfos.setMark.generate(),
@@ -305,8 +318,7 @@ export function getDefaultKeyBinds(): KeyBind[] {
     {
       ...commandInfos.seekMark.generate(),
       key: "KeyW",
-      valueString: "mark1",
-      spacing: 1
+      valueString: "mark1"
     },
     {
       ...commandInfos.toggleLoop.generate(),
@@ -316,20 +328,26 @@ export function getDefaultKeyBinds(): KeyBind[] {
       enabled: false
     },
     {
-      ...commandInfos.cycleFilterValue.generate(),
+      ...commandInfos.adjustFilter.generate(),
       key: {code: "KeyE"},
       filterOption: "invert",
       filterTarget: "both",
-      valueCycle: [0, 1],
-      enabled: false
+      adjustMode: AdjustMode.CYCLE,
+      enabled: false,
+      valueCycle: [0, 1]
     },
     {
-      ...commandInfos.cycleFilterValue.generate(),
-      key: {shiftKey: true, code: "KeyE"},
+      ...commandInfos.adjustFilter.generate(),
+      key: {code: "KeyE", shiftKey: true},
       filterOption: "grayscale",
       filterTarget: "backdrop",
+      adjustMode: AdjustMode.CYCLE,
+      enabled: false,
       valueCycle: [0, 1],
-      enabled: false
+      spacing: 2
     }
   ]
 }
+
+
+export const availCommandInfos = Object.fromEntries(Object.entries(commandInfos).filter(([k, v]) => !v.requiresTabCapture || chrome.tabCapture))

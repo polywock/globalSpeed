@@ -1,0 +1,112 @@
+{
+  "audio": {
+    "captureTab": "ele geçirmek",
+    "releaseTab": "serbest bırakmak",
+    "equalizer": "EQ",
+    "compressor": "kompresör"
+  },
+  "warnings": {
+    "backdropFirefox": "Firefox kullanıcılarının \"about:config\" URL'sine giderek \"gfx.webrender.all\" ve \"layout.css.backdrop-filter.enabled\" seçeneğini etkinleştirmeleri gerekir. İki bayrağı etkinleştirdikten sonra Firefox'u yeniden başlatın.",
+    "unusedGlobal": "Kullanılmayan genel kısayol tuşlarını serbest bırakın"
+  },
+  "token": {
+    "create": "oluşturmak",
+    "reset": "sıfırla",
+    
+    "on": "açık",
+    "off": "kapalı",
+    "toggle": "geçiş",
+    
+    "element": "öğe",
+    "backdrop": "arka fon",
+    "both": "her ikisi",
+    
+    "query": "selektör",
+    "warning": "uyarı",
+    "filters": "filtreler",
+    "transforms": "dönüşmek"
+  },
+  "filter": {
+    "grayscale": "gri tonlama",
+    "sepia": "sepya",
+    "hueRotate": "renk tonu",
+    "contrast": "karşıtlık",
+    "brightness": "parlaklık",
+    "saturate": "doygunluk",
+    "invert": "ters çevir",
+    "blur": "bulanıklaştırma",
+    "opacity": "opaklık",
+    "scaleX": "ölçek X",
+    "scaleY": "ölçek Y",
+    "translateX": "çevir X",
+    "translateY": "çevir Y",
+    "rotateX": "döndür X",
+    "rotateY": "döndür Y",
+    "rotateZ": "döndür Z"
+  },
+  "fxPanel": {
+    "queryTooltip": "Filtrelenecek öğeleri bulmak için kullanılan CSS seçici. Örneğin, 'video, img' hem videoları hem de resimleri seçer. Gelişmiş kullanım için, CSS seçiciler hakkındaki çevrimiçi belgelere bakın.",
+    "intoPane": "pencere oluştur"
+  },
+  "command": {
+    "nothing": "hiçbir eylem",
+    "runCode": "javascript",
+    "openUrl": "link aç",
+    "adjustSpeed": "hız",
+    "setPin": "sekmeyi sabitle",
+    "setState": "durum",
+    "seek": "vardiya zamanı",
+    "setPause": "duraklat",
+    "setMute": "sessiz",
+    "adjustVolume": "ses",
+    "setMark": "ayar işareti",
+    "seekMark": "işarete git",
+    "toggleLoop": "AB tekrarı",
+    "toggleLoopTooltip": "Videoyu işaretli konumdan geçerli konuma tekrarlayın.",
+    "setFx": "FX durum",
+    "resetFx": "FX sıfırlama",
+    "flipFx": "FX takas",
+    "adjustFilter": "filtre",
+    "adjustPitch": "ses aralığı",
+    "adjustGain": "ses+",
+    "adjustDelay": "geciktir",
+    "tabCapture": "ele geçirmek"
+  },
+  "options": {
+    "flags": {
+      "header": "Seçenekler",
+      "language": "dil",
+      "languageTooltip": "İngilizce dışındaki tüm diller çevrimiçi araçlar kullanılarak çevrilmiştir.",
+      "darkTheme": "karanlık tema",
+      "pinByDefault": "varsayılan olarak sabitle",
+      "pinByDefaultTooltip": "Yeni sekmeler otomatik olarak sabitlenir.",
+      "hideIndicator": "göstergeyi gizle",
+      "hideIndicatorTooltip": "Bazı kısayollar, sayfanın sol üst köşesinde bir geri bildirim göstergesi gösterir.",
+      "hideBadge": "rozeti gizle",
+      "hideBadgeTooltip": "Rozet, uzantı simgesindeki metindir.",
+      "fullscreenSupport": "tam ekran desteği",
+      "feedbackVolume": "geri bildirim hacmi",
+      "ghostMode": "hayalet modu",
+      "ghostModeTooltip": "Web sitesinin hız değiştirmesini engellemeye çalışın. Bazı web sitelerini bozabileceği için varsayılan olarak devre dışıdır."
+    },
+    "editor": {
+      "header": "Kısayol Düzenleyici",
+      "toggleMode": "Yerel veya genel kısayol tuşlarını kullanabilirsiniz.",
+      "toggleModeTooltip": "Genel kısayollar, başka bir program kullanırken video veya sesi kontrol etmek istediğinizde yararlıdır.",
+      "greedyMode": "Olay yayılımını ve varsayılan davranışları engellemeye çalışır."
+    },
+    "rules": {
+      "header": "URL Kuralları",
+      "startsWith": "ile başlar",
+      "contains": "içeren",
+      "regex": "regex",
+      "LAX": "Her sekme için yalnızca bir kez uygulayın.",
+      "ILO": "Yalnızca ilk sayfa yüklemesi sırasında kontrol edin."
+    },
+    "help": {
+      "header": "Yardım",
+      "issuePrompt": "Sorunlarınız veya öneriniz mi var?",
+      "issueDirective": "Github sayfasına bir rapor gönderin."
+    }
+  }
+}

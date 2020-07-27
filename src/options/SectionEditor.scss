@@ -1,0 +1,19 @@
+
+.SectionEditor {
+  & > .keybindControls {
+    margin-top: 20px;
+  }
+  
+  & > .add {
+    margin-top: 20px;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: left;
+    align-items: stretch;
+    grid-column-gap: 10px;
+
+    & > button {
+      border-radius: 5px;
+    }
+  }
+} 

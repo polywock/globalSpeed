@@ -1,76 +1,50 @@
-import React, { useState, useEffect } from "react"
-import { round, compareArrays, stringDropWhileEnd } from "../utils/helper"
-
-const NUMERIC_REGEX = /^-?(?=[\d\.])\d*(\.\d+)?$/
+import React from "react"
+import { NumericInput } from "./NumericInput"
+import "./CycleInput.scss"
+import produce from "immer"
 
 type CycleInputProps = {
   values: number[],
-  onChange: (newValues: number[]) => any,
-  placeholder?: string,
-  noNull?: boolean
-  displayRound?: number,
+  onChange: (newValues: number[]) => void 
   min?: number,
-  max?: number
+  max?: number,
+  defaultValue?: number 
 }
 
-
-export const CycleInput = (props: CycleInputProps) => {
-  const [ghostValue, setGhostValue] = useState("")
-  const [isValid, setIsValid] = useState(true)
-
-  useEffect(() => {
-    if (props.values == null) {
-      setGhostValue("")
-    } else {
-      setGhostValue(
-        props.values.map(v => round(v, props.displayRound ?? 2)).join(", ")
-      )
-    }
-  }, [...(props.values ?? [])])
-  
-  
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGhostValue(e.target.value)
-    const values = stringDropWhileEnd(e.target.value.replace(/\s/g, ""), v => v === ",")
-    if (!values) {
-      if (props.noNull) {
-        setIsValid(false)
-      } else {
-        setIsValid(true)
-        props.onChange(null)
-      }
-      return 
-    }
-
-    let newValues: number[] = []
-    for (let value of values.split(",")) {
-      if (!NUMERIC_REGEX.test(value)) {
-        return setIsValid(false)
-      }
-
-      const parsed = parseFloat(value)
-      if (props.min != null && parsed < props.min) {
-        return setIsValid(false) 
-      }
-      if (props.max != null && parsed > props.max) {
-        return setIsValid(false)
-      }
-      newValues.push(parsed)
-    }
-
-    
-    if (!compareArrays(newValues, props.values)) {
-      props.onChange(newValues)
-    }
-    
-    return setIsValid(true)
-  }
-
-  return (
-    <input 
-      placeholder={props.placeholder}
-      type="text" 
-      className={`${isValid ? "" : "red"}`} 
-      onChange={handleOnChange} value={ghostValue}/>
-  )
+export function CycleInput (props: CycleInputProps) {
+  return <div className="CycleInput">
+    <div className="values">
+      {<>
+        {props.values.map((value, i) => (
+          <div key={i} className="value">
+            <NumericInput 
+              value={value} 
+              onChange={v => {
+                props.onChange(produce(props.values, d => {
+                  d[i] = v
+                }))
+              }}
+              min={props.min}
+              max={props.max}
+              noNull={true}
+            />
+            {props.values.length > 0 && (
+              <div className="close" onClick={e => {
+                props.onChange(produce(props.values, d => {
+                  d.splice(i, 1)
+                }))
+              }}/>
+            )}
+          </div>
+        ))}
+        <div>
+          <button onClick={e => {
+            props.onChange(produce(props.values, d => {
+              d.push(props.defaultValue ?? 0)
+            }))
+          }}>+</button>
+        </div>
+      </>}
+    </div>
+  </div>
 }

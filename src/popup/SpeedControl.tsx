@@ -1,8 +1,10 @@
 
 import React from "react"
-import { SPEED_PRESETS } from "../defaults"
 import "./SpeedControl.scss"
 import { NumericControl } from "../comps/NumericControl"
+import { conformSpeed } from "../utils/configUtils"
+
+export const SPEED_PRESETS = [0.25, 0.5, 0.75, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3, 5, 10, 16]
 
 type SpeedControlProps = {
   onChange: (newSpeed: number) => any,
@@ -29,6 +31,7 @@ export function SpeedControl(props: SpeedControlProps) {
       min={0.07}
       max={16}
       inputNoNull={true}
+      rounding={2}
     />
   </div>
 }

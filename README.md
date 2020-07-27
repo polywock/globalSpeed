@@ -1,14 +1,14 @@
 # Global Speed
 Web extension that sets a default speed for HTML media elements (video and audio). 
 
-
-## To use, install the [Chrome](https://chrome.google.com/webstore/detail/global-speed-youtube-netf/jpbjcnkcffbooppibceonlgknpkniiff), [Firefox](https://addons.mozilla.org/addon/global-speed?src=external-github), or [Edge](https://microsoftedge.microsoft.com/addons/detail/mjhlabbcmjflkpjknnicihkfnmbdfced) extension. 
+To use, install the [Chrome](https://chrome.google.com/webstore/detail/global-speed-youtube-netf/jpbjcnkcffbooppibceonlgknpkniiff?hl=en), [Firefox](https://addons.mozilla.org/en-US/firefox/addon/global-speed/), or [Edge](https://microsoftedge.microsoft.com/addons/detail/mjhlabbcmjflkpjknnicihkfnmbdfced) extension. 
 
 ## Features
 - Compatible with nearly all video and audio streaming sites including Youtube, Netflix, Twitch, Spotify, podcasts, etc.  
-- Apply a custom speed to a specific tab.  
-- Optional hotkeys for adjusting speed, rewinding/forwarding, looping, frame by frame analysis, and even running javascript.  
-- Apply filters (invert, grayscale, mirroring, etc) on select elements like videos, or even the entire page.  
+- Optional hotkeys for adjusting speed, rewinding/forwarding, looping between, frame by frame analysis, and even running javascript.  
+- Apply filters (invert, grayscale, mirroring, etc) on videos or even the entire page. 
+- Optional URL rules to apply a specific speed depending on the page's URL. 
+- Audio manipulation including pitch shifting, volume boosting, and more. 
 
 
 <img src="https://github.com/polywock/globalSpeed/blob/master/assets/screenshot_a.jpg?raw=true" width="600">

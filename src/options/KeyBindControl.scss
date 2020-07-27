@@ -1,57 +1,27 @@
 
-.KeyBindControl {
+.KeybindControl {
   display: grid;
-  grid-template-columns: repeat(2, max-content) minmax(200px, 1.5fr) 150px repeat(2, max-content) 200px repeat(2, max-content);
+  grid-template-columns: repeat(2, max-content) minmax(200px, 1.5fr) max-content 150px 25px 200px repeat(2, max-content);
   grid-column-gap: 10px;
   align-items: center;
-  background-color: #f8f8f8;
-  border: 1px solid #aaa;
-  padding: 5px;
-  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  padding: 8px;
+  margin-bottom: 10px;
 
-  &.disabled {
-    opacity: 0.75;
-    border-color: #7f7f7f;
+  select {
+    text-align-last: center;
   }
 
   &.spacing {
     margin-bottom: 25px;
   }
+
   &.doubleSpacing {
     margin-bottom: 40px;
   }
 
-  
-
-
-  & .icon {
-    color: #aaa;
-    padding: 0;
-    background-color: inherit;
-    border: none;
-
-    &:hover {
-      color: #666;
-    }
-
-    &:focus {
-      outline: 1px solid var(--focus-color);
-    }
-  }
-
-  
-  
-  & > .move {
-    display: grid;
-  }
-
-
-  & > .close:hover {
-    color: #d55;
-  }
-
-  & > button:nth-child(3) {
-    margin-left: -5px;
+  &:last-child {
+    margin-bottom: 0;
   }
 
   & > .command {
@@ -60,23 +30,38 @@
       display: flex;
       align-items: center;
 
-      & > svg {
+      & > *:nth-child(1n+2) {
         margin-left: 10px;
-        color: #24a;
+      }
+
+
+
+      & > svg, & > .svg {
+        color: var(--icon-vibrant-color);
+        margin-right: 10px;
+        font-size: 16px;
       }
 
       & > .Tooltip {
-        margin-left: 10px;
+        margin-left: 5px;
+      }
+
+      & > .adjustMode {
+        margin-left: 15px;
+        font-weight: bolder;
+        border-radius: 3px;
+        color: var(--icon-vibrant-color);
+        padding: 3px;
       }
     }
 
     & > .support {
       margin-top: 5px; 
       display: flex;
+      flex-wrap: wrap;
       & > *:nth-child(1n+2) {
         margin-left: 3px;
       }
     }
   }
-
 }

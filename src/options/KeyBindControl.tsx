@@ -1,44 +1,69 @@
 import React from "react"
-import { KeyBind, FilterTarget, SetState } from "../types"
+import { Keybind, TargetFx, StateOption, AdjustMode } from "../types"
 import produce from "immer"
 import { KeyPicker } from "../comps/KeyPicker"
-import "./KeyBindControl.scss"
 import { Tooltip } from "../comps/Tooltip"
 import { NumericInput } from "../comps/NumericInput"
 import { commandInfos } from "../defaults/commands"
 import { filterInfos, FilterName, filterTargets  } from "../defaults/filters"
-import { GoArrowUp, GoArrowDown, GoChevronDown, GoChevronUp, GoX, GoTriangleDown, GoCode, GoPin, GoZap } from "react-icons/go"
+import { GoChevronDown, GoChevronUp, GoX, GoTriangleDown, GoCode, GoPin, GoZap } from "react-icons/go"
 import { CycleInput } from "../comps/CycleInput"
 import { ModalText } from "../comps/ModalText"
-import { FaPowerOff, FaPause, FaAngleDoubleRight, FaAngleDoubleLeft, FaStepBackward, FaStepForward, FaEquals, FaBookmark, FaLink, FaInfinity, FaVolumeDown, FaVolumeUp, FaVolumeMute } from "react-icons/fa"
+import { FaPowerOff, FaPause, FaEquals, FaBookmark, FaLink, FaVolumeUp, FaVolumeMute, FaGlobe, FaFile, FaLockOpen, FaLock, FaBackward, FaForward, FaArrowRight, FaExchangeAlt, FaPlus, FaMusic, FaList } from "react-icons/fa"
+import { requestCreateTab } from "../utils/browserUtils"
+import { GiAnticlockwiseRotation } from "react-icons/gi"
+import { TiArrowLoop } from "react-icons/ti"
+import { MdTimer } from "react-icons/md"
+import { isFirefox, clamp } from "../utils/helper"
+import { ThrottledTextInput } from "../comps/ThrottledTextInput"
+import { Move } from "../comps/Move"
+import "./KeybindControl.scss"
 
 
-type KeyBindControlProps = {
-  onChange: (id: string, newValue: KeyBind) => void,
+type KeybindControlProps = {
+  onChange: (id: string, newValue: Keybind) => void,
   onRemove: (id: string) => void,
   onMove: (id: string, down: boolean) => void,
-  value: KeyBind
+  value: Keybind
 }
 
-export const KeyBindControl = (props: KeyBindControlProps) => {
+export const KeybindControl = (props: KeybindControlProps) => {
+
   const { value } = props
   const commandInfo = commandInfos[value.command]
 
-  const isAdjustFilter = value.command === "adjustFilter"
+  const label = (window.gsm.command as any)[value.command]
+  const tooltip = (window.gsm.command as any)[value.command.concat("Tooltip")]
+
   let filterInfo = commandInfo.withFilterOption && filterInfos[value.filterOption]
+  let setMin = filterInfo ? filterInfo.min : commandInfo.valueMin
+  let setMax = filterInfo ? filterInfo.max : commandInfo.valueMax
+  let setDefaultValue = filterInfo ? filterInfo.default : commandInfo.valueDefault
 
-  
+  let min = setMin 
+  let max = setMax 
+  let defaultValue = setDefaultValue 
+
+  if (value.adjustMode === AdjustMode.ADD) {
+    min = null; 
+    max = null
+    defaultValue = filterInfo ? filterInfo.step : commandInfo.valueStep
+  }
+
+  let numericInput: "valueNumber" | "valueNumberAlt";
+  if (commandInfo.valueType === "number" || (commandInfo.valueType == "adjustMode" && value.adjustMode === AdjustMode.SET)) {
+    numericInput = "valueNumber"
+  } 
+  if (commandInfo.valueType == "adjustMode" && value.adjustMode === AdjustMode.ADD) {
+    numericInput = "valueNumberAlt"
+  }
 
 
-  return <div className={`KeyBindControl ${value.spacing === 1 ? "spacing" : value.spacing === 2 ? "doubleSpacing" : ""} ${value.enabled ? "" : "disabled"}`}>
-    <div className="move">
-      <button className="icon" onClick={() => props.onMove(value.id, false)}>
-        <GoArrowUp size="20px"/>
-      </button> 
-      <button className="icon" onClick={() => props.onMove(value.id, true)}>
-        <GoArrowDown size="20px"/>
-      </button>
-    </div>
+
+  return <div className={`KeybindControl ${value.spacing === 1 ? "spacing" : value.spacing === 2 ? "doubleSpacing" : ""} ${value.enabled ? "" : "disabled"}`}>
+    <Move onMove={down => {
+      props.onMove(value.id, down)
+    }}/>
     <input type="checkbox" checked={value.enabled} onChange={e => {
       props.onChange(value.id, produce(value, d => {
         d.enabled = !value.enabled
@@ -46,40 +71,61 @@ export const KeyBindControl = (props: KeyBindControlProps) => {
     }}/>
     <div className="command">
       <div className="name">
-        <span>{`${window.gsm[commandInfo.name] || ""}`}</span>
-        {value.command === "adjustSpeed" && <>
-          {value.valueNumber < 0 && (
-            <FaAngleDoubleLeft size="15px"/>
-          )}
-          {value.valueNumber > 0 && (
-            <FaAngleDoubleRight size="15px"/>
-          )}
-        </>}
-        {value.command === "runCode" && <GoCode size="14px"/>}
-        {value.command === "openUrl" && <FaLink size="14px"/>}
-        {value.command === "setSpeed" && <FaEquals size="14px"/>}
-        {value.command === "setPin" && <GoPin size="15px"/>}
-        {["setFx", "resetFx", "flipFx", "setFilter", "adjustFilter", "cycleFilterValue"].includes(value.command)&& <GoZap size="18px"/>}
-        {value.command === "setPause" && <FaPause size="13px"/>}
-        {value.command === "setMute" && <FaVolumeMute size="15px"/>}
-        {value.command === "adjustVolume" && <>
-            {value.valueNumber < 0 && <FaVolumeDown size="15px"/>}
-            {value.valueNumber > 0 && <FaVolumeUp size="15px"/>}
-        </>}
-        {value.command === "setState" && <FaPowerOff size="14px"/>}
-        {["setMark", "seekMark"].includes(value.command) && <FaBookmark size="13px"/>}
-        {value.command === "toggleLoop" && <FaInfinity size="14px"/>}
+        {value.command === "adjustSpeed" && <MdTimer size="1.3em"/>}
+        {value.command === "runCode" && <GoCode size="1.1em"/>}
+        {value.command === "openUrl" && <FaLink size="1em"/>}
+        {value.command === "setPin" && <GoPin size="1.05em"/>}
+        {value.command === "adjustFilter" && <GoZap size="1.3em"/>}
+        {value.command === "setFx" && <div className="svg">
+          <GoZap size="1.3em"/>
+          <FaPowerOff size="1em"/>
+        </div>}
+        {value.command === "resetFx" && <div className="svg">
+          <GoZap size="1.3em"/>
+          <GiAnticlockwiseRotation size="1.1em"/>
+        </div>}
+        {value.command === "flipFx" && <div className="svg">
+          <GoZap size="1.3em"/>
+          <FaExchangeAlt size="1.05em"/>
+        </div>}
+        {value.command === "setPause" && <FaPause size="0.95em"/>}
+        {value.command === "setMute" && <FaVolumeMute size="1.05em"/>}
+        {value.command === "adjustVolume" && <FaVolumeUp size="1.05em"/>}
+        {value.command === "adjustGain" && <FaVolumeUp size="1.05em"/>  }
+        {value.command === "adjustPitch" && <FaMusic size="1em"/>}
+        {value.command === "setState" && <FaPowerOff size="1em"/>}
+        {value.command === "setMark" && <FaBookmark size="0.95em"/>}
+        {value.command === "seekMark" && <div className="svg">
+          <FaArrowRight size="0.95em"/>
+          <FaBookmark size="0.95em"/>
+        </div>}
+        {value.command === "toggleLoop" && <TiArrowLoop size="1.4em"/>}
         {value.command === "seek" && <>
           {value.valueNumber < 0 && (
-            <FaStepBackward size="14px"/>
+            <FaBackward size="0.95em"/>
           )}
           {value.valueNumber > 0 && (
-            <FaStepForward size="14px"/>
+            <FaForward size="0.95em"/> 
           )}
         </>}
-        {commandInfo.tooltip && (
-          <Tooltip label="?" tooltip={window.gsm[commandInfo.tooltip]}/>
+        <span>{label}</span>
+        {value.command === "seek" && (
+          <button className={`toggle ${value.valueBool ? "active" : ""}`} onClick={e => {
+            props.onChange(value.id, produce(value, d => {
+              d.valueBool = !d.valueBool
+            }))
+          }}>x</button>
         )}
+        {tooltip && <Tooltip label="?" tooltip={tooltip}/>}
+        {commandInfo.valueType === "adjustMode" && <button className="adjustMode" onClick={e => {
+          props.onChange(value.id, produce(value, d => {
+            d.adjustMode = clamp(1, 3, ((d.adjustMode ?? 1) + 1) % 4)
+          }))
+        }}>
+            {value.adjustMode === AdjustMode.SET && <FaEquals size="1em"/>}
+            {value.adjustMode === AdjustMode.CYCLE && <FaList size="1em"/>}
+            {value.adjustMode === AdjustMode.ADD && <FaPlus size="1em"/>}
+        </button>}
       </div>
       {(commandInfo.withFilterTarget || commandInfo.withFilterOption) && (
         <div className="support">
@@ -88,11 +134,11 @@ export const KeyBindControl = (props: KeyBindControlProps) => {
               value={value.filterTarget} 
               onChange={e => {
                 props.onChange(value.id, produce(value, d => {
-                  d.filterTarget = e.target.value as FilterTarget
+                  d.filterTarget = e.target.value as TargetFx
                 }))
               }}
             >{filterTargets.map(v => {
-              return <option key={v} value={v}>{window.gsm[`token_${v}`] || ""}</option>
+              return <option key={v} value={v}>{(window.gsm.token as any)[v]}</option>
             })}</select>
           )}
           {commandInfo.withFilterOption && (
@@ -101,55 +147,71 @@ export const KeyBindControl = (props: KeyBindControlProps) => {
               onChange={e => {
                 props.onChange(value.id, produce(value, d => {
                   d.filterOption = e.target.value as FilterName
+                  delete d.valueNumber
+                  delete d.valueNumberAlt
                 }))
               }}
             >{Object.entries(filterInfos).map(([k, v]) => {
-              return <option key={k} value={k}>{window.gsm[v.name] || ""}</option>
+              return <option key={k} value={k}>{window.gsm.filter[k as FilterName] || ""}</option>
             })}</select>
           )}
         </div>
       )}
     </div>
-    <KeyPicker value={value.key} onChange={newKey => {
-      props.onChange(value.id, produce(value, d => {
-        d.key = newKey
-      }))
-    }}/>
-    <button className={value.ifMedia ? "blue" : ""} onClick={() => {
-      props.onChange(value.id, produce(value, d => {
-        d.ifMedia = !value.ifMedia
-      }))
-    }}>M</button>
-    <button className={value.greedy ? "blue" : ""} onClick={() => {
-      props.onChange(value.id, produce(value, d => {
-        d.greedy = !value.greedy
-      }))
-    }}>G</button>
-    {commandInfo.valueType === "number" && (
-      <NumericInput min={commandInfo.valueMin} max={commandInfo.valueMax} value={value.valueNumber} onChange={v => {
+    {isFirefox() ? <div></div> : (
+      <button className={`icon`} onClick={() => {
         props.onChange(value.id, produce(value, d => {
-          d.valueNumber = v
+          d.global = !value.global
+        }))
+      }}>{value.global ? <FaGlobe size="1.05em"/> : <FaFile size="1.05em"/>}</button>
+    )}
+    {value.global ? (
+      <>
+        <select value={value.globalKey || "commandA"} onChange={e => {
+          props.onChange(value.id, produce(value, d => {
+            d.globalKey = e.target.value 
+          }))
+        }}>
+          {"ABCDEFGHIJKLMNO".split("").map(v => [`command${v}`, `command ${v}`]).map(v => (
+            <option key={v[0]} value={v[0]}>{v[1]}</option>
+          ))}
+        </select>
+        <button className={`icon`} onClick={() => {
+          requestCreateTab(isFirefox() ? `https://support.mozilla.org/kb/manage-extension-shortcuts-firefox` :`chrome://extensions/shortcuts`)
+        }}><FaLink size={17}/></button>
+      </>
+    ) : (
+      <>
+        <KeyPicker value={value.key} onChange={newKey => {
+          props.onChange(value.id, produce(value, d => {
+            d.key = newKey
+          }))
+        }}/>
+        <button className={`icon`} onClick={() => {
+          props.onChange(value.id, produce(value, d => {
+            d.greedy = !value.greedy
+          }))
+        }}>{value.greedy ? <FaLock size={16}/> : <FaLockOpen size={16}/>}</button>
+      </>
+    )}
+    {numericInput && (
+      <NumericInput placeholder={defaultValue?.toString() ?? null} min={min} max={max} value={value[numericInput]} onChange={v => {
+        props.onChange(value.id, produce(value, d => {
+          d[numericInput] = v
         }))
       }}/>
     )}
-    {commandInfo.valueType === "filterNumber" && (
-      <NumericInput min={isAdjustFilter ? null : filterInfo.min} max={isAdjustFilter ? null : filterInfo.max} placeholder={`default '${isAdjustFilter ? filterInfo.largeStep : filterInfo.default}'`} value={value.valueNumber} onChange={v => {
-        props.onChange(value.id, produce(value, d => {
-          d.valueNumber = v
-        }))
-      }}/>
-    )}
-    {commandInfo.valueType === "cycle" && (
-      <CycleInput min={filterInfo.min} max={filterInfo.max}  placeholder={`default '0, 1'`} values={value.valueCycle} onChange={v => {
+    {commandInfo.valueType === "adjustMode" && value.adjustMode === AdjustMode.CYCLE && (
+      <CycleInput min={min} max={max} values={value.valueCycle || []} onChange={v => {
         props.onChange(value.id, produce(value, d => {
           d.valueCycle = v
         }))
       }}/>
     )}
     {commandInfo.valueType === "string" && (
-      <input type="text" value={value.valueString} onChange={e => {
+      <ThrottledTextInput value={value.valueString} onChange={v => {
         props.onChange(value.id, produce(value, d => {
-          d.valueString = e.target.value
+          d.valueString = v
         }))
       }}/>
     )}
@@ -165,11 +227,11 @@ export const KeyBindControl = (props: KeyBindControlProps) => {
         value={value.valueState} 
         onChange={e => {
           props.onChange(value.id, produce(value, d => {
-            d.valueState = e.target.value as SetState
+            d.valueState = e.target.value as StateOption
           }))
         }}
-      >{(["on", "off", "toggle"] as SetState[]).map(v => {
-        return <option key={v} value={v}>{window.gsm[`token_${v}`] || ""}</option>
+      >{(["on", "off", "toggle"] as StateOption[]).map(v => {
+        return <option key={v} value={v}>{window.gsm.token[v] || ""}</option>
       })}</select>
     )}
     {!commandInfo.valueType && <div/>}
@@ -179,13 +241,13 @@ export const KeyBindControl = (props: KeyBindControlProps) => {
       }))
     }}>
       {!value.spacing && (
-        <GoChevronDown size="20px"/>
+        <GoChevronDown size="1.3em"/>
       )} 
       {value.spacing === 1 && (
-        <GoTriangleDown size="20px"/>
+        <GoTriangleDown size="1.3em"/>
       )} 
       {value.spacing === 2 && (
-        <GoChevronUp size="20px"/>
+        <GoChevronUp size="1.3em"/>
       )} 
     </button>
     <button className="close icon" onClick={e => props.onRemove(value.id)}>

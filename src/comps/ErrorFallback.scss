@@ -1,0 +1,23 @@
+
+.ErrorFallback {
+  padding: 10px;
+  background-color: var(--fg-color);
+  font-size: 1.1em;
+  border: 3px solid red;
+  margin-top: 20px;
+  min-width: 600px;
+  max-width: 800px;
+
+  button {
+    display: block;
+    margin-top: 5px;
+  }
+
+  li {
+    margin-bottom: 15px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

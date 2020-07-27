@@ -1,0 +1,17 @@
+
+.FloatTooltip {
+  position: absolute;
+  left: -80px; 
+  right: -80px; 
+  bottom: 40px;
+  font-size: 0.9em;
+  display: grid;
+  justify-content: center;
+  
+  & > div {
+    display: inline-block; 
+    padding: 5px;
+    background-color: red;
+    color: white;
+  }
+}

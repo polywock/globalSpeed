@@ -1,7 +1,7 @@
 
 .NumericControl {
   display: grid;
-  grid-template-columns: repeat(2, 1fr) 65px repeat(2, 1fr);
+  grid-template-columns: repeat(2, 50px) 1fr repeat(2, 50px);
   grid-column-gap: 5px;
   align-items: stretch;
 
@@ -9,8 +9,20 @@
     font-size: 0.75em;
   }
 
-  & > button, & > input[type="text"] {
-    padding: 2px;
+  & > button, & input[type="text"] {
+    padding: none;
     text-align: center;
+  }
+
+  & > .NumericInput > input[type="text"] {
+    padding: 2px 0;
+  }
+
+  & > .NumericInput {
+    font-size: 0.9em;
+
+    & > input {
+      text-align: center;
+    }
   }
 }

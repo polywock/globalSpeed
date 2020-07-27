@@ -1,0 +1,112 @@
+{
+  "audio": {
+    "captureTab": "पकड़ना",
+    "releaseTab": "त्यागना",
+    "equalizer": "EQ",
+    "compressor": "कंप्रेसर"
+  },
+  "warnings": {
+    "backdropFirefox": "फ़ायरफ़ॉक्स उपयोगकर्ताओं को \"about:config\" URL पर जाकर \"gfx.webrender.all\" और \"layout.css.backdrop-filter.enabled\" को सक्षम करने की आवश्यकता है। दो झंडे को सक्षम करने के बाद फ़ायरफ़ॉक्स को पुनरारंभ करें।",
+    "unusedGlobal": "अप्रयुक्त वैश्विक शॉर्टकट कुंजी जारी करें।"
+  },
+  "token": {
+    "create": "बनाएँ",
+    "reset": "रीसेट",
+
+    "on": "चालू",
+    "off": "बंद",
+    "toggle": "टॉगल",
+
+    "element": "तत्व",
+    "backdrop": "पृष्ठभूमि",
+    "both": "दोनों",
+
+    "query": "चयनकर्ता",
+    "warning": "चेतावनी",
+    "filters": "फिल्टर",
+    "transforms": "परिवर्तन"
+  },
+  "filter": {
+    "grayscale": "ग्रेस्केल",
+    "sepia": "सेपिया",
+    "hueRotate": "रंग घुमाएँ",
+    "contrast": "कॉन्ट्रास्ट",
+    "brightness": "चमक",
+    "saturate": "परिपूर्णता",
+    "invert": "पलटें",
+    "blur": "ब्‍लर",
+    "opacity": "अपारदर्शिता",
+    "scaleX": "स्केल X",
+    "scaleY": "स्केल Y",
+    "translateX": "अनुवाद X",
+    "translateY": "अनुवाद Y",
+    "rotateX": "घुमाएँ X",
+    "rotateY": "घुमाएँ Y",
+    "rotateZ": "घुमाएँ Z"
+  },
+  "fxPanel": {
+    "queryTooltip": "CSS चयनकर्ता फ़िल्टर करने के लिए तत्वों को खोजने के लिए उपयोग किया जाता है। उदाहरण के लिए, \"video, img\" वीडियो और छवियों दोनों का चयन करेगा। उन्नत उपयोग के लिए, CSS चयनकर्ताओं के बारे में ऑनलाइन दस्तावेज़ देखें।",
+    "intoPane": "विंडो बनाएँ"
+  },
+  "command": {
+    "nothing": "कोई कार्रवाई नहीं",
+    "runCode": "javascript",
+    "openUrl": "URL",
+    "adjustSpeed": "गति",
+    "setPin": "टैब पिन करें",
+    "setState": "स्थिति",
+    "seek": "पारी की स्थिति",
+    "adjustVolume": "आवाज़",
+    "setMark": "मार्कर बनाएं",
+    "seekMark": "मार्कर पर जाएं",
+    "setPause": "रोकें",
+    "setMute": "म्यूट करें",
+    "toggleLoop": "AB पाश",
+    "toggleLoopTooltip": "चिह्नित स्थिति और वर्तमान स्थिति के बीच लूप सेट करें।",
+    "setFx": "FX स्थिति",
+    "resetFx": "FX रीसेट",
+    "flipFx": "FX स्वैप",
+    "adjustFilter": "FX फिल्टर",
+    "adjustPitch": "तारत्व",
+    "adjustGain": "आवाज़+",
+    "adjustDelay": "विलंब",
+    "tabCapture": "पकड़ना"
+  },
+  "options": {
+    "flags": {
+      "header": "विकल्प",
+      "language": "भाषा",
+      "languageTooltip": "अंग्रेजी को छोड़कर सभी भाषाओं का ऑनलाइन टूल का उपयोग करके अनुवाद किया गया था। परिवर्तन देखने के लिए टैब ताज़ा करें।",
+      "darkTheme": "डार्क थीम",
+      "pinByDefault": "डिफ़ॉल्ट रूप से पिन करें",
+      "pinByDefaultTooltip": "प्रत्येक टैब को डिफ़ॉल्ट रूप से पिन किया जाएगा।",
+      "hideIndicator": "सूचक छिपाएँ",
+      "hideIndicatorTooltip": "कुछ शॉर्टकट पृष्ठ के शीर्ष-बाईं ओर एक प्रतिक्रिया सूचक दिखाते हैं।",
+      "hideBadge": "बिल्ला छिपाना",
+      "hideBadgeTooltip": "बैज एक्सटेंशन आइकन पर पाठ है।",
+      "fullscreenSupport": "फुलस्क्रीन सपोर्ट",
+      "feedbackVolume": "प्रतिक्रिया मात्रा",
+      "ghostMode": "गोस्ट मोड",
+      "ghostModeTooltip": "वेबसाइट को गति बदलने से रोकने की कोशिश करें। डिफ़ॉल्ट रूप से अक्षम क्योंकि यह कुछ वेबसाइटों को तोड़ सकता है।"
+    },
+    "editor": {
+      "header": "शॉर्टकट संपादक",
+      "toggleMode": "आप स्थानीय या वैश्विक शॉर्टकट कुंजियों का उपयोग कर सकते हैं।",
+      "toggleModeTooltip": "जब आप किसी अन्य प्रोग्राम का उपयोग करते समय वीडियो या ऑडियो को नियंत्रित करना चाहते हैं तो वैश्विक शॉर्टकट उपयोगी होते हैं।",
+      "greedyMode": "लालची मोड घटना प्रसार और डिफ़ॉल्ट व्यवहार को ब्लॉक करने का प्रयास करेगा।"
+    },
+    "rules": {
+      "header": "URL नियम",
+      "startsWith": "साथ शुरू होता है",
+      "contains": "इसमें शामिल है",
+      "regex": "regex",
+      "LAX": "केवल टैब के अनुसार एक बार आवेदन करें।",
+      "ILO": "केवल प्रारंभिक पृष्ठ लोड के दौरान जाँच करें।"
+    },
+    "help": {
+      "header": "मदद",
+      "issuePrompt": "मुद्दों या एक सुझाव है?",
+      "issueDirective": "Github पेज पर एक नया मुद्दा बनाएं।"
+    }
+  }
+}

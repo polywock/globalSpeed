@@ -1,0 +1,15 @@
+
+.SectionFlags {
+
+  & > .fields {
+    margin-top: 20px;
+    
+    & > .field {
+      display: grid;
+      grid-template-columns: 300px max-content;
+      grid-column-gap: 10px;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+  }
+}

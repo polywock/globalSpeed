@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "es2018"],
+    "lib": ["dom", "dom.iterable", "es2019"],
     "types": ["@types/chrome", "@types/react", "@types/react-dom"],
     "outDir": "./dist/",
     "noImplicitAny": true,
@@ -12,5 +12,5 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
-  "exclude": ["./node_modules/**/*"]
+  "exclude": ["./node_modules", "build", "buildFf"]
 }

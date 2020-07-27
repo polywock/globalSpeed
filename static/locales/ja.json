@@ -1,0 +1,112 @@
+{
+  "audio": {
+    "captureTab": "捕捉",
+    "releaseTab": "手放す",
+    "equalizer": "イコライザー",
+    "compressor": "コンプレッサー"
+  },
+  "warnings": {
+    "backdropFirefox": "Firefoxユーザーは、「about:config」URLに移動して、「gfx.webrender.all」と「layout.css.backdrop-filter.enabled」を有効にする必要があります。 2つのフラグを有効にした後、Firefoxを再起動します。",
+    "unusedGlobal": "未使用のグローバルショートカットキーを放します。"
+  },
+  "token": {
+    "create": "作成",
+    "reset": "リセット",
+
+    "on": "オン",
+    "off": "オフ",
+    "toggle": "トグル",
+
+    "element": "要素",
+    "backdrop": "背景",
+    "both": "両方",
+
+    "query": "セレクター",
+    "warning": "警告",
+    "filters": "フィルター",
+    "transforms": "変換"
+  },
+  "filter": {
+    "grayscale": "グレースケール",
+    "sepia": "セピア",
+    "hueRotate": "色相回転",
+    "contrast": "コントラスト",
+    "brightness": "輝度",
+    "saturate": "彩度",
+    "invert": "反転",
+    "blur": "ぼかし",
+    "opacity": "不透明度",
+    "scaleX": "スケールX",
+    "scaleY": "スケールY",
+    "translateX": "移動X",
+    "translateY": "移動Y",
+    "rotateX": "回転X",
+    "rotateY": "回転Y",
+    "rotateZ": "回転Z"
+  },
+  "fxPanel" : {
+    "queryTooltip": "フィルタリングする要素を見つけるために使用されるCSSセレクター。例えば。 'video, img'は、ビデオと画像の両方を照会します。高度な使用方法については、CSSセレクターに関するドキュメントをオンラインで表示してください。",
+    "intoPane": "窓として"
+  },
+  "command": {
+    "nothing": "何もしない",
+    "runCode": "javascript",
+    "openUrl": "URLを開く",
+    "adjustSpeed": "スピード",
+    "setPin": "ピン]タブ",
+    "setState": "状態",
+    "seek": "シーク",
+    "setPause": "一時停止",
+    "setMute": "ミュート",
+    "adjustVolume": "音量",
+    "setMark": "セットマーク",
+    "seekMark": "マークに移動",
+    "toggleLoop": "ABループ",
+    "toggleLoopTooltip": "マークされた位置と現在の位置の間にループを設定します。",
+    "setFx": "FX状態",
+    "resetFx": "FXリセット",
+    "flipFx": "FXスワップ",
+    "adjustFilter": "FXフィルター",
+    "adjustPitch": "音高",
+    "adjustGain": "音量+",
+    "adjustDelay": "遅延",
+    "tabCapture": "捕捉"
+  },
+  "options": {
+    "flags": {
+      "header": "オプション",
+      "language": "言語",
+      "languageTooltip": "英語を除くすべての言語は、オンラインツールを使用して翻訳されました。タブを更新して変更を確認します。",
+      "darkTheme": "暗いテーマ",
+      "pinByDefault": "デフォルトでピン留め",
+      "pinByDefaultTooltip": "各タブはデフォルトで固定されます。",
+      "hideIndicator": "インジケーターを非表示",
+      "hideIndicatorTooltip": "一部のショートカットでは、ページの左上にフィードバックインジケーターが表示されます。",
+      "hideBadge": "バッジを隠す",
+      "hideBadgeTooltip": "バッジは、拡張機能アイコン上のテキストです。",
+      "fullscreenSupport": "フルスクリーンサポート",
+      "feedbackVolume": "フィードバック量",
+      "ghostMode": "ゴーストモード",
+      "ghostModeTooltip": "速度の変化からサイトをブロックしてみてください。一部のWebサイトを破壊する可能性があるため、デフォルトでは無効になっています。"
+    },
+    "editor": {
+      "header": "ショートカットエディター",
+      "toggleMode": "ローカルまたはグローバルのショートカットキーを使用できます。",
+      "toggleModeTooltip": "グローバルショートカットは、別のプログラムを使用しているときにビデオまたはオーディオを制御する場合に役立ちます。",
+      "greedyMode": "貪欲モードは、イベントの伝播とデフォルトの動作をブロックしようとします。"
+    },
+    "rules": {
+      "header": "URLルール",
+      "startsWith": "で始まる",
+      "contains": "含む",
+      "regex": "regex",
+      "LAX": "タブごとに1回だけ適用されます。",
+      "ILO": "最初のページの読み込み中にのみチェックします。"
+    },
+    "help": {
+      "header": "助けて",
+      "issuePrompt": "問題や提案がありますか？",
+      "issueDirective": "Githubページで新しい問題を作成します。"
+    }
+  }
+}
