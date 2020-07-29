@@ -69,13 +69,14 @@ class SignalView {
   }
   handleInterval = () => {
     const info = this.info
-    
-    if (this.freqMode) {
-      info.ana.node.getFloatFrequencyData(this.buffer)
-    } else {
-      info.ana.node.getFloatTimeDomainData(this.buffer)
+    if (info?.ana?.node) {
+      if (this.freqMode) {
+        info.ana.node.getFloatFrequencyData(this.buffer)
+      } else {
+        info.ana.node.getFloatTimeDomainData(this.buffer)
+      }
     }
-
+    
     this.draw()
   }
   draw = () => {

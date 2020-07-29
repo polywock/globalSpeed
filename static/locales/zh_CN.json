@@ -6,7 +6,7 @@
     "compressor": "压限器"
   },
   "warnings": {
-    "backdropFirefox": "警告：对于背景过滤器功能，Firefox用户需要转到“about:config”URL启用“gfx.webrender.all”和“layout.css.backdrop-filter.enabled”。启用这两个标志后，重新启动Firefox。",
+    "backdropFirefox": "对于背景过滤器功能，Firefox用户需要转到“about:config”URL启用“gfx.webrender.all”和“layout.css.backdrop-filter.enabled”。启用这两个标志后，重新启动Firefox。",
     "unusedGlobal": "释放未使用的全局热键"
   },
   "token": {
@@ -68,7 +68,7 @@
     "flipFx": "FX交换",
     "adjustFilter": "FX过滤器",
     "adjustPitch": "音高",
-    "adjustGain": "音量",
+    "adjustGain": "音量+",
     "adjustDelay": "延迟",
     "tabCapture": "捕获"
   },

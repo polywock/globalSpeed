@@ -2,12 +2,12 @@
   "audio": {
     "captureTab": "捕獲",  
     "releaseTab": "釋放",
-    "equalizer": "等化器",
-    "compressor": "壓縮器"
+    "equalizer": "均衡器",
+    "compressor": "壓限器"
   },
   "warnings": {
-    "backdropFirefox": "警告：對於背景過濾器功能，Firefox用戶需要轉到 \"about:config\" URL 啟用 \"gfx.webrender.all\" 和 \"layout.css.backdrop-filter.enabled\"。啟用這兩個標誌後，重新啟動Firefox。",
-    "unusedGlobal": "釋放未使用的全局快捷鍵。"
+    "backdropFirefox": "對於背景過濾器功能，Firefox用戶需要轉到“about:config”URL啟用“gfx.webrender.all”和“layout.css.backdrop-filter.enabled”。啟用這兩個標誌後，重新啟動Firefox。",
+    "unusedGlobal": "釋放未使用的全局熱鍵"
   },
   "token": {
     "create": "创建",
@@ -28,7 +28,7 @@
   },
   "filter": {
     "grayscale": "灰階",
-    "sepia": "復古",
+    "sepia": "棕褐色",
     "hueRotate": "色調旋轉",
     "contrast": "對比",
     "brightness": "亮度",
@@ -36,31 +36,31 @@
     "invert": "色彩對換",
     "blur": "模糊",
     "opacity": "不透明度",
-    "scaleX": "放大 X",
-    "scaleY": "放大 Y",
-    "translateX": "移 X",
-    "translateY": "移 Y",
-    "rotateX": "旋轉 X",
-    "rotateY": "旋轉 Y",
-    "rotateZ": "旋轉 Z"
+    "scaleX": "X軸縮放",
+    "scaleY": "Y軸縮放",
+    "translateX": "X軸移動",
+    "translateY": "Y軸移動",
+    "rotateX": "X軸旋轉",
+    "rotateY": "Y軸旋轉",
+    "rotateZ": "Z軸旋轉"
   },
   "fxPanel": {
     "queryTooltip": "CSS選擇器，用於查找要過濾的元素。例如，“video, img”將會同時查詢視頻和圖像。相關高級用法，請在線查閱CSS選擇器的相關文檔。",
-    "intoPane": "製作窗格"
+    "intoPane": "製成窗格"
   },
   "command": {
     "nothing": "無動作",
-    "runCode": "javascript",
+    "runCode": "javaScript",
     "openUrl": "打開網址",
     "adjustSpeed": "速度",
-    "setPin": "固定標籤",
+    "setPin": "固定標籤頁",
     "setState": "狀態",
     "seek": "移動時間軸",
     "setPause": "暫停",
     "setMute": "靜音",
     "adjustVolume": "音量",
     "setMark": "設置標記點",
-    "seekMark": "去標記",
+    "seekMark": "轉到標記點",
     "toggleLoop": "AB循環",
     "toggleLoopTooltip": "從標記位置到當前位置重複播放視頻。",
     "setFx": "FX狀態",
@@ -79,28 +79,28 @@
       "languageTooltip": "除英語以外的所有語言均使用在線工具進行了翻譯。",
       "darkTheme": "深色佈景主題",
       "pinByDefault": "默認固定",
-      "pinByDefaultTooltip": "每個選項卡將默認固定。",
+      "pinByDefaultTooltip": "默認固定每個標籤頁。",
       "hideIndicator": "隱藏反饋指示器",
       "hideIndicatorTooltip": "使用某些熱鍵時，在頁面左上方顯示反饋指示器。",
       "hideBadge": "隱藏徽章",
       "hideBadgeTooltip": "徽章是擴展圖標上的文字。",
       "fullscreenSupport": "全屏支持",
       "feedbackVolume": "反饋音量",
-      "ghostMode": "鬼模",
-      "ghostModeTooltip": "嘗試阻止網站更改速度。 默認情況下處於禁用狀態，因為它可能會破壞某些網站。"
+      "ghostMode": "幽靈模式",
+      "ghostModeTooltip": "嘗試阻止網站更改速度。默認情況下禁用，因為它可能會破壞某些網站。"
     },
     "editor": {
       "header": "熱鍵編輯器",
-      "toggleMode": "您可以使用本地或全局快捷鍵。",
-      "toggleModeTooltip": "當您想在使用其他程序時控制視頻或音頻時，全局快捷方式很有用。",
-      "greedyMode": "貪婪模式將嘗試阻止事件的傳播和默認行為。"
+      "toggleMode": "您可以使用本地熱鍵或全局熱鍵。",
+      "toggleModeTooltip": "全局熱鍵可以讓您在使用其他應用程序時控制視頻或音頻。",
+      "greedyMode": "貪婪模式會嘗試阻止事件的默認行為及其傳播。"
     },
     "rules": {
-      "header": "網址規則",
-      "startsWith": "開始於",
+      "header": "URL規則",
+      "startsWith": "以…開始",
       "contains": "包含",
-      "regex": "regex",
-      "LAX": "每個標籤一次。",
+      "regex": "正則表達式",
+      "LAX": "每個標籤頁只應用一次。",
       "ILO": "僅在初始頁面加載期間檢查。"
     },
     "help": {
