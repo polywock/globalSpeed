@@ -87,7 +87,8 @@
       "fullscreenSupport": "soporte de pantalla completa",
       "feedbackVolume": "retroalimentación de audio",
       "ghostMode": "modo fantasma",
-      "ghostModeTooltip": "Intenta bloquear el sitio web para que no cambie de velocidad. Deshabilitado de forma predeterminada porque podría romper algunos sitios web."
+      "ghostModeTooltip": "Intenta bloquear el sitio web para que no cambie de velocidad. Deshabilitado de forma predeterminada porque podría romper algunos sitios web.",
+      "hideMediaView": "ocultar lista de medios"
     },
     "editor": {
       "header": "Editor de accesos directos",

@@ -244,6 +244,7 @@ const namedSelectors = {
       feedbackVolume: true,
       hideBadge: true,
       staticOverlay: true,
+      hideMediaView: true,
       darkTheme: true,
       keybinds: true,
       rules: true,

@@ -87,7 +87,8 @@
       "fullscreenSupport": "전체 화면 지원",
       "feedbackVolume": "피드백 오디오 볼륨",
       "ghostMode": "유령 모드",
-      "ghostModeTooltip": "웹 사이트의 속도 변화를 차단하십시오. 일부 웹 사이트가 손상 될 수 있으므로 기본적으로 사용하지 않도록 설정되어 있습니다."
+      "ghostModeTooltip": "웹 사이트의 속도 변화를 차단하십시오. 일부 웹 사이트가 손상 될 수 있으므로 기본적으로 사용하지 않도록 설정되어 있습니다.",
+      "hideMediaView": "미디어 목록 숨기기"
     },
     "editor": {
       "header": "바로 가기 편집기",

@@ -10,7 +10,7 @@ import { isFirefox } from "../utils/helper"
 let feedbackAudio: HTMLAudioElement
 
 export function SectionFlags(props: {}) {
-  const [view, setView] = useStateView({language: true, darkTheme: true, hideBadge: true, hideIndicator: true, staticOverlay: true, pinByDefault: true, ghostMode: true})
+  const [view, setView] = useStateView({language: true, darkTheme: true, hideBadge: true, hideIndicator: true, staticOverlay: true, pinByDefault: true, ghostMode: true, hideMediaView: true})
   const [volumeView, setVolumeView] = useStateView({feedbackVolume: true})
   if (!view || !volumeView) return <div></div>
 
@@ -65,6 +65,12 @@ export function SectionFlags(props: {}) {
           </div>
           <input type="checkbox" checked={view.hideBadge || false} onChange={e => {
             pushView({override: {hideBadge: !view.hideBadge}})
+          }}/>
+        </div>
+        <div className="field">
+          <span>{window.gsm.options.flags.hideMediaView}</span>
+          <input type="checkbox" checked={view.hideMediaView || false} onChange={e => {
+            pushView({override: {hideMediaView: !view.hideMediaView}})
           }}/>
         </div>
         {isFirefox() ? null : (

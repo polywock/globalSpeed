@@ -87,7 +87,8 @@
       "fullscreenSupport": "フルスクリーンサポート",
       "feedbackVolume": "フィードバック量",
       "ghostMode": "ゴーストモード",
-      "ghostModeTooltip": "速度の変化からサイトをブロックしてみてください。一部のWebサイトを破壊する可能性があるため、デフォルトでは無効になっています。"
+      "ghostModeTooltip": "速度の変化からサイトをブロックしてみてください。一部のWebサイトを破壊する可能性があるため、デフォルトでは無効になっています。",
+      "hideMediaView": "メディアリストを隠す"
     },
     "editor": {
       "header": "ショートカットエディター",

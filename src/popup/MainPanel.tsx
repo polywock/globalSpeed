@@ -9,8 +9,7 @@ import produce from "immer"
 
 
 export function MainPanel(props: {}) {
-  const [view, setView] = useStateView({speed: true})
-  const mediaInfos = useMediaWatch()
+  const [view, setView] = useStateView({speed: true, hideMediaView: true})
   if (!view) return <div className="panel"></div>
 
   return (
@@ -20,9 +19,21 @@ export function MainPanel(props: {}) {
           d.speed = conformSpeed(v)
         }))
       }}/>
+      {view.hideMediaView ? null : <MediaViews/>}
+    </div>
+  )
+}
+
+
+
+export function MediaViews(props: {}) {
+  const mediaInfos = useMediaWatch()
+
+  return (
+    <>
       {mediaInfos.map(info => (
         <MediaView key={info.key} info={info}/>
       ))}
-    </div>
+    </>
   )
 }

@@ -87,7 +87,8 @@
       "fullscreenSupport": "suporte de tela cheia",
       "feedbackVolume": "feedback de volume",
       "ghostMode": "modo fantasma",
-      "ghostModeTooltip": "Tente impedir que o site mude de velocidade. Desabilitado por padrão, pois pode quebrar alguns sites."
+      "ghostModeTooltip": "Tente impedir que o site mude de velocidade. Desabilitado por padrão, pois pode quebrar alguns sites.",
+      "hideMediaView": "ocultar lista de mídia"
     },
     "editor": {
       "header": "Editor de Atalhos",

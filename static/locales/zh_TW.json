@@ -87,7 +87,8 @@
       "fullscreenSupport": "全屏支持",
       "feedbackVolume": "反饋音量",
       "ghostMode": "幽靈模式",
-      "ghostModeTooltip": "嘗試阻止網站更改速度。默認情況下禁用，因為它可能會破壞某些網站。"
+      "ghostModeTooltip": "嘗試阻止網站更改速度。默認情況下禁用，因為它可能會破壞某些網站。",
+      "hideMediaView": "隱藏媒體列表"
     },
     "editor": {
       "header": "熱鍵編輯器",

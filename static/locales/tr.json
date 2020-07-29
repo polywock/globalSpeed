@@ -87,7 +87,8 @@
       "fullscreenSupport": "tam ekran desteği",
       "feedbackVolume": "geri bildirim hacmi",
       "ghostMode": "hayalet modu",
-      "ghostModeTooltip": "Web sitesinin hız değiştirmesini engellemeye çalışın. Bazı web sitelerini bozabileceği için varsayılan olarak devre dışıdır."
+      "ghostModeTooltip": "Web sitesinin hız değiştirmesini engellemeye çalışın. Bazı web sitelerini bozabileceği için varsayılan olarak devre dışıdır.",
+      "hideMediaView": "medya listesini gizle"
     },
     "editor": {
       "header": "Kısayol Düzenleyici",

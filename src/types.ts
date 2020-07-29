@@ -31,6 +31,7 @@ export type State = {
   hideIndicator?: boolean,
   feedbackVolume?: number,
   hideBadge?: boolean,
+  hideMediaView?: boolean,
   staticOverlay?: boolean,
   darkTheme?: boolean,
   keybinds?: Keybind[],
@@ -268,7 +269,8 @@ export type Gsm = {
       fullscreenSupport: string,
       feedbackVolume: string,
       ghostMode: string,
-      ghostModeTooltip: string
+      ghostModeTooltip: string,
+      hideMediaView: string
     },
     editor: {
       header: string,

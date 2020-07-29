@@ -87,7 +87,8 @@
       "fullscreenSupport": "fullscreen support",
       "feedbackVolume": "feedback volume",
       "ghostMode": "ghost mode",
-      "ghostModeTooltip": "Try to block website from changing speed. Disabled by default because it might break some websites."
+      "ghostModeTooltip": "Try to block website from changing speed. Disabled by default because it might break some websites.",
+      "hideMediaView": "hide media list"
     },
     "editor": {
       "header": "Shortcut Editor",
