@@ -105,8 +105,8 @@ button, input, select, textarea {
 }
 
 select {
-  background-color: inherit; 
-  color: inherit; 
+  background-color: var(--fg-color); 
+  color: var(--text-color); 
   border: 1px solid var(--border-color); 
 }
 
