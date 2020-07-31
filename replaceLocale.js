@@ -1,10 +1,10 @@
 
-// Used to make sure all locales have the required strings.
+// Test to make sure all locales have the required strings.
 
 const { readFileSync, writeFileSync } = require("fs")
 const { exit } = require("process")
 
-const locales = ["en", "es", "hi", "ja", "ko", "ru", "zh_CN", "zh_TW"]
+const locales = ["en", "es", "hi", "ja", "ko", "pt_BR", "ru", "tr", "zh_CN", "zh_TW"]
 
 let targetLeaves;
 
@@ -13,7 +13,7 @@ for (let locale of locales) {
   try {
     leaves = getLeafs(JSON.parse(readFileSync(`./static/locales/${locale}.json`, {encoding: "utf8"})))
   } catch (err) {
-    console.log("Could not parse", leaves)
+    console.log("Could not parse", locale, leaves)
     exit()
   }
 
