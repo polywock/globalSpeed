@@ -248,7 +248,8 @@ const namedSelectors = {
       darkTheme: true,
       keybinds: true,
       rules: true,
-      ghostMode: true
+      ghostMode: true,
+      indicatorInit: true
     } as StateViewSelector    
 }
 

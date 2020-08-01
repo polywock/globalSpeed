@@ -7,7 +7,9 @@
   },
   "warnings": {
     "backdropFirefox": "Firefox 사용자는 \"about:config\"URL로 이동하여 \"gfx.webrender.all\"및 \"layout.css.backdrop-filter.enabled\"를 활성화해야합니다. 두 플래그를 활성화 한 후 Firefox를 다시 시작하십시오.",
-    "unusedGlobal": "사용하지 않는 전역 바로 가기 키를 놓습니다."
+    "unusedGlobal": "사용하지 않는 전역 바로 가기 키를 놓습니다.",
+    "selectTooltip": "미디어 단축키에 대한 선호 비디오를 선택하십시오. 다른 탭 (또는 전역 단축키가있는 다른 프로그램)에서 배경 음악을 제어하려는 경우에 유용합니다.",
+    "sliderTooltip": "⇧ 정확한 제어를 위해 Shift 키를 누르십시오."
   },
   "token": {
     "create": "창조하다",
@@ -24,7 +26,13 @@
     "query": "선택기",
     "warning": "경고",
     "filters": "필터",
-    "transforms": "변형"
+    "transforms": "변형",
+
+    "indicator": "표시기",
+    "color": "색",
+    "size": "크기",
+    "rounding": "진원도",
+    "duration": "기간"
   },
   "filter": {
     "grayscale": "회색조",

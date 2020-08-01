@@ -7,7 +7,9 @@
   },
   "warnings": {
     "backdropFirefox": "Firefoxユーザーは、「about:config」URLに移動して、「gfx.webrender.all」と「layout.css.backdrop-filter.enabled」を有効にする必要があります。 2つのフラグを有効にした後、Firefoxを再起動します。",
-    "unusedGlobal": "未使用のグローバルショートカットキーを放します。"
+    "unusedGlobal": "未使用のグローバルショートカットキーを放します。",
+    "selectTooltip": "メディアホットキーの優先ビデオを選択します。別のタブ（またはグローバルホットキーを持つ別のプログラム）からバックグラウンドミュージックを制御する場合に便利です。",
+    "sliderTooltip": "⇧ 正確な制御のためにシフトキーを押したままにします。"
   },
   "token": {
     "create": "作成",
@@ -24,7 +26,13 @@
     "query": "セレクター",
     "warning": "警告",
     "filters": "フィルター",
-    "transforms": "変換"
+    "transforms": "変換",
+
+    "indicator": "インジケータ",
+    "color": "色",
+    "size": "サイズ",
+    "rounding": "丸め",
+    "duration": "期間"
   },
   "filter": {
     "grayscale": "グレースケール",

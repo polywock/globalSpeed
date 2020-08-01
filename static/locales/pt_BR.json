@@ -7,7 +7,9 @@
   },
   "warnings": {
     "backdropFirefox": "Firefox users need to enable \"gfx.webrender.all\" and \"layout.css.backdrop-filter.enabled\" by accessing the \"about:config\" URL. Restart Firefox after enabling both flags.",
-    "unusedGlobal": "Solte as teclas de atalho globais não utilizadas"
+    "unusedGlobal": "Solte as teclas de atalho globais não utilizadas",
+    "selectTooltip": "Selecione o vídeo preferido para as teclas de atalho da mídia. Útil se você deseja controlar a música de fundo a partir de uma guia diferente (ou de outro programa com teclas de atalho globais).",
+    "sliderTooltip": "⇧ mantenha pressionada a tecla Shift para controle preciso."
   },
   "token": {
     "create": "crio",
@@ -24,7 +26,13 @@
     "query": "seletor",
     "warning": "aviso",
     "filters": "filtros",
-    "transforms": "transformar"
+    "transforms": "transformar",
+
+    "indicator": "indicador",
+    "color": "cor",
+    "size": "tamanho",
+    "rounding": "arredondado",
+    "duration": "duração"
   },
   "filter": {
     "grayscale": "escala de cinza",

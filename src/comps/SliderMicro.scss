@@ -2,8 +2,6 @@
 
 .SliderMicro {
   background-color: var(--fg-color);
-  // padding: 5px;
-  // border: 1px solid var(--border-color);
   --label-color: var(--text-color);
   --reset-color: var(--icon-color);
   --font-weight: 400;
@@ -19,21 +17,23 @@
 
   
   display: grid;
-  grid-template-columns: 80px 1fr max-content;
+  grid-template-columns: 1fr max-content;
   grid-column-gap: 5px;
   margin-bottom: 2px;
   align-items: center;
 
   &.withInput {
+    grid-template-columns: 1fr 60px max-content;
+  }
+
+  &.withLabel {
+    grid-template-columns: 80px 1fr max-content;
+  }
+
+  &.withLabel.withInput {
     grid-template-columns: 80px 1fr 60px max-content;
   }
 
-
-  // & > span {
-  //   align-self: center;
-  //   font-weight: var(--font-weight);
-  //   color: var(--label-color);
-  // }
 
   & > .button {
     color: var(--icon-color);

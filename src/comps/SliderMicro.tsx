@@ -4,9 +4,10 @@ import { NumericInput } from "../comps/NumericInput"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
 import debounce from "lodash.debounce"
 import "./SliderMicro.scss"
+import { Slider } from "./Slider"
 
 type SliderMicroProps = {
-  label: React.ReactNode,
+  label?: React.ReactNode,
   value: number,
   sliderMin: number,
   sliderMax: number,
@@ -21,27 +22,13 @@ type SliderMicroProps = {
 
 
 export function SliderMicro(props: SliderMicroProps) {
-
-  const env = useMemo(() => ({props} as {props: SliderMicroProps}), [])
-  env.props = props 
-  
-  const handleValueChangeDeb = debounce((value: number, relative?: boolean) => {
-    const { props } = env 
-    props.onChange(clamp(props.min, props.max, relative ? props.value + value : value))
-  }, 25, {maxWait: 50, leading: true, trailing: true})
-
-  const handleValueChange = (value: number, relative?: boolean) => {
-    props.onChange(clamp(props.min, props.max, relative ? props.value + value : value))
+  const handleValueChange = (value: number) => {
+    props.onChange(clamp(props.min, props.max, value))
   }
 
-  return <div {...(props.pass ?? {})} className={`SliderMicro ${props.withInput ? "withInput" : ""} ${props.default !== props.value ? "highlight" : ""}`}>
-    <span title={round(props.value, 2).toString()}>{props.label}</span>
-    <input list={`${props.label}_ticks`} type="range" min={props.sliderMin} max={props.sliderMax} step={props.sliderStep ?? 0.01} value={props.value} onChange={e => {
-      handleValueChangeDeb(e.target.valueAsNumber)
-    }}/>
-    <datalist id={`${props.label}_ticks`} >
-      <option value={props.default}></option>
-    </datalist>
+  return <div {...(props.pass ?? {})} className={`SliderMicro ${props.label ? "withLabel" : ""} ${props.withInput ? "withInput" : ""} ${props.default !== props.value ? "highlight" : ""}`}>
+    {props.label != null && <span title={round(props.value, 2).toString()}>{props.label}</span>}
+    <Slider step={props.sliderStep ?? 0.01} min={props.sliderMin} max={props.sliderMax} value={props.value} default={props.default} onChange={handleValueChange}/>
     {props.withInput && (
       <NumericInput value={props.value} min={props.min} max={props.max} noNull={true} onChange={v => {
         handleValueChange(v)

@@ -2,8 +2,8 @@ import React, { useMemo } from "react"
 import { clamp } from "../utils/helper"
 import { NumericInput } from "../comps/NumericInput"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
-import debounce from "lodash.debounce"
 import { Move } from "./Move"
+import { Slider } from "./Slider"
 import "./SliderPlus.scss"
 
 type SliderPlusProps = {
@@ -22,35 +22,24 @@ type SliderPlusProps = {
 
 export function SliderPlus(props: SliderPlusProps) {
 
-  const tickId = useMemo(() => Math.ceil(Math.random() * 1E6).toString(), [])
-
   const env = useMemo(() => ({props} as {props: SliderPlusProps}), [])
   env.props = props 
   
-  const handleValueChangeDeb = debounce((value: number, relative?: boolean) => {
-    const { props } = env 
-    props.onChange(clamp(props.min, props.max, relative ? props.value + value : value))
-  }, 25, {maxWait: 50, leading: true, trailing: true})
-
-  const handleValueChange = (value: number, relative?: boolean) => {
-    props.onChange(clamp(props.min, props.max, relative ? props.value + value : value))
+  const handleValueChange = (value: number) => {
+    props.onChange(clamp(props.min, props.max, value))
   }
-
 
   return <div className={`SliderPlus ${props.default !== props.value ? "highlight" : ""}`}>
     {props.onMove ? <Move onMove={props.onMove}/> : <div/>}
     <div className="core">
       <div className="header">
         <span>{props.label}</span>
-        <NumericInput noNull={true} min={props.min} max={props.max} value={props.value} onChange={v => handleValueChange(v, false)}/>
+        <NumericInput noNull={true} min={props.min} max={props.max} value={props.value} onChange={handleValueChange}/>
         <GiAnticlockwiseRotation size={15}  className={`button reset`} onClick={e => handleValueChange(props.default)}/>
       </div>
-      <input list={tickId} type="range" min={props.sliderMin} max={props.sliderMax} step={props.sliderStep ?? 0.01} value={props.value} onChange={e => {
-        handleValueChangeDeb(e.target.valueAsNumber)
-      }}/>
-      <datalist id={tickId} >
-        <option value={props.default}></option>
-      </datalist>
+      <Slider step={props.sliderStep ?? 0.01} min={props.sliderMin} max={props.sliderMax} value={props.value} default={props.default} onChange={handleValueChange}/>
     </div>
   </div>
 }
+
+

@@ -1,5 +1,5 @@
 
-import { Fx, AudioFx, URLRule, State } from "../types"
+import { Fx, AudioFx, URLRule, State, IndicatorInit } from "../types"
 import { FilterName, filterInfos } from "./filters"
 import { getDefaultKeybinds } from "./commands"
 import { chunkByPredicate } from "../utils/helper"
@@ -283,4 +283,13 @@ export function getDefaultURLRule(): URLRule {
     type: "SPEED",
     overrideSpeed: 1
   }
+}
+
+
+export const INDICATOR_INIT: IndicatorInit = {
+  backgroundColor: "#000000",
+  textColor: "#ffffff",
+  scaling: 1,
+  rounding: 0,
+  duration: 1
 }

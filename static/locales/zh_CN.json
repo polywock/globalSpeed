@@ -7,7 +7,9 @@
   },
   "warnings": {
     "backdropFirefox": "对于背景过滤器功能，Firefox用户需要转到“about:config”URL启用“gfx.webrender.all”和“layout.css.backdrop-filter.enabled”。启用这两个标志后，重新启动Firefox。",
-    "unusedGlobal": "释放未使用的全局热键"
+    "unusedGlobal": "释放未使用的全局热键",
+    "selectTooltip": "选择首选视频作为媒体热键。如果要从其他选项卡（或具有全局热键的另一个程序）控制背景音乐，则很有用。",
+    "sliderTooltip": "⇧ 按住Shift键可进行精确控制。"
   },
   "token": {
     "create": "创建",
@@ -24,7 +26,13 @@
     "query": "选择器",
     "warning": "警告",
     "filters": "滤镜",
-    "transforms": "变换"
+    "transforms": "变换",
+
+    "indicator": "反馈指示器",
+    "color": "颜色",
+    "size": "大小",
+    "rounding": "圆度",
+    "duration": "持续时间"
   },
   "filter": {
     "grayscale": "灰度",

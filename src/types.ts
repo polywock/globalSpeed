@@ -37,7 +37,8 @@ export type State = {
   keybinds?: Keybind[],
   ghostMode?: boolean,
   rules?: URLRule[],
-  common: Context
+  common: Context,
+  indicatorInit?: IndicatorInit,
 }
 
 export type StateSansCommon = Omit<State, "common">
@@ -46,6 +47,14 @@ export type StateView = Partial<StateSansCommon & Context & {isPinned: boolean}>
 
 export type StateViewSelector = {
   [key in keyof StateView]: boolean
+}
+
+export type IndicatorInit = {
+  backgroundColor?: string,
+  textColor?: string,
+  scaling?: number,
+  rounding?: number,
+  duration?: number 
 }
 
 export type MediaPath = {
@@ -189,7 +198,9 @@ export type Gsm = {
   },
   warnings: {
     backdropFirefox: string,
-    unusedGlobal: string
+    unusedGlobal: string,
+    selectTooltip: string,
+    sliderTooltip: string
   },
   token: {
     create: string,
@@ -206,7 +217,13 @@ export type Gsm = {
     query: string,
     warning: string,
     filters: string,
-    transforms: string
+    transforms: string,
+
+    indicator: string,
+    color: string,
+    size: string,
+    rounding: string,
+    duration: string
   },
   filter: {
     grayscale: string,

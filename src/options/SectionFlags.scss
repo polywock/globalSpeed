@@ -10,6 +10,11 @@
       grid-column-gap: 10px;
       margin-bottom: 10px;
       align-items: center;
+
+      &.indent {
+        margin-left: 20px;
+      }
     }
   }
 }
+

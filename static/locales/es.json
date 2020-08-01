@@ -7,7 +7,9 @@
   },
   "warnings": {
     "backdropFirefox": "Los usuarios de Firefox deben habilitar \"gfx.webrender.all\" y \"layout.css.backdrop-filter.enabled\" yendo a la URL \"about:config\". Reinicie Firefox después de habilitar las dos banderas.",
-    "unusedGlobal": "Suelte las teclas de acceso directo global no utilizadas."
+    "unusedGlobal": "Suelte las teclas de acceso directo global no utilizadas.",
+    "selectTooltip": "Seleccione el video preferido para las teclas de acceso rápido. Útil si desea controlar la música de fondo desde una pestaña diferente (o desde otro programa con teclas de acceso rápido globales).",
+    "sliderTooltip": "⇧ mantenga presionada la tecla shift para un control preciso."
   },
   "token": {
     "create": "crear",
@@ -24,7 +26,13 @@
     "query": "selector",
     "warning": "advertencia",
     "filters": "filtros",
-    "transforms": "transforma"
+    "transforms": "transforma",
+
+    "indicator": "indicador",
+    "color": "color",
+    "size": "tamaño",
+    "rounding": "redondeo",
+    "duration": "duración"
   },
   "filter": {
     "grayscale": "escala de grises",

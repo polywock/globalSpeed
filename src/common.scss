@@ -263,6 +263,9 @@ input[type=range]::-moz-range-thumb {
 }
 
 
-
-
-
+input[type="color"] {
+  background-color: var(--fg-color);
+  border: none;
+  width: 50px;
+  height: 30px;
+}

@@ -7,7 +7,9 @@
   },
   "warnings": {
     "backdropFirefox": "Firefox users need to enable \"gfx.webrender.all\" and \"layout.css.backdrop-filter.enabled\" by going to the \"about:config\" URL. Restart Firefox after enabling the two flags.",
-    "unusedGlobal": "Release the unused global shortcut keys"
+    "unusedGlobal": "Release the unused global shortcut keys",
+    "selectTooltip": "Select preferred video for media hotkeys. Useful if you want to control background music from a different tab (or from another program with global hotkeys).",
+    "sliderTooltip": "⇧ hold shift key for precise control."
   },
   "token": {
     "create": "create",
@@ -24,7 +26,13 @@
     "query": "query",
     "warning": "warning",
     "filters": "filters",
-    "transforms": "transforms"
+    "transforms": "transforms",
+
+    "indicator": "indicator",
+    "color": "color",
+    "size": "size",
+    "rounding": "rounding",
+    "duration": "duration"
   },
   "filter": {
     "grayscale": "grayscale",

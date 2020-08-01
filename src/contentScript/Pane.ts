@@ -12,7 +12,6 @@ export class Pane {
     this.div.appendChild(this.innerDiv)
     this.div.classList.add("pane")
     Pane.addPane(this);
-    (this.innerDiv.style as any).backdropFilter = filter;
     Pane.shadowRoot?.append(this.div)
     this.div.tabIndex = 0
 
@@ -77,10 +76,10 @@ export class Pane {
     }
 
     if (this.colorInput) {
-      this.innerDiv.style.backgroundColor = this.colorInput.value 
-      this.innerDiv.style.filter = "none"
+      this.innerDiv.style.backgroundColor = this.colorInput.value;
+      (this.innerDiv.style as any).backdropFilter = "none"
     } else {
-      this.innerDiv.style.filter = this.filter
+      (this.innerDiv.style as any).backdropFilter = this.filter
       this.innerDiv.style.backgroundColor = "transparent"
     }
   }

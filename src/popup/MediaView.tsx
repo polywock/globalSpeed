@@ -59,7 +59,7 @@ export function MediaView(props: MediaViewProps) {
             sendMediaEvent(event, info.key, tabId, frameId)
           }}><MdPictureInPictureAlt size={18}/></button>
         )}
-        <button className={info.pinned ? "active" : ""} onClick={e => {
+        <button title={window.gsm.warnings.selectTooltip} className={info.pinned ? "active" : ""} onClick={e => {
           chrome.runtime.sendMessage({type: "MEDIA_SET_PIN", value: info.pinned ? null : ({
             key: info.key,
             tabInfo: info.tabInfo

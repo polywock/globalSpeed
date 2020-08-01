@@ -7,7 +7,9 @@
   },
   "warnings": {
     "backdropFirefox": "Firefox kullanıcılarının \"about:config\" URL'sine giderek \"gfx.webrender.all\" ve \"layout.css.backdrop-filter.enabled\" seçeneğini etkinleştirmeleri gerekir. İki bayrağı etkinleştirdikten sonra Firefox'u yeniden başlatın.",
-    "unusedGlobal": "Kullanılmayan genel kısayol tuşlarını serbest bırakın"
+    "unusedGlobal": "Kullanılmayan genel kısayol tuşlarını serbest bırakın",
+    "selectTooltip": "Medya kısayol tuşları için tercih edilen videoyu seçin. Arka plan müziğini farklı bir sekmeden (veya genel kısayol tuşlarına sahip başka bir programdan) kontrol etmek istiyorsanız kullanışlıdır.",
+    "sliderTooltip": "⇧ hassas kontrol için shift tuşunu basılı tutun."
   },
   "token": {
     "create": "oluşturmak",
@@ -24,7 +26,13 @@
     "query": "selektör",
     "warning": "uyarı",
     "filters": "filtreler",
-    "transforms": "dönüşmek"
+    "transforms": "dönüşmek",
+
+    "indicator": "gösterge",
+    "color": "renk",
+    "size": "boyut",
+    "rounding": "yuvarlaklık",
+    "duration": "süre"
   },
   "filter": {
     "grayscale": "gri tonlama",

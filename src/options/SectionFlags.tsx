@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Tooltip } from "../comps/Tooltip"
 import { LOCALE_MAP } from "../defaults/i18"
 import { useStateView } from "../hooks/useStateView"
@@ -6,11 +6,17 @@ import { pushView } from "../background/GlobalState"
 import { createFeedbackAudio } from "../utils/configUtils"
 import "./SectionFlags.scss"
 import { isFirefox } from "../utils/helper"
+import { INDICATOR_INIT } from "../defaults"
+import produce from "immer"
+import { SliderMicro } from "../comps/SliderMicro"
+import { Overlay } from "../contentScript/Overlay"
+import { IndicatorInit } from "../types"
 
 let feedbackAudio: HTMLAudioElement
 
 export function SectionFlags(props: {}) {
-  const [view, setView] = useStateView({language: true, darkTheme: true, hideBadge: true, hideIndicator: true, staticOverlay: true, pinByDefault: true, ghostMode: true, hideMediaView: true})
+  const [showMore, setShowMore] = useState(false)
+  const [view, setView] = useStateView({indicatorInit: true, language: true, darkTheme: true, hideBadge: true, hideIndicator: true, staticOverlay: true, pinByDefault: true, ghostMode: true, hideMediaView: true})
   const [volumeView, setVolumeView] = useStateView({feedbackVolume: true})
   if (!view || !volumeView) return <div></div>
 
@@ -38,15 +44,6 @@ export function SectionFlags(props: {}) {
           <span>{window.gsm.options.flags.darkTheme}</span>
           <input type="checkbox" checked={view.darkTheme || false} onChange={e => {
             pushView({override: {darkTheme: !view.darkTheme}})
-          }}/>
-        </div>
-        <div className="field">
-          <div className="labelWithTooltip">
-            <span>{window.gsm.options.flags.pinByDefault}</span>
-            <Tooltip tooltip={window.gsm.options.flags.pinByDefaultTooltip}/>
-          </div>
-          <input type="checkbox" checked={view.pinByDefault || false} onChange={e => {
-            pushView({override: {pinByDefault: !view.pinByDefault}})
           }}/>
         </div>
         <div className="field">
@@ -90,6 +87,15 @@ export function SectionFlags(props: {}) {
             </datalist>
           </div>
         )}
+        <div style={{marginTop: "20px"}} className="field">
+          <div className="labelWithTooltip">
+            <span>{window.gsm.options.flags.pinByDefault}</span>
+            <Tooltip tooltip={window.gsm.options.flags.pinByDefaultTooltip}/>
+          </div>
+          <input type="checkbox" checked={view.pinByDefault || false} onChange={e => {
+            pushView({override: {pinByDefault: !view.pinByDefault}})
+          }}/>
+        </div>
         <div className="field">
           <span>{window.gsm.options.flags.fullscreenSupport}</span>
           <input type="checkbox" checked={!view.staticOverlay} onChange={e => {
@@ -105,7 +111,98 @@ export function SectionFlags(props: {}) {
             pushView({override: {ghostMode: !view.ghostMode}})
           }}/>
         </div>
+        {showMore ? <IndicatorFlags/> : <button onClick={e => setShowMore(true)}>...</button>}
       </div>
     </div>
   )
+}
+
+
+function IndicatorFlags(props: {}) {
+  const [view, setView] = useStateView({indicatorInit: true})
+  const init = view?.indicatorInit || {}
+
+
+  return <>
+    <div style={{marginTop: "20px"}} className="field">
+      <span>{window.gsm.token.indicator}</span>
+    </div>
+    <div className="field indent">
+      <span>{window.gsm.token.color}</span>
+      <div>
+        <input type="color" value={init?.backgroundColor || INDICATOR_INIT.backgroundColor} onChange={e => {
+          const indicatorInit = produce(init ?? {}, d => {
+            d.backgroundColor = e.target.value
+          })
+          showIndicator(indicatorInit)
+          pushView({override: {indicatorInit}})
+        }}/>
+        <input style={{marginLeft: "5px"}} type="color" value={init?.textColor || INDICATOR_INIT.textColor} onChange={e => {
+          const indicatorInit = produce(init ?? {}, d => {
+            d.textColor = e.target.value
+          })
+          showIndicator(indicatorInit)
+          pushView({override: {indicatorInit}})
+        }}/>
+      </div>
+    </div>
+    <div className="field indent">
+      <span>{window.gsm.token.size}</span>
+      <SliderMicro 
+        value={init?.scaling ?? INDICATOR_INIT.scaling} 
+        onChange={v => {
+          const indicatorInit = produce(init ?? {}, d => {
+            d.scaling = v
+          })
+          showIndicator(indicatorInit)
+          pushView({override: {indicatorInit}})
+        }}
+        default={INDICATOR_INIT.scaling}
+        sliderMin={0.75}
+        sliderMax={1.5}
+        sliderStep={0.01}
+      />
+    </div>
+    <div className="field indent">
+      <span>{window.gsm.token.rounding}</span>
+      <SliderMicro 
+        value={init?.rounding ?? INDICATOR_INIT.rounding} 
+        onChange={v => {
+          const indicatorInit = produce(init ?? {}, d => {
+            d.rounding = v
+          })
+          showIndicator(indicatorInit)
+          pushView({override: {indicatorInit}})
+        }}
+        default={INDICATOR_INIT.rounding}
+        sliderMin={0}
+        sliderMax={4}
+        sliderStep={0.01}
+      />
+    </div>
+    <div className="field indent">
+      <span>{window.gsm.token.duration}</span>
+      <SliderMicro 
+        value={init?.duration ?? INDICATOR_INIT.duration} 
+        onChange={v => {
+          const indicatorInit = produce(init ?? {}, d => {
+            d.duration = v
+          })
+          pushView({override: {indicatorInit}})
+        }}
+        default={INDICATOR_INIT.duration}
+        sliderMin={0.1}
+        sliderMax={1.9}
+        sliderStep={0.01}
+        pass={{onMouseUp: v => showIndicator(init, true)}}
+      />
+    </div>
+  </>
+}
+
+
+function showIndicator(init: IndicatorInit, realDuration?: boolean) {
+  window.overlay = window.overlay || new Overlay(true)
+  window.overlay.setInit({...init, duration: realDuration ? init?.duration : 3})
+  window.overlay.show({text: "1.00", static: !realDuration})
 }

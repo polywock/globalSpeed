@@ -18,9 +18,16 @@ export class ConfigSync {
     this.handleEnabledChange()
   }, 300)
   constructor() {
-    window.overlay || fetchView({staticOverlay: true}).then(view => {
-      window.overlay = window.overlay || new Overlay(view.staticOverlay)
-    })
+    if (window.overlay) {
+      fetchView({indicatorInit: true}).then(view => {
+        window.overlay.setInit(view.indicatorInit || {})
+      })
+    } else {
+      fetchView({staticOverlay: true, indicatorInit: true}).then(view => {
+        window.overlay = window.overlay || new Overlay(view.staticOverlay)
+        window.overlay.setInit(view.indicatorInit || {})
+      })
+    }
     
     this.port = chrome.runtime.connect({name: "configSync"}) 
     

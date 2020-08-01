@@ -1,4 +1,11 @@
 import { createOverlayIcons } from "../defaults/icons"
+import { INDICATOR_INIT } from "../defaults"
+import { IndicatorInit } from "../types"
+
+const BASE_FONT_SIZE = 30 
+const BASE_PADDING = 10 
+const BASE_BORDER_RADIUS = 10
+const SMALL_SCALING = 0.83
 
 export class Overlay {
   wrapper = document.createElement("div")
@@ -11,19 +18,18 @@ export class Overlay {
   hasIndicator = false
   hasFilter = false 
   root = document.documentElement as Element
+  scaling = 1
+  duration = 1 
   constructor(fixedOverlay: boolean) {
     this.indicator.setAttribute("style", `
       position: fixed;
       left: 30px;
       top: 30px;
-      font-size: 40px;
       font-family: Courier, monospace;
       color: white;
       background-color: black;
       z-index: 999999999999;
-      padding: 10px;
       white-space: pre;
-      
       display: grid;
       grid-auto-flow: column;
       align-items: center;
@@ -44,7 +50,7 @@ export class Overlay {
     style.textContent = `
       @keyframes gsScale {
         from {
-          transform: scale(0.90);
+          transform: scale(0.95);
           opacity: 1;
         }
         to {
@@ -57,6 +63,20 @@ export class Overlay {
     !fixedOverlay && document.addEventListener("fullscreenchange", () => {
       this.handleFullscreenChange()
     }, {capture: true, passive: true})
+
+    this.setInit({})
+  }
+  setInit = (init: IndicatorInit) => {
+    this.indicator.style.backgroundColor = init?.backgroundColor || INDICATOR_INIT.backgroundColor
+    this.indicator.style.color = init?.textColor || INDICATOR_INIT.textColor
+
+    this.duration = init?.duration ?? 1
+    this.scaling = init?.scaling ?? INDICATOR_INIT.scaling
+    const rounding = (init?.rounding ?? INDICATOR_INIT.rounding) * this.scaling
+
+    this.indicator.style.padding = `${BASE_PADDING * (this.scaling + rounding * 0.12)}px`
+    this.indicator.style.fontSize = `${BASE_FONT_SIZE * this.scaling}px`
+    this.indicator.style.borderRadius = `${BASE_BORDER_RADIUS * rounding}px`
   }
   release = () => {
     if (this.released) return 
@@ -76,9 +96,11 @@ export class Overlay {
       this.indicator.appendChild(this.icons[v])
     })
     this.indicator.append(opts.text || "")
+
+    const duration = (opts.duration ?? 900) * this.duration
     
-    this.indicator.style.fontSize = opts.small ? "25px" : "30px"
-    this.indicator.style.animation = opts.static ? "" : `gsScale 0.91s ease-out`
+    this.indicator.style.fontSize = `${(opts.small ? BASE_FONT_SIZE * SMALL_SCALING : BASE_FONT_SIZE) * this.scaling}px`
+    this.indicator.style.animation = opts.static ? "" : `gsScale ${duration}ms ease-out forwards`
     this.indicator.remove()
     this.shadowRoot.appendChild(this.indicator)
   
@@ -91,7 +113,7 @@ export class Overlay {
       this.hasIndicator = false 
       this.syncWrapper()
       delete this.timeoutId
-    }, opts.duration ?? 880)
+    }, duration)
   }
   updateBackdrop = (filter?: string) => {
     if (filter) {
