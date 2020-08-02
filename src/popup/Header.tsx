@@ -25,9 +25,7 @@ export function Header(props: HeaderProps) {
       <div 
         className={view.enabled ? "active" : "muted"}
         onClick={() => {
-          setView(produce(view, d => {
-            d.enabled = !d.enabled
-          }))
+          pushView({override: {enabled: !view.enabled}, tabId: window.tabInfo.tabId})
         }}
       >
         <FaPowerOff size="17px"/>
@@ -35,9 +33,7 @@ export function Header(props: HeaderProps) {
       <div 
         className={`pin ${view.isPinned ? "active" : "muted"}`}
         onClick={() => {
-          setView(produce(view, d => {
-            d.isPinned = !d.isPinned
-          }))
+          pushView({override: {isPinned: !view.isPinned}, tabId: window.tabInfo.tabId})
         }}
       >
         <GoPin size="20px"/>
