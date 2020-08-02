@@ -64,12 +64,6 @@ export function SectionFlags(props: {}) {
             pushView({override: {hideBadge: !view.hideBadge}})
           }}/>
         </div>
-        <div className="field">
-          <span>{window.gsm.options.flags.hideMediaView}</span>
-          <input type="checkbox" checked={view.hideMediaView || false} onChange={e => {
-            pushView({override: {hideMediaView: !view.hideMediaView}})
-          }}/>
-        </div>
         {isFirefox() ? null : (
           <div className="field">
             <span>{window.gsm.options.flags.feedbackVolume}</span>
@@ -87,7 +81,7 @@ export function SectionFlags(props: {}) {
             </datalist>
           </div>
         )}
-        <div style={{marginTop: "20px"}} className="field">
+        <div className="field">
           <div className="labelWithTooltip">
             <span>{window.gsm.options.flags.pinByDefault}</span>
             <Tooltip tooltip={window.gsm.options.flags.pinByDefaultTooltip}/>
@@ -96,22 +90,30 @@ export function SectionFlags(props: {}) {
             pushView({override: {pinByDefault: !view.pinByDefault}})
           }}/>
         </div>
-        <div className="field">
-          <span>{window.gsm.options.flags.fullscreenSupport}</span>
-          <input type="checkbox" checked={!view.staticOverlay} onChange={e => {
-            pushView({override: {staticOverlay: !view.staticOverlay}})
-          }}/>
-        </div>
-        <div className="field">
-          <div className="labelWithTooltip">
-            <span>{window.gsm.options.flags.ghostMode}</span>
-            <Tooltip tooltip={window.gsm.options.flags.ghostModeTooltip}/>
+        {showMore ? <>
+          <div className="field"  style={{marginTop: "30px"}}>
+            <span>{window.gsm.options.flags.fullscreenSupport}</span>
+            <input type="checkbox" checked={!view.staticOverlay} onChange={e => {
+              pushView({override: {staticOverlay: !view.staticOverlay}})
+            }}/>
           </div>
-          <input type="checkbox" checked={view.ghostMode} onChange={e => {
-            pushView({override: {ghostMode: !view.ghostMode}})
-          }}/>
-        </div>
-        {showMore ? <IndicatorFlags/> : <button onClick={e => setShowMore(true)}>...</button>}
+          <div className="field">
+            <div className="labelWithTooltip">
+              <span>{window.gsm.options.flags.ghostMode}</span>
+              <Tooltip tooltip={window.gsm.options.flags.ghostModeTooltip}/>
+            </div>
+            <input type="checkbox" checked={view.ghostMode} onChange={e => {
+              pushView({override: {ghostMode: !view.ghostMode}})
+            }}/>
+          </div>
+          <div className="field">
+            <span>{window.gsm.options.flags.hideMediaView}</span>
+            <input type="checkbox" checked={view.hideMediaView || false} onChange={e => {
+              pushView({override: {hideMediaView: !view.hideMediaView}})
+            }}/>
+          </div>
+          <IndicatorFlags/>
+        </> : <button style={{marginTop: "20px"}}  onClick={e => setShowMore(true)}>...</button>}
       </div>
     </div>
   )
@@ -124,7 +126,7 @@ function IndicatorFlags(props: {}) {
 
 
   return <>
-    <div style={{marginTop: "20px"}} className="field">
+    <div className="field" style={{marginTop: "30px"}}>
       <span>{window.gsm.token.indicator}</span>
     </div>
     <div className="field indent">
