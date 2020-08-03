@@ -56,6 +56,10 @@ async function main() {
     })
   ])
 
+  const view = (await fetchView({staticOverlay: true, indicatorInit: true})) || {}
+  window.overlay = window.overlay || new Overlay(view.staticOverlay)
+  window.overlay.setInit(view.indicatorInit || {})
+
   if (document.readyState === "loading")  {
     document.addEventListener("DOMContentLoaded", handleDOMLoaded, {capture: true, passive: true, once: true})
   } else {
