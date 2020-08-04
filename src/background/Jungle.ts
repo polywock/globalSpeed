@@ -3,7 +3,7 @@ const DELAY_DURATION = 0.1
 const FADE_DURATION = 0.05
 const BUFFER_DURATION = 0.1
 
-// From Chris Wilso --- https://github.com/cwilso/Audio-Input-Effects/blob/master/js/jungle.js
+// From Chris Wilson --- https://github.com/cwilso/Audio-Input-Effects/blob/master/js/jungle.js
 export class Jungle {
   input: AudioNode
   output: AudioNode
