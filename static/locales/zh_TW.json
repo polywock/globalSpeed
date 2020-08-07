@@ -32,7 +32,8 @@
     "color": "顏色",
     "size": "大小",
     "rounding": "圓度",
-    "duration": "持續時間"
+    "duration": "持續時間",
+    "offset": "位移"
   },
   "filter": {
     "grayscale": "灰階",

@@ -228,6 +228,14 @@ export class CaptureManager {
       delete info.delayNode
       head.connect(info.outputNode)
     }
+
+    if (audioFx.mono) {
+      info.outputNode.channelCount = 1 
+      info.outputNode.channelCountMode = "clamped-max"
+    } else {
+      info.outputNode.channelCount = info.streamSrc?.channelCount ?? 2
+      info.outputNode.channelCountMode = "max"
+    }
   }
 }
 

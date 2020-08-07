@@ -32,7 +32,8 @@
     "color": "renk",
     "size": "boyut",
     "rounding": "yuvarlaklık",
-    "duration": "süre"
+    "duration": "süre",
+    "offset": "ofset"
   },
   "filter": {
     "grayscale": "gri tonlama",

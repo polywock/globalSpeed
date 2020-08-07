@@ -32,7 +32,8 @@
     "color": "cor",
     "size": "tamanho",
     "rounding": "arredondado",
-    "duration": "duração"
+    "duration": "duração",
+    "offset": "deslocamento"
   },
   "filter": {
     "grayscale": "escala de cinza",

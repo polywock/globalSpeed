@@ -6,6 +6,7 @@ const BASE_FONT_SIZE = 30
 const BASE_PADDING = 10 
 const BASE_BORDER_RADIUS = 10
 const SMALL_SCALING = 0.83
+const BASE_OFFSET = 30 
 
 export class Overlay {
   wrapper = document.createElement("div")
@@ -20,11 +21,11 @@ export class Overlay {
   root = document.documentElement as Element
   scaling = 1
   duration = 1 
+  static = false 
   constructor(fixedOverlay: boolean) {
     this.indicator.setAttribute("style", `
+      box-sizing: border-box; 
       position: fixed;
-      left: 30px;
-      top: 30px;
       font-family: Courier, monospace;
       color: white;
       background-color: black;
@@ -33,6 +34,7 @@ export class Overlay {
       display: grid;
       grid-auto-flow: column;
       align-items: center;
+      border: none;
     `)
 
     this.backdrop.setAttribute("style", `
@@ -67,16 +69,20 @@ export class Overlay {
     this.setInit({})
   }
   setInit = (init: IndicatorInit) => {
-    this.indicator.style.backgroundColor = init?.backgroundColor || INDICATOR_INIT.backgroundColor
-    this.indicator.style.color = init?.textColor || INDICATOR_INIT.textColor
+    init = init || {}
+    this.indicator.style.backgroundColor = init.backgroundColor || INDICATOR_INIT.backgroundColor
+    this.indicator.style.color = init.textColor || INDICATOR_INIT.textColor
 
-    this.duration = init?.duration ?? 1
-    this.scaling = init?.scaling ?? INDICATOR_INIT.scaling
-    const rounding = (init?.rounding ?? INDICATOR_INIT.rounding) * this.scaling
+    this.static = init.static
+    this.duration = init.duration ?? 1
+    this.scaling = init.scaling ?? INDICATOR_INIT.scaling
+    const rounding = (init.rounding ?? INDICATOR_INIT.rounding) * this.scaling
 
     this.indicator.style.padding = `${BASE_PADDING * (this.scaling + rounding * 0.12)}px`
     this.indicator.style.fontSize = `${BASE_FONT_SIZE * this.scaling}px`
-    this.indicator.style.borderRadius = `${BASE_BORDER_RADIUS * rounding}px`
+    this.indicator.style.borderRadius = rounding ? `${BASE_BORDER_RADIUS * rounding}px` : "none"
+    this.indicator.style.left = `${BASE_OFFSET * (init.offset ?? 1)}px`
+    this.indicator.style.top = `${BASE_OFFSET * (init.offset ?? 1)}px`
   }
   release = () => {
     if (this.released) return 
@@ -100,7 +106,7 @@ export class Overlay {
     const duration = (opts.duration ?? 900) * this.duration
     
     this.indicator.style.fontSize = `${(opts.small ? BASE_FONT_SIZE * SMALL_SCALING : BASE_FONT_SIZE) * this.scaling}px`
-    this.indicator.style.animation = opts.static ? "" : `gsScale ${duration}ms ease-out forwards`
+    this.indicator.style.animation = (opts.static || this.static) ? "" : `gsScale ${duration}ms ease-out forwards`
     this.indicator.remove()
     this.shadowRoot.appendChild(this.indicator)
   

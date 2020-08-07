@@ -32,7 +32,8 @@
     "color": "रंग",
     "size": "आकार",
     "rounding": "गोलाई",
-    "duration": "अवधि"
+    "duration": "अवधि",
+    "offset": "ऑफ़सेट"
   },
   "filter": {
     "grayscale": "ग्रेस्केल",

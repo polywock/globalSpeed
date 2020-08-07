@@ -32,7 +32,8 @@
     "color": "色",
     "size": "サイズ",
     "rounding": "丸め",
-    "duration": "期間"
+    "duration": "期間",
+    "offset": "オフセット"
   },
   "filter": {
     "grayscale": "グレースケール",

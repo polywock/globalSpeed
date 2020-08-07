@@ -51,6 +51,12 @@ export function AudioPanel(props: {}) {
       label={<div>
         <FaVolumeUp size="17px"/>
         <span style={{marginLeft: "10px"}}>{window.gsm.command.adjustGain}</span>
+        <button title={"mono"} style={{marginLeft: "10px"}} className={`toggle ${audioFx.mono ? "active" : ""}`} onClick={e => {
+          setView(produce(view, d => {
+            d.audioFx.mono = !d.audioFx.mono 
+            d.audioFx.mono && ensureCaptured()
+          }))
+        }}>M</button>
       </div>}
       value={audioFx.volume ?? 1}
       sliderMin={0}

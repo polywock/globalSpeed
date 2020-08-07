@@ -291,5 +291,6 @@ export const INDICATOR_INIT: IndicatorInit = {
   textColor: "#ffffff",
   scaling: 1,
   rounding: 0,
-  duration: 1
+  duration: 1,
+  offset: 1
 }

@@ -32,7 +32,8 @@
     "color": "цвет",
     "size": "размер",
     "rounding": "круглость",
-    "duration": "скорость"
+    "duration": "скорость",
+    "offset": "сместить"
   },
   "filter": {
     "grayscale": "полутоновой",

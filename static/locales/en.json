@@ -32,7 +32,8 @@
     "color": "color",
     "size": "size",
     "rounding": "rounding",
-    "duration": "duration"
+    "duration": "duration",
+    "offset": "offset"
   },
   "filter": {
     "grayscale": "grayscale",

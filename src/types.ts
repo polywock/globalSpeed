@@ -54,7 +54,9 @@ export type IndicatorInit = {
   textColor?: string,
   scaling?: number,
   rounding?: number,
-  duration?: number 
+  duration?: number,
+  offset?: number,
+  static?: boolean
 }
 
 export type MediaPath = {
@@ -76,6 +78,7 @@ export type Context = {
 export type AudioFx = {
   pitch: number,
   volume: number,
+  mono?: boolean,
   delay: number,
   delayMerge?: boolean,
   eq: {
@@ -223,7 +226,8 @@ export type Gsm = {
     color: string,
     size: string,
     rounding: string,
-    duration: string
+    duration: string,
+    offset: string
   },
   filter: {
     grayscale: string,

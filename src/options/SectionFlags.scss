@@ -14,6 +14,13 @@
       &.indent {
         margin-left: 20px;
       }
+
+      & > .col {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: max-content;
+        grid-column-gap: 20px;
+      }
     }
   }
 }

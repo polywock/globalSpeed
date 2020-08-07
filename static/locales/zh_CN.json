@@ -32,7 +32,8 @@
     "color": "颜色",
     "size": "大小",
     "rounding": "圆度",
-    "duration": "持续时间"
+    "duration": "持续时间",
+    "offset": "偏移"
   },
   "filter": {
     "grayscale": "灰度",

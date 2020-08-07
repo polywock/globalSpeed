@@ -32,7 +32,8 @@
     "color": "색",
     "size": "크기",
     "rounding": "진원도",
-    "duration": "기간"
+    "duration": "기간",
+    "offset": "오프셋"
   },
   "filter": {
     "grayscale": "회색조",

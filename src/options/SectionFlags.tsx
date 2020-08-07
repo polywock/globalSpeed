@@ -183,21 +183,47 @@ function IndicatorFlags(props: {}) {
       />
     </div>
     <div className="field indent">
-      <span>{window.gsm.token.duration}</span>
+      <span>{window.gsm.token.offset}</span>
       <SliderMicro 
-        value={init?.duration ?? INDICATOR_INIT.duration} 
+        value={init?.offset ?? INDICATOR_INIT.offset} 
         onChange={v => {
           const indicatorInit = produce(init ?? {}, d => {
-            d.duration = v
+            d.offset = v
           })
+          showIndicator(indicatorInit)
           pushView({override: {indicatorInit}})
         }}
-        default={INDICATOR_INIT.duration}
-        sliderMin={0.1}
-        sliderMax={1.9}
+        default={INDICATOR_INIT.offset}
+        sliderMin={0}
+        sliderMax={4}
         sliderStep={0.01}
-        pass={{onMouseUp: v => showIndicator(init, true)}}
       />
+    </div>
+    <div className="field indent">
+      <span>{window.gsm.token.duration}</span>
+      <div className="col" style={{gridColumnGap: "10px"}}>
+        <SliderMicro 
+          value={init?.duration ?? INDICATOR_INIT.duration} 
+          onChange={v => {
+            const indicatorInit = produce(init ?? {}, d => {
+              d.duration = v
+            })
+            pushView({override: {indicatorInit}})
+          }}
+          default={INDICATOR_INIT.duration}
+          sliderMin={0.1}
+          sliderMax={1.9}
+          sliderStep={0.01}
+          pass={{onMouseUp: v => showIndicator(init, true)}}
+        />
+        <button title="static" className={`toggle ${init?.static ? "active" : ""}`} onClick={e => {
+          const indicatorInit = produce(init ?? {}, d => {
+            d.static = !d.static
+          })
+          showIndicator(indicatorInit, true)
+          pushView({override: {indicatorInit}})
+        }}>S</button>
+      </div>
     </div>
   </>
 }
@@ -206,5 +232,5 @@ function IndicatorFlags(props: {}) {
 function showIndicator(init: IndicatorInit, realDuration?: boolean) {
   window.overlay = window.overlay || new Overlay(true)
   window.overlay.setInit({...init, duration: realDuration ? init?.duration : 3})
-  window.overlay.show({text: "1.00", static: !realDuration})
+  window.overlay.show({text: "1.00", static: realDuration ? init.static : true})
 }
