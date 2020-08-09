@@ -117,7 +117,7 @@ export const COMP_PRESETS: readonly AudioFx["comp"][] = Object.freeze([
     gain: Math.sqrt(Math.pow(Math.E, 9 / 10)),
     ratio: 9.2,
     attack: 87 / 1000,
-    release: 1355.9 / 1000,
+    release: 1,
     knee: 30
   },
   {
@@ -127,7 +127,7 @@ export const COMP_PRESETS: readonly AudioFx["comp"][] = Object.freeze([
     gain: Math.sqrt(Math.pow(Math.E, 4.2 / 10)),
     ratio: 18.9,
     attack: 56.5 / 1000,
-    release: 3351.6 / 1000,
+    release: 1,
     knee: 30
   },{
     name: "Pad Treatment",
@@ -136,7 +136,7 @@ export const COMP_PRESETS: readonly AudioFx["comp"][] = Object.freeze([
     gain: Math.sqrt(Math.pow(Math.E, 15 / 10)),
     ratio: 5,
     attack: 50 / 1000,
-    release: 1000 / 1000,
+    release: 1,
     knee: 30
   },
   {
@@ -156,7 +156,7 @@ export const COMP_PRESETS: readonly AudioFx["comp"][] = Object.freeze([
     gain: Math.sqrt(Math.pow(Math.E, 4.9 / 10)),
     ratio: 4.9,
     attack: 62.2 / 1000,
-    release: 2146.9 / 1000,
+    release: 1,
     knee: 30
   },
   {
@@ -166,7 +166,7 @@ export const COMP_PRESETS: readonly AudioFx["comp"][] = Object.freeze([
     gain: Math.sqrt(Math.pow(Math.E, 18 / 10)),
     ratio: 20,
     attack: 0 / 1000,
-    release: 3587 / 1000,
+    release: 1,
     knee: 30
   },
   {
@@ -176,7 +176,7 @@ export const COMP_PRESETS: readonly AudioFx["comp"][] = Object.freeze([
     gain: Math.sqrt(Math.pow(Math.E, 10.3 / 10)),
     ratio: 11.8,
     attack: 93.2 / 1000,
-    release: 3559.3 / 1000,
+    release: 1,
     knee: 30
   },
   {

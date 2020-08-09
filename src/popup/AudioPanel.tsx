@@ -51,12 +51,12 @@ export function AudioPanel(props: {}) {
       label={<div>
         <FaVolumeUp size="17px"/>
         <span style={{marginLeft: "10px"}}>{window.gsm.command.adjustGain}</span>
-        <button title={"mono"} style={{marginLeft: "10px"}} className={`toggle ${audioFx.mono ? "active" : ""}`} onClick={e => {
+        <button style={{marginLeft: "10px"}} className={`toggle ${audioFx.mono ? "active" : ""}`} onClick={e => {
           setView(produce(view, d => {
             d.audioFx.mono = !d.audioFx.mono 
             d.audioFx.mono && ensureCaptured()
           }))
-        }}>M</button>
+        }}>MONO</button>
       </div>}
       value={audioFx.volume ?? 1}
       sliderMin={0}
@@ -74,7 +74,7 @@ export function AudioPanel(props: {}) {
       label={<div>
         <MdAccessTime size="20px"/>
         <span style={{marginLeft: "10px"}}>{window.gsm.command.adjustDelay}</span>
-        <button style={{marginLeft: "10px"}} className={`toggle ${audioFx.delayMerge ? "active" : ""}`} onClick={e => {
+        <button title={"merge"} style={{marginLeft: "10px"}} className={`toggle ${audioFx.delayMerge ? "active" : ""}`} onClick={e => {
           setView(produce(view, d => {
             d.audioFx.delayMerge = !d.audioFx.delayMerge
           }))
@@ -84,7 +84,7 @@ export function AudioPanel(props: {}) {
       sliderMin={0}
       sliderMax={5}
       min={0}
-      max={60}
+      max={179}
       default={0}
       onChange={newValue => {
         setView(produce(view, d => {

@@ -3,7 +3,7 @@ import { MessageCallback } from "../utils/browserUtils"
 import { SubClient, subscribeView } from "./GlobalState"
 import { AudioFx } from "../types"
 import { Jungle } from "./Jungle"
-import { round } from "../utils/helper"
+import { round, clamp } from "../utils/helper"
 
 
 
@@ -216,9 +216,14 @@ export class CaptureManager {
       info.outputNode.gain.value = 1
     }
 
-    if (enabled && audioFx.delay > 0) {
-      info.delayNode = info.delayNode ?? this.audioCtx.createDelay(60)
-      info.delayNode.delayTime.value = audioFx.delay
+    if (enabled && audioFx.delay > 0 && audioFx.delay < 180) {
+      info.delayNode = info.delayNode ?? this.audioCtx.createDelay(10)
+      if (audioFx.delay > info.delayNode.delayTime.maxValue) {
+        info.delayNode = this.audioCtx.createDelay(179.99)
+      }
+      info.delayNode.delayTime.value = clamp(0, info.delayNode.delayTime.maxValue, audioFx.delay)
+
+      
       head.connect(info.delayNode)
       info.delayNode.connect(info.outputNode)
       if (audioFx.delayMerge) {

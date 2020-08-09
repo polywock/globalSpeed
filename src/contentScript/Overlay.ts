@@ -80,7 +80,7 @@ export class Overlay {
 
     this.indicator.style.padding = `${BASE_PADDING * (this.scaling + rounding * 0.12)}px`
     this.indicator.style.fontSize = `${BASE_FONT_SIZE * this.scaling}px`
-    this.indicator.style.borderRadius = rounding ? `${BASE_BORDER_RADIUS * rounding}px` : "none"
+    this.indicator.style.borderRadius = rounding ? `${BASE_BORDER_RADIUS * rounding}px` : "0px"
     this.indicator.style.left = `${BASE_OFFSET * (init.offset ?? 1)}px`
     this.indicator.style.top = `${BASE_OFFSET * (init.offset ?? 1)}px`
   }
