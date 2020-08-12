@@ -1,6 +1,5 @@
 import { subscribeView } from "./GlobalState"
 import { StateView } from "../types"
-import { sendMediaEvent } from "../utils/configUtils"
 import { isFirefox } from "../utils/helper"
 
 
