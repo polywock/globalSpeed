@@ -26,7 +26,7 @@ export function ModalText(props: ModalTextProps) {
     ) : (
       <button onClick={e => {
         setModal(!modal)
-      }}>{props.label ?? "click to edit"}</button>
+      }}>{props.label ?? "edit"}</button>
     )}
   </div>
 }

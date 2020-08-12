@@ -2,7 +2,7 @@ import { randomId } from "../utils/helper";
 import { applyMediaEvent, MediaEvent } from "./utils/applyMediaEvent";
 import { generateScopeState, generateMediaState } from "./utils/genMediaInfo";
 import { MessageCallback } from "../utils/browserUtils";
-import { WindowTalk } from "./utils";
+import { WindowTalk, injectScript } from "./utils";
 import debounce from "lodash.debounce";
 
 export class MediaTower {
@@ -50,6 +50,8 @@ export class MediaTower {
       }
 
       reply(true)
+    } else if (msg.type === "RUN_JS") {
+      injectScript(msg.value)
     }
   }
   public processDoc = (doc: Window | ShadowRoot) => {

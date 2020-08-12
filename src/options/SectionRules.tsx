@@ -11,6 +11,7 @@ import { moveItem } from "../utils/helper"
 import { Move } from "../comps/Move"
 import "./SectionRules.scss"
 import produce from "immer"
+import { ModalText } from "../comps/ModalText"
 
 
 export function SectionRules(props: {}) {
@@ -128,6 +129,7 @@ function Rule(props: RuleProps) {
         <option value="STATE">{window.gsm.command.setState}</option>
         <option value="SPEED">{window.gsm.command.adjustSpeed}</option>
         <option value="FX">{window.gsm.command.adjustFilter}</option>
+        <option value="JS">{"javascript"}</option>
       </select>
       {rule.type == "STATE" && (
         <button onClick={e => {
@@ -145,6 +147,13 @@ function Rule(props: RuleProps) {
       )}
       {rule.type == "FX" && (
         <FxRuleControl rule={rule} onChange={onChange}/>
+      )}
+      {rule.type == "JS" && (
+        <ModalText value={rule.overrideJs || ""} onChange={v => {
+          onChange(produce(rule, d => {
+            d.overrideJs = v
+          }))
+        }}/>
       )}
       <button className="close icon" onClick={e => props.onChange(rule, true)}>
         <GoX size="23px"/>

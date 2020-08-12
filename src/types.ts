@@ -180,13 +180,14 @@ export type URLRule = {
   enabled: boolean,
   matchType: "STARTS_WITH" | "CONTAINS" | "REGEX",
   match: string,
-  type: "SPEED" | "STATE" | "FX",
+  type: "SPEED" | "STATE" | "FX" | "JS",
   overrideSpeed: number,
   overrideFx?: {
     elementFx: Fx,
     backdropFx: Fx
   },
   overrideEnabled?: boolean,
+  overrideJs?: string,
   strict?: boolean,
   initialLoadOnly?: boolean
 }

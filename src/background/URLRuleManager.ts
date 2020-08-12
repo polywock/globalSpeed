@@ -1,5 +1,7 @@
 import { subscribeView } from "./GlobalState"
 import { StateView } from "../types"
+import { sendMediaEvent } from "../utils/configUtils"
+import { isFirefox } from "../utils/helper"
 
 
 export class URLRuleManager {
@@ -89,9 +91,17 @@ export class URLRuleManager {
       if (rule.type === "FX") {
         if (!rule.overrideFx) return 
         overrides.push({...rule.overrideFx, isPinned: true})
+        return 
+      }
+
+      if (rule.type === "JS") {
+        setTimeout(() => {
+          rule.overrideJs && chrome.tabs.sendMessage(details.tabId, {type: "RUN_JS", value: rule.overrideJs}, {frameId: details.frameId})
+        }, (isFirefox() && commit) ? 500 : 100)
+        return 
       }
     }) 
 
-    window.globalState.set(overrides.map(override => ({override, tabId: details.tabId})))
+    overrides.length && window.globalState.set(overrides.map(override => ({override, tabId: details.tabId})))
   }
 }
