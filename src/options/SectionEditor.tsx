@@ -39,25 +39,27 @@ export function SectionEditor(props: {}) {
   return (
     <div className="section SectionEditor">
       <h2>{window.gsm.options.editor.header}</h2>
-      <div className="dict">
-        {isFirefox() ? null : (
-          <div>
-            <div className="toggleMode">
-              <FaFile className="icon active" size={17}/>
-              <div className="divider"></div>
-              <FaGlobe className="icon active" size={17}/>
-            </div>
+      {view.keybinds?.length > 0 && (
+        <div className="dict">
+          {isFirefox() ? null : (
             <div>
-              <span>{window.gsm.options.editor.toggleMode}</span>
-              <Tooltip pass={{style: {marginLeft: "10px"}}} tooltip={window.gsm.options.editor.toggleModeTooltip}/>
+              <div className="toggleMode">
+                <FaFile className="icon active" size={17}/>
+                <div className="divider"></div>
+                <FaGlobe className="icon active" size={17}/>
+              </div>
+              <div>
+                <span>{window.gsm.options.editor.toggleMode}</span>
+                <Tooltip pass={{style: {marginLeft: "10px"}}} tooltip={window.gsm.options.editor.toggleModeTooltip}/>
+              </div>
             </div>
+          )}
+          <div>
+            <FaLock className="icon active" size={17}/>
+            <span>{window.gsm.options.editor.greedyMode}</span>
           </div>
-        )}
-        <div>
-          <FaLock className="icon active" size={17}/>
-          <span>{window.gsm.options.editor.greedyMode}</span>
         </div>
-      </div>
+      )}
       {isFirefox() ? null : <UnusedCommandWarning keybinds={view.keybinds || []}/>}
       <div className="keybindControls">
         {(view.keybinds || []).map(bind => (
