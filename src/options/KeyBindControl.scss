@@ -7,6 +7,7 @@
   border: 1px solid var(--border-color);
   padding: 8px;
   margin-bottom: 10px;
+  position: relative;
 
   select {
     text-align-last: center;
@@ -22,6 +23,29 @@
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  &:hover > .urlRules {
+    display: block;
+  }
+
+  & > .urlRules {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff0000;
+    color: white;
+    padding: 0 5px;
+    border-radius: 10px;
+    display: none; 
+
+    &.active {
+      display: block; 
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   & > .command {

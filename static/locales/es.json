@@ -3,7 +3,10 @@
     "captureTab": "capturar",
     "releaseTab": "soltar",
     "equalizer": "ecualizador",
-    "compressor": "compresor"
+    "compressor": "compresor",
+    "split": "split",
+    "mono": "mono",
+    "reverse": "inverso"
   },
   "warnings": {
     "backdropFirefox": "Los usuarios de Firefox deben habilitar \"gfx.webrender.all\" y \"layout.css.backdrop-filter.enabled\" yendo a la URL \"about:config\". Reinicie Firefox después de habilitar las dos banderas.",
@@ -33,7 +36,12 @@
     "size": "tamaño",
     "rounding": "redondeo",
     "duration": "duración",
-    "offset": "desplazar"
+    "offset": "desplazar",
+    
+    "any": "cualquiera",
+    "all": "todas",
+    "copy": "copiar",
+    "paste": "pegar"
   },
   "filter": {
     "grayscale": "escala de grises",
@@ -62,6 +70,7 @@
     "runCode": "javascript",
     "openUrl": "URL",
     "adjustSpeed": "velocidad",
+    "preservePitch": "preservar el tono",
     "setPin": "pestaña pin",
     "setState": "estado",
     "seek": "buscar",
@@ -79,7 +88,8 @@
     "adjustPitch": "tono",
     "adjustGain": "volumen+",
     "adjustDelay": "retrasar",
-    "tabCapture": "capturar"
+    "tabCapture": "capturar",
+    "relativeTooltip": "relativa a la velocidad"
   },
   "options": {
     "flags": {
@@ -116,7 +126,10 @@
     "help": {
       "header": "Ayuda",
       "issuePrompt": "¿Tienes problemas o alguna sugerencia?",
-      "issueDirective": "Crea un nuevo problema en la página de Github."
+      "issueDirective": "Proporciona comentarios sobre Github.",
+      "export": "exportar",
+      "import": "importar",
+      "areYouSure": "Estas seguro?"
     }
   }  
 }

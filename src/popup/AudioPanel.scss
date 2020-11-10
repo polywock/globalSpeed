@@ -9,6 +9,7 @@
   }
 
   & > .capture {
+    margin-bottom: 15px;
     width: 100%;
     font-size: 1.3em;
     padding: 5px; 
@@ -27,6 +28,34 @@
 
   & > .SliderPlus {
     margin-bottom: 20px;
+
+    // for pitch HD button.
+    button.toggle {
+      padding: 0 5px;
+      font-size: 0.9em;
+    }
+  }
+
+  & > .mainControls {
+    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
+    
+    & button {
+      border-width: 2px;
+      border-radius: 3px;
+    }
+  }
+
+  & > .control {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    grid-column-gap: 10px;
+
+    &.split {
+      margin-bottom: 30px;
+    }
   }
 
   & > .audioTab {

@@ -1,12 +1,12 @@
 
-import { Fx, AudioFx, URLRule, State, IndicatorInit } from "../types"
+import { Fx, AudioFx, URLRule, State, IndicatorInit, URLCondition, URLConditionPart } from "../types"
 import { FilterName, filterInfos } from "./filters"
 import { getDefaultKeybinds } from "./commands"
-import { chunkByPredicate } from "../utils/helper"
+import { chunkByPredicate, randomId } from "../utils/helper"
 
 export function getDefaultState(): State {
   return {
-    version: 7,
+    version: 8,
     keybinds: getDefaultKeybinds(),
     common: {
       speed: 1,
@@ -274,14 +274,28 @@ export const EQ_PRESETS = {
   "30": EQ_30_PRESETS
 }
 
+export function getDefaultURLConditionPart(): URLConditionPart {
+  return {
+    type: "CONTAINS",
+    value: "twitch.tv",
+    id: randomId()
+  }
+}
+
+export function getDefaultURLCondition(): URLCondition {
+  return {
+    parts: []
+  }
+}
+
 export function getDefaultURLRule(): URLRule {
   return {
-    id: Math.ceil(Math.random() * 1E10).toString(),
+    id: randomId(),
     enabled: true,
-    matchType: "CONTAINS",
-    match: "twitch.tv",
+    condition: getDefaultURLCondition(),
     type: "SPEED",
-    overrideSpeed: 1
+    overrideSpeed: 1,
+    strict: true 
   }
 }
 

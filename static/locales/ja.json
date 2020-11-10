@@ -3,7 +3,10 @@
     "captureTab": "捕捉",
     "releaseTab": "手放す",
     "equalizer": "イコライザー",
-    "compressor": "コンプレッサー"
+    "compressor": "コンプレッサー",
+    "split": "分割",
+    "mono": "モノラル",
+    "reverse": "リバース"
   },
   "warnings": {
     "backdropFirefox": "Firefoxユーザーは、「about:config」URLに移動して、「gfx.webrender.all」と「layout.css.backdrop-filter.enabled」を有効にする必要があります。 2つのフラグを有効にした後、Firefoxを再起動します。",
@@ -33,7 +36,12 @@
     "size": "サイズ",
     "rounding": "丸め",
     "duration": "期間",
-    "offset": "オフセット"
+    "offset": "オフセット",
+
+    "any": "任意",
+    "all": "すべて",
+    "copy": "コピー",
+    "paste": "ペースト"
   },
   "filter": {
     "grayscale": "グレースケール",
@@ -62,6 +70,7 @@
     "runCode": "javascript",
     "openUrl": "URLを開く",
     "adjustSpeed": "スピード",
+    "preservePitch": "ピッチを維持する",
     "setPin": "ピン]タブ",
     "setState": "状態",
     "seek": "シーク",
@@ -79,7 +88,8 @@
     "adjustPitch": "音高",
     "adjustGain": "音量+",
     "adjustDelay": "遅延",
-    "tabCapture": "捕捉"
+    "tabCapture": "捕捉",
+    "relativeTooltip": "速度に対して"
   },
   "options": {
     "flags": {
@@ -116,7 +126,10 @@
     "help": {
       "header": "助けて",
       "issuePrompt": "問題や提案がありますか？",
-      "issueDirective": "Githubページで新しい問題を作成します。"
+      "issueDirective": "Githubにフィードバックを提供します。",
+      "export": "エクスポート",
+      "import": "インポート",
+      "areYouSure": "本気ですか？"
     }
   }
 }

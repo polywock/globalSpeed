@@ -8,7 +8,9 @@ const common = {
     popup: "./src/popup/popup.tsx",
     options: "./src/options/options.tsx",
     faqs: "./src/faqs/faqs.tsx",
-    ctx: "./src/contentScript/ctx.ts"
+    ctx: "./src/contentScript/ctx.ts",
+    "sound-touch-processor": "./src/background/SoundTouchProcessor.ts",
+    "reverse-sound-processor": "./src/background/ReverseProcessor.ts"
   },
   output: {
     path: resolve(__dirname, env.FIREFOX ? "buildFf": "build", "unpacked")
@@ -23,9 +25,14 @@ const common = {
       {
         test: /\.scss$/,
         use: [
-            "style-loader", // creates style nodes from JS strings
-            "css-loader", // translates CSS into CommonJS
-            "sass-loader" // compiles Sass to CSS, using Node Sass by default
+            "style-loader", 
+            {
+              loader: "css-loader",
+              options: {
+                url: false
+              }
+            },
+            "sass-loader"
         ]
       }
     ]

@@ -100,3 +100,13 @@ export function lerp(lb: number, rb: number, normal: number) {
 export function inverseLerp(lb: number, rb: number, value: number) {
   return (value - lb) / (rb - lb)
 }
+
+export function freqToLinear(freq: number) {
+  return Math.log2(freq / 440)
+}
+
+const chromatic = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
+
+export function linearToChromatic(linear: number): string {
+  return chromatic[(Math.round(linear * 12) + (12 * 1000)) % 12]  
+}

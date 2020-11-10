@@ -5,13 +5,22 @@
   }
 
   & > .controls {
-    margin-top: 20px;
+    display: grid;
+    grid-template-columns: max-content max-content 1fr;
+    column-gap: 10px; 
+    justify-items: right;
 
-    button {
+    & > button {
       text-transform: uppercase;
+    }
 
-      &:last-child {
-        margin-left: 10px;
+    & > .right {
+      display: grid;
+      grid-template-columns: max-content max-content max-content max-content;
+      column-gap: 5px;
+
+      & > *:nth-child(3) {
+        margin-left: 15px;
       }
     }
   }

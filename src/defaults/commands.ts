@@ -2,14 +2,13 @@
 import { Command, Keybind, AdjustMode } from "../types"
 import { randomId } from "../utils/helper"
 
-export type CommandName = "nothing" | "runCode" | "adjustSpeed" | "setPin" | "setState" | 
+export type CommandName = "nothing" | "runCode" | "adjustSpeed" | "preservePitch" | "setPin" | "setState" | 
   "seek" | "setPause" | "setMute" | "adjustVolume" | "setMark" | "seekMark" | "toggleLoop" | "openUrl" | 
   "setFx" | "resetFx" | "flipFx" | "adjustFilter" |
   "adjustGain" | "adjustPitch" | "adjustDelay" | "tabCapture"
 
 
 export let commandInfos: {[key in CommandName]: Command} = {
-  // safe for update
   nothing: {
     generate: () => ({
       id: randomId(),
@@ -18,7 +17,6 @@ export let commandInfos: {[key in CommandName]: Command} = {
       greedy: true
     })
   },
-  // safe for update 
   runCode: {
     valueType: "modalString",
     generate: () => ({
@@ -29,7 +27,6 @@ export let commandInfos: {[key in CommandName]: Command} = {
       valueString: `// your code here\n\nspeechSynthesis.speak(new SpeechSynthesisUtterance("Global Speed"))`
     })
   },
-  // safe for update
   openUrl: {
     valueType: "string",
     generate: () => ({
@@ -52,6 +49,17 @@ export let commandInfos: {[key in CommandName]: Command} = {
       enabled: true,
       greedy: true,
       adjustMode: AdjustMode.SET
+    })
+  },
+  preservePitch: {
+    valueType: "state",
+    requiresMedia: true,
+    generate: () => ({
+      id: randomId(),
+      command: "preservePitch",
+      enabled: true,
+      greedy: true,
+      valueState: "toggle"
     })
   },
   setPin: {
@@ -213,9 +221,9 @@ export let commandInfos: {[key in CommandName]: Command} = {
   adjustPitch: {
     valueType: "adjustMode",
     requiresTabCapture: true,
-    valueMin: -2,
-    valueMax: 2,
-    valueStep: 0.05,
+    valueMin: -36,
+    valueMax: 36,
+    valueStep: 1,
     valueDefault: 0,
     generate: () => ({
       id: randomId(),

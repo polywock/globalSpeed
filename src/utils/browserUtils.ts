@@ -6,9 +6,21 @@ declare global {
   }
 }
 
+export function hasWebNavigation(): Promise<boolean> {
+  return new Promise((res, rej) => {
+    chrome.permissions.request({permissions: ["webNavigation"]}, granted => {
+      if (chrome.runtime.lastError) {
+        rej(false)
+        return 
+      }
+      res(granted)
+    })
+  })
+}
+
 export function getActiveTabIds(): Promise<number[]> {
   return new Promise((res, rej) => {
-    chrome.tabs.query({active: true, currentWindow: undefined, windowType: "normal"}, tabs => {
+    chrome.tabs.query({active: true, currentWindow: undefined}, tabs => {
       res(tabs.map(v => v.id)) 
     })
   })
@@ -16,12 +28,13 @@ export function getActiveTabIds(): Promise<number[]> {
 
 export function getActiveTabInfo(): Promise<TabInfo> {
   return new Promise((res, rej) => {
-    chrome.tabs.query({active: true, currentWindow: true, windowType: "normal"}, tabs => {
+    chrome.tabs.query({active: true, currentWindow: true}, tabs => {
       if (tabs[0]) {
         const [tab] = tabs
         res({
           tabId: tab.id,
-          windowId: tab.windowId
+          windowId: tab.windowId,
+          url: tab.url
         })
       } else {
         res(null)
@@ -31,7 +44,7 @@ export function getActiveTabInfo(): Promise<TabInfo> {
 }
 
 
-export type TabInfo = {tabId: number, frameId?: number, windowId: number}
+export type TabInfo = {tabId: number, frameId?: number, windowId: number, url?: string}
 
 
 export function compareFrame(a: TabInfo, b: TabInfo) {

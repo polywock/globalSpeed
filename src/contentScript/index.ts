@@ -1,5 +1,5 @@
 
-import { injectCtx, injectScript } from './utils'
+import { injectCtx, WindowKeyListener } from './utils'
 import { TabInfo, requestTabInfo } from '../utils/browserUtils'
 import { MediaTower } from './MediaTower'
 import { ConfigSync } from './ConfigSync'
@@ -17,7 +17,8 @@ declare global {
     configSync: ConfigSync,
     fallbackId: number,
     ghostMode: boolean,
-    overlay: Overlay
+    overlay: Overlay,
+    keyListener: WindowKeyListener
   }
 }
 
@@ -25,6 +26,7 @@ declare global {
 async function main() {
   window.isContentScript = true
   window.mediaTower = new MediaTower()
+  window.keyListener = new WindowKeyListener()
 
   if (!(window.frameElement?.id === "ajaxframe")) {
     injectCtx()
@@ -76,6 +78,7 @@ function handleDOMLoaded() {
     window.visibleSync?.release(); delete window.visibleSync
     window.configSync?.release(); delete window.configSync
     window.overlay?.release(); delete window.overlay
+    window.keyListener?.release(); delete window.keyListener
   })
 }
 

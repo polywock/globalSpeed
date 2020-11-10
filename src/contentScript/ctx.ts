@@ -27,6 +27,15 @@ function main() {
   if (isFirefox()) {
     if (window.loadedGsCtx) return 
     window.loadedGsCtx = true 
+
+    // soundcloud.com support for Firefox (may remove later)
+    if (document.URL.startsWith("https://soundcloud.com/")) {
+      const og = AudioContext.prototype.createMediaElementSource
+      AudioContext.prototype.createMediaElementSource = function(...args) {
+        const out = og.apply(this, [document.createElement("audio")])
+        return out  
+      }
+    }
   }
   
   // #region ignore, used for testing

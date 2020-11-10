@@ -60,7 +60,7 @@ export function seekMark(elem: HTMLMediaElement, key: string) {
 }
 
 export function toggleLoop(elem: HTMLMediaElement, key: string) {
-  const markTime = elem.gsMarks?.[key]
+  let markTime = elem.gsMarks?.[key]
 
   const handleRemove = () => {
     elem.removeEventListener("timeupdate", elem.gsLoopTimeUpdateHandler, true)
@@ -79,7 +79,12 @@ export function toggleLoop(elem: HTMLMediaElement, key: string) {
     return 
   } 
 
-  const endTime = elem.currentTime
+  let endTime = elem.currentTime
+
+  // make unidirectional 
+  if (markTime > endTime) {
+    [markTime, endTime] = [endTime, markTime]
+  }
 
   elem.gsLoopTimeUpdateHandler = () => {
     if (elem.currentTime > endTime) {
@@ -108,15 +113,28 @@ function togglePip(elem: HTMLVideoElement) {
   }
 }
 
-function setPlaybackRate(elem: HTMLMediaElement, value: number) {
-  if (elem.playbackRate !== value) {
-    elem.playbackRate = clamp(0.0625, 16, value)
-  }
+function setPlaybackRate(elem: HTMLMediaElement, value: number, freePitch?: boolean) {
+  value = clamp(0.0625, 16, value)
+  try {
+    if (elem.playbackRate.toFixed(3) !== value.toFixed(3)) {
+      elem.playbackRate = value
+    }
+  } catch (err) {}
+
+  try {
+    if (elem.defaultPlaybackRate.toFixed(3) !== value.toFixed(3)) {
+      elem.defaultPlaybackRate = value
+    }
+  } catch (err) {}
+
+  elem.preservesPitch = !freePitch
+  elem.mozPreservesPitch = !freePitch
+  elem.webkitPreservesPitch = !freePitch
 }
 
 export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
   if (e.type === "PLAYBACK_RATE") {
-    setPlaybackRate(elem, e.value)
+    setPlaybackRate(elem, e.value, e.freePitch)
   } else if (e.type === "SEEK") {
     seek(elem, e.value, e.relative)
   } else if (e.type === "PAUSE") {
@@ -136,7 +154,7 @@ export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
   }
 }
 
-export type MediaEventPlaybackRate = {type: "PLAYBACK_RATE", value: number}
+export type MediaEventPlaybackRate = {type: "PLAYBACK_RATE", value: number, freePitch: boolean}
 export type MediaEventSeek = {type: "SEEK", value: number, relative: boolean}
 export type MediaEventPause = {type: "PAUSE", state: StateOption}
 export type MediaEventMute = {type: "MUTE", state: StateOption}

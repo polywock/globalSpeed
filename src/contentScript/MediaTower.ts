@@ -1,4 +1,5 @@
-import { randomId } from "../utils/helper";
+import { randomId, round } from "../utils/helper";
+import { conformSpeed } from "../utils/configUtils";
 import { applyMediaEvent, MediaEvent } from "./utils/applyMediaEvent";
 import { generateScopeState, generateMediaState } from "./utils/genMediaInfo";
 import { MessageCallback } from "../utils/browserUtils";
@@ -11,6 +12,7 @@ export class MediaTower {
   canopy = chrome.runtime.connect({name: "MEDIA_CANOPY"})
   talk = new WindowTalk("GLOBAL_SPEED_CS", "GLOBAL_SPEED_CTX")
   newDocCallbacks: Set<() => void> = new Set()
+  newMediaCallbacks: Set<() => void> = new Set()
   constructor() {
     this.processDoc(window)
     this.talk.initCb = this.handleTalkInit
@@ -49,16 +51,18 @@ export class MediaTower {
         })
       }
 
-      reply(true)
+      reply(true); return 
     } else if (msg.type === "RUN_JS") {
+      // used to run "javascript" URL rules
       injectScript(msg.value)
+      reply(true); return 
     }
   }
   public processDoc = (doc: Window | ShadowRoot) => {
     if (this.docs.includes(doc)) return 
     this.docs.push(doc)
     doc.addEventListener("play", this.handleMediaEvent, {capture: true, passive: true})
-    doc.addEventListener("timeupdate", debounce(this.handleMediaEvent, 3000, {leading: true, trailing: true, maxWait: 3000}), {capture: true, passive: true})
+    doc.addEventListener("timeupdate", this.handleMediaEventDeb, {capture: true, passive: true})
     doc.addEventListener("pause", this.handleMediaEvent, {capture: true, passive: true})
     doc.addEventListener("volumechange", this.handleMediaEvent, {capture: true, passive: true})
     doc.addEventListener("loadedmetadata", this.handleMediaEvent, {capture: true, passive: true})
@@ -66,37 +70,42 @@ export class MediaTower {
     doc.addEventListener("enterpictureinpicture", this.handleMediaEvent, {capture: true, passive: true})
     doc.addEventListener("leavepictureinpicture", this.handleMediaEvent, {capture: true, passive: true})
     doc.addEventListener("fullscreenchange", this.handleMediaEvent, {capture: true, passive: true})
-    doc.addEventListener("ratechange", this.handleRateChange, {capture: true, passive: true})
+    doc.addEventListener("ratechange", this.handleMediaEvent, {capture: true, passive: true})
     this.newDocCallbacks.forEach(cb => cb())
   }
   private processMedia = (elem: HTMLMediaElement) => {
     if (this.media.includes(elem)) return 
     elem.gsKey = elem.gsKey || randomId()
-
+    
     elem.addEventListener("play", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("pause", this.handleMediaEvent, {capture: true, passive: true})
-    elem.addEventListener("ratechange", this.handleRateChange, {capture: true, passive: true})
+    elem.addEventListener("ratechange", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("volumechange", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("loadedmetadata", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("emptied", this.handleMediaEvent, {capture: true, passive: true})
 
     this.media.push(elem)
     this.sendUpdate()
+
+    this.newMediaCallbacks.forEach(cb => cb())
   }
   lastEvent: Event
   private handleMediaEvent = (e: Event) => {
-    if (!e.isTrusted) return 
+    if (!(e?.isTrusted)) return 
+    if (this.lastEvent === e) return
+    this.lastEvent = e 
+
     let elem = e.target as HTMLMediaElement
+    if (!elem) return 
     if (elem.tagName !== "VIDEO" && elem.tagName !== "AUDIO") return 
     this.processMedia(elem)
-    this.lastEvent === e || this.sendUpdate()
-    this.lastEvent = e 
+    this.sendUpdate()
+
+    if (e.type === "ratechange") {
+      window.ghostMode && e.stopImmediatePropagation()
+    } 
   }
-  private handleRateChange = (e: Event) => {
-    if (!e.isTrusted) return 
-    this.handleMediaEvent(e)
-    window.ghostMode && e.stopImmediatePropagation()
-  }
+  private handleMediaEventDeb = debounce(this.handleMediaEvent, 5000, {leading: true, trailing: true, maxWait: 5000})
   sendUpdate = () => {
     const scope = generateScopeState(window.tabInfo)
     scope.media = this.media.map(elem => generateMediaState(elem))
@@ -115,6 +124,13 @@ export class MediaTower {
 
     targets.forEach(state => {
       applyMediaEvent(this.media.find(v => v.gsKey === state.gsKey), event)
+    })
+  }
+  applySpeedToAll = (speed: number, freePitch: boolean) => {
+    if (!speed) return 
+    speed = conformSpeed(speed)
+    this.media.forEach(media => {
+      applyMediaEvent(media, {type: "PLAYBACK_RATE", value: speed, freePitch})
     })
   }
 }

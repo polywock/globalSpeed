@@ -3,7 +3,10 @@
     "captureTab": "capture",
     "releaseTab": "release",
     "equalizer": "equalizer",
-    "compressor": "compressor"
+    "compressor": "compressor",
+    "split": "split",
+    "mono": "mono",
+    "reverse": "reverse"
   },
   "warnings": {
     "backdropFirefox": "Firefox users need to enable \"gfx.webrender.all\" and \"layout.css.backdrop-filter.enabled\" by going to the \"about:config\" URL. Restart Firefox after enabling the two flags.",
@@ -33,7 +36,12 @@
     "size": "size",
     "rounding": "rounding",
     "duration": "duration",
-    "offset": "offset"
+    "offset": "offset",
+    
+    "any": "any",
+    "all": "all",
+    "copy": "copy",
+    "paste": "paste"
   },
   "filter": {
     "grayscale": "grayscale",
@@ -62,6 +70,7 @@
     "runCode": "javascript",
     "openUrl": "open URL",
     "adjustSpeed": "speed",
+    "preservePitch": "preserve pitch",
     "setPin": "pin tab",
     "setState": "state",
     "seek": "seek",
@@ -79,7 +88,8 @@
     "adjustPitch": "pitch",
     "adjustGain": "gain",
     "adjustDelay": "delay",
-    "tabCapture": "tab capture"
+    "tabCapture": "tab capture",
+    "relativeTooltip": "relative to speed"
   },
   "options": {
     "flags": {
@@ -116,7 +126,10 @@
     "help": {
       "header": "Help",
       "issuePrompt": "Have issues or a suggestion?",
-      "issueDirective": "Create a new issue on the Github page."
+      "issueDirective": "Provide feedback on Github.",
+      "export": "export",
+      "import": "import",
+      "areYouSure": "Are you sure?"
     }
   }
 }

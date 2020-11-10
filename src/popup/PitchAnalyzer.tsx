@@ -1,43 +1,50 @@
 import { useEffect, useRef, useState } from "react";
-import { inverseLerp } from "../utils/helper";
+import { freqToLinear, inverseLerp, linearToChromatic } from "../utils/helper";
 import { CaptureInfo } from "../background/CaptureManager"
 import React from "react"
+import { PitchDetector } from "pitchy"
 
 const SAMPLE_RATE = 1 / 30
 
 export function PitchAnalyzer(props: {}) {
-  const [freqMode, setFreqMode] = useState(false)
+  const [pitchMode, setPitchMode] = useState(false)
   const ref = useRef<HTMLCanvasElement>()
+  const env = useRef({} as {signal: SignalView}).current
   
   useEffect(() => {
     const canvas = ref.current as HTMLCanvasElement
     const ctx = canvas.getContext("2d")
-    let signalView: SignalView
     chrome.runtime.getBackgroundPage(bgPage => {
-      signalView = new SignalView(ctx, bgPage, freqMode)
+      env.signal = new SignalView(ctx, bgPage)
     })
     
     return () => {
-      signalView.release()
-      signalView = null 
+      if (env.signal) {
+        env.signal.release()
+        env.signal = null 
+      }
     }
-  }, [freqMode])
+  }, [])
 
-  return <canvas onClick={e => setFreqMode(!freqMode)} style={{width: "100%", height: "125px"}} ref={ref}/>
+  useEffect(() => {
+    if (!env.signal) return 
+    env.signal.showPitch = pitchMode
+    env.signal.update()
+  }, [pitchMode])
+
+  return <canvas onClick={e => setPitchMode(!pitchMode)} style={{width: "100%", height: "125px"}} ref={ref}/>
 }
 
 
 class SignalView {
   canvas = this.ctx.canvas 
-  port = chrome.runtime.connect({name: `ANALYZER ${JSON.stringify({tabId: window.tabInfo.tabId, sampleRate: SAMPLE_RATE})}`})
+  port = chrome.runtime.connect({name: `ANALYZER ${JSON.stringify({tabId: window.tabInfo.tabId})}`})
   buffer: Float32Array
   intervalId: number
-  MIN_DB: number
-  MAX_DB: number
   info: CaptureInfo
   FFT_SIZE: number 
-  constructor(public ctx: CanvasRenderingContext2D, public bgPage: Window, private freqMode: boolean) {
-    
+  detector: any
+  constructor(public ctx: CanvasRenderingContext2D, public bgPage: Window, public showPitch = false) {
     this.port.onMessage.addListener(msg => {
       if (msg.type === "PING") {
         this.handleAnalyzerCreated()
@@ -55,67 +62,60 @@ class SignalView {
       return 
     }
 
-    this.FFT_SIZE = this.freqMode ? 256 : 1024 
-    info.ana.node.fftSize = this.FFT_SIZE
-    this.buffer = new Float32Array(this.freqMode ? info.ana.node.frequencyBinCount : this.FFT_SIZE)
-    this.MIN_DB = info.ana.node.minDecibels
-    this.MAX_DB = info.ana.node.maxDecibels
-  
+    this.update()
+
     this.intervalId = setInterval(this.handleInterval, SAMPLE_RATE * 1000)
   }
   release = () => {
     this.port.disconnect()
     clearInterval(this.intervalId)
   }
+  update = () => {
+    const { showPitch } = this
+    this.FFT_SIZE = showPitch ? 1024 : 256 
+    this.info.ana.node.fftSize = this.FFT_SIZE
+    this.detector = showPitch ? (this.detector || PitchDetector.forFloat32Array(this.FFT_SIZE)) : null 
+    this.buffer = this.buffer?.length !== this.FFT_SIZE ? new Float32Array(this.FFT_SIZE) : this.buffer
+  }
   handleInterval = () => {
     const info = this.info
     if (info?.ana?.node) {
-      if (this.freqMode) {
-        info.ana.node.getFloatFrequencyData(this.buffer)
-      } else {
-        info.ana.node.getFloatTimeDomainData(this.buffer)
-      }
+      info.ana.node.getFloatTimeDomainData(this.buffer)
     }
     
     this.draw()
   }
   draw = () => {
-    const { ctx, canvas } = this 
+    const { ctx, buffer, canvas } = this 
     ctx.fillStyle = "black"
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-    if (this.freqMode) {
-      this.drawFreq()
-    } else {
-      this.drawSignal()
-    }
-  }
-  drawSignal = () => {
-    const { ctx, buffer } = this 
     ctx.beginPath()
     ctx.strokeStyle = "yellow"
     ctx.lineWidth = 2 
-    for (let i = 0; i < buffer.length; i++) {
-      const x = i / buffer.length * ctx.canvas.width
+
+    const offset = buffer.length - 256 
+    for (let i = offset; i < buffer.length; i++) {
+      const x = (i - offset) / 256 * ctx.canvas.width
       const y = inverseLerp(0.75, -0.75, buffer[i]) * ctx.canvas.height
       ctx.lineTo(x, y)
     }
     ctx.stroke()
-  }
-  drawFreq = () => {
-    const { ctx, buffer } = this 
-    ctx.beginPath()
-    ctx.strokeStyle = "yellow"
-    ctx.lineWidth = 2
 
-    const binWidth = ctx.canvas.width / buffer.length
+    if (!this.showPitch) return 
 
-    for (let i = 0; i < buffer.length; i++) {
-      const x = (i + 0.5) * binWidth
-      const y = inverseLerp(this.MAX_DB, this.MIN_DB, buffer[i]) * ctx.canvas.height
-      ctx.lineTo(x, y)
+    let [pitch, clarity] = this.detector.findPitch(this.buffer, 44100);
+    ctx.fillStyle = "white"
+    ctx.font = '20px monospace';
+    ctx.textBaseline = "top"
+    
+    if (clarity > 0.5) {
+      ctx.textAlign = "left"
+      ctx.fillText(`${linearToChromatic(freqToLinear(pitch)).padEnd(2, " ")}`, 8, 15)
+
+      ctx.textAlign = "right"
+      ctx.fillText(`${pitch.toFixed(0)}`, canvas.width - 8, 15)
     }
-    ctx.stroke()
   }
 }
 

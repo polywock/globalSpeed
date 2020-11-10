@@ -3,7 +3,10 @@
     "captureTab": "ele geçirmek",
     "releaseTab": "serbest bırakmak",
     "equalizer": "EQ",
-    "compressor": "kompresör"
+    "compressor": "kompresör",
+    "split": "ayırmak",
+    "mono": "mono",
+    "reverse": "ters ses"
   },
   "warnings": {
     "backdropFirefox": "Firefox kullanıcılarının \"about:config\" URL'sine giderek \"gfx.webrender.all\" ve \"layout.css.backdrop-filter.enabled\" seçeneğini etkinleştirmeleri gerekir. İki bayrağı etkinleştirdikten sonra Firefox'u yeniden başlatın.",
@@ -33,7 +36,12 @@
     "size": "boyut",
     "rounding": "yuvarlaklık",
     "duration": "süre",
-    "offset": "ofset"
+    "offset": "ofset",
+
+    "any": "herhangi",
+    "all": "tümü",
+    "copy": "kopyala",
+    "paste": "yapıştır"
   },
   "filter": {
     "grayscale": "gri tonlama",
@@ -62,6 +70,7 @@
     "runCode": "javascript",
     "openUrl": "link aç",
     "adjustSpeed": "hız",
+    "preservePitch": "kilit ses aralığı",
     "setPin": "sekmeyi sabitle",
     "setState": "durum",
     "seek": "vardiya zamanı",
@@ -79,7 +88,8 @@
     "adjustPitch": "ses aralığı",
     "adjustGain": "ses+",
     "adjustDelay": "geciktir",
-    "tabCapture": "ele geçirmek"
+    "tabCapture": "ele geçirmek",
+    "relativeTooltip": "hıza göre"
   },
   "options": {
     "flags": {
@@ -116,7 +126,10 @@
     "help": {
       "header": "Yardım",
       "issuePrompt": "Sorunlarınız veya öneriniz mi var?",
-      "issueDirective": "Github sayfasına bir rapor gönderin."
+      "issueDirective": "Github ile ilgili geri bildirimde bulunun.",
+      "export": "dışarı aktar",
+      "import": "i̇çeri",
+      "areYouSure": "Emin misiniz?"
     }
   }
 }

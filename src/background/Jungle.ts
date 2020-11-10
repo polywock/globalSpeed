@@ -4,6 +4,7 @@ const FADE_DURATION = 0.05
 const BUFFER_DURATION = 0.1
 
 // From Chris Wilson --- https://github.com/cwilso/Audio-Input-Effects/blob/master/js/jungle.js
+// Refactored slightly.
 export class Jungle {
   input: AudioNode
   output: AudioNode
@@ -119,7 +120,9 @@ export class Jungle {
     this.modGain2.gain.setTargetAtTime(0.5*delayTime, this.ctx.currentTime, 0.010)
   }
   setPitchOffset = (mult: number) => {
-    if (mult>0) { // pitch up
+    mult = semitoneToMult(mult)
+    
+    if (mult > 0) { // pitch up
         this.mod1Gain.gain.value = 0
         this.mod2Gain.gain.value = 0
         this.mod3Gain.gain.value = 1
@@ -221,4 +224,10 @@ function createDelayTimeBuffer(ctx: AudioContext, shiftUp: boolean) {
   }
 
   return buffer
+}
+
+
+// polywock: took me a while to figure out, but seems to work.
+function semitoneToMult(semitone: number){
+  return Math.pow(2, 1 + (1 / 12 * semitone)) - 2
 }

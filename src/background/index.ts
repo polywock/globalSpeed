@@ -11,6 +11,7 @@ import { GlobalMedia } from "./GlobalMedia"
 import { CaptureManager } from "./CaptureManager"
 import { URLRuleManager } from "./URLRuleManager"
 import { isFirefox } from "../utils/helper"
+import { checkURLCondition } from "../utils/configUtils"
 
 declare global {
   interface Window {
@@ -55,9 +56,18 @@ async function main() {
 
 async function handleCommand(command: string) {
   if (!window.globalState.get({enabled: true}).enabled) return 
-  const keybinds = (window.globalState.get({keybinds: true}).keybinds || []).filter(kb => kb.enabled && kb.global && (kb.globalKey || "commandA") === command)
+  let keybinds = (window.globalState.get({keybinds: true}).keybinds || []).filter(kb => kb.enabled && kb.global && (kb.globalKey || "commandA") === command)
   if (!keybinds.length) return 
   const tabInfo = await getActiveTabInfo()
+
+
+  keybinds = keybinds.filter(kb => {
+    if (kb.condition?.parts.length > 0) {
+      return checkURLCondition(tabInfo?.url || "" , kb.condition, true)
+    } 
+    return true 
+  })
+
   processKeybinds(keybinds, tabInfo)
 }
 
@@ -81,10 +91,3 @@ function handleOnMessage(msg: any, sender: chrome.runtime.MessageSender, reply: 
     reply(true)
   }
 }
-
-
-// once created ShadowRoot 
-// Add element that ContentScript knows into ShadowRoot
-// Make sure 
-// 1. Tell contentScript 
-// 2. Dispatch CustomEvent; contentScript will listen 

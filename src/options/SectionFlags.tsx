@@ -4,19 +4,19 @@ import { LOCALE_MAP } from "../defaults/i18"
 import { useStateView } from "../hooks/useStateView"
 import { pushView } from "../background/GlobalState"
 import { createFeedbackAudio } from "../utils/configUtils"
-import "./SectionFlags.scss"
 import { isFirefox } from "../utils/helper"
 import { INDICATOR_INIT } from "../defaults"
-import produce from "immer"
 import { SliderMicro } from "../comps/SliderMicro"
 import { Overlay } from "../contentScript/Overlay"
 import { IndicatorInit } from "../types"
+import produce from "immer"
+import "./SectionFlags.scss"
 
 let feedbackAudio: HTMLAudioElement
 
 export function SectionFlags(props: {}) {
   const [showMore, setShowMore] = useState(false)
-  const [view, setView] = useStateView({indicatorInit: true, language: true, darkTheme: true, hideBadge: true, hideIndicator: true, staticOverlay: true, pinByDefault: true, ghostMode: true, hideMediaView: true})
+  const [view, setView] = useStateView({indicatorInit: true, language: true, darkTheme: true, hideBadge: true, hideIndicator: true, staticOverlay: true, pinByDefault: true, ghostMode: true, hideMediaView: true, freePitch: true})
   const [volumeView, setVolumeView] = useStateView({feedbackVolume: true})
   if (!view || !volumeView) return <div></div>
 
@@ -67,7 +67,7 @@ export function SectionFlags(props: {}) {
         {isFirefox() ? null : (
           <div className="field">
             <span>{window.gsm.options.flags.feedbackVolume}</span>
-            <input list="feedbackVolumeList" min={0} max={1} step={0.05} type="range" value={volumeView.feedbackVolume ?? 0.5} onChange={e => {
+            <input list="feedbackVolumeList" min={0} max={1} step={0.05} type="range" value={volumeView.feedbackVolume ?? 0} onChange={e => {
               feedbackAudio = feedbackAudio || createFeedbackAudio()
               feedbackAudio.volume = e.target.valueAsNumber
               feedbackAudio.currentTime = 0
@@ -95,6 +95,12 @@ export function SectionFlags(props: {}) {
             <span>{window.gsm.options.flags.fullscreenSupport}</span>
             <input type="checkbox" checked={!view.staticOverlay} onChange={e => {
               pushView({override: {staticOverlay: !view.staticOverlay}})
+            }}/>
+          </div>
+          <div className="field">
+            <span>{window.gsm.command.preservePitch}</span>
+            <input type="checkbox" checked={!view.freePitch} onChange={e => {
+              pushView({override: {freePitch: !view.freePitch}})
             }}/>
           </div>
           <div className="field">

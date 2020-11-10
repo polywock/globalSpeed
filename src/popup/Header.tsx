@@ -6,7 +6,6 @@ import { useStateView } from "../hooks/useStateView"
 import { pushView } from "../background/GlobalState"
 import { getDefaultFx } from "../defaults"
 import "./Header.scss"
-import produce from "immer"
 
 const SUPPORTS_TAB_CAPTURE = !!chrome.tabCapture?.capture
 
@@ -16,7 +15,7 @@ type HeaderProps = {
 }
 
 export function Header(props: HeaderProps) {
-  const [view, setView] = useStateView({enabled: true, isPinned: true})
+  const [view, setView] = useStateView({enabled: true, isPinned: true, superDisable: true})
 
   if (!view) return <div></div>
 
@@ -26,6 +25,10 @@ export function Header(props: HeaderProps) {
         className={view.enabled ? "active" : "muted"}
         onClick={() => {
           pushView({override: {enabled: !view.enabled}, tabId: window.tabInfo.tabId})
+        }}
+        onContextMenu={e => {
+          e.preventDefault()
+          pushView({override: {superDisable: true}})
         }}
       >
         <FaPowerOff size="17px"/>

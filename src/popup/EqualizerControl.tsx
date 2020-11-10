@@ -6,7 +6,6 @@ import { getDefaultEq, EQ_PRESETS } from "../defaults"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { formatFreq } from "../utils/helper"
 import { SliderMicro } from "../comps/SliderMicro"
-import { SliderPlus } from "../comps/SliderPlus"
 import "./EqualizerControl.scss"
 import produce from "immer"
 

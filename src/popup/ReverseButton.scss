@@ -1,0 +1,26 @@
+.ReverseButton {
+  width: 100%;
+  padding: 5px;
+  font-size: 1.3em;
+  border-width: 2px;
+  border-style: dashed;
+  border-radius: 5px;
+
+  &:focus {
+    border-width: 2px;
+  }
+
+  &.recording {
+    border-color: #500;
+    border-style: solid;
+    background-color: lightcoral; 
+    color: #500;
+  }
+
+  &.playing {
+    border-color: #172717;
+    border-style: solid;
+    background-color: lightgreen; 
+    color: #172717;
+  }
+}

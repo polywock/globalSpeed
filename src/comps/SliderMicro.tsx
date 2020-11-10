@@ -1,10 +1,9 @@
-import React, { useMemo } from "react"
+import React from "react"
 import { clamp, round } from "../utils/helper"
 import { NumericInput } from "../comps/NumericInput"
-import { GiAnticlockwiseRotation } from "react-icons/gi"
-import debounce from "lodash.debounce"
-import "./SliderMicro.scss"
 import { Slider } from "./Slider"
+import { Reset } from "./Reset"
+import "./SliderMicro.scss"
 
 type SliderMicroProps = {
   label?: React.ReactNode,
@@ -26,7 +25,9 @@ export function SliderMicro(props: SliderMicroProps) {
     props.onChange(clamp(props.min, props.max, value))
   }
 
-  return <div {...(props.pass ?? {})} className={`SliderMicro ${props.label ? "withLabel" : ""} ${props.withInput ? "withInput" : ""} ${props.default !== props.value ? "highlight" : ""}`}>
+  const activated = props.default !== props.value
+
+  return <div {...(props.pass ?? {})} className={`SliderMicro ${props.label ? "withLabel" : ""} ${props.withInput ? "withInput" : ""} ${activated ? "highlight" : ""}`}>
     {props.label != null && <span title={round(props.value, 2).toString()}>{props.label}</span>}
     <Slider step={props.sliderStep ?? 0.01} min={props.sliderMin} max={props.sliderMax} value={props.value} default={props.default} onChange={handleValueChange}/>
     {props.withInput && (
@@ -34,6 +35,6 @@ export function SliderMicro(props: SliderMicroProps) {
         handleValueChange(v)
       }}/>
     )}
-    <GiAnticlockwiseRotation size={15}  className={`button reset`} onClick={e => handleValueChange(props.default)}/>
+    <Reset active={activated} onClick={() => handleValueChange(props.default)}/>
   </div>
 }

@@ -5,6 +5,7 @@ import { getDefaultState } from "../defaults";
 import cloneDeep from "lodash.clonedeep";
 import debounce from "lodash.debounce";
 import { sendMediaEvent } from "../utils/configUtils";
+import { migrateGrainData } from "../utils/migrateSchema";
 
 
 export class GlobalState {
@@ -17,6 +18,24 @@ export class GlobalState {
     chrome.runtime.onSuspend?.addListener(() => {
       this.persistThrottled.flush()
     })
+  }
+  reload = (state: State) => {
+    try {
+      let newState = migrateGrainData(state) 
+      if (newState.version === getDefaultState().version) {
+        this.state = newState 
+        this.pins = []
+
+        // notify
+        this.subs.forEach(sub => {
+          sub.handleUpdate(this.get(sub.selector, sub.tabId))
+        })
+      }
+    } catch (err) {
+      return false 
+    } 
+
+    return true 
   }
   get = (keys: StateViewSelector, tabId?: number) => {
     const out: StateView = {} 
@@ -38,6 +57,14 @@ export class GlobalState {
       if (namedSelectors.simple[key]) {
         (out as any)[key] = this.state[key as keyof State]
         continue 
+      }
+    }
+
+    // If super disabled, set .enabled to false. 
+    if (keys.enabled) {
+      const { superDisable } = this.get({superDisable: true})
+      if (superDisable) {
+        out.enabled = false 
       }
     }
 
@@ -137,7 +164,7 @@ export class GlobalState {
   }
   set = (_init: SetInit[] | SetInit, frozenId?: string) => {
     const inits = Array.isArray(_init) ? _init : [_init]
-    let commonSpeed: {v: number}; 
+    let speedOrFreePitch = false 
 
     const markedSubs = new Set<SubInfo>()
     for (let init of inits) {
@@ -145,9 +172,9 @@ export class GlobalState {
 
       const flags = this._set(override, tabId, overDefault)
 
-      if (flags.ctx.speed.common) {
-        commonSpeed = {v: override.speed} 
-      }
+      if (flags.ctx.speed.common || flags.real.has("freePitch")) {
+        speedOrFreePitch = true 
+      } 
 
       // go through each sub 
       for (let sub of this.subs) {
@@ -174,13 +201,13 @@ export class GlobalState {
     }
 
     // make sure background tabs are updated
-    if (commonSpeed) {
+    if (speedOrFreePitch) {
       window.globalMedia.scopes.forEach(scope => {
-        const view = this.get({enabled: true, speed: true, isPinned: true})
+        const view = this.get({enabled: true, speed: true, isPinned: true, freePitch: true})
         if (!view.enabled || view.isPinned) return 
         scope.media?.forEach(media => {
           if (media.readyState && !media.paused) {
-            sendMediaEvent({type: "PLAYBACK_RATE", value: view.speed ?? 1}, media.key, scope.tabInfo.tabId, scope.tabInfo.frameId)
+            sendMediaEvent({type: "PLAYBACK_RATE", value: view.speed ?? 1, freePitch: view.freePitch}, media.key, scope.tabInfo.tabId, scope.tabInfo.frameId)
           }
         })
       })
@@ -223,7 +250,11 @@ export class GlobalState {
       reply(true)
     } else if (msg.type === "FETCH_VIEW") {
       reply(this.get(msg.selector as StateViewSelector, msg.tabId))
-    } 
+    } else if (msg.type === "GET_STATE") {
+      reply(this.state)
+    } else if (msg.type === "RELOAD_STATE") {
+      reply(this.reload(msg.state))
+    }
   }
 }
 
@@ -234,7 +265,10 @@ const namedSelectors = {
       enabled: true,
       elementFx: true,
       backdropFx: true,
-      audioFx: true
+      audioFx: true,
+      audioFxAlt: true,
+      stereoControl: true,
+      monoOutput: true
     } as StateViewSelector,
     simple: {
       version: true,
@@ -249,7 +283,9 @@ const namedSelectors = {
       keybinds: true,
       rules: true,
       ghostMode: true,
-      indicatorInit: true
+      indicatorInit: true,
+      freePitch: true,
+      superDisable: true 
     } as StateViewSelector    
 }
 
@@ -259,6 +295,12 @@ function pruneSelectors(selector: StateViewSelector) {
 
 function checkSubUpdate(sub: SubInfo, subTabIsPinned: boolean, tabId: number, flags: ChangeFlags) {
   const sameTab = sub.tabId === tabId || sub.tabId === -1
+
+
+  // .superDisable can change .enabled (derived) value. 
+  if (sub.selector.enabled && flags.real.has("superDisable")) {
+    return true 
+  }
 
   for (let _key in sub.selector) {
     const key = _key as keyof StateView

@@ -4,7 +4,8 @@
   "default_locale": "en",
   "description": "__MSG_appDesc__",
   "manifest_version": 2,
-  "permissions": ["storage", "https://*/*", "http://*/*", "file://*/*", "webNavigation"],
+  "optional_permissions": ["webNavigation", "clipboardWrite", "clipboardRead"],
+  "permissions": ["storage", "https://*/*", "http://*/*", "file://*/*"],
   "web_accessible_resources": ["ctx.js"],
   "browser_action": {
     "default_popup": "popup.html"

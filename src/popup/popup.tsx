@@ -9,10 +9,34 @@ import { AudioPanel } from "./AudioPanel"
 import { requestGsm } from "../utils/configUtils"
 import { ErrorFallback } from "../comps/ErrorFallback"
 import "./popup.scss"
+import { useStateView } from "../hooks/useStateView"
+import { FaPowerOff } from "react-icons/fa"
+import { pushView } from "../background/GlobalState"
 
 
 export function App(props: {}) {
   const [panel, setPanel] = useState(0)
+  const [view, setView] = useStateView({superDisable: true})
+
+  if (!view) return null 
+
+  if (view.superDisable) {
+    return (
+      <div 
+        id={"SuperDisable"}
+        onClick={() => {
+          pushView({override: {superDisable: false, enabled: true}, tabId: window.tabInfo.tabId})
+        }}
+        onContextMenu={e => {
+          e.preventDefault()
+          pushView({override: {superDisable: false, enabled: true}, tabId: window.tabInfo.tabId})
+        }}
+      >
+        <FaPowerOff size="25px"/>
+      </div>
+    )
+  }
+
   return (
     <div id="App">
       <ThemeSync/>

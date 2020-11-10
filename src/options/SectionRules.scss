@@ -4,12 +4,16 @@
     & > .Rule {
       display: grid;
       grid-column-gap: 10px;
-      grid-template-columns: repeat(5, max-content) 1fr repeat(3, max-content);
+      grid-template-columns: repeat(4, max-content) 1fr repeat(3, max-content);
       align-items: center;
 
       border: 1px solid var(--border-color);
       padding: 8px;
       margin-bottom: 10px;
+
+      & > .show {
+        border-radius: 5px; 
+      }
 
       &:last-child {
         margin-bottom: 0;

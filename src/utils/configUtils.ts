@@ -1,4 +1,4 @@
-import { FilterEntry, TargetFx, TargetFxFlags, Fx, StateView, Gsm } from "../types";
+import { FilterEntry, TargetFx, TargetFxFlags, Fx, StateView, Gsm, URLCondition } from "../types";
 import { clamp, round } from "./helper";
 import { filterInfos, FilterName } from "../defaults/filters";
 import { MediaEvent } from "../contentScript/utils/applyMediaEvent";
@@ -93,3 +93,38 @@ export function createFeedbackAudio(good = true) {
   return new Audio(chrome.runtime.getURL(`sounds/${good ? "good" : "bad"}.wav`))
 }
 
+
+export function checkURLCondition(url: string, cond: URLCondition, neutral?: boolean) {
+  let failedAny = false  
+  let passedAny = false 
+
+  cond.parts.forEach(part => {
+    if (part.disabled) return 
+    let passed = false 
+
+    if (part.type === "STARTS_WITH") {
+      passed = url.startsWith(part.value)
+    } else if (part.type === "CONTAINS") {
+      passed = url.includes(part.value)
+    } else if (part.type === "REGEX") {
+  
+      try {
+        passed = new RegExp(part.value).test(url)
+      } catch (err) {}
+    } else {
+      return 
+    }
+
+    if (part.inverse ? passed : !passed) {
+      failedAny = true 
+    } else {
+      passedAny = true 
+    }
+  })
+
+  if (!passedAny && !failedAny) return neutral
+
+  if (cond.matchAll && failedAny) return false
+
+  return passedAny
+}

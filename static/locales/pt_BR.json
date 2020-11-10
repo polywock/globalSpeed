@@ -3,7 +3,10 @@
     "captureTab": "capturar",
     "releaseTab": "libertar",
     "equalizer": "equalizador",
-    "compressor": "compressor"
+    "compressor": "compressor",
+    "split": "dividir",
+    "mono": "mono",
+    "reverse": "áudio reverso"
   },
   "warnings": {
     "backdropFirefox": "Firefox users need to enable \"gfx.webrender.all\" and \"layout.css.backdrop-filter.enabled\" by accessing the \"about:config\" URL. Restart Firefox after enabling both flags.",
@@ -33,7 +36,12 @@
     "size": "tamanho",
     "rounding": "arredondado",
     "duration": "duração",
-    "offset": "deslocamento"
+    "offset": "deslocamento",
+    
+    "any": "qualquer",
+    "all": "todos",
+    "copy": "copiar",
+    "paste": "colar"
   },
   "filter": {
     "grayscale": "escala de cinza",
@@ -62,6 +70,7 @@
     "runCode": "javascript",
     "openUrl": "Abrir URL",
     "adjustSpeed": "velocidade",
+    "preservePitch": "preservar o tom",
     "setPin": "fixar guia",
     "setState": "estado",
     "seek": "ajustar posição",
@@ -79,7 +88,8 @@
     "adjustPitch": "tom de som",
     "adjustGain": "volume+",
     "adjustDelay": "atraso",
-    "tabCapture": "capturar"
+    "tabCapture": "capturar",
+    "relativeTooltip": "relativo à velocidade"
   },
   "options": {
     "flags": {
@@ -116,7 +126,10 @@
     "help": {
       "header": "Socorro",
       "issuePrompt": "Tem problemas ou uma sugestão?",
-      "issueDirective": "Crie um novo relatório na página do Github."
+      "issueDirective": "Dê feedback no Github.",
+      "export": "exportar",
+      "import": "importar",
+      "areYouSure": "Você tem certeza?"
     }
   }
 }

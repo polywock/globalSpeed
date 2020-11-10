@@ -1,18 +1,19 @@
 import { subscribeView } from "./GlobalState"
 import { StateView } from "../types"
 import { isFirefox } from "../utils/helper"
+import { checkURLCondition } from "../utils/configUtils"
 
 
 export class URLRuleManager {
   appliedRules: Map<string, Set<number>> = new Map()
 
-  client = subscribeView({rules: true}, null, true, view => {
+  client = subscribeView({rules: true, superDisable: true}, null, true, view => {
     this.syncListeners(view)
   })
   addedCommit = false 
   addedHistory = false 
   syncListeners = (view: StateView) => {
-    const enabledRules = (view.rules || []).filter(rule => rule.enabled)
+    const enabledRules = view.superDisable ? [] :  (view.rules || []).filter(rule => rule.enabled)
 
     let commitFlag = false 
     let historyFlag = false 
@@ -61,19 +62,7 @@ export class URLRuleManager {
       if (rule.initialLoadOnly && !commit) return 
       if (!rule.strict && this.hasAppliedRule(rule.id, details.tabId)) return 
 
-      if (rule.matchType === "STARTS_WITH") {
-        if (!details.url.startsWith(rule.match)) return 
-      } else if (rule.matchType === "CONTAINS") {
-        if (!details.url.includes(rule.match)) return 
-      } else if (rule.matchType === "REGEX") {
-        try {
-          if (!(new RegExp(rule.match)).test(details.url)) return 
-        } catch (err) {
-          return
-        }
-      } else {
-        return 
-      }
+      if (!checkURLCondition(details.url, rule.condition, false)) return 
 
       this.setAppliedRule(rule.id, details.tabId)
 

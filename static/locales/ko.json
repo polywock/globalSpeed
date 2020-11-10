@@ -3,7 +3,10 @@
     "captureTab": "캡처",
     "releaseTab": "릴리스",
     "equalizer": "이퀄라이저",
-    "compressor": "컴프레서"
+    "compressor": "컴프레서",
+    "split": "분할",
+    "mono": "모노",
+    "reverse": "역 오디오"
   },
   "warnings": {
     "backdropFirefox": "Firefox 사용자는 \"about:config\"URL로 이동하여 \"gfx.webrender.all\"및 \"layout.css.backdrop-filter.enabled\"를 활성화해야합니다. 두 플래그를 활성화 한 후 Firefox를 다시 시작하십시오.",
@@ -33,7 +36,12 @@
     "size": "크기",
     "rounding": "진원도",
     "duration": "기간",
-    "offset": "오프셋"
+    "offset": "오프셋",
+    
+    "any": "any",
+    "all": "all",
+    "copy": "복사",
+    "paste": "붙여 넣기"
   },
   "filter": {
     "grayscale": "회색조",
@@ -62,6 +70,7 @@
     "runCode": "javascript",
     "openUrl": "열린 URL",
     "adjustSpeed": "속도",
+    "preservePitch": "피치 유지",
     "setPin": "핀 탭",
     "setState": "상태",
     "seek": "이동",
@@ -79,7 +88,8 @@
     "adjustPitch": "음높이",
     "adjustGain": "볼륨+",
     "adjustDelay": "지연",
-    "tabCapture": "캡처"
+    "tabCapture": "캡처",
+    "relativeTooltip": "속도에 비례"
   },
   "options": {
     "flags": {
@@ -116,7 +126,10 @@
     "help": {
       "header": "도움",
       "issuePrompt": "문제 나 제안이 있습니까?",
-      "issueDirective": "Github 페이지에서 새로운 이슈를 만듭니다."
+      "issueDirective": "Github에 대한 피드백을 제공하십시오.",
+      "export": "내보내기",
+      "import": "가져오기",
+      "areYouSure": "확실합니까?"
     }
   }
 }

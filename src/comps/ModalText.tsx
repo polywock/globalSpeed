@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react"
 import { ThrottledTextInput } from "./ThrottledTextInput"
+import { ModalBase } from "./ModalBase"
 import "./ModalText.scss"
 
 type ModalTextProps = {
@@ -10,19 +11,16 @@ type ModalTextProps = {
 
 export function ModalText(props: ModalTextProps) {
   const [modal, setModal] = useState(false)
-  const ref = useRef()
 
   return <div className="ModalText">
     {modal ? (
-      <div ref={ref} className="fg" onMouseDown={e => {
-        if (e.target === ref.current) {
-          setModal(false)
-        }
+      <ModalBase onClose={() => {
+        setModal(false)
       }}>
         <ThrottledTextInput textArea={true} value={props.value} onChange={v => {
           props.onChange(v)
         }}/>
-      </div>
+      </ModalBase>
     ) : (
       <button onClick={e => {
         setModal(!modal)

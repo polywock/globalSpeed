@@ -1,30 +1,28 @@
 import { subscribeView } from "../background/GlobalState"
-import { round } from "../utils/helper"
 
 export class SpeedSync {
   released: boolean
   intervalId: number
-  client = subscribeView({speed: true}, window.tabInfo.tabId, true, (view) => {
+  latest: {freePitch: boolean, speed: number}
+  client = subscribeView({speed: true, freePitch: true}, window.tabInfo.tabId, true, view => {
+    this.latest = {speed: view.speed, freePitch: view.freePitch} 
     this.updatePage()
   }, 150, 300)
   constructor() {
     this.intervalId = setInterval(this.updatePage, 1000)
+    window.mediaTower.newMediaCallbacks.add(this.updatePage)
   }
   release = () => {
     if (this.released) return 
     this.client?.release(); delete this.client
     this.released = true 
     this.intervalId = clearInterval(this.intervalId) as null 
+    window.mediaTower.newMediaCallbacks.delete(this.updatePage)
   }
   updatePage = () => {
-    const speed = this.client?.view?.speed
-    if (speed === null) return 
-    window.mediaTower.media.forEach(media => {
-      if (round(media.playbackRate, 2) !== round(speed, 2)) {
-        media.playbackRate = speed 
-      }
-    })
+    this.latest && window.mediaTower.applySpeedToAll(this.latest.speed, this.latest.freePitch)
   }
 }
+
 
 

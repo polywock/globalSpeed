@@ -1,12 +1,19 @@
 
-
-@import "../common.scss";
+@import "../_fonts.scss";
+@import "../_common.scss";
 
 
 body {
   margin: 0;
   padding: 0;
   background-color: var(--fg-color);
+}
+
+#SuperDisable {
+  padding: 10px;
+  background-color: #fafafa; 
+  color: #666; 
+  cursor: pointer;
 }
 
 #App {
@@ -16,4 +23,3 @@ body {
     min-height: 150px;
   }
 }
-

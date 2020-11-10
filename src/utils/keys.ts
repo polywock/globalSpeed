@@ -1,5 +1,5 @@
 
-export type FullHotKey = {
+export type FullHotkey = {
   code: string,
   altKey?: boolean,
   ctrlKey?: boolean,
@@ -7,7 +7,7 @@ export type FullHotKey = {
   metaKey?: boolean
 }
 
-export type Hotkey = FullHotKey | string
+export type Hotkey = FullHotkey | string
 
 export function formatHotkey(key: Hotkey) {
   if (!key) {
@@ -34,7 +34,7 @@ export function formatHotkey(key: Hotkey) {
   }
 }
 
-export function extractHotkey(event: KeyboardEvent): FullHotKey {
+export function extractHotkey(event: KeyboardEvent): FullHotkey {
   return {
     ctrlKey: event.ctrlKey,
     altKey: event.altKey,
@@ -49,10 +49,10 @@ export function compareHotkeys(lhs: Hotkey, rhs: Hotkey) {
     return false 
   }
   if (typeof(lhs) === "string") {
-    lhs = {code: lhs} as FullHotKey
+    lhs = {code: lhs} as FullHotkey
   }
   if (typeof(rhs) === "string") {
-    rhs = {code: rhs} as FullHotKey
+    rhs = {code: rhs} as FullHotkey
   }
 
   return (lhs.ctrlKey === true) == (rhs.ctrlKey === true) && 

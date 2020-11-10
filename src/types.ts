@@ -20,7 +20,12 @@ declare global {
       [key: string]: number
     },
     gsLoopTimeUpdateHandler?: () => void,
-    gsLoopSeekingHandler?: () => void
+    gsLoopSeekingHandler?: () => void,
+    preservesPitch?: boolean
+    mozPreservesPitch?: boolean
+    webkitPreservesPitch?: boolean
+    videoTracks: any[]
+    audioTracks: any[]
   }
 }
 
@@ -39,6 +44,8 @@ export type State = {
   rules?: URLRule[],
   common: Context,
   indicatorInit?: IndicatorInit,
+  freePitch?: boolean,
+  superDisable?: boolean
 }
 
 export type StateSansCommon = Omit<State, "common">
@@ -72,13 +79,15 @@ export type Context = {
   enabled: boolean,
   elementFx: Fx,
   backdropFx: Fx,
-  audioFx: AudioFx
+  monoOutput?: boolean,
+  audioFx: AudioFx,
+  audioFxAlt?: AudioFx
 }
 
 export type AudioFx = {
   pitch: number,
+  jungleMode?: boolean, 
   volume: number,
-  mono?: boolean,
   delay: number,
   delayMerge?: boolean,
   eq: {
@@ -137,7 +146,8 @@ export type Keybind = {
   filterTarget?: TargetFx,
   adjustMode?: AdjustMode,
   cycleIncrement?: number,
-  spacing?: number
+  spacing?: number,
+  condition?: URLCondition
 }
 
 
@@ -178,8 +188,7 @@ export type StateOption = "on" | "off" | "toggle"
 export type URLRule = {
   id: string,
   enabled: boolean,
-  matchType: "STARTS_WITH" | "CONTAINS" | "REGEX",
-  match: string,
+  condition: URLCondition,
   type: "SPEED" | "STATE" | "FX" | "JS",
   overrideSpeed: number,
   overrideFx?: {
@@ -193,12 +202,29 @@ export type URLRule = {
 }
 
 
+export type URLConditionPart = {
+  type: "STARTS_WITH" | "CONTAINS" | "REGEX",
+  inverse?: boolean,
+  value: string,
+  disabled?: boolean,
+  id: string
+}
+
+export type URLCondition = {
+  parts: URLConditionPart[],
+  matchAll?: boolean
+}
+
+
 export type Gsm = {
   audio: {
     captureTab: string,
     releaseTab: string,
     equalizer: string,
-    compressor: string
+    compressor: string,
+    split: string,
+    mono: string,
+    reverse: string
   },
   warnings: {
     backdropFirefox: string,
@@ -228,7 +254,12 @@ export type Gsm = {
     size: string,
     rounding: string,
     duration: string,
-    offset: string
+    offset: string,
+    
+    any: string,
+    all: string,
+    copy: string,
+    paste: string 
   },
   filter: {
     grayscale: string,
@@ -256,6 +287,7 @@ export type Gsm = {
     nothing: string,
     runCode: string,
     adjustSpeed: string,
+    preservePitch: string,
     setPin: string,
     setState: string,
     seek: string,
@@ -274,7 +306,8 @@ export type Gsm = {
     adjustPitch: string,
     adjustGain: string,
     adjustDelay: string,
-    tabCapture: string
+    tabCapture: string,
+    relativeTooltip: string
   },
   options: {
     flags: {
@@ -311,7 +344,10 @@ export type Gsm = {
     help: {
       header: string,
       issuePrompt: string,
-      issueDirective: string
+      issueDirective: string,
+      export: string,
+      import: string,
+      areYouSure: string
     }
   }
 }

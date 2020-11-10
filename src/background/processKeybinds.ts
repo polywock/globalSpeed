@@ -102,7 +102,7 @@ export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
   window.globalState.unfreeze("kb")
 
   if (feedback) {
-    feedback.volume = fetch({feedbackVolume: true}).feedbackVolume ?? 0.5
+    feedback.volume = fetch({feedbackVolume: true}).feedbackVolume ?? 0
     feedback.currentTime = 0 
     feedback.volume && feedback.play()
   }
@@ -202,6 +202,19 @@ const commandHandlers: {
     override.lastSpeed = view.speed  
  
     show({text: formatSpeed(override.speed, view.isPinned)})
+  },
+  preservePitch: async args => {
+    const { kb, show, override, fetch } = args 
+    const view = fetch({freePitch: true})
+    if (kb.valueState === "off" || (kb.valueState === "toggle" && view.freePitch)) {
+      override.freePitch = false 
+    } else {
+      override.freePitch = true
+    }
+    show({
+      text: ` ${window.gsm.token[override.freePitch ? "off" : "on"]}`,
+      icons: ["preservePitch"]
+    })
   },
   seek: async args => {
     const { kb, media, applyToMedia, show, fetch } = args
@@ -351,70 +364,13 @@ const commandHandlers: {
     })
   },
   adjustPitch: async args => {
-    const { kb, fetch, show, override, getCycleValue, commandInfo, tabInfo } = args 
-    let { audioFx } = fetch({audioFx: true})
-    audioFx = audioFx || getDefaultAudioFx()
-
-    let value: number
-    if (kb.adjustMode === AdjustMode.CYCLE) {
-      value = getCycleValue()
-    } else if (kb.adjustMode === AdjustMode.SET) {
-      value = kb.valueNumber ?? commandInfo.valueDefault
-    } else if (kb.adjustMode === AdjustMode.ADD) {
-      value = audioFx.pitch + (kb.valueNumberAlt ?? commandInfo.valueStep)
-    }
-
-    if (value == null || isNaN(value)) throw Error("Value not NULL or NaN.")
-
-    override.audioFx = {...audioFx, pitch: clamp(commandInfo.valueMin, commandInfo.valueMax, value)}
-
-    args.autoCapture(override.audioFx.pitch)
-
-    show({text: `${(override.audioFx.pitch * 100).toFixed(0)}%`})
+    processAudioParam(args, "pitch", v => `${(v).toFixed(1)}`)
   },
   adjustGain: async args => {
-    const { kb, fetch, show, override, getCycleValue, commandInfo, tabInfo } = args 
-    let { audioFx } = fetch({audioFx: true})
-    audioFx = audioFx || getDefaultAudioFx()
-
-    let value: number
-    if (kb.adjustMode === AdjustMode.CYCLE) {
-      value = getCycleValue()
-    } else if (kb.adjustMode === AdjustMode.SET) {
-      value = kb.valueNumber ?? commandInfo.valueDefault
-    } else if (kb.adjustMode === AdjustMode.ADD) {
-      value = audioFx.volume + (kb.valueNumberAlt ?? commandInfo.valueStep)
-    }
-
-    if (value == null || isNaN(value)) throw Error("Value not NULL or NaN.")
-
-    override.audioFx = {...audioFx, volume: clamp(commandInfo.valueMin, commandInfo.valueMax, value)}
-
-    args.autoCapture(override.audioFx.volume)
-
-    show({text: `${(override.audioFx.volume * 100).toFixed(0)}%`})
+    processAudioParam(args, "volume", v => `${(v * 100).toFixed(0)}%`)
   },
   adjustDelay: async args => {
-    const { kb, fetch, show, override, getCycleValue, commandInfo, tabInfo } = args 
-    let { audioFx } = fetch({audioFx: true})
-    audioFx = audioFx || getDefaultAudioFx()
-
-    let value: number
-    if (kb.adjustMode === AdjustMode.CYCLE) {
-      value = getCycleValue()
-    } else if (kb.adjustMode === AdjustMode.SET) {
-      value = kb.valueNumber ?? commandInfo.valueDefault
-    } else if (kb.adjustMode === AdjustMode.ADD) {
-      value = audioFx.delay + (kb.valueNumberAlt ?? commandInfo.valueStep)
-    }
-
-    if (value == null || isNaN(value)) throw Error("Value not NULL or NaN.")
-
-    override.audioFx = {...audioFx, delay: clamp(commandInfo.valueMin, commandInfo.valueMax, value)}
-
-    args.autoCapture(override.audioFx.delay)
-
-    show({text: `${override.audioFx.delay.toFixed(2)}`})
+    processAudioParam(args, "delay", v => `${v.toFixed(2)}`)
   },
   tabCapture: async args => {
     const { kb, show, setFeedback, tabInfo } = args 
@@ -448,3 +404,43 @@ const commandHandlers: {
 }
 
 
+function processAudioParam(args: CommandHandlerArgs, param: "pitch" | "delay" | "volume", format: (v: number) => string) {
+  const { kb, fetch, show, override, getCycleValue, commandInfo } = args 
+  let { audioFx, audioFxAlt } = fetch({audioFx: true, audioFxAlt: true})
+
+  audioFx = audioFx || getDefaultAudioFx()
+  audioFxAlt = audioFxAlt
+
+  let newValue: number
+  let newValueAlt: number 
+
+  if (kb.adjustMode === AdjustMode.CYCLE) {
+    newValue = getCycleValue()
+    newValueAlt = newValue // same
+  } else if (kb.adjustMode === AdjustMode.SET) {
+    newValue = kb.valueNumber ?? commandInfo.valueDefault
+    newValueAlt = newValue // same 
+  } else if (kb.adjustMode === AdjustMode.ADD) {
+    newValue = audioFx[param] + (kb.valueNumberAlt ?? commandInfo.valueStep)
+    newValueAlt = (audioFxAlt || audioFx)[param] + (kb.valueNumberAlt ?? commandInfo.valueStep)
+  } 
+  
+  let displayValues = new Set<string>()
+
+
+  if (newValue == null || isNaN(newValue)) throw Error("Value not NULL or NaN.")
+  newValue = clamp(commandInfo.valueMin, commandInfo.valueMax, newValue)
+  override.audioFx = {...audioFx, [param]: newValue}
+  displayValues.add(format(newValue))
+  args.autoCapture(override.audioFx[param])
+
+  if (audioFxAlt && !isNaN(newValueAlt) && newValueAlt != null) {
+    newValueAlt = clamp(commandInfo.valueMin, commandInfo.valueMax, newValueAlt)
+    override.audioFxAlt = {...audioFxAlt, [param]: newValueAlt}
+    displayValues.add(format(newValueAlt))
+    args.autoCapture(override.audioFxAlt[param])
+  }
+  
+
+  show({text: Array.from(displayValues).join(", ")})
+}

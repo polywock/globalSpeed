@@ -1,9 +1,8 @@
-import React, { useMemo } from "react"
+import React from "react"
 import { clamp } from "../utils/helper"
 import { NumericInput } from "../comps/NumericInput"
-import { GiAnticlockwiseRotation } from "react-icons/gi"
-import { Move } from "./Move"
 import { Slider } from "./Slider"
+import { Reset } from "./Reset"
 import "./SliderPlus.scss"
 
 type SliderPlusProps = {
@@ -16,30 +15,24 @@ type SliderPlusProps = {
   max?: number,
   default: number,
   onChange?: (newValue: number) => void,
-  onMove?: (down: boolean) => void,
+  noReset?: boolean
 }
 
 
 export function SliderPlus(props: SliderPlusProps) {
 
-  const env = useMemo(() => ({props} as {props: SliderPlusProps}), [])
-  env.props = props 
-  
   const handleValueChange = (value: number) => {
     props.onChange(clamp(props.min, props.max, value))
   }
 
-  return <div className={`SliderPlus ${props.default !== props.value ? "highlight" : ""}`}>
-    {props.onMove ? <Move onMove={props.onMove}/> : <div/>}
-    <div className="core">
-      <div className="header">
-        <span>{props.label}</span>
-        <NumericInput noNull={true} min={props.min} max={props.max} value={props.value} onChange={handleValueChange}/>
-        <GiAnticlockwiseRotation size={15}  className={`button reset`} onClick={e => handleValueChange(props.default)}/>
-      </div>
-      <Slider step={props.sliderStep ?? 0.01} min={props.sliderMin} max={props.sliderMax} value={props.value} default={props.default} onChange={handleValueChange}/>
+  const activated = props.default !== props.value
+
+  return <div className={`SliderPlus ${activated ? "highlight" : ""}`}>
+    <div className="header">
+      <span>{props.label}</span>
+      <NumericInput noNull={true} min={props.min} max={props.max} value={props.value} onChange={handleValueChange}/>
+      {props.noReset ? <div/> : <Reset active={activated} onClick={() => handleValueChange(props.default)}/>}
     </div>
+    <Slider step={props.sliderStep ?? 0.01} min={props.sliderMin} max={props.sliderMax} value={props.value} default={props.default} onChange={handleValueChange}/>
   </div>
 }
-
-

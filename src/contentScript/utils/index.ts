@@ -76,4 +76,49 @@ export class WindowTalk {
 
 
 
+export class WindowKeyListener {
+  downCbs: Set<(e: KeyboardEvent) => void> = new Set()
+  upCbs: Set<(e: KeyboardEvent) => void> = new Set()
+  constructor() {
+    window.addEventListener("keydown", this.handleKeyDown, true)
+    window.addEventListener("keyup", this.handleKeyUp, true)
+  }
+  release = () => {
+    window.removeEventListener("keydown", this.handleKeyDown, true)
+    window.removeEventListener("keyup", this.handleKeyUp, true)
+  }
+  handleKeyDown = (e: KeyboardEvent) => {
+    this.downCbs.forEach(cb => {
+      cb(e)
+    })
+  }
+  handleKeyUp = (e: KeyboardEvent) => {
+    this.upCbs.forEach(cb => {
+      cb(e)
+    })
+  }
+}
 
+
+
+function getShadowRoot(v: Element) {
+  if (v.shadowRoot) return v.shadowRoot
+
+  for (let doc of window.mediaTower.docs) {
+    if (doc instanceof ShadowRoot && doc.host === v) {
+      return doc 
+    }
+  }
+}
+
+export function findLeafActiveElement(doc: DocumentOrShadowRoot): Element {
+  const active = doc?.activeElement
+  if (!active) return 
+
+  const shadowRoot = getShadowRoot(active)
+  if (shadowRoot && shadowRoot.activeElement) {
+    return findLeafActiveElement(shadowRoot)
+  }
+
+  return active 
+}

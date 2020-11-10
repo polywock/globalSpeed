@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Keybind, TargetFx, StateOption, AdjustMode } from "../types"
 import produce from "immer"
 import { KeyPicker } from "../comps/KeyPicker"
@@ -10,13 +10,16 @@ import { GoChevronDown, GoChevronUp, GoX, GoTriangleDown, GoCode, GoPin, GoZap }
 import { CycleInput } from "../comps/CycleInput"
 import { ModalText } from "../comps/ModalText"
 import { FaPowerOff, FaPause, FaEquals, FaBookmark, FaLink, FaVolumeUp, FaVolumeMute, FaGlobe, FaFile, FaLockOpen, FaLock, FaBackward, FaForward, FaArrowRight, FaExchangeAlt, FaPlus, FaMusic, FaList } from "react-icons/fa"
-import { requestCreateTab } from "../utils/browserUtils"
+import { hasWebNavigation, requestCreateTab } from "../utils/browserUtils"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
+import { BsMusicNoteList } from "react-icons/bs"
 import { TiArrowLoop } from "react-icons/ti"
 import { MdTimer } from "react-icons/md"
 import { isFirefox, clamp } from "../utils/helper"
 import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { Move } from "../comps/Move"
+import { URLModal } from "./URLModal"
+import { getDefaultURLCondition } from "../defaults"
 import "./KeybindControl.scss"
 
 
@@ -28,8 +31,9 @@ type KeybindControlProps = {
 }
 
 export const KeybindControl = (props: KeybindControlProps) => {
-
   const { value } = props
+  const [show, setShow] = useState(false)
+
   const commandInfo = commandInfos[value.command]
 
   const label = (window.gsm.command as any)[value.command]
@@ -61,6 +65,47 @@ export const KeybindControl = (props: KeybindControlProps) => {
 
 
   return <div className={`KeybindControl ${value.spacing === 1 ? "spacing" : value.spacing === 2 ? "doubleSpacing" : ""} ${value.enabled ? "" : "disabled"}`}>
+    <div 
+      className={`urlRules ${value.condition?.parts.length ? "active" : ""}`} 
+      onClick={() => {
+        if (!isFirefox()) {
+          setShow(!show)
+        } else {
+          hasWebNavigation().then(granted => {
+            granted && setShow(!show)
+          })
+        }
+      }}
+      onContextMenu={e => {
+        if (value.condition) {
+          props.onChange(value.id, produce(value, d => {
+            d.condition = getDefaultURLCondition()
+          }))
+          e.preventDefault()
+        }
+      }}
+    >{value.condition?.parts.length || 0}</div>
+    {!show ? null : (
+      <URLModal neutralValue={true} onReset={() => {
+        props.onChange(value.id, produce(value, d => {
+          d.condition = getDefaultURLCondition()
+        }))
+      }} onChange={newValue => {
+        props.onChange(value.id, produce(value, d => {
+          d.condition = newValue 
+        }))
+      }} onClose={() => {
+        setShow(false)
+
+        if (value.condition && value.condition.parts.length === 0) {
+          props.onChange(value.id, produce(value, d => {
+            delete d.condition 
+          }))
+        }
+      }} value={value.condition || getDefaultURLCondition()}/>
+    )}
+
+    
     <Move onMove={down => {
       props.onMove(value.id, down)
     }}/>
@@ -72,6 +117,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
     <div className="command">
       <div className="name">
         {value.command === "adjustSpeed" && <MdTimer size="1.3em"/>}
+        {value.command === "preservePitch" && <BsMusicNoteList size="1.3em"/>}
         {value.command === "runCode" && <GoCode size="1.1em"/>}
         {value.command === "openUrl" && <FaLink size="1em"/>}
         {value.command === "setPin" && <GoPin size="1.05em"/>}
@@ -110,7 +156,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
         </>}
         <span>{label}</span>
         {value.command === "seek" && (
-          <button className={`toggle ${value.valueBool ? "active" : ""}`} onClick={e => {
+          <button title={window.gsm.command.relativeTooltip} className={`toggle ${value.valueBool ? "active" : ""}`} onClick={e => {
             props.onChange(value.id, produce(value, d => {
               d.valueBool = !d.valueBool
             }))

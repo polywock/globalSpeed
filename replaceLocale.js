@@ -1,7 +1,7 @@
 
 // Test to make sure all locales have the required strings.
 
-const { readFileSync, writeFileSync } = require("fs")
+const { readFileSync } = require("fs")
 const { exit } = require("process")
 
 const locales = ["en", "es", "hi", "ja", "ko", "pt_BR", "ru", "tr", "zh_CN", "zh_TW"]

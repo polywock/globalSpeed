@@ -1,17 +1,18 @@
 import React, { useState, useRef } from "react"
 import { useStateView } from "../hooks/useStateView"
 import { URLRule } from "../types"
-import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { GoX, GoZap } from "react-icons/go"
-import { getDefaultURLRule, getDefaultFx } from "../defaults"
+import { getDefaultURLRule, getDefaultFx, getDefaultURLCondition } from "../defaults"
 import { FaPowerOff } from "react-icons/fa"
 import { NumericInput } from "../comps/NumericInput"
 import { FxControl } from "../popup/FxControl"
-import { moveItem } from "../utils/helper"
+import { isFirefox, moveItem } from "../utils/helper"
 import { Move } from "../comps/Move"
-import "./SectionRules.scss"
-import produce from "immer"
 import { ModalText } from "../comps/ModalText"
+import { URLModal } from "./URLModal"
+import produce from "immer"
+import "./SectionRules.scss"
+import { hasWebNavigation } from "../utils/browserUtils"
 
 
 export function SectionRules(props: {}) {
@@ -64,7 +65,13 @@ export function SectionRules(props: {}) {
         <Rule key={rule.id} rule={rule} onChange={handleChange} onMove={handleMove}/>
       ))}</div>
       <button className="create" onClick={e => {
-        handleChange(getDefaultURLRule())
+        if (!isFirefox()) {
+          handleChange(getDefaultURLRule())
+        } else {
+          hasWebNavigation().then(granted => {
+            granted && handleChange(getDefaultURLRule())
+          })
+        }
       }}>{window.gsm.token.create}</button>
     </div>
   )
@@ -80,6 +87,8 @@ type RuleProps = {
 
 function Rule(props: RuleProps) {
   const { rule, onChange } = props
+  const [ show, setShow ] = useState(false)
+
   return (
     <div className="Rule">
       <Move onMove={down => {
@@ -100,27 +109,18 @@ function Rule(props: RuleProps) {
           d.strict = !d.strict
         }))
       }}>LAX</button>
-      <select value={rule.matchType} onChange={e => {
+      <button className="show" onClick={e => {
+        setShow(!show)
+      }}>{`-- ${rule.condition.parts?.length || 0} --`}</button>
+      {show ? <URLModal onReset={() => {
         onChange(produce(rule, d => {
-          d.matchType = e.target.value as any
-          if (d.matchType === "REGEX") {
-            d.match = String.raw`twitch\.tv`
-          } else if (d.matchType === "CONTAINS") {
-            d.match = "twitch.tv"
-          } else if (d.matchType === "STARTS_WITH") {
-            d.match = String.raw`https://www.twitch.tv`
-          }
+          d.condition = getDefaultURLCondition()
         }))
-      }}>
-        <option value={"STARTS_WITH"}>{window.gsm.options.rules.startsWith}</option>
-        <option value={"CONTAINS"}>{window.gsm.options.rules.contains}</option>
-        <option value={"REGEX"}>{window.gsm.options.rules.regex}</option>
-      </select>
-      <ThrottledTextInput value={rule.match} onChange={newValue => {
+      }} onChange={v => {
         onChange(produce(rule, d => {
-          d.match = newValue
+          d.condition = v 
         }))
-      }}/>
+      }} onClose={() => setShow(false)} value={rule.condition || getDefaultURLCondition()}/> : null}
       <select value={rule.type} onChange={e => {
          onChange(produce(rule, d => {
           d.type = e.target.value as any

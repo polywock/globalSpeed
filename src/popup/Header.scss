@@ -4,7 +4,6 @@
   grid-template-columns: repeat(2, max-content) 1fr repeat(4, max-content);
   justify-items: right;
   align-items: center;
-  // grid-column-gap: 10px;
   padding: 3px 5px 0px 5px;
   border-bottom: 1px solid var(--border-color);
   background-color: var(--fg-color);
@@ -14,6 +13,7 @@
     padding: 0 5px;
     color: var(--header-icon-color);
     border: none;
+    cursor: pointer;
 
     &.noPadding {
       padding: 0;
@@ -36,6 +36,10 @@
 
     &.active {
       color: var(--header-icon-active-color);
+
+      &.red {
+        color: red; 
+      }
 
       &.beat {
         animation: 1s ease-in beat infinite;

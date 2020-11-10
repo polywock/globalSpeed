@@ -1,0 +1,90 @@
+
+.URLModal {
+  width: 700px;
+  max-width: 90vw;
+  max-height: 90vh;
+  background-color: var(--fg-color);
+  padding: 20px;
+  border-radius: 10px;
+  overflow-y: scroll;
+
+  @keyframes passKeyframes {
+    from {
+      background-color: lightgreen; 
+      color: inherit; 
+    }
+    to {
+      background-color: inherit; 
+      color: inherit; 
+    }
+  }
+
+  @keyframes failKeyframes {
+    from {
+      background-color: lightcoral; 
+      color: inherit; 
+    }
+    to {
+      background-color: inherit; 
+      color: inherit; 
+    }
+  }
+
+
+  & > .header {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+
+    & > div:first-child {
+      font-size: 1.3em;
+    }
+
+    margin-bottom: 10px;
+  }
+
+
+  & > .parts {
+    margin-bottom: 20px;
+    
+    & > div {
+      margin-bottom: 15px;
+      display: grid;
+      grid-template-columns: max-content max-content max-content 1fr max-content;
+      column-gap: 10px;
+      align-items: center;
+    }
+  }
+
+  & > .controls  {
+    display: grid;
+    grid-template-columns: max-content max-content 1fr;
+    column-gap: 10px;
+
+    & > .right {
+      display: grid;
+      grid-template-columns: max-content max-content;
+      justify-content: right;
+      column-gap: 10px;
+    }
+  }
+
+  & > .test {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    align-items: center;
+    column-gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+
+    & > button {
+      &.passed {
+        animation: passKeyframes 500ms ease-out forwards
+      }
+      
+      &.failed {
+        animation: failKeyframes 500ms ease-out forwards
+      }
+    }
+  }
+}

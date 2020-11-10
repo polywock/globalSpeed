@@ -3,7 +3,10 @@
     "captureTab": "捕獲",  
     "releaseTab": "釋放",
     "equalizer": "均衡器",
-    "compressor": "壓限器"
+    "compressor": "壓限器",
+    "split": "分割",
+    "mono": "單聲道",
+    "reverse": "反向音頻"
   },
   "warnings": {
     "backdropFirefox": "對於背景過濾器功能，Firefox用戶需要轉到“about:config”URL啟用“gfx.webrender.all”和“layout.css.backdrop-filter.enabled”。啟用這兩個標誌後，重新啟動Firefox。",
@@ -33,7 +36,12 @@
     "size": "大小",
     "rounding": "圓度",
     "duration": "持續時間",
-    "offset": "位移"
+    "offset": "位移",
+    
+    "any": "任意",
+    "all": "全部",
+    "copy": "複製",
+    "paste": "粘貼"
   },
   "filter": {
     "grayscale": "灰階",
@@ -62,6 +70,7 @@
     "runCode": "javaScript",
     "openUrl": "打開網址",
     "adjustSpeed": "速度",
+    "preservePitch": "保持音高",
     "setPin": "固定標籤頁",
     "setState": "狀態",
     "seek": "移動時間軸",
@@ -79,7 +88,8 @@
     "adjustPitch": "音高",
     "adjustGain": "增益",
     "adjustDelay": "延遲",
-    "tabCapture": "捕獲"
+    "tabCapture": "捕獲",
+    "relativeTooltip": "相對於速度"
   },
   "options": {
     "flags": {
@@ -116,7 +126,10 @@
     "help": {
       "header": "幫助",
       "issuePrompt": "有問題或建議嗎？",
-      "issueDirective": "在Github上提供反饋。"
+      "issueDirective": "在Github上提供反饋。",
+      "export": "匯出​​",
+      "import": "匯入",
+      "areYouSure": "你確定嗎？"
     }
   }
 }

@@ -3,7 +3,10 @@
     "captureTab": "पकड़ना",
     "releaseTab": "त्यागना",
     "equalizer": "EQ",
-    "compressor": "कंप्रेसर"
+    "compressor": "कंप्रेसर",
+    "split": "विभाजित",
+    "mono": "मोनो",
+    "reverse": "रिवर्स"
   },
   "warnings": {
     "backdropFirefox": "फ़ायरफ़ॉक्स उपयोगकर्ताओं को \"about:config\" URL पर जाकर \"gfx.webrender.all\" और \"layout.css.backdrop-filter.enabled\" को सक्षम करने की आवश्यकता है। दो झंडे को सक्षम करने के बाद फ़ायरफ़ॉक्स को पुनरारंभ करें।",
@@ -33,7 +36,12 @@
     "size": "आकार",
     "rounding": "गोलाई",
     "duration": "अवधि",
-    "offset": "ऑफ़सेट"
+    "offset": "ऑफ़सेट",
+    
+    "any": "कोई भी",
+    "all": "सभी",
+    "copy": "कॉपी",
+    "paste": "पेस्ट"
   },
   "filter": {
     "grayscale": "ग्रेस्केल",
@@ -62,6 +70,7 @@
     "runCode": "javascript",
     "openUrl": "URL",
     "adjustSpeed": "गति",
+    "preservePitch": "ताला पिच",
     "setPin": "टैब पिन करें",
     "setState": "स्थिति",
     "seek": "पारी की स्थिति",
@@ -79,7 +88,8 @@
     "adjustPitch": "तारत्व",
     "adjustGain": "आवाज़+",
     "adjustDelay": "विलंब",
-    "tabCapture": "पकड़ना"
+    "tabCapture": "पकड़ना",
+    "relativeTooltip": "गति के सापेक्ष"
   },
   "options": {
     "flags": {
@@ -116,7 +126,10 @@
     "help": {
       "header": "मदद",
       "issuePrompt": "मुद्दों या एक सुझाव है?",
-      "issueDirective": "Github पेज पर एक नया मुद्दा बनाएं।"
+      "issueDirective": "Github पर प्रतिक्रिया दें।",
+      "export": "निर्यात",
+      "import": "आयात",
+      "areYouSure": "क्या आपको यकीन है?"
     }
   }
 }

@@ -3,7 +3,10 @@
     "captureTab": "захватить",
     "releaseTab": "отпускать",
     "equalizer": "Эквалайзер",
-    "compressor": "Компрессор"
+    "compressor": "Компрессор",
+    "split": "разделить",
+    "mono": "моно",
+    "reverse": "обратный звук"
   },
   "warnings": {
     "backdropFirefox": "Пользователи Firefox должны включить «gfx.webrender.all» и «layout.css.backdrop-filter.enabled», перейдя по URL «about:config». Перезапустите Firefox после включения двух флагов.",
@@ -33,7 +36,12 @@
     "size": "размер",
     "rounding": "круглость",
     "duration": "скорость",
-    "offset": "сместить"
+    "offset": "сместить",
+    
+    "any": "любой",
+    "all": "все",
+    "copy": "копировать",
+    "paste": "вставить"
   },
   "filter": {
     "grayscale": "полутоновой",
@@ -62,6 +70,7 @@
     "runCode": "javascript",
     "openUrl": "открыть URL",
     "adjustSpeed": "скорость",
+    "preservePitch": "сохранять высоту звука",
     "setPin": "прикрепить вкладку",
     "setState": "состояние",
     "seek": "сдвиг позиции",
@@ -79,7 +88,8 @@
     "adjustPitch": "Высота звука",
     "adjustGain": "громкость+",
     "adjustDelay": "задержка",
-    "tabCapture": "захватить"
+    "tabCapture": "захватить",
+    "relativeTooltip": "относительно скорости"
   },
   "options": {
     "flags": {
@@ -97,7 +107,7 @@
       "feedbackVolume": "объем обратной связи",
       "ghostMode": "режим призрака",
       "ghostModeTooltip": "Попробуйте заблокировать сайт от изменения скорости. По умолчанию отключено, поскольку это может привести к поломке некоторых веб-сайтов.",
-      "hideMediaView": "скрыть список СМИ"
+      "hideMediaView": "скрыть список медиа"
     },
     "editor": {
       "header": "Редактор ярлыков",
@@ -116,7 +126,10 @@
     "help": {
       "header": "Помогите",
       "issuePrompt": "Есть вопросы или предложения?",
-      "issueDirective": "Отправить отчет на Github."
+      "issueDirective": "Оставьте отзыв о Github.",
+      "export": "экспорт",
+      "import": "Импорт",
+      "areYouSure": "Ты уверен?"
     }
   }
 }

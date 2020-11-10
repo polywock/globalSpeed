@@ -1,9 +1,16 @@
 
-.Filters {
-  & > .SliderPlus {
-    margin-bottom: 15px;
-    &:last-child {
-      margin-bottom: 0;
-    }
+.Filters > .Filter {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 5px;
+  align-items: start;
+
+  & > .Move {
+    row-gap: 5px;
+  }
+
+  margin-bottom: 15px;
+  &:last-child {
+    margin-bottom: 0;
   }
 }
