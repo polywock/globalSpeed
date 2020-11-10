@@ -6,18 +6,6 @@ declare global {
   }
 }
 
-export function hasWebNavigation(): Promise<boolean> {
-  return new Promise((res, rej) => {
-    chrome.permissions.request({permissions: ["webNavigation"]}, granted => {
-      if (chrome.runtime.lastError) {
-        rej(false)
-        return 
-      }
-      res(granted)
-    })
-  })
-}
-
 export function getActiveTabIds(): Promise<number[]> {
   return new Promise((res, rej) => {
     chrome.tabs.query({active: true, currentWindow: undefined}, tabs => {

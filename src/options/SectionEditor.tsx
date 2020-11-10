@@ -103,10 +103,6 @@ export function SectionEditor(props: {}) {
           }}
           neutralValue={true}
         />}
-        {true}
-        {false}
-        {null}
-        {undefined}
       </div>
     </div>
   )

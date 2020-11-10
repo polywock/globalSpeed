@@ -12,7 +12,6 @@ import { ModalText } from "../comps/ModalText"
 import { URLModal } from "./URLModal"
 import produce from "immer"
 import "./SectionRules.scss"
-import { hasWebNavigation } from "../utils/browserUtils"
 
 
 export function SectionRules(props: {}) {
@@ -64,15 +63,7 @@ export function SectionRules(props: {}) {
       <div className="rules">{rules.map((rule, i) => (
         <Rule key={rule.id} rule={rule} onChange={handleChange} onMove={handleMove}/>
       ))}</div>
-      <button className="create" onClick={e => {
-        if (!isFirefox()) {
-          handleChange(getDefaultURLRule())
-        } else {
-          hasWebNavigation().then(granted => {
-            granted && handleChange(getDefaultURLRule())
-          })
-        }
-      }}>{window.gsm.token.create}</button>
+      <button className="create" onClick={e => handleChange(getDefaultURLRule())}>{window.gsm.token.create}</button>
     </div>
   )
 }

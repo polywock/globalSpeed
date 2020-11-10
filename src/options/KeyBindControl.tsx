@@ -10,7 +10,7 @@ import { GoChevronDown, GoChevronUp, GoX, GoTriangleDown, GoCode, GoPin, GoZap }
 import { CycleInput } from "../comps/CycleInput"
 import { ModalText } from "../comps/ModalText"
 import { FaPowerOff, FaPause, FaEquals, FaBookmark, FaLink, FaVolumeUp, FaVolumeMute, FaGlobe, FaFile, FaLockOpen, FaLock, FaBackward, FaForward, FaArrowRight, FaExchangeAlt, FaPlus, FaMusic, FaList } from "react-icons/fa"
-import { hasWebNavigation, requestCreateTab } from "../utils/browserUtils"
+import { requestCreateTab } from "../utils/browserUtils"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { BsMusicNoteList } from "react-icons/bs"
 import { TiArrowLoop } from "react-icons/ti"
@@ -67,15 +67,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
   return <div className={`KeybindControl ${value.spacing === 1 ? "spacing" : value.spacing === 2 ? "doubleSpacing" : ""} ${value.enabled ? "" : "disabled"}`}>
     <div 
       className={`urlRules ${value.condition?.parts.length ? "active" : ""}`} 
-      onClick={() => {
-        if (!isFirefox()) {
-          setShow(!show)
-        } else {
-          hasWebNavigation().then(granted => {
-            granted && setShow(!show)
-          })
-        }
-      }}
+      onClick={() => setShow(!show)}
       onContextMenu={e => {
         if (value.condition) {
           props.onChange(value.id, produce(value, d => {
