@@ -9,25 +9,44 @@ body {
   padding: 20px;
 }
 
-.Faqs {
+.Group {
+
+  h2 {
+    margin-top: 0;
+  }
+  
   width: 800px;
   background-color: white;
   padding: 20px;
+  margin-bottom: 30px;
+}
 
-  & > .Faq {
-    margin-bottom: 10px;
+.Item {
+  margin-bottom: 10px;
 
-    & > .header {
-      display: grid;
-      grid-template-columns: max-content 1fr;
-      grid-column-gap: 10px;
-      font-size: 1.3em;
-      align-items: center;
-      padding: 5px;
+  & > .header {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-column-gap: 10px;
+    font-size: 1.3em;
+    align-items: center;
+    padding: 5px;
 
-      & > button:first-child {
-        min-width: 30px;
-      }
+    & > button:first-child {
+      min-width: 30px;
     }
+  }
+}
+
+
+code {
+  background-color: #eee;
+}
+
+li {
+  margin-bottom: 10px;
+
+  &:last-child {
+    margin-bottom: 0px;
   }
 }
