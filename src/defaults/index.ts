@@ -7,6 +7,7 @@ import { chunkByPredicate, randomId } from "../utils/helper"
 export function getDefaultState(): State {
   return {
     version: 8,
+    firstUse: new Date().getTime(),
     keybinds: getDefaultKeybinds(),
     common: {
       speed: 1,

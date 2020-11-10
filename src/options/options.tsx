@@ -7,11 +7,13 @@ import { ThemeSync } from "../comps/ThemeSync"
 import { requestGsm } from "../utils/configUtils"
 import { SectionRules } from "./SectionRules"
 import { ErrorFallback } from "../comps/ErrorFallback"
+import { RateOverlay } from "./RateOverlay"
 import "./options.scss"
 
 const Options = (props: {}) => {
   return <div id="App">
     <ThemeSync/>
+    <RateOverlay/>
     <SectionFlags/>
     <SectionEditor/>
     <SectionRules/>

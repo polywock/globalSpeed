@@ -46,7 +46,9 @@ export type State = {
   common: Context,
   indicatorInit?: IndicatorInit,
   freePitch?: boolean,
-  superDisable?: boolean
+  superDisable?: boolean,
+  firstUse?: number,
+  clickedRating?: number
 }
 
 export type StateSansCommon = Omit<State, "common">

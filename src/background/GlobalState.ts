@@ -286,7 +286,9 @@ const namedSelectors = {
       ghostMode: true,
       indicatorInit: true,
       freePitch: true,
-      superDisable: true
+      superDisable: true,
+      firstUse: true,
+      clickedRating: true
     } as StateViewSelector    
 }
 

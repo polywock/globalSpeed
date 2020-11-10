@@ -1,7 +1,7 @@
 # Global Speed
 Web extension that sets a default speed for HTML media elements (video and audio). 
 
-## install the [Chrome](https://chrome.google.com/webstore/detail/global-speed-youtube-netf/jpbjcnkcffbooppibceonlgknpkniiff), [Firefox](https://addons.mozilla.org/firefox/addon/global-speed/), or [Edge](https://microsoftedge.microsoft.com/addons/detail/mjhlabbcmjflkpjknnicihkfnmbdfced) extension. 
+## Install the [Chrome](https://chrome.google.com/webstore/detail/global-speed-youtube-netf/jpbjcnkcffbooppibceonlgknpkniiff), [Firefox](https://addons.mozilla.org/firefox/addon/global-speed/), or [Edge](https://microsoftedge.microsoft.com/addons/detail/mjhlabbcmjflkpjknnicihkfnmbdfced) extension. 
 
 ### Speed Control 
 - Compatible with nearly all video and audio streaming sites including Youtube, Netflix, Twitch, Spotify, podcast sites, etc. 
@@ -20,6 +20,7 @@ Web extension that sets a default speed for HTML media elements (video and audio
 
 ### Audio Effects [Chromium Only]
 - Effects including pitch shifting, volume boosting, EQ, and more. 
+- Reverse audio to listen to [backmasked messages](https://en.wikipedia.org/wiki/List_of_backmasked_messages).
 - You can delay audio to fix sync issues. 
 - Configure hotkeys to adjust pitch, volume boost, and more. 
 - For fullscreen, first enter fullscreen and then capture the tab's audio using the optional shortcut key. 
