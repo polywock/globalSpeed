@@ -14,7 +14,7 @@ export class ConfigSync {
   lastTrigger = 0
   fxSync: FxSync
   speedSync: SpeedSync
-  client = subscribeView({enabled: true, keybinds: true, superDisable: true}, window.tabInfo.tabId, true, () => {
+  client = subscribeView({enabled: true, keybinds: true, keybindsUrlCondition: true, superDisable: true}, window.tabInfo.tabId, true, () => {
     this.handleEnabledChange()
   }, 300)
   constructor() {
@@ -61,7 +61,8 @@ export class ConfigSync {
     }
   }
   handleKeyDown = (e: KeyboardEvent) => {
-    if (this.client?.view?.superDisable) return 
+    if (!this.client?.view) return 
+    if (this.client.view.superDisable) return 
 
     const keybinds = this.client.view.keybinds
     const enabled = this.client.view.enabled
@@ -77,6 +78,12 @@ export class ConfigSync {
     const active = findLeafActiveElement(document)
     if (target !== active) {
       if (["INPUT", "TEXTAREA"].includes(active.tagName) || (active as HTMLElement).isContentEditable) {
+        return 
+      }
+    }
+
+    if (this.client.view.keybindsUrlCondition?.parts?.length) {
+      if (!checkURLCondition(location.href || "", this.client.view.keybindsUrlCondition, true)) {
         return 
       }
     }

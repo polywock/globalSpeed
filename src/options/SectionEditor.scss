@@ -4,11 +4,11 @@
     margin-top: 20px;
   }
   
-  & > .add {
+  & > .controls {
     margin-top: 30px;
     display: grid;
-    grid-auto-flow: column;
-    justify-content: left;
+    grid-template-columns: repeat(3, max-content) 1fr;
+    justify-items: right;
     align-items: stretch;
     grid-column-gap: 10px;
 

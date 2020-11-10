@@ -281,11 +281,12 @@ const namedSelectors = {
       hideMediaView: true,
       darkTheme: true,
       keybinds: true,
+      keybindsUrlCondition: true,
       rules: true,
       ghostMode: true,
       indicatorInit: true,
       freePitch: true,
-      superDisable: true 
+      superDisable: true
     } as StateViewSelector    
 }
 

@@ -9,13 +9,18 @@ import { useStateView } from "../hooks/useStateView"
 import { FaFile, FaGlobe, FaLock } from "react-icons/fa"
 import produce from "immer"
 import "./SectionEditor.scss"
+import { URLModal } from "./URLModal"
+import { getDefaultURLCondition } from "../defaults"
+import { pushView } from "../background/GlobalState"
 
 
 export function SectionEditor(props: {}) {
   const [commandOption, setCommandOption] = useState("adjustSpeed")
   const [view, setView] = useStateView({keybinds: true})
+  const [view2] = useStateView({keybindsUrlCondition: true})
+  const [show, setShow] = useState(false)
 
-  if (!view) return <div></div>
+  if (!view || !view2) return <div></div>
 
   const handleKeybindChange = (id: string, newKb: Keybind) => {
     setView(produce(view, d => {
@@ -70,7 +75,7 @@ export function SectionEditor(props: {}) {
           />
         ))}
       </div>
-      <div className="add">
+      <div className="controls">
         <select value={commandOption} onChange={e => {
           setCommandOption(e.target.value)
         }}>
@@ -88,6 +93,20 @@ export function SectionEditor(props: {}) {
             keybinds: getDefaultKeybinds()
           })
         }}>{window.gsm.token.reset}</button>
+        <button onClick={() => setShow(!show)} className="urlRules">{`-- ${view2.keybindsUrlCondition?.parts?.length || 0} --`}</button>
+        {show && <URLModal 
+          value={view2.keybindsUrlCondition || getDefaultURLCondition()} 
+          onClose={() => setShow(false)} 
+          onReset={() => pushView({override: {keybindsUrlCondition: null}})}
+          onChange={v => {
+            pushView({override: {keybindsUrlCondition: v.parts.length ? v : null}})
+          }}
+          neutralValue={true}
+        />}
+        {true}
+        {false}
+        {null}
+        {undefined}
       </div>
     </div>
   )

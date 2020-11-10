@@ -40,6 +40,7 @@ export type State = {
   staticOverlay?: boolean,
   darkTheme?: boolean,
   keybinds?: Keybind[],
+  keybindsUrlCondition?: URLCondition,
   ghostMode?: boolean,
   rules?: URLRule[],
   common: Context,
