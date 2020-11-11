@@ -18,8 +18,8 @@ export function injectCtx(file = false) {
     script.async = true 
     document.documentElement.appendChild(script)
   } else {
-    // $$$CTX$$$ is placeholder that is replaced during build. 
-    // It's replaced with the build of src/ctx.ts
+    // $CTX$ is placeholder that is replaced during build. 
+    // It's replaced with the build of src/contentScript/ctx.ts
     injectScript("$$$CTX$$$")
   }
 }

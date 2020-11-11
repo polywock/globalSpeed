@@ -28,7 +28,7 @@ export function RateOverlay(props: {}) {
   )
  
   
-  const passedFirstUsePeriod = new Date().getTime() - (view.firstUse || 0) > FIRST_USE_GRACE
+  const passedFirstUsePeriod = new Date().getTime() - (view.firstUse || 1603819820656) > FIRST_USE_GRACE
   const passedClickedPeriod = new Date().getTime() - (view.clickedRating || 0) > CLICK_GRACE
 
 

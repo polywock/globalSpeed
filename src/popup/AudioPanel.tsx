@@ -64,10 +64,10 @@ export function AudioPanel(props: {}) {
       <div className="tabs">
         <button className={!rightTab ? "open" : ""} onClick={e => {
           setRightTab(false)
-        }}>{"left"}</button>
+        }}>{"<< L"}</button>
         <button className={rightTab ? "open" : ""} onClick={e => {
           setRightTab(true)
-        }}>{"right"}</button>
+        }}>{"R >>"}</button>
       </div>
     ) : null}
     <SliderPlus

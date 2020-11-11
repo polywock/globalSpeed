@@ -4,9 +4,9 @@
     "releaseTab": "释放",
     "equalizer": "均衡器",
     "compressor": "压限器",
-    "split": "拆分",
+    "split": "分离声道",
     "mono": "单声道",
-    "reverse": "反向音频"
+    "reverse": "音频倒放"
   },
   "warnings": {
     "backdropFirefox": "对于背景过滤器功能，Firefox用户需要转到“about:config”URL启用“gfx.webrender.all”和“layout.css.backdrop-filter.enabled”。启用这两个标志后，重新启动Firefox。",
@@ -38,7 +38,7 @@
     "duration": "持续时间",
     "offset": "偏移",
 
-    "any": "任何",
+    "any": "任意",
     "all": "所有",
     "copy": "复制",
     "paste": "粘贴"
@@ -129,7 +129,7 @@
       "issueDirective": "在Github上提供反馈。",
       "export": "导出",
       "import": "导入",
-      "areYouSure": "你确定吗？"
+      "areYouSure": "确定吗？"
     }
   }
 }
