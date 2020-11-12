@@ -1,4 +1,4 @@
-import { migrateGrainData } from "../utils/migrateSchema"
+import { migrateSchema } from "../utils/migrateSchema"
 import { BadgeManager } from './BadgeManager'
 import { PortCapture } from './PortCapture'
 import { getStorage, getActiveTabInfo } from '../utils/browserUtils'
@@ -32,8 +32,14 @@ main()
 async function main() {
   window.isBackground = true 
   window.portCapture = new PortCapture()
-  let stateView = ((await getStorage()).config as State) || getDefaultState()
-  stateView = migrateGrainData(stateView)
+
+  let stateView: State 
+  try {
+    stateView = migrateSchema(((await getStorage()).config as State))
+  } catch (err) {}
+
+  stateView = stateView || getDefaultState()
+
   window.globalMedia = new GlobalMedia()
   window.globalState = new GlobalState(stateView)
   window.badgeMgr = new BadgeManager()

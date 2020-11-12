@@ -2,9 +2,11 @@ import { State } from "../types"
 import { getDefaultState } from "../defaults"
 import { randomId } from "./helper"
 
-export function migrateGrainData(state: State) {
-  if (state.version < 7) {
-    return getDefaultState()
+export function migrateSchema(state: State) {
+  const defaultState = getDefaultState()
+
+  if (!state || state.version < 7) {
+    return defaultState
   } 
   
   if (state.version === 7) {
@@ -15,8 +17,8 @@ export function migrateGrainData(state: State) {
     state = eightToNine(state)
   } */
 
-  if (state.version !== 8) {
-    return getDefaultState()
+  if (!(state?.version === defaultState.version)) {
+    return defaultState
   }
 
   return state 
