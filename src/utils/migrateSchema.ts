@@ -27,7 +27,7 @@ export function migrateSchema(state: State) {
 // These migration functions should be self contained. 
 function sevenToEight(state: State) {
   state.version = 8 
-  state.rules.forEach(rule => {
+  state.rules?.forEach(rule => {
     rule.condition = {
       parts: [{type: (rule as any).matchType || "CONTAINS", id: randomId(), value: (rule as any).match || ""}]
     }
