@@ -5,7 +5,7 @@ import { getDefaultState } from "../defaults";
 import cloneDeep from "lodash.clonedeep";
 import debounce from "lodash.debounce";
 import { sendMediaEvent } from "../utils/configUtils";
-import { migrateGrainData } from "../utils/migrateSchema";
+import { migrateSchema } from "../utils/migrateSchema";
 
 
 export class GlobalState {
@@ -21,7 +21,7 @@ export class GlobalState {
   }
   reload = (state: State) => {
     try {
-      let newState = migrateGrainData(state) 
+      let newState = migrateSchema(state) 
       if (newState.version === getDefaultState().version) {
         this.state = newState 
         this.pins = []
