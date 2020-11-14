@@ -2,13 +2,12 @@
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "es2019"],
     "types": ["@types/chrome", "@types/react", "@types/react-dom"],
-    "outDir": "./dist/",
     "noImplicitAny": true,
-    "module": "commonjs", 
     "target": "es2018",
+    "module": "commonjs",
     "allowJs": true,
     "sourceMap": false,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },

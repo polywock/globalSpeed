@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { freqToLinear, inverseLerp, linearToChromatic } from "../utils/helper";
 import { CaptureInfo } from "../background/CaptureManager"
-import React from "react"
 import { PitchDetector } from "pitchy"
 
 const SAMPLE_RATE = 1 / 30

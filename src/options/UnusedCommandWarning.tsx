@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Keybind } from "../types"
 import { DropdownWarning } from "../comps/DropdownWarning"
 import { requestCreateTab } from "../utils/browserUtils"

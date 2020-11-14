@@ -1,4 +1,3 @@
-import React from "react"
 import { conformSpeed } from "../utils/configUtils"
 import { SpeedControl } from "./SpeedControl"
 import { MediaView } from "./MediaView"

@@ -1,8 +1,8 @@
-import React from "react"
+import { Component, ReactElement } from "react"
 import { pushView } from "../background/GlobalState"
 import "./ErrorFallback.scss"
 
-export class ErrorFallback extends React.Component<{children: React.ReactElement}, {hasError: boolean}> {
+export class ErrorFallback extends Component<{children: ReactElement}, {hasError: boolean}> {
   state = {hasError: false}
   componentDidCatch() {
     this.setState({hasError: true})

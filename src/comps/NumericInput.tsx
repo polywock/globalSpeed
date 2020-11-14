@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect, ChangeEvent } from "react"
 import { FloatTooltip } from "./FloatTooltip"
 import { round } from "../utils/helper"
 
@@ -32,7 +32,7 @@ export const NumericInput = (props: NumericInputProps) => {
   }, [props.value])
   
   
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setGhostValue(e.target.value)
     const value = e.target.value.trim()
     if (!value) {

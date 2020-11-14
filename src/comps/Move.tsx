@@ -1,4 +1,3 @@
-import React from "react"
 import { GoArrowUp, GoArrowDown } from "react-icons/go"
 import "./Move.scss"
 

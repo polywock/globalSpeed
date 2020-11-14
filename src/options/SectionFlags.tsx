@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { Tooltip } from "../comps/Tooltip"
 import { LOCALE_MAP } from "../defaults/i18"
 import { useStateView } from "../hooks/useStateView"

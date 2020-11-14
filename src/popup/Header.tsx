@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import { useMemo } from "react"
 import { checkFilterDeviation } from "../utils/configUtils"
 import { GoPin, GoGear, GoMarkGithub, GoZap, GoArrowLeft} from "react-icons/go"
 import { FaPowerOff, FaVolumeUp } from "react-icons/fa"

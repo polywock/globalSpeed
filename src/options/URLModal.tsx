@@ -1,5 +1,5 @@
 
-import React, { useState } from "react"
+import { useState } from "react"
 import produce from "immer"
 import "./URLModal.scss"
 import { ModalBase } from "../comps/ModalBase"

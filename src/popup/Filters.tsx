@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { FilterEntry } from "../types"
 import { filterInfos } from "../defaults/filters"
 import { SliderPlus } from "../comps/SliderPlus"

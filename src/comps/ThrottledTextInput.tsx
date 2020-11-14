@@ -1,11 +1,11 @@
-import React, { useMemo, useState, useEffect, useCallback } from "react"
+import { useMemo, useState, useEffect, useCallback, DetailedHTMLProps, InputHTMLAttributes, TextareaHTMLAttributes  } from "react"
 import debounce from "lodash.debounce"
 
 type ThrottledTextInputProps = {
   value: string,
   onChange: (newValue: string) => void,
-  passInput?: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-  passTextArea?: React.DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>,
+  passInput?: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+  passTextArea?: DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>,
   textArea?: boolean
 }
 

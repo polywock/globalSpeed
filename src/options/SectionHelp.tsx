@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 import { MdContentCopy, MdContentPaste } from "react-icons/md"
 import { pushView } from "../background/GlobalState"
 import { State } from "../types"

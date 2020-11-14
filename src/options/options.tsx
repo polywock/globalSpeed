@@ -1,4 +1,3 @@
-import React from "react"
 import ReactDOM from "react-dom"
 import { SectionFlags } from "./SectionFlags"
 import { SectionEditor } from "./SectionEditor"

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import { useState } from "react"
 import { ThrottledTextInput } from "./ThrottledTextInput"
 import { ModalBase } from "./ModalBase"
 import "./ModalText.scss"

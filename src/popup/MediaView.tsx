@@ -1,4 +1,3 @@
-import React from "react"
 import { formatDuration, formatDomain } from "../utils/helper"
 import { FaPlay, FaPause, FaBackward, FaForward, FaMousePointer } from "react-icons/fa"
 import { MdPictureInPictureAlt } from "react-icons/md"

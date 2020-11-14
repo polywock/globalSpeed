@@ -1,4 +1,3 @@
-import React from "react"
 import { NumericInput } from "./NumericInput"
 import "./CycleInput.scss"
 import produce from "immer"

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import { useState, useRef } from "react"
 import { SliderPlus } from "../comps/SliderPlus";
 import { FaVolumeUp, FaMusic } from "react-icons/fa";
 import { CompressorControl } from "./CompressorControl";

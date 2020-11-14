@@ -1,11 +1,10 @@
-import React, { useState } from "react"
+import { useState, DetailedHTMLProps, HTMLAttributes } from "react"
 import "./Tooltip.scss"
-
 
 type ToolTipProps = {
   label?: string
   tooltip: string
-  pass?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+  pass?: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 }
 
 export const Tooltip = (props: ToolTipProps) => {

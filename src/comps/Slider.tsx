@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useEffect, useState } from "react"
+import { useMemo, useCallback, useEffect, useState } from "react"
 import { clamp, inverseLerp, lerp } from "../utils/helper"
 import debounce from "lodash.debounce"
 

@@ -1,5 +1,4 @@
 
-import React from "react"
 import { AudioFx } from "../types"
 import { FaPowerOff } from "react-icons/fa"
 import { getDefaultEq, EQ_PRESETS } from "../defaults"

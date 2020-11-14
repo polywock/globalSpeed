@@ -1,4 +1,3 @@
-import React from "react"
 import "./Origin.scss"
 
 type OriginProps = {

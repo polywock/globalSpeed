@@ -1,4 +1,4 @@
-import React from "react"
+import { ReactNode, DetailedHTMLProps, HTMLAttributes } from "react"
 import { clamp, round } from "../utils/helper"
 import { NumericInput } from "../comps/NumericInput"
 import { Slider } from "./Slider"
@@ -6,7 +6,7 @@ import { Reset } from "./Reset"
 import "./SliderMicro.scss"
 
 type SliderMicroProps = {
-  label?: React.ReactNode,
+  label?: ReactNode,
   value: number,
   sliderMin: number,
   sliderMax: number,
@@ -16,7 +16,7 @@ type SliderMicroProps = {
   default: number,
   onChange?: (newValue: number) => void,
   withInput?: boolean,
-  pass?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+  pass?: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 }
 
 

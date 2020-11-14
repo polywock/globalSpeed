@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { Keybind, TargetFx, StateOption, AdjustMode } from "../types"
 import produce from "immer"
 import { KeyPicker } from "../comps/KeyPicker"

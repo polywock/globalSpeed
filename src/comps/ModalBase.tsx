@@ -1,9 +1,9 @@
 
-import React, { useState, useRef } from "react"
+import { ReactElement, useRef } from "react"
 import "./ModalBase.scss"
 
 type Props = {
-  children: React.ReactElement,
+  children: ReactElement,
   onClose: () => void 
 }
 

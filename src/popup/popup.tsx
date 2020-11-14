@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import ReactDOM from "react-dom"
 import { Header } from "./Header"
 import { getActiveTabInfo } from "../utils/browserUtils"
@@ -8,10 +8,10 @@ import { ThemeSync } from "../comps/ThemeSync"
 import { AudioPanel } from "./AudioPanel"
 import { requestGsm } from "../utils/configUtils"
 import { ErrorFallback } from "../comps/ErrorFallback"
-import "./popup.scss"
 import { useStateView } from "../hooks/useStateView"
 import { FaPowerOff } from "react-icons/fa"
 import { pushView } from "../background/GlobalState"
+import "./popup.scss"
 
 
 export function App(props: {}) {

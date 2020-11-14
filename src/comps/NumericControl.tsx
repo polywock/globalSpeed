@@ -1,7 +1,6 @@
-import React from "react"
 import { NumericInput } from "./NumericInput"
-import "./NumericControl.scss"
 import { FaAngleDoubleLeft, FaAngleLeft, FaAngleRight, FaAngleDoubleRight } from "react-icons/fa"
+import "./NumericControl.scss"
 
 type NumericControlProps = {
   value: number,

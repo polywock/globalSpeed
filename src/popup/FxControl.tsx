@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react"
+import { useState, useMemo } from "react"
 import { checkFilterDeviation, sendMessageToConfigSync, formatFilters } from "../utils/configUtils"
 import { Tooltip } from "../comps/Tooltip"
 import { ThrottledTextInput } from "../comps/ThrottledTextInput"
@@ -109,7 +109,7 @@ export function FxControl(props: FxControlProps) {
           }, 50)
         }}>{window.gsm.fxPanel.intoPane}</button>
       )}
-      <Filters filters={transformTab ? fx.transforms : fx.filters} isBackdrop={backdropTab} onChange={newFilters => {
+      <Filters filters={transformTab ? fx.transforms : fx.filters} onChange={newFilters => {
         props.handleFxChange(backdropTab, produce(backdropTab ? backdropFx : elementFx, d => {
           d[transformTab ? "transforms" : "filters"] = newFilters
           if (checkFilterDeviation(transformTab ? d.transforms : d.filters)) {

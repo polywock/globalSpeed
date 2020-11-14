@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { Keybind } from "../types"
 import { isFirefox, moveItem } from "../utils/helper"
 import { commandInfos, CommandName, getDefaultKeybinds, availCommandInfos } from "../defaults/commands"

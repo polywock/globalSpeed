@@ -1,6 +1,6 @@
-import React, { useState } from "react"
-import "./KeyPicker.scss"
+import { useState, KeyboardEvent } from "react"
 import { Hotkey, extractHotkey, formatHotkey } from "../utils/keys"
+import "./KeyPicker.scss"
 
 
 
@@ -14,7 +14,7 @@ const MODIFIER_KEYS = ["Control", "Alt", "Shift", "Meta"]
 export const KeyPicker = (props: KeyPickerProps) => {
   const [enterState, setEnterState] = useState(false)
 
-  const handleOnKeyDown = (e: React.KeyboardEvent) => {
+  const handleOnKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Enter") {
       setEnterState(!enterState)
       return 

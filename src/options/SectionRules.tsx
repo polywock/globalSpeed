@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import { useState, useRef } from "react"
 import { useStateView } from "../hooks/useStateView"
 import { URLRule } from "../types"
 import { GoX, GoZap } from "react-icons/go"

@@ -1,10 +1,10 @@
-import React, { useState } from "react"
+import { useState, ReactNode } from "react"
 import { MdWarning } from "react-icons/md"
 import { GoChevronDown, GoChevronUp } from "react-icons/go"
 import "./DropdownWarning.scss"
 
 type DropdownWarningProps = {
-  value: React.ReactNode,
+  value: ReactNode,
   label?: string,
   defaultExpanded?: boolean
 }

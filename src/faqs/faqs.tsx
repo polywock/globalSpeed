@@ -1,11 +1,11 @@
 
-import React, { useState } from "react"
+import { useState, ReactElement } from "react"
 import ReactDOM from "react-dom"
 import { isFirefox } from "../utils/helper"
 import { requestCreateTab } from "../utils/browserUtils"
 import { GoPin, GoZap } from "react-icons/go"
-import "./faqs.scss"
 import { FaMousePointer, FaPowerOff } from "react-icons/fa"
+import "./faqs.scss"
 
 
 function Faqs(props: {}) {
@@ -54,7 +54,7 @@ function Faqs(props: {}) {
   </div>
 }
 
-function Group(props: {label: string, children: React.ReactElement[] | React.ReactElement}) {
+function Group(props: {label: string, children: ReactElement[] | ReactElement}) {
   return <div className="Group">
     <h2>{props.label}</h2>
     <div className="items">
@@ -64,7 +64,7 @@ function Group(props: {label: string, children: React.ReactElement[] | React.Rea
 }
 
 
-function Item(props: {q: string, a: React.ReactElement}) {
+function Item(props: {q: string, a: ReactElement}) {
   const [hidden, setHidden] = useState(true)
   return <div className="Item">
     <div className="header">

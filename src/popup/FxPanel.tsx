@@ -1,4 +1,3 @@
-import React from "react"
 import { useStateView } from "../hooks/useStateView"
 import { FxControl } from "./FxControl"
 import produce from "immer"

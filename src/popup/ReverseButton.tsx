@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { FaMicrophone, FaVolumeUp } from "react-icons/fa"
 import "./ReverseButton.scss"
 
