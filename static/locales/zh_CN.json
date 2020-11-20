@@ -113,7 +113,8 @@
       "header": "热键编辑器",
       "toggleMode": "您可以使用本地热键或全局热键。",
       "toggleModeTooltip": "全局热键可以让您在使用其他应用程序时控制视频或音频。",
-      "greedyMode": "贪婪模式会尝试阻止事件的默认行为及其传播。"
+      "greedyMode": "贪婪模式会尝试阻止事件的默认行为及其传播。",
+      "speedPresets": "速度预设"
     },
     "rules": {
       "header": "URL规则",

@@ -113,7 +113,8 @@
       "header": "熱鍵編輯器",
       "toggleMode": "您可以使用本地熱鍵或全局熱鍵。",
       "toggleModeTooltip": "全局熱鍵可以讓您在使用其他應用程序時控制視頻或音頻。",
-      "greedyMode": "貪婪模式會嘗試阻止事件的默認行為及其傳播。"
+      "greedyMode": "貪婪模式會嘗試阻止事件的默認行為及其傳播。",
+      "speedPresets": "速度預設"
     },
     "rules": {
       "header": "URL規則",

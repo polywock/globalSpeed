@@ -113,7 +113,8 @@
       "header": "Shortcut Editor",
       "toggleMode": "You can use local or global shortcut keys.",
       "toggleModeTooltip": "Global shortcuts are useful when you want to control video or audio while using another program.",
-      "greedyMode": "Will try to block event propagation and default behaviors."
+      "greedyMode": "Will try to block event propagation and default behaviors.",
+      "speedPresets": "speed presets"
     },
     "rules": {
       "header": "URL Rules",

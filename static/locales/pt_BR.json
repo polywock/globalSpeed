@@ -113,7 +113,8 @@
       "header": "Editor de Atalhos",
       "toggleMode": "Você pode usar teclas de atalho locais ou globais.",
       "toggleModeTooltip": "Atalhos globais são úteis quando você deseja controlar vídeo ou áudio enquanto usa outro programa.",
-      "greedyMode": "Tentará bloquear o comportamento padrão das teclas de atalho."
+      "greedyMode": "Tentará bloquear o comportamento padrão das teclas de atalho.",
+      "speedPresets": "predefinições de velocidade"
     },
     "rules": {
       "header": "Regras de URL",

@@ -113,7 +113,8 @@
       "header": "Kısayol Düzenleyici",
       "toggleMode": "Yerel veya genel kısayol tuşlarını kullanabilirsiniz.",
       "toggleModeTooltip": "Genel kısayollar, başka bir program kullanırken video veya sesi kontrol etmek istediğinizde yararlıdır.",
-      "greedyMode": "Olay yayılımını ve varsayılan davranışları engellemeye çalışır."
+      "greedyMode": "Olay yayılımını ve varsayılan davranışları engellemeye çalışır.",
+      "speedPresets": "hız ön ayarları"
     },
     "rules": {
       "header": "URL Kuralları",

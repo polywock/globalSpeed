@@ -23,6 +23,13 @@
       &.marginTop {
         margin-top: 30px;
       }
+
+      & > .colorControl {
+        display: grid;
+        grid-template-columns: repeat(3, max-content);
+        grid-gap: 10px; 
+        align-items: center;
+      }
       
       & > .col {
         display: grid;

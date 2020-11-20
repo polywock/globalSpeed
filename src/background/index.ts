@@ -62,14 +62,21 @@ async function main() {
 
 async function handleCommand(command: string) {
   if (!window.globalState.get({enabled: true}).enabled) return 
-  let keybinds = (window.globalState.get({keybinds: true}).keybinds || []).filter(kb => kb.enabled && kb.global && (kb.globalKey || "commandA") === command)
+  const view = window.globalState.get({keybinds: true, keybindsUrlCondition: true})
+  let keybinds = (view.keybinds || []).filter(kb => kb.enabled && kb.global && (kb.globalKey || "commandA") === command)
+
   if (!keybinds.length) return 
   const tabInfo = await getActiveTabInfo()
+  const url = tabInfo?.url || ""
+
+  if (view.keybindsUrlCondition && !checkURLCondition(url, view.keybindsUrlCondition, true)) {
+    return 
+  }
 
 
   keybinds = keybinds.filter(kb => {
     if (kb.condition?.parts.length > 0) {
-      return checkURLCondition(tabInfo?.url || "" , kb.condition, true)
+      return checkURLCondition(url, kb.condition, true)
     } 
     return true 
   })

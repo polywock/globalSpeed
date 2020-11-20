@@ -35,7 +35,7 @@ export function SpeedPresetFlags(props: {className?: string}) {
   return <>
     <div className="field marginTop">
       <div>
-        <span style={{marginRight: "10px"}}>{"speed presets"}</span>
+        <span style={{marginRight: "10px"}}>{window.gsm.options.editor.speedPresets}</span>
         <Reset active={resetActive} onClick={() => {
           pushView({override: {speedPresets: null, speedSmallStep: null, speedBigStep: null}})
         }}/>

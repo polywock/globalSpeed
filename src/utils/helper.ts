@@ -119,3 +119,25 @@ export function compareJson(lhs: Primitive, rhs: Primitive) {
   } catch (err) {}
   return false 
 }
+
+export function areYouSure() {
+  return confirm(window.gsm.options.help.areYouSure)
+}
+
+export function feedbackText(text: string, pos: {x: number, y: number}, decay?: number) {
+  const div = document.createElement("div")
+  div.textContent = text 
+  div.setAttribute(`style`, `
+    position: fixed;
+    left: ${pos.x}px;
+    top: ${pos.y}px;
+    background-color: blue; 
+    color: yellow;
+    padding: 10px;
+  `)
+  document.body.appendChild(div)
+
+  setTimeout(() => {
+    div.remove()
+  }, decay || 1000)
+}

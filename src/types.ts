@@ -338,7 +338,8 @@ export type Gsm = {
       header: string,
       toggleMode: string,
       toggleModeTooltip: string,
-      greedyMode: string
+      greedyMode: string,
+      speedPresets: string
     },
     rules: {
       header: string,

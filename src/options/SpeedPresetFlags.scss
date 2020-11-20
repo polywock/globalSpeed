@@ -2,6 +2,7 @@
 .SectionFlags .presetControl {
   display: grid;
   grid-template-columns: repeat(3, max-content);
+  align-items: center;
   gap: 10px;
   font-size: 0.95em;
   margin-bottom: 15px;

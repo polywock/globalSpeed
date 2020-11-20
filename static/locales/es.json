@@ -113,7 +113,8 @@
       "header": "Editor de accesos directos",
       "toggleMode": "Puede usar teclas de acceso directo locales o globales.",
       "toggleModeTooltip": "Los accesos directos globales son útiles cuando desea controlar video o audio mientras usa otro programa.",
-      "greedyMode": "El modo codicioso intentará bloquear la propagación de eventos y los comportamientos predeterminados."
+      "greedyMode": "El modo codicioso intentará bloquear la propagación de eventos y los comportamientos predeterminados.",
+      "speedPresets": "presets de velocidad"
     },
     "rules": {
       "header": "Reglas de URL",

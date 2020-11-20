@@ -1,9 +1,9 @@
-import { useEffect, useRef } from "react"
+import { MouseEvent, useEffect, useRef } from "react"
 import { MdContentCopy, MdContentPaste } from "react-icons/md"
 import { pushView } from "../background/GlobalState"
 import { State } from "../types"
 import { requestCreateTab } from "../utils/browserUtils"
-import { isFirefox } from "../utils/helper"
+import { isFirefox, areYouSure, feedbackText } from "../utils/helper"
 import "./SectionHelp.scss"
 
 
@@ -15,6 +15,7 @@ export function SectionHelp(props: {}) {
       <div className="card">{window.gsm.options.help.issuePrompt} <a href="https://github.com/polywock/globalSpeed/issues">{window.gsm.options.help.issueDirective}</a></div>
       <div className="controls">
         <button className="large" onClick={e => {
+          if (!areYouSure()) return 
           pushView({override: {}, overDefault: true})
           setTimeout(() => {
             window.location.reload()
@@ -65,10 +66,13 @@ function ExportImport(props: {}) {
         downloadState(state)
       })
     }}>{window.gsm.options.help.export}</button>
-    <button className="large" onClick={e => {
+    <button className="large" onClick={(e: MouseEvent<HTMLButtonElement>) => {
       const cb = () => {
         chrome.runtime.sendMessage({type: "GET_STATE"}, state => {
-          navigator.clipboard.writeText(JSON.stringify(state))
+          navigator.clipboard.writeText(JSON.stringify(state)).then(() => {
+            const {x, y} = (e.target as HTMLButtonElement).getBoundingClientRect()
+            feedbackText("copied!", {x: x + 10, y: y - 50})
+          }, err => {})
         })
       }
       !isFirefox() ? cb() : chrome.permissions.request({permissions: ["clipboardRead", "clipboardWrite"]}, granted => {
@@ -126,13 +130,12 @@ function loadStateFromFile(file: File) {
 }
 
 function loadState(state: State) {
-  if (confirm(window.gsm.options.help.areYouSure)) {
-    chrome.runtime.sendMessage({type: "RELOAD_STATE", state}, status => {
-      if (status) {
-        setTimeout(() => {
-          window.location.reload()
-        }, 100)
-      }
-    })
-  }
+  if (!areYouSure()) return 
+  chrome.runtime.sendMessage({type: "RELOAD_STATE", state}, status => {
+    if (status) {
+      setTimeout(() => {
+        window.location.reload()
+      }, 100)
+    }
+  })
 }

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Keybind } from "../types"
-import { isFirefox, moveItem } from "../utils/helper"
+import { areYouSure, isFirefox, moveItem } from "../utils/helper"
 import { commandInfos, CommandName, getDefaultKeybinds, availCommandInfos } from "../defaults/commands"
 import { KeybindControl } from "./KeybindControl"
 import { Tooltip } from "../comps/Tooltip"
@@ -17,10 +17,10 @@ import { pushView } from "../background/GlobalState"
 export function SectionEditor(props: {}) {
   const [commandOption, setCommandOption] = useState("adjustSpeed")
   const [view, setView] = useStateView({keybinds: true})
-  const [view2] = useStateView({keybindsUrlCondition: true})
+  const [urlView] = useStateView({keybindsUrlCondition: true})
   const [show, setShow] = useState(false)
 
-  if (!view || !view2) return <div></div>
+  if (!view || !urlView) return <div></div>
 
   const handleKeybindChange = (id: string, newKb: Keybind) => {
     setView(produce(view, d => {
@@ -40,6 +40,8 @@ export function SectionEditor(props: {}) {
       moveItem(d.keybinds, v => v.id === id, down)
     }))
   }
+
+  const urlRuleCount = urlView.keybindsUrlCondition?.parts?.length || 0
 
   return (
     <div className="section SectionEditor">
@@ -89,13 +91,17 @@ export function SectionEditor(props: {}) {
           })
         }}>{window.gsm.token.create}</button>
         <button onClick={e => {
+          if (!areYouSure()) return 
           setView({
             keybinds: getDefaultKeybinds()
           })
         }}>{window.gsm.token.reset}</button>
-        <button onClick={() => setShow(!show)} className="urlRules">{`-- ${view2.keybindsUrlCondition?.parts?.length || 0} --`}</button>
+        <button  onClick={() => setShow(!show)} onContextMenu={e => {
+          e.preventDefault()
+          pushView({override: {keybindsUrlCondition: null}})
+        }} className={`${urlRuleCount ? "error" : ""}`}>{`-- ${urlRuleCount} --`}</button>
         {show && <URLModal 
-          value={view2.keybindsUrlCondition || getDefaultURLCondition()} 
+          value={urlView.keybindsUrlCondition || getDefaultURLCondition()} 
           onClose={() => setShow(false)} 
           onReset={() => pushView({override: {keybindsUrlCondition: null}})}
           onChange={v => {

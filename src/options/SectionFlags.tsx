@@ -12,6 +12,7 @@ import { IndicatorInit } from "../types"
 import { SpeedPresetFlags } from "./SpeedPresetFlags"
 import produce from "immer"
 import "./SectionFlags.scss"
+import { Reset } from "../comps/Reset"
 
 let feedbackAudio: HTMLAudioElement
 
@@ -139,7 +140,7 @@ function IndicatorFlags(props: {}) {
     </div>
     <div className="field indent">
       <span>{window.gsm.token.color}</span>
-      <div>
+      <div className="colorControl">
         <input type="color" value={init?.backgroundColor || INDICATOR_INIT.backgroundColor} onChange={e => {
           const indicatorInit = produce(init ?? {}, d => {
             d.backgroundColor = e.target.value
@@ -147,13 +148,24 @@ function IndicatorFlags(props: {}) {
           showIndicator(indicatorInit)
           pushView({override: {indicatorInit}})
         }}/>
-        <input style={{marginLeft: "5px"}} type="color" value={init?.textColor || INDICATOR_INIT.textColor} onChange={e => {
+        <input type="color" value={init?.textColor || INDICATOR_INIT.textColor} onChange={e => {
           const indicatorInit = produce(init ?? {}, d => {
             d.textColor = e.target.value
           })
           showIndicator(indicatorInit)
           pushView({override: {indicatorInit}})
         }}/>
+        <Reset onClick={() => {
+          const indicatorInit = produce(init ?? {}, d => {
+            d.textColor = null 
+            d.backgroundColor = null
+          })
+          showIndicator(indicatorInit)
+          pushView({override: {indicatorInit}})
+        }} active={
+          ((init?.textColor || INDICATOR_INIT.textColor) !== INDICATOR_INIT.textColor) ||
+          ((init?.backgroundColor || INDICATOR_INIT.backgroundColor) !== INDICATOR_INIT.backgroundColor)
+        }/>
       </div>
     </div>
     <div className="field indent">

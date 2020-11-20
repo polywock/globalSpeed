@@ -120,6 +120,12 @@ button, input[type="text"], textarea {
     border: 1px solid var(--focus-color);
     outline: none;
   }
+
+  &.error {
+    background-color: var(--error-color);
+    color: var(--error-text-color);
+    border-color: var(--error-border-color);
+  }
 }
 
 input[type="text"] {
