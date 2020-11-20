@@ -1,5 +1,6 @@
 {
   "name": "__MSG_appName__",
+  "short_name": "Global Speed",
   "version": "2.7.0",
   "default_locale": "en",
   "description": "__MSG_appDesc__",
