@@ -1,0 +1,21 @@
+
+.SectionFlags .presetControl {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  gap: 10px;
+  font-size: 0.95em;
+  margin-bottom: 15px;
+
+  & > .NumericInput {
+    width: 60px;
+
+    &:nth-child(14), &:nth-child(16) {
+      width: 130px;
+      grid-column: auto / span 2;
+    }
+
+    input {
+      text-align: center;
+    }
+  }
+}

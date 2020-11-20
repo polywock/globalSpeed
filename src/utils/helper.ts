@@ -110,3 +110,12 @@ const chromatic = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G
 export function linearToChromatic(linear: number): string {
   return chromatic[(Math.round(linear * 12) + (12 * 1000)) % 12]  
 }
+
+type Primitive = number | string | boolean | Primitive[] | {[key: string]: Primitive}
+
+export function compareJson(lhs: Primitive, rhs: Primitive) {
+  try {
+    return JSON.stringify(lhs || {}) === JSON.stringify(rhs || {})
+  } catch (err) {}
+  return false 
+}

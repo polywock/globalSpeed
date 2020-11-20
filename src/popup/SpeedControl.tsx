@@ -1,7 +1,7 @@
 import "./SpeedControl.scss"
 import { NumericControl } from "../comps/NumericControl"
-
-export const SPEED_PRESETS = [0.25, 0.5, 0.75, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3, 5, 10, 16]
+import { getDefaultSpeedPresets } from "../defaults"
+import { useStateView } from "../hooks/useStateView"
 
 type SpeedControlProps = {
   onChange: (newSpeed: number) => any,
@@ -9,9 +9,12 @@ type SpeedControlProps = {
 }
 
 export function SpeedControl(props: SpeedControlProps) {
+  const [view] = useStateView({speedPresets: true, speedSmallStep: true, speedBigStep: true})
+  if (!view) return null 
+  
   return <div className="SpeedControl">
     <div className="options">
-      {SPEED_PRESETS.map(v => (
+      {(view.speedPresets?.length === 12 ? view.speedPresets : getDefaultSpeedPresets()).map(v => (
         <div 
           key={v}
           tabIndex={0}
@@ -23,8 +26,8 @@ export function SpeedControl(props: SpeedControlProps) {
     <NumericControl 
       value={props.speed} 
       onChange={newValue => props.onChange(newValue)}
-      smallStep={0.01}
-      largeStep={0.05}
+      smallStep={view.speedSmallStep || 0.01}
+      largeStep={view.speedBigStep || 0.1}
       min={0.07}
       max={16}
       inputNoNull={true}

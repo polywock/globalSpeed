@@ -9,6 +9,7 @@ import { INDICATOR_INIT } from "../defaults"
 import { SliderMicro } from "../comps/SliderMicro"
 import { Overlay } from "../contentScript/Overlay"
 import { IndicatorInit } from "../types"
+import { SpeedPresetFlags } from "./SpeedPresetFlags"
 import produce from "immer"
 import "./SectionFlags.scss"
 
@@ -91,7 +92,7 @@ export function SectionFlags(props: {}) {
           }}/>
         </div>
         {showMore ? <>
-          <div className="field"  style={{marginTop: "30px"}}>
+          <div className="field marginTop">
             <span>{window.gsm.options.flags.fullscreenSupport}</span>
             <input type="checkbox" checked={!view.staticOverlay} onChange={e => {
               pushView({override: {staticOverlay: !view.staticOverlay}})
@@ -119,6 +120,7 @@ export function SectionFlags(props: {}) {
             }}/>
           </div>
           <IndicatorFlags/>
+          <SpeedPresetFlags/>
         </> : <button style={{marginTop: "20px"}}  onClick={e => setShowMore(true)}>...</button>}
       </div>
     </div>
@@ -132,7 +134,7 @@ function IndicatorFlags(props: {}) {
 
 
   return <>
-    <div className="field" style={{marginTop: "30px"}}>
+    <div className="field marginTop">
       <span>{window.gsm.token.indicator}</span>
     </div>
     <div className="field indent">

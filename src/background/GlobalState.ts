@@ -288,7 +288,10 @@ const namedSelectors = {
       freePitch: true,
       superDisable: true,
       firstUse: true,
-      clickedRating: true
+      clickedRating: true,
+      speedPresets: true,
+      speedSmallStep: true,
+      speedBigStep: true 
     } as StateViewSelector    
 }
 
@@ -305,15 +308,13 @@ function checkSubUpdate(sub: SubInfo, subTabIsPinned: boolean, tabId: number, fl
     return true 
   }
 
+  if (sub.selector.isPinned && sameTab && flags.isPinnedCurrent) {
+    return true 
+  }
+
   for (let _key in sub.selector) {
     const key = _key as keyof StateView
-    if (key === "isPinned") {
-
-      // Either pins was set or isPinned was changed on the same tab.
-      if (sameTab && flags.isPinnedCurrent) {
-        return true 
-      }
-    } else if (namedSelectors.ctx[key]) {
+    if (namedSelectors.ctx[key]) {
 
       if (sameTab && flags.isPinnedCurrent) {
         return true 

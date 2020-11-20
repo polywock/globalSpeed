@@ -29,6 +29,7 @@ declare global {
   }
 }
 
+// Must also be added to namedSelectors @ src/background/GlobalState.ts 
 export type State = {
   version: number,
   language?: string,
@@ -48,7 +49,10 @@ export type State = {
   freePitch?: boolean,
   superDisable?: boolean,
   firstUse?: number,
-  clickedRating?: number
+  clickedRating?: number,
+  speedPresets?: number[],
+  speedSmallStep?: number,
+  speedBigStep?: number 
 }
 
 export type StateSansCommon = Omit<State, "common">

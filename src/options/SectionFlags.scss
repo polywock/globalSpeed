@@ -3,6 +3,11 @@
 
   & > .fields {
     margin-top: 20px;
+
+    & > .presetControl {
+      margin-top: 20px;
+      margin-left: 20px;
+    }
     
     & > .field {
       display: grid;
@@ -14,7 +19,11 @@
       &.indent {
         margin-left: 20px;
       }
-
+  
+      &.marginTop {
+        margin-top: 30px;
+      }
+      
       & > .col {
         display: grid;
         grid-auto-flow: column;
