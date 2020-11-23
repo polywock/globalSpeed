@@ -33,6 +33,11 @@
     button.toggle {
       padding: 0 5px;
       font-size: 0.9em;
+
+      &.active {
+        color: inherit;
+        border-color: inherit; 
+      }
     }
   }
 

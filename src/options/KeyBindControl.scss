@@ -66,6 +66,26 @@
         font-size: 16px;
       }
 
+      & > div.captureIcon {
+        @keyframes blink {
+          0% {opacity: 1}
+          50% {opacity: 0}
+        }
+
+        border: 1px solid #4673e8; 
+        
+        &.active {
+          animation: 1.5s ease-out blink 5;
+        }
+        
+        & > div {
+          background-color: #4673e8; 
+          width: 16px;
+          height: 14px;
+          border: 2px solid var(--fg-color);
+        }
+      }
+
       & > .Tooltip {
         margin-left: 5px;
       }

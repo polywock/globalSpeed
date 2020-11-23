@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Keybind } from "../types"
 import { areYouSure, isFirefox, moveItem } from "../utils/helper"
-import { commandInfos, CommandName, getDefaultKeybinds, availCommandInfos } from "../defaults/commands"
+import { commandInfos, CommandName, getDefaultKeybinds, availableCommandNames } from "../defaults/commands"
 import { KeybindControl } from "./KeybindControl"
 import { Tooltip } from "../comps/Tooltip"
 import { UnusedCommandWarning } from "./UnusedCommandWarning"
@@ -81,8 +81,8 @@ export function SectionEditor(props: {}) {
         <select value={commandOption} onChange={e => {
           setCommandOption(e.target.value)
         }}>
-          {Object.entries(availCommandInfos).map(([k, v]) => (
-            <option key={k} value={k}>{(window.gsm.command as any)[k]}</option>
+          {availableCommandNames.map((name, i) => (
+            <option disabled={name == null} key={name || i} value={name}>{name ? (window.gsm.command as any)[name] : "------"}</option>
           ))}
         </select>
         <button onClick={e => {

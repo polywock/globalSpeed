@@ -1,17 +1,22 @@
 const { resolve } = require("path")
 const { env } = require("process")
 
+const entry = {
+  contentScript: "./src/contentScript/index.ts",
+  background: "./src/background/index.ts",
+  popup: "./src/popup/popup.tsx",
+  options: "./src/options/options.tsx",
+  faqs: "./src/faqs/faqs.tsx",
+  ctx: "./src/contentScript/ctx.ts"
+}
+
+if (!env.FIREFOX) {
+  entry["sound-touch-processor"] = "./src/background/SoundTouchProcessor.ts"
+  entry["reverse-sound-processor"] = "./src/background/ReverseProcessor.ts"
+} 
+
 const common = {
-  entry: {
-    contentScript: "./src/contentScript/index.ts",
-    background: "./src/background/index.ts",
-    popup: "./src/popup/popup.tsx",
-    options: "./src/options/options.tsx",
-    faqs: "./src/faqs/faqs.tsx",
-    ctx: "./src/contentScript/ctx.ts",
-    "sound-touch-processor": "./src/background/SoundTouchProcessor.ts",
-    "reverse-sound-processor": "./src/background/ReverseProcessor.ts"
-  },
+  entry,
   output: {
     path: resolve(__dirname, env.FIREFOX ? "buildFf": "build", "unpacked")
   },
@@ -38,7 +43,11 @@ const common = {
     ]
   },
   resolve: {
-    extensions: [".tsx", ".ts", '.js']
+    extensions: [".tsx", ".ts", '.js'],
+    alias: {
+      notFirefox: env.FIREFOX ? false : resolve(__dirname, "src"),
+      isFirefox: env.FIREFOX ? resolve(__dirname, "src") : false 
+    }
   }
 }
 

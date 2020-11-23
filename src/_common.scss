@@ -135,6 +135,10 @@ input[type="text"] {
   &.error {
     background-color: var(--error-color);
   }
+
+  &:disabled {
+    opacity: 0.7;
+  }
 }
 
 button {

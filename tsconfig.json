@@ -4,12 +4,17 @@
     "types": ["@types/chrome", "@types/react", "@types/react-dom"],
     "noImplicitAny": true,
     "target": "es2018",
-    "module": "commonjs",
+    "moduleResolution": "node",
     "allowJs": true,
     "sourceMap": false,
     "jsx": "react-jsx",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "paths": {
+        "notFirefox/*": ["src/*"],
+        "isFirefox/*": ["src/*"] 
+    }
   },
   "exclude": ["./node_modules", "build", "buildFf"]
 }

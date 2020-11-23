@@ -141,3 +141,35 @@ export function feedbackText(text: string, pos: {x: number, y: number}, decay?: 
     div.remove()
   }, decay || 1000)
 }
+
+export function groupByKey<T>(items: T[], getKey: (v: T) => any): T[][] {
+  let map = new Map<any, T[]>()
+
+  for (let item of items) {
+    const key = getKey(item)
+    const arr = map.get(key) ?? []
+    arr.push(item)
+    map.set(key, arr)
+  }
+
+  const groups: T[][] = []
+  map.forEach(v => {
+    groups.push(v)
+  })
+
+  return groups 
+}
+
+export function flatJoin<T>(groups: T[][], value: T) {
+  let flatGroup: T[] = []
+  let flag = false 
+  for (let group of groups) {
+    if (flag) {
+      flatGroup.push(value)
+      flag = false 
+    }
+    flatGroup = [...flatGroup, ...group]
+    flag = true 
+  }
+  return flatGroup
+}

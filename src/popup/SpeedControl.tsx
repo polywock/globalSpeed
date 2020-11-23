@@ -2,6 +2,8 @@ import "./SpeedControl.scss"
 import { NumericControl } from "../comps/NumericControl"
 import { getDefaultSpeedPresets } from "../defaults"
 import { useStateView } from "../hooks/useStateView"
+import { BsMusicNoteList } from "react-icons/bs"
+import { pushView } from "../background/GlobalState"
 
 type SpeedControlProps = {
   onChange: (newSpeed: number) => any,
@@ -9,7 +11,7 @@ type SpeedControlProps = {
 }
 
 export function SpeedControl(props: SpeedControlProps) {
-  const [view] = useStateView({speedPresets: true, speedSmallStep: true, speedBigStep: true})
+  const [view] = useStateView({speedPresets: true, speedSmallStep: true, speedBigStep: true, speedSlider: true, freePitch: true})
   if (!view) return null 
   
   return <div className="SpeedControl">
@@ -33,5 +35,13 @@ export function SpeedControl(props: SpeedControlProps) {
       inputNoNull={true}
       rounding={2}
     />
+    {!!view.speedSlider && (
+      <div className="slider">
+        <BsMusicNoteList title={window.gsm.command.preservePitch} size={"17px"} className={`${view.freePitch ? "active" : ""}`} onClick={() => pushView({override: {freePitch: !view.freePitch}})}/>
+        <input step={0.01} type="range" min={view.speedSlider.min} max={view.speedSlider.max} value={props.speed} onChange={e => {
+          props.onChange(e.target.valueAsNumber)
+        }}/>
+      </div>
+    )}
   </div>
 }

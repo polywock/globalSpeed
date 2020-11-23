@@ -74,7 +74,7 @@ export function AudioPanel(props: {}) {
       label={<div>
         <FaMusic size="17px"/>
         <span style={{marginLeft: "10px"}}>{window.gsm.command.adjustPitch}</span>
-        <button title={"high quality"} style={{marginLeft: "10px"}} className={`toggle ${starAudioFx.jungleMode ? "" : "active"}`} onClick={e => {
+        <button title={"high quality"} style={{marginLeft: "10px"}} className={`micro toggle ${starAudioFx.jungleMode ? "" : "active"}`} onClick={e => {
           setView(produce(view, d => {
             d[starKey].jungleMode = !starAudioFx.jungleMode
           }))

@@ -146,6 +146,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
             <FaForward size="0.95em"/> 
           )}
         </>}
+        {value.command === "tabCapture" && <div className={`captureIcon ${value.enabled ? "active" : ""}`}><div></div></div>}
         <span>{label}</span>
         {value.command === "seek" && (
           <button title={window.gsm.command.relativeTooltip} className={`toggle ${value.valueBool ? "active" : ""}`} onClick={e => {

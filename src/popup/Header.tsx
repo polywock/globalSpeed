@@ -6,6 +6,7 @@ import { useStateView } from "../hooks/useStateView"
 import { pushView } from "../background/GlobalState"
 import { getDefaultFx } from "../defaults"
 import "./Header.scss"
+import { useCaptureStatus } from "../hooks/useCaptureStatus"
 
 const SUPPORTS_TAB_CAPTURE = !!chrome.tabCapture?.capture
 
@@ -42,12 +43,7 @@ export function Header(props: HeaderProps) {
         <GoPin size="20px"/>
       </div>
       {(props.panel === 0 && SUPPORTS_TAB_CAPTURE) ? (
-        <div 
-          className={`${false ? "active" : ""}`}
-          onClick={e => props.setPanel(2)}
-        >
-          <FaVolumeUp size="17px"/>
-        </div>
+        <AudioIcon onClick={() => props.setPanel(2)}/>
       ) : <div className="noPadding"/>}
       {props.panel === 0 ? (
         <FxIcon enabled={view?.enabled} onClick={() => props.setPanel(1)}/>
@@ -101,6 +97,28 @@ export function FxIcon(props: FxIconProps) {
       }}
     >
       <GoZap size="20px"/>
+    </div>
+  )
+}
+
+
+type AudioIconProps = {
+  onClick: () => void
+}
+
+export function AudioIcon(props: AudioIconProps) {
+  const status = useCaptureStatus()
+
+  return (
+    <div 
+      className={`beat ${status ? "active" : ""}`} 
+      onClick={props.onClick}
+      onContextMenu={e => {
+        e.preventDefault()
+        chrome.runtime.sendMessage({type: "TAB_CAPTURE", on: false, tabId: window.tabInfo.tabId})
+      }}
+    >
+      <FaVolumeUp size="17px"/>
     </div>
   )
 }

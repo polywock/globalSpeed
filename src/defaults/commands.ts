@@ -1,6 +1,6 @@
 
-import { Command, Keybind, AdjustMode } from "../types"
-import { randomId } from "../utils/helper"
+import { Command, Keybind, AdjustMode, CommandGroup } from "../types"
+import { randomId, groupByKey, flatJoin } from "../utils/helper"
 
 export type CommandName = "nothing" | "runCode" | "adjustSpeed" | "preservePitch" | "setPin" | "setState" | 
   "seek" | "setPause" | "setMute" | "adjustVolume" | "setMark" | "seekMark" | "toggleLoop" | "openUrl" | 
@@ -10,6 +10,7 @@ export type CommandName = "nothing" | "runCode" | "adjustSpeed" | "preservePitch
 
 export let commandInfos: {[key in CommandName]: Command} = {
   nothing: {
+    group: CommandGroup.MISC,
     generate: () => ({
       id: randomId(),
       command: "nothing",
@@ -18,6 +19,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   runCode: {
+    group: CommandGroup.MISC,
     valueType: "modalString",
     generate: () => ({
       id: randomId(),
@@ -28,6 +30,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   openUrl: {
+    group: CommandGroup.MISC,
     valueType: "string",
     generate: () => ({
       id: randomId(),
@@ -83,6 +86,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   seek: {
+    group: CommandGroup.MEDIA,
     valueType: "number",
     requiresMedia: true,
     generate: () => ({
@@ -94,6 +98,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   setPause: {
+    group: CommandGroup.MEDIA,
     valueType: "state",
     requiresMedia: true,
     generate: () => ({
@@ -105,6 +110,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   setMute: {
+    group: CommandGroup.MEDIA,
     valueType: "state",
     requiresMedia: true,
     generate: () => ({
@@ -116,6 +122,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   adjustVolume: {
+    group: CommandGroup.MEDIA,
     valueType: "number",
     requiresMedia: true,
     valueDefault: 0.05,
@@ -127,6 +134,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   setMark: {
+    group: CommandGroup.MEDIA,
     valueType: "string",
     requiresMedia: true,
     generate: () => ({
@@ -138,6 +146,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   seekMark: {
+    group: CommandGroup.MEDIA,
     valueType: "string",
     requiresMedia: true,
     generate: () => ({
@@ -149,6 +158,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   toggleLoop: {
+    group: CommandGroup.MEDIA,
     valueType: "string",
     requiresMedia: true,
     generate: () => ({
@@ -160,6 +170,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   setFx: {
+    group: CommandGroup.FX,
     withFilterTarget: true,
     valueType: "state",
     generate: () => ({
@@ -172,6 +183,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   resetFx: {
+    group: CommandGroup.FX,
     withFilterTarget: true,
     generate: () => ({
       id: randomId(),
@@ -182,6 +194,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   flipFx: {
+    group: CommandGroup.FX,
     generate: () => ({
       id: randomId(),
       command: "flipFx",
@@ -190,6 +203,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   adjustFilter: {
+    group: CommandGroup.FX,
     valueType: "adjustMode",
     withFilterOption: true,
     withFilterTarget: true,
@@ -204,6 +218,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   adjustGain: {
+    group: CommandGroup.AUDIO_FX,
     valueType: "adjustMode",
     requiresTabCapture: true,
     valueMin: 0,
@@ -219,6 +234,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   adjustPitch: {
+    group: CommandGroup.AUDIO_FX,
     valueType: "adjustMode",
     requiresTabCapture: true,
     valueMin: -36,
@@ -234,6 +250,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   adjustDelay: {
+    group: CommandGroup.AUDIO_FX,
     valueType: "adjustMode",
     requiresTabCapture: true,
     valueMin: 0,
@@ -249,6 +266,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     })
   },
   tabCapture: {
+    group: CommandGroup.AUDIO_FX,
     valueType: "state",
     requiresTabCapture: true,
     generate: () => ({
@@ -358,4 +376,13 @@ export function getDefaultKeybinds(): Keybind[] {
 }
 
 
-export const availCommandInfos = Object.fromEntries(Object.entries(commandInfos).filter(([k, v]) => !v.requiresTabCapture || chrome.tabCapture))
+export const availableCommandNames = flatJoin(
+  groupByKey(
+    Object.entries(commandInfos)
+      .filter(v => !v[1].requiresTabCapture || chrome.tabCapture)
+      .map(([name, info]) => [name, info.group] as [string, CommandGroup]),
+    v => v[1]
+  )
+    .map(g => g.map(v => v[0])),
+  null
+)

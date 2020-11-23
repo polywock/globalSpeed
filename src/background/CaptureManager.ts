@@ -143,6 +143,8 @@ export class CaptureManager {
       if (msg.tabId == null) return reply(true)
       if (msg.on) {
         this.captureTab(msg.tabId)
+      } else if (msg.on === false) {
+        this.releaseTab(msg.tabId)
       } else {
         this.handleToggleTab(msg.tabId)
       }

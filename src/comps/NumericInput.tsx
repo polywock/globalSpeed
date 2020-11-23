@@ -11,7 +11,8 @@ type NumericInputProps = {
   noNull?: boolean
   min?: number,
   max?: number,
-  rounding?: number
+  rounding?: number,
+  disabled?: boolean
 }
 
 
@@ -67,6 +68,7 @@ export const NumericInput = (props: NumericInputProps) => {
   return (
     <div className={`NumericInput`} style={{position: "relative"}}>
       <input 
+        disabled={props.disabled ?? false}
         onBlur={e => {
           setProblem(null)
           setGhostValue(props.value == null ? "" : round(props.value, props.rounding ?? 4).toString())

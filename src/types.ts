@@ -29,7 +29,7 @@ declare global {
   }
 }
 
-// Must also be added to namedSelectors @ src/background/GlobalState.ts 
+// New entries must be added to namedSelectors.simple @ src/background/GlobalState.ts 
 export type State = {
   version: number,
   language?: string,
@@ -52,8 +52,10 @@ export type State = {
   clickedRating?: number,
   speedPresets?: number[],
   speedSmallStep?: number,
-  speedBigStep?: number 
+  speedBigStep?: number,
+  speedSlider?: {min: number, max: number}
 }
+
 
 export type StateSansCommon = Omit<State, "common">
 export type StateView = Partial<StateSansCommon & Context & {isPinned: boolean}>
@@ -80,6 +82,7 @@ export type MediaPath = {
 
 export type Pin = {tabId: number, ctx: Context}
 
+// New entries must be added to namedSelectors.ctx @ src/background/GlobalState.ts 
 export type Context = {
   lastSpeed?: number,
   speed: number, 
@@ -122,6 +125,7 @@ export enum AdjustMode {
 }
 
 export type Command = {
+  group?: CommandGroup
   withFilterTarget?: boolean,
   withFilterOption?: boolean,
   valueType?: "number" | "string" | "modalString" | "adjustMode" | "state",
@@ -132,6 +136,13 @@ export type Command = {
   requiresMedia?: boolean,
   requiresTabCapture?: boolean,
   generate: () => Keybind 
+}
+
+export enum CommandGroup {
+  FX = 1,
+  AUDIO_FX,
+  MEDIA,
+  MISC
 }
 
 export type Keybind = {

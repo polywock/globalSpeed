@@ -291,7 +291,8 @@ const namedSelectors = {
       clickedRating: true,
       speedPresets: true,
       speedSmallStep: true,
-      speedBigStep: true 
+      speedBigStep: true,
+      speedSlider: true
     } as StateViewSelector    
 }
 

@@ -34,4 +34,20 @@
       padding: 0;
     }
   }
+
+  & > .slider {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    align-items: center; 
+    margin-top: 15px;
+    column-gap: 10px; 
+
+    & > svg {
+      color: var(--header-icon-color);
+
+      &.active {
+        opacity: 0.5;
+      }
+    }
+  }
 }

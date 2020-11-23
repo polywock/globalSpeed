@@ -90,7 +90,7 @@ export class Overlay {
     document.removeEventListener("fullscreenchange", () => {
       this.handleFullscreenChange()
     }, {capture: true})
-    this.wrapper.remove()
+    this.wrapper?.remove()
     delete this.wrapper
   }
   show = (opts: OverlayShowOpts) => {
@@ -149,7 +149,7 @@ export class Overlay {
         } 
       }
     } else {
-      this.wrapper.remove()
+      this.wrapper?.remove()
     }
   }
   handleFullscreenChange = () => {

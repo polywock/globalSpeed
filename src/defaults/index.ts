@@ -313,3 +313,7 @@ export const INDICATOR_INIT: IndicatorInit = {
 export function getDefaultSpeedPresets() {
   return [0.25, 0.5, 0.75, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 16]
 }
+
+export function getDefaultSpeedSlider() {
+  return {min: 0.5, max: 1.5}
+}

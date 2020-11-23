@@ -8,10 +8,10 @@ import { GsmManager } from "./GsmManager"
 import { GlobalState } from "./GlobalState"
 import { processKeybinds } from "./processKeybinds"
 import { GlobalMedia } from "./GlobalMedia"
-import { CaptureManager } from "./CaptureManager"
 import { URLRuleManager } from "./URLRuleManager"
 import { isFirefox } from "../utils/helper"
 import { checkURLCondition } from "../utils/configUtils"
+import { CaptureManager } from "notFirefox/background/CaptureManager"
 
 declare global {
   interface Window {
@@ -46,7 +46,7 @@ async function main() {
   window.ruleManager = new URLRuleManager()
   window.gsmMgr = new GsmManager(stateView.language)
   
-  if (chrome.tabCapture) {
+  if (chrome.tabCapture && CaptureManager) {
     window.captureMgr = new CaptureManager()
   }
 

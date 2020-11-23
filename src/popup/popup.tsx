@@ -5,7 +5,7 @@ import { getActiveTabInfo } from "../utils/browserUtils"
 import { MainPanel } from "./MainPanel"
 import { FxPanel } from "./FxPanel"
 import { ThemeSync } from "../comps/ThemeSync"
-import { AudioPanel } from "./AudioPanel"
+import { AudioPanel } from "notFirefox/popup/AudioPanel"
 import { requestGsm } from "../utils/configUtils"
 import { ErrorFallback } from "../comps/ErrorFallback"
 import { useStateView } from "../hooks/useStateView"
@@ -43,7 +43,7 @@ export function App(props: {}) {
       <Header panel={panel} setPanel={v => setPanel(v)}/>
       {panel === 0 && <MainPanel/>}
       {panel === 1 && <FxPanel/>}
-      {panel === 2 && <AudioPanel/>}
+      {panel === 2 && AudioPanel && <AudioPanel/>}
     </div>
   )
 }
