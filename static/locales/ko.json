@@ -89,7 +89,8 @@
     "adjustGain": "볼륨+",
     "adjustDelay": "지연",
     "tabCapture": "캡처",
-    "relativeTooltip": "속도에 비례"
+    "relativeTooltip": "속도에 비례",
+    "showNetTooltip": "순 기간 표시"
   },
   "options": {
     "flags": {

@@ -17,10 +17,10 @@ import { pushView } from "../background/GlobalState"
 export function SectionEditor(props: {}) {
   const [commandOption, setCommandOption] = useState("adjustSpeed")
   const [view, setView] = useStateView({keybinds: true})
-  const [urlView] = useStateView({keybindsUrlCondition: true})
+  const [viewAlt] = useStateView({keybindsUrlCondition: true, showNetSeek: true})
   const [show, setShow] = useState(false)
 
-  if (!view || !urlView) return <div></div>
+  if (!view || !viewAlt) return <div></div>
 
   const handleKeybindChange = (id: string, newKb: Keybind) => {
     setView(produce(view, d => {
@@ -41,7 +41,7 @@ export function SectionEditor(props: {}) {
     }))
   }
 
-  const urlRuleCount = urlView.keybindsUrlCondition?.parts?.length || 0
+  const urlRuleCount = viewAlt.keybindsUrlCondition?.parts?.length || 0
 
   return (
     <div className="section SectionEditor">
@@ -70,7 +70,7 @@ export function SectionEditor(props: {}) {
       {isFirefox() ? null : <UnusedCommandWarning keybinds={view.keybinds || []}/>}
       <div className="keybindControls">
         {(view.keybinds || []).map(bind => (
-          <KeybindControl key={bind.id} value={bind} 
+          <KeybindControl showNetSpeed={viewAlt.showNetSeek} key={bind.id} value={bind} 
             onChange={handleKeybindChange} 
             onRemove={handleKeybindRemove}
             onMove={handleKeybindMove}
@@ -102,7 +102,7 @@ export function SectionEditor(props: {}) {
           pushView({override: {keybindsUrlCondition: null}})
         }} className={`${urlRuleCount ? "error" : ""}`}>{`-- ${urlRuleCount} --`}</button>
         {show && <URLModal 
-          value={urlView.keybindsUrlCondition || getDefaultURLCondition()} 
+          value={viewAlt.keybindsUrlCondition || getDefaultURLCondition()} 
           onClose={() => setShow(false)} 
           onReset={() => pushView({override: {keybindsUrlCondition: null}})}
           onChange={v => {

@@ -89,7 +89,8 @@
     "adjustGain": "ses+",
     "adjustDelay": "geciktir",
     "tabCapture": "ele geçirmek",
-    "relativeTooltip": "hıza göre"
+    "relativeTooltip": "hıza göre",
+    "showNetTooltip": "net süreyi göster"
   },
   "options": {
     "flags": {

@@ -89,7 +89,8 @@
     "adjustGain": "gain",
     "adjustDelay": "delay",
     "tabCapture": "tab capture",
-    "relativeTooltip": "relative to speed"
+    "relativeTooltip": "relative to speed",
+    "showNetTooltip": "show net duration"
   },
   "options": {
     "flags": {

@@ -89,7 +89,8 @@
     "adjustGain": "增益",
     "adjustDelay": "延迟",
     "tabCapture": "捕获",
-    "relativeTooltip": "相对于速度"
+    "relativeTooltip": "相对于速度",
+    "showNetTooltip": "显示净时长"
   },
   "options": {
     "flags": {

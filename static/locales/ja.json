@@ -89,7 +89,8 @@
     "adjustGain": "音量+",
     "adjustDelay": "遅延",
     "tabCapture": "捕捉",
-    "relativeTooltip": "速度に対して"
+    "relativeTooltip": "速度に対して",
+    "showNetTooltip": "ネット期間を表示"
   },
   "options": {
     "flags": {

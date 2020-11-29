@@ -89,7 +89,8 @@
     "adjustGain": "आवाज़+",
     "adjustDelay": "विलंब",
     "tabCapture": "पकड़ना",
-    "relativeTooltip": "गति के सापेक्ष"
+    "relativeTooltip": "गति के सापेक्ष",
+    "showNetTooltip": "शुद्ध अवधि दिखाएं"
   },
   "options": {
     "flags": {

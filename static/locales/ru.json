@@ -89,7 +89,8 @@
     "adjustGain": "громкость+",
     "adjustDelay": "задержка",
     "tabCapture": "захватить",
-    "relativeTooltip": "относительно скорости"
+    "relativeTooltip": "относительно скорости",
+    "showNetTooltip": "показать чистую продолжительность"
   },
   "options": {
     "flags": {

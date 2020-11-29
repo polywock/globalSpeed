@@ -173,3 +173,8 @@ export function flatJoin<T>(groups: T[][], value: T) {
   }
   return flatGroup
 }
+
+
+export function domRectGetOffset(rect: DOMRect, offset = 10) {
+  return {x: rect.x + rect.width + offset, y: rect.y - rect.height - offset}
+}

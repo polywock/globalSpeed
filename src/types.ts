@@ -53,7 +53,8 @@ export type State = {
   speedPresets?: number[],
   speedSmallStep?: number,
   speedBigStep?: number,
-  speedSlider?: {min: number, max: number}
+  speedSlider?: {min: number, max: number},
+  showNetSeek?: boolean
 }
 
 
@@ -325,7 +326,8 @@ export type Gsm = {
     adjustGain: string,
     adjustDelay: string,
     tabCapture: string,
-    relativeTooltip: string
+    relativeTooltip: string,
+    showNetTooltip: string
   },
   options: {
     flags: {

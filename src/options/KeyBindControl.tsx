@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { Keybind, TargetFx, StateOption, AdjustMode } from "../types"
 import produce from "immer"
 import { KeyPicker } from "../comps/KeyPicker"
@@ -15,19 +15,21 @@ import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { BsMusicNoteList } from "react-icons/bs"
 import { TiArrowLoop } from "react-icons/ti"
 import { MdTimer } from "react-icons/md"
-import { isFirefox, clamp } from "../utils/helper"
+import { isFirefox, clamp, feedbackText, domRectGetOffset } from "../utils/helper"
 import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { Move } from "../comps/Move"
 import { URLModal } from "./URLModal"
 import { getDefaultURLCondition } from "../defaults"
 import "./KeybindControl.scss"
+import { pushView } from "notFirefox/background/GlobalState"
 
 
 type KeybindControlProps = {
   onChange: (id: string, newValue: Keybind) => void,
   onRemove: (id: string) => void,
   onMove: (id: string, down: boolean) => void,
-  value: Keybind
+  value: Keybind,
+  showNetSpeed: boolean
 }
 
 export const KeybindControl = (props: KeybindControlProps) => {
@@ -149,11 +151,24 @@ export const KeybindControl = (props: KeybindControlProps) => {
         {value.command === "tabCapture" && <div className={`captureIcon ${value.enabled ? "active" : ""}`}><div></div></div>}
         <span>{label}</span>
         {value.command === "seek" && (
-          <button title={window.gsm.command.relativeTooltip} className={`toggle ${value.valueBool ? "active" : ""}`} onClick={e => {
-            props.onChange(value.id, produce(value, d => {
-              d.valueBool = !d.valueBool
-            }))
-          }}>x</button>
+          <>
+            <button title={window.gsm.command.relativeTooltip} className={`toggle ${value.valueBool ? "active" : ""}`} onClick={e => {
+              props.onChange(value.id, produce(value, d => {
+                d.valueBool = !d.valueBool
+              }))
+
+              if (!value.valueBool) {
+                feedbackText(window.gsm.command.relativeTooltip, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
+              }
+            }}>{"×"}</button>
+            <button style={{marginLeft: "5px"}} title={window.gsm.command.showNetTooltip} className={`toggle ${props.showNetSpeed ? "active" : ""}`} onClick={e => {
+              pushView({override: {showNetSeek: !props.showNetSpeed}})
+
+              if (!props.showNetSpeed) {
+                feedbackText(window.gsm.command.showNetTooltip, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
+              }
+            }}>{":"}</button>
+          </>
         )}
         {tooltip && <Tooltip label="?" tooltip={tooltip}/>}
         {commandInfo.valueType === "adjustMode" && <button className="adjustMode" onClick={e => {

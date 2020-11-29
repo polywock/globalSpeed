@@ -292,7 +292,8 @@ const namedSelectors = {
       speedPresets: true,
       speedSmallStep: true,
       speedBigStep: true,
-      speedSlider: true
+      speedSlider: true,
+      showNetSeek: true
     } as StateViewSelector    
 }
 

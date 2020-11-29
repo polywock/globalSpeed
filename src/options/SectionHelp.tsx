@@ -3,7 +3,7 @@ import { MdContentCopy, MdContentPaste } from "react-icons/md"
 import { pushView } from "../background/GlobalState"
 import { State } from "../types"
 import { requestCreateTab } from "../utils/browserUtils"
-import { isFirefox, areYouSure, feedbackText } from "../utils/helper"
+import { isFirefox, areYouSure, feedbackText, domRectGetOffset } from "../utils/helper"
 import "./SectionHelp.scss"
 
 
@@ -70,8 +70,7 @@ function ExportImport(props: {}) {
       const cb = () => {
         chrome.runtime.sendMessage({type: "GET_STATE"}, state => {
           navigator.clipboard.writeText(JSON.stringify(state)).then(() => {
-            const {x, y} = (e.target as HTMLButtonElement).getBoundingClientRect()
-            feedbackText("copied!", {x: x + 10, y: y - 50})
+            feedbackText("copied!", domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
           }, err => {})
         })
       }

@@ -4,7 +4,7 @@ import { sendMessageToConfigSync, formatSpeed, intoFxFlags, sendMediaEvent, crea
 import { TabInfo, requestCreateTab } from "../utils/browserUtils"
 import { MediaEvent } from "../contentScript/utils/applyMediaEvent"
 import { OverlayShowOpts } from "../contentScript/Overlay"
-import { round, clamp, isFirefox } from "../utils/helper"
+import { round, clamp, isFirefox, formatDuration } from "../utils/helper"
 import { FlatMediaInfo } from "../contentScript/utils/genMediaInfo"
 import { getDefaultFx, getDefaultAudioFx } from "../defaults"
 import { filterInfos } from "../defaults/filters"
@@ -12,6 +12,7 @@ import produce from "immer"
 
 let feedbackAudio = isFirefox() ? null : createFeedbackAudio()
 let feedbackBadAudio = isFirefox() ? null : createFeedbackAudio(false)
+let lastSeek: {key: string, time: number, net: number}
 
 export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
   const fetch = (selector: StateViewSelector) => {
@@ -218,9 +219,22 @@ const commandHandlers: {
   },
   seek: async args => {
     const { kb, media, applyToMedia, show, fetch } = args
+    const { showNetSeek } = fetch({showNetSeek: true})
     const speed = fetch({speed: true}).speed ?? 1
+
     const value = kb.valueBool ? kb.valueNumber * speed : kb.valueNumber
-    const text = ` ${round(value, 2)}`
+    let text = ` ${Math.abs(round(value, 2))}`
+    
+    if (showNetSeek) {
+      const now = new Date().getTime()
+      let net = 0; 
+      if (lastSeek && lastSeek.key === media.key && lastSeek.time + 1000 > now) {
+        net = lastSeek.net
+      }
+      net += value 
+      lastSeek = {key: media.key, time: now, net}
+      text = ` ${net < 0 ? "-" : ""}${formatDuration(Math.abs(net))}`
+    }  
 
     kb.valueNumber >= 0 ? show({icons: ["forward"], text}) : show({icons: ["backward"], text}) 
     applyToMedia({type: "SEEK", value, relative: true})

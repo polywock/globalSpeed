@@ -89,7 +89,8 @@
     "adjustGain": "volume+",
     "adjustDelay": "atraso",
     "tabCapture": "capturar",
-    "relativeTooltip": "relativo à velocidade"
+    "relativeTooltip": "relativo à velocidade",
+    "showNetTooltip": "mostrar duração líquida"
   },
   "options": {
     "flags": {
