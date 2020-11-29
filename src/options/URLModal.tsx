@@ -1,7 +1,6 @@
 
 import { useState } from "react"
 import produce from "immer"
-import "./URLModal.scss"
 import { ModalBase } from "../comps/ModalBase"
 import { URLCondition } from "../types"
 import { checkURLCondition } from "../utils/configUtils"
@@ -10,6 +9,7 @@ import { GoX } from "react-icons/go"
 import { getDefaultURLConditionPart } from "../defaults"
 import cloneDeep from "lodash.clonedeep"
 import { randomId } from "../utils/helper"
+import "./URLModal.scss"
 
 type Props = {
   onClose: () => void,
@@ -28,7 +28,7 @@ export function URLModal(props: Props) {
     <div className="URLModal">
       <div className="header">
         <div>{window.gsm.options.rules.header}</div>
-        <select onChange={e => {
+        <select disabled={value.parts?.length < 2} onChange={e => {
           props.onChange(produce(value, d => {
             d.matchAll = e.target.value === "all"
           }))
@@ -136,7 +136,7 @@ export function URLModal(props: Props) {
           
           // East asian stock markets, red = good, green/blue = bad. To avoid confusion, use thumbs up. 
           if (window.gsm.token.create === "创建" || window.gsm.token.create === "作成" || window.gsm.token.create === "창조하다") {
-            alert(checkURLCondition(test, value, props.neutralValue || false) ? "👍 PASSED" : "👎 FAILED")
+            alert(checkURLCondition(test, value, props.neutralValue || false) ? "👍 👍 👍" : "👎")
           } else {
             setResult(checkURLCondition(test, value, props.neutralValue || false))
           }

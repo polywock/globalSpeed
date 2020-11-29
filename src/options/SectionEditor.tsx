@@ -95,6 +95,7 @@ export function SectionEditor(props: {}) {
           setView({
             keybinds: getDefaultKeybinds()
           })
+          pushView({override: {keybindsUrlCondition: null}})
         }}>{window.gsm.token.reset}</button>
         <button  onClick={() => setShow(!show)} onContextMenu={e => {
           e.preventDefault()
