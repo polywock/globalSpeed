@@ -21,21 +21,23 @@ type Props = {
 
 export function URLModal(props: Props) {
   const { value } = props  
-  const [test, setTest] = useState("example.com")
+  const [test, setTest] = useState("https://www.example.com")
   const [result, setResult] = useState(null as boolean)
 
   return <ModalBase onClose={props.onClose}>
     <div className="URLModal">
       <div className="header">
         <div>{window.gsm.options.rules.header}</div>
-        <select disabled={value.parts?.length < 2} onChange={e => {
-          props.onChange(produce(value, d => {
-            d.matchAll = e.target.value === "all"
-          }))
-        }} value={value.matchAll ? "all" : "any"}>
-          <option value="any">{`${window.gsm.token.any || "any"} (OR)`}</option>
-          <option value="all">{`${window.gsm.token.all || "all"} (AND)`}</option>
-        </select>
+        {value.parts?.length < 2 ? <div/> : (
+          <select onChange={e => {
+            props.onChange(produce(value, d => {
+              d.matchAll = e.target.value === "all"
+            }))
+          }} value={value.matchAll ? "all" : "any"}>
+            <option value="any">{`${window.gsm.token.any || "any"} (OR)`}</option>
+            <option value="all">{`${window.gsm.token.all || "all"} (AND)`}</option>
+          </select>
+        )} 
       </div>
       <div className="parts">
         {value.parts.map((part, i) => {

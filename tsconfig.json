@@ -16,5 +16,5 @@
         "isFirefox/*": ["src/*"] 
     }
   },
-  "exclude": ["./node_modules", "build", "buildFf"]
+  "exclude": ["./node_modules", "./build", "./buildFf"]
 }
