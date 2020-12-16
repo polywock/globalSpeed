@@ -184,8 +184,8 @@ export class CaptureManager {
     }
 
     this.infos.push(info)
-    info.client = subscribeView({superDisable: true, enabled: true, audioFx: true, audioFxAlt: true, monoOutput: true}, tabId, true, view => {
-      this.handleChange(info, view.enabled, view.audioFx, view.audioFxAlt, view.monoOutput)
+    info.client = subscribeView({superDisable: true, enabled: true, audioFx: true, audioFxAlt: true, monoOutput: true, audioPan: true}, tabId, true, view => {
+      this.handleChange(info, view.enabled, view.audioFx, view.audioFxAlt, view.monoOutput, view.audioPan)
 
       if (view.superDisable) {
         this.releaseTab(info.tabId)
@@ -214,67 +214,22 @@ export class CaptureManager {
     delete info.stream 
     info.client?.release()
     this.infos.splice(infoIdx, 1)
-    info.main?.release()
-    info.alt?.release()
-    info.merger?.disconnect(); delete info.merger
+    info.fx?.release(); delete info.fx 
     info.outputNode?.disconnect(); delete info.outputNode
-    info.splitter?.disconnect(); delete info.splitter
     info.streamSrc.disconnect(); delete info.streamSrc
 
     chrome.runtime.sendMessage({type: "CAPTURE_STATUS", tabId, value: false})
   }
-  handleChange = (info: CaptureInfo, enabled: boolean, audioFx: AudioFx, audioFxAlt: AudioFx, monoOutput: boolean) => {
+  handleChange = (info: CaptureInfo, enabled: boolean, audioFx: AudioFx, audioFxAlt: AudioFx, monoOutput: boolean, pan: number) => {
     const { streamSrc } = info 
-    let head: AudioNode = streamSrc
     
     streamSrc.disconnect()
-    info.main?.output.disconnect()
-    info.alt?.output.disconnect()
-    info.splitter?.disconnect()
-    info.merger?.disconnect()
-
-
-    info.main = info.main || new AudioEffect(this.audioCtx)
-    info.main.updateFx(enabled, audioFx)
-
-
-    if (audioFxAlt) {
-      streamSrc.channelCount = 2
-      streamSrc.channelCountMode = "explicit"
-
-      info.splitter = info.splitter || this.audioCtx.createChannelSplitter(2)
-      head.connect(info.splitter) 
-
-      info.alt = info.alt || new AudioEffect(this.audioCtx)
-      info.alt.updateFx(enabled, audioFxAlt)
-
-      info.splitter.connect(info.main.input, 0)
-      info.splitter.connect(info.alt.input, 1)
-
-      info.merger = info.merger || this.audioCtx.createChannelMerger(2)
-      info.main.output.connect(info.merger, undefined, 0)
-      info.alt.output.connect(info.merger, undefined, 1)
-      head = info.merger
+    info.fx = info.fx || new AudioEffectComplex(this.audioCtx)
     
-    } else {
-      streamSrc.channelCountMode = "max"
-      info.alt?.release();
-      delete info.alt
-      delete info.splitter
-      delete info.merger
+    info.fx.updateFx(enabled, audioFx, audioFxAlt, monoOutput, pan)
 
-      head.connect(info.main.input)
-      head = info.main.output
-    }
-
-    head.connect(info.outputNode)
-    
-    if (monoOutput) {
-      info.outputNode.channelCount = 1 
-      info.outputNode.channelCountMode = "clamped-max"
-    } else {
-      info.outputNode.channelCountMode = "max"
-    }
+    streamSrc.connect(info.fx.input)
+    info.fx.output.connect(info.outputNode)
   }
 }
 
@@ -284,19 +239,15 @@ export type CaptureInfo = {
   streamSrc: MediaStreamAudioSourceNode,
   outputNode: GainNode,
   client?: SubClient,
-  main?: AudioEffect,
-  alt?: AudioEffect,
+  fx?: AudioEffectComplex
   ana?: AnalyzerInfo,
   reverse?: () => void,
-  splitter?: ChannelSplitterNode,
-  merger?: ChannelMergerNode
 }
 
 type AnalyzerInfo = {
   port: chrome.runtime.Port,
   node: AnalyserNode
 }
-
 
 
 function captureTab(): Promise<MediaStream> {
@@ -310,7 +261,92 @@ function captureTab(): Promise<MediaStream> {
   })
 }
 
+class AudioEffectComplex {
+  input: GainNode
+  output: GainNode
+  main?: AudioEffect
+  alt?: AudioEffect
+  splitter?: ChannelSplitterNode
+  merger?: ChannelMergerNode
+  pan?: StereoPannerNode
 
+  constructor(public ctx: AudioContext) {
+    this.input = ctx.createGain()
+    this.output = ctx.createGain()
+  }
+  release = () => {
+    this.estrange()
+    this.main?.release()
+    this.alt?.release()
+  }
+  updateFx = async (enabled: boolean, audioFx: AudioFx, audioFxAlt: AudioFx, monoOutput: boolean, pan: number) => {
+    
+    let head = this.input as AudioNode
+    this.estrange()
+
+
+    this.main = this.main || new AudioEffect(this.ctx)
+    this.main.updateFx(enabled, audioFx, !!audioFxAlt)
+
+
+    if (enabled && audioFxAlt) {
+      head.channelCount = 2
+      head.channelCountMode = "explicit"
+
+      this.splitter = this.splitter || this.ctx.createChannelSplitter(2)
+      head.connect(this.splitter) 
+
+      this.alt = this.alt || new AudioEffect(this.ctx)
+      this.alt.updateFx(enabled, audioFxAlt)
+
+      this.splitter.connect(this.main.input, 0)
+      this.splitter.connect(this.alt.input, 1)
+
+      this.merger = this.merger || this.ctx.createChannelMerger(2)
+      this.main.output.connect(this.merger, undefined, 0)
+      this.alt.output.connect(this.merger, undefined, 1)
+      head = this.merger
+    
+    } else {
+      head.channelCountMode = "max"
+      this.alt?.release();
+      delete this.alt
+      delete this.splitter
+      delete this.merger
+
+      head.connect(this.main.input)
+      head = this.main.output
+    }
+
+    if (enabled && pan) {
+      this.pan = this.pan || this.ctx.createStereoPanner()
+      this.pan.pan.value = clamp(-1, 1, pan || 0)
+
+      head.connect(this.pan)
+      head = this.pan 
+    } else {
+      this.pan?.disconnect(); delete this.pan
+    }
+
+    head.connect(this.output)
+    head = this.output
+    
+    if (enabled && monoOutput) {
+      head.channelCount = 1 
+      head.channelCountMode = "clamped-max"
+    } else {
+      head.channelCountMode = "max"
+    }
+  }
+  estrange = () => {
+    this.input.disconnect()
+    this.main?.output.disconnect()
+    this.alt?.output.disconnect()
+    this.splitter?.disconnect()
+    this.merger?.disconnect()
+    this.pan?.disconnect()
+  }
+}
 
 
 class AudioEffect {
@@ -335,7 +371,7 @@ class AudioEffect {
     delete this.jungle
   }
   prevUpdateFx: () => void 
-  updateFx = async (enabled: boolean, audioFx: AudioFx) => {
+  updateFx = async (enabled: boolean, audioFx: AudioFx, hasAlt?: boolean) => {
     this.prevUpdateFx = () => this.updateFx(enabled, audioFx)
     this.estrange()
 
@@ -352,7 +388,6 @@ class AudioEffect {
       delete this.jungle
     }
 
-    
 
     // soundtouch pitch
     const soundTouchActive = enabled && !audioFx.jungleMode && audioFx.pitch !== null && audioFx.pitch !== 0

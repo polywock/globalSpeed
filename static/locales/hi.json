@@ -6,7 +6,8 @@
     "compressor": "कंप्रेसर",
     "split": "विभाजित",
     "mono": "मोनो",
-    "reverse": "रिवर्स"
+    "reverse": "रिवर्स",
+    "pan": "पैन"
   },
   "warnings": {
     "backdropFirefox": "फ़ायरफ़ॉक्स उपयोगकर्ताओं को \"about:config\" URL पर जाकर \"gfx.webrender.all\" और \"layout.css.backdrop-filter.enabled\" को सक्षम करने की आवश्यकता है। दो झंडे को सक्षम करने के बाद फ़ायरफ़ॉक्स को पुनरारंभ करें।",

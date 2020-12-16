@@ -6,7 +6,8 @@
     "compressor": "压限器",
     "split": "分离声道",
     "mono": "单声道",
-    "reverse": "音频倒放"
+    "reverse": "音频倒放",
+    "pan": "平移"
   },
   "warnings": {
     "backdropFirefox": "对于背景过滤器功能，Firefox用户需要转到“about:config”URL启用“gfx.webrender.all”和“layout.css.backdrop-filter.enabled”。启用这两个标志后，重新启动Firefox。",

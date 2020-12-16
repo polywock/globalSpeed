@@ -2,11 +2,12 @@
   "audio": {
     "captureTab": "захватить",
     "releaseTab": "отпускать",
-    "equalizer": "Эквалайзер",
-    "compressor": "Компрессор",
+    "equalizer": "эквалайзер",
+    "compressor": "компрессор",
     "split": "разделить",
     "mono": "моно",
-    "reverse": "обратный звук"
+    "reverse": "обратный звук",
+    "pan": "сдвиг"
   },
   "warnings": {
     "backdropFirefox": "Пользователи Firefox должны включить «gfx.webrender.all» и «layout.css.backdrop-filter.enabled», перейдя по URL «about:config». Перезапустите Firefox после включения двух флагов.",
@@ -18,8 +19,8 @@
     "create": "создать",
     "reset": "сброс настроек",
 
-    "on": "Вкл",
-    "off": "Выкл",
+    "on": "вкл",
+    "off": "выкл",
     "toggle": "переключить",
 
     "element": "элемент",

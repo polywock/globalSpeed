@@ -1,6 +1,6 @@
 import { useState, useRef } from "react"
 import { SliderPlus } from "../comps/SliderPlus";
-import { FaVolumeUp, FaMusic } from "react-icons/fa";
+import { FaVolumeUp, FaMusic, FaArrowsAltH } from "react-icons/fa";
 import { CompressorControl } from "./CompressorControl";
 import { EqualizerControl } from "./EqualizerControl";
 import { useStateView } from "../hooks/useStateView";
@@ -14,7 +14,7 @@ import { ReverseButton } from "./ReverseButton";
 import "./AudioPanel.scss"
 
 export function AudioPanel(props: {}) {
-  const [view, setView] = useStateView({audioFx: true, audioFxAlt: true, monoOutput: true})
+  const [view, setView] = useStateView({audioFx: true, audioFxAlt: true, monoOutput: true, audioPan: true})
   const env = useRef({viaButton: true}).current
   const [compTab, setCompTab] = useState(false)
   let [rightTab, setRightTab] = useState(false)
@@ -109,6 +109,23 @@ export function AudioPanel(props: {}) {
           d[starKey].volume = newValue 
         }))
         newValue !== 1 && ensureCaptured()
+      }}
+    />
+    <SliderPlus
+      label={<div>
+        <FaArrowsAltH size="17px"/>
+        <span style={{marginLeft: "10px"}}>{window.gsm.audio.pan}</span>
+      </div>}
+      value={view.audioPan ?? 0}
+      sliderMin={-1}
+      sliderMax={1}
+      min={-1}
+      default={0}
+      onChange={newValue => {
+        setView(produce(view, d => {
+          d.audioPan = newValue
+        }))
+        newValue !== 0 && ensureCaptured()
       }}
     />
     <SliderPlus

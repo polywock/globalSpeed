@@ -268,7 +268,8 @@ const namedSelectors = {
       audioFx: true,
       audioFxAlt: true,
       stereoControl: true,
-      monoOutput: true
+      monoOutput: true,
+      audioPan: true
     } as StateViewSelector,
     simple: {
       version: true,

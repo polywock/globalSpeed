@@ -6,7 +6,8 @@
     "compressor": "compresor",
     "split": "split",
     "mono": "mono",
-    "reverse": "inverso"
+    "reverse": "inverso",
+    "pan": "panorámica"
   },
   "warnings": {
     "backdropFirefox": "Los usuarios de Firefox deben habilitar \"gfx.webrender.all\" y \"layout.css.backdrop-filter.enabled\" yendo a la URL \"about:config\". Reinicie Firefox después de habilitar las dos banderas.",

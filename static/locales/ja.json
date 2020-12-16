@@ -6,7 +6,8 @@
     "compressor": "コンプレッサー",
     "split": "分割",
     "mono": "モノラル",
-    "reverse": "リバース"
+    "reverse": "リバース",
+    "pan": "パン"
   },
   "warnings": {
     "backdropFirefox": "Firefoxユーザーは、「about:config」URLに移動して、「gfx.webrender.all」と「layout.css.backdrop-filter.enabled」を有効にする必要があります。 2つのフラグを有効にした後、Firefoxを再起動します。",

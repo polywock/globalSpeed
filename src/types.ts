@@ -92,7 +92,8 @@ export type Context = {
   backdropFx: Fx,
   monoOutput?: boolean,
   audioFx: AudioFx,
-  audioFxAlt?: AudioFx
+  audioFxAlt?: AudioFx,
+  audioPan?: number 
 }
 
 export type AudioFx = {
@@ -243,7 +244,8 @@ export type Gsm = {
     compressor: string,
     split: string,
     mono: string,
-    reverse: string
+    reverse: string,
+    pan: string
   },
   warnings: {
     backdropFirefox: string,

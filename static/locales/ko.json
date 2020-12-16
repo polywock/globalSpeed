@@ -6,7 +6,8 @@
     "compressor": "컴프레서",
     "split": "분할",
     "mono": "모노",
-    "reverse": "역 오디오"
+    "reverse": "역 오디오",
+    "pan": "이동"
   },
   "warnings": {
     "backdropFirefox": "Firefox 사용자는 \"about:config\"URL로 이동하여 \"gfx.webrender.all\"및 \"layout.css.backdrop-filter.enabled\"를 활성화해야합니다. 두 플래그를 활성화 한 후 Firefox를 다시 시작하십시오.",
