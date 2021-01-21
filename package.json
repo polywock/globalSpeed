@@ -36,7 +36,7 @@
     "webpack-cli": "^4.2.0"
   },
   "dependencies": {
-    "immer": "^8.0.0",
+    "immer": "^8.0.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.debounce": "^4.0.8",
     "pitchy": "^2.0.2",
