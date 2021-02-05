@@ -13,6 +13,7 @@ export class MediaTower {
   talk = new WindowTalk("GLOBAL_SPEED_CS", "GLOBAL_SPEED_CTX")
   newDocCallbacks: Set<() => void> = new Set()
   newMediaCallbacks: Set<() => void> = new Set()
+  talkInitCb?: () => void
   constructor() {
     this.processDoc(window)
     this.talk.initCb = this.handleTalkInit
@@ -26,6 +27,8 @@ export class MediaTower {
     }
     parasiteShadowRoot.addEventListener(`PARASITE_WIGGLE`, this.handleParasiteWiggle, {capture: true, passive: true})
     parasiteShadowRoot.host.remove()
+
+    this.talkInitCb?.()
   }
   private handleParasiteWiggle = (e: CustomEvent) => {
     e.stopImmediatePropagation();

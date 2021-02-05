@@ -44,7 +44,7 @@ export function SectionFlags(props: {}) {
         </div>
         <div className="field">
           <span>{window.gsm.options.flags.darkTheme}</span>
-          <input type="checkbox" checked={view.darkTheme || false} onChange={e => {
+          <input type="checkbox" checked={!!view.darkTheme} onChange={e => {
             pushView({override: {darkTheme: !view.darkTheme}})
           }}/>
         </div>
@@ -53,7 +53,7 @@ export function SectionFlags(props: {}) {
             <span>{window.gsm.options.flags.hideIndicator}</span>
             <Tooltip tooltip={window.gsm.options.flags.hideIndicatorTooltip}/>
           </div>
-          <input type="checkbox" checked={view.hideIndicator || false} onChange={e => {
+          <input type="checkbox" checked={!!view.hideIndicator} onChange={e => {
             pushView({override: {hideIndicator: !view.hideIndicator}})
           }}/>
         </div>
@@ -62,7 +62,7 @@ export function SectionFlags(props: {}) {
             <span>{window.gsm.options.flags.hideBadge}</span>
             <Tooltip tooltip={window.gsm.options.flags.hideBadgeTooltip}/>
           </div>
-          <input type="checkbox" checked={view.hideBadge || false} onChange={e => {
+          <input type="checkbox" checked={!!view.hideBadge} onChange={e => {
             pushView({override: {hideBadge: !view.hideBadge}})
           }}/>
         </div>
@@ -88,7 +88,7 @@ export function SectionFlags(props: {}) {
             <span>{window.gsm.options.flags.pinByDefault}</span>
             <Tooltip tooltip={window.gsm.options.flags.pinByDefaultTooltip}/>
           </div>
-          <input type="checkbox" checked={view.pinByDefault || false} onChange={e => {
+          <input type="checkbox" checked={!!view.pinByDefault} onChange={e => {
             pushView({override: {pinByDefault: !view.pinByDefault}})
           }}/>
         </div>
@@ -110,13 +110,13 @@ export function SectionFlags(props: {}) {
               <span>{window.gsm.options.flags.ghostMode}</span>
               <Tooltip tooltip={window.gsm.options.flags.ghostModeTooltip}/>
             </div>
-            <input type="checkbox" checked={view.ghostMode} onChange={e => {
+            <input type="checkbox" checked={!!view.ghostMode} onChange={e => {
               pushView({override: {ghostMode: !view.ghostMode}})
             }}/>
           </div>
           <div className="field">
             <span>{window.gsm.options.flags.hideMediaView}</span>
-            <input type="checkbox" checked={view.hideMediaView || false} onChange={e => {
+            <input type="checkbox" checked={!!view.hideMediaView} onChange={e => {
               pushView({override: {hideMediaView: !view.hideMediaView}})
             }}/>
           </div>

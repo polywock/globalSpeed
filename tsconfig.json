@@ -14,7 +14,8 @@
     "paths": {
         "notFirefox/*": ["src/*"],
         "isFirefox/*": ["src/*"] 
-    }
+    },
+    "outDir": "build"
   },
   "exclude": ["./node_modules", "./build", "./buildFf"]
 }

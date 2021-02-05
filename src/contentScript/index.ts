@@ -26,28 +26,21 @@ declare global {
 async function main() {
   window.isContentScript = true
   window.mediaTower = new MediaTower()
+
+  window.mediaTower.talkInitCb = () => {
+    fetchView({ghostMode: true}).then(view => {
+      window.ghostMode = view.ghostMode
+      if (!window.ghostMode) return 
+      window.mediaTower.talk.send({type: "ACTIVATE_GHOST"})
+    })
+  }
+
   window.keyListener = new WindowKeyListener()
 
   if (!(window.frameElement?.id === "ajaxframe")) {
     injectCtx()
     isFirefox() && injectCtx(true)
   }
-
-
-  fetchView({ghostMode: true}).then(view => {
-    window.ghostMode = view.ghostMode
-    if (!window.ghostMode) return 
-
-    let repeatCount = 0
-    const intervalId = setInterval(() => {
-      repeatCount++ 
-      if (repeatCount > 20) clearInterval(intervalId)
-      if (window.mediaTower.talk.theirKey) {
-        window.mediaTower.talk.send({type: "ACTIVATE_GHOST"})
-        clearInterval(intervalId)
-      }
-    }, 500)
-  })
 
   await Promise.all([
     requestTabInfo().then(tabInfo => {

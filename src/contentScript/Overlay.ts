@@ -66,7 +66,7 @@ export class Overlay {
       this.handleFullscreenChange()
     }, {capture: true, passive: true})
 
-    this.setInit({})
+    this.setInit?.({})
   }
   setInit = (init: IndicatorInit) => {
     init = init || {}
