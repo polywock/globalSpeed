@@ -13,6 +13,11 @@ function seekTo(elem: HTMLMediaElement, value: number) {
       type: "SEEK_NETFLIX", 
       value
     })
+  } else if (document.URL.startsWith("https://www.amazon")) {
+    const paused = elem.paused 
+    elem.currentTime = value
+    paused ? elem.play() : elem.pause() 
+    paused ? elem.pause() : elem.play() 
   } else {
     elem.currentTime = value
   }

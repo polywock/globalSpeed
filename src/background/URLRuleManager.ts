@@ -2,6 +2,7 @@ import { subscribeView } from "./GlobalState"
 import { StateView } from "../types"
 import { isFirefox } from "../utils/helper"
 import { checkURLCondition } from "../utils/configUtils"
+import { getDefaultFx } from "notFirefox/defaults"
 
 
 export class URLRuleManager {
@@ -77,8 +78,9 @@ export class URLRuleManager {
       }
 
       if (rule.type === "FX") {
-        if (!rule.overrideFx) return 
-        overrides.push({...rule.overrideFx, isPinned: true})
+        let overrideFx = rule.overrideFx ?? {elementFx: getDefaultFx(), backdropFx: getDefaultFx()}
+        
+        overrides.push({...overrideFx, isPinned: true})
         return 
       }
 

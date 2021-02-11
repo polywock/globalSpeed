@@ -1,3 +1,6 @@
+// Must be done after Webpack builds the ctx.js and contentScript.js file. 
+// Replaces $$$CTX$$$ placeholder within contentScript.js to ctx.js code.
+
 const { readFileSync, writeFileSync } = require("fs")
 const { env } = require("process")
 
