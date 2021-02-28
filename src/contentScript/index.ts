@@ -22,6 +22,7 @@ declare global {
   }
 }
 
+const FORCED_GHOST_SITES = ["v.qq.com", "wetv.vip"]
 
 async function main() {
   window.isContentScript = true
@@ -30,7 +31,7 @@ async function main() {
   window.mediaTower.talkInitCb = () => {
     fetchView({ghostMode: true}).then(view => {
       window.ghostMode = view.ghostMode
-      if (!window.ghostMode) return 
+      if (!window.ghostMode && !FORCED_GHOST_SITES.some(site => (document.URL || "").includes(site))) return 
       window.mediaTower.talk.send({type: "ACTIVATE_GHOST"})
     })
   }

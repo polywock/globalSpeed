@@ -6,7 +6,7 @@ import { getDefaultURLRule, getDefaultFx, getDefaultURLCondition } from "../defa
 import { FaPowerOff } from "react-icons/fa"
 import { NumericInput } from "../comps/NumericInput"
 import { FxControl } from "../popup/FxControl"
-import { isFirefox, moveItem } from "../utils/helper"
+import { moveItem } from "../utils/helper"
 import { Move } from "../comps/Move"
 import { ModalText } from "../comps/ModalText"
 import { URLModal } from "./URLModal"

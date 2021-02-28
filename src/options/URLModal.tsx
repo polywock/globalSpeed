@@ -1,9 +1,6 @@
-
-import { useState } from "react"
 import produce from "immer"
 import { ModalBase } from "../comps/ModalBase"
 import { URLCondition } from "../types"
-import { checkURLCondition } from "../utils/configUtils"
 import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { GoX } from "react-icons/go"
 import { getDefaultURLConditionPart } from "../defaults"
@@ -21,8 +18,6 @@ type Props = {
 
 export function URLModal(props: Props) {
   const { value } = props  
-  const [test, setTest] = useState("https://www.example.com")
-  const [result, setResult] = useState(null as boolean)
 
   return <ModalBase onClose={props.onClose}>
     <div className="URLModal">
@@ -124,25 +119,6 @@ export function URLModal(props: Props) {
             }
           }}>{window.gsm.token.paste}</button>
         </div>
-      </div>
-      <div className="test">
-        <input type="text" value={test} onChange={e => {
-          setTest(e.target.value)
-        }}/>
-        <button onMouseDown={e => {
-          if (e.button !== 0) return 
-          setResult(null)
-        }} className={result ? "passed" : result == null ? "" : "failed"} onAnimationEnd={e => {
-          setResult(null)
-        }} onClick={() => {
-          
-          // East asian stock markets, red = good, green/blue = bad. To avoid confusion, use thumbs up. 
-          if (window.gsm.token.create === "创建" || window.gsm.token.create === "作成" || window.gsm.token.create === "창조하다") {
-            alert(checkURLCondition(test, value, props.neutralValue || false) ? "👍 👍 👍" : "👎")
-          } else {
-            setResult(checkURLCondition(test, value, props.neutralValue || false))
-          }
-        }}>test</button>
       </div>
     </div>
   </ModalBase>

@@ -67,24 +67,4 @@
       column-gap: 10px;
     }
   }
-
-  & > .test {
-    display: grid;
-    grid-template-columns: 1fr max-content;
-    align-items: center;
-    column-gap: 10px;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid var(--border-color);
-
-    & > button {
-      &.passed {
-        animation: passKeyframes 500ms ease-out forwards
-      }
-      
-      &.failed {
-        animation: failKeyframes 500ms ease-out forwards
-      }
-    }
-  }
 }
