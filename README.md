@@ -23,7 +23,6 @@ Web extension that sets a default speed for HTML media elements (video and audio
 - Reverse audio to listen to [backmasked messages](https://en.wikipedia.org/wiki/List_of_backmasked_messages).
 - You can delay audio to fix sync issues. 
 - Configure hotkeys to adjust pitch, volume boost, and more. 
-- For fullscreen, first enter fullscreen and then capture the tab's audio using the optional shortcut key. 
 
 
 <img src="https://github.com/polywock/globalSpeed/blob/master/assets/screenshot_a.jpg?raw=true" width="600">
