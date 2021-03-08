@@ -134,6 +134,7 @@ export function feedbackText(text: string, pos: {x: number, y: number}, decay?: 
     background-color: blue; 
     color: yellow;
     padding: 10px;
+    z-index: 99999999999;
   `)
   document.body.appendChild(div)
 

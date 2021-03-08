@@ -5,7 +5,7 @@ import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { GoX } from "react-icons/go"
 import { getDefaultURLConditionPart } from "../defaults"
 import cloneDeep from "lodash.clonedeep"
-import { randomId } from "../utils/helper"
+import { domRectGetOffset, feedbackText, randomId } from "../utils/helper"
 import "./URLModal.scss"
 
 type Props = {
@@ -105,10 +105,11 @@ export function URLModal(props: Props) {
         }}>{window.gsm.token.create}</button>
         <button onClick={props.onReset}>{window.gsm.token.reset}</button>
         <div className="right">
-          <button onClick={() => {
+          <button onClick={e => {
             (window as any).copiedUrlModal = cloneDeep(value)
+            feedbackText(window.gsm.token.copy, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect(), 5))
           }}>{window.gsm.token.copy}</button>
-          <button onClick={() => {
+          <button onClick={e => {
             const newValue = (window as any).copiedUrlModal as URLCondition
             if (newValue) {
               props.onChange(produce(newValue, d => {
@@ -116,6 +117,7 @@ export function URLModal(props: Props) {
                   part.id = randomId()
                 })
               }))
+              feedbackText(window.gsm.token.paste, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect(), 5))
             }
           }}>{window.gsm.token.paste}</button>
         </div>

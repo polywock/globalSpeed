@@ -6,7 +6,7 @@
   background-color: var(--fg-color);
   padding: 20px;
   border-radius: 10px;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   @keyframes passKeyframes {
     from {

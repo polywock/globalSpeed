@@ -70,7 +70,7 @@ function ExportImport(props: {}) {
       const cb = () => {
         chrome.runtime.sendMessage({type: "GET_STATE"}, state => {
           navigator.clipboard.writeText(JSON.stringify(state)).then(() => {
-            feedbackText("copied!", domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
+            feedbackText(window.gsm.token.copy, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
           }, err => {})
         })
       }

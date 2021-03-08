@@ -35,7 +35,7 @@ function Faqs(props: {}) {
     </Group>
     <Group label="hotkeys">
       <Item q={"I can't type because the Global Speed hotkeys are being triggered."} a={<ol>
-        <li>Suspend the extension using the <code>state</code> <FaPowerOff color={"#02a"} size="17px"/> button or hotkey (Shift + Q by default). This disables all hotkeys, except the <code>state</code> hotkey (so you can reactivate the the extension). </li>
+        <li>Suspend the extension using the <code>state</code> <FaPowerOff color={"#02a"} size="17px"/> button or hotkey (Shift + Q by default). This disables all hotkeys, except the <code>state</code> hotkey (so you can reactivate the extension). </li>
         <li>Or, add a <code>!=</code> URL rule to the hotkeys so it doesn't run on that website.</li>
       </ol>}/>
       <Item q={"Why are the media shortcut keys applying to the wrong video/audio? "} a={<div>If there multiple media elements on the page, Global Speed tends to prioritize the longest one. If it's wrong, you can select {<FaMousePointer size={20} color={"#02a"}/>} the video/audio you want prioritized.</div>}/>
