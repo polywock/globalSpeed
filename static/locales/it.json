@@ -1,0 +1,138 @@
+{
+  "audio": {
+    "captureTab": "cattura",
+    "releaseTab": "rilascia",
+    "equalizer": "equalizzatore",
+    "compressor": "compressore",
+    "split": "separa",
+    "mono": "mono",
+    "reverse": "inverti",
+    "pan": "sposta"
+  },
+  "warnings": {
+    "backdropFirefox": "Gli utenti Firefox devono abilitare \"gfx.webrender.all\" e \"layout.css.backdrop-filter.enabled\" andando all'URL \"about:config\". Riavvia Firefox dopo aver abilitato le due opzioni.",
+    "unusedGlobal": "Rilascia le scorciatoie globali non utilizzate",
+    "selectTooltip": "Seleziona il video preferito per le scorciatoie multimediali. Utile se si vuole  controllare la musica in sottofondo da una scheda diversa (o da un altro programma con le scorciatoie globali).",
+    "sliderTooltip": "⇧ tieni premuto il tasto maiusc per un controllo più preciso."
+  },
+  "token": {
+    "create": "crea",
+    "reset": "ripristina",
+    
+    "on": "on",
+    "off": "off",
+    "toggle": "cambia",
+    
+    "element": "elemento",
+    "backdrop": "sfondo",
+    "both": "entrambi",
+    
+    "query": "oggetto",
+    "warning": "avviso",
+    "filters": "filtri",
+    "transforms": "trasforma",
+
+    "indicator": "indicator",
+    "color": "colore",
+    "size": "dimensione",
+    "rounding": "arrotondamento",
+    "duration": "durata",
+    "offset": "scarto",
+    
+    "any": "qualsiasi",
+    "all": "tutti",
+    "copy": "copia",
+    "paste": "incolla"
+  },
+  "filter": {
+    "grayscale": "scala di grigi",
+    "sepia": "seppia",
+    "hueRotate": "tonalità",
+    "contrast": "contrasto",
+    "brightness": "luminosità",
+    "saturate": "saturazione",
+    "invert": "inverti",
+    "blur": "sfumatura",
+    "opacity": "opacità",
+    "scaleX": "scala X",
+    "scaleY": "scala Y",
+    "translateX": "trasla X",
+    "translateY": "trasla Y",
+    "rotateX": "ruota X",
+    "rotateY": "ruota Y",
+    "rotateZ": "ruota Z"
+  },
+  "fxPanel": {
+    "queryTooltip": "Selettore CSS utilizzato per trovare gli elementi da filtrare. Per esempio, 'video, img' selezionerà sia video che immagini. Per un utilizzo avanzato vedere la documentazione online sui selettori CSS.",
+    "intoPane": "in pannello"
+  },
+  "command": {
+    "nothing": "nessuna azione",
+    "runCode": "javascript",
+    "openUrl": "apri URL",
+    "adjustSpeed": "velocità",
+    "preservePitch": "mantieni tono",
+    "setPin": "fissa scheda",
+    "setState": "stato",
+    "seek": "cerca",
+    "setPause": "pausa",
+    "setMute": "muta",
+    "adjustVolume": "volume",
+    "setMark": "contrassegna",
+    "seekMark": "cerca segno",
+    "toggleLoop": "ciclo AB",
+    "toggleLoopTooltip": "Ripeti il video dalla posizione segnata alla posizione corrente",
+    "setFx": "stato effetti",
+    "resetFx": "ripristina effetti",
+    "flipFx": "scambia effetti",
+    "adjustFilter": "filtro",
+    "adjustPitch": "tono",
+    "adjustGain": "guadagno",
+    "adjustDelay": "ritardo",
+    "tabCapture": "cattura scheda",
+    "relativeTooltip": "relativamente alla velocità",
+    "showNetTooltip": "mostra avanzamento totale"
+  },
+  "options": {
+    "flags": {
+      "header": "Opzioni",
+      "language": "lingua",
+      "languageTooltip": "Tutte le lingue tranne l'inglese e l'italiano sono state tradotte utilizzando strumenti online.",
+      "darkTheme": "tema scuro",
+      "pinByDefault": "fissa automaticamente",
+      "pinByDefaultTooltip": "Le nuove schede saranno fissate automaticamente.",
+      "hideIndicator": "nascondi l'indicatore",
+      "hideIndicatorTooltip": "Alcune scorciatoie mostrano un indicatore in altro a sinistra nella pagina.",
+      "hideBadge": "nascondi badge",
+      "hideBadgeTooltip": "Il badge è il testo nell'icona dell'estensione.",
+      "fullscreenSupport": "supporto a schermo intero",
+      "feedbackVolume": "volume feedback",
+      "ghostMode": "ghost mode",
+      "ghostModeTooltip": "Prova a evitare che il sito cambi velocità. Disabilitato di default perchè potrebbe non funzionare su qualche sito.",
+      "hideMediaView": "nascondi lista di riproduzione"
+    },
+    "editor": {
+      "header": "Modifica Scorciatoie",
+      "toggleMode": "Puoi usare scorciatoie locali o globali.",
+      "toggleModeTooltip": "Le scorciatoie globali sono utili quando vuoi controllare video o audio mentre stai usando un altro programma.",
+      "greedyMode": "Tenterà di bloccare la propagazione degli eventi e il comportamento di default.",
+      "speedPresets": "velocità predefinite"
+    },
+    "rules": {
+      "header": "Regole URL",
+      "startsWith": "comincia con",
+      "contains": "contiene",
+      "regex": "regex",
+      "LAX": "Applica solo una volta per scheda.",
+      "ILO": "Controlla solo durante il caricamento iniziale della pagina."
+    },
+    "help": {
+      "header": "Aiuto",
+      "issuePrompt": "Hai problemi o suggerimenti?",
+      "issueDirective": "Fornisci un feedback su Github.",
+      "export": "esporta",
+      "import": "importa",
+      "areYouSure": "Sei sicuro?"
+    }
+  }
+}
