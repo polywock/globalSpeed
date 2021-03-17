@@ -8,6 +8,7 @@ export const LOCALE_MAP: {
   "en": { display: "English", title: "English" },
   "es": { display: "Español", title: "Spanish" },
   "hi": { display: "हिन्दी", title: "Hindu" },
+  "it": { display: "Italiano", title: "Italian" },
   "ja": { display: "日本語", title: "Japanese" },
   "ko": { display: "한국어", title: "Korean" },
   "pt_BR": { display: "Português", title: "Portuguese" },
@@ -18,4 +19,4 @@ export const LOCALE_MAP: {
 }
 
 
-export const AVAILABLE_LOCALES = ["en", "es", "hi", "ja", "ko", "pt_BR", "ru", "tr", "zh_CN", "zh_TW"]
+export const AVAILABLE_LOCALES = ["en", "es", "hi", "it", "ja", "ko", "pt_BR", "ru", "tr", "zh_CN", "zh_TW"]
