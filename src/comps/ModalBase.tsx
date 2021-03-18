@@ -10,7 +10,7 @@ type Props = {
 export function ModalBase(props: Props) {
   const ref = useRef<HTMLDivElement>()
 
-  return <div ref={ref} onClick={e => {
+  return <div ref={ref} onMouseDown={e => {
     if (e.target === ref.current) {
       props.onClose()
     }

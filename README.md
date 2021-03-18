@@ -25,7 +25,7 @@ Web extension that sets a default speed for HTML media elements (video and audio
 - Configure hotkeys to adjust pitch, volume boost, and more. 
 
 
-<img src="https://github.com/polywock/globalSpeed/blob/master/assets/screenshot_a.jpg?raw=true" width="600">
+<img src="https://github.com/polywock/globalSpeed/blob/master/assets/screenshot_a.png?raw=true" width="600">
 
 ## Build 
 1. `npm install` to install required dependencies. 
