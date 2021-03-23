@@ -3,8 +3,8 @@ import { MediaPath } from "../../types"
 
 
 export function generateMediaState(elem: HTMLMediaElement): MediaInfo {
-  const w = (elem as HTMLVideoElement).width
-  const h = (elem as HTMLVideoElement).height
+  const w = (elem as HTMLVideoElement).videoWidth
+  const h = (elem as HTMLVideoElement).videoHeight
   const videoSize = (elem.tagName === "VIDEO" && w && h) ? {w, h} : null
   const rootNode = elem.getRootNode()
   const pipMode = (rootNode as any as DocumentOrShadowRoot)?.pictureInPictureElement === elem
@@ -28,8 +28,8 @@ export function generateMediaState(elem: HTMLMediaElement): MediaInfo {
     shadowMode,
     isConnected: elem.isConnected,
     readyState: elem.readyState,
-    hasVideoTrack: !!(elem.videoTracks ? elem.videoTracks.length : videoSize),
-    hasAudioTrack: !!(elem.audioTracks ? elem.audioTracks.length : true),
+    hasVideoTrack: !!(elem.videoTracks?.length ?? videoSize),
+    hasAudioTrack: !!(elem.audioTracks?.length ?? true),
     videoSize,
     inLoop: !!elem.gsLoopTimeUpdateHandler,
     marks: Object.keys(elem.gsMarks || {})
