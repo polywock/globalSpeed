@@ -194,7 +194,7 @@ const commandHandlers: {
       throw Error("Value not NULL or NaN.")
     }
 
-    value = clamp(commandInfo.valueMin, commandInfo.valueMax, value)
+    value = clamp(commandInfo.valueMin, commandInfo.valueMax, round(value, 3))
     if (kb.adjustMode === AdjustMode.SET && (value === view.speed) && view.lastSpeed != null) {
       override.speed = view.lastSpeed
     } else {
