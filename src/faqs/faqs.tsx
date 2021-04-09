@@ -26,6 +26,7 @@ function Faqs(props: {}) {
         <Item q={"Why doesn't the Firefox version support audio FX and global shortcut keys? "} a={<div>Firefox doesn't support the required APIs. </div>}/>
       </>}
       <Item q={"Why are my colors weird/inverted? "} a={<div>You might have enabled a filter. You can disable filters by opening the FX <GoZap color={"#02a"} size={20}/> section. </div>}/>
+      <Item q={"How do I use filters on PiP videos? "} a={<div>If you're on Windows, there's a <a href="https://github.com/polywock/globalSpeed/issues/68#issuecomment-815925089">method</a> proposed by @Pawloland.</div>}/>
       <Item q={"I got a different problem. "} a={<div>Try reinstalling the extension. If that doesn't fix it, maybe create an <a href="https://github.com/polywock/globalSpeed/issues">issue on the Github page.</a></div>}/>
     </Group>
     <Group label="speed control">
