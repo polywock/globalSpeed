@@ -22,7 +22,7 @@ declare global {
   }
 }
 
-const FORCED_GHOST_SITES = ["v.qq.com", "wetv.vip"]
+const FORCED_GHOST_SITES = ["v.qq.com", "wetv.vip", "web.whatsapp.com"]
 
 async function main() {
   window.isContentScript = true
