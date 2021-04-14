@@ -66,6 +66,8 @@ export class GlobalMedia {
 
     if (!tabInfo) return 
     infos = infos.filter(info => info.tabInfo.tabId === tabInfo.tabId)
+      .filter(info => info.domain !== "iview.abc.net.au" || info.isConnected)
+
     if (!infos.length) return
 
     let highest: FlatMediaInfo[] = []
