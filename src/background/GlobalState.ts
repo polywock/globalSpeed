@@ -30,6 +30,8 @@ export class GlobalState {
         this.subs.forEach(sub => {
           sub.handleUpdate(this.get(sub.selector, sub.tabId))
         })
+
+        this.persist()
       }
     } catch (err) {
       return false 
