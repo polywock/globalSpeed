@@ -100,7 +100,7 @@ export function SectionEditor(props: {}) {
         <button  onClick={() => setShow(!show)} onContextMenu={e => {
           e.preventDefault()
           pushView({override: {keybindsUrlCondition: null}})
-        }} className={`${urlRuleCount ? "error" : ""}`}>{`-- ${urlRuleCount} --`}</button>
+        }} className={`${urlRuleCount ? "error" : "blue"}`}>{`-- ${urlRuleCount} --`}</button>
         {show && <URLModal 
           value={viewAlt.keybindsUrlCondition || getDefaultURLCondition()} 
           onClose={() => setShow(false)} 

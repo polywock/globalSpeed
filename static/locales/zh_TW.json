@@ -18,6 +18,7 @@
   "token": {
     "create": "创建",
     "reset": "重設",
+    "hide": "隱藏",
     
     "on": "開啟",
     "off": "關閉",
@@ -101,12 +102,9 @@
       "darkTheme": "深色佈景主題",
       "pinByDefault": "默認固定",
       "pinByDefaultTooltip": "默認固定每個標籤頁。",
-      "hideIndicator": "隱藏反饋指示器",
-      "hideIndicatorTooltip": "使用某些熱鍵時，在頁面左上方顯示反饋指示器。",
       "hideBadge": "隱藏徽章",
       "hideBadgeTooltip": "徽章是擴展圖標上的文字。",
-      "fullscreenSupport": "全屏支持",
-      "feedbackVolume": "反饋音量",
+      "fullscreenSupport": "全螢幕",
       "ghostMode": "幽靈模式",
       "ghostModeTooltip": "嘗試阻止網站更改速度。默認情況下禁用，因為它可能會破壞某些網站。",
       "hideMediaView": "隱藏媒體列表"

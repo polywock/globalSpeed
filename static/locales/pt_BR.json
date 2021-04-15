@@ -18,6 +18,7 @@
   "token": {
     "create": "crio",
     "reset": "redefinir",
+    "hide": "ocultar",
     
     "on": "ligado",
     "off": "desligado",
@@ -101,12 +102,9 @@
       "darkTheme": "tema escuro",
       "pinByDefault": "fixar por padrão",
       "pinByDefaultTooltip": "Novas guias serão automaticamente fixadas.",
-      "hideIndicator": "esconder indicador",
-      "hideIndicatorTooltip": "Alguns atalhos mostram um indicador de feedback no canto superior esquerdo da página.",
       "hideBadge": "esconder emblema",
       "hideBadgeTooltip": "O emblema é o texto no ícone de extensão.",
-      "fullscreenSupport": "suporte de tela cheia",
-      "feedbackVolume": "feedback de volume",
+      "fullscreenSupport": "tela inteira",
       "ghostMode": "modo fantasma",
       "ghostModeTooltip": "Tente impedir que o site mude de velocidade. Desabilitado por padrão, pois pode quebrar alguns sites.",
       "hideMediaView": "ocultar lista de mídia"

@@ -18,6 +18,7 @@
   "token": {
     "create": "crea",
     "reset": "ripristina",
+    "hide": "nascondi",
     
     "on": "on",
     "off": "off",
@@ -101,12 +102,9 @@
       "darkTheme": "tema scuro",
       "pinByDefault": "fissa automaticamente",
       "pinByDefaultTooltip": "Le nuove schede saranno fissate automaticamente.",
-      "hideIndicator": "nascondi l'indicatore",
-      "hideIndicatorTooltip": "Alcune scorciatoie mostrano un indicatore in altro a sinistra nella pagina.",
       "hideBadge": "nascondi badge",
       "hideBadgeTooltip": "Il badge è il testo nell'icona dell'estensione.",
-      "fullscreenSupport": "supporto a schermo intero",
-      "feedbackVolume": "volume feedback",
+      "fullscreenSupport": "schermo intero",
       "ghostMode": "ghost mode",
       "ghostModeTooltip": "Prova a evitare che il sito cambi velocità. Disabilitato di default perchè potrebbe non funzionare su qualche sito.",
       "hideMediaView": "nascondi lista di riproduzione"

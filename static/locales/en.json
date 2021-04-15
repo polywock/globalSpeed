@@ -18,6 +18,7 @@
   "token": {
     "create": "create",
     "reset": "reset",
+    "hide": "hide",
     
     "on": "on",
     "off": "off",
@@ -101,12 +102,9 @@
       "darkTheme": "dark theme",
       "pinByDefault": "pin by default",
       "pinByDefaultTooltip": "New tabs will automatically be pinned.",
-      "hideIndicator": "hide indicator",
-      "hideIndicatorTooltip": "Some shortcuts show a feedback indicator on the top-left of the page.",
       "hideBadge": "hide badge",
       "hideBadgeTooltip": "The badge is the text on the extension icon.",
-      "fullscreenSupport": "fullscreen support",
-      "feedbackVolume": "feedback volume",
+      "fullscreenSupport": "fullscreen",
       "ghostMode": "ghost mode",
       "ghostModeTooltip": "Try to block website from changing speed. Disabled by default because it might break some websites.",
       "hideMediaView": "hide media list"

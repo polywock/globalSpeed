@@ -256,6 +256,7 @@ export type Gsm = {
   token: {
     create: string,
     reset: string,
+    hide: string,
     
     on: string,
     off: string,
@@ -339,12 +340,9 @@ export type Gsm = {
       darkTheme: string,
       pinByDefault: string,
       pinByDefaultTooltip: string,
-      hideIndicator: string,
-      hideIndicatorTooltip: string,
       hideBadge: string,
       hideBadgeTooltip: string,
       fullscreenSupport: string,
-      feedbackVolume: string,
       ghostMode: string,
       ghostModeTooltip: string,
       hideMediaView: string

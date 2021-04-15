@@ -18,6 +18,7 @@
   "token": {
     "create": "作成",
     "reset": "リセット",
+    "hide": "非表示",
 
     "on": "オン",
     "off": "オフ",
@@ -101,12 +102,9 @@
       "darkTheme": "暗いテーマ",
       "pinByDefault": "デフォルトでピン留め",
       "pinByDefaultTooltip": "各タブはデフォルトで固定されます。",
-      "hideIndicator": "インジケーターを非表示",
-      "hideIndicatorTooltip": "一部のショートカットでは、ページの左上にフィードバックインジケーターが表示されます。",
       "hideBadge": "バッジを隠す",
       "hideBadgeTooltip": "バッジは、拡張機能アイコン上のテキストです。",
-      "fullscreenSupport": "フルスクリーンサポート",
-      "feedbackVolume": "フィードバック量",
+      "fullscreenSupport": "全画面表示",
       "ghostMode": "ゴーストモード",
       "ghostModeTooltip": "速度の変化からサイトをブロックしてみてください。一部のWebサイトを破壊する可能性があるため、デフォルトでは無効になっています。",
       "hideMediaView": "メディアリストを隠す"

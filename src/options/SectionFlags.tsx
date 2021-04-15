@@ -18,7 +18,7 @@ let feedbackAudio: HTMLAudioElement
 
 export function SectionFlags(props: {}) {
   const [showMore, setShowMore] = useState(false)
-  const [view, setView] = useStateView({indicatorInit: true, language: true, darkTheme: true, hideBadge: true, hideIndicator: true, staticOverlay: true, pinByDefault: true, ghostMode: true, hideMediaView: true, freePitch: true})
+  const [view, setView] = useStateView({indicatorInit: true, language: true, darkTheme: true, hideBadge: true, pinByDefault: true, ghostMode: true, hideMediaView: true, freePitch: true})
   const [volumeView, setVolumeView] = useStateView({feedbackVolume: true})
   if (!view || !volumeView) return <div></div>
 
@@ -50,15 +50,6 @@ export function SectionFlags(props: {}) {
         </div>
         <div className="field">
           <div className="labelWithTooltip">
-            <span>{window.gsm.options.flags.hideIndicator}</span>
-            <Tooltip tooltip={window.gsm.options.flags.hideIndicatorTooltip}/>
-          </div>
-          <input type="checkbox" checked={!!view.hideIndicator} onChange={e => {
-            pushView({override: {hideIndicator: !view.hideIndicator}})
-          }}/>
-        </div>
-        <div className="field">
-          <div className="labelWithTooltip">
             <span>{window.gsm.options.flags.hideBadge}</span>
             <Tooltip tooltip={window.gsm.options.flags.hideBadgeTooltip}/>
           </div>
@@ -66,24 +57,13 @@ export function SectionFlags(props: {}) {
             pushView({override: {hideBadge: !view.hideBadge}})
           }}/>
         </div>
-        {isFirefox() ? null : (
-          <div className="field">
-            <span>{window.gsm.options.flags.feedbackVolume}</span>
-            <input list="feedbackVolumeList" min={0} max={1} step={0.05} type="range" value={volumeView.feedbackVolume ?? 0} onChange={e => {
-              feedbackAudio = feedbackAudio || createFeedbackAudio()
-              feedbackAudio.volume = e.target.valueAsNumber
-              feedbackAudio.currentTime = 0
-              feedbackAudio.play()
-              setVolumeView({
-                feedbackVolume: e.target.valueAsNumber
-              })
-            }}/>
-            <datalist id="feedbackVolumeList">
-              <option value="0.5"></option>
-            </datalist>
-          </div>
-        )}
         <div className="field">
+          <span>{window.gsm.options.flags.hideMediaView}</span>
+          <input type="checkbox" checked={!!view.hideMediaView} onChange={e => {
+            pushView({override: {hideMediaView: !view.hideMediaView}})
+          }}/>
+        </div>
+        <div className="field marginTop">
           <div className="labelWithTooltip">
             <span>{window.gsm.options.flags.pinByDefault}</span>
             <Tooltip tooltip={window.gsm.options.flags.pinByDefaultTooltip}/>
@@ -92,34 +72,22 @@ export function SectionFlags(props: {}) {
             pushView({override: {pinByDefault: !view.pinByDefault}})
           }}/>
         </div>
+        <div className="field">
+          <span>{window.gsm.command.preservePitch}</span>
+          <input type="checkbox" checked={!view.freePitch} onChange={e => {
+            pushView({override: {freePitch: !view.freePitch}})
+          }}/>
+        </div>
+        <div className="field">
+          <div className="labelWithTooltip">
+            <span>{window.gsm.options.flags.ghostMode}</span>
+            <Tooltip tooltip={window.gsm.options.flags.ghostModeTooltip}/>
+          </div>
+          <input type="checkbox" checked={!!view.ghostMode} onChange={e => {
+            pushView({override: {ghostMode: !view.ghostMode}})
+          }}/>
+        </div>
         {showMore ? <>
-          <div className="field marginTop">
-            <span>{window.gsm.options.flags.fullscreenSupport}</span>
-            <input type="checkbox" checked={!view.staticOverlay} onChange={e => {
-              pushView({override: {staticOverlay: !view.staticOverlay}})
-            }}/>
-          </div>
-          <div className="field">
-            <span>{window.gsm.command.preservePitch}</span>
-            <input type="checkbox" checked={!view.freePitch} onChange={e => {
-              pushView({override: {freePitch: !view.freePitch}})
-            }}/>
-          </div>
-          <div className="field">
-            <div className="labelWithTooltip">
-              <span>{window.gsm.options.flags.ghostMode}</span>
-              <Tooltip tooltip={window.gsm.options.flags.ghostModeTooltip}/>
-            </div>
-            <input type="checkbox" checked={!!view.ghostMode} onChange={e => {
-              pushView({override: {ghostMode: !view.ghostMode}})
-            }}/>
-          </div>
-          <div className="field">
-            <span>{window.gsm.options.flags.hideMediaView}</span>
-            <input type="checkbox" checked={!!view.hideMediaView} onChange={e => {
-              pushView({override: {hideMediaView: !view.hideMediaView}})
-            }}/>
-          </div>
           <IndicatorFlags/>
           <SpeedPresetFlags/>
         </> : <button style={{marginTop: "20px"}}  onClick={e => setShowMore(true)}>...</button>}
@@ -130,13 +98,28 @@ export function SectionFlags(props: {}) {
 
 
 function IndicatorFlags(props: {}) {
-  const [view, setView] = useStateView({indicatorInit: true})
+  const [view, setView] = useStateView({indicatorInit: true, hideIndicator: true, staticOverlay: true})
+  const [volumeView, setVolumeView] = useStateView({feedbackVolume: true})
   const init = view?.indicatorInit || {}
+
+  if (!view || !volumeView) return null 
 
 
   return <>
     <div className="field marginTop">
       <span>{window.gsm.token.indicator}</span>
+    </div>
+    <div className="field indent">
+      <span>{window.gsm.token.hide}</span>
+      <input type="checkbox" checked={!!view.hideIndicator} onChange={e => {
+        pushView({override: {hideIndicator: !view.hideIndicator}})
+      }}/>
+    </div>
+    <div className="field indent">
+      <span>{window.gsm.options.flags.fullscreenSupport}</span>
+      <input type="checkbox" checked={!view.staticOverlay} onChange={e => {
+        pushView({override: {staticOverlay: !view.staticOverlay}})
+      }}/>
     </div>
     <div className="field indent">
       <span>{window.gsm.token.color}</span>
@@ -245,6 +228,29 @@ function IndicatorFlags(props: {}) {
         }}>S</button>
       </div>
     </div>
+    {isFirefox() ? null : (
+        <div className="field indent">
+          <span>{window.gsm.command.adjustVolume}</span>
+          <SliderMicro 
+            value={volumeView.feedbackVolume ?? 0} 
+            onChange={v => {
+              feedbackAudio = feedbackAudio || createFeedbackAudio()
+              feedbackAudio.volume = v
+              feedbackAudio.currentTime = 0
+              feedbackAudio.play()
+              setVolumeView({
+                feedbackVolume: v
+              })
+            }}
+            default={0}
+            min={0}
+            max={1}
+            sliderMin={0}
+            sliderMax={1}
+            sliderStep={0.05}
+          />
+        </div>
+      )}
   </>
 }
 

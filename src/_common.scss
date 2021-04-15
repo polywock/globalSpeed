@@ -9,6 +9,10 @@
   --error-text-color: #b70f0f;
   --error-border-color: #ff6c71;
 
+  --blue-color: #dde8ff;
+  --blue-text-color: #0f1ab7;
+  --blue-border-color: #6f6cff;
+
   --focus-color: blue; 
   --text-color: black; 
   --border-color: #aaa;
@@ -45,10 +49,14 @@
   --bg-color: #111;
   --mg-color: #181818;
   --fg-color: #222; 
+  
+  --error-color: #683131;
+  --error-text-color: #ffe0e0;
+  --error-border-color: #4d0d10;
 
-  --error-color: #322;
-  --error-text-color: #ffeeee;
-  --error-border-color: #6f2226;
+  --blue-color: #37395d;
+  --blue-text-color: #edeeff;
+  --blue-border-color: #060726;
 
   --focus-color: yellow; 
   --text-color: white; 
@@ -125,6 +133,12 @@ button, input[type="text"], textarea {
     background-color: var(--error-color);
     color: var(--error-text-color);
     border-color: var(--error-border-color);
+  }
+
+  &.blue {
+    background-color: var(--blue-color);
+    color: var(--blue-text-color);
+    border-color: var(--blue-border-color);
   }
 }
 

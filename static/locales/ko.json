@@ -18,6 +18,7 @@
   "token": {
     "create": "창조하다",
     "reset": "초기화",
+    "hide": "숨기기",
 
     "on": "켜짐",
     "off": "꺼짐",
@@ -101,12 +102,9 @@
       "darkTheme": "어두운 테마",
       "pinByDefault": "기본적으로 핀 탭",
       "pinByDefaultTooltip": "각 탭은 기본적으로 고정되어 있습니다.",
-      "hideIndicator": "표시기 숨기기",
-      "hideIndicatorTooltip": "일부 바로 가기는 페이지 왼쪽 상단에 피드백 표시기를 나타냅니다.",
       "hideBadge": "배지 숨기기",
       "hideBadgeTooltip": "배지는 확장 아이콘의 텍스트입니다.",
-      "fullscreenSupport": "전체 화면 지원",
-      "feedbackVolume": "피드백 오디오 볼륨",
+      "fullscreenSupport": "전체 화면",
       "ghostMode": "유령 모드",
       "ghostModeTooltip": "웹 사이트의 속도 변화를 차단하십시오. 일부 웹 사이트가 손상 될 수 있으므로 기본적으로 사용하지 않도록 설정되어 있습니다.",
       "hideMediaView": "미디어 목록 숨기기"

@@ -18,6 +18,7 @@
   "token": {
     "create": "oluşturmak",
     "reset": "sıfırla",
+    "hide": "gizle",
     
     "on": "açık",
     "off": "kapalı",
@@ -101,12 +102,9 @@
       "darkTheme": "karanlık tema",
       "pinByDefault": "varsayılan olarak sabitle",
       "pinByDefaultTooltip": "Yeni sekmeler otomatik olarak sabitlenir.",
-      "hideIndicator": "göstergeyi gizle",
-      "hideIndicatorTooltip": "Bazı kısayollar, sayfanın sol üst köşesinde bir geri bildirim göstergesi gösterir.",
       "hideBadge": "rozeti gizle",
       "hideBadgeTooltip": "Rozet, uzantı simgesindeki metindir.",
-      "fullscreenSupport": "tam ekran desteği",
-      "feedbackVolume": "geri bildirim hacmi",
+      "fullscreenSupport": "tam ekran",
       "ghostMode": "hayalet modu",
       "ghostModeTooltip": "Web sitesinin hız değiştirmesini engellemeye çalışın. Bazı web sitelerini bozabileceği için varsayılan olarak devre dışıdır.",
       "hideMediaView": "medya listesini gizle"
