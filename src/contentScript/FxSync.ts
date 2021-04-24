@@ -21,7 +21,7 @@ export class FxSync {
 
   lastResult: {time: number, elems: HTMLElement[]}
 
-  client = subscribeView({elementFx: true, backdropFx: true}, window.tabInfo.tabId, true, view => {
+  client = subscribeView({elementFx: true, backdropFx: true}, gvar.tabInfo.tabId, true, view => {
     this.handleChange(view)
   })
   // clear resources and clear all filters.
@@ -33,7 +33,7 @@ export class FxSync {
     this.backdropIntervalId = clearInterval(this.backdropIntervalId) as null 
     this.elementIntervalId = clearInterval(this.elementIntervalId) as null 
     this.styleJail.clear()
-    window.overlay.updateBackdrop()
+    gvar.overlay.updateBackdrop()
     this.documentTransform.clear()
   }
   handleChange = (view: StateView) => {
@@ -70,14 +70,14 @@ export class FxSync {
     } else {
       clearInterval(this.backdropIntervalId); delete this.backdropIntervalId
       this.documentTransform.clear()
-      window.overlay.updateBackdrop()
+      gvar.overlay.updateBackdrop()
        
     }
   }
   handleElementInterval = () => {
     let elems: HTMLElement[] = []
     if (this.elementQuery === "video") {
-      elems = window.mediaTower.media.filter(v => v.isConnected && v instanceof HTMLVideoElement)
+      elems = gvar.mediaTower.media.filter(v => v.isConnected && v instanceof HTMLVideoElement)
     } else {
       elems = CachedSelector.get(this.elementQuery)
     }
@@ -88,9 +88,9 @@ export class FxSync {
 
     // backdrop filter 
     if (this.backdropFilter && (window.top === window.self || document.fullscreenElement)) {
-      window.overlay.updateBackdrop(this.backdropFilter)
+      gvar.overlay.updateBackdrop(this.backdropFilter)
     } else {
-      window.overlay.updateBackdrop()
+      gvar.overlay.updateBackdrop()
     }
 
     // backdrop transform
@@ -252,7 +252,7 @@ function selector(query: string, tagNames?: string[]) {
     }
   }
 
-  window.mediaTower.docs.forEach(doc => {
+  gvar.mediaTower.docs.forEach(doc => {
     if (!(doc instanceof ShadowRoot && doc.isConnected)) return
     try {
       elems = [...elems, ...doc.querySelectorAll(query)]

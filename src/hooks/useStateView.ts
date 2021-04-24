@@ -11,7 +11,7 @@ export function useStateView(selector: StateViewSelector, wait?: number, maxWait
   const env = useMemo(() => ({} as Env), [])
 
   useEffect(() => {
-    env.client = subscribeView(selector, window.tabInfo?.tabId, true, view => {
+    env.client = subscribeView(selector, gvar.tabInfo?.tabId, true, view => {
       _setView(view)
     }, wait, maxWait)
 

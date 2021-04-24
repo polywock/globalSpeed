@@ -8,7 +8,7 @@ export function useCaptureStatus() {
   useEffect(() => {
     const handleMessage: MessageCallback = (msg, sender, reply) => {
       if (msg.type === "CAPTURE_STATUS") {
-        if (msg.tabId === window.tabInfo.tabId) {
+        if (msg.tabId === gvar.tabInfo.tabId) {
           setStatus(msg.value)
           reply(true)
           return 
@@ -16,7 +16,7 @@ export function useCaptureStatus() {
       }
     }
     chrome.runtime.onMessage.addListener(handleMessage)
-    chrome.runtime.sendMessage({type: "REQUEST_CAPTURE_STATUS", tabId: window.tabInfo.tabId})
+    chrome.runtime.sendMessage({type: "REQUEST_CAPTURE_STATUS", tabId: gvar.tabInfo.tabId})
 
     return () => {
       chrome.runtime.onMessage.removeListener(handleMessage)

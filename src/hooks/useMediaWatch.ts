@@ -15,7 +15,7 @@ export function useMediaWatch(): FlatMediaInfo[] {
     port.onMessage.addListener(msg => {
 
       let infos = flattenMediaInfos(msg.scopes, msg.pinInfo).filter(info => {
-        const sameTab = window.tabInfo.tabId === info.tabInfo.tabId
+        const sameTab = gvar.tabInfo.tabId === info.tabInfo.tabId
         if (info.pinned || env.shownBefore.includes(info.key) || (info.readyState && (sameTab || !info.paused))) {
           env.shownBefore.push(info.key)
           return true 

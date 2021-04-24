@@ -105,12 +105,12 @@ export class MediaTower {
     this.sendUpdate()
 
     if (e.type === "ratechange") {
-      window.ghostMode && e.stopImmediatePropagation()
+      gvar.ghostMode && e.stopImmediatePropagation()
     } 
   }
   private handleMediaEventDeb = debounce(this.handleMediaEvent, 5000, {leading: true, trailing: true, maxWait: 5000})
   sendUpdate = () => {
-    const scope = generateScopeState(window.tabInfo)
+    const scope = generateScopeState(gvar.tabInfo)
     scope.media = this.media.map(elem => generateMediaState(elem))
     chrome.runtime.sendMessage({type: "MEDIA_PUSH_SCOPE", value: scope})
   }

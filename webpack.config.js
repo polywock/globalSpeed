@@ -1,5 +1,6 @@
 const { resolve } = require("path")
 const { env } = require("process")
+const webpack = require('webpack')
 
 const entry = {
   contentScript: "./src/contentScript/index.ts",
@@ -45,10 +46,16 @@ const common = {
   resolve: {
     extensions: [".tsx", ".ts", '.js'],
     alias: {
+      src: resolve(__dirname, "src"),
       notFirefox: env.FIREFOX ? false : resolve(__dirname, "src"),
       isFirefox: env.FIREFOX ? resolve(__dirname, "src") : false 
     }
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      gvar: [resolve(__dirname, "src", "globalVar.ts"), "gvar"]
+    })
+  ]
 }
 
 if (env.NODE_ENV === "production") {

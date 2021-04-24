@@ -9,7 +9,7 @@ export function seek(elem: HTMLMediaElement, value: number, relative: boolean) {
 
 function seekTo(elem: HTMLMediaElement, value: number) {
   if (document.URL.startsWith("https://www.netflix.com")) {
-    window.mediaTower.talk.send({
+    gvar.mediaTower.talk.send({
       type: "SEEK_NETFLIX", 
       value
     })
@@ -52,7 +52,7 @@ export function setMark(elem: HTMLMediaElement, key: string) {
 
   elem.gsMarks = elem.gsMarks || {}
   elem.gsMarks[key] = elem.currentTime
-  window.mediaTower.sendUpdate()
+  gvar.mediaTower.sendUpdate()
 }
 
 export function seekMark(elem: HTMLMediaElement, key: string) {
@@ -72,7 +72,7 @@ export function toggleLoop(elem: HTMLMediaElement, key: string) {
     elem.removeEventListener("seeking", elem.gsLoopSeekingHandler, true)
     delete elem.gsLoopTimeUpdateHandler
     delete elem.gsLoopSeekingHandler
-    window.mediaTower.sendUpdate()
+    gvar.mediaTower.sendUpdate()
   }
 
   if (elem.gsLoopTimeUpdateHandler) {
@@ -106,7 +106,7 @@ export function toggleLoop(elem: HTMLMediaElement, key: string) {
   elem.addEventListener("timeupdate", elem.gsLoopTimeUpdateHandler, {capture: true, passive: true})
   elem.addEventListener("seeking", elem.gsLoopSeekingHandler, {capture: true, passive: true})
 
-  window.mediaTower.sendUpdate()
+  gvar.mediaTower.sendUpdate()
 }
 
 function togglePip(elem: HTMLVideoElement) {

@@ -12,6 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "paths": {
+        "src/*": ["src/*"],
         "notFirefox/*": ["src/*"],
         "isFirefox/*": ["src/*"] 
     },

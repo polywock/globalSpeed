@@ -9,8 +9,7 @@ import { fetchView } from '../background/GlobalState'
 import { Overlay } from './Overlay'
 
 declare global {
-  interface Window {
-    isContentScript: boolean,
+  interface GlobalVar {
     tabInfo: TabInfo,
     mediaTower: MediaTower,
     visibleSync: VisibleSync,
@@ -22,21 +21,20 @@ declare global {
   }
 }
 
-const FORCED_GHOST_SITES = ["v.qq.com", "wetv.vip", "web.whatsapp.com"]
+const FORCED_GHOST_SITES = ["v.qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com"]
 
 async function main() {
-  window.isContentScript = true
-  window.mediaTower = new MediaTower()
+  gvar.mediaTower = new MediaTower()
 
-  window.mediaTower.talkInitCb = () => {
+  gvar.mediaTower.talkInitCb = () => {
     fetchView({ghostMode: true}).then(view => {
-      window.ghostMode = view.ghostMode
-      if (!window.ghostMode && !FORCED_GHOST_SITES.some(site => (document.URL || "").includes(site))) return 
-      window.mediaTower.talk.send({type: "ACTIVATE_GHOST"})
+      gvar.ghostMode = view.ghostMode
+      if (!gvar.ghostMode && !FORCED_GHOST_SITES.some(site => (document.URL || "").includes(site))) return 
+      gvar.mediaTower.talk.send({type: "ACTIVATE_GHOST"})
     })
   }
 
-  window.keyListener = new WindowKeyListener()
+  gvar.keyListener = new WindowKeyListener()
 
   if (!(window.frameElement?.id === "ajaxframe")) {
     injectCtx()
@@ -45,7 +43,7 @@ async function main() {
 
   await Promise.all([
     requestTabInfo().then(tabInfo => {
-      window.tabInfo = tabInfo
+      gvar.tabInfo = tabInfo
     }),
     requestGsm().then(gsm => {
       window.gsm = gsm 
@@ -53,8 +51,8 @@ async function main() {
   ])
 
   const view = (await fetchView({staticOverlay: true, indicatorInit: true})) || {}
-  window.overlay = window.overlay || new Overlay(view.staticOverlay)
-  window.overlay.setInit(view.indicatorInit || {})
+  gvar.overlay = gvar.overlay || new Overlay(view.staticOverlay)
+  gvar.overlay.setInit(view.indicatorInit || {})
 
   if (document.readyState === "loading")  {
     document.addEventListener("DOMContentLoaded", handleDOMLoaded, {capture: true, passive: true, once: true})
@@ -64,15 +62,15 @@ async function main() {
 }
 
 function handleDOMLoaded() {
-  window.visibleSync = new VisibleSync()
+  gvar.visibleSync = new VisibleSync()
 
   // Chromium orphans contentScripts. Need to listen to a disconnect event for cleanup. 
   const port = chrome.runtime.connect({name: `canopy`})
   port.onDisconnect.addListener(() => {
-    window.visibleSync?.release(); delete window.visibleSync
-    window.configSync?.release(); delete window.configSync
-    window.overlay?.release(); delete window.overlay
-    window.keyListener?.release(); delete window.keyListener
+    gvar.visibleSync?.release(); delete gvar.visibleSync
+    gvar.configSync?.release(); delete gvar.configSync
+    gvar.overlay?.release(); delete gvar.overlay
+    gvar.keyListener?.release(); delete gvar.keyListener
   })
 }
 
@@ -101,10 +99,10 @@ class VisibleSync {
   }
   sync = () => {
     if (document.hidden) {
-      window.configSync?.release(); 
-      delete window.configSync
+      gvar.configSync?.release(); 
+      delete gvar.configSync
     } else {
-      window.configSync = window.configSync ?? new ConfigSync() 
+      gvar.configSync = gvar.configSync ?? new ConfigSync() 
     }
   }
 }

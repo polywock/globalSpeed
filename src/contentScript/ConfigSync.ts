@@ -14,20 +14,20 @@ export class ConfigSync {
   lastTrigger = 0
   fxSync: FxSync
   speedSync: SpeedSync
-  client = subscribeView({enabled: true, keybinds: true, keybindsUrlCondition: true, superDisable: true}, window.tabInfo.tabId, true, () => {
+  client = subscribeView({enabled: true, keybinds: true, keybindsUrlCondition: true, superDisable: true}, gvar.tabInfo.tabId, true, () => {
     this.handleEnabledChange()
   }, 300)
   constructor() {
     fetchView({indicatorInit: true}).then(view => {
-      window.overlay?.setInit(view.indicatorInit || {})
+      gvar.overlay?.setInit(view.indicatorInit || {})
     })
     
     this.port = chrome.runtime.connect({name: "configSync"}) 
     
     // delay a bit to ensure view is loaded.
     setTimeout(() => {
-      window.keyListener.downCbs.add(this.handleKeyDown)
-      window.keyListener.upCbs.add(this.handleKeyUp)
+      gvar.keyListener.downCbs.add(this.handleKeyDown)
+      gvar.keyListener.upCbs.add(this.handleKeyUp)
     }, 100)
 
     chrome.runtime.onMessage.addListener(this.handleMessage)
@@ -39,8 +39,8 @@ export class ConfigSync {
     this.fxSync?.release(); delete this.fxSync
     this.speedSync?.release(); delete this.speedSync
     this.port?.disconnect(); delete this.port
-    window.keyListener.downCbs.delete(this.handleKeyDown)
-    window.keyListener.upCbs.delete(this.handleKeyUp)
+    gvar.keyListener.downCbs.delete(this.handleKeyDown)
+    gvar.keyListener.upCbs.delete(this.handleKeyUp)
     chrome.runtime.onMessage.removeListener(this.handleMessage)
   }
   handleEnabledChange = () => {
@@ -115,7 +115,7 @@ export class ConfigSync {
   handleMessage: MessageCallback = (msg, sender, reply) => {
     if (msg.type === "SHOW_INDICATOR") {
       if (msg.requiresFocus && !documentHasFocus()) return 
-      window.overlay.show(msg.opts)
+      gvar.overlay.show(msg.opts)
       reply(true)
       return 
     } else if (msg.type === "INJECT_SCRIPT") {

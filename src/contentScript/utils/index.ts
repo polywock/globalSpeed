@@ -104,7 +104,7 @@ export class WindowKeyListener {
 function getShadowRoot(v: Element) {
   if (v.shadowRoot) return v.shadowRoot
 
-  for (let doc of window.mediaTower.docs) {
+  for (let doc of gvar.mediaTower.docs) {
     if (doc instanceof ShadowRoot && doc.host === v) {
       return doc 
     }

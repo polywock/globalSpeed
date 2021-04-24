@@ -25,7 +25,7 @@ export function Header(props: HeaderProps) {
       <div 
         className={view.enabled ? "active" : "muted"}
         onClick={() => {
-          pushView({override: {enabled: !view.enabled}, tabId: window.tabInfo.tabId})
+          pushView({override: {enabled: !view.enabled}, tabId: gvar.tabInfo.tabId})
         }}
         onContextMenu={e => {
           e.preventDefault()
@@ -37,7 +37,7 @@ export function Header(props: HeaderProps) {
       <div 
         className={`pin ${view.isPinned ? "active" : "muted"}`}
         onClick={() => {
-          pushView({override: {isPinned: !view.isPinned}, tabId: window.tabInfo.tabId})
+          pushView({override: {isPinned: !view.isPinned}, tabId: gvar.tabInfo.tabId})
         }}
       >
         <GoPin size="20px"/>
@@ -93,7 +93,7 @@ export function FxIcon(props: FxIconProps) {
       onClick={e => props.onClick()}
       onContextMenu={e => {
         e.preventDefault()
-        pushView({override: {elementFx: getDefaultFx(), backdropFx: getDefaultFx()}, tabId: window.tabInfo.tabId})
+        pushView({override: {elementFx: getDefaultFx(), backdropFx: getDefaultFx()}, tabId: gvar.tabInfo.tabId})
       }}
     >
       <GoZap size="20px"/>
@@ -115,7 +115,7 @@ export function AudioIcon(props: AudioIconProps) {
       onClick={props.onClick}
       onContextMenu={e => {
         e.preventDefault()
-        chrome.runtime.sendMessage({type: "TAB_CAPTURE", on: false, tabId: window.tabInfo.tabId})
+        chrome.runtime.sendMessage({type: "TAB_CAPTURE", on: false, tabId: gvar.tabInfo.tabId})
       }}
     >
       <FaVolumeUp size="17px"/>

@@ -2,7 +2,7 @@ import { subscribeView } from "./GlobalState"
 import { StateView } from "../types"
 import { isFirefox } from "../utils/helper"
 import { checkURLCondition } from "../utils/configUtils"
-import { getDefaultFx } from "notFirefox/defaults"
+import { getDefaultFx } from "../defaults"
 
 
 export class URLRuleManager {

@@ -32,13 +32,13 @@ export function AudioPanel(props: {}) {
   const ensureCaptured = () => {
     if (status) return 
     env.viaButton = false
-    chrome.runtime.sendMessage({type: "TAB_CAPTURE", on: true, tabId: window.tabInfo.tabId})
+    chrome.runtime.sendMessage({type: "TAB_CAPTURE", on: true, tabId: gvar.tabInfo.tabId})
   }
 
   return <div className="AudioPanel panel">
     <button className={`capture ${status ? "active" : ""}`} onClick={e => {
       env.viaButton = true 
-      chrome.runtime.sendMessage({type: "TAB_CAPTURE", tabId: window.tabInfo.tabId})
+      chrome.runtime.sendMessage({type: "TAB_CAPTURE", tabId: gvar.tabInfo.tabId})
     }}>{status ? window.gsm.audio.releaseTab : window.gsm.audio.captureTab}</button>
     {status && env.viaButton && <PitchAnalyzer/>}
     <div className="mainControls">

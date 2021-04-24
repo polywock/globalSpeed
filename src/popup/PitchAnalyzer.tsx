@@ -37,7 +37,7 @@ export function PitchAnalyzer(props: {}) {
 
 class SignalView {
   canvas = this.ctx.canvas 
-  port = chrome.runtime.connect({name: `ANALYZER ${JSON.stringify({tabId: window.tabInfo.tabId})}`})
+  port = chrome.runtime.connect({name: `ANALYZER ${JSON.stringify({tabId: gvar.tabInfo.tabId})}`})
   buffer: Float32Array
   intervalId: number
   info: CaptureInfo
@@ -52,7 +52,7 @@ class SignalView {
   }
   handleAnalyzerCreated = () => {
 
-    const info = this.bgPage.captureMgr.infos.find(info => info.tabId === window.tabInfo.tabId)
+    const info = this.bgPage.captureMgr.infos.find(info => info.tabId === gvar.tabInfo.tabId)
     this.info = info 
 
     

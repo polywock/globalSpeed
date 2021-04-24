@@ -21,7 +21,7 @@ import { Move } from "../comps/Move"
 import { URLModal } from "./URLModal"
 import { getDefaultURLCondition } from "../defaults"
 import "./KeybindControl.scss"
-import { pushView } from "notFirefox/background/GlobalState"
+import { pushView } from "../background/GlobalState"
 
 
 type KeybindControlProps = {

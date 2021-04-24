@@ -25,11 +25,11 @@ export function App(props: {}) {
       <div 
         id={"SuperDisable"}
         onClick={() => {
-          pushView({override: {superDisable: false, enabled: true}, tabId: window.tabInfo.tabId})
+          pushView({override: {superDisable: false, enabled: true}, tabId: gvar.tabInfo.tabId})
         }}
         onContextMenu={e => {
           e.preventDefault()
-          pushView({override: {superDisable: false, enabled: true}, tabId: window.tabInfo.tabId})
+          pushView({override: {superDisable: false, enabled: true}, tabId: gvar.tabInfo.tabId})
         }}
       >
         <FaPowerOff size="25px"/>
@@ -53,7 +53,7 @@ Promise.all([
     window.gsm = gsm 
   }),
   getActiveTabInfo().then(tabInfo => {
-    window.tabInfo = tabInfo
+    gvar.tabInfo = tabInfo
   })
 ]).then(() => {
   ReactDOM.render(<ErrorFallback><App/></ErrorFallback>, document.querySelector("#root"))

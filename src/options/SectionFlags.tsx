@@ -256,7 +256,7 @@ function IndicatorFlags(props: {}) {
 
 
 function showIndicator(init: IndicatorInit, realDuration?: boolean) {
-  window.overlay = window.overlay || new Overlay(true)
-  window.overlay.setInit({...init, duration: realDuration ? init?.duration : 3})
-  window.overlay.show({text: "1.00", static: realDuration ? init.static : true})
+  gvar.overlay = gvar.overlay || new Overlay(true)
+  gvar.overlay.setInit({...init, duration: realDuration ? init?.duration : 3})
+  gvar.overlay.show({text: "1.00", static: realDuration ? init.static : true})
 }

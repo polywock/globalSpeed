@@ -169,9 +169,9 @@ function getLeafFullscreenElement(doc: DocumentOrShadowRoot): Element {
   const fs = doc.fullscreenElement
 
   let coShadowRoot = fs.shadowRoot
-  coShadowRoot && window.mediaTower.processDoc(fs.shadowRoot) // side effect 
+  coShadowRoot && gvar.mediaTower.processDoc(fs.shadowRoot) // side effect 
   if (!coShadowRoot) {
-    coShadowRoot = window.mediaTower.docs.find(doc => doc instanceof ShadowRoot && doc.host === fs) as ShadowRoot
+    coShadowRoot = gvar.mediaTower.docs.find(doc => doc instanceof ShadowRoot && doc.host === fs) as ShadowRoot
   }
 
   if (coShadowRoot) {

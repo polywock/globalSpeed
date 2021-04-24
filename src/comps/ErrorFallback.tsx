@@ -9,7 +9,7 @@ export class ErrorFallback extends Component<{children: ReactElement}, {hasError
     return 
   }
   handleReset = () => {
-    pushView({override: {}, tabId: window.tabInfo?.tabId, overDefault: true})
+    pushView({override: {}, tabId: gvar.tabInfo?.tabId, overDefault: true})
     setTimeout(() => {
       window.location.reload()
     }, 50)

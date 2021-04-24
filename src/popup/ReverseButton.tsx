@@ -29,7 +29,7 @@ export function ReverseButton(props: ReverseButtonProps) {
 
       props.onActivate?.()
       
-      const port = chrome.runtime.connect({name: `REVERSE ${JSON.stringify({tabId: window.tabInfo.tabId})}`})
+      const port = chrome.runtime.connect({name: `REVERSE ${JSON.stringify({tabId: gvar.tabInfo.tabId})}`})
       env.info = [port, false]
       setInfo(env.info)
 

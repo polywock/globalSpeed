@@ -103,7 +103,7 @@ export function FxControl(props: FxControlProps) {
           props.handleFxChange(backdropTab, produce(fx, d => {
             d.filters = getDefaultFx().filters
           }))
-          sendMessageToConfigSync({type: "ADD_PANE", filter}, window.tabInfo.tabId, 0)
+          sendMessageToConfigSync({type: "ADD_PANE", filter}, gvar.tabInfo.tabId, 0)
           setTimeout(() => {
             window.close()
           }, 50)
