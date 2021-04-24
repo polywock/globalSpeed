@@ -58,6 +58,13 @@ async function main() {
       window.globalState.set({override: {isPinned: true}, tabId: tab.id})
     }
   })
+
+  chrome.storage.local.get(({firstTime}) => {
+    if (!firstTime) {
+      chrome.storage.local.set({firstTime: true})
+      chrome.tabs.create({url: chrome.runtime.getURL("install.html")})
+    }
+  })
 }
 
 async function handleCommand(command: string) {
