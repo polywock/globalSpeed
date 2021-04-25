@@ -19,6 +19,7 @@
     "create": "create",
     "reset": "reset",
     "hide": "hide",
+    "refreshPage": "refresh page",
     
     "on": "on",
     "off": "off",

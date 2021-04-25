@@ -4,7 +4,7 @@ import { LOCALE_MAP } from "../defaults/i18"
 import { useStateView } from "../hooks/useStateView"
 import { pushView } from "../background/GlobalState"
 import { createFeedbackAudio } from "../utils/configUtils"
-import { isFirefox } from "../utils/helper"
+import { domRectGetOffset, feedbackText, isFirefox } from "../utils/helper"
 import { INDICATOR_INIT } from "../defaults"
 import { SliderMicro } from "../comps/SliderMicro"
 import { Overlay } from "../contentScript/Overlay"
@@ -85,6 +85,7 @@ export function SectionFlags(props: {}) {
           </div>
           <input type="checkbox" checked={!!view.ghostMode} onChange={e => {
             pushView({override: {ghostMode: !view.ghostMode}})
+            feedbackText(window.gsm.token.refreshPage, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
           }}/>
         </div>
         {showMore ? <>

@@ -257,6 +257,7 @@ export type Gsm = {
     create: string,
     reset: string,
     hide: string,
+    refreshPage: string,
     
     on: string,
     off: string,
