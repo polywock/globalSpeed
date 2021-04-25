@@ -27,7 +27,14 @@ declare global {
   }
 }
 
-main()
+chrome.storage.local.get(items => {
+  if (!items.firstTime && !items.config) {
+    chrome.storage.local.set({firstTime: true})
+    chrome.tabs.create({url: chrome.runtime.getURL("install.html")})
+  }
+  main()
+})
+
 
 async function main() {
   window.isBackground = true 
@@ -56,13 +63,6 @@ async function main() {
   chrome.tabs.onCreated.addListener(tab => {
     if (window.globalState.get({pinByDefault: true}).pinByDefault) {
       window.globalState.set({override: {isPinned: true}, tabId: tab.id})
-    }
-  })
-
-  chrome.storage.local.get(({firstTime}) => {
-    if (!firstTime) {
-      chrome.storage.local.set({firstTime: true})
-      chrome.tabs.create({url: chrome.runtime.getURL("install.html")})
     }
   })
 }
