@@ -21,8 +21,7 @@ declare global {
   }
 }
 
-const FORCED_GHOST_SITES = ["v.qq.com", "wetv.vip", "web.whatsapp.com"]
-const NO_GHOST_SITES = ["pan.baidu.com"]
+const FORCED_GHOST_SITES = ["v.qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com"]
 
 async function main() {
   gvar.mediaTower = new MediaTower()
@@ -30,9 +29,9 @@ async function main() {
   gvar.mediaTower.talkInitCb = () => {
     fetchView({ghostMode: true}).then(view => {
       gvar.ghostMode = view.ghostMode
-      if (!gvar.ghostMode && !FORCED_GHOST_SITES.some(site => (document.URL || "").includes(site))) return 
-      if (NO_GHOST_SITES.some(site => (document.URL || "").includes(site))) return 
-      gvar.mediaTower.talk.send({type: "ACTIVATE_GHOST"})
+      if (gvar.ghostMode || FORCED_GHOST_SITES.some(site => (document.URL || "").includes(site))) {
+        gvar.mediaTower.talk.send({type: "ACTIVATE_GHOST"})
+      }
     })
   }
 

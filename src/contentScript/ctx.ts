@@ -71,8 +71,7 @@ function handleTalk(msg: any) {
   if (msg.type === "SEEK_NETFLIX") {
     seekNetflix(msg.value)
   } else if (msg.type === "ACTIVATE_GHOST") {
-    ghostMode = true 
-    mediaReferences.forEach(m => hijackRate(m))
+    activateGhost()
   }
 }
 
@@ -92,7 +91,6 @@ function handleOverrideMedia(args: any, _this: HTMLMediaElement, _return: any) {
   }
   if (mediaReferences.includes(_this)) return 
   mediaReferences.push(_this)
-  ghostMode && hijackRate(_this)
   wiggleOn(_this)
 }
 
@@ -108,23 +106,40 @@ function wiggleOn(target: ShadowRoot | HTMLMediaElement) {
   callNative("dispatchEvent", parasite.shadowRoot, parasiteWiggle)
 }
 
-function hijackRate(media: HTMLMediaElement) {
-  let rate = media.playbackRate
-  try {
-    Object.defineProperty(media, "playbackRate", {
-      get: () => {
-        return rate ?? 1
-      },
-      set: v => {
-        try {
-          dummyAudio.playbackRate = v
-          rate = dummyAudio.playbackRate
-        } catch (err) {
-          throw err 
-        }
-      }
+function activateGhost() {
+  if (ghostMode) return 
+  ghostMode = true 
+
+  for (let key of ["playbackRate", "defaultPlaybackRate"]) {
+    const ogDesc = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, key)
+
+    let coherence = new Map()
+    mediaReferences.forEach(m => {
+      coherence.set(m, m[key as keyof typeof m])
     })
-  } catch (err) { }
+
+    try {
+      Object.defineProperty(HTMLMediaElement.prototype, key, {
+        configurable: true, 
+        enumerable: true,
+        get: function() {
+          return coherence.has(this) ? coherence.get(this) : 1
+        }, 
+        set: function(newValue) {
+          try {
+            let output = ogDesc.set.call(dummyAudio, newValue)
+            let rate = ogDesc.get.call(dummyAudio)
+            coherence.set(this, rate)
+            return output 
+          } catch (err) {
+            throw err 
+          }
+        }
+      })
+    } catch (err) { }
+  }
 }
+
+
 
 main()
