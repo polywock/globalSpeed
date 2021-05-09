@@ -93,6 +93,7 @@
     "adjustDelay": "ritardo",
     "tabCapture": "cattura scheda",
     "relativeTooltip": "relativamente alla velocità",
+    "fastSeekTooltip": "più veloce ma meno preciso",
     "showNetTooltip": "mostra avanzamento totale"
   },
   "options": {

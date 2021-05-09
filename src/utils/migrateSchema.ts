@@ -13,9 +13,9 @@ export function migrateSchema(state: State) {
     state = sevenToEight(state)  
   }
 
-  /* if (state.version === 8) {
+  if (state.version === 8) {
     state = eightToNine(state)
-  } */
+  }
 
   if (!(state?.version === defaultState.version)) {
     return defaultState
@@ -37,7 +37,12 @@ function sevenToEight(state: State) {
   return state 
 }
 
-/* function eightToNine(state: State) {
+function eightToNine(state: State) {
   state.version = 9
+  state.keybinds?.forEach(kb => {
+    if (kb.command === "seek") {
+      kb.valueBool2 = true
+    }
+  })
   return state 
-} */
+}

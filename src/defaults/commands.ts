@@ -42,7 +42,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   adjustSpeed: {
     valueType: "adjustMode",
-    valueMin: 0.0625,
+    valueMin: 0.07,
     valueMax: 16,
     valueStep: 0.1,
     valueDefault: 1,
@@ -314,26 +314,28 @@ export function getDefaultKeybinds(): Keybind[] {
       ...commandInfos.seek.generate(),
       key: "KeyZ",
       enabled: true,
-      valueNumber: -5
+      valueNumber: -5,
+      valueBool2: true
     },
     {
       ...commandInfos.seek.generate(),
       key: "KeyX",
       enabled: true,
       valueNumber: 5,
+      valueBool2: true,
       spacing: 1
     },
     {
       ...commandInfos.seek.generate(),
       key: {shiftKey: true, code: "KeyZ"},
       enabled: true,
-      valueNumber: -0.04
+      valueNumber: -0.041
     },
     {
       ...commandInfos.seek.generate(),
       key: {shiftKey: true, code: "KeyX"},
       enabled: true,
-      valueNumber: 0.04,
+      valueNumber: 0.041,
       spacing: 1
     },
     {

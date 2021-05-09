@@ -47,15 +47,15 @@ export function SpeedPresetFlags(props: {className?: string}) {
     </div>
     <div className="presetControl">
       {presets.map((v, i) => (
-        <NumericInput key={i} value={v} onChange={t => handlePresetChange(i, t)} min={0.0625} max={16} noNull={true}/>
+        <NumericInput key={i} value={v} onChange={t => handlePresetChange(i, t)} min={0.07} max={16} noNull={true}/>
       ))}
       <span>{">"}</span>
       <NumericInput value={view.speedSmallStep || 0.01} onChange={t => handleStepChange(t, false)} min={0.001} noNull={false} placeholder={"0.01"}/>
       <span>{">>"}</span>
       <NumericInput value={view.speedBigStep || 0.1} onChange={t => handleStepChange(t, true)} min={0.001} noNull={false} placeholder={"0.1"}/>
-      <NumericInput disabled={!view.speedSlider} value={view.speedSlider?.min ?? defaultSlider.min} onChange={t => handleSliderChange(t, view.speedSlider?.max ?? defaultSlider.max)} min={0.0625} max={16} noNull={false} placeholder={defaultSlider.min.toString()}/>
+      <NumericInput disabled={!view.speedSlider} value={view.speedSlider?.min ?? defaultSlider.min} onChange={t => handleSliderChange(t, view.speedSlider?.max ?? defaultSlider.max)} min={0.07} max={16} noNull={true}/>
       <input type="checkbox" checked={!!view.speedSlider} onChange={v => pushView({override: {speedSlider: view.speedSlider ? null : getDefaultSpeedSlider()}})}/>
-      <NumericInput disabled={!view.speedSlider} value={view.speedSlider?.max ?? defaultSlider.max} onChange={t => handleSliderChange(view.speedSlider?.min ?? defaultSlider.min, t)} min={0.0625} max={16} noNull={false} placeholder={defaultSlider.max.toString()}/>
+      <NumericInput disabled={!view.speedSlider} value={view.speedSlider?.max ?? defaultSlider.max} onChange={t => handleSliderChange(view.speedSlider?.min ?? defaultSlider.min, t)} min={0.07} max={16} noNull={true}/>
     </div>
 
   </>

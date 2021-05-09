@@ -16,6 +16,11 @@ export function round(value: number, precision: number): number {
 	return Math.round(value * scalar) / scalar
 }
 
+export function ceil(value: number, precision: number): number {
+	const scalar = 10 ** precision
+	return Math.ceil(value * scalar) / scalar
+}
+
 export function randomId() {
   return Math.ceil(Math.random() * 1E10).toString()
 }

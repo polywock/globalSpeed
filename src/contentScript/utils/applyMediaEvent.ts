@@ -1,25 +1,57 @@
 import { StateOption } from "../../types"
-import { clamp } from "../../utils/helper"
+import { clamp, ceil } from "../../utils/helper"
 
 
-export function seek(elem: HTMLMediaElement, value: number, relative: boolean) {
-  const newPosition = relative ? elem.currentTime + value : value 
-  seekTo(elem, newPosition)
+const IS_NETFLIX = (document.URL || "").startsWith("https://www.netflix.com")
+const IS_AMAZON = (document.URL || "").startsWith("https://www.amazon")
+const IS_SPECIAL = IS_NETFLIX || IS_AMAZON
+
+export function seek(elem: HTMLMediaElement, value: number, relative: boolean, fast?: boolean) {
+  let newPosition = relative ? elem.currentTime + value : value 
+
+  // If browser supports seekToNextFrame like Firefox, relative change of 0.041 will be trigger to call it. 
+  if (relative && HTMLMediaElement.prototype.seekToNextFrame && !IS_SPECIAL && Math.abs(value) === 0.041) {
+    if (value < 0) {
+      elem.paused || elem.pause()
+      newPosition = elem.currentTime - (elem.gsFrameSpan ?? 0.04)
+    } else {
+      let pre = elem.currentTime
+      elem.paused || elem.pause()
+      elem.seekToNextFrame().then(v => {
+        elem.gsFrameSpan = ceil(elem.currentTime - pre, 4)
+        if (elem.gsFrameSpan > 1 / 20 || elem.gsFrameSpan < 1 / 65) {
+          elem.gsFrameSpan = 0.04
+        }
+      })
+      return 
+    }
+  }
+
+  seekTo(elem, newPosition, fast)
 }
 
-function seekTo(elem: HTMLMediaElement, value: number) {
-  if (document.URL.startsWith("https://www.netflix.com")) {
+function seekTo(elem: HTMLMediaElement, value: number, fast?: boolean) {
+  // fast seek is not precise for small changes.
+  if (fast && (value < 10 || Math.abs(elem.currentTime - value) < 3)) {
+    fast = false 
+  }
+
+  if (IS_NETFLIX) {
     gvar.mediaTower.talk.send({
       type: "SEEK_NETFLIX", 
       value
     })
-  } else if (document.URL.startsWith("https://www.amazon")) {
+  } else if (IS_AMAZON) {
     const paused = elem.paused 
     elem.currentTime = value
     paused ? elem.play() : elem.pause() 
     paused ? elem.pause() : elem.play() 
   } else {
-    elem.currentTime = value
+    if (fast && HTMLMediaElement.prototype.fastSeek) {
+      elem.fastSeek(value)
+    } else {
+      elem.currentTime = value
+    }
   }
 }
 
@@ -55,12 +87,12 @@ export function setMark(elem: HTMLMediaElement, key: string) {
   gvar.mediaTower.sendUpdate()
 }
 
-export function seekMark(elem: HTMLMediaElement, key: string) {
+export function seekMark(elem: HTMLMediaElement, key: string, fast?: boolean) {
   const markTime = elem.gsMarks?.[key]
   if (markTime == null) {
     setMark(elem, key)
   } else {
-    seekTo(elem, markTime)
+    seekTo(elem, markTime, fast)
   }
 }
 
@@ -141,7 +173,7 @@ export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
   if (e.type === "PLAYBACK_RATE") {
     setPlaybackRate(elem, e.value, e.freePitch)
   } else if (e.type === "SEEK") {
-    seek(elem, e.value, e.relative)
+    seek(elem, e.value, e.relative, e.fast)
   } else if (e.type === "PAUSE") {
     setPause(elem, e.state)
   } else if (e.type === "MUTE") {
@@ -151,7 +183,7 @@ export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
   } else if (e.type === "SET_MARK") {
     setMark(elem, e.key)
   } else if (e.type === "SEEK_MARK") {
-    seekMark(elem, e.key)
+    seekMark(elem, e.key, e.fast)
   } else if (e.type === "TOGGLE_LOOP") {
     toggleLoop(elem, e.key)
   } else if (e.type === "TOGGLE_PIP") {
@@ -160,12 +192,12 @@ export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
 }
 
 export type MediaEventPlaybackRate = {type: "PLAYBACK_RATE", value: number, freePitch: boolean}
-export type MediaEventSeek = {type: "SEEK", value: number, relative: boolean}
+export type MediaEventSeek = {type: "SEEK", value: number, relative: boolean, fast?: boolean}
 export type MediaEventPause = {type: "PAUSE", state: StateOption}
 export type MediaEventMute = {type: "MUTE", state: StateOption}
 export type MediaEventSetVolume = {type: "SET_VOLUME", value: number, relative: boolean}
 export type MediaEventSetMark = {type: "SET_MARK", key: string}
-export type MediaEventSeekMark = {type: "SEEK_MARK", key: string}
+export type MediaEventSeekMark = {type: "SEEK_MARK", key: string, fast: boolean}
 export type MediaEventToggleLoop = {type: "TOGGLE_LOOP", key: string}
 export type MediaEventTogglePip = {type: "TOGGLE_PIP"}
 

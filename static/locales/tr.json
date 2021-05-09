@@ -93,6 +93,7 @@
     "adjustDelay": "geciktir",
     "tabCapture": "ele geçirmek",
     "relativeTooltip": "hıza göre",
+    "fastSeekTooltip": "daha hızlı ama daha az doğru",
     "showNetTooltip": "net süreyi göster"
   },
   "options": {

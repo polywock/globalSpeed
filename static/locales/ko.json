@@ -93,6 +93,7 @@
     "adjustDelay": "지연",
     "tabCapture": "캡처",
     "relativeTooltip": "속도에 비례",
+    "fastSeekTooltip": "빠르지 만 덜 정확함",
     "showNetTooltip": "순 기간 표시"
   },
   "options": {

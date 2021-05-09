@@ -16,16 +16,18 @@ declare global {
   }
   interface HTMLMediaElement {
     gsKey?: string,
+    gsFrameSpan?: number,
     gsMarks?: {
       [key: string]: number
     },
     gsLoopTimeUpdateHandler?: () => void,
     gsLoopSeekingHandler?: () => void,
-    preservesPitch?: boolean
-    mozPreservesPitch?: boolean
-    webkitPreservesPitch?: boolean
-    videoTracks: any[]
-    audioTracks: any[]
+    preservesPitch?: boolean,
+    mozPreservesPitch?: boolean,
+    webkitPreservesPitch?: boolean,
+    videoTracks: any[],
+    audioTracks: any[],
+    seekToNextFrame?: () => Promise<any>,
   }
 }
 
@@ -162,6 +164,7 @@ export type Keybind = {
   valueString?: string,
   valueState?: StateOption,
   valueBool?: boolean,
+  valueBool2?: boolean,
   filterOption?: FilterName,
   filterTarget?: TargetFx,
   adjustMode?: AdjustMode,
@@ -331,6 +334,7 @@ export type Gsm = {
     adjustDelay: string,
     tabCapture: string,
     relativeTooltip: string,
+    fastSeekTooltip: string,
     showNetTooltip: string
   },
   options: {

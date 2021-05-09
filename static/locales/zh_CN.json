@@ -93,6 +93,7 @@
     "adjustDelay": "延迟",
     "tabCapture": "捕获",
     "relativeTooltip": "相对于速度",
+    "fastSeekTooltip": "更快，但准确性较低",
     "showNetTooltip": "显示净时长"
   },
   "options": {

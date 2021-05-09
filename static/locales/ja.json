@@ -93,6 +93,7 @@
     "adjustDelay": "遅延",
     "tabCapture": "捕捉",
     "relativeTooltip": "速度に対して",
+    "fastSeekTooltip": "高速ですが精度が低くなります",
     "showNetTooltip": "ネット期間を表示"
   },
   "options": {

@@ -93,6 +93,7 @@
     "adjustDelay": "विलंब",
     "tabCapture": "पकड़ना",
     "relativeTooltip": "गति के सापेक्ष",
+    "fastSeekTooltip": "तेज लेकिन कम सटीक",
     "showNetTooltip": "शुद्ध अवधि दिखाएं"
   },
   "options": {

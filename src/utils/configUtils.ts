@@ -4,8 +4,8 @@ import { filterInfos, FilterName } from "../defaults/filters";
 import { MediaEvent } from "../contentScript/utils/applyMediaEvent";
 
 
-export function conformSpeed(speed: number) {
-  return clamp(0.07, 16, round(speed, 2))
+export function conformSpeed(speed: number, rounding = 2) {
+  return clamp(0.07, 16, round(speed, rounding))
 }
 
 export function formatSpeed(speed: number, isPinned: boolean) {

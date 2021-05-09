@@ -93,6 +93,7 @@
     "adjustDelay": "retrasar",
     "tabCapture": "capturar",
     "relativeTooltip": "relativa a la velocidad",
+    "fastSeekTooltip": "más rápido pero menos preciso",
     "showNetTooltip": "mostrar la duración neta"
   },
   "options": {

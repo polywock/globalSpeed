@@ -150,26 +150,35 @@ export const KeybindControl = (props: KeybindControlProps) => {
         </>}
         {value.command === "tabCapture" && <div className={`captureIcon ${value.enabled ? "active" : ""}`}><div></div></div>}
         <span>{label}</span>
-        {value.command === "seek" && (
-          <>
-            <button title={window.gsm.command.relativeTooltip} className={`toggle ${value.valueBool ? "active" : ""}`} onClick={e => {
-              props.onChange(value.id, produce(value, d => {
-                d.valueBool = !d.valueBool
-              }))
+        {value.command === "seek" && <>
+          <button style={{marginLeft: "5px"}} title={window.gsm.command.showNetTooltip} className={`toggle ${props.showNetSpeed ? "active" : ""}`} onClick={e => {
+            pushView({override: {showNetSeek: !props.showNetSpeed}})
 
-              if (!value.valueBool) {
-                feedbackText(window.gsm.command.relativeTooltip, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
-              }
-            }}>{"×"}</button>
-            <button style={{marginLeft: "5px"}} title={window.gsm.command.showNetTooltip} className={`toggle ${props.showNetSpeed ? "active" : ""}`} onClick={e => {
-              pushView({override: {showNetSeek: !props.showNetSpeed}})
+            if (!props.showNetSpeed) {
+              feedbackText(window.gsm.command.showNetTooltip, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
+            }
+          }}>{":"}</button>
+          <button title={window.gsm.command.relativeTooltip} className={`toggle ${value.valueBool ? "active" : ""}`} onClick={e => {
+            props.onChange(value.id, produce(value, d => {
+              d.valueBool = !d.valueBool
+            }))
 
-              if (!props.showNetSpeed) {
-                feedbackText(window.gsm.command.showNetTooltip, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
-              }
-            }}>{":"}</button>
-          </>
-        )}
+            if (!value.valueBool) {
+              feedbackText(window.gsm.command.relativeTooltip, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
+            }
+          }}>{"×"}</button>
+        </>}
+        {(HTMLMediaElement.prototype.fastSeek && (value.command === "seek" || value.command === "seekMark") && (Math.abs(value.valueNumber) >= 3 || value.command === "seekMark")) && <>
+          <button title={window.gsm.command.fastSeekTooltip} className={`toggle ${value.valueBool2 ? "active" : ""}`} onClick={e => {
+            props.onChange(value.id, produce(value, d => {
+              d.valueBool2 = !d.valueBool2
+            }))
+
+            if (!value.valueBool2) {
+              feedbackText(window.gsm.command.fastSeekTooltip, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()), 2000)
+            }
+          }}>{"f"}</button>
+        </>}
         {tooltip && <Tooltip label="?" tooltip={tooltip}/>}
         {commandInfo.valueType === "adjustMode" && <button className="adjustMode" onClick={e => {
           props.onChange(value.id, produce(value, d => {

@@ -93,6 +93,7 @@
     "adjustDelay": "задержка",
     "tabCapture": "захватить",
     "relativeTooltip": "относительно скорости",
+    "fastSeekTooltip": "быстрее, но менее точно",
     "showNetTooltip": "показать чистую продолжительность"
   },
   "options": {

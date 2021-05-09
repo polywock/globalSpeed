@@ -237,7 +237,7 @@ const commandHandlers: {
     }  
 
     kb.valueNumber >= 0 ? show({icons: ["forward"], text}) : show({icons: ["backward"], text}) 
-    applyToMedia({type: "SEEK", value, relative: true})
+    applyToMedia({type: "SEEK", value, relative: true, fast: kb.valueBool2})
   },
   setPause: async args => {
     const { kb, media, applyToMedia, show } = args 
@@ -282,7 +282,7 @@ const commandHandlers: {
       text: ` ${kb.valueString}`,
       small: true
     })
-    applyToMedia({type: "SEEK_MARK", key: kb.valueString})
+    applyToMedia({type: "SEEK_MARK", key: kb.valueString, fast: kb.valueBool2})
   },
   toggleLoop: async args => {
     const { media, kb, applyToMedia, show } = args 

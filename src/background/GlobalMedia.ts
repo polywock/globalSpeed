@@ -78,15 +78,18 @@ export class GlobalMedia {
 
       const sameFrame = compareFrame(info.tabInfo, tabInfo)
       if (sameFrame && tabInfo.frameId !== 0) {
-        score += 0b1000
+        score += 0b10000
       }
       if (info.duration >= 10 * 60) {
-        score += 0b100
+        score += 0b1000
       }
       if (info.duration >= 3 * 60) {
-        score += 0b10
+        score += 0b100
       }
       if (info.duration >= 1 * 60) {
+        score += 0b10
+      }
+      if (info.isConnected) {
         score += 0b1
       }
 
