@@ -1,11 +1,13 @@
 import { extractHotkey, compareHotkeys } from "../utils/keys"
 import { MessageCallback } from "../utils/browserUtils"
 import { injectScript, documentHasFocus, findLeafActiveElement } from "./utils"
-import { subscribeView, fetchView } from "../background/GlobalState"
+import { subscribeView } from "../background/GlobalState"
 import { FxSync } from "./FxSync"
 import { SpeedSync } from "./SpeedSync"
 import { Pane } from "./Pane"
 import { checkURLCondition } from "../utils/configUtils"
+
+const FORCED_GHOST_SITES = ["v.qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com"]
 
 export class ConfigSync {
   port: chrome.runtime.Port 
@@ -14,14 +16,13 @@ export class ConfigSync {
   lastTrigger = 0
   fxSync: FxSync
   speedSync: SpeedSync
-  client = subscribeView({enabled: true, keybinds: true, keybindsUrlCondition: true, superDisable: true}, gvar.tabInfo.tabId, true, () => {
+  client = subscribeView({ghostMode: true, enabled: true, keybinds: true, keybindsUrlCondition: true, superDisable: true}, gvar.tabInfo.tabId, true, () => {
     this.handleEnabledChange()
   }, 300)
+  indicatorClient = subscribeView({indicatorInit: true}, gvar.tabInfo.tabId, true, view => {
+    gvar.overlay?.setInit(view.indicatorInit || {})
+  }, 500)
   constructor() {
-    fetchView({indicatorInit: true}).then(view => {
-      gvar.overlay?.setInit(view.indicatorInit || {})
-    })
-    
     this.port = chrome.runtime.connect({name: "configSync"}) 
     
     // delay a bit to ensure view is loaded.
@@ -50,6 +51,21 @@ export class ConfigSync {
     } else {
       this.fxSync?.release(); delete this.fxSync
       this.speedSync?.release(); delete this.speedSync
+    }
+
+    if (this.client.view?.enabled && (this.client.view?.ghostMode || FORCED_GHOST_SITES.some(site => (location.hostname || "").includes(site)))) {
+      if (gvar.ghostMode) return 
+      gvar.ghostMode = true 
+
+      const initCb = () => { gvar.mediaTower.server.send({type: "GHOST"}) }
+      gvar.mediaTower.server.initialized ? initCb() : gvar.mediaTower.server.initCbs.add(initCb)
+
+    } else {
+      if (!gvar.ghostMode) return 
+      gvar.ghostMode = false  
+
+      const initCb = () => { gvar.mediaTower.server.send({type: "GHOST", off: true}) }
+      gvar.mediaTower.server.initialized ? initCb() : gvar.mediaTower.server.initCbs.add(initCb)
     }
   } 
   handleKeyUp = (e: KeyboardEvent) => {

@@ -6,6 +6,7 @@ import cloneDeep from "lodash.clonedeep";
 import debounce from "lodash.debounce";
 import { sendMediaEvent } from "../utils/configUtils";
 import { migrateSchema } from "../utils/migrateSchema";
+import { availableCommandNames } from "src/defaults/commands";
 
 
 export class GlobalState {
@@ -13,11 +14,17 @@ export class GlobalState {
   pins: Pin[] = []
   frozen: Map<string, Set<SubInfo>> = new Map()
   constructor(public state: State) {
+    this.purify()
     chrome.runtime.onMessage.addListener(this.handleMessage)
     chrome.runtime.onConnect.addListener(this.handlePortConnect)
     chrome.runtime.onSuspend?.addListener(() => {
       this.persistThrottled.flush()
     })
+  }
+  purify = () => {
+    if (this.state.keybinds) {
+      this.state.keybinds = this.state.keybinds.filter(kb => availableCommandNames.includes(kb.command))
+    }
   }
   reload = (state: State) => {
     try {
@@ -25,6 +32,7 @@ export class GlobalState {
       if (newState.version === getDefaultState().version) {
         this.state = newState 
         this.pins = []
+        this.purify()
 
         // notify
         this.subs.forEach(sub => {

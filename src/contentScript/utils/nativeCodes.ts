@@ -1,21 +1,26 @@
 
-// Used to avoid page's script 
-
-const NATIVE_CODES = {
+// Store native functions because some websites override them. 
+// Annoying to use this way, but may be worth it to save debugging time. 
+export const native = {
   dispatchEvent: EventTarget.prototype.dispatchEvent,
-  addEventListener: EventTarget.prototype.addEventListener,
   stopImmediatePropagation: Event.prototype.stopImmediatePropagation,
-  postMessage: window.postMessage
+  appendChild: Node.prototype.appendChild,
+  map: {
+    clear: Map.prototype.clear,
+    set: Map.prototype.set,
+    has: Map.prototype.has,
+    get: Map.prototype.get
+  },
+  array: {
+    push: Array.prototype.push,
+    includes: Array.prototype.includes,
+  },
+  Map,
+  ShadowRoot,
+  HTMLMediaElement,
+  CustomEvent,
+  JSON: {
+    parse: JSON.parse,
+    stringify: JSON.stringify
+  }
 }
-
-type NATIVE_TYPES = {
-  dispatchEvent: EventTarget,
-  addEventListener: EventTarget,
-  stopImmediatePropagation: Event,
-  postMessage: Window
-}
-
-export function callNative<T extends keyof typeof NATIVE_CODES>(fn: T, base: NATIVE_TYPES[T], ...args: Parameters<(typeof NATIVE_CODES)[T]>) {
-  NATIVE_CODES[fn].apply(base, args)
-}
-

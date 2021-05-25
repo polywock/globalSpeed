@@ -49,6 +49,10 @@ export function requestTabInfo(): Promise<TabInfo> {
     chrome.runtime.sendMessage({
       type: "REQUEST_TAB_INFO"
     }, info => {
+      if (chrome.runtime.lastError) {
+        rej(chrome.runtime.lastError)
+        return 
+      } 
       res(info)
     })
   })
@@ -84,9 +88,9 @@ export function requestPermissions(permission: chrome.permissions.Permissions): 
 }
 
 
-export function getStorage(): Promise<{[key: string]: any}> {
+export function getStorage(key?: string | object | string[]): Promise<{[key: string]: any}> {
   return new Promise((res, rej) => {
-    chrome.storage.local.get(items => {
+    chrome.storage.local.get(key, items => {
       if (chrome.runtime.lastError) {
         rej(chrome.runtime.lastError)
       } else {

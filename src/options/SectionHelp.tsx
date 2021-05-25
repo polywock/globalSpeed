@@ -45,7 +45,6 @@ function ExportImport(props: {}) {
     document.documentElement.appendChild(input)
     
     const handleChange = (e: Event) => {
-      console.log(e.type, "CALLED")
       if (!input.files[0]) return 
       loadStateFromFile(input.files[0])
       setTimeout(() => {

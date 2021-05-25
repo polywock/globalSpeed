@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { Keybind, TargetFx, StateOption, AdjustMode } from "../types"
 import produce from "immer"
 import { KeyPicker } from "../comps/KeyPicker"
@@ -14,7 +14,7 @@ import { requestCreateTab } from "../utils/browserUtils"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { BsMusicNoteList } from "react-icons/bs"
 import { TiArrowLoop } from "react-icons/ti"
-import { MdTimer } from "react-icons/md"
+import { MdFullscreen, MdPictureInPictureAlt, MdTimer } from "react-icons/md"
 import { isFirefox, clamp, feedbackText, domRectGetOffset } from "../utils/helper"
 import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { Move } from "../comps/Move"
@@ -111,7 +111,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
     <div className="command">
       <div className="name">
         {value.command === "adjustSpeed" && <MdTimer size="1.3em"/>}
-        {value.command === "preservePitch" && <BsMusicNoteList size="1.3em"/>}
+        {value.command === "speedChangesPitch" && <BsMusicNoteList size="1.3em"/>}
         {value.command === "runCode" && <GoCode size="1.1em"/>}
         {value.command === "openUrl" && <FaLink size="1em"/>}
         {value.command === "setPin" && <GoPin size="1.05em"/>}
@@ -130,6 +130,8 @@ export const KeybindControl = (props: KeybindControlProps) => {
         </div>}
         {value.command === "setPause" && <FaPause size="0.95em"/>}
         {value.command === "setMute" && <FaVolumeMute size="1.05em"/>}
+        {value.command === "PiP" && <MdPictureInPictureAlt size="1.05em"/>}
+        {value.command === "fullscreen" && <MdFullscreen size="1em" style={{transform: "scale(1.4)"}}/>}
         {value.command === "adjustVolume" && <FaVolumeUp size="1.05em"/>}
         {value.command === "adjustGain" && <FaVolumeUp size="1.05em"/>  }
         {value.command === "adjustPitch" && <FaMusic size="1em"/>}
@@ -180,6 +182,13 @@ export const KeybindControl = (props: KeybindControlProps) => {
           }}>{"f"}</button>
         </>}
         {tooltip && <Tooltip label="?" tooltip={tooltip}/>}
+        {value.command === "fullscreen" && <>
+          <button style={{marginLeft: "10px"}} className={`toggle ${value.valueBool ? "active" : ""}`} onClick={e => {
+            props.onChange(value.id, produce(value, d => {
+              d.valueBool = !d.valueBool
+            }))
+          }}>{window.gsm.command.nativeTooltip}</button>
+        </>}
         {commandInfo.valueType === "adjustMode" && <button className="adjustMode" onClick={e => {
           props.onChange(value.id, produce(value, d => {
             d.adjustMode = clamp(1, 3, ((d.adjustMode ?? 1) + 1) % 4)
@@ -223,6 +232,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
     </div>
     {isFirefox() ? <div></div> : (
       <button className={`icon`} onClick={() => {
+        if (value.command === "tabCapture") return 
         props.onChange(value.id, produce(value, d => {
           d.global = !value.global
         }))
@@ -258,7 +268,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
       </>
     )}
     {numericInput && (
-      <NumericInput placeholder={defaultValue?.toString() ?? null} min={min} max={max} value={value[numericInput]} onChange={v => {
+      <NumericInput noNull={commandInfo.noNull} placeholder={defaultValue?.toString() ?? null} min={min} max={max} value={value[numericInput]} onChange={v => {
         props.onChange(value.id, produce(value, d => {
           d[numericInput] = v
         }))
@@ -273,6 +283,17 @@ export const KeybindControl = (props: KeybindControlProps) => {
     )}
     {commandInfo.valueType === "string" && (
       <ThrottledTextInput value={value.valueString} onChange={v => {
+        if (value.command === "openUrl") {
+
+          if (v === "::clear_fs") {
+            chrome.storage.local.get(items => {
+              chrome.storage.local.set(Object.fromEntries(Object.keys(items).filter(v => v.startsWith("fs::")).map(v => [v, null])))
+              alert("cleared fullscreen cache.")
+
+              props.onRemove(value.id)
+            })
+          }
+        }
         props.onChange(value.id, produce(value, d => {
           d.valueString = v
         }))

@@ -44,9 +44,11 @@
 
     & > svg {
       color: var(--header-icon-color);
+      opacity: 0.5;
 
       &.active {
-        opacity: 0.5;
+        opacity: 1;
+        color: var(--header-icon-active-color);
       }
     }
   }

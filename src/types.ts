@@ -11,8 +11,11 @@ declare global {
   interface Document {
     exitPictureInPicture: () => void 
   }
+  interface Event {
+    processed?: boolean
+  }
   interface HTMLVideoElement {
-    requestPictureInPicture(): () => void
+    requestPictureInPicture: () => Promise<void>
   }
   interface HTMLMediaElement {
     gsKey?: string,
@@ -27,7 +30,7 @@ declare global {
     webkitPreservesPitch?: boolean,
     videoTracks: any[],
     audioTracks: any[],
-    seekToNextFrame?: () => Promise<any>,
+    seekToNextFrame?: () => Promise<any>
   }
 }
 
@@ -139,6 +142,8 @@ export type Command = {
   valueDefault?: number,
   requiresMedia?: boolean,
   requiresTabCapture?: boolean,
+  requiresPiPApi?: boolean,
+  noNull?: boolean,
   generate: () => Keybind 
 }
 
@@ -260,7 +265,6 @@ export type Gsm = {
     create: string,
     reset: string,
     hide: string,
-    refreshPage: string,
     
     on: string,
     off: string,
@@ -313,7 +317,7 @@ export type Gsm = {
     nothing: string,
     runCode: string,
     adjustSpeed: string,
-    preservePitch: string,
+    speedChangesPitch: string,
     setPin: string,
     setState: string,
     seek: string,
@@ -324,6 +328,9 @@ export type Gsm = {
     seekMark: string,
     toggleLoop: string,
     toggleLoopTooltip: string,
+    fullscreen: string,
+    nativeTooltip: string,
+    PiP: string,
     openUrl: string,
     setFx: string,
     resetFx: string,

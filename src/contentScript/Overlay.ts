@@ -138,7 +138,7 @@ export class Overlay {
   syncWrapper = () => {
     if (this.hasFilter || this.hasIndicator) {
       this.root = this.root?.isConnected ? this.root : document.documentElement
-      if (this.wrapper.parentElement === this.root) return 
+      if (this.wrapper.parentNode === this.root) return 
       
       try {
         this.root.appendChild(this.wrapper)

@@ -34,14 +34,14 @@ export function SpeedPresetFlags(props: {className?: string}) {
 
   const defaultSlider = getDefaultSpeedSlider()
 
-  const resetActive = ![view.speedPresets ?? null, view.speedSmallStep ?? null, view.speedBigStep ?? null, view.speedSlider ?? null].every(v => v == null)
+  const resetActive = ![view.speedPresets ?? null, view.speedSmallStep ?? null, view.speedBigStep ?? null, view.speedSlider?.min === defaultSlider.min && null, view.speedSlider?.max === defaultSlider.max && null].every(v => v === null)
 
   return <>
     <div className="field marginTop">
       <div>
         <span style={{marginRight: "10px"}}>{window.gsm.options.editor.speedPresets}</span>
         <Reset active={resetActive} onClick={() => {
-          pushView({override: {speedPresets: null, speedSmallStep: null, speedBigStep: null, speedSlider: null}})
+          pushView({override: {speedPresets: null, speedSmallStep: null, speedBigStep: null, speedSlider: getDefaultSpeedSlider()}})
         }}/>
       </div>
     </div>

@@ -4,7 +4,7 @@
 const { readFileSync } = require("fs")
 const { exit } = require("process")
 
-const locales = ["en", "it", "es", "hi", "ja", "ko", "pt_BR", "ru", "tr", "zh_CN", "zh_TW"]
+const locales = ["en", "it", "es", "ja", "ko", "pt_BR", "ru", "tr", "zh_CN", "zh_TW"]
 
 let targetLeaves;
 

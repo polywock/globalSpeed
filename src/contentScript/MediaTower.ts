@@ -1,45 +1,30 @@
-import { randomId, round } from "../utils/helper";
+import { randomId } from "../utils/helper";
 import { conformSpeed } from "../utils/configUtils";
 import { applyMediaEvent, MediaEvent } from "./utils/applyMediaEvent";
 import { generateScopeState, generateMediaState } from "./utils/genMediaInfo";
 import { MessageCallback } from "../utils/browserUtils";
-import { WindowTalk, injectScript } from "./utils";
+import { injectScript } from "./utils";
 import debounce from "lodash.debounce";
+
 
 export class MediaTower {
   media: HTMLMediaElement[] = []
   docs: (Window | ShadowRoot)[] = []
   canopy = chrome.runtime.connect({name: "MEDIA_CANOPY"})
-  talk = new WindowTalk("GLOBAL_SPEED_CS", "GLOBAL_SPEED_CTX")
+  server = new StratumServer()
   newDocCallbacks: Set<() => void> = new Set()
   newMediaCallbacks: Set<() => void> = new Set()
-  talkInitCb?: () => void
   constructor() {
     this.processDoc(window)
-    this.talk.initCb = this.handleTalkInit
+    this.server.wiggleCbs.add(this.handleWiggle)
     chrome.runtime.onMessage.addListener(this.handleMessage)
   }
-  private handleTalkInit = () => {
-    const parasiteShadowRoot = document.querySelector("#GS_PARASITE")?.shadowRoot
-    if (!parasiteShadowRoot) {
-      console.error("Parasite not found!")
-      return 
-    }
-    parasiteShadowRoot.addEventListener(`PARASITE_WIGGLE`, this.handleParasiteWiggle, {capture: true, passive: true})
-    parasiteShadowRoot.host.remove()
-
-    this.talkInitCb?.()
-  }
-  private handleParasiteWiggle = (e: CustomEvent) => {
-    e.stopImmediatePropagation();
-    const host = (e.target as ShadowRoot).host
-    const parent = host.parentElement
+  private handleWiggle = (parent: Node & ParentNode) => {
     if (parent instanceof ShadowRoot) {
       this.processDoc(parent)
     } else if (parent instanceof HTMLMediaElement) {
       this.processMedia(parent)
     }
-    host.remove()
   }
   private handleMessage: MessageCallback = (msg, sender, reply) => {
     if (msg.type === "APPLY_MEDIA_EVENT") {
@@ -79,6 +64,8 @@ export class MediaTower {
   private processMedia = (elem: HTMLMediaElement) => {
     if (this.media.includes(elem)) return 
     elem.gsKey = elem.gsKey || randomId()
+    const rootNode = elem?.getRootNode()
+    rootNode instanceof ShadowRoot && this.processDoc(rootNode)
     
     elem.addEventListener("play", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("pause", this.handleMediaEvent, {capture: true, passive: true})
@@ -92,26 +79,36 @@ export class MediaTower {
 
     this.newMediaCallbacks.forEach(cb => cb())
   }
-  lastEvent: Event
   private handleMediaEvent = (e: Event) => {
     if (!(e?.isTrusted)) return 
-    if (this.lastEvent === e) return
-    this.lastEvent = e 
-
+    if (e.processed) return 
+    e.processed = true 
+    
     let elem = e.target as HTMLMediaElement
-    if (!elem) return 
-    if (elem.tagName !== "VIDEO" && elem.tagName !== "AUDIO") return 
+    if (!(elem instanceof HTMLMediaElement)) return 
+
+    let latestTarget: string; 
+    if (["timeupdate", "volumechange", "play"].includes(e.type)) {
+      latestTarget = elem.gsKey
+    }
+
     this.processMedia(elem)
-    this.sendUpdate()
+    this.sendUpdate(latestTarget)
 
     if (e.type === "ratechange") {
       gvar.ghostMode && e.stopImmediatePropagation()
     } 
   }
   private handleMediaEventDeb = debounce(this.handleMediaEvent, 5000, {leading: true, trailing: true, maxWait: 5000})
-  sendUpdate = () => {
+  sendUpdate = (latestTarget?: string) => {
+    if (!gvar.tabInfo) return 
     const scope = generateScopeState(gvar.tabInfo)
     scope.media = this.media.map(elem => generateMediaState(elem))
+    latestTarget && scope.media.forEach(m => {
+      if (m.key === latestTarget) {
+        m.latestMovement = true 
+      }
+    })
     chrome.runtime.sendMessage({type: "MEDIA_PUSH_SCOPE", value: scope})
   }
   applyMediaEventTo = (event: MediaEvent, key?: string, longest?: boolean) => {
@@ -139,5 +136,48 @@ export class MediaTower {
 }
 
 
+class StratumServer {
+  private parasite: HTMLDivElement
+  private parasiteRoot: ShadowRoot
+  wiggleCbs = new Set<(target: Node & ParentNode) => void>()
+  msgCbs = new Set<(data: any) => void>()
+  initCbs = new Set<() => void>()
+  initialized = false 
+  constructor() {
+    window.addEventListener("GS_INIT", this.handleInit, true)
+  }
+  handleInit = (e: Event) => {
+    if (!(e.target instanceof HTMLDivElement && e.target.id === "GS_PARASITE" && e.target.shadowRoot)) return 
+    this.parasite = e.target
+    this.parasiteRoot = this.parasite.shadowRoot
+    this.parasite.remove()
+    window.removeEventListener("GS_INIT", this.handleInit, true)
+    this.parasiteRoot.addEventListener("GS_SERVER", this.handle, {capture: true})
+
+    this.initialized = true 
+    this.initCbs.forEach(cb => cb())
+    this.initCbs.clear()
+  }
+  handle = (e: CustomEvent) => {
+    e.stopImmediatePropagation()
+    if (!(e.type === "GS_SERVER" && e.detail)) return
+    let detail: any
+    try {
+      detail = JSON.parse(e.detail)
+    } catch (err) {}
 
 
+    if (detail.type === "WIGGLE") {
+      const parent = this.parasite.parentNode
+      if (parent) {
+        this.parasite.remove()
+        this.wiggleCbs.forEach(cb => cb(parent))
+      }
+    } else if (detail.type === "MSG") {
+      this.msgCbs.forEach(cb => cb(detail.data || {}))
+    }
+  }
+  send = (data: any) => {
+    this.parasiteRoot.dispatchEvent(new CustomEvent("GS_CLIENT", {detail: JSON.stringify(data)}))
+  }
+}

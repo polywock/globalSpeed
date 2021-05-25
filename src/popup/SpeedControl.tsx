@@ -7,7 +7,7 @@ import { pushView } from "../background/GlobalState"
 
 type SpeedControlProps = {
   onChange: (newSpeed: number) => any,
-  speed: number 
+  speed: number
 }
 
 export function SpeedControl(props: SpeedControlProps) {
@@ -37,7 +37,7 @@ export function SpeedControl(props: SpeedControlProps) {
     />
     {!!view.speedSlider && (
       <div className="slider">
-        <BsMusicNoteList title={window.gsm.command.preservePitch} size={"17px"} className={`${view.freePitch ? "active" : ""}`} onClick={() => pushView({override: {freePitch: !view.freePitch}})}/>
+        <BsMusicNoteList title={window.gsm.command.speedChangesPitch} size={"17px"} className={`${view.freePitch ? "active" : ""}`} onClick={() => pushView({override: {freePitch: !view.freePitch}})}/>
         <input step={0.01} type="range" min={view.speedSlider.min} max={view.speedSlider.max} value={props.speed} onChange={e => {
           props.onChange(e.target.valueAsNumber)
         }}/>

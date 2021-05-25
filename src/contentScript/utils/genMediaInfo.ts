@@ -84,7 +84,8 @@ export type MediaInfo = {
   hasAudioTrack: boolean,
   videoSize?: {w: number, h: number},
   inLoop?: boolean,
-  marks: string[]
+  marks: string[],
+  latestMovement?: boolean
 }
 
 export type FlatMediaInfo = MediaScope & MediaInfo & {pinned?: boolean}

@@ -1,23 +1,20 @@
+import { BLOCKS_PIP, HAS_PIP_API } from "src/utils/supports"
 import { StateOption } from "../../types"
 import { clamp, ceil } from "../../utils/helper"
+import { IS_SPECIAL_SEEK, IS_AMAZON, IS_NETFLIX, IS_NATIVE, IS_SMART, IS_BILIBILI } from "./isWebsite"
 
-
-const IS_NETFLIX = (document.URL || "").startsWith("https://www.netflix.com")
-const IS_AMAZON = (document.URL || "").startsWith("https://www.amazon")
-const IS_SPECIAL = IS_NETFLIX || IS_AMAZON
 
 export function seek(elem: HTMLMediaElement, value: number, relative: boolean, fast?: boolean) {
   let newPosition = relative ? elem.currentTime + value : value 
 
   // If browser supports seekToNextFrame like Firefox, relative change of 0.041 will be trigger to call it. 
-  if (relative && HTMLMediaElement.prototype.seekToNextFrame && !IS_SPECIAL && Math.abs(value) === 0.041) {
+  if (relative && HTMLMediaElement.prototype.seekToNextFrame && !IS_SPECIAL_SEEK && Math.abs(value) === 0.041) {
+    elem.paused || elem.pause()
     if (value < 0) {
-      elem.paused || elem.pause()
       newPosition = elem.currentTime - (elem.gsFrameSpan ?? 0.04)
     } else {
       let pre = elem.currentTime
-      elem.paused || elem.pause()
-      elem.seekToNextFrame().then(v => {
+      elem.seekToNextFrame().then(() => {
         elem.gsFrameSpan = ceil(elem.currentTime - pre, 4)
         if (elem.gsFrameSpan > 1 / 20 || elem.gsFrameSpan < 1 / 65) {
           elem.gsFrameSpan = 0.04
@@ -37,7 +34,7 @@ function seekTo(elem: HTMLMediaElement, value: number, fast?: boolean) {
   }
 
   if (IS_NETFLIX) {
-    gvar.mediaTower.talk.send({
+    gvar.mediaTower.server.send({
       type: "SEEK_NETFLIX", 
       value
     })
@@ -141,14 +138,27 @@ export function toggleLoop(elem: HTMLMediaElement, key: string) {
   gvar.mediaTower.sendUpdate()
 }
 
-function togglePip(elem: HTMLVideoElement) {
-  if ((elem.getRootNode() as any as DocumentOrShadowRoot).pictureInPictureElement === elem) {
+function togglePip(elem: HTMLVideoElement, state: StateOption = "toggle") {
+  if (!HAS_PIP_API) return 
+  let exit = state === "off"
+  if (state === "toggle" && (elem.getRootNode() as any as DocumentOrShadowRoot).pictureInPictureElement === elem) {
+    exit = true 
+  }
+
+  if (exit) {
     document.exitPictureInPicture()
   } else {
-    elem.removeAttribute("disablePictureInPicture");
-    elem.requestPictureInPicture()
+    if (!elem.isConnected) return 
+    elem.removeAttribute("disablePictureInPicture")
+    elem.requestPictureInPicture?.().catch(err => {
+      if (err?.name === "SecurityError" && err?.message.includes("permissions policy")) {
+        alert("PiP blocking detected. To circumvent, try my 'PiP Unblocker' extension.")
+      }
+    })
   }
 }
+
+
 
 function setPlaybackRate(elem: HTMLMediaElement, value: number, freePitch?: boolean) {
   value = clamp(0.0625, 16, value)
@@ -169,7 +179,26 @@ function setPlaybackRate(elem: HTMLMediaElement, value: number, freePitch?: bool
   elem.webkitPreservesPitch = !freePitch
 }
 
+function applyFullscreen(elem: HTMLVideoElement, direct: boolean) {
+  if (IS_BILIBILI && !direct) {
+    let control = document.querySelector(".bilibili-player-video-btn-fullscreen") as HTMLButtonElement
+    if (control) {
+      control.click()
+      return 
+    }
+  }
+
+  if (!IS_NATIVE && !IS_SMART) return 
+
+  if (direct || (!IS_SMART && IS_NATIVE)) {
+    gvar.nativeFs.toggle(elem as HTMLVideoElement)
+  } else if (!direct || (IS_NATIVE && IS_SMART)) {
+    gvar.smartFs.toggle(elem as HTMLVideoElement)
+  }
+}
+
 export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
+  if (!elem) return 
   if (e.type === "PLAYBACK_RATE") {
     setPlaybackRate(elem, e.value, e.freePitch)
   } else if (e.type === "SEEK") {
@@ -186,8 +215,10 @@ export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
     seekMark(elem, e.key, e.fast)
   } else if (e.type === "TOGGLE_LOOP") {
     toggleLoop(elem, e.key)
-  } else if (e.type === "TOGGLE_PIP") {
-    togglePip(elem as HTMLVideoElement)
+  } else if (e.type === "PIP") {
+    togglePip(elem as HTMLVideoElement, e.state)
+  } else if (e.type === "FULLSCREEN") {
+    applyFullscreen(elem as HTMLVideoElement, e.direct)
   }
 }
 
@@ -199,8 +230,9 @@ export type MediaEventSetVolume = {type: "SET_VOLUME", value: number, relative: 
 export type MediaEventSetMark = {type: "SET_MARK", key: string}
 export type MediaEventSeekMark = {type: "SEEK_MARK", key: string, fast: boolean}
 export type MediaEventToggleLoop = {type: "TOGGLE_LOOP", key: string}
-export type MediaEventTogglePip = {type: "TOGGLE_PIP"}
+export type MediaEventTogglePip = {type: "PIP", state?: StateOption}
+export type MediaEventToggleFs = {type: "FULLSCREEN", direct?: boolean}
 
 export type MediaEvent = 
   MediaEventPlaybackRate | MediaEventSeek | MediaEventPause | MediaEventMute | MediaEventSetVolume |
-  MediaEventSetMark | MediaEventSeekMark | MediaEventToggleLoop | MediaEventTogglePip
+  MediaEventSetMark | MediaEventSeekMark | MediaEventToggleLoop | MediaEventTogglePip | MediaEventToggleFs

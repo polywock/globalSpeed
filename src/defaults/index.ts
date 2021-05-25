@@ -6,7 +6,7 @@ import { chunkByPredicate, randomId } from "../utils/helper"
 
 export function getDefaultState(): State {
   return {
-    version: 9,
+    version: 10,
     firstUse: new Date().getTime(),
     keybinds: getDefaultKeybinds(),
     common: {
@@ -15,7 +15,8 @@ export function getDefaultState(): State {
       backdropFx: getDefaultFx(),
       elementFx: getDefaultFx(),
       audioFx: getDefaultAudioFx()
-    }
+    },
+    speedSlider: getDefaultSpeedSlider()
   }
 }
 

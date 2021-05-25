@@ -3,10 +3,11 @@ import { injectCtx, WindowKeyListener } from './utils'
 import { TabInfo, requestTabInfo } from '../utils/browserUtils'
 import { MediaTower } from './MediaTower'
 import { ConfigSync } from './ConfigSync'
-import { requestGsm } from '../utils/configUtils'
 import { isFirefox } from '../utils/helper'
 import { fetchView } from '../background/GlobalState'
 import { Overlay } from './Overlay'
+import { SmartFs } from './utils/SmartFs'
+import { NativeFs } from './utils/NativeFs'
 
 declare global {
   interface GlobalVar {
@@ -17,24 +18,17 @@ declare global {
     fallbackId: number,
     ghostMode: boolean,
     overlay: Overlay,
-    keyListener: WindowKeyListener
+    keyListener: WindowKeyListener,
+    smartFs: SmartFs,
+    nativeFs: NativeFs
   }
 }
 
-const FORCED_GHOST_SITES = ["v.qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com"]
-
 async function main() {
+  ;(document as any).gvar = gvar 
   gvar.mediaTower = new MediaTower()
-
-  gvar.mediaTower.talkInitCb = () => {
-    fetchView({ghostMode: true}).then(view => {
-      gvar.ghostMode = view.ghostMode
-      if (gvar.ghostMode || FORCED_GHOST_SITES.some(site => (document.URL || "").includes(site))) {
-        gvar.mediaTower.talk.send({type: "ACTIVATE_GHOST"})
-      }
-    })
-  }
-
+  gvar.smartFs = new SmartFs()
+  gvar.nativeFs = new NativeFs()
   gvar.keyListener = new WindowKeyListener()
 
   if (!(window.frameElement?.id === "ajaxframe")) {
@@ -45,11 +39,26 @@ async function main() {
   await Promise.all([
     requestTabInfo().then(tabInfo => {
       gvar.tabInfo = tabInfo
-    }),
-    requestGsm().then(gsm => {
-      window.gsm = gsm 
-    })
+    }, err => {})
   ])
+
+  // if failed to get, try again after a few seconds. (firefox sometimes)
+  if (!gvar.tabInfo) {
+
+    await new Promise((res, rej) => setTimeout(() => res(true), 3000))
+
+    try {
+      await Promise.all([
+        requestTabInfo().then(tabInfo => {
+          gvar.tabInfo = tabInfo
+        })
+      ])
+    } catch (err) {
+
+      // exit 
+      return 
+    }
+  }
 
   const view = (await fetchView({staticOverlay: true, indicatorInit: true})) || {}
   gvar.overlay = gvar.overlay || new Overlay(view.staticOverlay)

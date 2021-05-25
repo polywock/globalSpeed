@@ -1,6 +1,6 @@
 {
   "name": "__MSG_appName__",
-  "version": "2.8.1",
+  "version": "2.8.2",
   "default_locale": "en",
   "description": "__MSG_appDesc__",
   "manifest_version": 2,

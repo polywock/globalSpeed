@@ -66,7 +66,6 @@ export class GlobalMedia {
 
     if (!tabInfo) return 
     infos = infos.filter(info => info.tabInfo.tabId === tabInfo.tabId)
-      .filter(info => info.domain !== "iview.abc.net.au" || info.isConnected)
 
     if (!infos.length) return
 
@@ -78,9 +77,12 @@ export class GlobalMedia {
 
       const sameFrame = compareFrame(info.tabInfo, tabInfo)
       if (sameFrame && tabInfo.frameId !== 0) {
-        score += 0b10000
+        score += 0b100000
       }
       if (info.duration >= 10 * 60) {
+        score += 0b10000
+      }
+      if (info.latestMovement) {
         score += 0b1000
       }
       if (info.duration >= 3 * 60) {
@@ -89,8 +91,8 @@ export class GlobalMedia {
       if (info.duration >= 1 * 60) {
         score += 0b10
       }
-      if (info.isConnected) {
-        score += 0b1
+      if (info.type === "VIDEO" && !info.isConnected && location.hostname !== "www.spotify.com") {
+        score = -0b1
       }
 
       if (score >= highestScore) {

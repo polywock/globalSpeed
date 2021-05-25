@@ -42,7 +42,7 @@ async function main() {
 
   let stateView: State 
   try {
-    stateView = migrateSchema(((await getStorage()).config as State))
+    stateView = migrateSchema(((await getStorage("config")).config as State))
   } catch (err) {}
 
   stateView = stateView || getDefaultState()

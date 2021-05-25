@@ -184,3 +184,20 @@ export function flatJoin<T>(groups: T[][], value: T) {
 export function domRectGetOffset(rect: DOMRect, offset = 10) {
   return {x: rect.x + rect.width + offset, y: rect.y - rect.height - offset}
 }
+
+    
+export function intersect<T, B>(lhs: T[], rhs: B[]) {
+  lhs = lhs || [] 
+  rhs = rhs || []
+  const arr = [] as T[]
+  lhs.forEach(v => {
+    if (rhs.includes(v as any)) arr.push(v)
+  })
+  return arr
+}
+
+export function speak(text: string) {
+  let utter = new SpeechSynthesisUtterance(text)
+  utter.lang = "en"
+  speechSynthesis.speak(utter)
+}

@@ -54,7 +54,7 @@ export function MediaView(props: MediaViewProps) {
         </>} 
         {(!(HAS_REQUEST_PIP && info.hasVideoTrack && info.duration)) ? <div/> : (
           <button className={info.pipMode ? "active" : ""} onClick={e => {
-            const event: MediaEvent = {type: "TOGGLE_PIP"}
+            const event: MediaEvent = e.shiftKey ? {type: "FULLSCREEN", direct: true} : {type: "PIP"}
             sendMediaEvent(event, info.key, tabId, frameId)
           }}><MdPictureInPictureAlt size={18}/></button>
         )}

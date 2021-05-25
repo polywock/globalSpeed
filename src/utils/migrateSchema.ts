@@ -17,6 +17,10 @@ export function migrateSchema(state: State) {
     state = eightToNine(state)
   }
 
+  if (state.version === 9) {
+    state = nineToTen(state)
+  }
+
   if (!(state?.version === defaultState.version)) {
     return defaultState
   }
@@ -42,6 +46,17 @@ function eightToNine(state: State) {
   state.keybinds?.forEach(kb => {
     if (kb.command === "seek") {
       kb.valueBool2 = true
+    }
+  })
+  return state 
+}
+
+function nineToTen(state: State) {
+  state.version = 10
+  state.keybinds?.forEach(kb => {
+    if ((kb.command as string) === "preservePitch") {
+      kb.command = "speedChangesPitch"
+      kb.valueState = kb.valueState === "on" ? "off" : kb.valueState === "off" ? "on" : "toggle"
     }
   })
   return state 

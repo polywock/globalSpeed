@@ -4,15 +4,15 @@ import { LOCALE_MAP } from "../defaults/i18"
 import { useStateView } from "../hooks/useStateView"
 import { pushView } from "../background/GlobalState"
 import { createFeedbackAudio } from "../utils/configUtils"
-import { domRectGetOffset, feedbackText, isFirefox } from "../utils/helper"
+import { isFirefox } from "../utils/helper"
 import { INDICATOR_INIT } from "../defaults"
 import { SliderMicro } from "../comps/SliderMicro"
 import { Overlay } from "../contentScript/Overlay"
 import { IndicatorInit } from "../types"
 import { SpeedPresetFlags } from "./SpeedPresetFlags"
 import produce from "immer"
-import "./SectionFlags.scss"
 import { Reset } from "../comps/Reset"
+import "./SectionFlags.scss"
 
 let feedbackAudio: HTMLAudioElement
 
@@ -73,8 +73,8 @@ export function SectionFlags(props: {}) {
           }}/>
         </div>
         <div className="field">
-          <span>{window.gsm.command.preservePitch}</span>
-          <input type="checkbox" checked={!view.freePitch} onChange={e => {
+          <span>{window.gsm.command.speedChangesPitch}</span>
+          <input type="checkbox" checked={!!view.freePitch} onChange={e => {
             pushView({override: {freePitch: !view.freePitch}})
           }}/>
         </div>
@@ -85,7 +85,6 @@ export function SectionFlags(props: {}) {
           </div>
           <input type="checkbox" checked={!!view.ghostMode} onChange={e => {
             pushView({override: {ghostMode: !view.ghostMode}})
-            feedbackText(window.gsm.token.refreshPage, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
           }}/>
         </div>
         {showMore ? <>

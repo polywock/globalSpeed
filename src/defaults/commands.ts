@@ -1,11 +1,12 @@
 
+import { HAS_PIP_API } from "src/utils/supports"
 import { Command, Keybind, AdjustMode, CommandGroup } from "../types"
 import { randomId, groupByKey, flatJoin } from "../utils/helper"
 
-export type CommandName = "nothing" | "runCode" | "adjustSpeed" | "preservePitch" | "setPin" | "setState" | 
+export type CommandName = "nothing" | "runCode" | "adjustSpeed" | "speedChangesPitch" | "setPin" | "setState" | 
   "seek" | "setPause" | "setMute" | "adjustVolume" | "setMark" | "seekMark" | "toggleLoop" | "openUrl" | 
   "setFx" | "resetFx" | "flipFx" | "adjustFilter" |
-  "adjustGain" | "adjustPitch" | "adjustDelay" | "tabCapture"
+  "adjustGain" | "adjustPitch" | "adjustDelay" | "tabCapture" | "fullscreen" | "PiP"
 
 
 export let commandInfos: {[key in CommandName]: Command} = {
@@ -26,7 +27,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
       command: "runCode",
       enabled: true,
       greedy: true,
-      valueString: `// your code here\n\nspeechSynthesis.speak(new SpeechSynthesisUtterance("Global Speed"))`
+      valueString: `// code here`
     })
   },
   openUrl: {
@@ -54,12 +55,12 @@ export let commandInfos: {[key in CommandName]: Command} = {
       adjustMode: AdjustMode.SET
     })
   },
-  preservePitch: {
+  speedChangesPitch: {
     valueType: "state",
     requiresMedia: true,
     generate: () => ({
       id: randomId(),
-      command: "preservePitch",
+      command: "speedChangesPitch",
       enabled: true,
       greedy: true,
       valueState: "toggle"
@@ -89,12 +90,13 @@ export let commandInfos: {[key in CommandName]: Command} = {
     group: CommandGroup.MEDIA,
     valueType: "number",
     requiresMedia: true,
+    noNull: true,
     generate: () => ({
       id: randomId(),
       command: "seek",
       enabled: true,
       greedy: true,
-      valueNumber: 5
+      valueNumber: 10
     })
   },
   setPause: {
@@ -167,6 +169,29 @@ export let commandInfos: {[key in CommandName]: Command} = {
       enabled: true,
       greedy: true,
       valueString: "mark1"
+    })
+  },
+  fullscreen: {
+    group: CommandGroup.MEDIA,
+    requiresMedia: true,
+    generate: () => ({
+      id: randomId(),
+      command: "fullscreen",
+      enabled: true,
+      greedy: true
+    })
+  },
+  PiP: {
+    group: CommandGroup.MEDIA,
+    valueType: "state",
+    requiresMedia: true,
+    requiresPiPApi: true,
+    generate: () => ({
+      id: randomId(),
+      command: "PiP",
+      enabled: true,
+      greedy: true,
+      valueState: "toggle"
     })
   },
   setFx: {
@@ -274,7 +299,8 @@ export let commandInfos: {[key in CommandName]: Command} = {
       command: "tabCapture",
       enabled: true,
       greedy: true,
-      valueState: "toggle"
+      valueState: "toggle",
+      global: true
     })
   },
 }
@@ -321,7 +347,7 @@ export function getDefaultKeybinds(): Keybind[] {
       ...commandInfos.seek.generate(),
       key: "KeyX",
       enabled: true,
-      valueNumber: 5,
+      valueNumber: 10,
       valueBool2: true,
       spacing: 1
     },
@@ -337,6 +363,13 @@ export function getDefaultKeybinds(): Keybind[] {
       enabled: true,
       valueNumber: 0.041,
       spacing: 1
+    },
+    {
+      ...commandInfos.fullscreen.generate(),
+      key: {shiftKey: true, code: "KeyF"},
+      enabled: true,
+      valueBool: true,
+      spacing: 2
     },
     {
       ...commandInfos.setMark.generate(),
@@ -382,6 +415,7 @@ export const availableCommandNames = flatJoin(
   groupByKey(
     Object.entries(commandInfos)
       .filter(v => !v[1].requiresTabCapture || chrome.tabCapture)
+      .filter(v => !v[1].requiresPiPApi || HAS_PIP_API)
       .map(([name, info]) => [name, info.group] as [string, CommandGroup]),
     v => v[1]
   )

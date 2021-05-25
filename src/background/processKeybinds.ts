@@ -204,17 +204,18 @@ const commandHandlers: {
  
     show({text: formatSpeed(override.speed, view.isPinned)})
   },
-  preservePitch: async args => {
+  speedChangesPitch: async args => {
     const { kb, show, override, fetch } = args 
     const view = fetch({freePitch: true})
+    // speed changes pitch (off) = freePith = true
     if (kb.valueState === "off" || (kb.valueState === "toggle" && view.freePitch)) {
       override.freePitch = false 
     } else {
-      override.freePitch = true
+      override.freePitch = true  
     }
     show({
-      text: ` ${window.gsm.token[override.freePitch ? "off" : "on"]}`,
-      icons: ["preservePitch"]
+      text: ` ${window.gsm.token[override.freePitch ? "on" : "off"]}`,
+      icons: ["speedChangesPitch"]
     })
   },
   seek: async args => {
@@ -302,6 +303,14 @@ const commandHandlers: {
       text: ` ${kb.valueString}???`,
       small: true,
     })
+  },
+  fullscreen: async args => {
+    const { kb, applyToMedia } = args 
+    applyToMedia({type: "FULLSCREEN", direct: kb.valueBool}) 
+  },
+  PiP: async args => {
+    const { kb, applyToMedia } = args 
+    applyToMedia({type: "PIP", state: kb.valueState}) 
   },
   setFx: async args => {
     const { kb, fetch, override, show } = args

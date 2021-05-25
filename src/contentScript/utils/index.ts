@@ -1,5 +1,3 @@
-import { callNative } from "./nativeCodes"
-import { randomId } from "../../utils/helper"
 
 export function injectScript(text: string) {
   if (!text) return 
@@ -38,42 +36,6 @@ export function requestSendMessage(msg: any, tabId: number, frameId: number) {
     chrome.runtime.sendMessage({type: "REQUEST_SEND_MSG", msg, tabId, frameId})
   }
 }
-
-
-export class WindowTalk {
-  ourKey = randomId()
-  theirKey: string
-  cbs: Set<(msg: any) => void> = new Set()
-  initCb?: (key: string) => void 
-  constructor(public ourName: string, public theirName: string) {
-    callNative("addEventListener", window, ourName, this.handleMessage, {capture: true, passive: true})
-  }
-  handleMessage = (e: CustomEvent) => {
-    callNative("stopImmediatePropagation", e)
-    const { detail } = e
-    if (!detail) return 
-    const payload = JSON.parse(detail)
-
-    if (payload.type === "SET_KEY") {
-      if (!this.theirKey) {
-        this.theirKey = payload.senderKey
-        payload.sendBack && this.sendKey()
-        this.initCb?.(this.theirKey)
-        delete this.initCb
-      }
-      return 
-    }
-    if (payload.senderKey !== this.theirKey) return 
-    this.cbs.forEach(fn => fn(payload))
-  }
-  sendKey = (sendBack?: boolean) => {
-    this.send({type: "SET_KEY", senderKey: this.ourKey, sendBack})
-  }
-  send = (msg: any) => {
-    callNative("dispatchEvent", window, new CustomEvent(this.theirName, {detail: JSON.stringify({...msg, senderKey: this.ourKey}), cancelable: false, composed: false, bubbles: false}))
-  }
-}
-
 
 
 export class WindowKeyListener {
