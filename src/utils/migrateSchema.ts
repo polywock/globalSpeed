@@ -1,6 +1,7 @@
 import { State } from "../types"
 import { getDefaultState } from "../defaults"
 import { randomId } from "./helper"
+import { availableCommandNames } from "src/defaults/commands"
 
 export function migrateSchema(state: State) {
   const defaultState = getDefaultState()
@@ -22,6 +23,12 @@ export function migrateSchema(state: State) {
   }
 
   if (!(state?.version === defaultState.version)) {
+    
+    // purify
+    if (state.keybinds?.length) {
+      state.keybinds = state.keybinds.filter(kb => availableCommandNames.includes(kb.command))
+    }
+
     return defaultState
   }
 

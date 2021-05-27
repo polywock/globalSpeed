@@ -34,7 +34,6 @@ declare global {
   }
 }
 
-// New entries must be added to namedSelectors.simple @ src/background/GlobalState.ts 
 export type State = {
   version: number,
   language?: string,
@@ -88,18 +87,22 @@ export type MediaPath = {
 
 export type Pin = {tabId: number, ctx: Context}
 
-// New entries must be added to namedSelectors.ctx @ src/background/GlobalState.ts 
 export type Context = {
-  lastSpeed?: number,
   speed: number, 
+  lastSpeed?: number,
   enabled: boolean,
   elementFx: Fx,
   backdropFx: Fx,
   monoOutput?: boolean,
   audioFx: AudioFx,
   audioFxAlt?: AudioFx,
-  audioPan?: number 
+  audioPan?: number
 }
+
+export const CONTEXT_KEYS: (keyof Context)[] = [ 
+  "speed", "lastSpeed", "enabled", "elementFx", "backdropFx", 
+  "monoOutput", "audioFx", "audioFxAlt", "audioPan"
+]
 
 export type AudioFx = {
   pitch: number,
@@ -384,3 +387,6 @@ export type Gsm = {
     }
   }
 }
+
+// Compound utility type that makes certain keys in an interface option. 
+// export type PartialPick<T, K extends keyof T & (string | number | symbol)> =  Omit<T, K> & Partial<Pick<T, K>>

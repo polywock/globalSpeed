@@ -92,7 +92,7 @@ export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
       }
 
       if (Object.keys(override).length) {
-        window.globalState.set({override, tabId: tabInfo?.tabId}, "kb")
+        window.globalState.set({override, tabId: tabInfo?.tabId}, true)
       }
     } catch (err) {
       setFeedback(feedbackBadAudio)
@@ -100,7 +100,7 @@ export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
     }
   }
 
-  window.globalState.unfreeze("kb")
+  window.globalState.unfreeze()
 
   if (feedback) {
     feedback.volume = fetch({feedbackVolume: true}).feedbackVolume ?? 0
@@ -207,7 +207,6 @@ const commandHandlers: {
   speedChangesPitch: async args => {
     const { kb, show, override, fetch } = args 
     const view = fetch({freePitch: true})
-    // speed changes pitch (off) = freePith = true
     if (kb.valueState === "off" || (kb.valueState === "toggle" && view.freePitch)) {
       override.freePitch = false 
     } else {

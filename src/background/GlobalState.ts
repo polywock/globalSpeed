@@ -1,4 +1,4 @@
-import { Context, Pin, StateView, StateViewSelector, State } from "../types";
+import { Context, Pin, StateView, StateViewSelector, State, CONTEXT_KEYS } from "../types";
 import { MessageCallback } from "../utils/browserUtils";
 import { randomId } from "../utils/helper";
 import { getDefaultState } from "../defaults";
@@ -6,25 +6,18 @@ import cloneDeep from "lodash.clonedeep";
 import debounce from "lodash.debounce";
 import { sendMediaEvent } from "../utils/configUtils";
 import { migrateSchema } from "../utils/migrateSchema";
-import { availableCommandNames } from "src/defaults/commands";
 
 
 export class GlobalState {
   subs: Set<SubInfo> = new Set()
   pins: Pin[] = []
-  frozen: Map<string, Set<SubInfo>> = new Map()
+  frozen: Set<SubInfo> = new Set()
   constructor(public state: State) {
-    this.purify()
     chrome.runtime.onMessage.addListener(this.handleMessage)
     chrome.runtime.onConnect.addListener(this.handlePortConnect)
     chrome.runtime.onSuspend?.addListener(() => {
       this.persistThrottled.flush()
     })
-  }
-  purify = () => {
-    if (this.state.keybinds) {
-      this.state.keybinds = this.state.keybinds.filter(kb => availableCommandNames.includes(kb.command))
-    }
   }
   reload = (state: State) => {
     try {
@@ -32,7 +25,6 @@ export class GlobalState {
       if (newState.version === getDefaultState().version) {
         this.state = newState 
         this.pins = []
-        this.purify()
 
         // notify
         this.subs.forEach(sub => {
@@ -53,72 +45,35 @@ export class GlobalState {
     for (let _key in keys) {
       const key = _key as keyof StateView
 
-      if (key === "isPinned" || namedSelectors.ctx[key]) {
-        const pin = this.pins?.find(pin => pin.tabId === tabId)
-        const ctx = pin?.ctx || this.state.common
-
-        if (key === 'isPinned') {
-          out["isPinned"] = !!pin
-        } else {
-          (out as any)[key] = ctx[key as keyof Context]
-        }
-      } 
-
-      if (namedSelectors.simple[key]) {
+      if (key === "isPinned") {
+        out.isPinned = !!this.pins.find(pin => pin.tabId === tabId) 
+      } else if (CONTEXT_KEYS.includes(key as any)) {
+        const ctx = this.pins.find(pin => pin.tabId === tabId)?.ctx || this.state.common;
+        (out as any)[key] = ctx[key as keyof Context]
+      } else {
         (out as any)[key] = this.state[key as keyof State]
-        continue 
       }
     }
 
     // If super disabled, set .enabled to false. 
-    if (keys.enabled) {
-      const { superDisable } = this.get({superDisable: true})
-      if (superDisable) {
-        out.enabled = false 
-      }
+    if (keys.enabled && this.get({superDisable: true}).superDisable) {
+      out.enabled = false 
     }
 
     return out 
   }
-
   _set = (override: StateView, tabId: number, overDefault?: boolean) => {
 
     if (overDefault) {
       this.state = getDefaultState()
+      this.pins = []
     }
 
     const flags: ChangeFlags = {
-      real: new Set(),
-      ctx: Object.fromEntries(Object.keys(namedSelectors.ctx).map(key => [key, {current: false, common: false}])) as any,
+      real: [],
+      contextCommon: [],
+      contextCurrent: [],
       isPinnedCurrent: false 
-    }
-
-    // main loop that iterates over every key
-    let ctxKeys = [] as (keyof StateView)[]
-    for (let _key in override) {
-      const key = _key as keyof StateView
-
-      // isPinned we check independently
-      if (key === "isPinned") {
-        continue 
-      } 
-
-      // if a ctx key, collect it. 
-      if (namedSelectors.ctx[key]) {
-        ctxKeys.push(key)
-        continue 
-      } 
-
-      // if real, set it.
-      if (namedSelectors.simple[key]) {
-        const newValue = override[key];
-        if (newValue !== (this.state as any)[key]) {
-          (this.state as any)[key] = newValue 
-          flags.real.add(key)
-        }
-        continue 
-      }
-
     }
 
     // define closure to lazy load ctx.
@@ -127,14 +82,15 @@ export class GlobalState {
     const lazyInit = (force?: boolean) => {
       if (!force && loaded) return 
 
-      const pin = this.pins?.find(pin => pin.tabId === tabId)
+      const pin = this.pins.find(pin => pin.tabId === tabId)
       loaded = {
         pin,
         ctx: pin?.ctx || this.state.common
       }
     }
 
-    // handle isPinned next.
+
+    // isPinned takes priority.
     if ("isPinned" in override && tabId != null) { 
       lazyInit()
 
@@ -159,20 +115,31 @@ export class GlobalState {
       } 
     }
 
-    // finally ctx keys 
-    for (let key of ctxKeys) {
-      lazyInit();
-      if ((loaded.ctx as any)[key] !== override[key]) {
-        (loaded.ctx as any)[key] = override[key]
-        flags.ctx[key][loaded.pin ? "current" : "common"] = true 
+
+    for (let [_key, value] of Object.entries(override)) {
+      let key = _key as keyof StateView 
+      if (key === "isPinned") continue  
+  
+      if (CONTEXT_KEYS.includes(key as any)) {
+        let key = _key as keyof Context
+        lazyInit();
+
+        if (loaded.ctx[key] !== override[key]) {
+          (loaded.ctx as any)[key] = override[key]
+          flags[loaded.pin ? "contextCurrent" : "contextCommon"].push(key)
+        }
+      } else {
+        if (value !== (this.state as any)[key]) {
+          (this.state as any)[key] = value 
+          flags.real.push(key)
+        }
       }
     }
 
     this.persistThrottled()
-
     return flags
   }
-  set = (_init: SetInit[] | SetInit, frozenId?: string) => {
+  set = (_init: SetInit[] | SetInit, freeze?: boolean) => {
     const inits = Array.isArray(_init) ? _init : [_init]
     let speedOrFreePitch = false 
 
@@ -182,16 +149,14 @@ export class GlobalState {
 
       const flags = this._set(override, tabId, overDefault)
 
-      if (flags.ctx.speed.common || flags.real.has("freePitch")) {
+      if (flags.contextCommon.includes("speed") || flags.real.includes("freePitch")) {
         speedOrFreePitch = true 
       } 
 
       // go through each sub 
       for (let sub of this.subs) {
-        if (ignoreSub && sub.id === ignoreSub) {
-          continue
-        }
-        const isPinned = !!(this.pins || []).find(v => v.tabId === sub.tabId)
+        if (ignoreSub && sub.id === ignoreSub) continue
+        const isPinned = !!this.pins.find(v => v.tabId === sub.tabId)
 
         if (overDefault || checkSubUpdate(sub, isPinned, tabId, flags)) {
           markedSubs.add(sub)
@@ -200,34 +165,37 @@ export class GlobalState {
     }
 
     // notify 
-    if (frozenId) {
-      const current = this.frozen.get(frozenId) || new Set()
-      markedSubs.forEach(sub => current.add(sub))
-      this.frozen.set(frozenId, current)
+    if (freeze) {
+      markedSubs.forEach(sub => this.frozen.add(sub))
     } else {
       markedSubs.forEach(sub => {
         sub.handleUpdate(this.get(sub.selector, sub.tabId))
       })
     }
 
-    // make sure background tabs are updated
+    // make sure background tabs are updated of speed changes.
     if (speedOrFreePitch) {
-      window.globalMedia.scopes.forEach(scope => {
-        const view = this.get({enabled: true, speed: true, isPinned: true, freePitch: true})
-        if (!view.enabled || view.isPinned) return 
-        scope.media?.forEach(media => {
-          if (media.readyState && !media.paused) {
-            sendMediaEvent({type: "PLAYBACK_RATE", value: view.speed ?? 1, freePitch: view.freePitch}, media.key, scope.tabInfo.tabId, scope.tabInfo.frameId)
-          }
-        })
-      })
+      try {
+        this.updateBackgroundSpeed()
+      } catch (err) {}
     }
   }
-  unfreeze = (id: string) => {
-    this.frozen.get(id)?.forEach(sub => {
+  unfreeze = () => {
+    this.frozen.forEach(sub => {
       sub.handleUpdate(this.get(sub.selector, sub.tabId))
     })
-    this.frozen.delete(id)
+    this.frozen.clear()
+  }
+  updateBackgroundSpeed = () => {
+    window.globalMedia.scopes.forEach(scope => {
+      const view = this.get({enabled: true, speed: true, isPinned: true, freePitch: true})
+      if (!view.enabled || view.isPinned) return 
+      scope.media?.forEach(media => {
+        if (media.readyState && !media.paused) {
+          sendMediaEvent({type: "PLAYBACK_RATE", value: view.speed ?? 1, freePitch: view.freePitch}, media.key, scope.tabInfo.tabId, scope.tabInfo.frameId)
+        }
+      })
+    })
   }
   persist = () => {
     chrome.storage.local.set({
@@ -236,23 +204,23 @@ export class GlobalState {
   }
   persistThrottled = debounce(this.persist, 5000, {trailing: true, maxWait: 15000})
   handlePortConnect = (port: chrome.runtime.Port) => {
-    if (port.name.startsWith("subscribe ")) {
-      const { selector, tabId, wait, maxWait, id } = JSON.parse(port.name.slice(10))
-      const sub: SubInfo = {
-        selector,
-        tabId,
-        handleUpdate: debounce(data => {
-          port.postMessage(data)
-        }, wait ?? 0, {leading: true, trailing: true, ...(maxWait == null ? {} : {maxWait})}),
-        id
-      }
-
-      this.subs.add(sub)
-
-      port.onDisconnect.addListener(port => {
-        this.subs.delete(sub)
-      })
+    if (!port.name.startsWith("subscribe ")) return 
+    const { selector, tabId, wait, maxWait, id } = JSON.parse(port.name.slice(10))
+    
+    const sub: SubInfo = {
+      selector,
+      tabId,
+      handleUpdate: debounce(data => {
+        port.postMessage(data)
+      }, wait ?? 0, {leading: true, trailing: true, ...(maxWait == null ? {} : {maxWait})}),
+      id
     }
+
+    this.subs.add(sub)
+
+    port.onDisconnect.addListener(port => {
+      this.subs.delete(sub)
+    })
   }
   handleMessage: MessageCallback = (msg, sender, reply) => {
     if (msg.type === "PUSH_VIEW") {
@@ -268,46 +236,6 @@ export class GlobalState {
   }
 }
 
-const namedSelectors = {
-    ctx: {
-      speed: true, 
-      lastSpeed: true,
-      enabled: true,
-      elementFx: true,
-      backdropFx: true,
-      audioFx: true,
-      audioFxAlt: true,
-      stereoControl: true,
-      monoOutput: true,
-      audioPan: true
-    } as StateViewSelector,
-    simple: {
-      version: true,
-      language: true,
-      pinByDefault: true,
-      hideIndicator: true,
-      feedbackVolume: true,
-      hideBadge: true,
-      staticOverlay: true,
-      hideMediaView: true,
-      darkTheme: true,
-      keybinds: true,
-      keybindsUrlCondition: true,
-      rules: true,
-      ghostMode: true,
-      indicatorInit: true,
-      freePitch: true,
-      superDisable: true,
-      firstUse: true,
-      clickedRating: true,
-      speedPresets: true,
-      speedSmallStep: true,
-      speedBigStep: true,
-      speedSlider: true,
-      showNetSeek: true
-    } as StateViewSelector    
-}
-
 function pruneSelectors(selector: StateViewSelector) {
   return Object.fromEntries(Object.entries(selector).filter(([k, v]) => v)) as StateViewSelector
 }
@@ -317,7 +245,7 @@ function checkSubUpdate(sub: SubInfo, subTabIsPinned: boolean, tabId: number, fl
 
 
   // .superDisable can change .enabled (derived) value. 
-  if (sub.selector.enabled && flags.real.has("superDisable")) {
+  if (sub.selector.enabled && flags.real.includes("superDisable")) {
     return true 
   }
 
@@ -327,25 +255,25 @@ function checkSubUpdate(sub: SubInfo, subTabIsPinned: boolean, tabId: number, fl
 
   for (let _key in sub.selector) {
     const key = _key as keyof StateView
-    if (namedSelectors.ctx[key]) {
+    if (CONTEXT_KEYS.includes(key as any)) {
 
       if (sameTab && flags.isPinnedCurrent) {
         return true 
       }
       
       if (subTabIsPinned || sub.tabId === -1) {
-        if (flags.ctx[key].current && sameTab) {
+        if (flags.contextCurrent.includes(key as keyof Context) && sameTab) {
           return true 
         }
       } 
       
       if (!subTabIsPinned || sub.tabId === -1) {
-        if (flags.ctx[key].common) {
+        if (flags.contextCommon.includes(key as keyof Context)) {
           return true 
         }
       }
     } else {
-      if (flags.real.has(key)) {
+      if (flags.real.includes(key)) {
         return true
       }
     }
@@ -373,7 +301,7 @@ export function fetchView(selector: StateViewSelector, tabId?: number): Promise<
 }
 
 export function pushView(init: SetInit): Promise<void> {
-  if (window.globalState) {
+  if (window.globalState?.set) {
     window.globalState.set(init)
     return Promise.resolve()
   }
@@ -466,8 +394,9 @@ type SubInfo = {
 }
 
 type ChangeFlags = {
-  real: Set<keyof StateView>,
-  ctx: {[key in keyof StateView]: {current: boolean, common: boolean}}, 
+  real: Array<keyof StateView>,
+  contextCommon?: Array<keyof Context>,
+  contextCurrent?: Array<keyof Context>,
   isPinnedCurrent: boolean 
 }
 
