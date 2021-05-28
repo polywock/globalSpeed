@@ -188,13 +188,9 @@ export class GlobalState {
   }
   updateBackgroundSpeed = () => {
     window.globalMedia.scopes.forEach(scope => {
-      const view = this.get({enabled: true, speed: true, isPinned: true, freePitch: true})
+      const view = this.get({enabled: true, speed: true, isPinned: true, freePitch: true}, scope.tabInfo?.tabId)
       if (!view.enabled || view.isPinned) return 
-      scope.media?.forEach(media => {
-        if (media.readyState && !media.paused) {
-          sendMediaEvent({type: "PLAYBACK_RATE", value: view.speed ?? 1, freePitch: view.freePitch}, media.key, scope.tabInfo.tabId, scope.tabInfo.frameId)
-        }
-      })
+      sendMediaEvent({type: "PLAYBACK_RATE", value: view.speed ?? 1, freePitch: view.freePitch}, null, scope.tabInfo?.tabId, scope.tabInfo?.frameId)
     })
   }
   persist = () => {
@@ -206,7 +202,7 @@ export class GlobalState {
   handlePortConnect = (port: chrome.runtime.Port) => {
     if (!port.name.startsWith("subscribe ")) return 
     const { selector, tabId, wait, maxWait, id } = JSON.parse(port.name.slice(10))
-    
+
     const sub: SubInfo = {
       selector,
       tabId,
