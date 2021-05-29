@@ -387,25 +387,6 @@ export function getDefaultKeybinds(): Keybind[] {
       valueString: "mark1",
       spacing: 2,
       enabled: false
-    },
-    {
-      ...commandInfos.adjustFilter.generate(),
-      key: {code: "KeyE"},
-      filterOption: "invert",
-      filterTarget: "both",
-      adjustMode: AdjustMode.CYCLE,
-      enabled: false,
-      valueCycle: [0, 1]
-    },
-    {
-      ...commandInfos.adjustFilter.generate(),
-      key: {code: "KeyE", shiftKey: true},
-      filterOption: "grayscale",
-      filterTarget: "backdrop",
-      adjustMode: AdjustMode.CYCLE,
-      enabled: false,
-      valueCycle: [0, 1],
-      spacing: 2
     }
   ]
 }
