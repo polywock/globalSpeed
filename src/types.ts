@@ -23,6 +23,7 @@ declare global {
     gsMarks?: {
       [key: string]: number
     },
+    gsNameless?: number[],
     gsLoopTimeUpdateHandler?: () => void,
     gsLoopSeekingHandler?: () => void,
     preservesPitch?: boolean,

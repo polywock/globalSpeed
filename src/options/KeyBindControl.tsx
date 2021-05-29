@@ -9,7 +9,7 @@ import { filterInfos, FilterName, filterTargets  } from "../defaults/filters"
 import { GoChevronDown, GoChevronUp, GoX, GoTriangleDown, GoCode, GoPin, GoZap } from "react-icons/go"
 import { CycleInput } from "../comps/CycleInput"
 import { ModalText } from "../comps/ModalText"
-import { FaPowerOff, FaPause, FaEquals, FaBookmark, FaLink, FaVolumeUp, FaVolumeMute, FaGlobe, FaFile, FaLockOpen, FaLock, FaBackward, FaForward, FaArrowRight, FaExchangeAlt, FaPlus, FaMusic, FaList } from "react-icons/fa"
+import { FaPowerOff, FaPause, FaEquals, FaBookmark, FaLink, FaVolumeUp, FaVolumeMute, FaGlobe, FaFile, FaLockOpen, FaLock, FaBackward, FaForward, FaArrowRight, FaExchangeAlt, FaPlus, FaMusic, FaList, FaStar } from "react-icons/fa"
 import { requestCreateTab } from "../utils/browserUtils"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { BsMusicNoteList } from "react-icons/bs"
@@ -38,8 +38,8 @@ export const KeybindControl = (props: KeybindControlProps) => {
 
   const commandInfo = commandInfos[value.command]
 
-  const label = (window.gsm.command as any)[value.command]
-  const tooltip = (window.gsm.command as any)[value.command.concat("Tooltip")]
+  let label = (window.gsm.command as any)[value.command]
+  let tooltip = (window.gsm.command as any)[value.command.concat("Tooltip")]
 
   let filterInfo = commandInfo.withFilterOption && filterInfos[value.filterOption]
   let setMin = filterInfo ? filterInfo.min : commandInfo.valueMin
@@ -65,6 +65,10 @@ export const KeybindControl = (props: KeybindControlProps) => {
   }
 
 
+  const specialKey = value.command === "setMark" && ["::nameless", "::nameless-prev", "::nameless-next"].includes(value.valueString?.toLowerCase())
+  if (specialKey) {
+    label = "special"
+  }
 
   return <div className={`KeybindControl ${value.spacing === 1 ? "spacing" : value.spacing === 2 ? "doubleSpacing" : ""} ${value.enabled ? "" : "disabled"}`}>
     <div 
@@ -136,7 +140,8 @@ export const KeybindControl = (props: KeybindControlProps) => {
         {value.command === "adjustGain" && <FaVolumeUp size="1.05em"/>  }
         {value.command === "adjustPitch" && <FaMusic size="1em"/>}
         {value.command === "setState" && <FaPowerOff size="1em"/>}
-        {value.command === "setMark" && <FaBookmark size="0.95em"/>}
+        {(value.command === "setMark" && !specialKey) && <FaBookmark size="0.95em"/>}
+        {specialKey && <FaStar size="1em"/>}
         {value.command === "seekMark" && <div className="svg">
           <FaArrowRight size="0.95em"/>
           <FaBookmark size="0.95em"/>
@@ -282,7 +287,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
       }}/>
     )}
     {commandInfo.valueType === "string" && (
-      <ThrottledTextInput value={value.valueString} onChange={v => {
+      <ThrottledTextInput passInput={specialKey ? {style: {color: "red"}} : undefined} value={value.valueString} onChange={v => {
         if (value.command === "openUrl") {
 
           if (v === "::clear_fs") {

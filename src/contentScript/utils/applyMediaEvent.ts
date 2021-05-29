@@ -93,6 +93,57 @@ export function seekMark(elem: HTMLMediaElement, key: string, fast?: boolean) {
   }
 }
 
+function findNameless(arr: number[], currentTime: number, mode: "N" | "P" | "C") {
+  let closest: {index: number, diff: number}
+
+  arr.forEach((v, index) => {
+    if (mode === "N" && v <= currentTime) return 
+    if (mode === "P" && v >= currentTime) return 
+
+    let diff = Math.abs(currentTime - v) 
+    if (!closest || diff < closest.diff) {
+      closest = {index, diff}
+    }
+  })
+
+  if (!closest) {
+    if (mode === "N" && arr.length) {
+      closest = {index: 0, diff: Math.abs(currentTime - arr[0])}
+    }
+    if (mode === "P" && arr.length) {
+      closest = {index: arr.length - 1, diff: Math.abs(currentTime - arr[arr.length - 1])}
+    }
+  }
+  return closest 
+}
+
+
+function setNameless(elem: HTMLMediaElement) {
+  elem.gsNameless = elem.gsNameless || []
+  const nameless = elem.gsNameless
+
+  // if any marks close enough, remove. 
+  const closest = findNameless(nameless, elem.currentTime, "C")
+  if (closest?.diff <= 1) {
+    nameless.splice(closest.index, 1)
+    return 
+  }
+
+  nameless.push(elem.currentTime)
+
+  elem.addEventListener("unload", () => {
+    delete elem.gsNameless
+  }, {once: true, capture: true})
+}
+
+function jumpNameless(elem: HTMLMediaElement, next?: boolean) {
+  elem.gsNameless = elem.gsNameless || []
+  let closest = findNameless(elem.gsNameless, elem.currentTime - (next ? 0 : 1), next ? "N" : "P")
+  if (closest) {
+    seekTo(elem, elem.gsNameless[closest.index])
+  }
+}
+
 export function toggleLoop(elem: HTMLMediaElement, key: string) {
   let markTime = elem.gsMarks?.[key]
 
@@ -210,7 +261,17 @@ export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
   } else if (e.type === "SET_VOLUME") {
     setVolume(elem, e.value, e.relative)
   } else if (e.type === "SET_MARK") {
-    setMark(elem, e.key)
+    let lowerCaseKey = (e.key || "").toLowerCase()
+    if (e.key === "::nameless") {
+      setNameless(elem)
+    } else if (lowerCaseKey === "::nameless-prev") {
+      jumpNameless(elem)
+    } else if (lowerCaseKey === "::nameless-next") {
+      jumpNameless(elem, true)
+    } else {
+      setMark(elem, e.key)
+    }
+    
   } else if (e.type === "SEEK_MARK") {
     seekMark(elem, e.key, e.fast)
   } else if (e.type === "TOGGLE_LOOP") {

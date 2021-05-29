@@ -268,9 +268,27 @@ const commandHandlers: {
   },
   setMark: async args => {
     const { kb, applyToMedia, show } = args 
+    let text = ` ${kb.valueString}`
+    let icons: OverlayShowOpts["icons"] = ["bookmark"]
+
+
+    switch (kb.valueString?.toLowerCase()) {
+      case "::nameless": 
+        text = " nameless"
+        break
+      case "::nameless-prev":
+        text = " prev" 
+        icons = ["arrowLeft"]
+        break
+      case "::nameless-next":
+        text = " next"
+        icons = ["arrowRight"]
+        break 
+    }
+
     show({
-      icons: ["bookmark"],
-      text: ` ${kb.valueString}`,
+      icons,
+      text,
       small: true
     })
     applyToMedia({type: "SET_MARK", key: kb.valueString})
