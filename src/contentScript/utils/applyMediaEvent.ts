@@ -72,13 +72,6 @@ export function setVolume(elem: HTMLMediaElement, value: number, relative: boole
 export function setMark(elem: HTMLMediaElement, key: string) {
   if (!elem.readyState) return 
 
-  // first time, add listener to clear them.
-  if (!elem.gsMarks) {
-    elem.addEventListener("unload", e => {
-      delete elem.gsMarks
-    }, {passive: true, capture: true, once: true})
-  }
-
   elem.gsMarks = elem.gsMarks || {}
   elem.gsMarks[key] = elem.currentTime
   gvar.mediaTower.sendUpdate()
@@ -130,10 +123,6 @@ function setNameless(elem: HTMLMediaElement) {
   }
 
   nameless.push(elem.currentTime)
-
-  elem.addEventListener("unload", () => {
-    delete elem.gsNameless
-  }, {once: true, capture: true})
 }
 
 function jumpNameless(elem: HTMLMediaElement, next?: boolean) {

@@ -97,7 +97,11 @@ export class MediaTower {
 
     if (e.type === "ratechange") {
       gvar.ghostMode && e.stopImmediatePropagation()
-    } 
+    } else if (e.type === "emptied") {
+      console.log("EMPTY")
+      delete elem.gsMarks
+      delete elem.gsNameless
+    }
   }
   private handleMediaEventDeb = debounce(this.handleMediaEvent, 5000, {leading: true, trailing: true, maxWait: 5000})
   sendUpdate = (latestTarget?: string) => {
