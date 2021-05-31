@@ -15,8 +15,7 @@ export function getDefaultState(): State {
       backdropFx: getDefaultFx(),
       elementFx: getDefaultFx(),
       audioFx: getDefaultAudioFx()
-    },
-    speedSlider: getDefaultSpeedSlider()
+    }
   }
 }
 

@@ -34,7 +34,7 @@ function Faqs(props: {}) {
       <Item q={"What does pinning do? "} a={<div>By default all tabs share the same context (speed, filters, etc). If you want a tab to have unique settings, you can <GoPin color={"#02a"} size="20px"/> pin it. Useful if you want separate speeds on different tabs. If you prefer all tabs have different speed values, you can enable "pin by default" in the settings page.</div>}/>
       <Item q={"How do I change speed without preserving pitch? "} a={<div>You can enable "speed changes pitch" in the settings page, create a hotkey to toggle it, or use the control near the slider.</div>}/>
       <Item q={"How do I configure the speed presets?"} a={<div>Open the options page and click on the three dots [...] to open the hidden options. The speed presets can be configured under the "speed presets" section.</div>}/>
-      <Item q={"How do I disable the slider control?"} a={<div>Open the options page and click on the three dots [...] to open the hidden options. Under the "speed presets" section, you can disable the slider control by unticking the checkbox. By default, the slider goes between 0.5 and 1.5 speed.</div>}/>
+      <Item q={"How do I enable a slider control?"} a={<div>Open the options page and click on the three dots [...] to open the hidden options. Under the "speed presets" section, you can enable the slider control by ticking the checkbox. By default, the slider goes between 0.5 and 1.5 speed.</div>}/>
     </Group>
     <Group label="hotkeys">
       <Item q={"How do I block hotkeys on some sites? "} a={<ul>
