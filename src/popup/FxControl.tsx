@@ -11,8 +11,7 @@ import { getDefaultFx } from "../defaults"
 import { Fx } from "../types"
 import "./FxControl.scss"
 import produce from "immer"
-
-const SUPPORTS_BACKDROP = window.CSS.supports("backdrop-filter: invert(1)")
+import { SUPPORTS_BACKDROP } from "src/utils/supports"
 
 type FxControlProps = {
   live?: boolean,

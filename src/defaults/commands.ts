@@ -1,5 +1,5 @@
 
-import { HAS_PIP_API } from "src/utils/supports"
+import { HAS_PIP_API, SUPPORTS_BACKDROP } from "src/utils/supports"
 import { Command, Keybind, AdjustMode, CommandGroup } from "../types"
 import { randomId, groupByKey, flatJoin } from "../utils/helper"
 
@@ -307,7 +307,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
 
 
 export function getDefaultKeybinds(): Keybind[] {
-  return [
+  let kbs: Keybind[] = [
     {
       ...commandInfos.adjustSpeed.generate(),
       key: "KeyA",
@@ -389,6 +389,28 @@ export function getDefaultKeybinds(): Keybind[] {
       enabled: false
     }
   ]
+  if (SUPPORTS_BACKDROP) {
+    kbs.push({
+      ...commandInfos.adjustFilter.generate(),
+      key: {code: "KeyE"},
+      filterOption: "invert",
+      filterTarget: "both",
+      adjustMode: AdjustMode.CYCLE,
+      enabled: false,
+      valueCycle: [0, 1]
+    },
+    {
+      ...commandInfos.adjustFilter.generate(),
+      key: {code: "KeyE", shiftKey: true},
+      filterOption: "grayscale",
+      filterTarget: "backdrop",
+      adjustMode: AdjustMode.CYCLE,
+      enabled: false,
+      valueCycle: [0, 1],
+      spacing: 2
+    })
+  }
+  return kbs 
 }
 
 
