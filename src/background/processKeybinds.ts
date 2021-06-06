@@ -225,7 +225,7 @@ const commandHandlers: {
     const value = kb.valueBool ? kb.valueNumber * speed : kb.valueNumber
     let text = ` ${Math.abs(round(value, 2))}`
     
-    if (showNetSeek) {
+    if (showNetSeek && Math.abs(value) >= 1) {
       const now = new Date().getTime()
       let net = 0; 
       if (lastSeek && lastSeek.key === media.key && lastSeek.time + 1000 > now) {

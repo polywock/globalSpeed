@@ -35,6 +35,7 @@ export class GlobalMedia {
     } else if (msg.type === "MEDIA_PUSH_SCOPE") {
       const scope = msg.value as MediaScope
       scope.tabInfo = senderToTabInfo(sender)
+      if (!scope.tabInfo) return reply(true) 
       scope.pushTime = new Date().getTime()
       const idx = this.scopes.findIndex(v => compareFrame(v.tabInfo, scope.tabInfo))
       if (idx === -1) {

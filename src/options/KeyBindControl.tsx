@@ -158,13 +158,15 @@ export const KeybindControl = (props: KeybindControlProps) => {
         {value.command === "tabCapture" && <div className={`captureIcon ${value.enabled ? "active" : ""}`}><div></div></div>}
         <span>{label}</span>
         {value.command === "seek" && <>
-          <button style={{marginLeft: "5px"}} title={window.gsm.command.showNetTooltip} className={`toggle ${props.showNetSpeed ? "active" : ""}`} onClick={e => {
-            pushView({override: {showNetSeek: !props.showNetSpeed}})
-
-            if (!props.showNetSpeed) {
-              feedbackText(window.gsm.command.showNetTooltip, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
-            }
-          }}>{":"}</button>
+          {Math.abs(value.valueNumber) >= 1 ? (
+            <button style={{marginLeft: "5px"}} title={window.gsm.command.showNetTooltip} className={`toggle ${props.showNetSpeed ? "active" : ""}`} onClick={e => {
+              pushView({override: {showNetSeek: !props.showNetSpeed}})
+  
+              if (!props.showNetSpeed) {
+                feedbackText(window.gsm.command.showNetTooltip, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
+              }
+            }}>{":"}</button>
+          ) : null}
           <button title={window.gsm.command.relativeTooltip} className={`toggle ${value.valueBool ? "active" : ""}`} onClick={e => {
             props.onChange(value.id, produce(value, d => {
               d.valueBool = !d.valueBool

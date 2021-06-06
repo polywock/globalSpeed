@@ -4,6 +4,7 @@ import { getDefaultSpeedPresets } from "../defaults"
 import { useStateView } from "../hooks/useStateView"
 import { BsMusicNoteList } from "react-icons/bs"
 import { pushView } from "../background/GlobalState"
+import { domRectGetOffset, feedbackText } from "src/utils/helper"
 
 type SpeedControlProps = {
   onChange: (newSpeed: number) => any,
@@ -37,7 +38,12 @@ export function SpeedControl(props: SpeedControlProps) {
     />
     {!!view.speedSlider && (
       <div className="slider">
-        <BsMusicNoteList title={window.gsm.command.speedChangesPitch} size={"17px"} className={`${view.freePitch ? "active" : ""}`} onClick={() => pushView({override: {freePitch: !view.freePitch}})}/>
+        <BsMusicNoteList title={window.gsm.command.speedChangesPitch} size={"17px"} className={`${view.freePitch ? "active" : ""}`} onClick={e => {
+          if (!view.freePitch) {
+            feedbackText(window.gsm.command.speedChangesPitch, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
+          }
+          pushView({override: {freePitch: !view.freePitch}})
+        }}/>
         <input step={0.01} type="range" min={view.speedSlider.min} max={view.speedSlider.max} value={props.speed} onChange={e => {
           props.onChange(e.target.valueAsNumber)
         }}/>
