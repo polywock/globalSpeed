@@ -6,29 +6,38 @@ declare global {
   }
 }
 
-export function getActiveTabIds(): Promise<number[]> {
+export function queryTabs(queryInfo: chrome.tabs.QueryInfo): Promise<chrome.tabs.Tab[]> {
   return new Promise((res, rej) => {
-    chrome.tabs.query({active: true, currentWindow: undefined}, tabs => {
-      res(tabs.map(v => v.id)) 
+    chrome.tabs.query(queryInfo, tabs => {
+      if (chrome.runtime.lastError) {
+        rej(chrome.runtime.lastError.message)
+        return 
+      } 
+      res(tabs || []) 
     })
   })
 }
 
-export function getActiveTabInfo(): Promise<TabInfo> {
-  return new Promise((res, rej) => {
-    chrome.tabs.query({active: true, currentWindow: true}, tabs => {
-      if (tabs[0]) {
-        const [tab] = tabs
-        res({
-          tabId: tab.id,
-          windowId: tab.windowId,
-          url: tab.url
-        })
-      } else {
-        res(null)
-      }
-    })
-  })
+export async function queryTabsSeveral(queryInfo: chrome.tabs.QueryInfo, attempts = 5, timeout = 100): Promise<chrome.tabs.Tab[]> {
+  for (let i = 0; i < Math.max(0, attempts ?? 3); i++) {
+    if (i) {
+      await new Promise((res, rej) => setTimeout(() => res(true), timeout ?? 100))
+    }
+    try {
+      return await queryTabs(queryInfo)
+    } catch (err) {}
+  }
+}
+
+export async function getActiveTabInfo(): Promise<TabInfo> {
+  let tabs = await queryTabsSeveral({active: true, currentWindow: true}, 3, 75)
+  if (!tabs.length) return 
+  const [ tab ] = tabs
+  return {
+    tabId: tab.id,
+    windowId: tab.windowId,
+    url: tab.url
+  }
 }
 
 

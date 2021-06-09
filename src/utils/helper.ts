@@ -36,11 +36,8 @@ export function findAndRemove<T>(arr: T[], test: (v: T) => boolean) {
 
 
 let isFirefoxResult: boolean
-
 export function isFirefox() {
-  if (isFirefoxResult == null) {
-    isFirefoxResult = navigator.userAgent.includes("Firefox/")
-  }
+  isFirefoxResult = isFirefoxResult ?? navigator.userAgent.includes("Firefox/")
   return isFirefoxResult
 }
 

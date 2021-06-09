@@ -54,6 +54,7 @@ Promise.all([
   }),
   getActiveTabInfo().then(tabInfo => {
     gvar.tabInfo = tabInfo
+    gvar.tabInfo || window.close()
   })
 ]).then(() => {
   ReactDOM.render(<ErrorFallback><App/></ErrorFallback>, document.querySelector("#root"))

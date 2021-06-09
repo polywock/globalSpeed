@@ -1,5 +1,5 @@
 
-import { getActiveTabIds } from "../utils/browserUtils"
+import { queryTabsSeveral } from "../utils/browserUtils"
 import { formatSpeedForBadge } from "../utils/configUtils"
 import { subscribeView, fetchView } from "./GlobalState"
 
@@ -24,8 +24,11 @@ export class BadgeManager {
 }
 
 async function updateBadges() {
+  const tabs = await queryTabsSeveral({active: true, currentWindow: undefined})
+  if (!tabs?.length) return 
+
+  const tabIds = tabs.map(tab => tab.id)
   const common = await fetchView({speed: true, enabled: true, hideBadge: true})
-  const tabIds = await getActiveTabIds()
 
   // set global badge text. 
   if (common.hideBadge || !common.enabled) {

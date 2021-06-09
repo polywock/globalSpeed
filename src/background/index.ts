@@ -1,7 +1,7 @@
 import { migrateSchema } from "../utils/migrateSchema"
 import { BadgeManager } from './BadgeManager'
 import { PortCapture } from './PortCapture'
-import { getStorage, getActiveTabInfo } from '../utils/browserUtils'
+import { getStorage, getActiveTabInfo, queryTabsSeveral } from '../utils/browserUtils'
 import { getDefaultState } from '../defaults'
 import { State } from '../types'
 import { GsmManager } from "./GsmManager"
@@ -26,15 +26,6 @@ declare global {
     ruleManager: URLRuleManager
   }
 }
-
-chrome.storage.local.get(items => {
-  if (!items.firstTime && !items.config) {
-    chrome.storage.local.set({firstTime: true})
-    chrome.tabs.create({url: chrome.runtime.getURL("install.html")})
-  }
-  main()
-})
-
 
 async function main() {
   window.isBackground = true 
@@ -111,3 +102,20 @@ function handleOnMessage(msg: any, sender: chrome.runtime.MessageSender, reply: 
     reply(true)
   }
 }
+
+async function handleInstall(detail: chrome.runtime.InstalledDetails) {
+  chrome.runtime.onInstalled.removeListener(handleInstall)
+  const tabs = await queryTabsSeveral({url: ["https://*/*", "http://*/*"]})
+  if (!tabs) return 
+  console.log(`Reloading ${tabs.length} tabs. `)
+  tabs.forEach(tab => {
+    chrome.tabs.executeScript(tab.id, {file: "contentScript.js", allFrames: true}, () => {
+      // if no permission, it will error, that's fine. 
+      chrome.runtime.lastError
+    })
+  })
+}
+
+isFirefox() || chrome.runtime.onInstalled.addListener(handleInstall)
+main()
+

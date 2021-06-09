@@ -5,6 +5,11 @@ import { TabInfo } from "./utils/browserUtils"
 
 
 declare global {
+  interface GlobalVar {
+  }
+  
+  var gvar: GlobalVar
+
   interface DocumentOrShadowRoot {
     pictureInPictureElement: HTMLVideoElement,
   }

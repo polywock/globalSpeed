@@ -25,8 +25,3 @@ declare function registerProcessor(
     parameterDescriptors?: AudioParamDescriptor[]
   }
 ): void
-
-interface GlobalVar {
-}
-
-declare var gvar: GlobalVar
