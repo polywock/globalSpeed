@@ -11,6 +11,7 @@ export class NativeFs {
   operationLock: boolean
   constructor() {
     window.addEventListener("fullscreenchange", this.handleFsChange, {capture: true, passive: true})
+    window.addEventListener("webkitfullscreenchange", this.handleFsChange, {capture: true, passive: true})
   }
   toggleSafe = async (video: HTMLVideoElement) => {
     if (this.operationLock) return 

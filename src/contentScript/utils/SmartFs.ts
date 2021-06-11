@@ -7,6 +7,7 @@ export class SmartFs {
   private operationLock: boolean
   constructor() {
     window.addEventListener("fullscreenchange", this.handleFullscreenChange, {passive: true, capture: true})
+    window.addEventListener("webkitfullscreenchange", this.handleFullscreenChange, {passive: true, capture: true})
   }
   handleFullscreenChange = (e: Event) => {
     if (this.lock) {
@@ -20,8 +21,18 @@ export class SmartFs {
     document.fullscreenElement && this.attemptIntegration()
   }
   attemptIntegration = async () => {
-    if (!document.fullscreenElement || document.fullscreenElement instanceof HTMLMediaElement)  return 
-    const matches = gvar.mediaTower.media.filter(m => m.readyState && m instanceof HTMLVideoElement && (m as HTMLVideoElement).videoWidth && m.isConnected).map(m => findFullscreenAncestor(m)).filter(v => v);
+    if (!document.fullscreenElement || document.fullscreenElement instanceof HTMLVideoElement)  return 
+    let matches = gvar.mediaTower.media.filter(m => m.readyState && m instanceof HTMLVideoElement && (m as HTMLVideoElement).videoWidth && m.isConnected).map(m => findFullscreenAncestor(m)).filter(v => v);
+
+    // if more than one video child of the fullscreen element, cull it.
+    console.log("MATCHES: ", matches.length)
+    if (matches.length > 1) {
+      matches = matches
+        .filter(m => (m.child as HTMLVideoElement).intersectionRatio)
+        .sort((a, b) => (b.child as HTMLVideoElement).intersectionRatio - (a.child as HTMLVideoElement).intersectionRatio)
+        .slice(0, 1)
+    }
+    console.log("MATCHES2: ", matches.length)
 
     // if multiple media is fullscreen, ignore. 
     if (matches.length !== 1) return 
@@ -108,7 +119,7 @@ export function findFullscreenAncestor(child: Node) {
   if (!child) return
 
   let ancestor = getFullscreenRootNode(child)?.fullscreenElement
-  if (!ancestor) return 
+  if (!ancestor || ancestor === child) return 
 
   return getAncestorDistance(ancestor, child)
 }

@@ -1,12 +1,14 @@
 import { MediaScope, flattenMediaInfos, FlatMediaInfo } from "../contentScript/utils/genMediaInfo";
 import { compareFrame, MessageCallback, senderToTabInfo, TabInfo } from "../utils/browserUtils";
 import { MediaPath } from "../types";
+import { playAudio } from "src/utils/configUtils";
 
 export class GlobalMedia {
   scopes: MediaScope[] = []
   watchPorts: Set<chrome.runtime.Port> = new Set()
   canopyPorts: Set<chrome.runtime.Port> = new Set()
   latestPin: MediaPath
+  pushVolume: number 
   constructor() {
     chrome.runtime.onMessage.addListener(this.handleMessage)
     chrome.runtime.onConnect.addListener(port => {
@@ -33,6 +35,7 @@ export class GlobalMedia {
       this.sendUpdate()
       reply(true)
     } else if (msg.type === "MEDIA_PUSH_SCOPE") {
+      this.pushVolume && playAudio("good", this.pushVolume)
       const scope = msg.value as MediaScope
       scope.tabInfo = senderToTabInfo(sender)
       if (!scope.tabInfo) return reply(true) 
@@ -45,6 +48,8 @@ export class GlobalMedia {
       }
       this.sendUpdate()
       reply(true)
+    } else if (msg.type === "MEDIA_PUSH_SOUND") {
+      this.pushVolume = isNaN(msg.volume) ? 0.5 : msg.volume
     }
   }
   sendUpdate = () => {

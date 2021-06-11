@@ -62,9 +62,10 @@ export class Overlay {
       }
     `
 
-    !fixedOverlay && document.addEventListener("fullscreenchange", () => {
-      this.handleFullscreenChange()
-    }, {capture: true, passive: true})
+    if (!fixedOverlay) {
+      window.addEventListener("fullscreenchange", this.handleFullscreenChange, {capture: true, passive: true})
+      window.addEventListener("webkitfullscreenchange", this.handleFullscreenChange, {capture: true, passive: true})
+    }
 
     this.setInit?.({})
   }
@@ -87,9 +88,8 @@ export class Overlay {
   release = () => {
     if (this.released) return 
     this.released = true 
-    document.removeEventListener("fullscreenchange", () => {
-      this.handleFullscreenChange()
-    }, {capture: true})
+    window.removeEventListener("fullscreenchange", this.handleFullscreenChange, {capture: true})
+    window.removeEventListener("webkitfullscreenchange", this.handleFullscreenChange, {capture: true})
     this.wrapper?.remove()
     delete this.wrapper
   }
@@ -152,7 +152,7 @@ export class Overlay {
       this.wrapper?.remove()
     }
   }
-  handleFullscreenChange = () => {
+  handleFullscreenChange = (e: Event) => {
     let target = document.documentElement as Element
 
     let fs = getLeafFullscreenElement(document)

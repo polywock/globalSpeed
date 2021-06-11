@@ -1,5 +1,5 @@
 import { FilterEntry, TargetFx, TargetFxFlags, Gsm, URLCondition } from "../types";
-import { clamp, round } from "./helper";
+import { clamp, isFirefox, round } from "./helper";
 import { filterInfos } from "../defaults/filters";
 import { MediaEvent } from "../contentScript/utils/applyMediaEvent";
 
@@ -70,7 +70,7 @@ export function requestGsm(): Promise<Gsm> {
 export type SoundName = "good" | "bad"
 let audioInfos = new Map<string, {audio: HTMLAudioElement, timeoutId: number}>()
 export function playAudio(name: SoundName, volume: number) {
-  if (!(volume > 0)) return 
+  if (isFirefox() || !(volume > 0)) return 
   let { audio, timeoutId } = audioInfos.get(name) || {}
   timeoutId && clearTimeout(timeoutId)
   try {

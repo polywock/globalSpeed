@@ -71,6 +71,7 @@ export class MediaTower {
     doc.addEventListener("enterpictureinpicture", this.handleMediaEvent, {capture: true, passive: true})
     doc.addEventListener("leavepictureinpicture", this.handleMediaEvent, {capture: true, passive: true})
     doc.addEventListener("fullscreenchange", this.handleMediaEvent, {capture: true, passive: true})
+    doc.addEventListener("webkitfullscreenchange", this.handleMediaEvent, {capture: true, passive: true})
     doc.addEventListener("ratechange", this.handleMediaEvent, {capture: true, passive: true})
     this.newDocCallbacks.forEach(cb => cb())
   }

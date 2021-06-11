@@ -290,17 +290,6 @@ export const KeybindControl = (props: KeybindControlProps) => {
     )}
     {commandInfo.valueType === "string" && (
       <ThrottledTextInput passInput={specialKey ? {style: {color: "red"}} : undefined} value={value.valueString} onChange={v => {
-        if (value.command === "openUrl") {
-
-          if (v === "::clear_fs") {
-            chrome.storage.local.get(items => {
-              chrome.storage.local.set(Object.fromEntries(Object.keys(items).filter(v => v.startsWith("fs::")).map(v => [v, null])))
-              alert("cleared fullscreen cache.")
-
-              props.onRemove(value.id)
-            })
-          }
-        }
         props.onChange(value.id, produce(value, d => {
           d.valueString = v
         }))

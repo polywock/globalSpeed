@@ -4,7 +4,7 @@ import { sendMessageToConfigSync, formatSpeed, intoFxFlags, sendMediaEvent, play
 import { TabInfo, requestCreateTab } from "../utils/browserUtils"
 import { MediaEvent } from "../contentScript/utils/applyMediaEvent"
 import { OverlayShowOpts } from "../contentScript/Overlay"
-import { round, clamp, isFirefox, formatDuration } from "../utils/helper"
+import { round, clamp, formatDuration } from "../utils/helper"
 import { FlatMediaInfo } from "../contentScript/utils/genMediaInfo"
 import { getDefaultFx, getDefaultAudioFx } from "../defaults"
 import { filterInfos } from "../defaults/filters"

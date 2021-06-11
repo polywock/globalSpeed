@@ -5,13 +5,35 @@ import { State } from "../types"
 import { requestCreateTab } from "../utils/browserUtils"
 import { isFirefox, areYouSure, feedbackText, domRectGetOffset } from "../utils/helper"
 import "./SectionHelp.scss"
-
+let helpClicked = 0 
 
 export function SectionHelp(props: {}) {
 
   return (
     <div className="section SectionHelp">
-      <h2>{window.gsm.options.help.header}</h2>
+      <h2 onClick={v => {
+        helpClicked++
+        if (helpClicked >= 10) {
+          const command = prompt("Command? ")
+          if (command === "fs cache") {
+            chrome.storage.local.get(items => {
+              const entries = Object.entries(items).filter(([key]) => key.startsWith("fs::"))
+              const cacheText = entries.map(([key, value]) => `${key.substr(4)} (${value?.length ?? 0})`).join("\n")
+              if (entries.length) {
+                if (confirm(`Delete fullscreen cache? \n${cacheText}`)) {
+                  chrome.storage.local.remove(entries.map(([key]) => key))
+                }
+              } else {
+                alert("No fullscreen cache.")
+              }
+            })
+          } else if (command === "push sound") {
+            chrome.runtime.sendMessage({type: "MEDIA_PUSH_SOUND", volume: parseFloat(prompt("Volume: ", "0.5"))})
+          } else {
+            alert("Invalid command.")
+          }
+        }
+      }}>{window.gsm.options.help.header}</h2>
       <div className="card">{window.gsm.options.help.issuePrompt} <a href="https://github.com/polywock/globalSpeed/issues">{window.gsm.options.help.issueDirective}</a></div>
       <div className="controls">
         <button className="large" onClick={e => {
