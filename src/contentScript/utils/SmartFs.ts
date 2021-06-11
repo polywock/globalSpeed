@@ -4,6 +4,7 @@ import { IS_SMART } from "./isWebsite"
 
 export class SmartFs {
   private lock: Element
+  private operationLock: boolean
   constructor() {
     window.addEventListener("fullscreenchange", this.handleFullscreenChange, {passive: true, capture: true})
   }
@@ -31,11 +32,18 @@ export class SmartFs {
     // integrate new profile. 
     profile && (await integrateProfile(profile))
   }
+  toggleSafe = async (video: HTMLVideoElement) => {
+    if (this.operationLock) return 
+    
+    this.operationLock = true 
+    await this.toggle(video).finally(() => {
+      delete this.operationLock
+    })
+  }
   toggle = async (video: HTMLVideoElement) => {
-
     // if fullscreen, exit. 
     if (document.fullscreenElement) {
-      document.exitFullscreen()
+      await document.exitFullscreen()
       return 
     }
 
@@ -47,16 +55,13 @@ export class SmartFs {
 
     // if no qualified profile found, try native fullscreen. 
     if (!profile) {
-      gvar.nativeFs.toggle(video)
+      await gvar.nativeFs.toggleSafe(video)
       return 
     }
 
     // enter fullscreen
+    await profile.ancestor.requestFullscreen()
     this.lock = profile.ancestor
-    profile.ancestor.requestFullscreen().catch(() => {
-      delete this.lock
-    })
-
   }
 }
 

@@ -6,21 +6,33 @@ export class NativeFs {
     mo: MutationObserver,
     originalValues: {controls: boolean, pointerEvents: string, background: string, scrollX: number, scrollY: number},
     modifiedSheets: {sheet: StyleSheet, original: boolean}[],
-    resetCount: 0
+    resetCount: number 
   }
+  operationLock: boolean
   constructor() {
     window.addEventListener("fullscreenchange", this.handleFsChange, {capture: true, passive: true})
   }
-
-  toggle = (video: HTMLVideoElement) => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen()
+  toggleSafe = async (video: HTMLVideoElement) => {
+    if (this.operationLock) return 
+    
+    this.operationLock = true 
+    await this.toggle(video).finally(() => {
+      delete this.operationLock
+    })
+  }
+  toggle = async (video: HTMLVideoElement) => {
+    if (this.lock) {
+      await this.release()
       return 
     }
-    this.lock && this.release()
+    
+    if (document.fullscreenElement) {
+      await document.exitFullscreen()
+      return 
+    }
     
     if (video?.isConnected && IS_NATIVE) {
-      this.activate(video)
+      await this.activate(video)
     }
   }
   async activate(video: HTMLVideoElement) {
@@ -55,6 +67,7 @@ export class NativeFs {
     this.ensureProper()
   }
   ensureProper = () => {
+    if (!this.lock) return 
     let { video, resetCount } = this.lock
     if (!video) return 
     
@@ -73,7 +86,7 @@ export class NativeFs {
       resetCount++ > 1000 && this.release()
     }
   }
-  release = () => {
+  release = async () => {
     let { lock, lock: { video, originalValues: {scrollX, scrollY}} } = this 
     if (!lock) return 
 
@@ -84,7 +97,9 @@ export class NativeFs {
     video.controls = lock.originalValues.controls
     video.style.pointerEvents = lock.originalValues.pointerEvents
     video.style.background = lock.originalValues.background
-    document.fullscreenElement && document.exitFullscreen()
+    if (document.fullscreenElement) {
+      await document.exitFullscreen()
+    }
     window.scrollTo(scrollX, scrollY)
     delete this.lock
   }

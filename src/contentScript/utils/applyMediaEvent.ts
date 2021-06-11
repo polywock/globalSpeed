@@ -1,4 +1,4 @@
-import { BLOCKS_PIP, HAS_PIP_API } from "src/utils/supports"
+import { HAS_PIP_API } from "src/utils/supports"
 import { StateOption } from "../../types"
 import { clamp, ceil } from "../../utils/helper"
 import { IS_SPECIAL_SEEK, IS_AMAZON, IS_NETFLIX, IS_NATIVE, IS_SMART, IS_BILIBILI } from "./isWebsite"
@@ -231,9 +231,9 @@ function applyFullscreen(elem: HTMLVideoElement, direct: boolean) {
   if (!IS_NATIVE && !IS_SMART) return 
 
   if (direct || (!IS_SMART && IS_NATIVE)) {
-    gvar.nativeFs.toggle(elem as HTMLVideoElement)
+    gvar.nativeFs.toggleSafe(elem as HTMLVideoElement)
   } else if (!direct || (IS_NATIVE && IS_SMART)) {
-    gvar.smartFs.toggle(elem as HTMLVideoElement)
+    gvar.smartFs.toggleSafe(elem as HTMLVideoElement)
   }
 }
 
