@@ -25,16 +25,6 @@ export function randomId() {
   return Math.ceil(Math.random() * 1E10).toString()
 }
 
-export function findAndRemove<T>(arr: T[], test: (v: T) => boolean) {
-  const idx = arr.findIndex(v => test(v))
-  if (idx >= 0) {
-    arr.splice(idx, 1)
-    return arr[idx]
-  }
-  return null
-}
-
-
 let isFirefoxResult: boolean
 export function isFirefox() {
   isFirefoxResult = isFirefoxResult ?? navigator.userAgent.includes("Firefox/")
@@ -113,15 +103,6 @@ export function linearToChromatic(linear: number): string {
   return chromatic[(Math.round(linear * 12) + (12 * 1000)) % 12]  
 }
 
-type Primitive = number | string | boolean | Primitive[] | {[key: string]: Primitive}
-
-export function compareJson(lhs: Primitive, rhs: Primitive) {
-  try {
-    return JSON.stringify(lhs || {}) === JSON.stringify(rhs || {})
-  } catch (err) {}
-  return false 
-}
-
 export function areYouSure() {
   return confirm(window.gsm.options.help.areYouSure)
 }
@@ -182,16 +163,6 @@ export function domRectGetOffset(rect: DOMRect, offset = 10) {
   return {x: rect.x + rect.width + offset, y: rect.y - rect.height - offset}
 }
 
-    
-export function intersect<T, B>(lhs: T[], rhs: B[]) {
-  lhs = lhs || [] 
-  rhs = rhs || []
-  const arr = [] as T[]
-  lhs.forEach(v => {
-    if (rhs.includes(v as any)) arr.push(v)
-  })
-  return arr
-}
 
 export function speak(text: string) {
   let utter = new SpeechSynthesisUtterance(text)

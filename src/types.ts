@@ -21,6 +21,7 @@ declare global {
   }
   interface HTMLVideoElement {
     requestPictureInPicture: () => Promise<void>
+    intersectionRatio: number 
   }
   interface HTMLMediaElement {
     gsKey?: string,
@@ -150,6 +151,7 @@ export type Command = {
   valueStep?: number,
   valueDefault?: number,
   requiresMedia?: boolean,
+  requiresVideo?: boolean,
   requiresTabCapture?: boolean,
   requiresPiPApi?: boolean,
   noNull?: boolean,

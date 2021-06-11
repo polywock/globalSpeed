@@ -7,10 +7,10 @@ import { useStateView } from "../hooks/useStateView";
 import { useCaptureStatus } from "../hooks/useCaptureStatus";
 import { MdAccessTime } from "react-icons/md";
 import { PitchAnalyzer } from "./PitchAnalyzer";
-import produce from "immer";
 import { getDefaultAudioFx } from "../defaults";
-import cloneDeep from "lodash.clonedeep";
 import { ReverseButton } from "./ReverseButton";
+import cloneDeep from "lodash.clonedeep";
+import produce from "immer";
 import "./AudioPanel.scss"
 
 export function AudioPanel(props: {}) {

@@ -1,6 +1,6 @@
 import { Keybind, Command, StateView, StateViewSelector, AdjustMode } from "../types"
 import { CommandName, commandInfos } from "../defaults/commands"
-import { sendMessageToConfigSync, formatSpeed, intoFxFlags, sendMediaEvent, createFeedbackAudio } from "../utils/configUtils"
+import { sendMessageToConfigSync, formatSpeed, intoFxFlags, sendMediaEvent, playAudio, SoundName } from "../utils/configUtils"
 import { TabInfo, requestCreateTab } from "../utils/browserUtils"
 import { MediaEvent } from "../contentScript/utils/applyMediaEvent"
 import { OverlayShowOpts } from "../contentScript/Overlay"
@@ -10,8 +10,6 @@ import { getDefaultFx, getDefaultAudioFx } from "../defaults"
 import { filterInfos } from "../defaults/filters"
 import produce from "immer"
 
-let feedbackAudio = isFirefox() ? null : createFeedbackAudio()
-let feedbackBadAudio = isFirefox() ? null : createFeedbackAudio(false)
 let lastSeek: {key: string, time: number, net: number}
 
 export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
@@ -24,27 +22,35 @@ export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
     sendMessageToConfigSync({type: "SHOW_INDICATOR", opts, requiresFocus: tabInfo.frameId == null ? true : false}, tabInfo.tabId, tabInfo.frameId)
   }
 
-  let media: FlatMediaInfo
-  let mediaLoaded = false 
+  let loadedMedia: FlatMediaInfo
 
   let applyToMedia = (e: MediaEvent) => {
-    if (!media) return 
-    sendMediaEvent(e, media.key, media.tabInfo.tabId, media.tabInfo.frameId)
+    if (!loadedMedia) return 
+    sendMediaEvent(e, loadedMedia.key, loadedMedia.tabInfo.tabId, loadedMedia.tabInfo.frameId)
   };
 
-  let feedback: HTMLAudioElement = feedbackAudio
-  const setFeedback = (fb: HTMLAudioElement) => {
-    feedback = fb 
+  let feedbackSound: SoundName = "good"
+  const setFeedback = (name: SoundName) => {
+    feedbackSound = name 
   } 
 
 
   for (let kb of keybinds) {
     let commandInfo = commandInfos[kb.command]
 
-    if (commandInfo.requiresMedia) {
-      media = mediaLoaded ? media : window.globalMedia.getAuto(tabInfo)
-      if (!media) {
-        setFeedback(feedbackBadAudio)
+    if (commandInfo.requiresMedia || commandInfo.requiresVideo) {
+
+      // if video required, make sure laoded is video. 
+      if (loadedMedia && commandInfo.requiresVideo && !loadedMedia.isVideo) {
+        loadedMedia = undefined 
+      }
+
+      if (!loadedMedia) {
+        loadedMedia = window.globalMedia.getAuto(tabInfo, commandInfo.requiresVideo) ?? null 
+      }
+      
+      if (!loadedMedia) {
+        setFeedback("bad")
         continue 
       }
     }
@@ -78,7 +84,7 @@ export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
         kb,
         commandInfo,
         tabInfo,
-        media,
+        media: loadedMedia,
         applyToMedia,
         show
       })
@@ -95,24 +101,23 @@ export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
         window.globalState.set({override, tabId: tabInfo?.tabId}, true)
       }
     } catch (err) {
-      setFeedback(feedbackBadAudio)
+      setFeedback("bad")
       break 
     }
   }
 
   window.globalState.unfreeze()
 
-  if (feedback) {
-    feedback.volume = fetch({feedbackVolume: true}).feedbackVolume ?? 0
-    feedback.currentTime = 0 
-    feedback.volume && feedback.play()
+  if (feedbackSound) {
+    const volume = fetch({feedbackVolume: true}).feedbackVolume
+    if (volume) playAudio(feedbackSound, volume)
   }
 }
 
 type CommandHandlerArgs = {
   autoCapture: (v: number) => void,
   getCycleValue: () => number,
-  setFeedback: (fb: HTMLAudioElement) => void,
+  setFeedback: (name: SoundName) => void,
   fetch: (selector: StateViewSelector) => StateView,
   override: StateView,
   kb: Keybind, 
@@ -130,7 +135,7 @@ const commandHandlers: {
   runCode: async args => {
     const { kb, tabInfo } = args
     if (!tabInfo) {
-      args.setFeedback(feedbackBadAudio)
+      args.setFeedback("bad")
       return 
     } 
     sendMessageToConfigSync({type: "INJECT_SCRIPT", requiresFocus: tabInfo.frameId == null ? true : false, code: kb.valueString}, tabInfo.tabId, tabInfo.frameId)
@@ -161,7 +166,7 @@ const commandHandlers: {
   setPin: async args => {
     const { kb, tabInfo, override, show, fetch } = args 
     if (!tabInfo) {
-      args.setFeedback(feedbackBadAudio)
+      args.setFeedback("bad")
       return 
     } 
     const view = fetch({speed: true, isPinned: true})
@@ -314,7 +319,7 @@ const commandHandlers: {
       return 
     } 
 
-    args.setFeedback(feedbackBadAudio)
+    args.setFeedback("bad")
     show({
       icons: ["loop"],
       text: ` ${kb.valueString}???`,
@@ -415,7 +420,7 @@ const commandHandlers: {
   tabCapture: async args => {
     const { kb, show, setFeedback, tabInfo } = args 
     if (!tabInfo) {
-      setFeedback(feedbackBadAudio)
+      setFeedback("bad")
       return 
     }
 
@@ -435,7 +440,7 @@ const commandHandlers: {
         }
       }
     } catch (err ) {
-      setFeedback(feedbackBadAudio)
+      setFeedback("bad")
       return 
     }
 

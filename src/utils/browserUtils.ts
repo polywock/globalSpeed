@@ -1,11 +1,4 @@
 
-
-declare global {
-  interface Window {
-    bgPage?: Window 
-  }
-}
-
 export function queryTabs(queryInfo: chrome.tabs.QueryInfo): Promise<chrome.tabs.Tab[]> {
   return new Promise((res, rej) => {
     chrome.tabs.query(queryInfo, tabs => {
@@ -77,25 +70,6 @@ export function requestCreateTab(url: string): Promise<number> {
     })
   })
 }
-
-export function hasPermissions(permission: chrome.permissions.Permissions): Promise<boolean> {
-  return new Promise((res, rej) => {
-    chrome.permissions.contains(permission, has => res(has))
-  })
-}
-
-export function removePermissions(permission: chrome.permissions.Permissions): Promise<boolean>  {
-  return new Promise((res, rej) => {
-    chrome.permissions.remove(permission, has => res(has))
-  })
-}
-
-export function requestPermissions(permission: chrome.permissions.Permissions): Promise<boolean> {
-  return new Promise((res, rej) => {
-    chrome.permissions.request(permission, has => res(has))
-  })
-}
-
 
 export function getStorage(key?: string | object | string[]): Promise<{[key: string]: any}> {
   return new Promise((res, rej) => {

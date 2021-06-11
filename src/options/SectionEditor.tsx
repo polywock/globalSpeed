@@ -8,10 +8,10 @@ import { UnusedCommandWarning } from "./UnusedCommandWarning"
 import { useStateView } from "../hooks/useStateView"
 import { FaFile, FaGlobe, FaLock } from "react-icons/fa"
 import produce from "immer"
-import "./SectionEditor.scss"
 import { URLModal } from "./URLModal"
 import { getDefaultURLCondition } from "../defaults"
 import { pushView } from "../background/GlobalState"
+import "./SectionEditor.scss"
 
 
 export function SectionEditor(props: {}) {

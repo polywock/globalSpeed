@@ -1,58 +1,51 @@
-import { TabInfo, compareFrame } from "../../utils/browserUtils"
-import { MediaPath } from "../../types"
+import { TabInfo } from "../../utils/browserUtils"
 
 
 export function generateMediaState(elem: HTMLMediaElement): MediaInfo {
+  const rootNode = elem.getRootNode() as ShadowRoot | Document 
+
   const w = (elem as HTMLVideoElement).videoWidth
   const h = (elem as HTMLVideoElement).videoHeight
-  const videoSize = (elem.tagName === "VIDEO" && w && h) ? {w, h} : null
-  const rootNode = elem.getRootNode()
-  const pipMode = (rootNode as any as DocumentOrShadowRoot)?.pictureInPictureElement === elem
-  const fsMode = (rootNode as any as DocumentOrShadowRoot)?.fullscreenElement === elem
-
-  let shadowMode: ShadowRootMode
-
-  if (rootNode instanceof ShadowRoot) {
-    shadowMode = rootNode.mode
-  }
+  const videoSize = (elem instanceof HTMLVideoElement && w && h) ? {w, h} : null
   
   return {
     key: elem.gsKey,
-    type: elem.tagName === "VIDEO" ? "VIDEO" : "AUDIO",
+    isVideo: elem instanceof HTMLVideoElement,
     duration: elem.duration,
+    infinity: elem.duration === Infinity || undefined,
     paused: elem.paused,
     volume: elem.volume,
     muted: elem.muted,
-    pipMode,
-    fsMode,
-    shadowMode,
+    pipMode: rootNode?.pictureInPictureElement === elem,
+    shadowMode: rootNode instanceof ShadowRoot ? rootNode.mode : undefined,
     isConnected: elem.isConnected,
     readyState: elem.readyState,
     hasVideoTrack: !!(elem.videoTracks?.length ?? videoSize),
     hasAudioTrack: !!(elem.audioTracks?.length ?? true),
     videoSize,
     inLoop: !!elem.gsLoopTimeUpdateHandler,
-    marks: Object.keys(elem.gsMarks || {})
+    marks: Object.keys(elem.gsMarks || {}),
+    intersectionRatio: videoSize && (elem as HTMLVideoElement).intersectionRatio
   }
 }
 
 
-export function generateScopeState(tabInfo: TabInfo): MediaScope {
+export function generateScopeState(tabInfo: TabInfo, media: HTMLMediaElement[]): MediaScope {
   return {
     tabInfo: {...tabInfo},
     metaTitle: (navigator as any).mediaSession?.metadata?.title, 
     title:  document.title,
     domain: document.domain,
-    url: document.URL
+    url: document.URL,
+    media: media.map(m => generateMediaState(m))
   }
 }
 
-export function flattenMediaInfos(scopes: MediaScope[], pinInfo: MediaPath): FlatMediaInfo[] {
+export function flattenMediaInfos(scopes: MediaScope[]): FlatMediaInfo[] {
   const infos: FlatMediaInfo[] = []
   scopes?.forEach(scope => {
     scope.media?.forEach(media => {
-      const pinned = media.key === pinInfo?.key && compareFrame(pinInfo?.tabInfo, scope.tabInfo)
-      infos.push({...media, ...scope, pinned})
+      infos.push({...media, ...scope})
     })
   })
   return infos 
@@ -65,18 +58,19 @@ export type MediaScope = {
   title: string,
   metaTitle?: string,
   media?: MediaInfo[],
-  pushTime?: number
+  pushTime?: number,
+  latest?: string
 }
 
 export type MediaInfo = {
   key: string,
-  type: "VIDEO" | "AUDIO",
+  isVideo?: boolean,
   duration: number,
+  infinity: boolean,
   paused: boolean,
   volume: number,
   muted: boolean,
   pipMode: boolean,
-  fsMode: boolean,
   isConnected: boolean,
   shadowMode: ShadowRootMode,
   readyState: number,
@@ -85,9 +79,9 @@ export type MediaInfo = {
   videoSize?: {w: number, h: number},
   inLoop?: boolean,
   marks: string[],
-  latestMovement?: boolean
+  intersectionRatio?: number 
 }
 
-export type FlatMediaInfo = MediaScope & MediaInfo & {pinned?: boolean}
+export type FlatMediaInfo = MediaScope & MediaInfo
 
 

@@ -3,8 +3,8 @@ import { SpeedControl } from "./SpeedControl"
 import { MediaView } from "./MediaView"
 import { useStateView } from "../hooks/useStateView"
 import { useMediaWatch } from "../hooks/useMediaWatch"
-import "./MainPanel.scss"
 import produce from "immer"
+import "./MainPanel.scss"
 
 
 export function MainPanel(props: {}) {
@@ -26,12 +26,12 @@ export function MainPanel(props: {}) {
 
 
 export function MediaViews(props: {}) {
-  const mediaInfos = useMediaWatch()
+  const watchInfo = useMediaWatch()
 
   return (
     <>
-      {mediaInfos.map(info => (
-        <MediaView key={info.key} info={info}/>
+      {(watchInfo?.infos || []).map(info => (
+        <MediaView key={info.key} info={info} pinned={info.key === watchInfo.pinned}/>
       ))}
     </>
   )

@@ -11,23 +11,19 @@ import "./MediaView.scss"
 const HAS_REQUEST_PIP = !!(HTMLVideoElement.prototype.requestPictureInPicture)
 
 
-type MediaViewProps = {
-  info: FlatMediaInfo
-}
-
-export function MediaView(props: MediaViewProps) {
-  const { info } = props
+export function MediaView(props: {info: FlatMediaInfo, pinned: boolean}) {
+  const { info, pinned } = props
   const { tabId, frameId } = info.tabInfo
 
   let parts: string[] = [
-    formatDomain(info.domain),
-    formatDuration(info.duration)
+    formatDomain(info.domain)
   ]
-
+  
+  !info.infinity && info.duration && parts.push(formatDuration(info.duration))
 
   return (
     <div className={`MediaView`}>
-      <div className="header" title={info.metaTitle || info.title}>{parts.join(" • ")}
+      <div className="header" title={info.metaTitle || info.title}>{parts.join(info.shadowMode == null ? " • " : info.shadowMode === "open" ? " / " : ` \ `)}
       </div>
       <div className="controls" key={info.key}>
         <button onClick={e => {
@@ -58,8 +54,8 @@ export function MediaView(props: MediaViewProps) {
             sendMediaEvent(event, info.key, tabId, frameId)
           }}><MdPictureInPictureAlt size={18}/></button>
         )}
-        <button title={window.gsm.warnings.selectTooltip} className={info.pinned ? "active" : ""} onClick={e => {
-          chrome.runtime.sendMessage({type: "MEDIA_SET_PIN", value: info.pinned ? null : ({
+        <button title={window.gsm.warnings.selectTooltip} className={pinned ? "active" : ""} onClick={e => {
+          chrome.runtime.sendMessage({type: "MEDIA_SET_PIN", value: pinned ? null : ({
             key: info.key,
             tabInfo: info.tabInfo
           }) as MediaPath})

@@ -5,8 +5,8 @@ import { FaPowerOff, FaVolumeUp } from "react-icons/fa"
 import { useStateView } from "../hooks/useStateView"
 import { pushView } from "../background/GlobalState"
 import { getDefaultFx } from "../defaults"
-import "./Header.scss"
 import { useCaptureStatus } from "../hooks/useCaptureStatus"
+import "./Header.scss"
 
 const SUPPORTS_TAB_CAPTURE = !!chrome.tabCapture?.capture
 

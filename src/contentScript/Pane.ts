@@ -150,9 +150,6 @@ export class Pane {
   }
 }
 
-
-
-
 const HOT_ZONE = 20
 const MIN_WIDTH = 150
 const MIN_HEIGHT = 100 

@@ -9,9 +9,9 @@ import { FaPowerOff, FaExchangeAlt } from "react-icons/fa"
 import { DropdownWarning } from "../comps/DropdownWarning"
 import { getDefaultFx } from "../defaults"
 import { Fx } from "../types"
-import "./FxControl.scss"
 import produce from "immer"
 import { SUPPORTS_BACKDROP } from "src/utils/supports"
+import "./FxControl.scss"
 
 type FxControlProps = {
   live?: boolean,

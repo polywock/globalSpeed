@@ -1,10 +1,10 @@
-import "./SpeedControl.scss"
 import { NumericControl } from "../comps/NumericControl"
 import { getDefaultSpeedPresets } from "../defaults"
 import { useStateView } from "../hooks/useStateView"
 import { BsMusicNoteList } from "react-icons/bs"
 import { pushView } from "../background/GlobalState"
 import { domRectGetOffset, feedbackText } from "src/utils/helper"
+import "./SpeedControl.scss"
 
 type SpeedControlProps = {
   onChange: (newSpeed: number) => any,

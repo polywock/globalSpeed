@@ -5,8 +5,8 @@ import { getDefaultEq, EQ_PRESETS } from "../defaults"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { formatFreq } from "../utils/helper"
 import { SliderMicro } from "../comps/SliderMicro"
-import "./EqualizerControl.scss"
 import produce from "immer"
+import "./EqualizerControl.scss"
 
 type EqualizerControlProps = {
   value: AudioFx["eq"],

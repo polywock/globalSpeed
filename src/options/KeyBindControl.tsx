@@ -20,8 +20,8 @@ import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { Move } from "../comps/Move"
 import { URLModal } from "./URLModal"
 import { getDefaultURLCondition } from "../defaults"
-import "./KeybindControl.scss"
 import { pushView } from "../background/GlobalState"
+import "./KeybindControl.scss"
 
 
 type KeybindControlProps = {

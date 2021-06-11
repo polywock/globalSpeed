@@ -1,6 +1,6 @@
 import { NumericInput } from "./NumericInput"
-import "./CycleInput.scss"
 import produce from "immer"
+import "./CycleInput.scss"
 
 type CycleInputProps = {
   values: number[],

@@ -29,7 +29,7 @@ export class GlobalMedia {
   }
   handleMessage: MessageCallback = (msg, sender, reply) => {
     if (msg.type === "MEDIA_SET_PIN") {
-      this.latestPin = msg.value 
+      this.latestPin = msg.value
       this.sendUpdate()
       reply(true)
     } else if (msg.type === "MEDIA_PUSH_SCOPE") {
@@ -49,16 +49,17 @@ export class GlobalMedia {
   }
   sendUpdate = () => {
     if (this.watchPorts.size) {
-      const msg = {scopes: this.scopes, pinInfo: this.latestPin}
+      const msg = {scopes: this.scopes, pinned: this.latestPin?.key}
       this.watchPorts.forEach(port => {
         port.postMessage(msg)
       })
     }
   }
-  getAuto = (tabInfo: TabInfo) => {
-    let infos = flattenMediaInfos(this.scopes, this.latestPin).filter(info => info.readyState)
+  getAuto = (tabInfo: TabInfo, videoOnly?: boolean) => {
+    let infos = flattenMediaInfos(this.scopes).filter(info => info.readyState)
+    infos = videoOnly ? infos.filter(info => info.videoSize) : infos 
     
-    const pinnedInfo = infos.find(info => info.pinned)
+    const pinnedInfo = infos.find(info => info.key === this.latestPin?.key)
     if (pinnedInfo) return pinnedInfo
 
     infos.sort((a, b) => b.pushTime - a.pushTime)
@@ -70,9 +71,11 @@ export class GlobalMedia {
 
     if (!infos.length) return
 
-    let highest: FlatMediaInfo[] = []
-    let highestScore = -Infinity
 
+    let peakIntersect = infos.filter(v => v.intersectionRatio != null).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.intersectionRatio
+    console.log(infos)
+
+    let highest: {info: FlatMediaInfo, score: number}
     infos.forEach(info => {
       let score = 0
 
@@ -80,34 +83,31 @@ export class GlobalMedia {
       if (sameFrame && tabInfo.frameId !== 0) {
         score += 0b100000
       }
-      if (info.duration >= 10 * 60) {
+      if (info.intersectionRatio > 0.05 && info.intersectionRatio === peakIntersect) {
         score += 0b10000
       }
-      if (info.latestMovement) {
+      if (info.infinity || info.duration >= 30 * 60) {
         score += 0b1000
       }
-      if (info.duration >= 3 * 60) {
+      if (info.duration >= 10 * 60) {
         score += 0b100
       }
-      if (info.duration >= 1 * 60) {
+      if (info.duration >= 3 * 60) {
         score += 0b10
       }
-      if (info.type === "VIDEO" && !info.isConnected && location.hostname !== "www.spotify.com") {
+      if (info.duration >= 1 * 60) {
+        score += 0b1
+      }
+      if (info.isVideo && location.hostname !== "www.spotify.com" && !info.isConnected) {
         score = -0b1
       }
 
-      if (score >= highestScore) {
-        if (score !== highestScore) {
-          highestScore = score 
-          highest = []
-        }
-        highest.push(info)
+      if (!highest || score > highest.score || (score === highest.score && (info.infinity ? 60 : info.duration) > highest.info.duration)) {
+        highest = {info, score}
       }
     })
 
-    if (highest.length) {
-      return highest.sort((a, b) => b.duration - a.duration)[0]
-    }
+    return highest?.info
   }
 }
 

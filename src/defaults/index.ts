@@ -59,7 +59,8 @@ export function getDefaultEq(): AudioFx["eq"] {
 }
 
 
-// Presets from Audio Audition.
+// Presets from Audio Audition. 
+// I don't think these presets make sense for dynamic compressor. 
 export const COMP_PRESETS: readonly AudioFx["comp"][] = Object.freeze([
   {
     name: "Blissful Bass",

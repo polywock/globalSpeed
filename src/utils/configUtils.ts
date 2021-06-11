@@ -1,6 +1,6 @@
-import { FilterEntry, TargetFx, TargetFxFlags, Fx, StateView, Gsm, URLCondition } from "../types";
+import { FilterEntry, TargetFx, TargetFxFlags, Gsm, URLCondition } from "../types";
 import { clamp, round } from "./helper";
-import { filterInfos, FilterName } from "../defaults/filters";
+import { filterInfos } from "../defaults/filters";
 import { MediaEvent } from "../contentScript/utils/applyMediaEvent";
 
 
@@ -36,7 +36,6 @@ export function checkFilterDeviation(values: FilterEntry[]) {
   }
 }
 
-
 export function intoFxFlags(target: TargetFx) {
   const flags: TargetFxFlags = {}
   if (target === "backdrop" || target === "both") {
@@ -47,26 +46,6 @@ export function intoFxFlags(target: TargetFx) {
   }
   return flags 
 }
-
-export function extractFx(flags: TargetFxFlags, view: StateView) {
-  const sets: Fx[] = [] 
-  if (flags.element) {
-    sets.push(view.elementFx);
-  }
-  if (flags.backdrop) {
-    sets.push(view.backdropFx);
-  }
-  return sets
-}
-
-
-export function setFilterValue(entries: FilterEntry[], name: FilterName, value: number, relative?: boolean) {
-  const filterInfo = filterInfos[name]
-  value = value ?? (relative ? filterInfo.step : filterInfo.default)
-  const targetEntry = entries.find(v => v.name === name)
-  targetEntry.value = clamp(filterInfo.min, filterInfo.max, relative ? targetEntry.value + value : value)
-}
-
 
 export function sendMediaEvent(event: MediaEvent, key: string, tabId: number, frameId: number) {
   chrome.tabs.sendMessage(tabId, {type: "APPLY_MEDIA_EVENT", event, key}, frameId == null ? undefined : {frameId})
@@ -88,11 +67,20 @@ export function requestGsm(): Promise<Gsm> {
   })
 }
 
-
-export function createFeedbackAudio(good = true) {
-  return new Audio(chrome.runtime.getURL(`sounds/${good ? "good" : "bad"}.wav`))
+export type SoundName = "good" | "bad"
+let audioInfos = new Map<string, {audio: HTMLAudioElement, timeoutId: number}>()
+export function playAudio(name: SoundName, volume: number) {
+  if (!(volume > 0)) return 
+  let { audio, timeoutId } = audioInfos.get(name) || {}
+  timeoutId && clearTimeout(timeoutId)
+  try {
+    audio = audio || new Audio(chrome.runtime.getURL(`sounds/${name}.wav`))
+    audioInfos.set(name, {audio, timeoutId: setTimeout(() => audioInfos.delete(name), 5 * 60000)})
+    audio.volume = volume 
+    audio.currentTime = 0
+    audio.play()
+  } catch (err) { }
 }
-
 
 export function checkURLCondition(url: string, cond: URLCondition, neutral?: boolean) {
   let failedAny = false  

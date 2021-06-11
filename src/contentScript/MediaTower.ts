@@ -1,7 +1,7 @@
 import { randomId } from "../utils/helper";
 import { conformSpeed } from "../utils/configUtils";
 import { applyMediaEvent, MediaEvent } from "./utils/applyMediaEvent";
-import { generateScopeState, generateMediaState } from "./utils/genMediaInfo";
+import { generateScopeState } from "./utils/genMediaInfo";
 import { MessageCallback } from "../utils/browserUtils";
 import { injectScript } from "./utils";
 import debounce from "lodash.debounce";
@@ -14,10 +14,23 @@ export class MediaTower {
   server = new StratumServer()
   newDocCallbacks: Set<() => void> = new Set()
   newMediaCallbacks: Set<() => void> = new Set()
+
+  observer: IntersectionObserver
   constructor() {
     this.processDoc(window)
     this.server.wiggleCbs.add(this.handleWiggle)
     chrome.runtime.onMessage.addListener(this.handleMessage)
+  }
+  private observe = (video: HTMLVideoElement) => {
+    if (!window.IntersectionObserver) return 
+    this.observer = this.observer || new IntersectionObserver(this.handleObservation, {threshold: [0, 0.2, 0.4, 0.6, 0.8, 1]});
+    this.observer.observe(video)
+  }
+  private handleObservation: IntersectionObserverCallback = entries => {
+    entries.forEach(entry => {
+      (entry.target as HTMLVideoElement).intersectionRatio = entry.intersectionRatio
+    })
+    this.sendUpdateDeb()
   }
   private handleWiggle = (parent: Node & ParentNode) => {
     if (parent instanceof ShadowRoot) {
@@ -73,6 +86,7 @@ export class MediaTower {
     elem.addEventListener("volumechange", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("loadedmetadata", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("emptied", this.handleMediaEvent, {capture: true, passive: true})
+    elem instanceof HTMLVideoElement && this.observe(elem)
 
     this.media.push(elem)
     this.sendUpdate()
@@ -87,13 +101,9 @@ export class MediaTower {
     let elem = e.target as HTMLMediaElement
     if (!(elem instanceof HTMLMediaElement)) return 
 
-    let latestTarget: string; 
-    if (["timeupdate", "volumechange", "play"].includes(e.type)) {
-      latestTarget = elem.gsKey
-    }
 
     this.processMedia(elem)
-    this.sendUpdate(latestTarget)
+    this.sendUpdate()
 
     if (e.type === "ratechange") {
       gvar.ghostMode && e.stopImmediatePropagation()
@@ -103,17 +113,12 @@ export class MediaTower {
     }
   }
   private handleMediaEventDeb = debounce(this.handleMediaEvent, 5000, {leading: true, trailing: true, maxWait: 5000})
-  sendUpdate = (latestTarget?: string) => {
+  sendUpdate = () => {
     if (!gvar.tabInfo) return 
-    const scope = generateScopeState(gvar.tabInfo)
-    scope.media = this.media.map(elem => generateMediaState(elem))
-    latestTarget && scope.media.forEach(m => {
-      if (m.key === latestTarget) {
-        m.latestMovement = true 
-      }
-    })
+    const scope = generateScopeState(gvar.tabInfo, this.media)
     chrome.runtime.sendMessage({type: "MEDIA_PUSH_SCOPE", value: scope})
   }
+  private sendUpdateDeb = debounce(this.sendUpdate, 500, {leading: true, trailing: true, maxWait: 2000})
   applyMediaEventTo = (event: MediaEvent, key?: string, longest?: boolean) => {
     let targets = this.media.filter(v => v.readyState)
 

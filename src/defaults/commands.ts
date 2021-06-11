@@ -173,7 +173,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   fullscreen: {
     group: CommandGroup.MEDIA,
-    requiresMedia: true,
+    requiresVideo: true,
     generate: () => ({
       id: randomId(),
       command: "fullscreen",
@@ -184,7 +184,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   PiP: {
     group: CommandGroup.MEDIA,
     valueType: "state",
-    requiresMedia: true,
+    requiresVideo: true,
     requiresPiPApi: true,
     generate: () => ({
       id: randomId(),

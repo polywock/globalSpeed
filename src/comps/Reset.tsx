@@ -1,4 +1,3 @@
-import React from "react"
 import { GiAnticlockwiseRotation } from "react-icons/gi";
 
 type ResetProps = {

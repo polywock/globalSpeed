@@ -1,6 +1,6 @@
 
-import { useState, ReactElement } from "react"
 import ReactDOM from "react-dom"
+import { useState, ReactElement } from "react"
 import { isFirefox } from "../utils/helper"
 import { requestCreateTab } from "../utils/browserUtils"
 import { GoPin, GoZap } from "react-icons/go"
@@ -32,7 +32,7 @@ function Faqs(props: {}) {
     <Group label="speed control">
       <Item q={"Why doesn't it work for certain videos? "} a={<div>Global Speed doesn't support flash videos, only HTML5 video/audio. Some websites listen to speed change events and revert the speed. Or they aggressively set the speed. To bypass this, try enabling <i>ghost mode</i> in the options page.</div>}/>
       <Item q={"What does pinning do? "} a={<div>By default all tabs share the same context (speed, filters, etc). If you want a tab to have unique settings, you can <GoPin color={"#02a"} size="20px"/> pin it. Useful if you want separate speeds on different tabs. If you prefer all tabs have different speed values, you can enable "pin by default" in the settings page.</div>}/>
-      <Item q={"How do I change speed without preserving pitch? "} a={<div>You can enable "speed changes pitch" in the settings page, create a hotkey to toggle it, or use the control near the slider.</div>}/>
+      <Item q={"How do I change speed without preserving pitch? "} a={<div>You can enable "speed changes pitch" in the settings page, create a hotkey to toggle it, or use the control near the optional speed slider.</div>}/>
       <Item q={"How do I configure the speed presets?"} a={<div>Open the options page and click on the three dots [...] to open the hidden options. The speed presets can be configured under the "speed presets" section.</div>}/>
       <Item q={"How do I enable a slider control?"} a={<div>Open the options page and click on the three dots [...] to open the hidden options. Under the "speed presets" section, you can enable the slider control by ticking the checkbox. By default, the slider goes between 0.5 and 1.5 speed.</div>}/>
     </Group>
@@ -44,11 +44,14 @@ function Faqs(props: {}) {
         <li style={{backgroundColor: "yellow", fontWeight: "bolder", padding: "5px"}}>Note: If you add multiple conditions, you need to specify whether all conditions should be met or only one. If we want the hotkeys to only enabled if the website isn't {"[ != ]"} stadia.com AND isn't {"[ != ]"} miniclip.com, we would select "all (AND)" option. <div style={{marginTop: "10px"}}>On the other hand, if we wanted the hotkeys to only be enabled if the website's URL matches {"[ == ]"} specific websites like youtube.com OR twitch.tv, we would require only a single condition to be met and thus select the "any (OR)" option.</div></li>
         <li style={{backgroundColor: "yellow", fontWeight: "bolder", padding: "5px", marginTop: "10px"}}>Note: You can also add URL conditions to specific hotkeys by hovering over a hotkey item and clicking on the top-right red botton.</li>
       </ul>}/>
-      <Item q={"I can't type because the Global Speed hotkeys are being triggered."} a={<ol>
-        <li>Suspend the extension using the "state" <FaPowerOff color={"#02a"} size="17px"/> button or hotkey (Shift + Q by default). This disables all hotkeys, except the "state" hotkey (so you can reactivate the extension). </li>
-        <li>Or, add a {"[ != ]"} URL rule to the hotkeys so it doesn't run on that website.</li>
-      </ol>}/>
-      <Item q={"Why are the media shortcut keys applying to the wrong video/audio? "} a={<div>If there multiple media elements on the page, Global Speed tends to prioritize the longest one. If it's wrong, you can select {<FaMousePointer size={20} color={"#02a"}/>} the video/audio you want prioritized.</div>}/>
+      <Item q={"I can't type because the Global Speed hotkeys are being triggered."} a={<>
+        <ol>
+          <li>Suspend the extension using the state <FaPowerOff color={"#02a"} size="17px"/> button or hotkey (Shift + Q by default). This disables all hotkeys except for the state <FaPowerOff color={"#02a"} size="17px"/> hotkey (so you can reactivate the extension).</li>
+          <li>Or, add a {"[ != ]"} URL rule to the hotkeys so it doesn't run on that website.</li>
+        </ol>
+        <div style={{backgroundColor: "yellow", fontWeight: "bolder", padding: "5px"}}>Note: If you want to disable all hotkeys, you can right click the state <FaPowerOff color={"#02a"} size="17px"/> button.</div>
+      </>}/>
+      <Item q={"Why are the media shortcut keys applying to the wrong video/audio? "} a={<div>If there multiple media elements on the page, Global Speed prioritizes videos most centered on the screen. If it's wrong, you can select {<FaMousePointer size={20} color={"#02a"}/>} the video/audio you want prioritized.</div>}/>
       <Item q={"How do I control background music/video while using another tab? "} a={<div>Select the video/audio you want to control using the {<FaMousePointer size={20} color={"#02a"}/>} button.</div>}/>
       {!isFirefox() && (
         <Item q={"How do I control background music or PiP videos while using another program? "} a={<div>Create global hotkeys in the settings page, and select the video/audio you want to control using the {<FaMousePointer size={20} color={"#02a"}/>} button. <a href="https://www.youtube.com/watch?v=EZA-TnVAyDo">Youtube demo.</a></div>}/>
@@ -58,7 +61,7 @@ function Faqs(props: {}) {
     <Group label="audio effects">
       <Item q={"What's the difference between standard and HD pitch shifter? "} a={<div>The standard one uses <a href="https://github.com/cwilso/Audio-Input-Effects/blob/master/js/jungle.js">Cwilso's Jungle algorithm.</a> The HD version uses <a href="https://github.com/cutterbl/SoundTouchJS">Cutterbl's port</a> of <a href="https://www.surina.net/soundtouch/">Soundtouch</a>. The HD one has less reverb, but also has a small delay.</div>}/>
       <Item q={"Why can't I make the video fullscreen when I use audio effects? "} a={<div>The API does not allow entering fullscreen if the tab's audio is already captured. You need to first enter fullscreen and then capture the audio using the optional "tab capture" shortcut key.</div>}/>
-      <Item q={`I added a "tab capture" hotkey, but it doesn't work unless I first click the extension icon.`} a={<div>The API used to manipulate the tab's audio requires the user to first invoke the extension. To invoke Global Speed, either click on the extension icon. Or, setup a global "tab capture" hotkey. Unlike local hotkeys, global hotkeys can be used to invoke an extension.</div>}/>
+      <Item q={`Why can the "tab capture" hotkey be only global? `} a={<div>The API used to manipulate the tab's audio requires the user to first invoke the extension. Only global hotkeys can be used to invoke an extension.</div>}/>
     </Group>
     </>}
   </div>
@@ -74,7 +77,7 @@ function Group(props: {label: string, children: ReactElement[] | ReactElement}) 
 }
 
 
-function Item(props: {q: string, a: ReactElement}) {
+function Item(props: {q: string | ReactElement, a: ReactElement}) {
   const [hidden, setHidden] = useState(true)
   return <div className="Item">
     <div className="header">

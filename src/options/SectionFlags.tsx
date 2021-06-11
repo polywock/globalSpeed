@@ -3,7 +3,7 @@ import { Tooltip } from "../comps/Tooltip"
 import { LOCALE_MAP } from "../defaults/i18"
 import { useStateView } from "../hooks/useStateView"
 import { pushView } from "../background/GlobalState"
-import { createFeedbackAudio } from "../utils/configUtils"
+import { playAudio } from "../utils/configUtils"
 import { isFirefox } from "../utils/helper"
 import { INDICATOR_INIT } from "../defaults"
 import { SliderMicro } from "../comps/SliderMicro"
@@ -233,13 +233,10 @@ function IndicatorFlags(props: {}) {
           <span>{window.gsm.command.adjustVolume}</span>
           <SliderMicro 
             value={volumeView.feedbackVolume ?? 0} 
-            onChange={v => {
-              feedbackAudio = feedbackAudio || createFeedbackAudio()
-              feedbackAudio.volume = v
-              feedbackAudio.currentTime = 0
-              feedbackAudio.play()
+            onChange={volume => {
+              volume && playAudio("good", volume)
               setVolumeView({
-                feedbackVolume: v
+                feedbackVolume: volume
               })
             }}
             default={0}
@@ -247,7 +244,7 @@ function IndicatorFlags(props: {}) {
             max={1}
             sliderMin={0}
             sliderMax={1}
-            sliderStep={0.05}
+            sliderStep={0.025}
           />
         </div>
       )}
