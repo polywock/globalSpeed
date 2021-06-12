@@ -100,8 +100,6 @@ function handleOnMessage(msg: any, sender: chrome.runtime.MessageSender, reply: 
     let targets = window.globalState.get({keybinds: true}).keybinds.filter(kb => msg.ids.includes(kb.id))
     processKeybinds(targets, {tabId: sender.tab.id, frameId: sender.frameId, windowId: sender.tab.windowId})
     reply(true)
-  } else if (msg.type === "REQUEST_STATE") {
-    reply(window.globalState.state)
   }
 }
 

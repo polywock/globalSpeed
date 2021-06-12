@@ -1,14 +1,10 @@
 import { MouseEvent, useEffect, useRef } from "react"
-import { FaArrowDown, FaArrowUp } from "react-icons/fa"
 import { MdContentCopy, MdContentPaste } from "react-icons/md"
-import { downloadSync, uploadSync } from "src/utils/syncUtils"
 import { pushView } from "../background/GlobalState"
-import { State, StateSync } from "../types"
+import { State } from "../types"
 import { requestCreateTab } from "../utils/browserUtils"
 import { isFirefox, areYouSure, feedbackText, domRectGetOffset } from "../utils/helper"
 import "./SectionHelp.scss"
-
-const SUPPORTS_SYNCING = chrome.storage.sync
 let helpClicked = 0 
 
 export function SectionHelp(props: {}) {
@@ -103,11 +99,6 @@ function ExportImport(props: {}) {
         if (granted) cb()
       })
     }}><MdContentCopy/></button>
-    {!SUPPORTS_SYNCING ? <div/> : (
-      <button className="large" onClick={e => {
-        handleSyncUpload()
-      }}><FaArrowUp/></button>
-    )}
     <button 
       className="large" 
       onClick={e => {
@@ -118,7 +109,7 @@ function ExportImport(props: {}) {
       const cb = () => {
         navigator.clipboard.readText().then(text => {
           try {
-            loadState(JSON.parse(text)).catch(err => prompt("Load failure ⚠"))
+            loadState(JSON.parse(text))
           } catch (err) {}
         })
       }
@@ -126,46 +117,13 @@ function ExportImport(props: {}) {
         if (granted) cb()
       })
     }}><MdContentPaste/></button>
-    {!SUPPORTS_SYNCING ? <div/> : (
-      <button className="large" onClick={e => {
-        handleSyncDownload()
-      }}><FaArrowDown/></button>
-    )}
   </>
-}
-
-function handleSyncUpload() {
-  chrome.runtime.sendMessage({type: "REQUEST_STATE"}, state => {
-    if (chrome.runtime.lastError || !state) return 
-    const stateSync = {state, created: new Date().getTime()} as StateSync
-    uploadSync("stateSync", stateSync).then(() => {
-      alert("Upload success ✓\nOn your other devices, you should be able to download your config data if you're signed in with the same account and have syncing enabled.")
-    }, () => {
-      alert("Upload failure ⚠")
-    })
-  })
-}
-
-function handleSyncDownload() {
-  downloadSync<StateSync>("stateSync").then(data => {
-    if (!data?.state) {
-      return alert("No upload found ⚠\n1. You might not have uploaded your config data.\n2. You might have syncing disabled.\n3. You might not be signed into the same account across devices. \n4. The browser's sync servers might be blocked on your network.")
-    } 
-
-    if (confirm(`Download config data from "${new Date(data.created).toLocaleString()}"?`)) {
-      loadState(data.state, true).catch(err => {
-        alert("Load failure ⚠")
-      })
-    }
-  }, err => {
-    alert("Download failure ⚠")
-  })
 }
 
 export function downloadState(state: State){
   const a = document.createElement("a")
   a.setAttribute("href", window.URL.createObjectURL(new Blob([JSON.stringify(state)], {type: "octet/stream"})));
-  a.setAttribute('download', `Global Speed - ${new Date().toLocaleDateString()}.json`)
+  a.setAttribute('download', `Global Speed - ${new Date().toDateString()}.json`)
   a.setAttribute("style", "position: fixed; left: -1000px; top: 1000px; opacity: 0;")
   document.documentElement.append(a)
   a.click()
@@ -191,17 +149,13 @@ function loadStateFromFile(file: File) {
   } catch (err) {}
 }
 
-function loadState(state: State, force?: boolean): Promise<void> {
-  return new Promise((res, rej) => {
-    if (!(force || areYouSure())) return rej()
-    chrome.runtime.sendMessage({type: "RELOAD_STATE", state}, status => {
-      if (chrome.runtime.lastError || !status) {
-        return rej()
-      } 
-      res()
+function loadState(state: State) {
+  if (!areYouSure()) return 
+  chrome.runtime.sendMessage({type: "RELOAD_STATE", state}, status => {
+    if (status) {
       setTimeout(() => {
         window.location.reload()
       }, 100)
-    })
+    }
   })
 }

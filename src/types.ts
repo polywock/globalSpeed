@@ -68,7 +68,6 @@ export type State = {
   showNetSeek?: boolean
 }
 
-export type StateSync = {state: State, created: number}
 
 export type StateSansCommon = Omit<State, "common">
 export type StateView = Partial<StateSansCommon & Context & {isPinned: boolean}>
