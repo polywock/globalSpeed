@@ -16,10 +16,10 @@
 
     & > .right {
       display: grid;
-      grid-template-columns: max-content max-content max-content max-content;
+      grid-template-columns: max-content max-content max-content max-content max-content max-content;
       column-gap: 5px;
 
-      & > *:nth-child(3) {
+      & > *:nth-child(4) {
         margin-left: 15px;
       }
     }
