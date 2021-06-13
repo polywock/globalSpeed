@@ -30,15 +30,17 @@ const common = {
       },
       {
         test: /\.scss$/,
+        exclude: /node_modules/,
         use: [
             "style-loader", 
             {
               loader: "css-loader",
               options: {
-                url: false
+                url: false,
+                importLoaders: 1
               }
             },
-            "sass-loader"
+            "postcss-loader"
         ]
       }
     ]
