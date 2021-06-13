@@ -4,19 +4,20 @@ import { Header } from "./Header"
 import { getActiveTabInfo } from "../utils/browserUtils"
 import { MainPanel } from "./MainPanel"
 import { FxPanel } from "./FxPanel"
-import { ThemeSync } from "../comps/ThemeSync"
 import { AudioPanel } from "notFirefox/popup/AudioPanel"
 import { requestGsm } from "../utils/configUtils"
 import { ErrorFallback } from "../comps/ErrorFallback"
 import { useStateView } from "../hooks/useStateView"
 import { FaPowerOff } from "react-icons/fa"
 import { pushView } from "../background/GlobalState"
+import { useThemeSync } from "src/hooks/useThemeSync"
 import "./popup.scss"
 
 
 export function App(props: {}) {
   const [panel, setPanel] = useState(0)
   const [view, setView] = useStateView({superDisable: true})
+  useThemeSync()
 
   if (!view) return null 
 
@@ -39,7 +40,6 @@ export function App(props: {}) {
 
   return (
     <div id="App">
-      <ThemeSync/>
       <Header panel={panel} setPanel={v => setPanel(v)}/>
       {panel === 0 && <MainPanel/>}
       {panel === 1 && <FxPanel/>}

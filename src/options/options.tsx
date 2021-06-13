@@ -2,15 +2,15 @@ import ReactDOM from "react-dom"
 import { SectionFlags } from "./SectionFlags"
 import { SectionEditor } from "./SectionEditor"
 import { SectionHelp } from "./SectionHelp"
-import { ThemeSync } from "../comps/ThemeSync"
 import { requestGsm } from "../utils/configUtils"
 import { SectionRules } from "./SectionRules"
 import { ErrorFallback } from "../comps/ErrorFallback"
+import { useThemeSync } from "src/hooks/useThemeSync"
 import "./options.scss"
 
 const Options = (props: {}) => {
+  useThemeSync()
   return <div id="App">
-    <ThemeSync/>
     <SectionFlags/>
     <SectionEditor/>
     <SectionRules/>

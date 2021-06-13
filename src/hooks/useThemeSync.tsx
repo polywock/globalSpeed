@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useStateView } from "../hooks/useStateView"
 
 
-export function ThemeSync(props: {}): null {
+export function useThemeSync() {
   const [view, setView] = useStateView({darkTheme: true})
   useEffect(() => {
     if (view?.darkTheme) {
@@ -11,5 +11,4 @@ export function ThemeSync(props: {}): null {
       document.documentElement.classList.remove("darkTheme")
     }
   }, [view?.darkTheme])
-  return null 
 }
