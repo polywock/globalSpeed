@@ -232,7 +232,7 @@ function applyFullscreen(elem: HTMLVideoElement, direct: boolean) {
 
   if (direct || (!IS_SMART && IS_NATIVE)) {
     gvar.nativeFs.toggleSafe(elem as HTMLVideoElement)
-  } else if (!direct || (IS_NATIVE && IS_SMART)) {
+  } else if (!direct || (!IS_NATIVE && IS_SMART)) {
     gvar.smartFs.toggleSafe(elem as HTMLVideoElement)
   }
 }

@@ -107,7 +107,6 @@ async function handleInstall(detail: chrome.runtime.InstalledDetails) {
   chrome.runtime.onInstalled.removeListener(handleInstall)
   const tabs = await queryTabsSeveral({url: ["https://*/*", "http://*/*"]})
   if (!tabs) return 
-  console.log(`Reloading ${tabs.length} tabs. `)
   tabs.forEach(tab => {
     chrome.tabs.executeScript(tab.id, {file: "contentScript.js", allFrames: true}, () => {
       // if no permission, it will error, that's fine. 

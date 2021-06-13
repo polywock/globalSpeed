@@ -28,6 +28,7 @@ export function SectionHelp(props: {}) {
               }
             })
           } else if (command === "push sound") {
+            if (isFirefox()) return alert("Not supported for Firefox.")
             chrome.runtime.sendMessage({type: "MEDIA_PUSH_SOUND", volume: parseFloat(prompt("Volume: ", "0.5"))})
           } else {
             alert("Invalid command.")

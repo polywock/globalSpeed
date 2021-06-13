@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "browserslist": ["defaults"],
   "scripts": {
-    "build:common": "  rm -rf build   &&              webpack --config webpack.config.js &&              node replaceCtx.js && cp -r static/.            build/unpacked   && find build   -name '.DS_Store' -type f -delete",
+    "build:common": "  rm -rf build   &&              webpack --config webpack.config.js &&              node replaceCtx.js && cp -r static/. staticCh/. build/unpacked   && find build   -name '.DS_Store' -type f -delete",
     "build:commonFf": "rm -rf buildFf && FIREFOX=true webpack --config webpack.config.js && FIREFOX=true node replaceCtx.js && cp -r static/. staticFf/. buildFf/unpacked && find buildFf -name '.DS_Store' -type f -delete",
     "build:dev": "    export NODE_ENV=development && npm run build:common",
     "build:devFf": "  export NODE_ENV=development && npm run build:commonFf",

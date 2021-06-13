@@ -301,7 +301,7 @@ const commandHandlers: {
   seekMark: async args => {
     const { media, kb, applyToMedia, show } = args 
     show({
-      icons:  media.marks.includes(kb.valueString) ? ["arrowRight", "bookmark"] : ["arrowRight", "bookmark"],
+      icons:  media.marks.includes(kb.valueString) ? ["arrowRight"] : ["bookmark"],
       text: ` ${kb.valueString}`,
       small: true
     })
