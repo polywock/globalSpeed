@@ -8,7 +8,7 @@ import "./MainPanel.scss"
 
 
 export function MainPanel(props: {}) {
-  const [view, setView] = useStateView({speed: true, hideMediaView: true})
+  const [view, setView] = useStateView({speed: true, hideMediaView: true, enabled: true})
   if (!view) return <div className="panel"></div>
 
   return (
@@ -16,6 +16,7 @@ export function MainPanel(props: {}) {
       <SpeedControl speed={view.speed} onChange={v => {
         setView(produce(view, d => {
           d.speed = conformSpeed(v)
+          d.enabled = true 
         }))
       }}/>
       {view.hideMediaView ? null : <MediaViews/>}

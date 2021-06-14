@@ -41,9 +41,21 @@ export function requestSendMessage(msg: any, tabId: number, frameId: number) {
 export class WindowKeyListener {
   downCbs: Set<(e: KeyboardEvent) => void> = new Set()
   upCbs: Set<(e: KeyboardEvent) => void> = new Set()
+  withinFrame: boolean
   constructor() {
+    this.setup();
+
+    if (window.frameElement?.tagName === "IFRAME") {
+      this.withinFrame = true;
+      (window.frameElement as HTMLIFrameElement).addEventListener("load", this.setup, {capture: true, passive: true})
+    }
+  }
+  setup = () => {
     window.addEventListener("keydown", this.handleKeyDown, true)
     window.addEventListener("keyup", this.handleKeyUp, true)
+
+    // ensure event listeners are added, some events don't register before load.
+    if (this.withinFrame) gvar.mediaTower.ensureEventListeners()
   }
   release = () => {
     window.removeEventListener("keydown", this.handleKeyDown, true)
@@ -84,3 +96,5 @@ export function findLeafActiveElement(doc: DocumentOrShadowRoot): Element {
 
   return active 
 }
+
+

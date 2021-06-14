@@ -78,7 +78,6 @@ export class GlobalMedia {
 
 
     let peakIntersect = infos.filter(v => v.intersectionRatio != null).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.intersectionRatio
-    console.log(infos)
 
     let highest: {info: FlatMediaInfo, score: number}
     infos.forEach(info => {

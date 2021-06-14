@@ -1,6 +1,6 @@
 {
   "name": "__MSG_appName__",
-  "version": "2.8.7",
+  "version": "2.8.8",
   "default_locale": "en",
   "description": "__MSG_appDesc__",
   "manifest_version": 2,
@@ -21,6 +21,7 @@
     "matches": ["https://*/*", "http://*/*", "file://*/*"],
     "js": ["contentScript.js"],
     "all_frames": true,
+    "match_about_blank": true,
     "run_at": "document_start"
   }],
   "options_ui": {

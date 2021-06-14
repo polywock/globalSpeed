@@ -62,6 +62,23 @@ export class MediaTower {
   public processDoc = (doc: Window | ShadowRoot) => {
     if (this.docs.includes(doc)) return 
     this.docs.push(doc)
+    this.ensureDocEventListeners(doc)
+    this.newDocCallbacks.forEach(cb => cb())
+  }
+  private processMedia = (elem: HTMLMediaElement) => {
+    if (this.media.includes(elem)) return 
+    elem.gsKey = elem.gsKey || randomId()
+    const rootNode = elem?.getRootNode()
+    rootNode instanceof ShadowRoot && this.processDoc(rootNode)
+  
+    this.ensureMediaEventListeners(elem)
+    elem instanceof HTMLVideoElement && this.observe(elem)
+    this.media.push(elem)
+    this.sendUpdate()
+
+    this.newMediaCallbacks.forEach(cb => cb())
+  }
+  private ensureDocEventListeners = (doc: Window | ShadowRoot) => {
     doc.addEventListener("play", this.handleMediaEvent, {capture: true, passive: true})
     doc.addEventListener("timeupdate", this.handleMediaEventDeb, {capture: true, passive: true})
     doc.addEventListener("pause", this.handleMediaEvent, {capture: true, passive: true})
@@ -73,26 +90,18 @@ export class MediaTower {
     doc.addEventListener("fullscreenchange", this.handleMediaEvent, {capture: true, passive: true})
     doc.addEventListener("webkitfullscreenchange", this.handleMediaEvent, {capture: true, passive: true})
     doc.addEventListener("ratechange", this.handleMediaEvent, {capture: true, passive: true})
-    this.newDocCallbacks.forEach(cb => cb())
   }
-  private processMedia = (elem: HTMLMediaElement) => {
-    if (this.media.includes(elem)) return 
-    elem.gsKey = elem.gsKey || randomId()
-    const rootNode = elem?.getRootNode()
-    rootNode instanceof ShadowRoot && this.processDoc(rootNode)
-    
+  private ensureMediaEventListeners = (elem: HTMLMediaElement) => {
     elem.addEventListener("play", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("pause", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("ratechange", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("volumechange", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("loadedmetadata", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("emptied", this.handleMediaEvent, {capture: true, passive: true})
-    elem instanceof HTMLVideoElement && this.observe(elem)
-
-    this.media.push(elem)
-    this.sendUpdate()
-
-    this.newMediaCallbacks.forEach(cb => cb())
+  }
+  public ensureEventListeners = () => {
+    this.docs.forEach(doc => this.ensureDocEventListeners(doc))
+    this.media.forEach(media => this.ensureMediaEventListeners(media))
   }
   private handleMediaEvent = (e: Event) => {
     if (!(e?.isTrusted)) return 
