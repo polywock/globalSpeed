@@ -7,7 +7,7 @@ import { SpeedSync } from "./SpeedSync"
 import { Pane } from "./Pane"
 import { checkURLCondition } from "../utils/configUtils"
 
-const FORCED_GHOST_SITES = ["v.qq.com", "www.qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com"]
+const FORCED_GHOST_SITES = ["v.qq.com", "www.qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com", "onedrive.live.com"]
 
 export class ConfigSync {
   port: chrome.runtime.Port 
