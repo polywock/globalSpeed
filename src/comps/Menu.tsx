@@ -1,5 +1,6 @@
 
 import { ModalBase } from "./ModalBase"
+import { FaCheck } from "react-icons/fa"
 import "./Menu.scss"
 
 export const Menu = (props: {
@@ -17,7 +18,7 @@ export const Menu = (props: {
         }
 
         return <div>
-          <span onClick={handleClick}style={{display: "inline-block", minWidth: "20px"}}>{v.checked === true ? "✓" : ""}</span>
+          <span onClick={handleClick}style={{display: "inline-block", minWidth: "20px"}}>{v.checked === true ? <FaCheck/> : <div/>}</span>
           <span onClick={handleClick}>{v.label ?? v.name}</span>
         </div>
       })}

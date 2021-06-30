@@ -1,7 +1,7 @@
 import { HAS_PIP_API } from "src/utils/supports"
 import { StateOption } from "../../types"
 import { clamp, ceil } from "../../utils/helper"
-import { IS_SPECIAL_SEEK, IS_AMAZON, IS_NETFLIX, IS_NATIVE, IS_SMART, IS_BILIBILI } from "./isWebsite"
+import { IS_SPECIAL_SEEK, IS_AMAZON, IS_NETFLIX, IS_NATIVE, IS_SMART, IS_BILIBILI, IS_YOUTUBE } from "./isWebsite"
 
 
 export function seek(elem: HTMLMediaElement, value: number, relative: boolean, fast?: boolean) {
@@ -222,6 +222,13 @@ function setPlaybackRate(elem: HTMLMediaElement, value: number, freePitch?: bool
 function applyFullscreen(elem: HTMLVideoElement, direct: boolean) {
   if (IS_BILIBILI && !direct) {
     let control = document.querySelector(".bilibili-player-video-btn-fullscreen") as HTMLButtonElement
+    if (control) {
+      control.click()
+      return 
+    }
+  }
+  if (IS_YOUTUBE && !direct) {
+    let control = document.querySelector(".ytp-fullscreen-button.ytp-button") as HTMLButtonElement
     if (control) {
       control.click()
       return 

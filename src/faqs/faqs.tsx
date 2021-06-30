@@ -56,6 +56,12 @@ function Faqs(props: {}) {
       {!isFirefox() && (
         <Item q={"How do I control background music or PiP videos while using another program? "} a={<div>Create global hotkeys in the settings page, and select the video/audio you want to control using the {<FaMousePointer size={20} color={"#02a"}/>} button. <a href="https://www.youtube.com/watch?v=EZA-TnVAyDo">Youtube demo.</a></div>}/>
       )}
+      <Item q={"How do I hide the indicator for a specific hotkey?"} a={<div>Right click the hotkey name and enable "hide indicator".</div>}/>
+      <Item q={"What does the native option do for the fullscreen hotkey?"} a={<div>
+        <p><b>native mode:</b> enters fullscreen mode directly on the video and activates the HTML5 native controls.</p> 
+        <p><b>standard mode:</b> tries to enter fullscreen mode on the container element to mimic the website's standard fullscreen behavior. This method is more complicated and uses a learning algorithm. If you visit a new website, you must manually click on the fullscreen button at least once. Otherwise, Global Speed won't know which element is the video player container.</p>
+        <div style={{backgroundColor: "yellow", fontWeight: "bolder", padding: "5px"}}>Note: the fullscreen hotkey is buggy on some websites.</div>
+      </div>}/>
     </Group> 
     {!isFirefox() && <>
     <Group label="audio effects">
