@@ -33,7 +33,9 @@
     "filters": "filtreler",
     "transforms": "dönüşmek",
 
-    "indicator": "gösterge",
+    "blockEvents": "olayları önlemek",
+    "hideIndicator": "indikatörü gizle",
+    "indicator": "indikatör",
     "color": "renk",
     "size": "boyut",
     "rounding": "yuvarlaklık",

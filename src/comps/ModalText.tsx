@@ -14,7 +14,7 @@ export function ModalText(props: ModalTextProps) {
 
   return <div className="ModalText">
     {modal ? (
-      <ModalBase onClose={() => {
+      <ModalBase keepOnClose={true} onClose={() => {
         setModal(false)
       }}>
         <ThrottledTextInput textArea={true} value={props.value} onChange={v => {

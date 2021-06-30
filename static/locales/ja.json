@@ -18,7 +18,7 @@
   "token": {
     "create": "作成",
     "reset": "リセット",
-    "hide": "非表示",
+    "hide": "隠す",
 
     "on": "オン",
     "off": "オフ",
@@ -33,6 +33,8 @@
     "filters": "フィルター",
     "transforms": "変換",
 
+    "blockEvents": "ブロックイベント",
+    "hideIndicator": "インジケータを隠す",
     "indicator": "インジケータ",
     "color": "色",
     "size": "サイズ",

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { Keybind, TargetFx, StateOption, AdjustMode } from "../types"
 import produce from "immer"
 import { KeyPicker } from "../comps/KeyPicker"
@@ -9,7 +9,7 @@ import { filterInfos, FilterName, filterTargets  } from "../defaults/filters"
 import { GoChevronDown, GoChevronUp, GoX, GoTriangleDown, GoCode, GoPin, GoZap } from "react-icons/go"
 import { CycleInput } from "../comps/CycleInput"
 import { ModalText } from "../comps/ModalText"
-import { FaPowerOff, FaPause, FaEquals, FaBookmark, FaLink, FaVolumeUp, FaVolumeMute, FaGlobe, FaFile, FaLockOpen, FaLock, FaBackward, FaForward, FaArrowRight, FaExchangeAlt, FaPlus, FaMusic, FaList, FaStar } from "react-icons/fa"
+import { FaPowerOff, FaPause, FaEquals, FaBookmark, FaLink, FaVolumeUp, FaVolumeMute, FaGlobe, FaFile, FaBackward, FaForward, FaArrowRight, FaExchangeAlt, FaPlus, FaMusic, FaList, FaStar } from "react-icons/fa"
 import { requestCreateTab } from "../utils/browserUtils"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { BsMusicNoteList } from "react-icons/bs"
@@ -18,6 +18,7 @@ import { MdFullscreen, MdPictureInPictureAlt, MdTimer } from "react-icons/md"
 import { isFirefox, clamp, feedbackText, domRectGetOffset } from "../utils/helper"
 import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { Move } from "../comps/Move"
+import { Menu } from "../comps/Menu"
 import { URLModal } from "./URLModal"
 import { getDefaultURLCondition } from "../defaults"
 import { pushView } from "../background/GlobalState"
@@ -29,12 +30,14 @@ type KeybindControlProps = {
   onRemove: (id: string) => void,
   onMove: (id: string, down: boolean) => void,
   value: Keybind,
-  showNetSpeed: boolean
+  showNetSpeed: boolean,
+  hideIndicator: boolean
 }
 
 export const KeybindControl = (props: KeybindControlProps) => {
   const { value } = props
   const [show, setShow] = useState(false)
+  const [menu, setMenu] = useState(null as {x: number, y: number})
 
   const commandInfo = commandInfos[value.command]
 
@@ -70,7 +73,13 @@ export const KeybindControl = (props: KeybindControlProps) => {
     label = "special"
   }
 
-  return <div className={`KeybindControl ${value.spacing === 1 ? "spacing" : value.spacing === 2 ? "doubleSpacing" : ""} ${value.enabled ? "" : "disabled"}`}>
+  const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!(e.target === e.currentTarget)) return 
+    e.preventDefault()
+    setMenu({x: e.clientX, y: e.clientY})
+  }
+
+  return <div onContextMenu={handleContextMenu} className={`KeybindControl ${value.spacing === 1 ? "spacing" : value.spacing === 2 ? "doubleSpacing" : ""} ${value.enabled ? "" : "disabled"}`}>
     <div 
       className={`urlRules ${value.condition?.parts.length ? "active" : ""}`} 
       onClick={() => setShow(!show)}
@@ -83,6 +92,22 @@ export const KeybindControl = (props: KeybindControlProps) => {
         }
       }}
     >{value.condition?.parts.length || 0}</div>
+    {!menu ? null : (
+      <Menu items={[
+        {name: "blockEvents", checked: !!value.greedy, label: <>{window.gsm.token.blockEvents}<Tooltip alert={true} pass={{style: {paddingLeft: "10px"}}} tooltip={window.gsm.options.editor.greedyMode}/></>},
+        (commandInfo.hasFeedback && !props.hideIndicator) ? {name: "hideIndicator", label: window.gsm.token.hideIndicator, checked: !!value.hideIndicator} : null,
+      ].filter(v => v)} position={menu} onClose={() => setMenu(null)} onSelect={name => {
+        if (name === "hideIndicator") {
+          props.onChange(value.id, produce(value, d => {
+            d.hideIndicator = !d.hideIndicator
+          }))
+        } else if (name === "blockEvents") {
+          props.onChange(value.id, produce(value, d => {
+            d.greedy = !d.greedy
+          }))
+        }
+      }}/>
+    )}
     {!show ? null : (
       <URLModal neutralValue={true} onReset={() => {
         props.onChange(value.id, produce(value, d => {
@@ -107,13 +132,13 @@ export const KeybindControl = (props: KeybindControlProps) => {
     <Move onMove={down => {
       props.onMove(value.id, down)
     }}/>
-    <input type="checkbox" checked={value.enabled} onChange={e => {
+    <input  type="checkbox" checked={value.enabled} onChange={e => {
       props.onChange(value.id, produce(value, d => {
         d.enabled = !value.enabled
       }))
     }}/>
     <div className="command">
-      <div className="name">
+      <div className="name" onContextMenu={handleContextMenu}>
         {value.command === "adjustSpeed" && <MdTimer size="1.3em"/>}
         {value.command === "speedChangesPitch" && <BsMusicNoteList size="1.3em"/>}
         {value.command === "runCode" && <GoCode size="1.1em"/>}
@@ -156,7 +181,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
           )}
         </>}
         {value.command === "tabCapture" && <div className={`captureIcon ${value.enabled ? "active" : ""}`}><div></div></div>}
-        <span>{label}</span>
+        <span onContextMenu={handleContextMenu}>{label}</span>
         {value.command === "seek" && <>
           {Math.abs(value.valueNumber) >= 1 ? (
             <button style={{marginLeft: "5px"}} title={window.gsm.command.showNetTooltip} className={`toggle ${props.showNetSpeed ? "active" : ""}`} onClick={e => {
@@ -207,7 +232,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
         </button>}
       </div>
       {(commandInfo.withFilterTarget || commandInfo.withFilterOption) && (
-        <div className="support">
+        <div className="support" onContextMenu={handleContextMenu}>
           {commandInfo.withFilterTarget && (
             <select 
               value={value.filterTarget} 
@@ -261,18 +286,11 @@ export const KeybindControl = (props: KeybindControlProps) => {
         }}><FaLink size={17}/></button>
       </>
     ) : (
-      <>
-        <KeyPicker value={value.key} onChange={newKey => {
-          props.onChange(value.id, produce(value, d => {
-            d.key = newKey
-          }))
-        }}/>
-        <button className={`icon`} onClick={() => {
-          props.onChange(value.id, produce(value, d => {
-            d.greedy = !value.greedy
-          }))
-        }}>{value.greedy ? <FaLock size={16}/> : <FaLockOpen size={16}/>}</button>
-      </>
+      <KeyPicker value={value.key} onChange={newKey => {
+        props.onChange(value.id, produce(value, d => {
+          d.key = newKey
+        }))
+      }}/>
     )}
     {numericInput && (
       <NumericInput noNull={commandInfo.noNull} placeholder={defaultValue?.toString() ?? null} min={min} max={max} value={value[numericInput]} onChange={v => {
@@ -321,13 +339,13 @@ export const KeybindControl = (props: KeybindControlProps) => {
       }))
     }}>
       {!value.spacing && (
-        <GoChevronDown size="1.3em"/>
-      )} 
+        <GoChevronUp title="1x spacing" size="1.3em"/>
+        )} 
       {value.spacing === 1 && (
-        <GoTriangleDown size="1.3em"/>
-      )} 
+        <GoChevronDown title="2x spacing" size="1.3em"/>
+        )} 
       {value.spacing === 2 && (
-        <GoChevronUp size="1.3em"/>
+        <GoTriangleDown title="3x spacing" size="1.3em"/>
       )} 
     </button>
     <button className="close icon" onClick={e => props.onRemove(value.id)}>

@@ -19,7 +19,7 @@ type Props = {
 export function URLModal(props: Props) {
   const { value } = props  
 
-  return <ModalBase onClose={props.onClose}>
+  return <ModalBase keepOnClose={true} onClose={props.onClose}>
     <div className="URLModal">
       <div className="header">
         <div>{window.gsm.options.rules.header}</div>

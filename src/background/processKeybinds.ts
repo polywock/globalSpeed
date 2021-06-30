@@ -86,7 +86,7 @@ export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
         tabInfo,
         media: loadedMedia,
         applyToMedia,
-        show
+        show: kb.hideIndicator ? () => {} : show
       })
 
       if (lazyValues) {

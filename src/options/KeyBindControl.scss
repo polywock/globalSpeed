@@ -1,7 +1,7 @@
 
 .KeybindControl {
   display: grid;
-  grid-template-columns: repeat(2, max-content) minmax(200px, 1.5fr) max-content 150px 25px 200px repeat(2, max-content);
+  grid-template-columns: repeat(2, max-content) minmax(200px, 1.5fr) max-content 150px 200px repeat(2, max-content);
   grid-column-gap: 10px;
   align-items: center;
   border: 1px solid var(--border-color);

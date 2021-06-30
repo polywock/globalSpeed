@@ -33,6 +33,8 @@
     "filters": "filtros",
     "transforms": "transformar",
 
+    "blockEvents": "bloquear eventos",
+    "hideIndicator": "indicador de ocultar",
     "indicator": "indicador",
     "color": "cor",
     "size": "tamanho",

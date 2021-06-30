@@ -33,6 +33,8 @@
     "filters": "filters",
     "transforms": "transforms",
 
+    "blockEvents": "block events",
+    "hideIndicator": "hide indicator",
     "indicator": "indicator",
     "color": "color",
     "size": "size",

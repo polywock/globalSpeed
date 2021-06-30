@@ -33,6 +33,8 @@
     "filters": "фильтры",
     "transforms": "преобразование",
 
+    "blockEvents": "блокировать события",
+    "hideIndicator": "скрыть индикатор",
     "indicator": "индикатор",
     "color": "цвет",
     "size": "размер",

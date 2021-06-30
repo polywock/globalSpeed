@@ -43,6 +43,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   adjustSpeed: {
     valueType: "adjustMode",
+    hasFeedback: true,
     valueMin: 0.07,
     valueMax: 16,
     valueStep: 0.1,
@@ -57,6 +58,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   speedChangesPitch: {
     valueType: "state",
+    hasFeedback: true,
     requiresMedia: true,
     generate: () => ({
       id: randomId(),
@@ -68,6 +70,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   setPin: {
     valueType: "state",
+    hasFeedback: true,
     generate: () => ({
       id: randomId(),
       command: "setPin",
@@ -78,6 +81,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   setState: {
     valueType: "state",
+    hasFeedback: true,
     generate: () => ({
       id: randomId(),
       command: "setState",
@@ -91,6 +95,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     valueType: "number",
     requiresMedia: true,
     noNull: true,
+    hasFeedback: true,
     generate: () => ({
       id: randomId(),
       command: "seek",
@@ -103,6 +108,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
     group: CommandGroup.MEDIA,
     valueType: "state",
     requiresMedia: true,
+    hasFeedback: true,
     generate: () => ({
       id: randomId(),
       command: "setPause",
@@ -113,6 +119,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   setMute: {
     group: CommandGroup.MEDIA,
+    hasFeedback: true,
     valueType: "state",
     requiresMedia: true,
     generate: () => ({
@@ -125,6 +132,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   adjustVolume: {
     group: CommandGroup.MEDIA,
+    hasFeedback: true,
     valueType: "number",
     requiresMedia: true,
     valueDefault: 0.05,
@@ -137,6 +145,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   setMark: {
     group: CommandGroup.MEDIA,
+    hasFeedback: true,
     valueType: "string",
     requiresMedia: true,
     generate: () => ({
@@ -149,6 +158,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   seekMark: {
     group: CommandGroup.MEDIA,
+    hasFeedback: true,
     valueType: "string",
     requiresMedia: true,
     generate: () => ({
@@ -161,6 +171,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   toggleLoop: {
     group: CommandGroup.MEDIA,
+    hasFeedback: true,
     valueType: "string",
     requiresMedia: true,
     generate: () => ({
@@ -196,6 +207,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   setFx: {
     group: CommandGroup.FX,
+    hasFeedback: true,
     withFilterTarget: true,
     valueType: "state",
     generate: () => ({
@@ -209,6 +221,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   resetFx: {
     group: CommandGroup.FX,
+    hasFeedback: true,
     withFilterTarget: true,
     generate: () => ({
       id: randomId(),
@@ -220,6 +233,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   flipFx: {
     group: CommandGroup.FX,
+    hasFeedback: true,
     generate: () => ({
       id: randomId(),
       command: "flipFx",
@@ -229,6 +243,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   adjustFilter: {
     group: CommandGroup.FX,
+    hasFeedback: true,
     valueType: "adjustMode",
     withFilterOption: true,
     withFilterTarget: true,
@@ -244,6 +259,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   adjustGain: {
     group: CommandGroup.AUDIO_FX,
+    hasFeedback: true,
     valueType: "adjustMode",
     requiresTabCapture: true,
     valueMin: 0,
@@ -260,6 +276,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   adjustPitch: {
     group: CommandGroup.AUDIO_FX,
+    hasFeedback: true,
     valueType: "adjustMode",
     requiresTabCapture: true,
     valueMin: -36,
@@ -276,6 +293,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   adjustDelay: {
     group: CommandGroup.AUDIO_FX,
+    hasFeedback: true,
     valueType: "adjustMode",
     requiresTabCapture: true,
     valueMin: 0,
@@ -292,6 +310,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
   },
   tabCapture: {
     group: CommandGroup.AUDIO_FX,
+    hasFeedback: true,
     valueType: "state",
     requiresTabCapture: true,
     generate: () => ({

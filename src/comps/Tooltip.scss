@@ -15,20 +15,8 @@
     }
   }
 
-  & > .fg, .bg {
+  & > .ModalBase > .fg {
     position: fixed;
-    z-index: 2;
-  }
-
-  & > .bg {
-    width: 100vw;
-    height: 100vh;
-    left: 0px;
-    top: 0px;
-    z-index: 2;
-  }
-
-  & > .fg {
     display: inline-block;
     background-color: var(--fg-color);
     color: var(--text-color);

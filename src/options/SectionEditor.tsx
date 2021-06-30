@@ -6,7 +6,7 @@ import { KeybindControl } from "./KeybindControl"
 import { Tooltip } from "../comps/Tooltip"
 import { UnusedCommandWarning } from "./UnusedCommandWarning"
 import { useStateView } from "../hooks/useStateView"
-import { FaFile, FaGlobe, FaLock } from "react-icons/fa"
+import { FaFile, FaGlobe } from "react-icons/fa"
 import produce from "immer"
 import { URLModal } from "./URLModal"
 import { getDefaultURLCondition } from "../defaults"
@@ -17,7 +17,7 @@ import "./SectionEditor.scss"
 export function SectionEditor(props: {}) {
   const [commandOption, setCommandOption] = useState("adjustSpeed")
   const [view, setView] = useStateView({keybinds: true})
-  const [viewAlt] = useStateView({keybindsUrlCondition: true, showNetSeek: true})
+  const [viewAlt] = useStateView({keybindsUrlCondition: true, showNetSeek: true, hideIndicator: true})
   const [show, setShow] = useState(false)
 
   if (!view || !viewAlt) return <div></div>
@@ -61,16 +61,12 @@ export function SectionEditor(props: {}) {
               </div>
             </div>
           )}
-          <div>
-            <FaLock className="icon active" size={17}/>
-            <span>{window.gsm.options.editor.greedyMode}</span>
-          </div>
         </div>
       )}
       {isFirefox() ? null : <UnusedCommandWarning keybinds={view.keybinds || []}/>}
       <div className="keybindControls">
         {(view.keybinds || []).map(bind => (
-          <KeybindControl showNetSpeed={viewAlt.showNetSeek} key={bind.id} value={bind} 
+          <KeybindControl hideIndicator={viewAlt.hideIndicator} showNetSpeed={viewAlt.showNetSeek} key={bind.id} value={bind} 
             onChange={handleKeybindChange} 
             onRemove={handleKeybindRemove}
             onMove={handleKeybindMove}

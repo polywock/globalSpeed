@@ -33,6 +33,8 @@
     "filters": "濾鏡",
     "transforms": "转换",
 
+    "blockEvents": "阻止事件",
+    "hideIndicator": "隱藏反饋指示器",
     "indicator": "反饋指示器",
     "color": "顏色",
     "size": "大小",

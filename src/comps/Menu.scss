@@ -1,0 +1,15 @@
+
+.Menu {
+  position: fixed;
+  z-index: 99999999;
+  background-color: var(--bg-color);
+  color: var(--text-color); 
+  filter: invert(1);
+  user-select: none;
+  
+  & > div {
+    padding: 5px 10px;
+    border-bottom: 1px solid var(--text-color);
+    padding-right: 20px;
+  }
+}

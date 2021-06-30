@@ -33,6 +33,8 @@
     "filters": "필터",
     "transforms": "변형",
 
+    "blockEvents": "이벤트 방지",
+    "hideIndicator": "표시기 숨기기",
     "indicator": "표시기",
     "color": "색",
     "size": "크기",
