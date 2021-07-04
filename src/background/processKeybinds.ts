@@ -242,7 +242,7 @@ const commandHandlers: {
     }  
 
     kb.valueNumber >= 0 ? show({icons: ["forward"], text}) : show({icons: ["backward"], text}) 
-    applyToMedia({type: "SEEK", value, relative: true, fast: kb.valueBool2})
+    applyToMedia({type: "SEEK", value, relative: true, fast: kb.valueBool2, autoPause: kb.valueBool3})
   },
   setPause: async args => {
     const { kb, media, applyToMedia, show } = args 

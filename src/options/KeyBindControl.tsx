@@ -6,7 +6,7 @@ import { Tooltip } from "../comps/Tooltip"
 import { NumericInput } from "../comps/NumericInput"
 import { commandInfos } from "../defaults/commands"
 import { filterInfos, FilterName, filterTargets  } from "../defaults/filters"
-import { GoChevronDown, GoChevronUp, GoX, GoTriangleDown, GoCode, GoPin, GoZap } from "react-icons/go"
+import { GoChevronDown, GoChevronUp, GoX, GoTriangleDown, GoCode, GoPin, GoZap, GoKebabVertical } from "react-icons/go"
 import { CycleInput } from "../comps/CycleInput"
 import { ModalText } from "../comps/ModalText"
 import { FaPowerOff, FaPause, FaEquals, FaBookmark, FaLink, FaVolumeUp, FaVolumeMute, FaGlobe, FaFile, FaBackward, FaForward, FaArrowRight, FaExchangeAlt, FaPlus, FaMusic, FaList, FaStar } from "react-icons/fa"
@@ -73,7 +73,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
     label = "special"
   }
 
-  const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleContextMenu = (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>) => {
     if (!(e.target === e.currentTarget)) return 
     e.preventDefault()
     setMenu({x: e.clientX, y: e.clientY})
@@ -96,6 +96,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
       <Menu items={[
         {name: "blockEvents", checked: !!value.greedy, label: <>{window.gsm.token.blockEvents}<Tooltip alert={true} pass={{style: {paddingLeft: "10px"}}} tooltip={window.gsm.options.editor.greedyMode}/></>},
         (commandInfo.hasFeedback && !props.hideIndicator) ? {name: "hideIndicator", label: window.gsm.token.hideIndicator, checked: !!value.hideIndicator} : null,
+        (value.command === "seek") ? {name: "autoPause", label: window.gsm.command.setPause, checked: !!value.valueBool3} : null
       ].filter(v => v)} position={menu} onClose={() => setMenu(null)} onSelect={name => {
         if (name === "hideIndicator") {
           props.onChange(value.id, produce(value, d => {
@@ -104,6 +105,10 @@ export const KeybindControl = (props: KeybindControlProps) => {
         } else if (name === "blockEvents") {
           props.onChange(value.id, produce(value, d => {
             d.greedy = !d.greedy
+          }))
+        } else if (name === "autoPause") {
+          props.onChange(value.id, produce(value, d => {
+            d.valueBool3 = !d.valueBool3
           }))
         }
       }}/>
@@ -182,9 +187,9 @@ export const KeybindControl = (props: KeybindControlProps) => {
         </>}
         {value.command === "tabCapture" && <div className={`captureIcon ${value.enabled ? "active" : ""}`}><div></div></div>}
         <span onContextMenu={handleContextMenu}>{label}</span>
-        {value.command === "seek" && <>
+        {value.command === "seek"&& <>
           {Math.abs(value.valueNumber) >= 1 ? (
-            <button style={{marginLeft: "5px"}} title={window.gsm.command.showNetTooltip} className={`toggle ${props.showNetSpeed ? "active" : ""}`} onClick={e => {
+            <button disabled={!!(props.hideIndicator || value.hideIndicator)} style={{marginLeft: "5px"}} title={window.gsm.command.showNetTooltip} className={`toggle ${props.showNetSpeed ? "active" : ""}`} onClick={e => {
               pushView({override: {showNetSeek: !props.showNetSpeed}})
   
               if (!props.showNetSpeed) {
@@ -333,6 +338,9 @@ export const KeybindControl = (props: KeybindControlProps) => {
       })}</select>
     )}
     {!commandInfo.valueType && <div/>}
+    <button className="icon" onClick={handleContextMenu}>
+      <GoKebabVertical style={{pointerEvents: "none"}} title="..." size="1.3em"/>
+    </button>
     <button className="icon" onClick={e => {
        props.onChange(value.id, produce(value, d => {
         d.spacing = ((value.spacing || 0) + 1) % 3

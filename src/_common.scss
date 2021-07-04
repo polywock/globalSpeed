@@ -171,7 +171,7 @@ button {
     border-style: dashed;
     color: var(--text-color);
 
-    &.active {
+    &:enabled.active {
       border-style: solid;
       border-color: var(--text-color);
       font-weight: bold;

@@ -7,7 +7,7 @@ export const Menu = (props: {
   position: {x: number, y: number},
   onClose: () => void, 
   onSelect: (name: string) => void, 
-  items: {name: string, checked: boolean, label?: string | React.ReactElement}[],
+  items: {name: string, checked?: boolean, label?: string | React.ReactElement}[],
 }) => {
 
   return <ModalBase color={"transparent"} onClose={props.onClose}>
@@ -17,7 +17,7 @@ export const Menu = (props: {
           e.target === e.currentTarget && props.onSelect(v.name)
         }
 
-        return <div>
+        return <div key={v.name}>
           <span onClick={handleClick}style={{display: "inline-block", minWidth: "20px"}}>{v.checked === true ? <FaCheck/> : <div/>}</span>
           <span onClick={handleClick}>{v.label ?? v.name}</span>
         </div>

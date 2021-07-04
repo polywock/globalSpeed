@@ -183,6 +183,7 @@ export type Keybind = {
   valueState?: StateOption,
   valueBool?: boolean,
   valueBool2?: boolean,
+  valueBool3?: boolean,
   filterOption?: FilterName,
   filterTarget?: TargetFx,
   adjustMode?: AdjustMode,

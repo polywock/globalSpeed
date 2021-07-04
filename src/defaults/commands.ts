@@ -374,14 +374,16 @@ export function getDefaultKeybinds(): Keybind[] {
       ...commandInfos.seek.generate(),
       key: {shiftKey: true, code: "KeyZ"},
       enabled: true,
-      valueNumber: -0.041
+      valueNumber: -0.041,
+      valueBool3: true
     },
     {
       ...commandInfos.seek.generate(),
       key: {shiftKey: true, code: "KeyX"},
       enabled: true,
       valueNumber: 0.041,
-      spacing: 1
+      spacing: 1,
+      valueBool3: true
     },
     {
       ...commandInfos.fullscreen.generate(),

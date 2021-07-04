@@ -4,7 +4,7 @@ import { clamp, ceil } from "../../utils/helper"
 import { IS_SPECIAL_SEEK, IS_AMAZON, IS_NETFLIX, IS_NATIVE, IS_SMART, IS_BILIBILI, IS_YOUTUBE } from "./isWebsite"
 
 
-export function seek(elem: HTMLMediaElement, value: number, relative: boolean, fast?: boolean) {
+export function seek(elem: HTMLMediaElement, value: number, relative: boolean, fast?: boolean, autoPause?: boolean) {
   let newPosition = relative ? elem.currentTime + value : value 
 
   // If browser supports seekToNextFrame like Firefox, relative change of 0.041 will be trigger to call it. 
@@ -24,31 +24,35 @@ export function seek(elem: HTMLMediaElement, value: number, relative: boolean, f
     }
   }
 
-  seekTo(elem, newPosition, fast)
+  seekTo(elem, newPosition, fast, autoPause)
 }
 
-function seekTo(elem: HTMLMediaElement, value: number, fast?: boolean) {
+function seekTo(elem: HTMLMediaElement, value: number, fast?: boolean, autoPause?: boolean) {
   // fast seek is not precise for small changes.
   if (fast && (value < 10 || Math.abs(elem.currentTime - value) < 3)) {
     fast = false 
   }
+  
+  const paused = elem.paused 
+  autoPause && elem.pause()
 
   if (IS_NETFLIX) {
     gvar.mediaTower.server.send({
       type: "SEEK_NETFLIX", 
       value
     })
-  } else if (IS_AMAZON) {
-    const paused = elem.paused 
+    return 
+  } 
+
+  if (fast && HTMLMediaElement.prototype.fastSeek) {
+    elem.fastSeek(value)
+  } else {
     elem.currentTime = value
+  }
+
+  if (IS_AMAZON && !autoPause) {
     paused ? elem.play() : elem.pause() 
     paused ? elem.pause() : elem.play() 
-  } else {
-    if (fast && HTMLMediaElement.prototype.fastSeek) {
-      elem.fastSeek(value)
-    } else {
-      elem.currentTime = value
-    }
   }
 }
 
@@ -247,7 +251,7 @@ export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
   if (e.type === "PLAYBACK_RATE") {
     setPlaybackRate(elem, e.value, e.freePitch)
   } else if (e.type === "SEEK") {
-    seek(elem, e.value, e.relative, e.fast)
+    seek(elem, e.value, e.relative, e.fast, e.autoPause)
   } else if (e.type === "PAUSE") {
     setPause(elem, e.state)
   } else if (e.type === "MUTE") {
@@ -278,7 +282,7 @@ export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
 }
 
 export type MediaEventPlaybackRate = {type: "PLAYBACK_RATE", value: number, freePitch: boolean}
-export type MediaEventSeek = {type: "SEEK", value: number, relative: boolean, fast?: boolean}
+export type MediaEventSeek = {type: "SEEK", value: number, relative: boolean, fast?: boolean, autoPause?: boolean}
 export type MediaEventPause = {type: "PAUSE", state: StateOption}
 export type MediaEventMute = {type: "MUTE", state: StateOption}
 export type MediaEventSetVolume = {type: "SET_VOLUME", value: number, relative: boolean}
