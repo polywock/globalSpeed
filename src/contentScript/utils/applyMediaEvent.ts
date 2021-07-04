@@ -219,15 +219,15 @@ function setPlaybackRate(elem: HTMLMediaElement, value: number, freePitch?: bool
   elem.webkitPreservesPitch = !freePitch
 }
 
-function applyFullscreen(elem: HTMLVideoElement, direct: boolean) {
-  if (IS_BILIBILI && !direct) {
+function applyFullscreen(elem: HTMLVideoElement, native: boolean) {
+  if (IS_BILIBILI && !native) {
     let control = document.querySelector(".bilibili-player-video-btn-fullscreen") as HTMLButtonElement
     if (control) {
       control.click()
       return 
     }
   }
-  if (IS_YOUTUBE && !direct) {
+  if (IS_YOUTUBE && !native) {
     let control = document.querySelector(".ytp-fullscreen-button.ytp-button") as HTMLButtonElement
     if (control) {
       control.click()
@@ -235,11 +235,9 @@ function applyFullscreen(elem: HTMLVideoElement, direct: boolean) {
     }
   }
 
-  if (!IS_NATIVE && !IS_SMART) return 
-
-  if (direct || (!IS_SMART && IS_NATIVE)) {
+  if (IS_NATIVE && (native || !IS_SMART)) {
     gvar.nativeFs.toggleSafe(elem as HTMLVideoElement)
-  } else if (!direct || (!IS_NATIVE && IS_SMART)) {
+  } else if (IS_SMART && (!native || !IS_NATIVE)) {
     gvar.smartFs.toggleSafe(elem as HTMLVideoElement)
   }
 }
