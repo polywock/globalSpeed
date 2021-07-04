@@ -1,6 +1,5 @@
 
 declare module "soundtouchjs"
-declare module "pitchy"
 
 interface AudioWorkletProcessor {
   readonly port: MessagePort;

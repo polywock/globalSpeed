@@ -6,7 +6,6 @@ import { EqualizerControl } from "./EqualizerControl";
 import { useStateView } from "../hooks/useStateView";
 import { useCaptureStatus } from "../hooks/useCaptureStatus";
 import { MdAccessTime } from "react-icons/md";
-import { PitchAnalyzer } from "./PitchAnalyzer";
 import { getDefaultAudioFx } from "../defaults";
 import { ReverseButton } from "./ReverseButton";
 import cloneDeep from "lodash.clonedeep";
@@ -40,7 +39,6 @@ export function AudioPanel(props: {}) {
       env.viaButton = true 
       chrome.runtime.sendMessage({type: "TAB_CAPTURE", tabId: gvar.tabInfo.tabId})
     }}>{status ? window.gsm.audio.releaseTab : window.gsm.audio.captureTab}</button>
-    {status && env.viaButton && <PitchAnalyzer/>}
     <div className="mainControls">
       <button 
         className={`toggle ${view.audioFxAlt ? "active" : ""}`}

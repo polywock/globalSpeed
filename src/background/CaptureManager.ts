@@ -15,12 +15,7 @@ export class CaptureManager {
   constructor() {
     chrome.runtime.onMessage.addListener(this.handleMessage)
     chrome.runtime.onConnect.addListener(port => {
-      if (port.name.startsWith("ANALYZER")) {
-        if (!this.audioCtx) return 
-        const data = JSON.parse(port.name.slice(9))
-        if (data?.tabId == null) return 
-        this.initAnalyzer(data.tabId, port)
-      } else if (port.name.startsWith("REVERSE")) {
+      if (port.name.startsWith("REVERSE")) {
         const data = JSON.parse(port.name.slice(8))
         if (data?.tabId == null) return 
         this.initReverse(data.tabId, port)
@@ -119,25 +114,6 @@ export class CaptureManager {
     info.outputNode.connect(node)
     node.connect(this.audioCtx.destination)
   }
-  initAnalyzer = (tabId: number, port: chrome.runtime.Port) => {
-    const info = this.infos.find(info => info.tabId === tabId)
-    if (!info || info.ana) return 
-    info.ana = {
-      port,
-      node: this.audioCtx.createAnalyser()
-    }
-
-    info.outputNode.connect(info.ana.node)
-
-    port.onDisconnect.addListener(port => {
-      this.clearAnalyzer(info)
-    })
-
-    port.postMessage({type: "PING"})
-  }
-  clearAnalyzer = (info: CaptureInfo) => {
-    delete info.ana
-  }
   handleMessage: MessageCallback = (msg, sender, reply) => {
     if (msg.type === "TAB_CAPTURE") {
       if (msg.tabId == null) return reply(true)
@@ -206,7 +182,6 @@ export class CaptureManager {
 
     info.reverse?.()
 
-    info.ana && this.clearAnalyzer(info)
     info.client.release()
     info.stream.getAudioTracks().forEach(track => {
       track.stop()
@@ -240,13 +215,7 @@ export type CaptureInfo = {
   outputNode: GainNode,
   client?: SubClient,
   fx?: AudioEffectComplex
-  ana?: AnalyzerInfo,
   reverse?: () => void,
-}
-
-type AnalyzerInfo = {
-  port: chrome.runtime.Port,
-  node: AnalyserNode
 }
 
 
