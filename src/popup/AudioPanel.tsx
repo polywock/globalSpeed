@@ -1,7 +1,6 @@
 import { useState, useRef } from "react"
 import { SliderPlus } from "../comps/SliderPlus";
 import { FaVolumeUp, FaMusic, FaArrowsAltH } from "react-icons/fa";
-import { CompressorControl } from "./CompressorControl";
 import { EqualizerControl } from "./EqualizerControl";
 import { useStateView } from "../hooks/useStateView";
 import { useCaptureStatus } from "../hooks/useCaptureStatus";
@@ -15,7 +14,6 @@ import "./AudioPanel.scss"
 export function AudioPanel(props: {}) {
   const [view, setView] = useStateView({audioFx: true, audioFxAlt: true, monoOutput: true, audioPan: true})
   const env = useRef({viaButton: true}).current
-  const [compTab, setCompTab] = useState(false)
   let [rightTab, setRightTab] = useState(false)
   const status = useCaptureStatus()
   
@@ -150,29 +148,11 @@ export function AudioPanel(props: {}) {
       }}
     />
     {<ReverseButton onActivate={ensureCaptured}/>}
-    <div className="tabs">
-      <button className={`${!compTab ? "open" : ""} ${starAudioFx.eq.enabled ? "active" : ""}`} onClick={e => {
-        setCompTab(false)
-      }}>{window.gsm.audio.equalizer}</button>
-      <button className={`${compTab ? "open" : ""} ${starAudioFx.comp.enabled ? "active" : ""}`} onClick={e => {
-        setCompTab(true)
-      }}>{window.gsm.audio.compressor}</button>
-    </div>
-    {compTab && (
-      <CompressorControl value={starAudioFx.comp} onChange={newValue => {
-        setView(produce(view, d => {
-          d[starKey].comp = newValue 
-        }))
-        newValue.enabled && ensureCaptured()
-      }}/>
-    )}
-    {!compTab && (
-      <EqualizerControl value={starAudioFx.eq} onChange={newValue => {
-        setView(produce(view, d => {
-          d[starKey].eq = newValue
-        }))
-        newValue.enabled && ensureCaptured()
-      }}/>
-    )}
+    <EqualizerControl value={starAudioFx.eq} onChange={newValue => {
+      setView(produce(view, d => {
+        d[starKey].eq = newValue
+      }))
+      newValue.enabled && ensureCaptured()
+    }}/>
   </div>
 }

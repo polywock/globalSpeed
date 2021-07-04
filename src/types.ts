@@ -122,16 +122,6 @@ export type AudioFx = {
     enabled: boolean,
     factor: number,
     values: number[]
-  },
-  comp: {
-    name?: string,
-    enabled: boolean,
-    threshold: number,
-    knee: number,
-    ratio: number,
-    attack: number,
-    release: number,
-    gain: number
   }
 }
 
@@ -262,8 +252,6 @@ export type Gsm = {
   audio: {
     captureTab: string,
     releaseTab: string,
-    equalizer: string,
-    compressor: string,
     split: string,
     mono: string,
     reverse: string,

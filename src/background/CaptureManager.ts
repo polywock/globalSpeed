@@ -322,8 +322,6 @@ class AudioEffect {
   input: GainNode
   output: GainNode
 
-  compNode?: DynamicsCompressorNode
-  compGainNode?: GainNode
   filterNodes?: BiquadFilterNode[]
   jungle?: Jungle
   soundTouchNode?: SoundTouchNode
@@ -430,30 +428,6 @@ class AudioEffect {
       delete this.filterNodes
     }
 
-    // compressor
-    if (enabled && audioFx.comp?.enabled) {
-      const { comp } = audioFx
-      this.compNode = this.compNode ?? this.ctx.createDynamicsCompressor()
-      this.compNode.threshold.value = comp.threshold
-      this.compNode.knee.value = comp.knee
-      this.compNode.ratio.value = comp.ratio
-      this.compNode.attack.value = comp.attack
-      this.compNode.release.value = comp.release
-
-      head.connect(this.compNode)
-      head = this.compNode
-
-      if (comp.gain !== 1) {
-        this.compGainNode = this.compGainNode ?? this.ctx.createGain()
-        this.compGainNode.gain.value = comp.gain * comp.gain
-        head.connect(this.compGainNode) 
-        head = this.compGainNode
-      }
-    } else {
-      delete this.compNode;
-      delete this.compGainNode;
-    }
-
     // delay
     let secondHead: AudioNode;
     if (enabled && audioFx.delay > 0) {
@@ -485,8 +459,6 @@ class AudioEffect {
   }
   estrange = () => {
     this.input.disconnect()
-    this.compNode?.disconnect()
-    this.compGainNode?.disconnect()
     this.delayNode?.disconnect()
     this.filterNodes?.forEach(f => {
       f.disconnect()

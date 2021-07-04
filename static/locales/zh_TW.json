@@ -2,8 +2,6 @@
   "audio": {
     "captureTab": "捕獲",  
     "releaseTab": "釋放",
-    "equalizer": "均衡器",
-    "compressor": "壓限器",
     "split": "分離聲道",
     "mono": "單聲道",
     "reverse": "音頻倒放",

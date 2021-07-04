@@ -1,5 +1,9 @@
 
 .EqualizerControl {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid var(--text-color);
+  
   & > .preset {
     display: grid;
     grid-template-columns: max-content 1fr;

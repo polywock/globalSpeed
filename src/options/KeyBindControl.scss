@@ -1,7 +1,8 @@
 
 .KeybindControl {
   display: grid;
-  grid-template-columns: repeat(2, max-content) minmax(200px, 1.5fr) max-content 150px 200px repeat(3, max-content);
+  grid-template-columns: repeat(2, max-content) minmax(200px, 1.5fr) max-content 175px 200px repeat(3, max-content);
+
   grid-column-gap: 10px;
   align-items: center;
   border: 1px solid var(--border-color);
@@ -107,5 +108,11 @@
         margin-left: 3px;
       }
     }
+  }
+
+  & > .globalPicker {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    column-gap: 10px;
   }
 }

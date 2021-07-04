@@ -2,8 +2,6 @@
   "audio": {
     "captureTab": "capturar",
     "releaseTab": "soltar",
-    "equalizer": "ecualizador",
-    "compressor": "compresor",
     "split": "split",
     "mono": "mono",
     "reverse": "inverso",

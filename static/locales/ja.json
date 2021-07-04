@@ -2,8 +2,6 @@
   "audio": {
     "captureTab": "捕捉",
     "releaseTab": "手放す",
-    "equalizer": "イコライザー",
-    "compressor": "コンプレッサー",
     "split": "分割",
     "mono": "モノラル",
     "reverse": "リバース",

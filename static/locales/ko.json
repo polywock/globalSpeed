@@ -2,8 +2,6 @@
   "audio": {
     "captureTab": "캡처",
     "releaseTab": "릴리스",
-    "equalizer": "이퀄라이저",
-    "compressor": "컴프레서",
     "split": "분할",
     "mono": "모노",
     "reverse": "역 오디오",

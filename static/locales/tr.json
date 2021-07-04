@@ -2,8 +2,6 @@
   "audio": {
     "captureTab": "ele geçirmek",
     "releaseTab": "serbest bırakmak",
-    "equalizer": "EQ",
-    "compressor": "kompresör",
     "split": "ayırmak",
     "mono": "mono",
     "reverse": "ters ses",

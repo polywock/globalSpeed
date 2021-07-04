@@ -276,7 +276,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
       }}>{value.global ? <FaGlobe size="1.05em"/> : <FaFile size="1.05em"/>}</button>
     )}
     {value.global ? (
-      <>
+      <div className="globalPicker">
         <select value={value.globalKey || "commandA"} onChange={e => {
           props.onChange(value.id, produce(value, d => {
             d.globalKey = e.target.value 
@@ -289,7 +289,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
         <button className={`icon`} onClick={() => {
           requestCreateTab(isFirefox() ? `https://support.mozilla.org/kb/manage-extension-shortcuts-firefox` :`chrome://extensions/shortcuts`)
         }}><FaLink size={17}/></button>
-      </>
+      </div>
     ) : (
       <KeyPicker value={value.key} onChange={newKey => {
         props.onChange(value.id, produce(value, d => {
