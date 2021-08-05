@@ -11,9 +11,11 @@
     justify-items: center;
     grid-gap: 3px;
   
-    & > div {
+    & > button {
       width: 100%;
       text-align: center;
+      border: none;
+      padding: var(--padding) 0px;
       
       &:focus {
         outline: 1px solid var(--focus-color);

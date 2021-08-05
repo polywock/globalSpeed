@@ -39,6 +39,7 @@
     "rounding": "yuvarlaklık",
     "duration": "süre",
     "offset": "ofset",
+    "rows": "satırlar",
 
     "any": "herhangi",
     "all": "tümü",
@@ -122,6 +123,7 @@
     },
     "rules": {
       "header": "URL Kuralları",
+      "conditions": "URL koşulları",
       "startsWith": "ile başlar",
       "contains": "içeren",
       "regex": "regex",

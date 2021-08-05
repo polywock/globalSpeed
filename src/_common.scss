@@ -43,6 +43,10 @@
 
   --thumb-color: #888;
   --thumb-border-color: #666;
+
+  
+  --select-red: red;
+  --select-green: green;
 }
 
 :root.darkTheme {
@@ -86,6 +90,9 @@
 
   --thumb-color: #ddd;
   --thumb-border-color: #eee;
+
+  --select-red: #f66;
+  --select-green: #35df35;
 }
 
 body {
@@ -292,6 +299,17 @@ input[type="color"] {
   border: none;
   width: 50px;
   height: 30px;
+}
+
+select {
+  &.green {
+    border: 1px solid var(--select-green);
+    color: var(--select-green);
+  }
+  &.red {
+    border: 1px solid var(--select-red);
+    color: var(--select-red);
+  }
 }
 
 .reset {

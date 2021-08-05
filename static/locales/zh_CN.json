@@ -39,6 +39,7 @@
     "rounding": "圆度",
     "duration": "持续时间",
     "offset": "偏移",
+    "rows": "行",
 
     "any": "任意",
     "all": "所有",
@@ -122,6 +123,7 @@
     },
     "rules": {
       "header": "URL规则",
+      "conditions": "URL條件",
       "startsWith": "以…开始",
       "contains": "包含",
       "regex": "正则表达式",

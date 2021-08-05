@@ -14,8 +14,6 @@ import produce from "immer"
 import { Reset } from "../comps/Reset"
 import "./SectionFlags.scss"
 
-let feedbackAudio: HTMLAudioElement
-
 export function SectionFlags(props: {}) {
   const [showMore, setShowMore] = useState(false)
   const [view, setView] = useStateView({indicatorInit: true, language: true, darkTheme: true, hideBadge: true, pinByDefault: true, ghostMode: true, hideMediaView: true, freePitch: true})

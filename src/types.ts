@@ -62,10 +62,13 @@ export type State = {
   firstUse?: number,
   clickedRating?: number,
   speedPresets?: number[],
+  speedPresetRows?: number,
+  speedPresetPadding?: number,
   speedSmallStep?: number,
   speedBigStep?: number,
   speedSlider?: {min: number, max: number},
-  showNetSeek?: boolean
+  showNetSeek?: boolean,
+  iOverride?: boolean // when tab is pinned, speeds shows as "1.0i", this disables the "i". 
 }
 
 
@@ -289,6 +292,7 @@ export type Gsm = {
     rounding: string,
     duration: string,
     offset: string,
+    rows: string,
     
     any: string,
     all: string,
@@ -372,6 +376,7 @@ export type Gsm = {
     },
     rules: {
       header: string,
+      conditions: string,
       startsWith: string,
       contains: string,
       regex: string,

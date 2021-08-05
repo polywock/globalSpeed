@@ -9,7 +9,7 @@ import "./MainPanel.scss"
 
 export function MainPanel(props: {}) {
   const [view, setView] = useStateView({speed: true, hideMediaView: true, enabled: true})
-  if (!view) return <div className="panel"></div>
+  if (!view) return <div className="panel unloaded"></div>
 
   return (
     <div className="MainPanal panel">

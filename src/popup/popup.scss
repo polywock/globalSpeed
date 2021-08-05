@@ -20,6 +20,10 @@ body {
   & > .panel {
     width: 300px;
     padding: 8px;
-    min-height: 130px;
+    min-height: 40px;
+
+    & > .unloaded {
+      min-height: 130px;
+    }
   }
 }

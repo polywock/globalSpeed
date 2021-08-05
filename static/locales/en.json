@@ -39,6 +39,7 @@
     "rounding": "rounding",
     "duration": "duration",
     "offset": "offset",
+    "rows": "rows",
     
     "any": "any",
     "all": "all",
@@ -122,6 +123,7 @@
     },
     "rules": {
       "header": "URL Rules",
+      "conditions": "URL conditions",
       "startsWith": "starts with",
       "contains": "contains",
       "regex": "regex",

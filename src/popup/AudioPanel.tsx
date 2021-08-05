@@ -17,7 +17,7 @@ export function AudioPanel(props: {}) {
   let [rightTab, setRightTab] = useState(false)
   const status = useCaptureStatus()
   
-  if (!view) return <div className="panel"></div>
+  if (!view) return <div className="panel unloaded"></div>
 
   if (!view.audioFxAlt) {
     rightTab = false 

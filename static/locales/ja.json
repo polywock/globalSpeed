@@ -39,6 +39,7 @@
     "rounding": "丸め",
     "duration": "期間",
     "offset": "オフセット",
+    "rows": "行",
 
     "any": "任意",
     "all": "すべて",
@@ -122,6 +123,7 @@
     },
     "rules": {
       "header": "URLルール",
+      "conditions": "URL条件",
       "startsWith": "で始まる",
       "contains": "含む",
       "regex": "regex",

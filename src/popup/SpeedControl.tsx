@@ -1,9 +1,10 @@
+import { CSSProperties } from "react"
 import { NumericControl } from "../comps/NumericControl"
 import { getDefaultSpeedPresets } from "../defaults"
 import { useStateView } from "../hooks/useStateView"
 import { BsMusicNoteList } from "react-icons/bs"
 import { pushView } from "../background/GlobalState"
-import { domRectGetOffset, feedbackText } from "src/utils/helper"
+import { clamp, domRectGetOffset, feedbackText } from "src/utils/helper"
 import "./SpeedControl.scss"
 
 type SpeedControlProps = {
@@ -12,18 +13,20 @@ type SpeedControlProps = {
 }
 
 export function SpeedControl(props: SpeedControlProps) {
-  const [view] = useStateView({speedPresets: true, speedSmallStep: true, speedBigStep: true, speedSlider: true, freePitch: true})
+  const [view] = useStateView({speedPresets: true, speedSmallStep: true, speedBigStep: true, speedSlider: true, freePitch: true, speedPresetRows: true, speedPresetPadding: true})
   if (!view) return null 
+
+  let presets = view.speedPresets?.length === 12 ? view.speedPresets : getDefaultSpeedPresets()
+  presets = presets.slice(0, clamp(1, 4, view.speedPresetRows ?? 4) * 3)
   
   return <div className="SpeedControl">
-    <div className="options">
-      {(view.speedPresets?.length === 12 ? view.speedPresets : getDefaultSpeedPresets()).map(v => (
-        <div 
+    <div className="options" style={{"--padding": `${view.speedPresetPadding ?? 0}px`} as CSSProperties}>
+      {presets.map(v => (
+        <button 
           key={v}
-          tabIndex={0}
           className={props.speed === v ? "selected" : ""}
           onClick={() => props.onChange(v)}
-        >{v.toFixed(2)}</div> 
+        >{v.toFixed(2)}</button> 
       ))}
     </div>
     <NumericControl 

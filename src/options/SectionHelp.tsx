@@ -1,6 +1,6 @@
 import { MouseEvent, useEffect, useRef } from "react"
 import { MdContentCopy, MdContentPaste } from "react-icons/md"
-import { pushView } from "../background/GlobalState"
+import { fetchView, pushView } from "../background/GlobalState"
 import { State } from "../types"
 import { requestCreateTab } from "../utils/browserUtils"
 import { isFirefox, areYouSure, feedbackText, domRectGetOffset } from "../utils/helper"
@@ -15,7 +15,9 @@ export function SectionHelp(props: {}) {
         helpClicked++
         if (helpClicked >= 10) {
           const command = prompt("Command? ")
-          if (command === "fs cache") {
+          if (!command) {
+            return 
+          } else if (command === "fs cache") {
             chrome.storage.local.get(items => {
               const entries = Object.entries(items).filter(([key]) => key.startsWith("fs::"))
               const cacheText = entries.map(([key, value]) => `${key.substr(4)} (${value?.length ?? 0})`).join("\n")
@@ -30,6 +32,12 @@ export function SectionHelp(props: {}) {
           } else if (command === "push sound") {
             if (isFirefox()) return alert("Not supported for Firefox.")
             chrome.runtime.sendMessage({type: "MEDIA_PUSH_SOUND", volume: parseFloat(prompt("Volume: ", "0.5"))})
+          } else if (command === "toggle i") {
+            fetchView({iOverride: true}).then(view => {
+              if (confirm(view.iOverride ? `'i' is disabled, do you want to enable it?` : `'i' is enabled, do you want to disable it?`)) {
+                pushView({override: {iOverride: !view.iOverride}})
+              }
+            })
           } else {
             alert("Invalid command.")
           }

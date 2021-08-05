@@ -39,6 +39,7 @@
     "rounding": "arrotondamento",
     "duration": "durata",
     "offset": "scarto",
+    "rows": "righe",
     
     "any": "qualsiasi",
     "all": "tutti",
@@ -122,6 +123,7 @@
     },
     "rules": {
       "header": "Regole URL",
+      "conditions": "condizioni URL",
       "startsWith": "comincia con",
       "contains": "contiene",
       "regex": "regex",

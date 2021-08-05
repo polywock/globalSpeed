@@ -22,7 +22,7 @@ export function URLModal(props: Props) {
   return <ModalBase keepOnClose={true} onClose={props.onClose}>
     <div className="URLModal">
       <div className="header">
-        <div>{window.gsm.options.rules.header}</div>
+        <div>{window.gsm.options.rules.conditions}</div>
         {value.parts?.length < 2 ? <div/> : (
           <select onChange={e => {
             props.onChange(produce(value, d => {
@@ -55,7 +55,7 @@ export function URLModal(props: Props) {
                   d.disabled = !d.disabled
                 }))
               }}/>
-              <select value={part.inverse ? "!=" : "=="} onChange={e => {
+              <select className={part.inverse ? "red" : "green"} value={part.inverse ? "!=" : "=="} onChange={e => {
                 changePart(produce(part, d => {
                   d.inverse = e.target.value === "!="
                 }))

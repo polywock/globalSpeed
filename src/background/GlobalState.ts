@@ -307,7 +307,7 @@ export function pushView(init: SetInit): Promise<void> {
     // sendMessage removes undefined values, so ensure they are null.
     const override: StateView = {}
     for (let [key, value] of Object.entries(init.override || {})) {
-      (override as any)[key] = value ?? null
+      (<any> override)[key] = value ?? null
     }
     init.override = override
 
@@ -369,7 +369,7 @@ export function subscribeView(selector: StateViewSelector, tabId?: number, onLau
   client.push = _view => {
     const override = {} as StateView
     Object.keys(selector).forEach(key => {
-      (override as any)[key] = (_view as any)[key]
+      (<any> override)[key] = (_view as any)[key]
     })
     handleUpdate(override, false)
     pushView({override, tabId, ignoreSub: client.subId})

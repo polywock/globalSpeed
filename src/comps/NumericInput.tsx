@@ -12,7 +12,8 @@ type NumericInputProps = {
   min?: number,
   max?: number,
   rounding?: number,
-  disabled?: boolean
+  disabled?: boolean,
+  className?: string
 }
 
 
@@ -66,7 +67,7 @@ export const NumericInput = (props: NumericInputProps) => {
   }
 
   return (
-    <div className={`NumericInput`} style={{position: "relative"}}>
+    <div className={`NumericInput ${props.className || ""}`} style={{position: "relative"}}>
       <input 
         disabled={props.disabled ?? false}
         onBlur={e => {

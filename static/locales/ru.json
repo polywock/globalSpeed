@@ -39,6 +39,7 @@
     "rounding": "круглость",
     "duration": "скорость",
     "offset": "сместить",
+    "rows": "строки",
     
     "any": "любой",
     "all": "все",
@@ -122,6 +123,7 @@
     },
     "rules": {
       "header": "Правила URL",
+      "conditions": "условия URL",
       "startsWith": "начинается с",
       "contains": "содержит",
       "regex": "regex",
