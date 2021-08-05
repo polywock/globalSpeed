@@ -101,6 +101,7 @@ export type Context = {
   speed: number, 
   lastSpeed?: number,
   enabled: boolean,
+  enabledLatestViaPopup?: boolean,
   elementFx: Fx,
   backdropFx: Fx,
   monoOutput?: boolean,
@@ -110,7 +111,7 @@ export type Context = {
 }
 
 export const CONTEXT_KEYS: (keyof Context)[] = [ 
-  "speed", "lastSpeed", "enabled", "elementFx", "backdropFx", 
+  "speed", "lastSpeed", "enabled", "enabledLatestViaPopup", "elementFx", "backdropFx", 
   "monoOutput", "audioFx", "audioFxAlt", "audioPan"
 ]
 

@@ -153,6 +153,7 @@ const commandHandlers: {
   setState: async args => {
     const { kb, show, override, fetch } = args 
     const view = fetch({enabled: true})
+    override.enabledLatestViaPopup = false
     if (kb.valueState === "off" || (kb.valueState === "toggle" && view.enabled)) {
       override.enabled = false 
     } else {

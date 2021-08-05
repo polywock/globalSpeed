@@ -25,7 +25,7 @@ export function Header(props: HeaderProps) {
       <div 
         className={view.enabled ? "active" : "muted"}
         onClick={() => {
-          pushView({override: {enabled: !view.enabled}, tabId: gvar.tabInfo.tabId})
+          pushView({override: {enabled: !view.enabled, enabledLatestViaPopup: true}, tabId: gvar.tabInfo.tabId})
         }}
         onContextMenu={e => {
           e.preventDefault()

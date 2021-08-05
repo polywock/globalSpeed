@@ -16,7 +16,7 @@ export class ConfigSync {
   lastTrigger = 0
   fxSync: FxSync
   speedSync: SpeedSync
-  client = subscribeView({ghostMode: true, enabled: true, keybinds: true, keybindsUrlCondition: true, superDisable: true}, gvar.tabInfo.tabId, true, () => {
+  client = subscribeView({ghostMode: true, enabled: true, enabledLatestViaPopup: true, keybinds: true, keybindsUrlCondition: true, superDisable: true}, gvar.tabInfo.tabId, true, () => {
     this.handleEnabledChange()
   }, 300)
   indicatorClient = subscribeView({indicatorInit: true}, gvar.tabInfo.tabId, true, view => {
@@ -79,9 +79,10 @@ export class ConfigSync {
   handleKeyDown = (e: KeyboardEvent) => {
     if (!this.client?.view) return 
     if (this.client.view.superDisable) return 
-
-    const keybinds = this.client.view.keybinds
     const enabled = this.client.view.enabled
+    if (!enabled && this.client.view.enabledLatestViaPopup) return 
+    
+    const keybinds = this.client.view.keybinds
 
     this.blockKeyUp = false 
 

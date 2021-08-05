@@ -46,20 +46,19 @@ function Faqs(props: {}) {
       </ul>}/>
       <Item q={"I can't type because the Global Speed hotkeys are being triggered."} a={<>
         <ol>
-          <li>Suspend the extension using the state <FaPowerOff color={"#02a"} size="17px"/> button or hotkey (Shift + Q by default). This disables all hotkeys except for the state <FaPowerOff color={"#02a"} size="17px"/> hotkey (so you can reactivate the extension).</li>
+          <li>Suspend Global Speed using the  <FaPowerOff color={"#02a"} size="17px"/> button. This disables all hotkeys.</li>
+          <li>Suspend Global Speed using the  <FaPowerOff color={"#02a"} size="17px"/> hotkey (Shift + Q by default). This disables all hotkeys except itself so you can later reactivate Global Speed.</li>
           <li>Or, add a {"[ != ]"} URL rule to the hotkeys so it doesn't run on that website.</li>
         </ol>
-        <div style={{backgroundColor: "yellow", fontWeight: "bolder", padding: "5px"}}>Note: If you want to disable all hotkeys, you can right click the state <FaPowerOff color={"#02a"} size="17px"/> button.</div>
       </>}/>
       <Item q={"Why are the media shortcut keys applying to the wrong video/audio? "} a={<div>If there multiple media elements on the page, Global Speed prioritizes videos most centered on the screen. If it's wrong, you can select {<FaMousePointer size={20} color={"#02a"}/>} the video/audio you want prioritized.</div>}/>
       <Item q={"How do I control background music/video while using another tab? "} a={<div>Select the video/audio you want to control using the {<FaMousePointer size={20} color={"#02a"}/>} button.</div>}/>
       {!isFirefox() && (
         <Item q={"How do I control background music or PiP videos while using another program? "} a={<div>Create global hotkeys in the settings page, and select the video/audio you want to control using the {<FaMousePointer size={20} color={"#02a"}/>} button. <a href="https://www.youtube.com/watch?v=EZA-TnVAyDo">Youtube demo.</a></div>}/>
       )}
-      <Item q={"How do I hide the indicator for a specific hotkey?"} a={<div>Right click the hotkey name and enable "hide indicator".</div>}/>
       <Item q={"What does the native option do for the fullscreen hotkey?"} a={<div>
         <p><b>native mode:</b> enters fullscreen mode directly on the video and activates the HTML5 native controls.</p> 
-        <p><b>standard mode:</b> tries to enter fullscreen mode on the container element to mimic the website's standard fullscreen behavior. This method is more complicated and uses a learning algorithm. If you visit a new website, you must manually click on the fullscreen button at least once. Otherwise, Global Speed won't know which element is the video player container.</p>
+        <p><b>standard mode:</b> tries to enter fullscreen mode on the container element to mimic the website's standard fullscreen behavior. This method requires learning. If you visit a new website, you must manually click on the fullscreen button at least once. Otherwise, Global Speed won't know which element is the video player container.</p>
         <div style={{backgroundColor: "yellow", fontWeight: "bolder", padding: "5px"}}>Note: the fullscreen hotkey is buggy on some websites.</div>
       </div>}/>
     </Group> 
