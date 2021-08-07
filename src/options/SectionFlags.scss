@@ -18,6 +18,11 @@
 
       &.indent {
         margin-left: 20px;
+        
+        &.compact {
+          grid-template-columns: 280px max-content;
+          margin-bottom: 20px;
+        }
       }
   
       &.marginTop {

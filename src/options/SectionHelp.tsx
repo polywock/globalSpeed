@@ -32,10 +32,10 @@ export function SectionHelp(props: {}) {
           } else if (command === "push sound") {
             if (isFirefox()) return alert("Not supported for Firefox.")
             chrome.runtime.sendMessage({type: "MEDIA_PUSH_SOUND", volume: parseFloat(prompt("Volume: ", "0.5"))})
-          } else if (command === "toggle i") {
-            fetchView({iOverride: true}).then(view => {
-              if (confirm(view.iOverride ? `'i' is disabled, do you want to enable it?` : `'i' is enabled, do you want to disable it?`)) {
-                pushView({override: {iOverride: !view.iOverride}})
+          } else if (command === "toggle pip priority") {
+            fetchView({ignorePiP: true}).then(view => {
+              if (confirm(`Do you want to ${view.ignorePiP ? "" : "de"}prioritize PiP videos? `)) {
+                pushView({override: {ignorePiP: !view.ignorePiP}})
               }
             })
           } else {

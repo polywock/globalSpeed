@@ -39,7 +39,7 @@ function Faqs(props: {}) {
     <Group label="hotkeys">
       <Item q={"How do I block hotkeys on some sites? "} a={<ul>
         <li>In this example, I'll block hotkeys for stadia.com, a game streaming website.</li>
-        <li>1. Click on the <code>{"-- 0 --"}</code> button at the bottom-right of the Shortcut Editor section. Here we can add conditions that need to met for the hotkeys to remain enabled.</li>
+        <li>1. Click on the <code>{"-- 0 --"}</code> button at the bottom-right of the Shortcut Editor section. Here we can add conditions that need to be met for the hotkeys to remain enabled.</li>
         <li>3. Since we want the hotkeys to remain enabled only if the website isn't "stadia.com". Add a not equals condition {"[ != ]"} if the URL contains the "stadia.com" keyword.</li>
         <li style={{backgroundColor: "yellow", fontWeight: "bolder", padding: "5px"}}>Note: If you add multiple conditions, you need to specify whether all conditions should be met or only one. If we want the hotkeys to only enabled if the website isn't {"[ != ]"} stadia.com AND isn't {"[ != ]"} miniclip.com, we would select "all (AND)" option. <div style={{marginTop: "10px"}}>On the other hand, if we wanted the hotkeys to only be enabled if the website's URL matches {"[ == ]"} specific websites like youtube.com OR twitch.tv, we would require only a single condition to be met and thus select the "any (OR)" option.</div></li>
         <li style={{backgroundColor: "yellow", fontWeight: "bolder", padding: "5px", marginTop: "10px"}}>Note: You can also add URL conditions to specific hotkeys by hovering over a hotkey item and clicking on the top-right red botton.</li>

@@ -112,7 +112,9 @@
       "fullscreenSupport": "全螢幕",
       "ghostMode": "幽靈模式",
       "ghostModeTooltip": "嘗試阻止網站更改速度。默認情況下禁用，因為它可能會破壞某些網站。",
-      "hideMediaView": "隱藏媒體列表"
+      "hideMediaView": "隱藏媒體列表",
+      "inheritGlobal": "繼承全局",
+      "inheritGlobalTooltip": "新選項卡可以繼承前一個選項卡的上下文或全局上下文。"
     },
     "editor": {
       "header": "熱鍵編輯器",

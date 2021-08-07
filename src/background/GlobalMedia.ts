@@ -61,6 +61,7 @@ export class GlobalMedia {
     }
   }
   getAuto = (tabInfo: TabInfo, videoOnly?: boolean) => {
+    const ignorePiP = window.globalState.get({ignorePiP: true}).ignorePiP
     let infos = flattenMediaInfos(this.scopes).filter(info => info.readyState)
     infos = videoOnly ? infos.filter(info => info.videoSize) : infos 
     
@@ -69,7 +70,7 @@ export class GlobalMedia {
 
     infos.sort((a, b) => b.pushTime - a.pushTime)
     const pippedInfo = infos.find(info => info.pipMode)
-    if (pippedInfo) return pippedInfo
+    if (!ignorePiP && pippedInfo) return pippedInfo
 
     if (!tabInfo) return 
     infos = infos.filter(info => info.tabInfo.tabId === tabInfo.tabId)

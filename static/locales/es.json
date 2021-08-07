@@ -1,8 +1,8 @@
 {
   "audio": {
     "captureTab": "capturar",
-    "releaseTab": "soltar",
-    "split": "split",
+    "releaseTab": "liberar",
+    "split": "dividir",
     "mono": "mono",
     "reverse": "inverso",
     "pan": "panorámica"
@@ -112,7 +112,9 @@
       "fullscreenSupport": "pantalla completa",
       "ghostMode": "modo fantasma",
       "ghostModeTooltip": "Intenta bloquear el sitio web para que no cambie de velocidad. Deshabilitado de forma predeterminada porque podría romper algunos sitios web.",
-      "hideMediaView": "ocultar lista de medios"
+      "hideMediaView": "ocultar lista de medios",
+      "inheritGlobal": "heredar global",
+      "inheritGlobalTooltip": "Las nuevas pestañas pueden heredar el contexto de la pestaña anterior o el contexto global."
     },
     "editor": {
       "header": "Editor de accesos directos",

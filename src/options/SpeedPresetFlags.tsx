@@ -65,7 +65,7 @@ export function SpeedPresetFlags(props: {className?: string}) {
         }}
         default={0}
         sliderMin={0}
-        sliderMax={10}
+        sliderMax={15}
         sliderStep={0.1}
       />
     </div>

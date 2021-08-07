@@ -16,7 +16,7 @@ import "./SectionFlags.scss"
 
 export function SectionFlags(props: {}) {
   const [showMore, setShowMore] = useState(false)
-  const [view, setView] = useStateView({indicatorInit: true, language: true, darkTheme: true, hideBadge: true, pinByDefault: true, ghostMode: true, hideMediaView: true, freePitch: true})
+  const [view, setView] = useStateView({indicatorInit: true, language: true, darkTheme: true, hideBadge: true, pinByDefault: true, ghostMode: true, hideMediaView: true, freePitch: true, inheritPreviousContext: true})
   const [volumeView, setVolumeView] = useStateView({feedbackVolume: true})
   if (!view || !volumeView) return <div></div>
 
@@ -70,6 +70,17 @@ export function SectionFlags(props: {}) {
             pushView({override: {pinByDefault: !view.pinByDefault}})
           }}/>
         </div>
+        {!!view.pinByDefault && (
+          <div className="field indent compact">
+            <div className="labelWithTooltip">
+              <span>{window.gsm.options.flags.inheritGlobal}</span>
+              <Tooltip tooltip={window.gsm.options.flags.inheritGlobalTooltip}/>
+            </div>
+            <input type="checkbox" checked={!view.inheritPreviousContext} onChange={e => {
+              pushView({override: {inheritPreviousContext: !view.inheritPreviousContext}})
+            }}/>
+          </div>
+        )}
         <div className="field">
           <span>{window.gsm.command.speedChangesPitch}</span>
           <input type="checkbox" checked={!!view.freePitch} onChange={e => {

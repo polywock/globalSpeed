@@ -45,6 +45,7 @@ export type State = {
   version: number,
   language?: string,
   pinByDefault?: boolean,
+  inheritPreviousContext?: boolean,
   hideIndicator?: boolean,
   feedbackVolume?: number,
   hideBadge?: boolean,
@@ -68,7 +69,7 @@ export type State = {
   speedBigStep?: number,
   speedSlider?: {min: number, max: number},
   showNetSeek?: boolean,
-  iOverride?: boolean // when tab is pinned, speeds shows as "1.0i", this disables the "i". 
+  ignorePiP?: boolean // PiP videos are deprioritized for hotkeys.
 }
 
 
@@ -366,7 +367,9 @@ export type Gsm = {
       fullscreenSupport: string,
       ghostMode: string,
       ghostModeTooltip: string,
-      hideMediaView: string
+      hideMediaView: string,
+      inheritGlobal?: string,
+      inheritGlobalTooltip?: string
     },
     editor: {
       header: string,

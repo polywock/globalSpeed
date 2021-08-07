@@ -23,7 +23,9 @@ declare global {
     gsmMgr?: GsmManager,
     isBackground: boolean,
     commandListenerAdded: boolean,
-    ruleManager: URLRuleManager
+    ruleManager: URLRuleManager,
+    previousTabId: number,
+    currentTabId: number
   }
 }
 
@@ -53,7 +55,14 @@ async function main() {
 
   chrome.tabs.onCreated.addListener(tab => {
     if (window.globalState.get({pinByDefault: true}).pinByDefault) {
-      window.globalState.set({override: {isPinned: true}, tabId: tab.id})
+      let openerId = tab.openerTabId
+      if (!openerId) {
+        openerId = window.currentTabId
+        if (window.currentTabId === tab?.id) {
+          openerId = window.previousTabId
+        }
+      }
+      window.globalState.autoPin(tab.id, openerId ?? null)
     }
   })
 }

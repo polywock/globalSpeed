@@ -112,7 +112,9 @@
       "fullscreenSupport": "全屏",
       "ghostMode": "幽灵模式",
       "ghostModeTooltip": "尝试阻止网站更改速度。默认情况下禁用，因为它可能会破坏某些网站。",
-      "hideMediaView": "隐藏媒体列表"
+      "hideMediaView": "隐藏媒体列表",
+      "inheritGlobal": "继承全局",
+      "inheritGlobalTooltip": "新标签可以继承前一个标签的上下文或全局上下文。"
     },
     "editor": {
       "header": "热键编辑器",

@@ -112,7 +112,9 @@
       "fullscreenSupport": "tam ekran",
       "ghostMode": "hayalet modu",
       "ghostModeTooltip": "Web sitesinin hız değiştirmesini engellemeye çalışın. Bazı web sitelerini bozabileceği için varsayılan olarak devre dışıdır.",
-      "hideMediaView": "medya listesini gizle"
+      "hideMediaView": "medya listesini gizle",
+      "inheritGlobal": "küresel miras",
+      "inheritGlobalTooltip": "Yeni sekmeler, önceki sekmenin bağlamını veya genel bağlamı devralabilir."
     },
     "editor": {
       "header": "Kısayol Düzenleyici",

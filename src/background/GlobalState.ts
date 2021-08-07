@@ -62,6 +62,18 @@ export class GlobalState {
 
     return out 
   }
+  autoPin = (tabId: number, openerTabId?: number) => {
+    if (!tabId) return 
+    if (this.pins.find(pin => pin.tabId === tabId)) return 
+
+    let newContext = this.state.common
+    
+    if (openerTabId && this.state.inheritPreviousContext) {
+      newContext = this.pins.find(pin => pin.tabId === openerTabId)?.ctx ?? this.state.common
+    } 
+
+    this.pins.push({tabId, ctx: cloneDeep(newContext)})
+  }
   _set = (override: StateView, tabId: number, overDefault?: boolean) => {
 
     if (overDefault) {

@@ -112,7 +112,9 @@
       "fullscreenSupport": "tela inteira",
       "ghostMode": "modo fantasma",
       "ghostModeTooltip": "Tente impedir que o site mude de velocidade. Desabilitado por padrão, pois pode quebrar alguns sites.",
-      "hideMediaView": "ocultar lista de mídia"
+      "hideMediaView": "ocultar lista de mídia",
+      "inheritGlobal": "herdar global",
+      "inheritGlobalTooltip": "As novas guias podem herdar o contexto da guia anterior ou o contexto global."
     },
     "editor": {
       "header": "Editor de Atalhos",

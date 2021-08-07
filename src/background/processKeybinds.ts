@@ -184,7 +184,7 @@ const commandHandlers: {
   },
   adjustSpeed: async args => {
     const { kb, show, fetch, override, commandInfo, getCycleValue } = args 
-    const view = fetch({speed: true, isPinned: true, keybinds: true, lastSpeed: true, iOverride: true})
+    const view = fetch({speed: true, isPinned: true, keybinds: true, lastSpeed: true})
     
     let value: number 
 
@@ -208,7 +208,7 @@ const commandHandlers: {
     } 
     override.lastSpeed = view.speed  
  
-    show({text: formatSpeed(override.speed, view.iOverride ? false : view.isPinned)})
+    show({text: formatSpeed(override.speed, false)})
   },
   speedChangesPitch: async args => {
     const { kb, show, override, fetch } = args 

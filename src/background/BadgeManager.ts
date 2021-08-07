@@ -18,7 +18,11 @@ export class BadgeManager {
   }, 1000)
 
   constructor() {
-    chrome.tabs.onActivated.addListener(updateBadges)
+    chrome.tabs.onActivated.addListener(tab => {
+      window.previousTabId = window.currentTabId 
+      window.currentTabId = tab.tabId
+      updateBadges()
+    })
     chrome.tabs.onUpdated.addListener(updateBadges)
   }
 }

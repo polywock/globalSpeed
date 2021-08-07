@@ -112,7 +112,9 @@
       "fullscreenSupport": "全画面表示",
       "ghostMode": "ゴーストモード",
       "ghostModeTooltip": "速度の変化からサイトをブロックしてみてください。一部のWebサイトを破壊する可能性があるため、デフォルトでは無効になっています。",
-      "hideMediaView": "メディアリストを隠す"
+      "hideMediaView": "メディアリストを隠す",
+      "inheritGlobal": "グローバルを継承",
+      "inheritGlobalTooltip": "新しいタブは、前のタブのコンテキストまたはグローバルコンテキストを継承することができます。"
     },
     "editor": {
       "header": "ショートカットエディター",

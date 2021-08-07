@@ -112,7 +112,9 @@
       "fullscreenSupport": "schermo intero",
       "ghostMode": "ghost mode",
       "ghostModeTooltip": "Prova a evitare che il sito cambi velocità. Disabilitato di default perchè potrebbe non funzionare su qualche sito.",
-      "hideMediaView": "nascondi lista di riproduzione"
+      "hideMediaView": "nascondi lista di riproduzione",
+      "inheritGlobal": "ereditare globale",
+      "inheritGlobalTooltip": "Le nuove schede possono ereditare il contesto della scheda precedente o il contesto globale."
     },
     "editor": {
       "header": "Modifica Scorciatoie",

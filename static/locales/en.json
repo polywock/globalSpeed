@@ -112,7 +112,9 @@
       "fullscreenSupport": "fullscreen",
       "ghostMode": "ghost mode",
       "ghostModeTooltip": "Try to block website from changing speed. Disabled by default because it might break some websites.",
-      "hideMediaView": "hide media list"
+      "hideMediaView": "hide media list",
+      "inheritGlobal": "inherit global",
+      "inheritGlobalTooltip": "New tab's can inherit from the global context or the previous tab's context?"
     },
     "editor": {
       "header": "Shortcut Editor",

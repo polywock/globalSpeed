@@ -36,7 +36,7 @@ export const Tooltip = (props: ToolTipProps) => {
       updateRef(e.clientX, e.clientY)
     }}>{props.label ?? "?"}</span>
     {ref && (
-      <ModalBase onClose={() => setRef(null)}>
+      <ModalBase color={"#00000000"} onClose={() => setRef(null)}>
         <div
           className="fg" 
           tabIndex={0} 
