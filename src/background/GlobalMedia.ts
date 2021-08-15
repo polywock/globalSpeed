@@ -72,10 +72,10 @@ export class GlobalMedia {
     const pippedInfo = infos.find(info => info.pipMode)
     if (!ignorePiP && pippedInfo) return pippedInfo
 
-    if (!tabInfo) return 
+    if (!tabInfo) return (pippedInfo || undefined)
     infos = infos.filter(info => info.tabInfo.tabId === tabInfo.tabId)
 
-    if (!infos.length) return
+    if (!infos.length) return (pippedInfo || undefined)
 
 
     let peakIntersect = infos.filter(v => v.intersectionRatio != null).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.intersectionRatio
