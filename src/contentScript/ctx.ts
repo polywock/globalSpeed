@@ -42,7 +42,6 @@ function main() {
   // #endregion
 
   toStringHijack = new ToStringHijack()
-  ensureBilibili()
   ghostMode = new GhostMode()
   client = new StratumClient()
 
@@ -94,26 +93,6 @@ function ensureSoundcloud() {
     const out = og.apply(this, [document.createElement("audio")])
     return out  
   }
-}
-
-function ensureBilibili() {
-  if (!document.domain.includes("bilibili.com")) return 
-  
-  let og = window.localStorage.getItem;
-  window.localStorage.getItem = function(...args) {
-    let out = og.apply(this, args)
-    try {
-      if (args[0] === "bwphevc_supported") {
-        let parsed = JSON.parse(out);
-        if (parsed.supported && !(parsed?.info?.isBrowserHEVCTypeSupported)) {
-          parsed.supported = false  
-          return JSON.stringify(parsed)
-        }
-      }
-    } catch (err) {}
-    return out 
-  }
-  toStringHijack.set(window.localStorage.getItem, og)
 }
 
 class ToStringHijack {
