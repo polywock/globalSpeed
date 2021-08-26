@@ -23,23 +23,27 @@ export class BadgeManager {
       window.currentTabId = tab.tabId
       updateBadges()
     })
-    chrome.tabs.onUpdated.addListener(updateBadges)
+    // chrome.tabs.onUpdated.addListener(updateBadges)
   }
 }
 
 async function updateBadges() {
   const tabs = await queryTabsSeveral({active: true, currentWindow: undefined})
+
   if (!tabs?.length) return 
 
   const tabIds = tabs.map(tab => tab.id)
   const common = await fetchView({speed: true, enabled: true, hideBadge: true})
+
+  let globalText = ""
 
   // set global badge text. 
   if (common.hideBadge || !common.enabled) {
     chrome.browserAction.setBadgeText({text: "", tabId: null})
   } else {
     chrome.browserAction.setBadgeBackgroundColor({color: "#a64646"})
-    chrome.browserAction.setBadgeText({text: formatSpeedForBadge(common.speed), tabId: null})
+    globalText = formatSpeedForBadge(common.speed)
+    chrome.browserAction.setBadgeText({text: globalText, tabId: null})
   }
 
   // set global icon.
@@ -50,13 +54,22 @@ async function updateBadges() {
     const tabView = await fetchView({speed: true, enabled: true, isPinned: true}, tabId)
 
     if (common.hideBadge || !tabView.enabled) {
-      chrome.browserAction.setBadgeText({text: "", tabId})
+      if (globalText !== "") {
+        chrome.browserAction.setBadgeText({text: "", tabId})
+      }
     } else {
-      chrome.browserAction.setBadgeBackgroundColor({color: tabView.isPinned ? "#44a" : "#a64646", tabId: tabId})
-      chrome.browserAction.setBadgeText({text: formatSpeedForBadge(tabView.speed), tabId})
+      if (tabView.isPinned) {
+        chrome.browserAction.setBadgeBackgroundColor({color: "#44a", tabId: tabId})
+      }
+      const text = formatSpeedForBadge(tabView.speed)
+      if (text !== globalText) {
+        chrome.browserAction.setBadgeText({text, tabId})
+      }
     }
     
-    chrome.browserAction.setIcon({path: tabView.enabled ? standardIcons : grayscaleIcons, tabId})
+    if ((tabView.enabled || null) != (common.enabled || null)) {
+      chrome.browserAction.setIcon({path: tabView.enabled ? standardIcons : grayscaleIcons, tabId})
+    }
   }
 }
 
