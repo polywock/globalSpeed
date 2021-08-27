@@ -62,7 +62,9 @@ async function main() {
           openerId = window.previousTabId
         }
       }
-      window.globalState.autoPin(tab.id, openerId ?? null)
+      window.globalState.unfreeze()
+      if (window.globalState.pins?.find(pin => pin.tabId === tab.id)) return 
+      window.globalState.set([{tabId: tab.id, inheritContextFromTabId: openerId ?? null, override: {isPinned: true}}])
     }
   })
 }

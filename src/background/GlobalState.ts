@@ -62,19 +62,7 @@ export class GlobalState {
 
     return out 
   }
-  autoPin = (tabId: number, openerTabId?: number) => {
-    if (!tabId) return 
-    if (this.pins.find(pin => pin.tabId === tabId)) return 
-
-    let newContext = this.state.common
-    
-    if (openerTabId && this.state.inheritPreviousContext) {
-      newContext = this.pins.find(pin => pin.tabId === openerTabId)?.ctx ?? this.state.common
-    } 
-
-    this.pins.push({tabId, ctx: cloneDeep(newContext)})
-  }
-  _set = (override: StateView, tabId: number, overDefault?: boolean) => {
+  _set = (override: StateView, tabId: number, overDefault?: boolean, inheritContextFromTabId?: number) => {
 
     if (overDefault) {
       this.state = getDefaultState()
@@ -111,9 +99,15 @@ export class GlobalState {
         flags.isPinnedCurrent = true 
         
         this.pins = this.pins || []
+
+        let newContext = this.state.common
+        if (inheritContextFromTabId && this.state.inheritPreviousContext) {
+          newContext = this.pins.find(pin => pin.tabId === inheritContextFromTabId)?.ctx ?? this.state.common
+        } 
+
         this.pins.push({
           tabId,
-          ctx: cloneDeep(this.state.common)
+          ctx: cloneDeep(newContext)
         })
         lazyInit(true)
       }
@@ -159,7 +153,7 @@ export class GlobalState {
     for (let init of inits) {
       const {override, tabId, ignoreSub, overDefault} = init
 
-      const flags = this._set(override, tabId, overDefault)
+      const flags = this._set(override, tabId, overDefault, init.inheritContextFromTabId)
 
       if (flags.contextCommon.includes("speed") || flags.real.includes("freePitch")) {
         speedOrFreePitch = true 
@@ -422,5 +416,6 @@ export type SetInit = {
   override: StateView, 
   tabId?: number, 
   ignoreSub?: string, 
-  overDefault?: boolean
+  overDefault?: boolean,
+  inheritContextFromTabId?: number
 }

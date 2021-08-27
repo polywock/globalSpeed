@@ -180,7 +180,7 @@ const commandHandlers: {
     } else {
       override.isPinned = true 
     }
-    show({text: formatSpeed(speed, override.isPinned)})
+    show({text: override.isPinned ? "local" : "global", small: true})
   },
   adjustSpeed: async args => {
     const { kb, show, fetch, override, commandInfo, getCycleValue } = args 
@@ -208,7 +208,7 @@ const commandHandlers: {
     } 
     override.lastSpeed = view.speed  
  
-    show({text: formatSpeed(override.speed, false)})
+    show({text: formatSpeed(override.speed)})
   },
   speedChangesPitch: async args => {
     const { kb, show, override, fetch } = args 
