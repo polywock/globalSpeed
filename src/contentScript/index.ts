@@ -30,7 +30,6 @@ async function main() {
   gvar.smartFs = new SmartFs()
   gvar.nativeFs = new NativeFs()
   gvar.keyListener = new WindowKeyListener()
-  ensureBilibili()
 
   if (!(window.frameElement?.id === "ajaxframe")) {
     injectCtx()
@@ -116,14 +115,6 @@ class VisibleSync {
       gvar.configSync = gvar.configSync ?? new ConfigSync() 
     }
   }
-}
-
-function ensureBilibili() {
-  if (!document.domain.includes("bilibili.com")) return 
-  if (localStorage.getItem("GS_BILI_FLAG")) return
-  
-  localStorage.setItem("GS_BILI_FLAG", "1")
-  localStorage.setItem("bilibili_player_codec_prefer_type", "2")
 }
 
 main()

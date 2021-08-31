@@ -4,13 +4,14 @@ import { TabInfo } from "../../utils/browserUtils"
 export function generateMediaState(elem: HTMLMediaElement): MediaInfo {
   const rootNode = elem.getRootNode() as ShadowRoot | Document 
 
+  const isVideo = elem instanceof HTMLVideoElement
   const w = (elem as HTMLVideoElement).videoWidth
   const h = (elem as HTMLVideoElement).videoHeight
-  const videoSize = (elem instanceof HTMLVideoElement && w && h) ? {w, h} : null
+  const videoSize = (isVideo && w && h) ? {w, h} : null
   
   return {
     key: elem.gsKey,
-    isVideo: elem instanceof HTMLVideoElement,
+    isVideo,
     duration: elem.duration,
     infinity: elem.duration === Infinity || undefined,
     paused: elem.paused,
@@ -79,7 +80,7 @@ export type MediaInfo = {
   videoSize?: {w: number, h: number},
   inLoop?: boolean,
   marks: string[],
-  intersectionRatio?: number 
+  intersectionRatio?: number
 }
 
 export type FlatMediaInfo = MediaScope & MediaInfo

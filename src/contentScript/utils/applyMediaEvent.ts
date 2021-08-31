@@ -8,7 +8,7 @@ export function seek(elem: HTMLMediaElement, value: number, relative: boolean, f
   let newPosition = relative ? elem.currentTime + value : value 
 
   // If browser supports seekToNextFrame like Firefox, relative change of 0.041 will be trigger to call it. 
-  if (relative && HTMLMediaElement.prototype.seekToNextFrame && !IS_SPECIAL_SEEK && Math.abs(value) === 0.041) {
+  if (relative && elem.seekToNextFrame && !IS_SPECIAL_SEEK && Math.abs(value) === 0.041) {
     elem.paused || elem.pause()
     if (value < 0) {
       newPosition = elem.currentTime - (elem.gsFrameSpan ?? 0.04)
@@ -44,7 +44,7 @@ function seekTo(elem: HTMLMediaElement, value: number, fast?: boolean, autoPause
     return 
   } 
 
-  if (fast && HTMLMediaElement.prototype.fastSeek) {
+  if (fast && elem.fastSeek) {
     elem.fastSeek(value)
   } else {
     elem.currentTime = value

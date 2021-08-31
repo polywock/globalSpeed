@@ -27,57 +27,40 @@ export class BadgeManager {
     })
     isFirefox() && chrome.tabs.onUpdated.addListener(this.updateBadgesDeb)
   }
-  updateBadgesDeb = debounce(updateBadges, 300, {trailing: true, leading: true})
+  updateBadgesDeb = debounce(updateBadges, 500, {trailing: true, leading: true})
 }
 
 
 async function updateBadges() {
   const tabs = await queryTabsSeveral({active: true, currentWindow: undefined})
-
   if (!tabs?.length) return 
 
   const tabIds = tabs.map(tab => tab.id)
-  const common = window.globalState.get({speed: true, enabled: true, hideBadge: true})
-
-  let globalText = ""
+  const common = await fetchView({speed: true, enabled: true, hideBadge: true})
 
   // set global badge text. 
   if (common.hideBadge || !common.enabled) {
     chrome.browserAction.setBadgeText({text: "", tabId: null})
   } else {
     chrome.browserAction.setBadgeBackgroundColor({color: "#a64646"})
-    globalText = formatSpeedForBadge(common.speed)
-    chrome.browserAction.setBadgeText({text: globalText, tabId: null})
+    chrome.browserAction.setBadgeText({text: formatSpeedForBadge(common.speed), tabId: null})
   }
 
   // set global icon.
   chrome.browserAction.setIcon({path: common.enabled ? standardIcons : grayscaleIcons})
-  
-  await new Promise((res, rej) => setTimeout(() => res(true), 50))
 
   // override for each active tab.
   for (let tabId of tabIds) {
-    const tabView = window.globalState.get({speed: true, enabled: true, isPinned: true}, tabId)
+    const tabView = await fetchView({speed: true, enabled: true, isPinned: true}, tabId)
 
     if (common.hideBadge || !tabView.enabled) {
-      if (isFirefox() || globalText !== "") {
-        chrome.browserAction.setBadgeText({text: "", tabId})
-      }
+      chrome.browserAction.setBadgeText({text: "", tabId})
     } else {
-      if (tabView.isPinned) {
-        chrome.browserAction.setBadgeBackgroundColor({color: "#44a", tabId})
-      } else if (isFirefox()) {
-        chrome.browserAction.setBadgeBackgroundColor({color: "#a64646", tabId})
-      }
-      const text = formatSpeedForBadge(tabView.speed)
-      if (isFirefox() || text !== globalText) {
-        chrome.browserAction.setBadgeText({text, tabId})
-      }
+      chrome.browserAction.setBadgeBackgroundColor({color: tabView.isPinned ? "#44a" : "#a64646", tabId: tabId})
+      chrome.browserAction.setBadgeText({text: formatSpeedForBadge(tabView.speed), tabId})
     }
     
-    if ((tabView.enabled || null) != (common.enabled || null)) {
-      chrome.browserAction.setIcon({path: tabView.enabled ? standardIcons : grayscaleIcons, tabId})
-    }
+    chrome.browserAction.setIcon({path: tabView.enabled ? standardIcons : grayscaleIcons, tabId})
   }
 }
 
