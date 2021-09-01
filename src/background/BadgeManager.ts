@@ -25,7 +25,11 @@ export class BadgeManager {
       window.currentTabId = tab.tabId
       this.updateBadgesDeb()
     })
-    isFirefox() && chrome.tabs.onUpdated.addListener(this.updateBadgesDeb)
+    chrome.tabs.onUpdated.addListener((tabId, info) => {
+      if (info.status) {
+        this.updateBadgesDeb()
+      }
+    })
   }
   updateBadgesDeb = debounce(updateBadges, 500, {trailing: true, leading: true})
 }
