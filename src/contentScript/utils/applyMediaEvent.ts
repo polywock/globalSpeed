@@ -27,6 +27,11 @@ export function seek(elem: HTMLMediaElement, value: number, relative: boolean, f
   seekTo(elem, newPosition, fast, autoPause)
 }
 
+export function seekPercentage(elem: HTMLMediaElement, value: number, fast?: boolean, autoPause?: boolean) {
+  if (Math.abs(elem.duration) === Infinity) return 
+  seekTo(elem, elem.duration * value, fast, autoPause)
+}
+
 function seekTo(elem: HTMLMediaElement, value: number, fast?: boolean, autoPause?: boolean) {
   // fast seek is not precise for small changes.
   if (fast && (value < 10 || Math.abs(elem.currentTime - value) < 3)) {
@@ -251,6 +256,10 @@ export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
   if (e.type === "PLAYBACK_RATE") {
     setPlaybackRate(elem, e.value, e.freePitch)
   } else if (e.type === "SEEK") {
+    if (e.percent) {
+      seekPercentage(elem, e.value, e.fast, e.autoPause)
+      return 
+    }
     seek(elem, e.value, e.relative, e.fast, e.autoPause)
   } else if (e.type === "PAUSE") {
     setPause(elem, e.state)
@@ -282,7 +291,7 @@ export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
 }
 
 export type MediaEventPlaybackRate = {type: "PLAYBACK_RATE", value: number, freePitch: boolean}
-export type MediaEventSeek = {type: "SEEK", value: number, relative: boolean, fast?: boolean, autoPause?: boolean}
+export type MediaEventSeek = {type: "SEEK", value: number, relative?: boolean, fast?: boolean, autoPause?: boolean, percent?: boolean}
 export type MediaEventPause = {type: "PAUSE", state: StateOption}
 export type MediaEventMute = {type: "MUTE", state: StateOption}
 export type MediaEventSetVolume = {type: "SET_VOLUME", value: number, relative: boolean}

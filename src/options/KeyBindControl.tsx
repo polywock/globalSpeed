@@ -9,7 +9,7 @@ import { filterInfos, FilterName, filterTargets  } from "../defaults/filters"
 import { GoChevronDown, GoChevronUp, GoX, GoTriangleDown, GoCode, GoPin, GoZap, GoKebabVertical } from "react-icons/go"
 import { CycleInput } from "../comps/CycleInput"
 import { ModalText } from "../comps/ModalText"
-import { FaPowerOff, FaPause, FaEquals, FaBookmark, FaLink, FaVolumeUp, FaVolumeMute, FaGlobe, FaFile, FaBackward, FaForward, FaArrowRight, FaExchangeAlt, FaPlus, FaMusic, FaList, FaStar } from "react-icons/fa"
+import { FaPowerOff, FaPause, FaEquals, FaBookmark, FaLink, FaVolumeUp, FaVolumeMute, FaGlobe, FaPercent, FaFile, FaBackward, FaForward, FaArrowRight, FaExchangeAlt, FaPlus, FaMusic, FaList, FaStar } from "react-icons/fa"
 import { requestCreateTab } from "../utils/browserUtils"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { BsMusicNoteList } from "react-icons/bs"
@@ -52,6 +52,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
   let min = setMin 
   let max = setMax 
   let defaultValue = setDefaultValue 
+  let noNull = commandInfo.noNull
 
   if (value.adjustMode === AdjustMode.ADD) {
     min = null; 
@@ -66,7 +67,13 @@ export const KeybindControl = (props: KeybindControlProps) => {
   if (commandInfo.valueType == "adjustMode" && value.adjustMode === AdjustMode.ADD) {
     numericInput = "valueNumberAlt"
   }
-
+  if (value.command === "seek" && value.valueBool4) {
+    numericInput = "valueNumberAlt"
+    min = 0
+    max = 100 
+    defaultValue = 50
+    noNull = false 
+  }
 
   const specialKey = value.command === "setMark" && ["::nameless", "::nameless-prev", "::nameless-next"].includes(value.valueString?.toLowerCase())
   if (specialKey) {
@@ -177,19 +184,20 @@ export const KeybindControl = (props: KeybindControlProps) => {
           <FaBookmark size="0.95em"/>
         </div>}
         {value.command === "toggleLoop" && <TiArrowLoop size="1.4em"/>}
-        {value.command === "seek" && <>
+        {value.command === "seek" && value.valueBool4 && <FaPercent size="0.95em"/>}
+        {value.command === "seek" && !value.valueBool4 && <>
           {value.valueNumber < 0 && (
             <FaBackward size="0.95em"/>
           )}
-          {value.valueNumber > 0 && (
+          {value.valueNumber >= 0 && (
             <FaForward size="0.95em"/> 
           )}
         </>}
         {value.command === "tabCapture" && <div className={`captureIcon ${value.enabled ? "active" : ""}`}><div></div></div>}
         <span onContextMenu={handleContextMenu}>{label}</span>
         {value.command === "seek"&& <>
-          {Math.abs(value.valueNumber) >= 1 ? (
-            <button disabled={!!(props.hideIndicator || value.hideIndicator)} style={{marginLeft: "5px"}} title={window.gsm.command.showNetTooltip} className={`toggle ${props.showNetSpeed ? "active" : ""}`} onClick={e => {
+          {!(props.hideIndicator || value.hideIndicator || value.valueBool4 || Math.abs(value.valueNumber) < 1) ? (
+            <button title={window.gsm.command.showNetTooltip} className={`toggle ${props.showNetSpeed ? "active" : ""}`} onClick={e => {
               pushView({override: {showNetSeek: !props.showNetSpeed}})
   
               if (!props.showNetSpeed) {
@@ -197,15 +205,26 @@ export const KeybindControl = (props: KeybindControlProps) => {
               }
             }}>{":"}</button>
           ) : null}
-          <button title={window.gsm.command.relativeTooltip} className={`toggle ${value.valueBool ? "active" : ""}`} onClick={e => {
+          {!value.valueBool4 && (
+            <button title={window.gsm.command.relativeTooltip} className={`toggle ${value.valueBool ? "active" : ""}`} onClick={e => {
+              props.onChange(value.id, produce(value, d => {
+                d.valueBool = !d.valueBool
+              }))
+  
+              if (!value.valueBool) {
+                feedbackText(window.gsm.command.relativeTooltip, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
+              }
+            }}>{"×"}</button>
+          )}
+          <button title={"0% to 100%"} className={`toggle ${value.valueBool4 ? "active" : ""}`} onClick={e => {
             props.onChange(value.id, produce(value, d => {
-              d.valueBool = !d.valueBool
+              d.valueBool4 = !d.valueBool4
             }))
 
-            if (!value.valueBool) {
-              feedbackText(window.gsm.command.relativeTooltip, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
+            if (!value.valueBool4) {
+              feedbackText("0% to 100%", domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
             }
-          }}>{"×"}</button>
+          }}>{"%"}</button>
         </>}
         {(HTMLMediaElement.prototype.fastSeek && (value.command === "seek" || value.command === "seekMark") && (Math.abs(value.valueNumber) >= 3 || value.command === "seekMark")) && <>
           <button title={window.gsm.command.fastSeekTooltip} className={`toggle ${value.valueBool2 ? "active" : ""}`} onClick={e => {
@@ -298,7 +317,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
       }}/>
     )}
     {numericInput && (
-      <NumericInput noNull={commandInfo.noNull} placeholder={defaultValue?.toString() ?? null} min={min} max={max} value={value[numericInput]} onChange={v => {
+      <NumericInput noNull={noNull} placeholder={defaultValue?.toString() ?? null} min={min} max={max} value={value[numericInput]} onChange={v => {
         props.onChange(value.id, produce(value, d => {
           d[numericInput] = v
         }))

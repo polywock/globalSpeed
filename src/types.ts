@@ -9,18 +9,10 @@ declare global {
   }
   
   var gvar: GlobalVar
-
-  interface DocumentOrShadowRoot {
-    pictureInPictureElement: HTMLVideoElement,
-  }
-  interface Document {
-    exitPictureInPicture: () => void 
-  }
   interface Event {
     processed?: boolean
   }
   interface HTMLVideoElement {
-    requestPictureInPicture: () => Promise<void>
     intersectionRatio: number 
   }
   interface HTMLMediaElement {
@@ -179,6 +171,7 @@ export type Keybind = {
   valueBool?: boolean,
   valueBool2?: boolean,
   valueBool3?: boolean,
+  valueBool4?: boolean,
   filterOption?: FilterName,
   filterTarget?: TargetFx,
   adjustMode?: AdjustMode,

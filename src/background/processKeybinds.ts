@@ -225,6 +225,13 @@ const commandHandlers: {
   },
   seek: async args => {
     const { kb, media, applyToMedia, show, fetch } = args
+    if (kb.valueBool4) {
+      const value = kb.valueNumberAlt ?? 50
+      show({text: `${value?.toFixed(0)}%`})
+      applyToMedia({type: "SEEK", percent: true, value: value / 100, fast: kb.valueBool2, autoPause: kb.valueBool3})
+      return 
+    } 
+
     const { showNetSeek } = fetch({showNetSeek: true})
     const speed = fetch({speed: true}).speed ?? 1
 
