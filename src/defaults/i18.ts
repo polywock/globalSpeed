@@ -13,6 +13,7 @@ export const LOCALE_MAP: {
   "pt_BR": { display: "Português", title: "Portuguese" },
   "ru": { display: "Русский", title: "Russian" },
   "tr": { display: "Türkçe", title: "Turkish" },
+  "vi": { display: "Tiếng Việt", title: "Vietnamese" },
   "zh_CN": { display: "中文 (简体)", title: "Chinese (Simplified)" },
   "zh_TW": { display: "中文 (繁體)", title: "Chinese (Traditional)" }
 }
