@@ -1,0 +1,144 @@
+{
+  "audio": {
+    "captureTab": "capture",
+    "releaseTab": "release",
+    "split": "split",
+    "mono": "mono",
+    "reverse": "reverse",
+    "pan": "pan"
+  },
+  "warnings": {
+    "backdropFirefox": "Người dùng Firefox cần bật \"gfx.webrender.all\" và \"layout.css.backdrop-filter.enabled\" bằng cách truy cập URL \"about:config\". Khởi động lại Firefox sau khi bật hai flags.",
+    "unusedGlobal": "Loại bỏ các phím tắt chung không sử dụng",
+    "selectTooltip": "Chọn video ưa thích cho các phím nóng phương tiện. Hữu ích nếu bạn muốn điều khiển nhạc nền từ một tab khác (hoặc từ một chương trình khác với các phím nóng chung).",
+    "sliderTooltip": "⇧ giữ phím shift để điều khiển chính xác."
+  },
+  "token": {
+    "create": "tạo mới",
+    "reset": "cài lại",
+    "hide": "ẩn giấu",
+    
+    "on": "bật",
+    "off": "tắt",
+    "toggle": "chuyển đổi",
+    
+    "element": "thành phần",
+    "backdrop": "phông nền",
+    "both": "cả hai",
+    
+    "query": "câu hỏi",
+    "warning": "cảnh báo",
+    "filters": "bộ lọc",
+    "transforms": "biến đổi",
+
+    "blockEvents": "chặn sự kiện",
+    "hideIndicator": "ẩn chỉ báo",
+    "indicator": "chỉ báo",
+    "color": "màu sắc",
+    "size": "kích cỡ",
+    "rounding": "làm tròn",
+    "duration": "khoảng thời gian",
+    "offset": "bù lại",
+    "rows": "hàng",
+    
+    "any": "any",
+    "all": "tất cả",
+    "copy": "sao chép",
+    "paste": "dán"
+  },
+  "filter": {
+    "grayscale": "thước xám",
+    "sepia": "nâu đỏ",
+    "hueRotate": "màu xoay vòng",
+    "contrast": "tương phản",
+    "brightness": "độ sáng",
+    "saturate": "bão hòa",
+    "invert": "đảo ngược",
+    "blur": "làm mờ",
+    "opacity": "độ đậm nhạt",
+    "scaleX": "scaleX",
+    "scaleY": "scaleY",
+    "translateX": "translateX",
+    "translateY": "translateY",
+    "rotateX": "rotateX",
+    "rotateY": "rotateY",
+    "rotateZ": "rotateZ"
+  },
+  "fxPanel": {
+    "queryTooltip": "Bộ chọn CSS được sử dụng để tìm các phần tử cần lọc. Ví dụ: 'video, img' sẽ chọn cả video và hình ảnh. Để sử dụng nâng cao, hãy xem tài liệu trực tuyến về bộ chọn CSS.",
+    "intoPane": "into pane"
+  },
+  "command": {
+    "nothing": "không hành động",
+    "runCode": "javascript",
+    "openUrl": "mở URL",
+    "adjustSpeed": "tốc độ",
+    "speedChangesPitch": "tốc độ thay đổi cao độ",
+    "setPin": "ghim tab",
+    "setState": "trạng thái",
+    "seek": "tìm kiếm",
+    "setPause": "tạm dừng",
+    "setMute": "im lặng",
+    "adjustVolume": "âm lượng",
+    "setMark": "đặt điểm đánh dấu",
+    "seekMark": "đến điểm đánh dấu",
+    "toggleLoop": "Vòng AB",
+    "toggleLoopTooltip": "Lặp lại video từ vị trí đã đánh dấu đến vị trí hiện tại.",
+    "fullscreen": "toàn màn hình",
+    "nativeTooltip": "đơn giản",
+    "PiP": "picture-in-picture",
+    "setFx": "Trạng thái FX",
+    "resetFx": "FX reset",
+    "flipFx": "FX swap",
+    "adjustFilter": "bộ lọc",
+    "adjustPitch": "cao độ",
+    "adjustGain": "đạt được",
+    "adjustDelay": "trì hoãn",
+    "tabCapture": "chụp tab",
+    "relativeTooltip": "liên quan đến tốc độ",
+    "fastSeekTooltip": "nhanh hơn nhưng kém chính xác",
+    "showNetTooltip": "hiển thị thời lượng thực"
+  },
+  "options": {
+    "flags": {
+      "header": "Tùy chọn",
+      "language": "ngôn ngữ",
+      "languageTooltip": "Tất cả các ngôn ngữ ngoại trừ tiếng Anh đã được dịch bằng các công cụ trực tuyến.",
+      "darkTheme": "chủ đề tối",
+      "pinByDefault": "ghim theo mặc định",
+      "pinByDefaultTooltip": "Các tab mới sẽ tự động được ghim.",
+      "hideBadge": "ẩn huy hiệu",
+      "hideBadgeTooltip": "Huy hiệu là văn bản trên biểu tượng tiện ích mở rộng.",
+      "fullscreenSupport": "toàn màn hình",
+      "ghostMode": "chế độ ghost",
+      "ghostModeTooltip": "Cố gắng chặn trang web thay đổi tốc độ. Bị tắt theo mặc định vì nó có thể làm hỏng một số trang web.",
+      "hideMediaView": "ẩn danh sách phương tiện",
+      "inheritGlobal": "kế thừa toàn cầu",
+      "inheritGlobalTooltip": "Tab mới có thể kế thừa từ ngữ cảnh chung hay ngữ cảnh của tab trước?"
+    },
+    "editor": {
+      "header": "Chỉnh sửa phím tắt",
+      "toggleMode": "Bạn có thể sử dụng các phím tắt cục bộ hoặc chung.",
+      "toggleModeTooltip": "Các phím tắt chung rất hữu ích khi bạn muốn điều khiển video hoặc âm thanh trong khi sử dụng một chương trình khác.",
+      "greedyMode": "Sẽ cố gắng chặn sự lan truyền sự kiện và các hành vi mặc định.",
+      "speedPresets": "cài đặt trước tốc độ"
+    },
+    "rules": {
+      "header": "Quy tắc URL",
+      "conditions": "Điều kiện URL",
+      "startsWith": "bắt đầu với",
+      "contains": "chứa đựng",
+      "regex": "regex",
+      "LAX": "Chỉ áp dụng một lần cho mỗi tab.",
+      "ILO": "Chỉ kiểm tra trong lần tải trang đầu tiên."
+    },
+    "help": {
+      "header": "Trợ giúp",
+      "issuePrompt": "Có vấn đề hoặc một đề xuất?",
+      "issueDirective": "Cung cấp phản hồi trên Github.",
+      "export": "xuất",
+      "import": "nhập",
+      "areYouSure": "Bạn có chắc?"
+    }
+  }
+}
