@@ -22,13 +22,12 @@ export function migrateSchema(state: State) {
     state = nineToTen(state)
   }
 
-  if (!(state?.version === defaultState.version)) {
-    
-    // purify
-    if (state.keybinds?.length) {
-      state.keybinds = state.keybinds.filter(kb => availableCommandNames.includes(kb.command))
-    }
+  // purify
+  if (state.keybinds?.length) {
+    state.keybinds = state.keybinds.filter(kb => availableCommandNames.includes(kb.command))
+  }
 
+  if (!(state?.version === defaultState.version)) {
     return defaultState
   }
 

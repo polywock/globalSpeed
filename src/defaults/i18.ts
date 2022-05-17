@@ -19,4 +19,4 @@ export const LOCALE_MAP: {
 }
 
 
-export const AVAILABLE_LOCALES = ["en", "es", "it", "ja", "ko", "pt_BR", "ru", "tr", "zh_CN", "zh_TW"]
+export const AVAILABLE_LOCALES = ["en", "es", "it", "ja", "ko", "pt_BR", "ru", "tr", "vi", "zh_CN", "zh_TW"]

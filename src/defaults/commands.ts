@@ -360,14 +360,12 @@ export function getDefaultKeybinds(): Keybind[] {
       key: "KeyZ",
       enabled: true,
       valueNumber: -5,
-      valueBool2: true
     },
     {
       ...commandInfos.seek.generate(),
       key: "KeyX",
       enabled: true,
       valueNumber: 10,
-      valueBool2: true,
       spacing: 1
     },
     {

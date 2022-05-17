@@ -42,6 +42,12 @@ export const KeyPicker = (props: KeyPickerProps) => {
       onKeyDown={handleOnKeyDown} 
       onClick={e => setEnterState(!enterState)} 
       tabIndex={0} 
+      onContextMenu={e => {
+        e.preventDefault()
+        e.stopPropagation()
+        enterState && setEnterState(false)
+        props.onChange?.(null)
+      }}
       className="KeyPicker">
       {enterState ? "..." : formatHotkey(props.value)}
     </div>

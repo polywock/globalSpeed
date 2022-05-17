@@ -28,18 +28,8 @@ function main() {
 
     ensureSoundcloud()
   }
-  
-  
-  // #region ignore, used for testing
-  // console.log("CTX NOW", performance.now())
-  // const scripts = [...document.scripts].filter(v => v.src);
-  // scripts.length && console.log(scripts.map(v => v.src).join(", "));
-  // scripts.forEach(v => {
-  //   v.onload = () => {
-  //     console.log("LOADED", v.src)
-  //   }
-  // })
-  // #endregion
+  ensureBaidu()
+
 
   toStringHijack = new ToStringHijack()
   ensureBilibili()
@@ -94,6 +84,11 @@ function ensureSoundcloud() {
     const out = og.apply(this, [document.createElement("audio")])
     return out  
   }
+}
+
+function ensureBaidu() {
+  if (!location.hostname.includes("pan.baidu.com")) return 
+  delete HTMLCanvasElement.prototype.getContext
 }
 
 function ensureBilibili() {
