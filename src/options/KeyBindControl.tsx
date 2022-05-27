@@ -22,7 +22,7 @@ import { Menu } from "../comps/Menu"
 import { URLModal } from "./URLModal"
 import { getDefaultURLCondition } from "../defaults"
 import { pushView } from "../background/GlobalState"
-import "./KeybindControl.scss"
+import "./KeyBindControl.scss"
 
 
 type KeybindControlProps = {
