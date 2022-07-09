@@ -35,6 +35,7 @@ export class Overlay {
       grid-auto-flow: column;
       align-items: center;
       border: none;
+      user-select: none;
     `)
 
     this.backdrop.setAttribute("style", `

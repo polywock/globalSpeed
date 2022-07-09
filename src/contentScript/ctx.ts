@@ -5,7 +5,6 @@ import { native } from "./utils/nativeCodes"
 import { isFirefox } from "../utils/helper"
 
 
-
 document.currentScript?.remove()
 
 declare global {
@@ -19,6 +18,9 @@ let shadowRoots: ShadowRoot[] = []
 let client: StratumClient
 let ghostMode: GhostMode
 let toStringHijack: ToStringHijack
+
+let ensureYtLastSpeed: number 
+let handleYtRateChange: (newSpeed: number) => void 
 
 
 function main() {
@@ -35,6 +37,7 @@ function main() {
   ensureBilibili()
   ghostMode = new GhostMode()
   client = new StratumClient()
+  ensureYt()
 
   
   
@@ -88,8 +91,48 @@ function ensureSoundcloud() {
 
 function ensureBaidu() {
   if (!location.hostname.includes("pan.baidu.com")) return 
-  delete HTMLCanvasElement.prototype.getContext
+  const ua = navigator.userAgent
+  // const newUa = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.61 Safari/537.36"
+  let newUa: string
+  
+  if (parseFloat(/^Mozilla\/\d.0 \(.*Windows NT ([\d.]+)[;)].*$/.exec(ua)?.[1]) >= 10) {
+      newUa = ua.replace(/(^Mozilla\/\d.0 \(.*Windows NT )([\d.]+)([;)].*$)/, "$16.3$3")
+  } else if (parseFloat(/^.*Mac OS X ([\d_]+).*$/.exec(ua)?.[1]?.split("_").slice(0, 2).join(".")) >= 11.1 ) {
+      newUa = ua.replace(/(^.*Mac OS X )([\d_]+)(.*$)/, "$110_15_7$3")
+  } 
+  
+  if (newUa) {
+      const desc = Object.getOwnPropertyDescriptor(Navigator.prototype, "userAgent")
+      Object.defineProperty(Navigator.prototype, "userAgent", {...desc, get: function() {return newUa}})
+  }
 }
+
+function ensureYt() {
+  if (location.hostname !== "www.youtube.com") return 
+
+  window.addEventListener("timeupdate", function() {
+    let player = document.querySelector("#movie_player") as any; 
+    if (!player) return 
+
+    try {
+      player.getAvailablePlaybackRates().push(16)
+    } catch (err) {
+      return 
+    }
+
+    handleYtRateChange = (speed: number) => {
+      if (ensureYtLastSpeed === speed) return 
+      ensureYtLastSpeed = speed
+      try {
+        ghostMode.activateFor(1000)
+        player.setPlaybackRate(speed) 
+      } catch (err) {}
+    }
+  
+    client?.send({type: "YT_REQUEST_RATE"})
+  }, {capture: true, once: true})
+}
+
 
 function ensureBilibili() {
   if (!document.domain.includes("bilibili.com")) return 
@@ -136,6 +179,7 @@ class ToStringHijack {
 
 class GhostMode {
   active = false 
+  tempTimeout?: number
   dummyAudio = new Audio()
   ogDesc = {
     playbackRate: Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, "playbackRate"),
@@ -184,8 +228,13 @@ class GhostMode {
 
   }
   activate = () => {
+    if (this.tempTimeout) {
+      clearTimeout(this.tempTimeout)
+      delete this.tempTimeout
+    }
     if (this.active) return 
     this.active = true 
+
 
     native.map.clear.call(this.coherence.playbackRate)
     native.map.clear.call(this.coherence.defaultPlaybackRate)
@@ -196,9 +245,18 @@ class GhostMode {
     })
   }
   deactivate = () => {
+    if (this.tempTimeout) {
+      clearTimeout(this.tempTimeout)
+      delete this.tempTimeout
+    }
     if (!this.active) return 
     this.active = false  
-  } 
+  }  
+  activateFor = (ms: number) => {
+    if (this.active) return 
+    this.activate()
+    this.tempTimeout = setTimeout(this.deactivate, ms) 
+  }
 }
 
 class StratumClient {
@@ -223,6 +281,8 @@ class StratumClient {
       seekNetflix(data.value)
     } else if (data.type === "GHOST") {
       data.off ? ghostMode.deactivate() : ghostMode.activate()
+    } else if (data.type === "YT_RATE_CHANGE") {
+      data.value && handleYtRateChange?.(data.value)
     }
   }
   send = (data: any) => {

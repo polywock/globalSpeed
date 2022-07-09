@@ -1,6 +1,6 @@
 import { Keybind, Command, StateView, StateViewSelector, AdjustMode } from "../types"
 import { CommandName, commandInfos } from "../defaults/commands"
-import { sendMessageToConfigSync, formatSpeed, intoFxFlags, sendMediaEvent, playAudio, SoundName } from "../utils/configUtils"
+import { sendMessageToConfigSync, formatSpeed, intoFxFlags, sendMediaEvent } from "../utils/configUtils"
 import { TabInfo, requestCreateTab } from "../utils/browserUtils"
 import { MediaEvent } from "../contentScript/utils/applyMediaEvent"
 import { OverlayShowOpts } from "../contentScript/Overlay"
@@ -29,11 +29,6 @@ export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
     sendMediaEvent(e, loadedMedia.key, loadedMedia.tabInfo.tabId, loadedMedia.tabInfo.frameId)
   };
 
-  let feedbackSound: SoundName = "good"
-  const setFeedback = (name: SoundName) => {
-    feedbackSound = name 
-  } 
-
 
   for (let kb of keybinds) {
     let commandInfo = commandInfos[kb.command]
@@ -49,10 +44,7 @@ export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
         loadedMedia = window.globalMedia.getAuto(tabInfo, commandInfo.requiresVideo) ?? null 
       }
       
-      if (!loadedMedia) {
-        setFeedback("bad")
-        continue 
-      }
+      if (!loadedMedia) continue
     }
 
     let lazyValues: {value: number, nextIncrement: number}
@@ -78,7 +70,6 @@ export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
       commandHandlers[kb.command]({
         autoCapture,
         getCycleValue,
-        setFeedback,
         fetch,
         override,
         kb,
@@ -101,23 +92,16 @@ export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
         window.globalState.set({override, tabId: tabInfo?.tabId}, true)
       }
     } catch (err) {
-      setFeedback("bad")
       break 
     }
   }
 
   window.globalState.unfreeze()
-
-  if (feedbackSound) {
-    const volume = fetch({feedbackVolume: true}).feedbackVolume
-    if (volume) playAudio(feedbackSound, volume)
-  }
 }
 
 type CommandHandlerArgs = {
   autoCapture: (v: number) => void,
   getCycleValue: () => number,
-  setFeedback: (name: SoundName) => void,
   fetch: (selector: StateViewSelector) => StateView,
   override: StateView,
   kb: Keybind, 
@@ -131,13 +115,10 @@ type CommandHandlerArgs = {
 const commandHandlers: {
   [key in CommandName]: (args: CommandHandlerArgs) => Promise<void>
 } = {
-  nothing: async args => {args.setFeedback(null)},
+  nothing: async args => {},
   runCode: async args => {
     const { kb, tabInfo } = args
-    if (!tabInfo) {
-      args.setFeedback("bad")
-      return 
-    } 
+    if (!tabInfo) return
     sendMessageToConfigSync({type: "INJECT_SCRIPT", requiresFocus: tabInfo.frameId == null ? true : false, code: kb.valueString}, tabInfo.tabId, tabInfo.frameId)
   },
   openUrl: async args => {
@@ -166,10 +147,7 @@ const commandHandlers: {
   },
   setPin: async args => {
     const { kb, tabInfo, override, show, fetch } = args 
-    if (!tabInfo) {
-      args.setFeedback("bad")
-      return 
-    } 
+    if (!tabInfo) return
     const view = fetch({speed: true, isPinned: true})
     let speed = view.speed
     if (kb.valueState === "off" || (kb.valueState === "toggle" && view.isPinned)) {
@@ -327,7 +305,6 @@ const commandHandlers: {
       return 
     } 
 
-    args.setFeedback("bad")
     show({
       icons: ["loop"],
       text: ` ${kb.valueString}???`,
@@ -426,11 +403,8 @@ const commandHandlers: {
     processAudioParam(args, "delay", v => `${v.toFixed(2)}`)
   },
   tabCapture: async args => {
-    const { kb, show, setFeedback, tabInfo } = args 
-    if (!tabInfo) {
-      setFeedback("bad")
-      return 
-    }
+    const { kb, show, tabInfo } = args 
+    if (!tabInfo) return
 
     let state = "off"
 
@@ -448,7 +422,6 @@ const commandHandlers: {
         }
       }
     } catch (err ) {
-      setFeedback("bad")
       return 
     }
 

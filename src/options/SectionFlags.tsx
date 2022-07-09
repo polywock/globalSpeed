@@ -3,8 +3,6 @@ import { Tooltip } from "../comps/Tooltip"
 import { LOCALE_MAP } from "../defaults/i18"
 import { useStateView } from "../hooks/useStateView"
 import { pushView } from "../background/GlobalState"
-import { playAudio } from "../utils/configUtils"
-import { isFirefox } from "../utils/helper"
 import { INDICATOR_INIT } from "../defaults"
 import { SliderMicro } from "../comps/SliderMicro"
 import { Overlay } from "../contentScript/Overlay"
@@ -17,8 +15,7 @@ import "./SectionFlags.scss"
 export function SectionFlags(props: {}) {
   const [showMore, setShowMore] = useState(false)
   const [view, setView] = useStateView({indicatorInit: true, language: true, darkTheme: true, hideBadge: true, pinByDefault: true, ghostMode: true, hideMediaView: true, freePitch: true, inheritPreviousContext: true})
-  const [volumeView, setVolumeView] = useStateView({feedbackVolume: true})
-  if (!view || !volumeView) return <div></div>
+  if (!view) return <div></div>
 
   return (
     <div className="section SectionFlags">
@@ -108,10 +105,9 @@ export function SectionFlags(props: {}) {
 
 function IndicatorFlags(props: {}) {
   const [view, setView] = useStateView({indicatorInit: true, hideIndicator: true, staticOverlay: true})
-  const [volumeView, setVolumeView] = useStateView({feedbackVolume: true})
   const init = view?.indicatorInit || {}
 
-  if (!view || !volumeView) return null 
+  if (!view) return null 
 
 
   return <>
@@ -237,26 +233,6 @@ function IndicatorFlags(props: {}) {
         }}>S</button>
       </div>
     </div>
-    {isFirefox() ? null : (
-        <div className="field indent">
-          <span>{window.gsm.command.adjustVolume}</span>
-          <SliderMicro 
-            value={volumeView.feedbackVolume ?? 0} 
-            onChange={volume => {
-              volume && playAudio("good", volume)
-              setVolumeView({
-                feedbackVolume: volume
-              })
-            }}
-            default={0}
-            min={0}
-            max={1}
-            sliderMin={0}
-            sliderMax={1}
-            sliderStep={0.025}
-          />
-        </div>
-      )}
   </>
 }
 

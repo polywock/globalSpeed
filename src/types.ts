@@ -39,7 +39,6 @@ export type State = {
   pinByDefault?: boolean,
   inheritPreviousContext?: boolean,
   hideIndicator?: boolean,
-  feedbackVolume?: number,
   hideBadge?: boolean,
   hideMediaView?: boolean,
   staticOverlay?: boolean,

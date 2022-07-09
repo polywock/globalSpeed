@@ -31,7 +31,7 @@ export function MediaViews(props: {}) {
 
   return (
     <>
-      {(watchInfo?.infos || []).map(info => (
+      {(watchInfo?.infos || []).filter(info => info.isConnected || info.duration > 0.5 || info.key === watchInfo.pinned).map(info => (
         <MediaView key={info.key} info={info} pinned={info.key === watchInfo.pinned}/>
       ))}
     </>

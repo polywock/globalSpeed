@@ -67,21 +67,6 @@ export function requestGsm(): Promise<Gsm> {
   })
 }
 
-export type SoundName = "good" | "bad"
-let audioInfos = new Map<string, {audio: HTMLAudioElement, timeoutId: number}>()
-export function playAudio(name: SoundName, volume: number) {
-  if (isFirefox() || !(volume > 0)) return 
-  let { audio, timeoutId } = audioInfos.get(name) || {}
-  timeoutId && clearTimeout(timeoutId)
-  try {
-    audio = audio || new Audio(chrome.runtime.getURL(`sounds/${name}.wav`))
-    audioInfos.set(name, {audio, timeoutId: setTimeout(() => audioInfos.delete(name), 5 * 60000)})
-    audio.volume = volume 
-    audio.currentTime = 0
-    audio.play()
-  } catch (err) { }
-}
-
 export function checkURLCondition(url: string, cond: URLCondition, neutral?: boolean) {
   let failedAny = false  
   let passedAny = false 

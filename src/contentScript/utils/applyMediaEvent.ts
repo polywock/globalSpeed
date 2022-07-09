@@ -209,7 +209,7 @@ function togglePip(elem: HTMLVideoElement, state: StateOption = "toggle") {
 
 
 
-function setPlaybackRate(elem: HTMLMediaElement, value: number, freePitch?: boolean) {
+function _setPlaybackRate(elem: HTMLMediaElement, value: number, freePitch?: boolean) {
   value = clamp(0.0625, 16, value)
   try {
     if (elem.playbackRate.toFixed(3) !== value.toFixed(3)) {
@@ -227,6 +227,14 @@ function setPlaybackRate(elem: HTMLMediaElement, value: number, freePitch?: bool
   elem.mozPreservesPitch = !freePitch
   elem.webkitPreservesPitch = !freePitch
 }
+
+function _setPlaybackRateYt(elem: HTMLMediaElement, value: number, freePitch?: boolean) {
+  if (elem.hasAttribute("yss-skip")) return 
+  _setPlaybackRate(elem, value, freePitch)
+}
+
+let setPlaybackRate = IS_YOUTUBE ? _setPlaybackRateYt : _setPlaybackRate
+
 
 function applyFullscreen(elem: HTMLVideoElement, native: boolean) {
   if (IS_BILIBILI && !native) {

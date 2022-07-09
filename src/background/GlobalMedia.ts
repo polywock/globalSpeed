@@ -1,7 +1,6 @@
 import { MediaScope, flattenMediaInfos, FlatMediaInfo } from "../contentScript/utils/genMediaInfo";
 import { compareFrame, MessageCallback, senderToTabInfo, TabInfo } from "../utils/browserUtils";
 import { MediaPath } from "../types";
-import { playAudio } from "src/utils/configUtils";
 
 export class GlobalMedia {
   scopes: MediaScope[] = []
@@ -35,7 +34,6 @@ export class GlobalMedia {
       this.sendUpdate()
       reply(true)
     } else if (msg.type === "MEDIA_PUSH_SCOPE") {
-      this.pushVolume && playAudio("good", this.pushVolume)
       const scope = msg.value as MediaScope
       scope.tabInfo = senderToTabInfo(sender)
       if (!scope.tabInfo) return reply(true) 

@@ -4,6 +4,7 @@ import { applyMediaEvent, MediaEvent } from "./utils/applyMediaEvent";
 import { generateScopeState } from "./utils/genMediaInfo";
 import { MessageCallback } from "../utils/browserUtils";
 import { injectScript } from "./utils";
+import { IS_YOUTUBE } from "./utils/isWebsite";
 import debounce from "lodash.debounce";
 
 
@@ -19,6 +20,7 @@ export class MediaTower {
   constructor() {
     this.processDoc(window)
     this.server.wiggleCbs.add(this.handleWiggle)
+    IS_YOUTUBE && this.server.msgCbs.add(this.handleServerMessage)
     chrome.runtime.onMessage.addListener(this.handleMessage)
   }
   private observe = (video: HTMLVideoElement) => {
@@ -37,6 +39,12 @@ export class MediaTower {
       this.processDoc(parent)
     } else if (parent instanceof HTMLMediaElement) {
       this.processMedia(parent)
+    }
+  }
+  private handleServerMessage = (data: any) => { 
+    if (data?.type === "YT_REQUEST_RATE") {
+      const value = gvar.configSync?.speedSync?.latest?.speed
+      value && this.server.send({type: "YT_RATE_CHANGE", value})
     }
   }
   private handleMessage: MessageCallback = (msg, sender, reply) => {
@@ -90,23 +98,30 @@ export class MediaTower {
     doc.addEventListener("fullscreenchange", this.handleMediaEvent, {capture: true, passive: true})
     doc.addEventListener("webkitfullscreenchange", this.handleMediaEvent, {capture: true, passive: true})
     doc.addEventListener("ratechange", this.handleMediaEvent, {capture: true, passive: true})
+    IS_YOUTUBE && doc.addEventListener("ratechange", this.handleYoutubeRateChange, {capture: true, passive: true})
   }
   private ensureMediaEventListeners = (elem: HTMLMediaElement) => {
     elem.addEventListener("play", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("pause", this.handleMediaEvent, {capture: true, passive: true})
-    elem.addEventListener("ratechange", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("volumechange", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("loadedmetadata", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("emptied", this.handleMediaEvent, {capture: true, passive: true})
+    elem.addEventListener("ratechange", this.handleMediaEvent, {capture: true, passive: true})
   }
   public ensureEventListeners = () => {
     this.docs.forEach(doc => this.ensureDocEventListeners(doc))
     this.media.forEach(media => this.ensureMediaEventListeners(media))
   }
+  private handleYoutubeRateChange = (e: Event) => {
+    const value = (e.target as HTMLMediaElement).playbackRate
+    value && gvar.mediaTower.server.send({type: "YT_RATE_CHANGE", value})
+  }
   private handleMediaEvent = (e: Event) => {
     if (!(e?.isTrusted)) return 
     if (e.processed) return 
     e.processed = true 
+
+    // TODO implement failsafe here for recursive ratechange issue.  
     
     let elem = e.target as HTMLMediaElement
     if (!(elem instanceof HTMLMediaElement)) return 
