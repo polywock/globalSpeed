@@ -147,7 +147,7 @@ export class CaptureManager {
     } catch (err) {
       return 
     }
-    this.audioCtx = this.audioCtx || new AudioContext({sampleRate: 44100})
+    this.audioCtx = this.audioCtx || new AudioContext({sampleRate: 44100, latencyHint: 0})
 
     const outputNode = this.audioCtx.createGain()
     outputNode.connect(this.audioCtx.destination)

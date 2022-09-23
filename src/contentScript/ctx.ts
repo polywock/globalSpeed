@@ -92,13 +92,12 @@ function ensureSoundcloud() {
 function ensureBaidu() {
   if (!location.hostname.includes("pan.baidu.com")) return 
   const ua = navigator.userAgent
-  // const newUa = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.61 Safari/537.36"
   let newUa: string
   
-  if (parseFloat(/^Mozilla\/\d.0 \(.*Windows NT ([\d.]+)[;)].*$/.exec(ua)?.[1]) >= 10) {
-      newUa = ua.replace(/(^Mozilla\/\d.0 \(.*Windows NT )([\d.]+)([;)].*$)/, "$16.3$3")
-  } else if (parseFloat(/^.*Mac OS X ([\d_]+).*$/.exec(ua)?.[1]?.split("_").slice(0, 2).join(".")) >= 11.1 ) {
-      newUa = ua.replace(/(^.*Mac OS X )([\d_]+)(.*$)/, "$110_15_7$3")
+  if (ua.includes("Windows NT")) {
+      newUa = ua.replace("Windows NT", "Windоws NT")
+  } else if (ua.includes("Macintosh")) {
+      newUa = ua.replace("Macintosh", "Macintоsh")
   } 
   
   if (newUa) {
