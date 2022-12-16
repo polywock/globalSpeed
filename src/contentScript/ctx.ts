@@ -33,14 +33,14 @@ function main() {
   ensureBaidu()
 
 
-  toStringHijack = new ToStringHijack()
+  toStringHijack = new ToStringHijack() 
   ensureBilibili()
   ghostMode = new GhostMode()
   client = new StratumClient()
   ensureYt()
+  
 
-  
-  
+
   overridePrototypeMethod(HTMLMediaElement, "play", handleOverrideMedia)
   overridePrototypeMethod(HTMLMediaElement, "pause", handleOverrideMedia)
   overridePrototypeMethod(HTMLMediaElement, "load", handleOverrideMedia)
@@ -156,8 +156,13 @@ function ensureBilibili() {
 class ToStringHijack {
   originalFn = Function.prototype.toString
   outputMap = new Map<any, string> ()
-  constructor() {    
+  constructor() {  
+    if (location.hostname.includes("twitch")) {
+      return 
+    }
+
     let self = this
+
     Function.prototype.toString = function(...args) {
       try {
         const output = native.map.get.call(self.outputMap, this)

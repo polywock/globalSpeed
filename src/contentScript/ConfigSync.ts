@@ -46,9 +46,13 @@ export class ConfigSync {
   }
   handleEnabledChange = () => {
     if (this.client.view?.enabled) {
+      SpeedSync.applySpeedOnHiddenDoc = true 
+
       this.fxSync = this.fxSync ?? new FxSync()
       this.speedSync = this.speedSync ?? new SpeedSync()
     } else {
+      SpeedSync.applySpeedOnHiddenDoc = false 
+
       this.fxSync?.release(); delete this.fxSync
       this.speedSync?.release(); delete this.speedSync
     }

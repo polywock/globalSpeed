@@ -4,7 +4,7 @@ import { randomId } from "../utils/helper";
 import { getDefaultState } from "../defaults";
 import cloneDeep from "lodash.clonedeep";
 import debounce from "lodash.debounce";
-import { sendMediaEvent } from "../utils/configUtils";
+import { sendMediaEvent, sendMessageToConfigSync } from "../utils/configUtils";
 import { migrateSchema } from "../utils/migrateSchema";
 
 
@@ -196,7 +196,7 @@ export class GlobalState {
     window.globalMedia.scopes.forEach(scope => {
       const view = this.get({enabled: true, speed: true, isPinned: true, freePitch: true}, scope.tabInfo?.tabId)
       if (!view.enabled || view.isPinned) return 
-      sendMediaEvent({type: "PLAYBACK_RATE", value: view.speed ?? 1, freePitch: view.freePitch}, null, scope.tabInfo?.tabId, scope.tabInfo?.frameId)
+      sendMessageToConfigSync({type: "BG_SPEED_OVERRIDE", speed: view.speed ?? 1, freePitch: view.freePitch}, scope.tabInfo?.tabId, scope.tabInfo?.frameId)
     })
   }
   persist = () => {

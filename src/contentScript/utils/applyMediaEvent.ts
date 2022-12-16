@@ -207,33 +207,56 @@ function togglePip(elem: HTMLVideoElement, state: StateOption = "toggle") {
   }
 }
 
+const RATE_LIMIT_PERIOD = 1000 * 60 
+const RATE_LIMIT = 200 
+const RATE_LIMIT_BREAK = 3 
 
 
-function _setPlaybackRate(elem: HTMLMediaElement, value: number, freePitch?: boolean) {
-  value = clamp(0.0625, 16, value)
-  try {
-    if (elem.playbackRate.toFixed(3) !== value.toFixed(3)) {
-      elem.playbackRate = value
+class SetPlaybackRate {
+  static rateTracker: {time: number, count: number}
+  static rateLimitPassed = 0 
+  static rateLimitBroken = false 
+  static checkLimited() {
+    if (this.rateLimitBroken) return true  
+
+    const time = Math.ceil(new Date().getTime() / RATE_LIMIT_PERIOD) * RATE_LIMIT_PERIOD
+    if (SetPlaybackRate.rateTracker?.["time"] === time) {
+      if (++SetPlaybackRate.rateTracker["count"] > RATE_LIMIT) {
+        if (++SetPlaybackRate.rateLimitPassed >= RATE_LIMIT_BREAK) {
+          SetPlaybackRate.rateLimitBroken = true 
+        }
+        return true 
+      } 
+    } else {
+      SetPlaybackRate.rateTracker = {time, count: 1}
     }
-  } catch (err) {}
+    return false 
+  }
+  static _set(elem: HTMLMediaElement, value: number, freePitch?: boolean) {
+    if (SetPlaybackRate.checkLimited()) return 
+    value = clamp(0.0625, 16, value)
+    try {
+      if (elem.playbackRate.toFixed(3) !== value.toFixed(3)) {
+        elem.playbackRate = value
+      }
+    } catch (err) {}
 
-  try {
-    if (elem.defaultPlaybackRate.toFixed(3) !== value.toFixed(3)) {
-      elem.defaultPlaybackRate = value
-    }
-  } catch (err) {}
+    try {
+      if (elem.defaultPlaybackRate.toFixed(3) !== value.toFixed(3)) {
+        elem.defaultPlaybackRate = value
+      }
+    } catch (err) {}
 
-  elem.preservesPitch = !freePitch
-  elem.mozPreservesPitch = !freePitch
-  elem.webkitPreservesPitch = !freePitch
+    elem.preservesPitch = !freePitch
+    elem.mozPreservesPitch = !freePitch
+    elem.webkitPreservesPitch = !freePitch
+  }
+  static _setYt(elem: HTMLMediaElement, value: number, freePitch?: boolean) {
+    if (elem.hasAttribute("yss-skip")) return 
+    this._set(elem, value, freePitch)
+  }
+  static set = IS_YOUTUBE ? SetPlaybackRate._setYt : SetPlaybackRate._set
 }
-
-function _setPlaybackRateYt(elem: HTMLMediaElement, value: number, freePitch?: boolean) {
-  if (elem.hasAttribute("yss-skip")) return 
-  _setPlaybackRate(elem, value, freePitch)
-}
-
-let setPlaybackRate = IS_YOUTUBE ? _setPlaybackRateYt : _setPlaybackRate
 
 
 function applyFullscreen(elem: HTMLVideoElement, native: boolean) {
@@ -262,7 +285,7 @@ function applyFullscreen(elem: HTMLVideoElement, native: boolean) {
 export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
   if (!elem) return 
   if (e.type === "PLAYBACK_RATE") {
-    setPlaybackRate(elem, e.value, e.freePitch)
+    SetPlaybackRate.set(elem, e.value, e.freePitch)
   } else if (e.type === "SEEK") {
     if (e.percent) {
       seekPercentage(elem, e.value, e.fast, e.autoPause)

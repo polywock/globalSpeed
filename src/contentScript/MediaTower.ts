@@ -6,6 +6,7 @@ import { MessageCallback } from "../utils/browserUtils";
 import { injectScript } from "./utils";
 import { IS_YOUTUBE } from "./utils/isWebsite";
 import debounce from "lodash.debounce";
+import { SpeedSync } from "./SpeedSync";
 
 
 export class MediaTower {
@@ -43,7 +44,7 @@ export class MediaTower {
   }
   private handleServerMessage = (data: any) => { 
     if (data?.type === "YT_REQUEST_RATE") {
-      const value = gvar.configSync?.speedSync?.latest?.speed
+      const value = SpeedSync.latest?.speed
       value && this.server.send({type: "YT_RATE_CHANGE", value})
     }
   }
@@ -65,6 +66,11 @@ export class MediaTower {
       // used to run "javascript" URL rules
       injectScript(msg.value)
       reply(true); return 
+    } else if (msg.type === "BG_SPEED_OVERRIDE") {
+      SpeedSync.latest = {speed: msg.speed, freePitch: msg.freePitch}
+      console.log("NEW INFO: ", JSON.stringify(SpeedSync.latest))
+      SpeedSync.handleHiddenDocSpeedPrompt()
+      reply(true); return
     }
   }
   public processDoc = (doc: Window | ShadowRoot) => {
@@ -116,12 +122,11 @@ export class MediaTower {
     const value = (e.target as HTMLMediaElement).playbackRate
     value && gvar.mediaTower.server.send({type: "YT_RATE_CHANGE", value})
   }
+  hiddenSpeedUpdateTimeout: number 
   private handleMediaEvent = (e: Event) => {
     if (!(e?.isTrusted)) return 
     if (e.processed) return 
-    e.processed = true 
-
-    // TODO implement failsafe here for recursive ratechange issue.  
+    e.processed = true  
     
     let elem = e.target as HTMLMediaElement
     if (!(elem instanceof HTMLMediaElement)) return 
@@ -129,6 +134,13 @@ export class MediaTower {
 
     this.processMedia(elem)
     this.sendUpdate()
+
+    if (document.hidden && SpeedSync.applySpeedOnHiddenDoc && (e.type === "play" || e.type === "ratechange")) {
+      clearTimeout(this.hiddenSpeedUpdateTimeout)
+      this.hiddenSpeedUpdateTimeout = setTimeout(() => {
+        document.hidden && SpeedSync.handleHiddenDocSpeedPrompt()
+      }, 200)
+    }
 
     if (e.type === "ratechange") {
       gvar.ghostMode && e.stopImmediatePropagation()
