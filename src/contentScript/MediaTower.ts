@@ -68,7 +68,6 @@ export class MediaTower {
       reply(true); return 
     } else if (msg.type === "BG_SPEED_OVERRIDE") {
       SpeedSync.latest = {speed: msg.speed, freePitch: msg.freePitch}
-      console.log("NEW INFO: ", JSON.stringify(SpeedSync.latest))
       SpeedSync.handleHiddenDocSpeedPrompt()
       reply(true); return
     }

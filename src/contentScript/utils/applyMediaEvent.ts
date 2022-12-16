@@ -207,33 +207,32 @@ function togglePip(elem: HTMLVideoElement, state: StateOption = "toggle") {
   }
 }
 
-const RATE_LIMIT_PERIOD = 1000 * 60 
-const RATE_LIMIT = 200 
-const RATE_LIMIT_BREAK = 3 
+const RATE_LIMIT_PERIOD = 1000 * 20 
+const RATE_LIMIT = 1000
+const RATE_LIMIT_MAX_VIOLATIONS = 3 
 
 
 class SetPlaybackRate {
-  static rateTracker: {time: number, count: number}
-  static rateLimitPassed = 0 
-  static rateLimitBroken = false 
-  static checkLimited() {
-    if (this.rateLimitBroken) return true  
+  static checkLimited(elem: HTMLMediaElement) {
+    if (!elem || elem.gsRateBanned) return true 
 
     const time = Math.ceil(new Date().getTime() / RATE_LIMIT_PERIOD) * RATE_LIMIT_PERIOD
-    if (SetPlaybackRate.rateTracker?.["time"] === time) {
-      if (++SetPlaybackRate.rateTracker["count"] > RATE_LIMIT) {
-        if (++SetPlaybackRate.rateLimitPassed >= RATE_LIMIT_BREAK) {
-          SetPlaybackRate.rateLimitBroken = true 
+    if (elem.gsRateCounter?.["time"] === time) {
+      if (++elem.gsRateCounter["count"] > RATE_LIMIT) {
+        elem.gsRateViolations = elem.gsRateViolations ?? 0
+        if (++elem.gsRateViolations >= RATE_LIMIT_MAX_VIOLATIONS) {
+          elem.gsRateBanned = true 
         }
+        delete elem.gsRateCounter
         return true 
       } 
     } else {
-      SetPlaybackRate.rateTracker = {time, count: 1}
+      elem.gsRateCounter = {time, count: 1}
     }
     return false 
   }
   static _set(elem: HTMLMediaElement, value: number, freePitch?: boolean) {
-    if (SetPlaybackRate.checkLimited()) return 
+    if (SetPlaybackRate.checkLimited(elem)) return 
     value = clamp(0.0625, 16, value)
     try {
       if (elem.playbackRate.toFixed(3) !== value.toFixed(3)) {
