@@ -1,6 +1,5 @@
 import { migrateSchema } from "../utils/migrateSchema"
 import { BadgeManager } from './BadgeManager'
-import { PortCapture } from './PortCapture'
 import { getStorage, getActiveTabInfo, queryTabsSeveral } from '../utils/browserUtils'
 import { getDefaultState } from '../defaults'
 import { State } from '../types'
@@ -18,7 +17,6 @@ declare global {
     globalState?: GlobalState,
     globalMedia?: GlobalMedia,
     badgeMgr?: BadgeManager,
-    portCapture?: PortCapture,
     captureMgr: CaptureManager,
     gsmMgr?: GsmManager,
     isBackground: boolean,
@@ -31,7 +29,6 @@ declare global {
 
 async function main() {
   window.isBackground = true 
-  window.portCapture = new PortCapture()
 
   let stateView: State 
   try {
