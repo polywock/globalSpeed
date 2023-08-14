@@ -402,6 +402,9 @@ const commandHandlers: {
   adjustDelay: async args => {
     processAudioParam(args, "delay", v => `${v.toFixed(2)}`)
   },
+  adjustPan: async args => {
+    processAudioParam(args, "pan", v => `${v.toFixed(2)}`)
+  },
   tabCapture: async args => {
     const { kb, show, tabInfo } = args 
     if (!tabInfo) return
@@ -430,7 +433,7 @@ const commandHandlers: {
 }
 
 
-function processAudioParam(args: CommandHandlerArgs, param: "pitch" | "delay" | "volume", format: (v: number) => string) {
+function processAudioParam(args: CommandHandlerArgs, param: "pitch" | "delay" | "volume" | "pan", format: (v: number) => string) {
   const { kb, fetch, show, override, getCycleValue, commandInfo } = args 
   let { audioFx, audioFxAlt } = fetch({audioFx: true, audioFxAlt: true})
 

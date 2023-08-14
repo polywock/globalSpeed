@@ -33,10 +33,10 @@ export function getDefaultAudioFx(): AudioFx {
     pitch: 0,
     volume: 1,
     delay: 0,
-    eq: getDefaultEq()
+    eq: getDefaultEq(),
+    pan: 0
   }
 }
-
 
 export function getDefaultEq(): AudioFx["eq"] {
   return {

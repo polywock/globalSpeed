@@ -160,8 +160,8 @@ export class CaptureManager {
     }
 
     this.infos.push(info)
-    info.client = subscribeView({superDisable: true, enabled: true, audioFx: true, audioFxAlt: true, monoOutput: true, audioPan: true}, tabId, true, view => {
-      this.handleChange(info, view.enabled, view.audioFx, view.audioFxAlt, view.monoOutput, view.audioPan)
+    info.client = subscribeView({superDisable: true, enabled: true, audioFx: true, audioFxAlt: true, monoOutput: true}, tabId, true, view => {
+      this.handleChange(info, view.enabled, view.audioFx, view.audioFxAlt, view.monoOutput)
 
       if (view.superDisable) {
         this.releaseTab(info.tabId)
@@ -195,13 +195,13 @@ export class CaptureManager {
 
     chrome.runtime.sendMessage({type: "CAPTURE_STATUS", tabId, value: false})
   }
-  handleChange = (info: CaptureInfo, enabled: boolean, audioFx: AudioFx, audioFxAlt: AudioFx, monoOutput: boolean, pan: number) => {
+  handleChange = (info: CaptureInfo, enabled: boolean, audioFx: AudioFx, audioFxAlt: AudioFx, monoOutput: boolean) => {
     const { streamSrc } = info 
     
     streamSrc.disconnect()
     info.fx = info.fx || new AudioEffectComplex(this.audioCtx)
     
-    info.fx.updateFx(enabled, audioFx, audioFxAlt, monoOutput, pan)
+    info.fx.updateFx(enabled, audioFx, audioFxAlt, monoOutput)
 
     streamSrc.connect(info.fx.input)
     info.fx.output.connect(info.outputNode)
@@ -248,7 +248,7 @@ class AudioEffectComplex {
     this.main?.release()
     this.alt?.release()
   }
-  updateFx = async (enabled: boolean, audioFx: AudioFx, audioFxAlt: AudioFx, monoOutput: boolean, pan: number) => {
+  updateFx = async (enabled: boolean, audioFx: AudioFx, audioFxAlt: AudioFx, monoOutput: boolean) => {
     
     let head = this.input as AudioNode
     this.estrange()
@@ -287,9 +287,9 @@ class AudioEffectComplex {
       head = this.main.output
     }
 
-    if (enabled && pan) {
+    if (enabled && audioFx.pan) {
       this.pan = this.pan || this.ctx.createStereoPanner()
-      this.pan.pan.value = clamp(-1, 1, pan || 0)
+      this.pan.pan.value = clamp(-1, 1, audioFx.pan || 0)
 
       head.connect(this.pan)
       head = this.pan 

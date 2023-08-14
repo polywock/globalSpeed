@@ -6,7 +6,7 @@ import { randomId, groupByKey, flatJoin } from "../utils/helper"
 export type CommandName = "nothing" | "runCode" | "adjustSpeed" | "speedChangesPitch" | "setPin" | "setState" | 
   "seek" | "setPause" | "setMute" | "adjustVolume" | "setMark" | "seekMark" | "toggleLoop" | "openUrl" | 
   "setFx" | "resetFx" | "flipFx" | "adjustFilter" |
-  "adjustGain" | "adjustPitch" | "adjustDelay" | "tabCapture" | "fullscreen" | "PiP"
+  "adjustGain" | "adjustPitch" | "adjustDelay" | "tabCapture" | "fullscreen" | "PiP" | "adjustPan"
 
 
 export let commandInfos: {[key in CommandName]: Command} = {
@@ -303,6 +303,23 @@ export let commandInfos: {[key in CommandName]: Command} = {
     generate: () => ({
       id: randomId(),
       command: "adjustDelay",
+      enabled: true,
+      greedy: true,
+      adjustMode: AdjustMode.ADD
+    })
+  },
+  adjustPan: {
+    group: CommandGroup.AUDIO_FX,
+    hasFeedback: true,
+    valueType: "adjustMode",
+    requiresTabCapture: true,
+    valueMin: -1,
+    valueMax: 1,
+    valueStep: 0.05,
+    valueDefault: 0,
+    generate: () => ({
+      id: randomId(),
+      command: "adjustPan",
       enabled: true,
       greedy: true,
       adjustMode: AdjustMode.ADD
