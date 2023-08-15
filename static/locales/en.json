@@ -94,6 +94,7 @@
     "adjustPitch": "pitch",
     "adjustGain": "gain",
     "adjustDelay": "delay",
+    "adjustPan": "pan",
     "tabCapture": "tab capture",
     "relativeTooltip": "relative to speed",
     "fastSeekTooltip": "faster but less accurate",
