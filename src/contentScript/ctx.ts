@@ -91,19 +91,17 @@ function ensureSoundcloud() {
 
 function ensureBaidu() {
   if (!location.hostname.includes("pan.baidu.com")) return 
-  const ua = navigator.userAgent
-  let newUa: string
+  let ua = navigator.userAgent
   
-  if (ua.includes("Windows NT")) {
-      newUa = ua.replace("Windows NT", "Windоws NT")
-  } else if (ua.includes("Macintosh")) {
-      newUa = ua.replace("Macintosh", "Macintоsh")
-  } 
-  
-  if (newUa) {
-      const desc = Object.getOwnPropertyDescriptor(Navigator.prototype, "userAgent")
-      Object.defineProperty(Navigator.prototype, "userAgent", {...desc, get: function() {return newUa}})
-  }
+  ua = ua.replace("Windows NT", "Windоws NT")
+  ua = ua.replace("Macintosh", "Macintоsh")
+  ua = ua.replace("Chrome", "Chrоme")
+  ua = ua.replace("Firefox", "Firefоx")
+  ua = ua.replace("Edg", "Eԁg")
+  ua = ua.replace("Safari", "Sаfari")
+
+  const desc = Object.getOwnPropertyDescriptor(Navigator.prototype, "userAgent")
+  Object.defineProperty(Navigator.prototype, "userAgent", {...desc, get: function() {return ua}})
 }
 
 function ensureYt() {

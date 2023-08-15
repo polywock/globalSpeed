@@ -403,7 +403,7 @@ const commandHandlers: {
     processAudioParam(args, "delay", v => `${v.toFixed(2)}`)
   },
   adjustPan: async args => {
-    processAudioParam(args, "pan", v => `${v.toFixed(2)}`)
+    processPan(args)
   },
   tabCapture: async args => {
     const { kb, show, tabInfo } = args 
@@ -433,7 +433,7 @@ const commandHandlers: {
 }
 
 
-function processAudioParam(args: CommandHandlerArgs, param: "pitch" | "delay" | "volume" | "pan", format: (v: number) => string) {
+function processAudioParam(args: CommandHandlerArgs, param: "pitch" | "delay" | "volume", format: (v: number) => string) {
   const { kb, fetch, show, override, getCycleValue, commandInfo } = args 
   let { audioFx, audioFxAlt } = fetch({audioFx: true, audioFxAlt: true})
 
@@ -472,4 +472,31 @@ function processAudioParam(args: CommandHandlerArgs, param: "pitch" | "delay" | 
   
 
   show({text: Array.from(displayValues).join(", ")})
+}
+
+function processPan(args: CommandHandlerArgs) {
+  const { kb, fetch, show, override, getCycleValue, commandInfo } = args 
+  let { audioPan } = fetch({audioPan: true})
+
+  let value = audioPan ?? 0
+
+  if (kb.adjustMode === AdjustMode.CYCLE) {
+    value = getCycleValue()
+  } else if (kb.adjustMode === AdjustMode.SET) {
+    value = kb.valueNumber ?? commandInfo.valueDefault
+  } else if (kb.adjustMode === AdjustMode.ADD) {
+    value = value + (kb.valueNumberAlt ?? commandInfo.valueStep)
+  }
+
+  
+  value = clamp(commandInfo.valueMin, commandInfo.valueMax, round(value, 3))
+  
+  if (value == null || isNaN(value)) {
+    throw Error("Value not NULL or NaN.")
+  }
+  
+  override.audioPan = value 
+  args.autoCapture(value)  
+
+  show({text: ` ${value}`, icons: ["pan"]})
 }

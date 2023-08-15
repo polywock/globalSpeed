@@ -115,7 +115,6 @@ export type AudioFx = {
   volume: number,
   delay: number,
   delayMerge?: boolean,
-  pan: number,
   eq: {
     name?: string,
     enabled: boolean,
@@ -255,6 +254,7 @@ export type Gsm = {
     split: string,
     mono: string,
     reverse: string,
+    pan: string
   },
   warnings: {
     backdropFirefox: string,
@@ -342,8 +342,8 @@ export type Gsm = {
     adjustFilter: string,
     adjustPitch: string,
     adjustGain: string,
-    adjustPan: string,
     adjustDelay: string,
+    adjustPan: string,
     tabCapture: string,
     relativeTooltip: string,
     fastSeekTooltip: string,
