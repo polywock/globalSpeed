@@ -110,7 +110,7 @@ export function AudioPanel(props: {}) {
     <SliderPlus
       label={<div>
         <FaArrowsAltH size="17px"/>
-        <span style={{marginLeft: "10px"}}>{window.gsm.audio.pan}</span>
+        <span style={{marginLeft: "10px"}}>{window.gsm.command.adjustPan}</span>
       </div>}
       value={view.audioPan ?? 0}
       sliderMin={-1}

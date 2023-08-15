@@ -4,8 +4,7 @@
     "releaseTab": "釋放",
     "split": "分離聲道",
     "mono": "單聲道",
-    "reverse": "音頻倒放",
-    "pan": "平移"
+    "reverse": "音頻倒放"
   },
   "warnings": {
     "backdropFirefox": "對於背景過濾器功能，Firefox用戶需要轉到“about:config”URL啟用“gfx.webrender.all”和“layout.css.backdrop-filter.enabled”。啟用這兩個標誌後，重新啟動Firefox。",
@@ -94,6 +93,7 @@
     "adjustPitch": "音高",
     "adjustGain": "增益",
     "adjustDelay": "延遲",
+    "adjustPan": "平移",
     "tabCapture": "捕獲",
     "relativeTooltip": "相對於速度",
     "fastSeekTooltip": "更快，但準確性較低",

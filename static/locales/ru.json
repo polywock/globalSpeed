@@ -4,8 +4,7 @@
     "releaseTab": "отпускать",
     "split": "разделить",
     "mono": "моно",
-    "reverse": "обратный звук",
-    "pan": "сдвиг"
+    "reverse": "обратный звук"
   },
   "warnings": {
     "backdropFirefox": "Пользователи Firefox должны включить «gfx.webrender.all» и «layout.css.backdrop-filter.enabled», перейдя по URL «about:config». Перезапустите Firefox после включения двух флагов.",
@@ -94,6 +93,7 @@
     "adjustPitch": "Высота звука",
     "adjustGain": "громкость+",
     "adjustDelay": "задержка",
+    "adjustPan": "сдвиг",
     "tabCapture": "захватить",
     "relativeTooltip": "относительно скорости",
     "fastSeekTooltip": "быстрее, но менее точно",

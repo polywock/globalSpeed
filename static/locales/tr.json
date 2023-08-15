@@ -4,8 +4,7 @@
     "releaseTab": "serbest bırakmak",
     "split": "ayırmak",
     "mono": "mono",
-    "reverse": "ters ses",
-    "pan": "kaydır"
+    "reverse": "ters ses"
   },
   "warnings": {
     "backdropFirefox": "Firefox kullanıcılarının \"about:config\" URL'sine giderek \"gfx.webrender.all\" ve \"layout.css.backdrop-filter.enabled\" seçeneğini etkinleştirmeleri gerekir. İki bayrağı etkinleştirdikten sonra Firefox'u yeniden başlatın.",
@@ -94,6 +93,7 @@
     "adjustPitch": "ses aralığı",
     "adjustGain": "ses+",
     "adjustDelay": "geciktir",
+    "adjustPan": "kaydır",
     "tabCapture": "ele geçirmek",
     "relativeTooltip": "hıza göre",
     "fastSeekTooltip": "daha hızlı ama daha az doğru",

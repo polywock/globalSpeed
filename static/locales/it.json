@@ -4,8 +4,7 @@
     "releaseTab": "rilascia",
     "split": "separa",
     "mono": "mono",
-    "reverse": "inverti",
-    "pan": "sposta"
+    "reverse": "inverti"
   },
   "warnings": {
     "backdropFirefox": "Gli utenti Firefox devono abilitare \"gfx.webrender.all\" e \"layout.css.backdrop-filter.enabled\" andando all'URL \"about:config\". Riavvia Firefox dopo aver abilitato le due opzioni.",
@@ -94,6 +93,7 @@
     "adjustPitch": "tono",
     "adjustGain": "guadagno",
     "adjustDelay": "ritardo",
+    "adjustPan": "sposta",
     "tabCapture": "cattura scheda",
     "relativeTooltip": "relativamente alla velocità",
     "fastSeekTooltip": "più veloce ma meno preciso",

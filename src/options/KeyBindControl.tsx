@@ -10,11 +10,12 @@ import { GoChevronDown, GoChevronUp, GoX, GoTriangleDown, GoCode, GoPin, GoZap, 
 import { CycleInput } from "../comps/CycleInput"
 import { ModalText } from "../comps/ModalText"
 import { FaPowerOff, FaPause, FaEquals, FaBookmark, FaLink, FaVolumeUp, FaVolumeMute, FaGlobe, FaPercent, FaFile, FaBackward, FaForward, FaArrowRight, FaExchangeAlt, FaPlus, FaMusic, FaList, FaStar } from "react-icons/fa"
+import { TbArrowsHorizontal } from "react-icons/tb"
 import { requestCreateTab } from "../utils/browserUtils"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { BsMusicNoteList } from "react-icons/bs"
 import { TiArrowLoop } from "react-icons/ti"
-import { Md3DRotation, MdFullscreen, MdPictureInPictureAlt, MdTimer } from "react-icons/md"
+import { MdFullscreen, MdPictureInPictureAlt, MdTimer } from "react-icons/md"
 import { isFirefox, clamp, feedbackText, domRectGetOffset } from "../utils/helper"
 import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { Move } from "../comps/Move"
@@ -193,7 +194,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
             <FaForward size="0.95em"/> 
           )}
         </>}
-        {value.command === "adjustPan" && <Md3DRotation size="1em"/>}
+        {value.command === "adjustPan" && <TbArrowsHorizontal size="1.2em"/>}
         {value.command === "tabCapture" && <div className={`captureIcon ${value.enabled ? "active" : ""}`}><div></div></div>}
         <span onContextMenu={handleContextMenu}>{label}</span>
         {value.command === "seek"&& <>

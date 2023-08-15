@@ -4,8 +4,7 @@
     "releaseTab": "release",
     "split": "split",
     "mono": "mono",
-    "reverse": "reverse",
-    "pan": "pan"
+    "reverse": "reverse"
   },
   "warnings": {
     "backdropFirefox": "Firefox users need to enable \"gfx.webrender.all\" and \"layout.css.backdrop-filter.enabled\" by going to the \"about:config\" URL. Restart Firefox after enabling the two flags.",

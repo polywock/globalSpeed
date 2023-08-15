@@ -4,8 +4,7 @@
     "releaseTab": "release",
     "split": "split",
     "mono": "mono",
-    "reverse": "reverse",
-    "pan": "pan"
+    "reverse": "reverse"
   },
   "warnings": {
     "backdropFirefox": "Người dùng Firefox cần bật \"gfx.webrender.all\" và \"layout.css.backdrop-filter.enabled\" bằng cách truy cập URL \"about:config\". Khởi động lại Firefox sau khi bật hai flags.",
@@ -94,6 +93,7 @@
     "adjustPitch": "cao độ",
     "adjustGain": "đạt được",
     "adjustDelay": "trì hoãn",
+    "adjustPan": "pan",
     "tabCapture": "chụp tab",
     "relativeTooltip": "liên quan đến tốc độ",
     "fastSeekTooltip": "nhanh hơn nhưng kém chính xác",
