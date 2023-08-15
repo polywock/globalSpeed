@@ -1,4 +1,4 @@
-import ReactDOM from "react-dom"
+import { createRoot } from "react-dom/client"
 import { SectionFlags } from "./SectionFlags"
 import { SectionEditor } from "./SectionEditor"
 import { SectionHelp } from "./SectionHelp"
@@ -21,7 +21,8 @@ const Options = (props: {}) => {
 
 requestGsm().then(gsm => {
   window.gsm = gsm 
-  ReactDOM.render(<ErrorFallback><Options/></ErrorFallback>, document.querySelector("#root"))
+  const root = createRoot(document.querySelector("#root"))
+  root.render(<ErrorFallback><Options/></ErrorFallback>)
 })
 
 
