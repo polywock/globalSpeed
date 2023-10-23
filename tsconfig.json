@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "es2019"],
+    "lib": ["dom", "dom.iterable", "es2022"],
     "types": ["@types/chrome", "@types/react", "@types/react-dom"],
     "noImplicitAny": true,
     "target": "es2018",

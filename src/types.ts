@@ -343,6 +343,7 @@ export type Gsm = {
     adjustPitch: string,
     adjustGain: string,
     adjustDelay: string,
+    adjustPan: string,
     tabCapture: string,
     relativeTooltip: string,
     fastSeekTooltip: string,

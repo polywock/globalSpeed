@@ -94,6 +94,7 @@
     "adjustPitch": "音高",
     "adjustGain": "增益",
     "adjustDelay": "延遲",
+    "adjustPan": "平移",
     "tabCapture": "捕獲",
     "relativeTooltip": "相對於速度",
     "fastSeekTooltip": "更快，但準確性較低",

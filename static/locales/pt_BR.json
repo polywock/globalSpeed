@@ -4,8 +4,7 @@
     "releaseTab": "libertar",
     "split": "dividir",
     "mono": "mono",
-    "reverse": "áudio reverso",
-    "pan": "panorâmica"
+    "reverse": "áudio reverso"
   },
   "warnings": {
     "backdropFirefox": "Firefox users need to enable \"gfx.webrender.all\" and \"layout.css.backdrop-filter.enabled\" by accessing the \"about:config\" URL. Restart Firefox after enabling both flags.",
@@ -94,6 +93,7 @@
     "adjustPitch": "tom de som",
     "adjustGain": "volume+",
     "adjustDelay": "atraso",
+    "adjustPan": "panorâmica",
     "tabCapture": "capturar",
     "relativeTooltip": "relativo à velocidade",
     "fastSeekTooltip": "mais rápido mas menos preciso",

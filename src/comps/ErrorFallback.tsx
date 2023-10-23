@@ -4,7 +4,9 @@ import "./ErrorFallback.scss"
 
 export class ErrorFallback extends Component<{children: ReactElement}, {hasError: boolean}> {
   state = {hasError: false}
-  componentDidCatch() {
+  componentDidCatch(error: any, errorInfo: any) {
+    console.log("ERROR: ", error)
+    console.log("ERROR INFO: ", errorInfo)
     this.setState({hasError: true})
     return 
   }

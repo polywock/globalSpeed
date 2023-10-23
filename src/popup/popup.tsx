@@ -12,6 +12,7 @@ import { FaPowerOff } from "react-icons/fa"
 import { pushView } from "../background/GlobalState"
 import { useThemeSync } from "src/hooks/useThemeSync"
 import "./popup.scss"
+import { createRoot } from "react-dom/client"
 
 
 export function App(props: {}) {
@@ -57,6 +58,7 @@ Promise.all([
     gvar.tabInfo || window.close()
   })
 ]).then(() => {
-  ReactDOM.render(<ErrorFallback><App/></ErrorFallback>, document.querySelector("#root"))
+  const root = createRoot(document.querySelector("#root"))
+  root.render(<ErrorFallback><App/></ErrorFallback>)
 })
 
