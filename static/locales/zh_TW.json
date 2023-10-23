@@ -1,19 +1,20 @@
-{
+﻿{
   "audio": {
     "captureTab": "捕獲",  
     "releaseTab": "釋放",
     "split": "分離聲道",
     "mono": "單聲道",
-    "reverse": "音頻倒放"
+    "reverse": "音訊倒放",
+    "pan": "平移"
   },
   "warnings": {
-    "backdropFirefox": "對於背景過濾器功能，Firefox用戶需要轉到“about:config”URL啟用“gfx.webrender.all”和“layout.css.backdrop-filter.enabled”。啟用這兩個標誌後，重新啟動Firefox。",
-    "unusedGlobal": "釋放未使用的全局熱鍵",
-    "selectTooltip": "選擇首選視頻作為媒體熱鍵。如果要從其他選項卡（或具有全局熱鍵的另一個程序）控制背景音樂，則很有用。",
+    "backdropFirefox": "對於背景過濾器功能，Firefox使用者需要轉到“about:config”URL啟用“gfx.webrender.all”和“layout.css.backdrop-filter.enabled”。啟用這兩個標誌後，重新啟動Firefox。",
+    "unusedGlobal": "釋放未使用的全域快速鍵",
+    "selectTooltip": "選擇首選影片作為媒體快速鍵。如果要從其他頁籤（或具有全域快速鍵的另一個程式）控制背景音樂，則很有用。",
     "sliderTooltip": "⇧ 按住Shift鍵可進行精確控制。"
   },
   "token": {
-    "create": "创建",
+    "create": "建立",
     "reset": "重設",
     "hide": "隱藏",
     
@@ -25,14 +26,14 @@
     "backdrop": "背景",
     "both": "兩者",
 
-    "query": "查询",
+    "query": "查詢",
     "warning": "警告",
     "filters": "濾鏡",
-    "transforms": "转换",
+    "transforms": "轉換",
 
     "blockEvents": "阻止事件",
-    "hideIndicator": "隱藏反饋指示器",
-    "indicator": "反饋指示器",
+    "hideIndicator": "隱藏回饋指示器",
+    "indicator": "回饋指示器",
     "color": "顏色",
     "size": "大小",
     "rounding": "圓度",
@@ -43,7 +44,7 @@
     "any": "任意",
     "all": "全部",
     "copy": "複製",
-    "paste": "粘貼"
+    "paste": "貼上"
   },
   "filter": {
     "grayscale": "灰階",
@@ -64,7 +65,7 @@
     "rotateZ": "Z軸旋轉"
   },
   "fxPanel": {
-    "queryTooltip": "CSS選擇器，用於查找要過濾的元素。例如，“video, img”將會同時查詢視頻和圖像。相關高級用法，請在線查閱CSS選擇器的相關文檔。",
+    "queryTooltip": "CSS選擇器，用於尋找要過濾的元素。例如，“video, img”將會同時查詢影片和圖像。相關進階用法，請線上查閱CSS選擇器的相關文件。",
     "intoPane": "製成窗格"
   },
   "command": {
@@ -73,21 +74,21 @@
     "openUrl": "打開網址",
     "adjustSpeed": "速度",
     "speedChangesPitch": "速度改變音高",
-    "setPin": "固定標籤頁",
+    "setPin": "固定分頁",
     "setState": "狀態",
     "seek": "移動時間軸",
     "setPause": "暫停",
     "setMute": "靜音",
     "adjustVolume": "音量",
-    "setMark": "設置標記點",
+    "setMark": "設定標記點",
     "seekMark": "轉到標記點",
     "toggleLoop": "AB循環",
-    "toggleLoopTooltip": "從標記位置到當前位置重複播放視頻。",
+    "toggleLoopTooltip": "從標記位置到目前位置重複播放影片。",
     "fullscreen": "全螢幕",
     "nativeTooltip": "簡單模式",
     "PiP": "子母畫面",
     "setFx": "FX狀態",
-    "resetFx": "FX重置",
+    "resetFx": "FX重設",
     "flipFx": "FX交換",
     "adjustFilter": "FX過濾器",
     "adjustPitch": "音高",
@@ -103,39 +104,39 @@
     "flags": {
       "header": "選項",
       "language": "語言",
-      "languageTooltip": "除英語以外的所有語言均使用在線工具進行了翻譯。",
+      "languageTooltip": "除英語以外的所有語言均使用線上工具進行了翻譯。",
       "darkTheme": "深色佈景主題",
-      "pinByDefault": "默認固定",
-      "pinByDefaultTooltip": "默認固定每個標籤頁。",
+      "pinByDefault": "預設固定",
+      "pinByDefaultTooltip": "預設固定每個分頁。",
       "hideBadge": "隱藏徽章",
-      "hideBadgeTooltip": "徽章是擴展圖標上的文字。",
+      "hideBadgeTooltip": "徽章是擴展圖示上的文字。",
       "fullscreenSupport": "全螢幕",
       "ghostMode": "幽靈模式",
-      "ghostModeTooltip": "嘗試阻止網站更改速度。默認情況下禁用，因為它可能會破壞某些網站。",
+      "ghostModeTooltip": "嘗試阻止網站更改速度。預設情況下禁用，因為它可能會破壞某些網站。",
       "hideMediaView": "隱藏媒體列表",
-      "inheritGlobal": "繼承全局",
-      "inheritGlobalTooltip": "新選項卡可以繼承前一個選項卡的上下文或全局上下文。"
+      "inheritGlobal": "繼承全域",
+      "inheritGlobalTooltip": "新頁籤可以繼承前一個頁籤的上下文或全域上下文。"
     },
     "editor": {
-      "header": "熱鍵編輯器",
-      "toggleMode": "您可以使用本地熱鍵或全局熱鍵。",
-      "toggleModeTooltip": "全局熱鍵可以讓您在使用其他應用程序時控制視頻或音頻。",
-      "greedyMode": "貪婪模式會嘗試阻止事件的默認行為及其傳播。",
+      "header": "快速鍵編輯器",
+      "toggleMode": "您可以使用本機快速鍵或全域快速鍵。",
+      "toggleModeTooltip": "全域快速鍵可以讓您在使用其他應用程式時控制影片或音訊。",
+      "greedyMode": "貪婪模式會嘗試阻止事件的預設行為及其傳播。",
       "speedPresets": "速度預設"
     },
     "rules": {
       "header": "URL規則",
-      "conditions": "URL条件",
+      "conditions": "URL條件",
       "startsWith": "以…開始",
       "contains": "包含",
-      "regex": "正則表達式",
-      "LAX": "每個標籤頁只應用一次。",
-      "ILO": "僅在初始頁面加載期間檢查。"
+      "regex": "正規表示式",
+      "LAX": "每個分頁只應用一次。",
+      "ILO": "僅在初始頁面載入期間檢查。"
     },
     "help": {
       "header": "幫助",
       "issuePrompt": "有問題或建議嗎？",
-      "issueDirective": "在Github上提供反饋。",
+      "issueDirective": "在Github上提供回饋。",
       "export": "匯出​​",
       "import": "匯入",
       "areYouSure": "確定嗎？"
