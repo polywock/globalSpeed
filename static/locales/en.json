@@ -10,7 +10,7 @@
     "backdropFirefox": "Firefox users need to enable \"gfx.webrender.all\" and \"layout.css.backdrop-filter.enabled\" by going to the \"about:config\" URL. Restart Firefox after enabling the two flags.",
     "unusedGlobal": "Release the unused global shortcut keys",
     "selectTooltip": "Select preferred video for media hotkeys. Useful if you want to control background music from a different tab (or from another program with global hotkeys).",
-    "sliderTooltip": "⇧ hold shift key for precise control."
+    "sliderTooltip": "hold shift key for precise control."
   },
   "token": {
     "create": "create",
