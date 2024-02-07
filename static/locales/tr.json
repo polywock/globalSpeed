@@ -1,19 +1,19 @@
 {
   "audio": {
-    "captureTab": "ele geçirmek",
-    "releaseTab": "serbest bırakmak",
-    "split": "ayırmak",
+    "captureTab": "yakala",
+    "releaseTab": "bırak",
+    "split": "ayır",
     "mono": "mono",
     "reverse": "ters ses"
   },
   "warnings": {
-    "backdropFirefox": "Firefox kullanıcılarının \"about:config\" URL'sine giderek \"gfx.webrender.all\" ve \"layout.css.backdrop-filter.enabled\" seçeneğini etkinleştirmeleri gerekir. İki bayrağı etkinleştirdikten sonra Firefox'u yeniden başlatın.",
-    "unusedGlobal": "Kullanılmayan genel kısayol tuşlarını serbest bırakın",
+    "backdropFirefox": "Firefox kullanıcılarının \"about:config\" URL'sine giderek \"gfx.webrender.all\" ve \"layout.css.backdrop-filter.enabled\" seçeneğini etkinleştirmeleri gerekir. İki özelliği etkinleştirdikten sonra Firefox'u yeniden başlatın.",
+    "unusedGlobal": "Kullanılmayan genel kısayol tuşlarını devre dışı bırakın",
     "selectTooltip": "Medya kısayol tuşları için tercih edilen videoyu seçin. Arka plan müziğini farklı bir sekmeden (veya genel kısayol tuşlarına sahip başka bir programdan) kontrol etmek istiyorsanız kullanışlıdır.",
     "sliderTooltip": "⇧ hassas kontrol için shift tuşunu basılı tutun."
   },
   "token": {
-    "create": "oluşturmak",
+    "create": "p",
     "reset": "sıfırla",
     "hide": "gizle",
     
@@ -25,12 +25,12 @@
     "backdrop": "arka fon",
     "both": "her ikisi",
     
-    "query": "selektör",
+    "query": "seçici",
     "warning": "uyarı",
     "filters": "filtreler",
-    "transforms": "dönüşmek",
+    "transforms": "oynatıcı",
 
-    "blockEvents": "olayları önlemek",
+    "blockEvents": "olayları önle",
     "hideIndicator": "indikatörü gizle",
     "indicator": "indikatör",
     "color": "renk",
@@ -53,7 +53,7 @@
     "brightness": "parlaklık",
     "saturate": "doygunluk",
     "invert": "ters çevir",
-    "blur": "bulanıklaştırma",
+    "blur": "bulanıklaştır",
     "opacity": "opaklık",
     "scaleX": "ölçek X",
     "scaleY": "ölçek Y",
@@ -68,14 +68,14 @@
     "intoPane": "pencere oluştur"
   },
   "command": {
-    "nothing": "hiçbir eylem",
+    "nothing": "hiçbiri",
     "runCode": "javascript",
     "openUrl": "link aç",
     "adjustSpeed": "hız",
     "speedChangesPitch": "hız değişimi ses aralığı",
     "setPin": "sekmeyi sabitle",
     "setState": "durum",
-    "seek": "vardiya zamanı",
+    "seek": "ilerlet",
     "setPause": "duraklat",
     "setMute": "sessiz",
     "adjustVolume": "ses",
@@ -94,16 +94,16 @@
     "adjustGain": "ses+",
     "adjustDelay": "geciktir",
     "adjustPan": "kaydır",
-    "tabCapture": "ele geçirmek",
+    "tabCapture": "yakala",
     "relativeTooltip": "hıza göre",
-    "fastSeekTooltip": "daha hızlı ama daha az doğru",
+    "fastSeekTooltip": "daha hızlı ama orantısız",
     "showNetTooltip": "net süreyi göster"
   },
   "options": {
     "flags": {
       "header": "Seçenekler",
       "language": "dil",
-      "languageTooltip": "İngilizce dışındaki tüm diller çevrimiçi araçlar kullanılarak çevrilmiştir.",
+      "languageTooltip": "İngilizce ve Türkçe dışındaki tüm diller çevrimiçi araçlar kullanılarak çevrilmiştir.",
       "darkTheme": "karanlık tema",
       "pinByDefault": "varsayılan olarak sabitle",
       "pinByDefaultTooltip": "Yeni sekmeler otomatik olarak sabitlenir.",
