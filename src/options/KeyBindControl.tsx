@@ -6,10 +6,11 @@ import { Tooltip } from "../comps/Tooltip"
 import { NumericInput } from "../comps/NumericInput"
 import { commandInfos } from "../defaults/commands"
 import { filterInfos, FilterName, filterTargets  } from "../defaults/filters"
-import { GoChevronDown, GoChevronUp, GoX, GoTriangleDown, GoCode, GoPin, GoZap, GoKebabVertical } from "react-icons/go"
+import { GoChevronDown, GoChevronUp, GoX, GoTriangleDown, GoCode, GoPin, GoZap } from "react-icons/go"
 import { CycleInput } from "../comps/CycleInput"
 import { ModalText } from "../comps/ModalText"
 import { FaPowerOff, FaPause, FaEquals, FaBookmark, FaLink, FaVolumeUp, FaVolumeMute, FaGlobe, FaPercent, FaFile, FaBackward, FaForward, FaArrowRight, FaExchangeAlt, FaPlus, FaMusic, FaList, FaStar } from "react-icons/fa"
+import { PiArrowArcRightBold, PiArrowsClockwiseBold, PiDotsThreeOutlineVerticalFill } from "react-icons/pi"
 import { TbArrowsHorizontal } from "react-icons/tb"
 import { requestCreateTab } from "../utils/browserUtils"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
@@ -249,11 +250,12 @@ export const KeybindControl = (props: KeybindControlProps) => {
         </>}
         {commandInfo.valueType === "adjustMode" && <button className="adjustMode" onClick={e => {
           props.onChange(value.id, produce(value, d => {
-            d.adjustMode = clamp(1, 3, ((d.adjustMode ?? 1) + 1) % 4)
+            d.adjustMode = clamp(1, 4, ((d.adjustMode ?? 1) + 1) % 5)
           }))
         }}>
             {value.adjustMode === AdjustMode.SET && <FaEquals size="1em"/>}
-            {value.adjustMode === AdjustMode.CYCLE && <FaList size="1em"/>}
+            {value.adjustMode === AdjustMode.CYCLE && <PiArrowsClockwiseBold size="1em"/>}
+            {value.adjustMode === AdjustMode.NOCYCLE && <PiArrowArcRightBold size="1em"/>}
             {value.adjustMode === AdjustMode.ADD && <FaPlus size="1em"/>}
         </button>}
       </div>
@@ -332,6 +334,13 @@ export const KeybindControl = (props: KeybindControlProps) => {
         }))
       }}/>
     )}
+    {commandInfo.valueType === "adjustMode" && value.adjustMode === AdjustMode.NOCYCLE && (
+      <CycleInput min={min} max={max} values={value.valueCycle || []} onChange={v => {
+        props.onChange(value.id, produce(value, d => {
+          d.valueCycle = v
+        }))
+      }}/>
+    )}
     {commandInfo.valueType === "string" && (
       <ThrottledTextInput passInput={specialKey ? {style: {color: "red"}} : undefined} value={value.valueString} onChange={v => {
         props.onChange(value.id, produce(value, d => {
@@ -360,7 +369,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
     )}
     {!commandInfo.valueType && <div/>}
     <button className="icon" onClick={handleContextMenu}>
-      <GoKebabVertical style={{pointerEvents: "none"}} title="..." size="1.3em"/>
+      <PiDotsThreeOutlineVerticalFill style={{pointerEvents: "none"}} title="..." size="1.3em"/>
     </button>
     <button className="icon" onClick={e => {
        props.onChange(value.id, produce(value, d => {

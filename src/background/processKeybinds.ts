@@ -58,6 +58,29 @@ export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
       return lazyValues.value
     }
 
+    const getNoCycleValue = (speed: number) => {
+      console.log(speed);
+      if (!(kb.valueCycle?.length >= 2)) {
+        throw Error("Less than 2 items in nocycle")
+      }
+      const isAscend = kb.valueCycle[1] - kb.valueCycle[0] > 0
+      let value: number
+      for (let i = kb.valueCycle.length - 1; i >= 0; i -= 1) {
+        if (isAscend && kb.valueCycle[i] <= speed) {
+          value = kb.valueCycle[i + 1] ?? speed
+          break
+        }
+        if (!isAscend && kb.valueCycle[i] >= speed) {
+          value = kb.valueCycle[i + 1] ?? speed
+          break
+        }
+      }
+      if (!value) value = kb.valueCycle[0]
+      console.log(kb.valueCycle);
+      console.log(value);
+      return value
+    }
+
     const autoCapture = (value: number) => {
       if (tabInfo?.tabId == null) return 
       if (value?.toFixed(6) !== commandInfo.valueDefault.toFixed(6)) {
@@ -70,6 +93,7 @@ export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
       commandHandlers[kb.command]({
         autoCapture,
         getCycleValue,
+        getNoCycleValue,
         fetch,
         override,
         kb,
@@ -102,6 +126,7 @@ export async function processKeybinds(keybinds: Keybind[], tabInfo: TabInfo) {
 type CommandHandlerArgs = {
   autoCapture: (v: number) => void,
   getCycleValue: () => number,
+  getNoCycleValue: (speed: number) => number,
   fetch: (selector: StateViewSelector) => StateView,
   override: StateView,
   kb: Keybind, 
@@ -161,13 +186,15 @@ const commandHandlers: {
     show({text: override.isPinned ? "local" : "global", small: true})
   },
   adjustSpeed: async args => {
-    const { kb, show, fetch, override, commandInfo, getCycleValue } = args 
+    const { kb, show, fetch, override, commandInfo, getCycleValue, getNoCycleValue } = args 
     const view = fetch({speed: true, isPinned: true, keybinds: true, lastSpeed: true})
     
     let value: number 
 
     if (kb.adjustMode === AdjustMode.CYCLE) {
       value = getCycleValue()
+    } else if (kb.adjustMode === AdjustMode.NOCYCLE) {
+      value =  getNoCycleValue(view.speed ?? 1)
     } else if (kb.adjustMode === AdjustMode.SET) {
       value = kb.valueNumber ?? commandInfo.valueDefault
     } else if (kb.adjustMode === AdjustMode.ADD) {

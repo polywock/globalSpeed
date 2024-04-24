@@ -126,7 +126,8 @@ export type AudioFx = {
 export enum AdjustMode {
   SET = 1,
   ADD,
-  CYCLE
+  CYCLE,
+  NOCYCLE
 }
 
 export type Command = {

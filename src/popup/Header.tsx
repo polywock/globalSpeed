@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { checkFilterDeviation } from "../utils/configUtils"
-import { GoPin, GoGear, GoMarkGithub, GoZap, GoArrowLeft} from "react-icons/go"
-import { FaPowerOff, FaVolumeUp } from "react-icons/fa"
+import { GoPin, GoGear, GoZap, GoArrowLeft} from "react-icons/go"
+import { FaPowerOff, FaVolumeUp, FaGithub } from "react-icons/fa"
 import { useStateView } from "../hooks/useStateView"
 import { pushView } from "../background/GlobalState"
 import { getDefaultFx } from "../defaults"
@@ -63,7 +63,7 @@ export function Header(props: HeaderProps) {
       <div title="open github page." onClick={e => {
         window.open("https://github.com/polywock/globalSpeed", "_blank")
       }}>
-        <GoMarkGithub size="18px"/>
+        <FaGithub size="18px"/>
       </div>
     </div>
   )
