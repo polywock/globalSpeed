@@ -470,7 +470,7 @@ async function processAdjustMode(args: CommandHandlerArgs) {
     value = kb.valueNumber ?? ref.default
     if (kb.command === "speed") {
       let view = (await fetch({'speed': true, 'lastSpeed': true}))
-      if (view.speed === value && view.lastSpeed != null) {
+      if (view.speed?.toFixed(2) === value.toFixed(2) && view.lastSpeed != null) {
         value = view.lastSpeed
       }
     }
