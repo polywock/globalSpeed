@@ -168,6 +168,10 @@ function tenToEleven(state: State) {
       }
     }
 
+    if ((kb.adjustMode || AdjustMode.ADD) === AdjustMode.ADD) {
+      kb.valueNumber = kb.valueNumberAlt
+    }
+
     // Migrate seek
     if (kb.command === "seek") {
       if ((kb as any).valueBool) kb.relativeToSpeed = true
