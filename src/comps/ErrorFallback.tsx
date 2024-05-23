@@ -1,6 +1,7 @@
 import { Component, ReactElement } from "react"
-import { pushView } from "../background/GlobalState"
-import "./ErrorFallback.scss"
+import { restoreConfig } from "../utils/state"
+import "./ErrorFallback.css"
+import { getDefaultState } from "src/defaults"
 
 export class ErrorFallback extends Component<{children: ReactElement}, {hasError: boolean}> {
   state = {hasError: false}
@@ -10,8 +11,9 @@ export class ErrorFallback extends Component<{children: ReactElement}, {hasError
     this.setState({hasError: true})
     return 
   }
-  handleReset = () => {
-    pushView({override: {}, tabId: gvar.tabInfo?.tabId, overDefault: true})
+  handleReset = async () => {
+    await chrome.storage.local.clear()
+    await restoreConfig(getDefaultState(), false)
     setTimeout(() => {
       window.location.reload()
     }, 50)

@@ -1,12 +1,12 @@
-import { formatDuration, formatDomain } from "../utils/helper"
+import { formatDuration, formatDomain, feedbackText } from "../utils/helper"
 import { FaPlay, FaPause, FaBackward, FaForward, FaMousePointer } from "react-icons/fa"
 import { MdPictureInPictureAlt } from "react-icons/md"
 import { FaVolumeMute, FaVolumeUp, FaVolumeDown } from "react-icons/fa"
 import { sendMediaEvent } from "../utils/configUtils"
-import { MediaEvent } from "../contentScript/utils/applyMediaEvent"
-import { FlatMediaInfo } from "../contentScript/utils/genMediaInfo"
-import { MediaPath } from "../types"
-import "./MediaView.scss"
+import type { MediaEvent } from "../contentScript/isolated/utils/applyMediaEvent"
+import { FlatMediaInfo, MediaPath } from "../contentScript/isolated/utils/genMediaInfo"
+import { useState } from "react"
+import "./MediaView.css"
 
 const HAS_REQUEST_PIP = !!(HTMLVideoElement.prototype.requestPictureInPicture)
 
@@ -14,52 +14,75 @@ const HAS_REQUEST_PIP = !!(HTMLVideoElement.prototype.requestPictureInPicture)
 export function MediaView(props: {info: FlatMediaInfo, pinned: boolean}) {
   const { info, pinned } = props
   const { tabId, frameId } = info.tabInfo
+  const [ show, setShow ] = useState(false)
 
   let parts: string[] = [
     formatDomain(info.domain)
   ]
-  
-  !info.infinity && info.duration && parts.push(formatDuration(info.duration))
+
+  if (!info.infinity && info.duration) parts.push(formatDuration(info.duration))
 
   return (
     <div className={`MediaView`}>
-      <div className="header" title={info.metaTitle || info.title}>{parts.join(info.shadowMode == null ? " • " : info.shadowMode === "open" ? " / " : ` \ `)}
-      </div>
+
+      {/* Header */}
+      <span onClick={async e => {
+        let probe = await chrome.tabs.sendMessage(info.tabInfo.tabId, {type: 'MEDIA_PROBE', key: info.key, formatted: true} as Messages, {frameId: info.tabInfo.frameId || 0})
+        if (!probe) return
+        feedbackText(probe.formatted, {y: (e.target as HTMLDivElement).getBoundingClientRect().top - 50}, 1000 * 30) 
+      }} className="header" title={info.metaTitle || info.title}>{parts.join(info.shadowMode == null ? " • " : info.shadowMode === "open" ? " / " : ` \ `)}
+      </span>
+      <br />
+
+      {/* Controls */}
       <div className="controls" key={info.key}>
+
+        {/* Seek back */}
         <button onClick={e => {
           const event: MediaEvent = {type: "SEEK", value: -5, relative: true}
           sendMediaEvent(event, info.key, tabId, frameId)
-        }}><FaBackward size={15}/></button>
+        }}><FaBackward size={"1.07rem"}/></button>
+
+        {/* Pause */}
         <button onClick={e => {
           const event: MediaEvent = {type: "PAUSE", state: "toggle"}
           sendMediaEvent(event, info.key, tabId, frameId)
-        }}>{info.paused ? <FaPlay size={16}/> : <FaPause size={16}/>}</button>
+        }}>{info.paused ? <FaPlay size={"1.14rem"}/> : <FaPause size={"1.14rem"}/>}</button>
+
+        {/* Seek forwards */}
         <button onClick={e => {
           const event: MediaEvent = {type: "SEEK", value: 5, relative: true}
           sendMediaEvent(event, info.key, tabId, frameId)
-        }}><FaForward size={15}/></button>
+        }}><FaForward size={"1.07rem"}/></button>
+
+        {/* Volume */}
         {!info.hasAudioTrack ? <><div/><div/></> : <>
           <button onClick={e => {
             const event: MediaEvent = {type: "MUTE", state: "toggle"}
             sendMediaEvent(event, info.key, tabId, frameId)
-          }}>{info.muted ? <FaVolumeMute size={16}/> : info.volume > 0.5 ? <FaVolumeUp size={16}/> : <FaVolumeDown size={16}/>}</button>
+          }}>{info.muted ? <FaVolumeMute size={"1.14rem"}/> : info.volume > 0.5 ? <FaVolumeUp size={"1.14rem"}/> : <FaVolumeDown size={"1.14rem"}/>}</button>
           <input className="slider" onChange={e => {
             const event: MediaEvent = {type: "SET_VOLUME", value: e.target.valueAsNumber, relative: false}
             sendMediaEvent(event, info.key, tabId, frameId)
           }} type="range" min={0} max={1} step={0.1} value={info.volume}/>
         </>} 
+        
+        {/* PiP */}
         {(!(HAS_REQUEST_PIP && info.hasVideoTrack && info.duration)) ? <div/> : (
           <button className={info.pipMode ? "active" : ""} onClick={e => {
             const event: MediaEvent = e.shiftKey ? {type: "FULLSCREEN", direct: true} : {type: "PIP"}
             sendMediaEvent(event, info.key, tabId, frameId)
-          }}><MdPictureInPictureAlt size={18}/></button>
+          }}><MdPictureInPictureAlt size={"1.285rem"}/></button>
         )}
-        <button title={window.gsm.warnings.selectTooltip} className={pinned ? "active" : ""} onClick={e => {
-          chrome.runtime.sendMessage({type: "MEDIA_SET_PIN", value: pinned ? null : ({
+
+        {/* Select */}
+        <button title={gvar.gsm.warnings.selectTooltip} className={pinned ? "active" : ""} onClick={e => {
+          chrome.storage.session.set({[`m:pin`]: pinned ? null : ({
             key: info.key,
             tabInfo: info.tabInfo
           }) as MediaPath})
-        }}><FaMousePointer size={18}/></button>
+        }}><FaMousePointer size={"1.285rem"}/></button>
+        
       </div>
     </div>
   )

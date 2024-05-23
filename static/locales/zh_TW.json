@@ -1,23 +1,27 @@
-﻿{
+{
+  "_scale": 1.15,
   "audio": {
     "captureTab": "捕獲",  
     "releaseTab": "釋放",
     "split": "分離聲道",
-    "mono": "單聲道",
-    "reverse": "音頻倒放",
-    "pan": "平移"
+    "reverse": "音頻倒放"
   },
   "warnings": {
-    "backdropFirefox": "對於背景過濾器功能，Firefox使用者需要轉到“about:config”URL啟用“gfx.webrender.all”和“layout.css.backdrop-filter.enabled”。啟用這兩個標誌後，重新啟動Firefox。",
-    "unusedGlobal": "釋放未使用的全域快速鍵",
-    "selectTooltip": "選擇首選影片作為媒體快速鍵。如果要從其他頁籤（或具有全域快速鍵的另一個程式）控制背景音樂，則很有用。",
-    "sliderTooltip": "⇧ 按住Shift鍵可進行精確控制。"
+    "unusedGlobal":  "釋放未使用的全域快捷鍵。",
+    "selectTooltip": "選擇媒體熱鍵的首選視頻。如果您想要從不同的標籤頁（或使用全域熱鍵的另一個程式）控制背景音樂，這會很有幫助。",
+    "sliderTooltip": "按住 Shift 鍵以精確控制。",
+    "captureRequired": "使用 $1 快捷鍵來啟動。"
   },
   "token": {
     "create": "建立",
     "reset": "重設",
-    "hide": "隱藏",
+    "duplicate": "複製",
     
+    
+    "pinTooltip": "固定如果你想要當前標籤頁擁有它自己的上下文（速度，過濾器等）。",
+    "mergeBoth": "合併兩者",
+    "min": "最小",
+    "max": "最大",
     "on": "開啟",
     "off": "關閉",
     "toggle": "開關",
@@ -27,24 +31,54 @@
     "both": "兩者",
 
     "query": "查詢",
+    "queryTooltip": "用來尋找要過濾元素的 CSS 選擇器。例如，'video, img' 會選擇視頻和圖片。欲了解進階用法，請參閱線上關於 CSS 選擇器的文件。",
+
+    "intoPane": "製成窗格",
     "warning": "警告",
     "filters": "濾鏡",
     "transforms": "轉換",
 
     "blockEvents": "阻止事件",
-    "hideIndicator": "隱藏回饋指示器",
-    "indicator": "回饋指示器",
+    "blockEventsTooltip": "貪婪模式會嘗試阻止事件的預設行為及其傳播。",
     "color": "顏色",
     "size": "大小",
     "rounding": "圓度",
     "duration": "持續時間",
     "offset": "位移",
+    "position": "位置",
+    "center": "中心",
+    "topLeft": "左上",
+    "topRight": "右上",
+    "bottomLeft": "左下",
+    "bottomRight": "右下",
+    "animation": "動畫",
+    "default": "預設",
+    "static": "靜態",
+    "shrink": "縮小",
+    "implode": "內爆",
+    "rotate": "旋轉",
     "rows": "列",
     
-    "any": "任意",
-    "all": "全部",
     "copy": "複製",
-    "paste": "貼上"
+    "paste": "貼上",
+    "replaceWith": "替換$1為？",
+    "invalidNumber": "無效數字",
+    "openPage": "開啟頁面",
+    "seconds": "秒",
+    "percent": "%",
+    "frames": "幀"
+  },
+  "placer": {
+    "windowBounds": {
+      "left": "左",
+      "top": "頂",
+      "width": "寬度",
+      "height": "高度"
+    },
+    "windowSize": "互動窗口大小",
+    "windowPrompt": "調整此窗口的大小和位置，然後按應用。",
+    "apply": "應用",
+    "cancel": "取消"
   },
   "filter": {
     "grayscale": "灰階",
@@ -64,65 +98,134 @@
     "rotateY": "Y軸旋轉",
     "rotateZ": "Z軸旋轉"
   },
-  "fxPanel": {
-    "queryTooltip": "CSS選擇器，用於尋找要過濾的元素。例如，“video, img”將會同時查詢影片和圖像。相關進階用法，請線上查閱CSS選擇器的相關文件。",
-    "intoPane": "製成窗格"
-  },
   "command": {
-    "nothing": "無動作",
-    "runCode": "javaScript",
+        "runCode": "javaScript",
     "openUrl": "打開網址",
-    "adjustSpeed": "速度",
+    "speed": "速度",
     "speedChangesPitch": "速度改變音高",
-    "setPin": "固定分頁",
-    "setState": "狀態",
+    "pin": "固定分頁",
+    "state": "狀態",
     "seek": "移動時間軸",
-    "setPause": "暫停",
-    "setMute": "靜音",
-    "adjustVolume": "音量",
+    "pause": "暫停",
+    "mute": "靜音",
+    "volume": "音量",
     "setMark": "設定標記點",
     "seekMark": "轉到標記點",
-    "toggleLoop": "AB循環",
-    "toggleLoopTooltip": "從標記位置到目前位置重複播放影片。",
+    "loop": "AB循環",
+    "loopTooltip": "從標記位置到目前位置重複播放影片。",
     "fullscreen": "全螢幕",
     "nativeTooltip": "簡單模式",
     "PiP": "子母畫面",
-    "setFx": "FX狀態",
-    "resetFx": "FX重設",
-    "flipFx": "FX交換",
-    "adjustFilter": "FX過濾器",
-    "adjustPitch": "音高",
-    "adjustGain": "增益",
-    "adjustDelay": "延遲",
-    "adjustPan": "平移",
-    "tabCapture": "捕獲",
-    "relativeTooltip": "相對於速度",
+    "fxState": "FX狀態",
+    "fxReset": "FX重設",
+    "fxSwap": "FX交換",
+    "fxFilter": "FX過濾器",
+    "afxPitch": "音高",
+    "afxGain": "增益",
+    "afxDelay": "延遲",
+    "afxPan": "平移",
+    "afxMono": "單聲道",
+    "afxCapture": "捕獲",
+    "afxReset": "音訊重設",
+    "relativeToSpeed": "相對於速度",
+    "showNet": "顯示總時長",
+    "drawPage": "在頁面上畫",
+    "fastSeek": "快速搜尋",
     "fastSeekTooltip": "更快，但準確性較低",
-    "showNetTooltip": "顯示淨時長"
+    "mediaInfo": "顯示媒體資訊",
+    "intoPopup": "轉為彈出窗口",
+    "intoPopupTooltip": "將當前標籤頁轉換為彈出窗口。",
+    
+    "skip": "AB跳過", 
+    "skipTooltip": "跳過標記位置和當前位置之間的視頻段。",
+    "detectiveMode": "偵探模式",
+    "detectiveModeTooltip": "隱藏除通過一個圓形可見的一切外的所有內容。",
+    "cinema": "加深背景",
+    "cinemaTooltip": "加深視頻的背景。要退出，按背景或再次使用快捷鍵。"
   },
   "options": {
     "flags": {
       "header": "選項",
       "language": "語言",
-      "languageTooltip": "除英語以外的所有語言均使用線上工具進行了翻譯。",
+      "languageTooltip": "除了英文之外的所有語言都是使用線上工具翻譯的。(@nathan60107 對中文翻譯作了一些調整。)",
       "darkTheme": "深色佈景主題",
-      "pinByDefault": "預設固定",
-      "pinByDefaultTooltip": "預設固定每個分頁。",
-      "hideBadge": "隱藏徽章",
-      "hideBadgeTooltip": "徽章是擴展圖示上的文字。",
-      "fullscreenSupport": "全螢幕",
+      "showBadge": "顯示徽章",
+      "showBadgeTooltip": "徽章是擴展圖標上的文字。",
+      "showMediaView": "顯示媒體列表",
+      "showIndicator": "顯示指示器",
+      "showIndicatorTooltip": "指示器是使用快捷鍵時的視覺反饋。",
       "ghostMode": "幽靈模式",
       "ghostModeTooltip": "嘗試阻止網站更改速度。預設情況下禁用，因為它可能會破壞某些網站。",
-      "hideMediaView": "隱藏媒體列表",
-      "inheritGlobal": "繼承全域",
-      "inheritGlobalTooltip": "新頁籤可以繼承前一個頁籤的上下文或全域上下文。"
+      "pinByDefault": "預設固定",
+      "pinByDefaultTooltip": "預設固定每個分頁。",
+      "initialState": "初始狀態",
+      "previousTab": "前一個標籤的上下文。",
+      "globalContext": "全球上下文",
+      "previousContext": "前一個標籤的上下文",
+      "newContext": "新上下文",
+      "customContext": "自訂上下文",
+      "customContextTooltip": "儲存此標籤目前上下文的快照。新創建的標籤將使用這個快照作為初始狀態。",
+      "jsShortcutWarning": "由於舊API的廢棄，JavaScript快捷方式目前已被禁用。功能將在Chromium實施userScripts.execute()方法時恢復。",
+      "keyboardInput": "鍵盤輸入",
+      "keyboardInputTooltip": "如果使用虛擬鍵盤或非QWERTY佈局鍵盤，考慮切換到虛擬輸入模式。這只適用於未來的快捷鍵變更，現有的快捷鍵不會受影響。",
+      "qwerty": "QWERTY佈局",
+      "virtual": "虛擬",
+      "grantPermission": "授予權限",
+      "grantPermissionTooltip": "為了啟用全部功能，包括嵌入影片支持，必須啟用此權限。對於有限功能，您可以通過右鍵點擊工具欄圖標按網站啟用。",
+      "speedSlider": "速度滑桿",
+      "textSize": "文字大小",
+      "speedPresets": "速度預設",
+      "widget": {
+        "option": "圓形小工具",
+        "optionTooltip": "（實驗性）影片可見時將顯示圓形小工具：\n - 影片可見時將顯示圓形小工具。\n - 向左/右拖動以在影片中尋找。\n - 向上/下拖動以調整播放速度。",
+        "movementMobile": "\n - 按住圓圈幾秒鐘以移動或刪除它。",
+        "movementDesktop": "\n - 使用右鍵拖動圓圈以移動或刪除它。",
+        "headerTooltip": "啟用圓形小工具。",
+        "showIcon": "顯示圖示",
+        "showIconTooltip": "在主選單上顯示圖示以方便切換圓形小工具。",
+        "autoHide": "自動隱藏"
+      }
     },
     "editor": {
       "header": "快速鍵編輯器",
       "toggleMode": "您可以使用本機快速鍵或全域快速鍵。",
       "toggleModeTooltip": "全域快速鍵可以讓您在使用其他應用程式時控制影片或音訊。",
-      "greedyMode": "貪婪模式會嘗試阻止事件的預設行為及其傳播。",
-      "speedPresets": "速度預設"
+
+    
+      "menuLabel": "菜單標籤",
+      "triggerMode": "支持多種觸發模式。",
+      "triggerModeTooltip": "本地快捷鍵（預設）：靈活的快捷鍵。\n\n全局快捷鍵：當您想在使用其他應用程序時控制視頻或音頻時非常有用。\n\n上下文菜單：適用於不常用的命令。右鍵點擊頁面觸發。",
+      "triggerModeTooltipFf": "本地快捷鍵（預設）：靈活的快捷鍵。\n\n上下文菜單：適用於不常用的命令。右鍵點擊頁面觸發。",
+      "triggerModes": {
+        "0": "本地快捷鍵",
+        "1": "全域快捷鍵",
+        "2": "上下文選單"
+      },
+      "spacing": "間距", 
+      "reversible": "可逆",
+      "reversibleTooltip": "允許設置第二個快捷鍵以反轉列表。",
+      "wraparound": "環繞",
+      "wraparoundTooltip": "如果你越過開始或結束，它會環繞到另一邊。",
+      "addLabel": "添加標籤",
+      "liveScrubbing": "實時擦洗",
+      "liveScrubbingTooltip": "移動光標時連續預覽更改。",
+      "pauseWhileScrubbing": "擦洗時暫停",
+      "adjustModes": {
+        "1": "設置為值",
+        "2": "按值調整",
+        "3": "在值列表之間循環",
+        "4": "交互式地設置為值。",
+        "5": "交互式地按值調整."
+      },
+      "openModes": {
+        "foregroundTab": "前景標籤",
+        "backgroundTab": "背景標籤",
+        "newWindow": "新窗口",
+        "newPopup": "新彈出窗",
+        "sameTab": "當前標籤"
+      },
+      "pressAndHold": "按住",
+      "pressAndHoldTooltip": "如果啟用，則在互動調整值時必須按住鍵。"
     },
     "rules": {
       "header": "URL規則",
@@ -130,8 +233,9 @@
       "startsWith": "以…開始",
       "contains": "包含",
       "regex": "正規表示式",
-      "LAX": "每個分頁只應用一次。",
-      "ILO": "僅在初始頁面載入期間檢查。"
+      "allowlist": "白名單",
+      "blocklist": "黑名單",
+      "status": "URL規則已更改一些值。"
     },
     "help": {
       "header": "幫助",
@@ -141,5 +245,14 @@
       "import": "匯入",
       "areYouSure": "確定嗎？"
     }
+  },
+  "pageDraw": {
+    "_labelScale": 0.75,
+    "_fontScale": 1.1,
+    "draw": "繪製",
+    "erase": "擦除",
+    "select": "互動",
+    "selectTooltip": "與網頁互動",    
+    "tips": "一些實用的快捷方式\n1. 使用滑鼠右鍵擦除。\n2. 按住Shift點擊畫線。\n3. 使用Caps Lock切換$1和$2模式\n4. 要調整橡皮擦大小：按住滑鼠中鍵並左右拖動。\n5. 要調整畫筆大小：按住滑鼠中鍵並上下拖動。\n6. 右鍵點擊顏色，將頁面填充為該顏色。"
   }
 }

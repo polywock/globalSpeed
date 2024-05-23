@@ -1,0 +1,24 @@
+
+.OrmHeader {
+    background-color: aquamarine;
+    border-bottom: 1px solid seagreen;
+    color: black; 
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    font-weight: bolder;
+    display: grid;
+    grid-template-columns: 1fr max-content max-content;
+    align-items: center;
+    column-gap: 7px;
+    user-select: none;
+
+    & > span {
+        opacity: 0.7;
+    }
+
+    & > svg:hover {
+        opacity: 0.5;
+        cursor: pointer;
+    }
+
+}

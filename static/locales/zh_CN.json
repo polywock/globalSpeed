@@ -1,22 +1,29 @@
 {
+  "_scale": 1.12,
   "audio": {
     "captureTab": "捕获",
     "releaseTab": "释放",
     "split": "分离声道",
-    "mono": "单声道",
     "reverse": "音频倒放"
   },
   "warnings": {
-    "backdropFirefox": "对于背景过滤器功能，Firefox用户需要转到“about:config”URL启用“gfx.webrender.all”和“layout.css.backdrop-filter.enabled”。启用这两个标志后，重新启动Firefox。",
-    "unusedGlobal": "释放未使用的全局热键",
-    "selectTooltip": "选择首选视频作为媒体热键。如果要从其他选项卡（或具有全局热键的另一个程序）控制背景音乐，则很有用。",
-    "sliderTooltip": "⇧ 按住Shift键可进行精确控制。"
+    "unusedGlobal": "释放未使用的全局快捷键。",
+    "selectTooltip": "选择媒体热键的首选视频。如果你想从不同的标签页（或使用全局热键的另一程序）控制背景音乐，这会很有用。",
+    "sliderTooltip": "按住Shift键以进行精确控制。",
+    "captureRequired": "使用 $1 快捷键来激活。"
   },
   "token": {
     "create": "创建",
     "reset": "重置",
-    "hide": "隐藏",
+    "duplicate": "复制",
+    
 
+
+    "pinTooltip": "固定如果你想要当前标签页拥有它自己的上下文（速度，过滤器等）。",
+    "mergeBoth": "合并两者",
+    "min": "最小",
+    "max": "最大",
+    
     "on": "打开",
     "off": "关闭",
     "toggle": "切换",
@@ -26,24 +33,54 @@
     "both": "两者",
 
     "query": "选择器",
+    "queryTooltip": "用于查找要过滤的元素的CSS选择器。例如，'video, img' 将选择视频和图片。有关CSS选择器的高级用法，请查看在线文档。",
+    
+    "intoPane": "制成窗格",
     "warning": "警告",
     "filters": "滤镜",
     "transforms": "变换",
 
     "blockEvents": "阻止事件",
-    "hideIndicator": "隐藏反馈指示器",
-    "indicator": "反馈指示器",
+    "blockEventsTooltip": "贪婪模式会尝试阻止事件的默认行为及其传播。",
     "color": "颜色",
     "size": "大小",
     "rounding": "圆度",
     "duration": "持续时间",
     "offset": "偏移",
+    "position": "位置",
+    "center": "中心",
+    "topLeft": "左上",
+    "topRight": "右上",
+    "bottomLeft": "左下",
+    "bottomRight": "右下",
+    "animation": "动画",
+    "default": "默认",
+    "static": "静态",
+    "shrink": "收缩",
+    "implode": "内爆",
+    "rotate": "旋转",
     "rows": "行",
 
-    "any": "任意",
-    "all": "所有",
     "copy": "复制",
-    "paste": "粘贴"
+    "paste": "粘贴",
+    "replaceWith": "替换$1为？",
+    "invalidNumber": "无效数字",
+    "openPage": "打开页面",
+    "seconds": "秒",
+    "percent": "%",
+    "frames": "帧"
+  },
+  "placer": {
+    "windowBounds": {
+      "left": "左",
+      "top": "顶",
+      "width": "宽度",
+      "height": "高度"
+    },
+    "windowSize": "交互式窗口大小",
+    "windowPrompt": "调整此窗口的大小和位置，然后按应用。",
+    "apply": "应用",
+    "cancel": "取消"
   },
   "filter": {
     "grayscale": "灰度",
@@ -63,74 +100,144 @@
     "rotateY": "Y轴旋转",
     "rotateZ": "Z轴旋转"
   },
-  "fxPanel": {
-    "queryTooltip": "CSS选择器，用于查找要过滤的元素。例如，“video, img”将会同时查询视频和图像。相关高级用法，请在线查阅CSS选择器的相关文档。",
-    "intoPane": "制成窗格"
-  },
   "command": {
-    "nothing": "无动作",
-    "runCode": "JavaScript",
+        "runCode": "JavaScript",
     "openUrl": "打开网址",
-    "adjustSpeed": "速度",
+    "speed": "速度",
     "speedChangesPitch": "速度改变音高",
-    "setPin": "固定标签页",
-    "setState": "状态",
+    "pin": "固定标签页",
+    "state": "状态",
     "seek": "移动时间轴",
-    "setPause": "暂停",
-    "setMute": "静音",
-    "adjustVolume": "音量",
+    "pause": "暂停",
+    "mute": "静音",
+    "volume": "音量",
     "setMark": "设置标记点",
     "seekMark": "转到标记点",
-    "toggleLoop": "AB循环",
-    "toggleLoopTooltip": "从标记位置到当前位置重复播放视频。",
+    "loop": "AB循环",
+    "loopTooltip": "从标记位置到当前位置重复播放视频。",
     "fullscreen": "全屏",
     "nativeTooltip": "简单模式",
     "PiP": "画中画",
-    "setFx": "FX状态",
-    "resetFx": "FX重置",
-    "flipFx": "FX交换",
-    "adjustFilter": "FX过滤器",
-    "adjustPitch": "音高",
-    "adjustGain": "增益",
-    "adjustDelay": "延迟",
-    "adjustPan": "平移",
-    "tabCapture": "捕获",
-    "relativeTooltip": "相对于速度",
+    "fxState": "FX状态",
+    "fxReset": "FX重置",
+    "fxSwap": "FX交换",
+    "fxFilter": "FX过滤器",
+    "afxPitch": "音高",
+    "afxGain": "增益",
+    "afxDelay": "延迟",
+    "afxPan": "平移",
+    "afxMono": "单声道",
+    "afxCapture": "捕获",
+    "afxReset": "音频重置",
+    "relativeToSpeed": "相对于速度",
+    "showNet": "显示总时长",
+    "drawPage": "在页面上画",
+    "fastSeek": "快速查找",
     "fastSeekTooltip": "更快，但准确性较低",
-    "showNetTooltip": "显示净时长"
+    "mediaInfo": "显示媒体信息",
+    "intoPopup": "转为弹出窗口",
+    "intoPopupTooltip": "将当前标签页转换为弹出窗口。",
+    
+    "skip": "AB跳过", 
+    "skipTooltip": "跳过标记位置和当前位置之间的视频段。",
+    "detectiveMode": "侦探模式",
+    "detectiveModeTooltip": "隐藏除通过一个圆形可见的一切外的所有内容。",
+    "cinema": "加深背景",
+    "cinemaTooltip": "加深视频的背景。要退出，按背景或再次使用快捷键。"
   },
   "options": {
     "flags": {
       "header": "选项",
       "language": "语言",
-      "languageTooltip": "除英语以外的所有语言均使用在线工具进行翻译（liangjiancang对部分中文翻译作出调整）。",
+      "languageTooltip": "除了英语以外的所有语言都是使用在线工具翻译的。(@liangjiancang 对中文翻译做了一些调整。)",
       "darkTheme": "深色主题",
-      "pinByDefault": "默认固定",
-      "pinByDefaultTooltip": "默认固定每个标签页。",
-      "hideBadge": "隐藏徽章",
-      "hideBadgeTooltip": "徽章是扩展图标上的文字。",
-      "fullscreenSupport": "全屏",
+      "showBadge": "显示徽章",
+      "showBadgeTooltip": "徽章是扩展图标上的文字。",
+      "showMediaView": "显示媒体列表",
+      "showIndicator": "显示指示器",
+      "showIndicatorTooltip": "指示器是使用快捷键时的视觉反馈。",
       "ghostMode": "幽灵模式",
       "ghostModeTooltip": "尝试阻止网站更改速度。默认情况下禁用，因为它可能会破坏某些网站。",
-      "hideMediaView": "隐藏媒体列表",
-      "inheritGlobal": "继承全局",
-      "inheritGlobalTooltip": "新标签可以继承前一个标签的上下文或全局上下文。"
+      "pinByDefault": "默认固定",
+      "pinByDefaultTooltip": "默认固定每个标签页。",
+      "initialState": "初始状态",
+      "previousTab": "前一个标签页的上下文。",
+      "globalContext": "全局上下文",
+      "previousContext": "前一个标签页的上下文",
+      "newContext": "新上下文",
+      "customContext": "自定义上下文",
+      "customContextTooltip": "保存此标签页当前上下文的快照。新创建的标签页将使用此快照作为初始状态。",
+      "jsShortcutWarning": "由于旧API的废弃，JavaScript快捷方式目前被禁用。功能将在Chromium实现userScripts.execute()方法时恢复。",
+      "keyboardInput": "键盘输入",
+      "keyboardInputTooltip": "如果使用虚拟键盘或非QWERTY布局键盘，考虑切换到虚拟输入模式。这仅适用于未来的快捷键更改，现有的快捷键不会受影响。",
+      "qwerty": "QWERTY布局",
+      "virtual": "虚拟",
+      "grantPermission": "授权",
+      "grantPermissionTooltip": "为了启用全部功能，包括嵌入视频支持，必须启用此权限。对于有限功能，您可以通过右键点击工具栏图标按站点启用。",
+      "speedSlider": "速度滑块",
+      "textSize": "文字大小",
+      "speedPresets": "速度预设",
+      "widget": {
+        "option": "圆形小部件",
+        "optionTooltip": "（实验性）视频可见时将显示圆形小部件：\n - 视频可见时将显示圆形小部件。\n - 向左/右拖动以在视频中寻找。\n - 向上/下拖动以调整播放速度。",
+        "movementMobile": "\n - 按住圆圈几秒钟以移动或删除它。",
+        "movementDesktop": "\n - 使用右键拖动圆圈以移动或删除它。",
+        "headerTooltip": "启用圆形小部件。",
+        "showIcon": "显示图标",
+        "showIconTooltip": "在主菜单上显示图标以方便切换圆形小部件。",
+        "autoHide": "自动隐藏"
+      }
     },
     "editor": {
       "header": "热键编辑器",
       "toggleMode": "您可以使用本地热键或全局热键。",
       "toggleModeTooltip": "全局热键可以让您在使用其他应用程序时控制视频或音频。",
-      "greedyMode": "贪婪模式会尝试阻止事件的默认行为及其传播。",
-      "speedPresets": "速度预设"
+
+    
+      "menuLabel": "菜单标签",
+      "triggerMode": "支持多种触发模式。",
+      "triggerModeTooltip": "本地快捷键（默认）：灵活的快捷键。\n\n全局快捷键：当您想在使用其他应用程序时控制视频或音频时非常有用。\n\n上下文菜单：适用于不常用的命令。右键点击页面触发。",
+      "triggerModeTooltipFf": "本地快捷键（默认）：灵活的快捷键。\n\n上下文菜单：适用于不常用的命令。右键点击页面触发。",
+      "triggerModes": {
+        "0": "本地快捷键",
+        "1": "全局快捷键",
+        "2": "上下文菜单"
+      },
+      "spacing": "间距", 
+      "reversible": "可逆",
+      "reversibleTooltip": "允许设置第二个快捷键以反转列表。",
+      "wraparound": "环绕",
+      "wraparoundTooltip": "如果你越过开始或结束，它会环绕到另一边。",
+      "addLabel": "添加标签",
+      "liveScrubbing": "实时擦洗",
+      "liveScrubbingTooltip": "移动光标时连续预览更改。",
+      "pauseWhileScrubbing": "擦洗时暂停",
+      "adjustModes": {
+        "1": "设置为值",
+        "2": "按值调整",
+        "3": "在值列表之间循环",
+        "4": "交互式地设置为值。",
+        "5": "交互式地按值调整."
+      },
+      "openModes": {
+        "foregroundTab": "前台标签",
+        "backgroundTab": "后台标签",
+        "newWindow": "新窗口",
+        "newPopup": "新弹窗",
+        "sameTab": "当前标签"
+      },
+      "pressAndHold": "按住",
+      "pressAndHoldTooltip": "如果启用，则在交互调整值时必须按住键。"
     },
     "rules": {
       "header": "URL规则",
-      "conditions": "URL條件",
+      "conditions": "URL条件",
       "startsWith": "以…开始",
       "contains": "包含",
       "regex": "正则表达式",
-      "LAX": "每个标签页只应用一次。",
-      "ILO": "仅在初始页面加载期间检查。"
+      "allowlist": "白名单",
+      "blocklist": "黑名单",
+      "status": "URL规则已更改一些值。"
     },
     "help": {
       "header": "帮助",
@@ -140,5 +247,14 @@
       "import": "导入",
       "areYouSure": "确定吗？"
     }
+  },
+  "pageDraw": {
+    "_labelScale": 0.75,
+    "_fontScale": 1.1,
+    "draw": "绘制",
+    "erase": "擦除",
+    "select": "互动",
+    "selectTooltip": "与网页互动",    
+    "tips": "一些有用的快捷方式\n1. 使用鼠标右键擦除。\n2. 按住Shift点击画线。\n3. 使用Caps Lock切换$1和$2模式\n4. 要调整橡皮擦大小：按住鼠标中键并左右拖动。\n5. 要调整画笔大小：按住鼠标中键并上下拖动。\n6. 右键单击颜色，将页面填充为该颜色。"
   }
 }

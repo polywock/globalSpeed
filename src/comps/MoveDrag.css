@@ -1,0 +1,13 @@
+
+:root.dragging * {
+    cursor: ns-resize !important;
+}
+
+.icon.MoveDrag {
+    cursor: ns-resize;
+    position: relative;
+    
+    &:focus {
+        outline: none;
+    }
+}

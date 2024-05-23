@@ -1,12 +1,14 @@
 import { useMemo, useState, useEffect, useCallback, DetailedHTMLProps, InputHTMLAttributes, TextareaHTMLAttributes  } from "react"
 import debounce from "lodash.debounce"
+import { assertType } from "src/utils/helper"
 
 type ThrottledTextInputProps = {
   value: string,
   onChange: (newValue: string) => void,
   passInput?: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
   passTextArea?: DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>,
-  textArea?: boolean
+  textArea?: boolean,
+  placeholder?: string
 }
 
 type Env = {
@@ -49,7 +51,23 @@ export function ThrottledTextInput(props: ThrottledTextInputProps) {
 
   if (props.textArea) {
     return (
-      <textarea {...(props.passTextArea ?? {})} value={ghostValue} onChange={e => {
+      <textarea placeholder={props.placeholder} onKeyDown={e => {
+        if (e.key === "Tab") {
+          e.preventDefault();
+          const item = e.target
+          assertType<HTMLTextAreaElement>(item)
+          var start = item.selectionStart;
+          var end = item.selectionEnd;
+
+          // Add spaces 
+          const newText = item.value.substring(0, start) + "  " + item.value.substring(end);
+
+          // Adjust cursor. 
+          item.selectionStart = item.selectionEnd = start + 2;
+          setGhostValue(newText)
+          env.sendUpdateDebounced(newText)
+        }
+      }} {...(props.passTextArea ?? {})} value={ghostValue || ""} onChange={e => {
         setGhostValue(e.target.value)
         env.sendUpdateDebounced(e.target.value)
       }} onBlur={env.handleBlur}/>
@@ -57,7 +75,7 @@ export function ThrottledTextInput(props: ThrottledTextInputProps) {
   } 
 
   return (
-    <input {...(props.passInput ?? {})} value={ghostValue} onChange={e => {
+    <input placeholder={props.placeholder}  {...(props.passInput ?? {})} value={ghostValue || ""} onChange={e => {
       setGhostValue(e.target.value)
       env.sendUpdateDebounced(e.target.value)
     }} type="text"onBlur={env.handleBlur}/>

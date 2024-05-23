@@ -1,0 +1,12 @@
+
+:root.noUseraSelectScroll {
+    * {
+        user-select: none !important;
+    }
+}
+
+:root.noUseraSelect {
+    * {
+        user-select: none !important;
+    }
+}

@@ -3,17 +3,27 @@ import { CommandName } from "./defaults/commands"
 import { FilterName } from "./defaults/filters"
 import { TabInfo } from "./utils/browserUtils"
 
-
 declare global {
   interface GlobalVar {
   }
-  
+
   var gvar: GlobalVar
+
+  interface Message {
+  }
+
+  type Messages = Message[keyof Message]
+
+  interface AudioWorkletMessage {
+  }
+
+  type AudioWorkletMessages = AudioWorkletMessage[keyof AudioWorkletMessage]
+
   interface Event {
     processed?: boolean
   }
   interface HTMLVideoElement {
-    intersectionRatio: number 
+    intersectionRatio: number
   }
   interface HTMLMediaElement {
     gsKey?: string,
@@ -24,9 +34,13 @@ declare global {
     gsNameless?: number[],
     gsLoopTimeUpdateHandler?: () => void,
     gsLoopSeekingHandler?: () => void,
+    gsSkipTimeUpdateHandler?: () => void,
+    gsSkipSeekingHandler?: () => void,
     gsRateCounter?: {time: number, count: number},
     gsRateViolations?: number,
     gsRateBanned?: boolean,
+    gsFpsSum?: number,
+    gsFpsCount?: number,
     mozPreservesPitch?: boolean,
     webkitPreservesPitch?: boolean,
     videoTracks: any[],
@@ -35,21 +49,24 @@ declare global {
   }
 }
 
+export type AnyDict = {[key: string]: any}
+
 export type State = {
   version: number,
   language?: string,
+  fontSize?: number,
   pinByDefault?: boolean,
-  inheritPreviousContext?: boolean,
+  initialContext?: InitialContext,
+  customContext?: Context,
   hideIndicator?: boolean,
   hideBadge?: boolean,
   hideMediaView?: boolean,
-  staticOverlay?: boolean,
   darkTheme?: boolean,
   keybinds?: Keybind[],
   keybindsUrlCondition?: URLCondition,
   ghostMode?: boolean,
+  ghostModeUrlCondition?: URLCondition,
   rules?: URLRule[],
-  common: Context,
   indicatorInit?: IndicatorInit,
   freePitch?: boolean,
   superDisable?: boolean,
@@ -61,13 +78,19 @@ export type State = {
   speedSmallStep?: number,
   speedBigStep?: number,
   speedSlider?: {min: number, max: number},
-  showNetSeek?: boolean,
-  ignorePiP?: boolean // PiP videos are deprioritized for hotkeys.
-}
+  ignorePiP?: boolean, // PiP videos are deprioritized for hotkeys.
+  minimizeOrlBanner?: boolean,
+  virtualInput?: boolean,
+  hideGrant?: boolean,
+  circleWidget?: boolean,
+  circleWidgetIcon?: boolean,
+  circleInit?: CircleInit,
+  freshKeybinds?: boolean
+} & Context
 
+export type StoredKey = `${"t" | "r"}:${number}:${keyof Context | "isPinned"}` | `${"g" | "x"}:${keyof State}`; 
 
-export type StateSansCommon = Omit<State, "common">
-export type StateView = Partial<StateSansCommon & Context & {isPinned: boolean}>
+export type StateView = Partial<State & {isPinned: boolean, hasOrl: boolean}>
 
 
 export type StateViewSelector = {
@@ -81,13 +104,26 @@ export type IndicatorInit = {
   rounding?: number,
   duration?: number,
   offset?: number,
-  static?: boolean
+  static?: boolean,
+  position?: "TL" | "TR" | "BL" | "BR" | "C",
+  animation?: 1 | 2 | 3 | 4 | 5,
+  showShadow?: boolean
 }
 
-export type MediaPath = {
-  key: string,
-  tabInfo: TabInfo
+export type CircleInit = {
+  circleSize?: number,
+  circleInitial?: Point,
+  autoHideDisabled?: boolean,
+  opacity?: number 
 }
+
+export enum InitialContext {
+  PREVIOUS = 1,
+  GLOBAL,
+  NEW,
+  CUSTOM
+}
+
 
 export type Pin = {tabId: number, ctx: Context}
 
@@ -95,9 +131,9 @@ export type Context = {
   speed: number, 
   lastSpeed?: number,
   enabled: boolean,
-  enabledLatestViaPopup?: boolean,
-  elementFx: Fx,
-  backdropFx: Fx,
+  latestViaShortcut?: boolean,
+  elementFx?: Fx,
+  backdropFx?: Fx,
   monoOutput?: boolean,
   audioFx: AudioFx,
   audioFxAlt?: AudioFx,
@@ -105,9 +141,23 @@ export type Context = {
 }
 
 export const CONTEXT_KEYS: (keyof Context)[] = [ 
-  "speed", "lastSpeed", "enabled", "enabledLatestViaPopup", "elementFx", "backdropFx", 
+  "speed", "lastSpeed", "enabled", "latestViaShortcut", "elementFx", "backdropFx", 
   "monoOutput", "audioFx", "audioFxAlt", "audioPan"
 ]
+
+export const CONTEXT_KEYS_SET = new Set(CONTEXT_KEYS)
+
+// Groups of context keys that are tightly coupled and should be cleared together (URL Overrides). 
+export const ORL_GROUPS: (keyof Context)[][] = [["speed"], ["elementFx", "backdropFx"], ["enabled", "latestViaShortcut"]]
+
+export const ORL_CONTEXT_KEYS: (keyof Context)[] = ORL_GROUPS.flat(1)
+
+export const ORL_CONTEXT_KEYS_SET = new Set(ORL_CONTEXT_KEYS)
+
+export const REVERSE_ORL_GROUP = Object.fromEntries(ORL_CONTEXT_KEYS.map(k => [k, ORL_GROUPS.find(o => o.includes(k))])) as {[key in keyof Context]: (keyof Context)[]}
+
+export const AUDIO_CONTEXT_KEYS = ["enabled", "monoOutput", "audioFx", "audioFxAlt", "audioPan"] as (keyof Context)[]
+export const AUDIO_CONTEXT_KEYS_SET = new Set(AUDIO_CONTEXT_KEYS)
 
 export type AudioFx = {
   pitch: number,
@@ -126,25 +176,51 @@ export type AudioFx = {
 export enum AdjustMode {
   SET = 1,
   ADD,
-  CYCLE
+  CYCLE,
+  ITC,
+  ITC_REL
+}
+
+export enum Duration {
+  SECS = 1,
+  FRAMES,
+  PERCENT
+}
+
+export enum Trigger {
+  LOCAL = 0,
+  GLOBAL = 1,
+  CONTEXT = 2
 }
 
 export type Command = {
   group?: CommandGroup
+  withDuration?: boolean,
   withFilterTarget?: boolean,
   withFilterOption?: boolean,
   valueType?: "number" | "string" | "modalString" | "adjustMode" | "state",
-  valueMin?: number,
-  valueMax?: number,
-  valueStep?: number,
   hasFeedback?: boolean,
-  valueDefault?: number,
   requiresMedia?: boolean,
   requiresVideo?: boolean,
   requiresTabCapture?: boolean,
   requiresPiPApi?: boolean,
-  noNull?: boolean,
+  noReset?: boolean,
+  ref?: ReferenceValues,
+  getRef?: (command: Command, kb: Keybind) => ReferenceValues
   generate: () => Keybind 
+}
+
+export type ReferenceValues = {
+  min?: number,
+  max?: number,
+  step?: number,
+  default?: number,
+  reset?: number,
+  sliderMin?: number,
+  sliderMax?: number,
+  sliderStep?: number,
+  itcStep?: number,
+  wrappable?: boolean
 }
 
 export enum CommandGroup {
@@ -154,32 +230,83 @@ export enum CommandGroup {
   MISC
 }
 
+
 export type Keybind = {
   id: string,
+  label?: string,
   command: CommandName,
   enabled: boolean,
-  global?: boolean,
-  globalKey?: string,
+  
+  trigger?: Trigger,
+  allowAlt?: boolean,
+  cycleNoWrap?: boolean,
+  replaceWithGsm?: number,
+
   key?: Hotkey,
+  keyAlt?: Hotkey,
+  globalKey?: string,
+  globalKeyAlt?: string,
+  contextLabel?: string
+  contextLabelAlt?: string
+
   greedy?: boolean,
   ifMedia?: boolean,
   valueNumber?: number,
-  hideIndicator?: boolean,
   valueNumberAlt?: number,
+  valueItcMin?: number,
+  valueItcMax?: number,
   valueCycle?: number[],
   valueString?: string,
   valueState?: StateOption,
-  valueBool?: boolean,
-  valueBool2?: boolean,
-  valueBool3?: boolean,
-  valueBool4?: boolean,
+  valueUrlMode?: "fgTab" | "bgTab" | "newWindow" | "newPopup" | "sameTab",
+  valuePopupRect?: Rect,
+  invertIndicator?: boolean,
+  
+  relativeToSpeed?: boolean,
+  fastSeek?: boolean,
+  showNetDuration?: number
+  wraparound?: boolean,
+  itcWraparound?: boolean,
+  autoPause?: boolean, 
+  skipPauseSmall?: boolean,
+  pauseWhileScrubbing?: boolean, 
+  seekOnce?: boolean,
+  noHold?: boolean,
+  direct?: boolean,
   filterOption?: FilterName,
   filterTarget?: TargetFx,
   adjustMode?: AdjustMode,
+  duration?: Duration,
   cycleIncrement?: number,
   spacing?: number,
-  condition?: URLCondition
+  condition?: URLCondition,
+  oncePerUp?: boolean
 }
+
+export type KeybindMatch = {
+  kb: Keybind;
+  alt?: boolean;
+}
+
+export type KeybindMatchId = {
+  id: string, 
+  alt?: boolean;
+}
+
+
+
+export type Rect = {
+  left: number,
+  top: number,
+  width: number,
+  height: number 
+}
+
+export type Point = {
+  x: number,
+  y: number 
+}
+
 
 
 export type Fx = {
@@ -194,13 +321,7 @@ export type Fx = {
 
 export type FilterInfo = {
   isTransform?: boolean,
-  min?: number,
-  max?: number,
-  step: number,
-  default: number,
-  sliderMin: number,
-  sliderMax: number,
-  sliderStep?: number,
+  ref?: ReferenceValues,
   format: (value: number) => string 
 }
 
@@ -219,179 +340,65 @@ export type StateOption = "on" | "off" | "toggle"
 export type URLRule = {
   id: string,
   enabled: boolean,
-  condition: URLCondition,
-  type: "SPEED" | "STATE" | "FX" | "JS",
+  label?: string,
+  spacing?: number,
+  condition?: URLCondition,
+  type: "SPEED" | "ON" | "OFF" | "FX" | "JS",
   overrideSpeed: number,
   overrideFx?: {
     elementFx: Fx,
     backdropFx: Fx
   },
-  overrideEnabled?: boolean,
-  overrideJs?: string,
-  strict?: boolean,
-  initialLoadOnly?: boolean
+  overrideJs?: string
 }
 
 
 export type URLConditionPart = {
   type: "STARTS_WITH" | "CONTAINS" | "REGEX",
-  inverse?: boolean,
-  value: string,
+  valueStartsWith: string,
+  valueContains: string,
+  valueRegex: string,
   disabled?: boolean,
   id: string
 }
 
 export type URLCondition = {
   parts: URLConditionPart[],
-  matchAll?: boolean
+  block?: boolean
 }
 
 
-export type Gsm = {
-  audio: {
-    captureTab: string,
-    releaseTab: string,
-    split: string,
-    mono: string,
-    reverse: string,
-    pan: string
-  },
-  warnings: {
-    backdropFirefox: string,
-    unusedGlobal: string,
-    selectTooltip: string,
-    sliderTooltip: string
-  },
-  token: {
-    create: string,
-    reset: string,
-    hide: string,
-    
-    on: string,
-    off: string,
-    toggle: string,
-    
-    element: string,
-    backdrop: string,
-    both: string,
-    
-    query: string,
-    warning: string,
-    filters: string,
-    transforms: string,
 
-    blockEvents: string,
-    hideIndicator: string,
-    indicator: string,
-    color: string,
-    size: string,
-    rounding: string,
-    duration: string,
-    offset: string,
-    rows: string,
-    
-    any: string,
-    all: string,
-    copy: string,
-    paste: string 
-  },
-  filter: {
-    grayscale: string,
-    sepia: string,
-    hueRotate: string,
-    contrast: string,
-    brightness: string,
-    saturate: string,
-    invert: string,
-    blur: string,
-    opacity: string,
-    scaleX: string,
-    scaleY: string,
-    translateX: string,
-    translateY: string,
-    rotateX: string,
-    rotateY: string,
-    rotateZ: string
-  },
-  fxPanel: {
-    queryTooltip: string,
-    intoPane: string
-  },
-  command: {
-    nothing: string,
-    runCode: string,
-    adjustSpeed: string,
-    speedChangesPitch: string,
-    setPin: string,
-    setState: string,
-    seek: string,
-    setPause: string,
-    setMute: string,
-    adjustVolume: string,
-    setMark: string,
-    seekMark: string,
-    toggleLoop: string,
-    toggleLoopTooltip: string,
-    fullscreen: string,
-    nativeTooltip: string,
-    PiP: string,
-    openUrl: string,
-    setFx: string,
-    resetFx: string,
-    flipFx: string,
-    adjustFilter: string,
-    adjustPitch: string,
-    adjustGain: string,
-    adjustDelay: string,
-    adjustPan: string,
-    tabCapture: string,
-    relativeTooltip: string,
-    fastSeekTooltip: string,
-    showNetTooltip: string
-  },
-  options: {
-    flags: {
-      header: string,
-      language: string,
-      languageTooltip: string,
-      darkTheme: string,
-      pinByDefault: string,
-      pinByDefaultTooltip: string,
-      hideBadge: string,
-      hideBadgeTooltip: string,
-      fullscreenSupport: string,
-      ghostMode: string,
-      ghostModeTooltip: string,
-      hideMediaView: string,
-      inheritGlobal?: string,
-      inheritGlobalTooltip?: string
-    },
-    editor: {
-      header: string,
-      toggleMode: string,
-      toggleModeTooltip: string,
-      greedyMode: string,
-      speedPresets: string
-    },
-    rules: {
-      header: string,
-      conditions: string,
-      startsWith: string,
-      contains: string,
-      regex: string,
-      LAX: string,
-      ILO: string
-    },
-    help: {
-      header: string,
-      issuePrompt: string,
-      issueDirective: string,
-      export: string,
-      import: string,
-      areYouSure: string
-    }
-  }
+export type MediaProbe = {
+  currentTime: number,
+  duration: number,
+  paused: boolean,
+  volume: number,
+  fps: number,
+  formatted?: string
 }
 
-// Compound utility type that makes certain keys in an interface option. 
-// export type PartialPick<T, K extends keyof T & (string | number | symbol)> =  Omit<T, K> & Partial<Pick<T, K>>
+export type ItcInit = {
+  mediaKey?: string,
+  dontReleaseKeyUp?: boolean,
+  mediaTabInfo?: TabInfo,
+  mediaDuration?: number,
+  shouldShow?: boolean,
+  kb: Keybind,
+
+  relative?: boolean
+  seekOnce?: boolean,
+  resetTo?: number
+  original?: number,
+  originalAlt?: number,
+
+  step?: number,
+  min?: number,
+  max?: number,
+
+  sliderMin?: number,
+  sliderMax?: number,
+
+  wasPaused?: boolean
+}
+

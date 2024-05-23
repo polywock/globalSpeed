@@ -1,0 +1,29 @@
+
+
+.ModalBase {
+  position: fixed;
+  left: 0px; 
+  top: 0px; 
+  width: 100vw;
+  height: 100vh;
+  background-color: #00000088; 
+  z-index: 9999999999;
+
+  display: grid;
+  justify-content: center;
+  align-items: center;
+
+  &.passThrough {
+    pointer-events: none;
+  }
+}
+
+
+.ModalMain {
+  width: 700px;
+  max-width: 90vw;
+  max-height: 90vh;
+  background-color: var(--fg-color);
+  padding: 20px;
+  overflow-y: auto;
+}

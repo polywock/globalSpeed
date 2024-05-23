@@ -1,4 +1,4 @@
-import "./Toggle.scss"
+import "./Toggle.css"
 
 type ToggleProps = {
   value: boolean,

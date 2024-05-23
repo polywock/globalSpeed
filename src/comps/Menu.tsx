@@ -1,25 +1,28 @@
 
 import { ModalBase } from "./ModalBase"
 import { FaCheck } from "react-icons/fa"
-import "./Menu.scss"
+import "./Menu.css"
 
-export const Menu = (props: {
+export type MenuProps = {
   position: {x: number, y: number},
   onClose: () => void, 
   onSelect: (name: string) => void, 
-  items: {name: string, checked?: boolean, label?: string | React.ReactElement}[],
-}) => {
+  items: {name: string, checked?: boolean, close?: boolean, preLabel?: string, label?: string | React.ReactElement}[],
+}
+
+export const Menu = (props: MenuProps) => {
 
   return <ModalBase color={"transparent"} onClose={props.onClose}>
     <div style={{left: `${props.position.x}px`, top: `${props.position.y}px`}} className="Menu">
       {props.items.map(v => {
         const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-          e.target === e.currentTarget && props.onSelect(v.name)
+          props.onSelect(v.name)
+          if (v.close) props.onClose()
         }
 
-        return <div key={v.name}>
-          <span onClick={handleClick}style={{display: "inline-block", minWidth: "20px"}}>{v.checked === true ? <FaCheck/> : <div/>}</span>
-          <span onClick={handleClick}>{v.label ?? v.name}</span>
+        return <div key={v.name} onClick={handleClick}>
+          <span style={{display: "inline-block", minWidth: "20px"}}>{v.checked === true ? <FaCheck/> : <div>{v.preLabel ?? ""}</div>}</span>
+          <span>{v.label ?? v.name}</span>
         </div>
       })}
     </div>

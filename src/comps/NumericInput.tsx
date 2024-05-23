@@ -7,6 +7,7 @@ const NUMERIC_REGEX = /^-?(?=[\d\.])\d*(\.\d+)?$/
 type NumericInputProps = {
   value: number,
   onChange: (newValue: number) => any,
+  onFocus?: (e: React.FocusEvent<HTMLDivElement>) => void 
   placeholder?: string,
   noNull?: boolean
   min?: number,
@@ -28,7 +29,7 @@ export const NumericInput = (props: NumericInputProps) => {
     } else {
       let parsedGhostValue = parseFloat(ghostValue)
       if (parsedGhostValue !== props.value) {
-        setGhostValue(round(props.value, props.rounding ?? 4).toString())
+        setGhostValue(`${round(props.value, props.rounding ?? 4)}`)
       }
     }
   }, [props.value])
@@ -37,26 +38,29 @@ export const NumericInput = (props: NumericInputProps) => {
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setGhostValue(e.target.value)
     const value = e.target.value.trim()
-    if (!value) {
-      if (props.noNull) {
-        setProblem("empty")
-      } else {
-        setProblem(null)
-        props.onChange(null)
-      }
-      return 
-    }
     
     const parsed = round(parseFloat(value), props.rounding ?? 4)
-    if (NUMERIC_REGEX.test(value) && !isNaN(parsed)) {
-      if (props.min != null && parsed < props.min) {
-        setProblem(`>= ${props.min}`)
+
+    if (!props.noNull && !value.length) {
+      setProblem(null)
+      if (props.value != null) {
+        props.onChange(null)
+      }
+    }
+
+    if (!isNaN(parsed) && NUMERIC_REGEX.test(value)) {
+      let min = props.min
+      let max = props.max 
+
+      if (min != null && parsed < min) {
+        setProblem(`>= ${min}`)
         return 
       }
-      if (props.max != null && parsed > props.max) {
-        setProblem(`<=  ${props.max}`)
+      if (max != null && parsed > max) {
+        setProblem(`<= ${max}`)
         return
       }
+
       if (parsed !== round(props.value, props.rounding ?? 4)) {
         props.onChange(parsed)
       }
@@ -64,6 +68,7 @@ export const NumericInput = (props: NumericInputProps) => {
     } else {
       setProblem(`NaN`) 
     }
+
   }
 
   return (
@@ -72,12 +77,13 @@ export const NumericInput = (props: NumericInputProps) => {
         disabled={props.disabled ?? false}
         onBlur={e => {
           setProblem(null)
-          setGhostValue(props.value == null ? "" : round(props.value, props.rounding ?? 4).toString())
+          setGhostValue(props.value == null ? "" : `${round(props.value, props.rounding ?? 4)}`)
         }}
         className={problem ? "error" : ""}
         placeholder={props.placeholder}
         type="text" 
         onChange={handleOnChange} value={ghostValue}
+        onFocus={props.onFocus}
       />
       {problem && (
         <FloatTooltip value={problem}/>

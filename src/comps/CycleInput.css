@@ -1,0 +1,44 @@
+
+
+.CycleInput {
+
+  & .close {
+    opacity: 0;
+  }
+
+  &:hover .close {
+    opacity: 0.9;
+  }
+
+
+  & > .values {
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    align-items: center;
+    grid-gap: 7px;
+
+    & button {
+      font-size: 0.7rem;
+    }
+    
+    & > .value {
+      position: relative;
+      width: 44px;
+
+      & > .close {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        width: 11px;
+        height: 11px;
+        background-color: #d99;
+        border: 1px solid #d66;
+        border-radius: 50%;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  } 
+}

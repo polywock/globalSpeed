@@ -1,0 +1,13 @@
+
+.IndicatorModal {
+    width: 600px;
+    max-width: 90vw;
+    max-height: 90vh;
+    background-color: var(--fg-color);
+    padding: 20px;
+    overflow-y: auto;
+
+    & > button.reset {
+        font-size: 1.14rem;
+    }
+}

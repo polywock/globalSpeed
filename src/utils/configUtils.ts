@@ -1,26 +1,36 @@
-import { FilterEntry, TargetFx, TargetFxFlags, Gsm, URLCondition } from "../types";
+import { AdjustMode, Duration, KeybindMatch, ReferenceValues, Trigger, type FilterEntry, type Keybind, type TargetFx, type TargetFxFlags, type URLCondition, type URLConditionPart } from "../types";
 import { clamp, isFirefox, round } from "./helper";
 import { filterInfos } from "../defaults/filters";
-import { MediaEvent } from "../contentScript/utils/applyMediaEvent";
+import type { MediaEvent } from "../contentScript/isolated/utils/applyMediaEvent";
+import { Hotkey, compareHotkeys } from "./keys";
+
 
 
 export function conformSpeed(speed: number, rounding = 2) {
   return clamp(0.07, 16, round(speed, rounding))
 }
 
-export function formatSpeed(speed: number) {
+export function formatSpeedOld(speed: number) {
   return speed.toFixed(2)
 }
 
+export function formatSpeed(speed: number, snip = false) {
+  let speedString = speed.toFixed(2) 
+  if (snip && speedString.at(-1) === "0") {
+    speedString = speedString.slice(0, -1)
+  }
+  return speedString
+}
+
 export function formatSpeedForBadge(speed: number) {
-  return speed.toFixed(2).slice(0, 4)
+  return formatSpeed(speed).slice(0, isFirefox() ? 3 : 4)
 }
 
 export function formatFilters(filterValues: FilterEntry[]) {
   let parts: string[] = []
   filterValues?.forEach(v => {
     const filterInfo = filterInfos[v.name]
-    if (v.value != null && v.value !== filterInfo.default) {
+    if (v.value != null && v.value !== filterInfo.ref.default) {
       parts.push(filterInfo.format(v.value))
     }
   })
@@ -30,7 +40,7 @@ export function formatFilters(filterValues: FilterEntry[]) {
 export function checkFilterDeviation(values: FilterEntry[]) {
   for (let v of (values || [])) {
     const filterInfo = filterInfos[v.name]
-    if (v.value != null && v.value !== filterInfo.default) {
+    if (v.value != null && v.value !== filterInfo.ref.default) {
       return true  
     }
   }
@@ -48,6 +58,9 @@ export function intoFxFlags(target: TargetFx) {
 }
 
 export function sendMediaEvent(event: MediaEvent, key: string, tabId: number, frameId: number) {
+  if (gvar?.tabInfo?.tabId === tabId && gvar.tabInfo.frameId === frameId) {
+    // realizeMediaEvent(key, event)
+  } else {}
   chrome.tabs.sendMessage(tabId, {type: "APPLY_MEDIA_EVENT", event, key}, frameId == null ? undefined : {frameId})
 }
 
@@ -55,49 +68,61 @@ export function sendMessageToConfigSync(msg: any, tabId: number, frameId?: numbe
   chrome.tabs.sendMessage(tabId, msg, frameId == null ? undefined : {frameId})
 }
 
-export function requestGsm(): Promise<Gsm> {
-  return new Promise((res, rej) => {
-    chrome.runtime.sendMessage({type: "REQUEST_GSM"}, gsm => {
-      if (chrome.runtime.lastError) {
-        rej(chrome.runtime.lastError)
-      } else { 
-        res(gsm)
-      }
-    })
-  })
+function testURLWithPart(url: string, p: URLConditionPart) {
+  if (p.type === "STARTS_WITH") {
+    return url.startsWith(p.valueStartsWith)
+  } else if (p.type === "CONTAINS") {
+    return url.includes(p.valueContains)
+  } else if (p.type === "REGEX") {
+    try {
+      return new RegExp(p.valueRegex).test(url)
+    } catch (err) {}
+  } 
 }
 
-export function checkURLCondition(url: string, cond: URLCondition, neutral?: boolean) {
-  let failedAny = false  
-  let passedAny = false 
-
-  cond.parts.forEach(part => {
-    if (part.disabled) return 
-    let passed = false 
-
-    if (part.type === "STARTS_WITH") {
-      passed = url.startsWith(part.value)
-    } else if (part.type === "CONTAINS") {
-      passed = url.includes(part.value)
-    } else if (part.type === "REGEX") {
-  
-      try {
-        passed = new RegExp(part.value).test(url)
-      } catch (err) {}
-    } else {
-      return 
-    }
-
-    if (part.inverse ? passed : !passed) {
-      failedAny = true 
-    } else {
-      passedAny = true 
-    }
-  })
-
-  if (!passedAny && !failedAny) return neutral
-
-  if (cond.matchAll && failedAny) return false
-
-  return passedAny
+export function testURL(url: string, c: URLCondition, neutral?: boolean) {
+  const enabledParts = c?.parts.filter(p => !p.disabled) || []
+  if (!enabledParts.length) return neutral 
+  const matched = enabledParts.some(p => testURLWithPart(url, p))
+  return c.block ? !matched : matched 
 }
+
+
+export function extractURLPartValueKey(part: URLConditionPart): "valueContains" | "valueStartsWith" | "valueRegex" {
+  return (part.type === "CONTAINS" ? "valueContains" : (part.type === "STARTS_WITH" ? "valueStartsWith" : "valueRegex"))
+}
+
+export function requestSyncContextMenu(direct?: boolean) {
+  chrome.runtime.sendMessage({type: "SYNC_CONTEXT_MENUS", direct})
+}
+
+export function isSeekSmall(kb: Keybind, ref?: ReferenceValues) {
+  if (kb.adjustMode === AdjustMode.ADD) {
+    let val = kb.valueNumber ?? ref?.step
+    if ((kb.duration || Duration.SECS) === Duration.SECS) return Math.abs(val) < 0.5
+    if (kb.duration === Duration.FRAMES) return Math.abs(val) < 14
+  }
+}
+
+export function findMatchingKeybindsLocal(kbs: Keybind[], key?: Hotkey): KeybindMatch[] {
+  return kbs.filter(kb => kb.enabled && (kb.trigger || Trigger.LOCAL) === Trigger.LOCAL).map(kb => {
+    if (kb.key && compareHotkeys(kb.key, key)) return {kb}
+    if (kb.allowAlt && kb.adjustMode === AdjustMode.CYCLE && compareHotkeys(kb.keyAlt, key)) return {kb, alt: true}
+  }).filter(v => v)
+}
+
+export function findMatchingKeybindsGlobal(kbs: Keybind[], global?: string): KeybindMatch[] {
+  return kbs.filter(kb => kb.enabled && kb.trigger === Trigger.GLOBAL).map(kb => {
+    if ((kb.globalKey || 'commandA') === global) return {kb}
+    if (kb.allowAlt && kb.adjustMode === AdjustMode.CYCLE && (kb.globalKeyAlt || 'commandA') === global) return {kb, alt: true}
+  }).filter(v => v)
+}
+
+export function findMatchingKeybindsContext(kbs: Keybind[], id: string): KeybindMatch[] {
+  return kbs.filter(kb => kb.enabled && kb.trigger === Trigger.CONTEXT).map(kb => {
+    if (kb.id === id) return {kb}
+    if (kb.allowAlt && kb.adjustMode === AdjustMode.CYCLE && `ALT_${kb.id}` === id) return {kb, alt: true}
+  }).filter(v => v)
+}
+
+

@@ -49,7 +49,7 @@ export function Slider(props: SliderProps) {
 
   return (
     <input
-      title={window.gsm.warnings.sliderTooltip}
+      title={gvar.gsm.warnings.sliderTooltip}
       style={anchor ? {outline: "2px solid red", transformOrigin: "center", transform: "scaleY(1.5)"} : {}}
       onMouseDown={e => {
         e.shiftKey && ensureAnchored()

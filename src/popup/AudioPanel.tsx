@@ -7,9 +7,10 @@ import { useCaptureStatus } from "../hooks/useCaptureStatus";
 import { MdAccessTime } from "react-icons/md";
 import { getDefaultAudioFx } from "../defaults";
 import { ReverseButton } from "./ReverseButton";
-import cloneDeep from "lodash.clonedeep";
-import produce from "immer";
-import "./AudioPanel.scss"
+import { produce } from "immer";
+import { initTabCapture, releaseTabCapture } from "src/background/utils/tabCapture";
+import "./AudioPanel.css"
+import { domRectGetOffset, feedbackText } from "src/utils/helper";
 
 export function AudioPanel(props: {}) {
   const [view, setView] = useStateView({audioFx: true, audioFxAlt: true, monoOutput: true, audioPan: true})
@@ -26,26 +27,33 @@ export function AudioPanel(props: {}) {
   let starAudioFx = rightTab ? view.audioFxAlt : view.audioFx
   let starKey: "audioFxAlt" | "audioFx"  = rightTab ? "audioFxAlt" : "audioFx"
 
-  const ensureCaptured = () => {
-    if (status) return 
+  const ensureCaptured = async () => {
+    if (status) return status 
     env.viaButton = false
-    chrome.runtime.sendMessage({type: "TAB_CAPTURE", on: true, tabId: gvar.tabInfo.tabId})
+    return initTabCapture(gvar.tabInfo.tabId)
   }
 
   return <div className="AudioPanel panel">
+
+    {/* Capture button */}
     <button className={`capture ${status ? "active" : ""}`} onClick={e => {
       env.viaButton = true 
-      chrome.runtime.sendMessage({type: "TAB_CAPTURE", tabId: gvar.tabInfo.tabId})
-    }}>{status ? window.gsm.audio.releaseTab : window.gsm.audio.captureTab}</button>
+      status ? releaseTabCapture(gvar.tabInfo.tabId) : initTabCapture(gvar.tabInfo.tabId)
+    }}>{status ? gvar.gsm.audio.releaseTab : gvar.gsm.audio.captureTab}</button>
+
     <div className="mainControls">
+
+      {/* Split */}
       <button 
         className={`toggle ${view.audioFxAlt ? "active" : ""}`}
         onClick={() => {
           setView(produce(view, d => {
-            d.audioFxAlt = d.audioFxAlt ? null : cloneDeep(d.audioFx || getDefaultAudioFx())
+            d.audioFxAlt = d.audioFxAlt ? null : structuredClone(view.audioFx || getDefaultAudioFx())
           }))
         }}
-      >{window.gsm.audio.split}</button>
+      >{gvar.gsm.audio.split}</button>
+
+      {/* Mono */}
       <button 
         className={`toggle ${view.monoOutput ? "active" : ""}`}
         onClick={() => {
@@ -54,9 +62,12 @@ export function AudioPanel(props: {}) {
             d.monoOutput && ensureCaptured()
           }))
         }}
-      >{window.gsm.audio.mono}</button>
+      >{gvar.gsm.command.afxMono}</button>
+
     </div>
-    {view.audioFxAlt ? (
+
+    {/* Split tabs */}
+    {!!view.audioFxAlt && (
       <div className="tabs">
         <button className={!rightTab ? "open" : ""} onClick={e => {
           setRightTab(false)
@@ -65,11 +76,13 @@ export function AudioPanel(props: {}) {
           setRightTab(true)
         }}>{"R >>"}</button>
       </div>
-    ) : null}
+    )}
+
+    {/* Pitch control */}
     <SliderPlus
       label={<div>
-        <FaMusic size="17px"/>
-        <span style={{marginLeft: "10px"}}>{window.gsm.command.adjustPitch}</span>
+        <FaMusic size="1.21rem"/>
+        <span style={{marginLeft: "10px"}}>{gvar.gsm.command.afxPitch}</span>
         <button title={"high quality"} style={{marginLeft: "10px"}} className={`micro toggle ${starAudioFx.jungleMode ? "" : "active"}`} onClick={e => {
           setView(produce(view, d => {
             d[starKey].jungleMode = !starAudioFx.jungleMode
@@ -90,10 +103,12 @@ export function AudioPanel(props: {}) {
         newValue !== 0 && ensureCaptured()
       }}
     />
+
+    {/* Gain control */}
     <SliderPlus
       label={<div>
-        <FaVolumeUp size="17px"/>
-        <span style={{marginLeft: "10px"}}>{window.gsm.command.adjustGain}</span>
+        <FaVolumeUp size="1.21rem"/>
+        <span style={{marginLeft: "10px"}}>{gvar.gsm.command.afxGain}</span>
       </div>}
       value={starAudioFx.volume ?? 1}
       sliderMin={0}
@@ -107,10 +122,12 @@ export function AudioPanel(props: {}) {
         newValue !== 1 && ensureCaptured()
       }}
     />
+
+    {/* Pan control */}
     <SliderPlus
       label={<div>
-        <FaArrowsAltH size="17px"/>
-        <span style={{marginLeft: "10px"}}>{window.gsm.command.adjustPan}</span>
+        <FaArrowsAltH size="1.21rem"/>
+        <span style={{marginLeft: "10px"}}>{gvar.gsm.command.afxPan}</span>
       </div>}
       value={view.audioPan ?? 0}
       sliderMin={-1}
@@ -124,13 +141,16 @@ export function AudioPanel(props: {}) {
         newValue !== 0 && ensureCaptured()
       }}
     />
+
+    {/* Delay control */}
     <SliderPlus
       label={<div>
-        <MdAccessTime size="20px"/>
-        <span style={{marginLeft: "10px"}}>{window.gsm.command.adjustDelay}</span>
-        <button title={"merge"} style={{marginLeft: "10px"}} className={`toggle ${starAudioFx.delayMerge ? "active" : ""}`} onClick={e => {
+        <MdAccessTime size="1.42rem"/>
+        <span style={{marginLeft: "10px"}}>{gvar.gsm.command.afxDelay}</span>
+        <button style={{marginLeft: "10px"}} className={`toggle ${starAudioFx.delayMerge ? "active" : ""}`} onClick={e => {
           setView(produce(view, d => {
             d[starKey].delayMerge = !starAudioFx.delayMerge
+            if(d[starKey].delayMerge) feedbackText(gvar.gsm.token.mergeBoth, domRectGetOffset((e.currentTarget as any as HTMLButtonElement).getBoundingClientRect(), 8, 30))
           }))
         }}>+</button>
       </div>}
@@ -147,7 +167,11 @@ export function AudioPanel(props: {}) {
         newValue !== 0 && ensureCaptured()
       }}
     />
+
+    {/* Reverse */}
     {<ReverseButton onActivate={ensureCaptured}/>}
+
+    {/* EQ */}
     <EqualizerControl value={starAudioFx.eq} onChange={newValue => {
       setView(produce(view, d => {
         d[starKey].eq = newValue

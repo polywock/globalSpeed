@@ -3,7 +3,7 @@ import { clamp } from "../utils/helper"
 import { NumericInput } from "../comps/NumericInput"
 import { Slider } from "./Slider"
 import { Reset } from "./Reset"
-import "./SliderPlus.scss"
+import "./SliderPlus.css"
 
 type SliderPlusProps = {
   label: ReactNode,

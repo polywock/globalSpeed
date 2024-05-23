@@ -1,5 +1,5 @@
 import { GoArrowUp, GoArrowDown } from "react-icons/go"
-import "./Move.scss"
+import "./Move.css"
 
 type MoveProps = {
   onMove: (down: boolean) => void
@@ -8,10 +8,10 @@ type MoveProps = {
 export function Move(props: MoveProps) {
   return <div className="Move">
     <button className="icon" onClick={() => props.onMove(false)}>
-      <GoArrowUp size="20px"/>
+      <GoArrowUp size="1.42rem"/>
     </button>
     <button className="icon" onClick={() => props.onMove(true)}>
-      <GoArrowDown size="20px"/>
+      <GoArrowDown size="1.42rem"/>
     </button>
   </div>
 }

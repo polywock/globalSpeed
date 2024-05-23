@@ -3,19 +3,25 @@
     "captureTab": "yakala",
     "releaseTab": "bırak",
     "split": "ayır",
-    "mono": "mono",
     "reverse": "ters ses"
   },
   "warnings": {
-    "backdropFirefox": "Firefox kullanıcılarının \"about:config\" URL'sine giderek \"gfx.webrender.all\" ve \"layout.css.backdrop-filter.enabled\" seçeneğini etkinleştirmeleri gerekir. İki özelliği etkinleştirdikten sonra Firefox'u yeniden başlatın.",
-    "unusedGlobal": "Kullanılmayan genel kısayol tuşlarını devre dışı bırakın",
-    "selectTooltip": "Medya kısayol tuşları için tercih edilen videoyu seçin. Arka plan müziğini farklı bir sekmeden (veya genel kısayol tuşlarına sahip başka bir programdan) kontrol etmek istiyorsanız kullanışlıdır.",
-    "sliderTooltip": "⇧ hassas kontrol için shift tuşunu basılı tutun."
+    "unusedGlobal": "Kullanılmayan genel kısayol tuşlarını kaldırın."    ,
+    "selectTooltip": "Medya sıcak tuşları için tercih ettiğiniz videoyu seçin. Arka plandaki müziği farklı bir sekmeden (veya global kısayol tuşları olan başka bir programdan) kontrol etmek istiyorsanız kullanışlıdır.",
+    "sliderTooltip": "Kesin kontrol için Shift tuşunu basılı tutun.",
+    "captureRequired": "$1 kısayolunu kullanarak etkinleştir."
   },
   "token": {
-    "create": "oluştur",
+    "create": "ekle",
     "reset": "sıfırla",
-    "hide": "gizle",
+    "duplicate": "çiftleştir",
+
+
+    
+    "pinTooltip": "Mevcut sekmeyi kendi bağlamına (hız, filtreler vb.) sahip olması için sabitleyin.",
+    "mergeBoth": "her ikisini birleştir",
+    "min": "min",
+    "max": "maks",
     
     "on": "açık",
     "off": "kapalı",
@@ -26,24 +32,54 @@
     "both": "her ikisi",
     
     "query": "seçici",
+    "queryTooltip": "Filtrelenecek öğeleri bulmak için kullanılan CSS seçicisi. Örneğin, 'video, img' hem videoları hem de resimleri seçer. Gelişmiş kullanım için çevrimiçi belgelerden CSS seçicileri hakkında bilgi edinin.",
+    
+    "intoPane": "pencere oluştur",
     "warning": "uyarı",
     "filters": "filtreler",
-    "transforms": "oynatıcı",
+    "transforms": "dönüşmek",
 
     "blockEvents": "olayları önle",
-    "hideIndicator": "indikatörü gizle",
-    "indicator": "indikatör",
+    "blockEventsTooltip": "Olay yayılımını ve varsayılan davranışları engellemeye çalışır.",
     "color": "renk",
     "size": "boyut",
     "rounding": "yuvarlaklık",
     "duration": "süre",
     "offset": "ofset",
+    "position": "pozisyon",
+    "center": "Merkez",
+    "topLeft": "Sol üst",
+    "topRight": "Sağ üst",
+    "bottomLeft": "Sol alt",
+    "bottomRight": "Sağ alt",
+    "animation": "animasyon",
+    "default": "Varsayılan",
+    "static": "Statik",
+    "shrink": "Küçültmek",
+    "implode": "İçe çökme",
+    "rotate": "Döndürmek",
     "rows": "satırlar",
 
-    "any": "herhangi",
-    "all": "tümü",
     "copy": "kopyala",
-    "paste": "yapıştır"
+    "paste": "yapıştır",
+    "replaceWith": "$1 yerine ne koymalı?",
+    "invalidNumber": "geçersiz numara",
+    "openPage": "sayfayı aç",
+    "seconds": "sn",
+    "percent": "%",
+    "frames": "kare"
+  },
+  "placer": {
+    "windowBounds": {
+      "left": "Sol",
+      "top": "Üst",
+      "width": "Genişlik",
+      "height": "Yükseklik"
+    },
+    "windowSize": "Etkileşimli pencere boyutlandırma",
+    "windowPrompt": "Bu pencerenin boyutunu ve konumunu ayarlayın ve Uygula'ya basın.",
+    "apply": "Uygula",
+    "cancel": "İptal"
   },
   "filter": {
     "grayscale": "gri tonlama",
@@ -53,7 +89,7 @@
     "brightness": "parlaklık",
     "saturate": "doygunluk",
     "invert": "ters çevir",
-    "blur": "bulanıklaştır",
+    "blur": "bulanıklaştı",
     "opacity": "opaklık",
     "scaleX": "ölçek X",
     "scaleY": "ölçek Y",
@@ -63,65 +99,134 @@
     "rotateY": "döndür Y",
     "rotateZ": "döndür Z"
   },
-  "fxPanel": {
-    "queryTooltip": "Filtrelenecek öğeleri bulmak için kullanılan CSS seçici. Örneğin, 'video, img' hem videoları hem de resimleri seçer. Gelişmiş kullanım için, CSS seçiciler hakkındaki çevrimiçi belgelere bakın.",
-    "intoPane": "pencere oluştur"
-  },
   "command": {
-    "nothing": "hiçbiri",
-    "runCode": "javascript",
+        "runCode": "javascript",
     "openUrl": "link aç",
-    "adjustSpeed": "hız",
+    "speed": "hız",
     "speedChangesPitch": "hız değişimi ses aralığı",
-    "setPin": "sekmeyi sabitle",
-    "setState": "durum",
+    "pin": "sekmeyi sabitle",
+    "state": "durum",
     "seek": "ilerlet",
-    "setPause": "duraklat",
-    "setMute": "sessiz",
-    "adjustVolume": "ses",
+    "pause": "duraklat",
+    "mute": "sessiz",
+    "volume": "ses",
     "setMark": "ayar işareti",
     "seekMark": "işarete git",
-    "toggleLoop": "AB tekrarı",
-    "toggleLoopTooltip": "Videoyu işaretli konumdan geçerli konuma tekrarlayın.",
+    "loop": "AB tekrarı",
+    "loopTooltip": "Videoyu işaretli konumdan geçerli konuma tekrarlayın.",
     "fullscreen": "tam ekran",
     "nativeTooltip": "özel",
     "PiP": "resim i̇çinde resim",
-    "setFx": "FX durum",
-    "resetFx": "FX sıfırlama",
-    "flipFx": "FX takas",
-    "adjustFilter": "filtre",
-    "adjustPitch": "ses aralığı",
-    "adjustGain": "ses+",
-    "adjustDelay": "geciktir",
-    "adjustPan": "kaydır",
-    "tabCapture": "yakala",
-    "relativeTooltip": "hıza göre",
-    "fastSeekTooltip": "daha hızlı ama orantısız",
-    "showNetTooltip": "net süreyi göster"
+    "fxState": "FX durum",
+    "fxReset": "FX sıfırlama",
+    "fxSwap": "FX takas",
+    "fxFilter": "filtre",
+    "afxPitch": "ses aralığı",
+    "afxGain": "ses+",
+    "afxDelay": "geciktir",
+    "afxPan": "kaydır",
+    "afxMono": "mono",
+    "afxCapture": "yakala",
+    "afxReset": "ses sıfırlama",
+    "relativeToSpeed": "hıza göre",
+    "showNet": "toplam süreyi göster",
+    "drawPage": "sayfada çiz",
+    "fastSeek": "hızlı arama",
+    "fastSeekTooltip": "daha hızlı ancak daha az kesin",
+    "mediaInfo": "medya bilgisini göster",
+    "intoPopup": "açılır pencereye",
+    "intoPopupTooltip": "Mevcut sekmeyi bir açılır pencereye dönüştür.",
+    
+    "skip": "AB atlama", 
+    "skipTooltip": "İşaretlenmiş pozisyon ile mevcut pozisyon arasındaki video segmentini atlayın.",
+    "detectiveMode": "dedektif modu",
+    "detectiveModeTooltip": "Sadece bir daire aracılığıyla görülebilenleri hariç her şeyi gizler.",
+    "cinema": "arkaplanı karart",
+    "cinemaTooltip": "Video arkaplanını karartır. Çıkmak için arkaplana basın veya tekrar kısayol kullanın."
   },
   "options": {
     "flags": {
       "header": "Seçenekler",
       "language": "dil",
-      "languageTooltip": "İngilizce ve Türkçe dışındaki tüm diller çevrimiçi araçlar kullanılarak çevrilmiştir.",
+      "languageTooltip": "Bazı Türkçe çeviriler @FoofAPP tarafından yapılmıştır.",
       "darkTheme": "karanlık tema",
-      "pinByDefault": "varsayılan olarak sabitle",
-      "pinByDefaultTooltip": "Yeni sekmeler otomatik olarak sabitlenir.",
-      "hideBadge": "rozeti gizle",
-      "hideBadgeTooltip": "Rozet, uzantı simgesindeki metindir.",
-      "fullscreenSupport": "tam ekran",
+      "showBadge": "rozet göster",
+      "showBadgeTooltip": "Rozet, uzantı simgesi üzerindeki metindir.",
+      "showMediaView": "medya listesini göster",
+      "showIndicator": "göstergeyi göster",
+      "showIndicatorTooltip": "Gösterge, kısayollar kullanılırken görsel geri bildirimdir.",
       "ghostMode": "hayalet modu",
       "ghostModeTooltip": "Web sitesinin hız değiştirmesini engellemeye çalışın. Bazı web sitelerini bozabileceği için varsayılan olarak devre dışıdır.",
-      "hideMediaView": "medya listesini gizle",
-      "inheritGlobal": "küresel miras",
-      "inheritGlobalTooltip": "Yeni sekmeler, önceki sekmenin bağlamını veya genel bağlamı devralabilir."
+      "pinByDefault": "varsayılan olarak sabitle",
+      "pinByDefaultTooltip": "Yeni sekmeler otomatik olarak sabitlenir.",
+      "initialState": "başlangıç durumu",
+      "previousTab": "Önceki sekmenin bağlamı.",
+      "globalContext": "Küresel bağlam",
+      "previousContext": "Önceki sekmenin bağlamı",
+      "newContext": "Yeni bağlam",
+      "customContext": "Özel bağlam",
+      "customContextTooltip": "Bu sekmelerin güncel bağlamının bir anlık görüntüsünü kaydeder. Yeni oluşturulan sekmeler bu anlık görüntüyü başlangıç durumu olarak kullanacak.",
+      "jsShortcutWarning": "Eski API'lerin kullanımdan kaldırılması nedeniyle JavaScript kısayolları şu anda devre dışı bırakılmıştır. Chromium userScripts.execute() metodunu uyguladığında işlevsellik devam edecektir.",
+      "keyboardInput": "klavye girişi",
+      "keyboardInputTooltip": "Sanal klavye kullanıyorsanız veya QWERTY olmayan bir klavye düzeni kullanıyorsanız sanal giriş moduna geçmeyi düşünün. Bu, yalnızca gelecekteki kısayol değişikliklerine uygulanır ve mevcut kısayollar etkilenmez.",
+      "qwerty": "QWERTY düzeni",
+      "virtual": "Sanal",
+      "grantPermission": "izin ver",
+      "grantPermissionTooltip": "Video gömme desteği de dahil olmak üzere tam işlevselliği etkinleştirmek için bu iznin etkinleştirilmesi gerekir. Sınırlı işlevsellik için, araç çubuğu simgesine sağ tıklayarak site bazında etkinleştirebilirsiniz.",
+      "speedSlider": "hız kaydırıcı",
+      "textSize": "metin boyutu",
+      "speedPresets": "hız ön ayarları",
+      "widget": {
+        "option": "daire widget'ı",
+        "optionTooltip": "(Deneysel) Videolar görünürken bir daire widget'ı gösterilecektir:\n - Videolar görünürken bir daire widget'ı gösterilecektir.\n - Videoyu ileri/geri almak için sola/sağa sürükleyin.\n - Oynatma hızını ayarlamak için yukarı/aşağı sürükleyin.",
+        "movementMobile": "\n - Hareket ettirmek veya silmek için daireye birkaç saniye basılı tutun.",
+        "movementDesktop": "\n - Sağ fare düğmesi ile daireyi sürükleyerek hareket ettirin veya silin.",
+        "headerTooltip": "Daire widget'ı etkinleştirildi.",
+        "showIcon": "simgesini göster",
+        "showIconTooltip": "Daire widget'ını kolayca açıp kapatmak için ana menüde bir simge göster.",
+        "autoHide": "otomatik gizleme"
+      }  
     },
     "editor": {
       "header": "Kısayol Düzenleyici",
       "toggleMode": "Yerel veya genel kısayol tuşlarını kullanabilirsiniz.",
       "toggleModeTooltip": "Genel kısayollar, başka bir program kullanırken video veya sesi kontrol etmek istediğinizde yararlıdır.",
-      "greedyMode": "Olay yayılımını ve varsayılan davranışları engellemeye çalışır.",
-      "speedPresets": "hız ön ayarları"
+
+
+      "menuLabel": "menü etiketi",
+      "triggerMode": "Çoklu tetikleme modları desteklenmektedir.",
+      "triggerModeTooltip": "Yerel kısayollar (varsayılan): Esnek kısayol tuşları.\n\nGlobal kısayollar: Başka bir uygulama kullanırken video veya sesi kontrol etmek istediğinizde kullanışlıdır.\n\nBağlam menüsü: Nadiren kullanılan komutlar için idealdir. Tetiklemek için sayfaya sağ tıklayın.",
+      "triggerModeTooltipFf": "Yerel kısayollar (varsayılan): Esnek kısayol tuşları.\n\nBağlam menüsü: Nadiren kullanılan komutlar için idealdir. Tetiklemek için sayfaya sağ tıklayın.",
+      "triggerModes": {
+        "0": "Yerel kısayollar",
+        "1": "Küresel kısayollar",
+        "2": "Bağlam menüsü"
+      },
+      "spacing": "aralık", 
+      "reversible": "ters çevrilebilir",
+      "reversibleTooltip": "Listenin tersini gerçekleştirmek için ikinci bir kısayol ayarlamanıza olanak tanır.",
+      "wraparound": "dolaşım",
+      "wraparoundTooltip": "Başlangıç veya sonu geçerseniz, diğer tarafa döner.",
+      "addLabel": "etiket ekle",
+      "liveScrubbing": "canlı sürtünme",
+      "liveScrubbingTooltip": "İmleci hareket ettirirken değişiklikleri sürekli önizleyin.",
+      "pauseWhileScrubbing": "sürtünme esnasında duraklat",
+      "adjustModes": {
+        "1": "Değere ayarla",
+        "2": "Değerle ayarla",
+        "3": "Değerler listesi arasında döngü",
+        "4": "Etkileşimli olarak değere ayarla.",
+        "5": "Etkileşimli olarak değerle ayarla."
+      },
+      "openModes": {
+        "foregroundTab": "ön plandaki sekme",
+        "backgroundTab": "arka plandaki sekme",
+        "newWindow": "yeni pencere",
+        "newPopup": "yeni açılır pencere",
+        "sameTab": "mevcut sekme"
+      },
+      "pressAndHold": "basılı tut",
+      "pressAndHoldTooltip": "Etkinleştirilirse, değeri etkileşimli olarak ayarlarken tuş basılı tutulmalıdır."
     },
     "rules": {
       "header": "URL Kuralları",
@@ -129,8 +234,9 @@
       "startsWith": "ile başlar",
       "contains": "içeren",
       "regex": "regex",
-      "LAX": "Her sekme için yalnızca bir kez uygulayın.",
-      "ILO": "Yalnızca ilk sayfa yüklemesi sırasında kontrol edin."
+      "allowlist": "İzin verilenler listesi",
+      "blocklist": "Engellenenler listesi",
+      "status": "URL kuralları bazı değerleri değiştirdi."
     },
     "help": {
       "header": "Yardım",
@@ -140,5 +246,14 @@
       "import": "i̇çeri",
       "areYouSure": "Emin misiniz?"
     }
+  },
+  "pageDraw": {
+    "_labelScale": 0.75,
+    "_fontScale": 0.9,
+    "draw": "Çiz",
+    "erase": "Sil",
+    "select": "Etkileşim",
+    "selectTooltip": "Web sayfasıyla etkileşim",    
+    "tips": "Bazı faydalı kısayollar\n1. Sağ tıklayarak sil.\n2. Shift'i basılı tutarak tıklayarak çizgi çiz.\n3. Caps Lock kullanarak $1 ve $2 modları arasında geçiş yap\n4. Silgi boyutunu ayarlamak için: orta düğmeye basılı tutarak sola veya sağa sürükle.\n5. Fırça boyutunu ayarlamak için: orta düğmeye basılı tutarak yukarı veya aşağı sürükle.\n6. Renge sağ tıklayarak sayfayı bir renkle doldurun."
   }
 }

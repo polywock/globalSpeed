@@ -3,7 +3,7 @@ import { clamp, round } from "../utils/helper"
 import { NumericInput } from "../comps/NumericInput"
 import { Slider } from "./Slider"
 import { Reset } from "./Reset"
-import "./SliderMicro.scss"
+import "./SliderMicro.css"
 
 type SliderMicroProps = {
   label?: ReactNode,

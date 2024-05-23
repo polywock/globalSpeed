@@ -3,20 +3,24 @@
     "captureTab": "捕捉",
     "releaseTab": "手放す",
     "split": "分割",
-    "mono": "モノラル",
     "reverse": "リバース"
   },
   "warnings": {
-    "backdropFirefox": "Firefoxユーザーは、「about:config」URLに移動して、「gfx.webrender.all」と「layout.css.backdrop-filter.enabled」を有効にする必要があります。 2つのフラグを有効にした後、Firefoxを再起動します。",
-    "unusedGlobal": "未使用のグローバルショートカットキーを放します。",
-    "selectTooltip": "メディアホットキーの優先ビデオを選択します。別のタブ（またはグローバルホットキーを持つ別のプログラム）からバックグラウンドミュージックを制御する場合に便利です。",
-    "sliderTooltip": "⇧ 正確な制御のためにシフトキーを押したままにします。"
+    "unusedGlobal": "使用されていないグローバルショートカットキーを解放してください。",
+    "selectTooltip": "メディアのホットキーに好みのビデオを選択してください。別のタブ（またはグローバルホットキーを持つ別のプログラム）からバックグラウンドミュージックをコントロールしたい場合に便利です。",
+    "sliderTooltip": "シフトキーを押し続けて精密な調整を行ってください。",
+    "captureRequired": "$1 ショートカットを使用してアクティブにしてください。"
   },
   "token": {
     "create": "作成",
     "reset": "リセット",
-    "hide": "隠す",
-
+    "duplicate": "複製",
+    
+    
+    "pinTooltip": "現在のタブに独自のコンテキスト（速度、フィルターなど）が必要な場合に固定します。",
+    "mergeBoth": "両方を統合",
+    "min": "最小",
+    "max": "最大",
     "on": "オン",
     "off": "オフ",
     "toggle": "トグル",
@@ -26,24 +30,54 @@
     "both": "両方",
 
     "query": "セレクター",
+    "queryTooltip": "要素をフィルタリングするために使用されるCSSセレクタ。例えば、'video, img' はビデオと画像の両方を選択します。高度な使用法については、CSSセレクタに関するオンラインドキュメントをご覧ください。",
+    
+    "intoPane": "窓として",
     "warning": "警告",
     "filters": "フィルター",
     "transforms": "変換",
 
     "blockEvents": "ブロックイベント",
-    "hideIndicator": "インジケータを隠す",
-    "indicator": "インジケータ",
+    "blockEventsTooltip": "貪欲モードは、イベントの伝播とデフォルトの動作をブロックしようとします。",
     "color": "色",
     "size": "サイズ",
     "rounding": "丸め",
     "duration": "期間",
     "offset": "オフセット",
+    "position": "位置",
+    "center": "センター",
+    "topLeft": "左上",
+    "topRight": "右上",
+    "bottomLeft": "左下",
+    "bottomRight": "右下",
+    "animation": "アニメーション",
+    "default": "デフォルト",
+    "static": "静的",
+    "shrink": "縮小",
+    "implode": "内部崩壊",
+    "rotate": "回転",
     "rows": "行",
 
-    "any": "任意",
-    "all": "すべて",
     "copy": "コピー",
-    "paste": "ペースト"
+    "paste": "ペースト",
+    "replaceWith": "$1を何に置き換えますか？",
+    "invalidNumber": "無効な数字",
+    "openPage": "ページを開く",
+    "seconds": "秒",
+    "percent": "%",
+    "frames": "フレーム"
+  },
+  "placer": {
+    "windowBounds": {
+      "left": "左",
+      "top": "上",
+      "width": "幅",
+      "height": "高さ"
+    },
+    "windowSize": "インタラクティブウィンドウのサイズ調整",
+    "windowPrompt": "このウィンドウのサイズと位置を調整して、「適用」を押します。",
+    "apply": "適用",
+    "cancel": "キャンセル"
   },
   "filter": {
     "grayscale": "グレースケール",
@@ -63,65 +97,135 @@
     "rotateY": "回転Y",
     "rotateZ": "回転Z"
   },
-  "fxPanel" : {
-    "queryTooltip": "フィルタリングする要素を見つけるために使用されるCSSセレクター。例えば。 'video, img'は、ビデオと画像の両方を照会します。高度な使用方法については、CSSセレクターに関するドキュメントをオンラインで表示してください。",
-    "intoPane": "窓として"
-  },
   "command": {
-    "nothing": "何もしない",
+    
     "runCode": "javascript",
     "openUrl": "URLを開く",
-    "adjustSpeed": "スピード",
+    "speed": "スピード",
     "speedChangesPitch": "スピードがピッチを変える",
-    "setPin": "ピン]タブ",
-    "setState": "状態",
+    "pin": "ピン]タブ",
+    "state": "状態",
     "seek": "シーク",
-    "setPause": "一時停止",
-    "setMute": "ミュート",
-    "adjustVolume": "音量",
+    "pause": "一時停止",
+    "mute": "ミュート",
+    "volume": "音量",
     "setMark": "セットマーク",
     "seekMark": "マークに移動",
-    "toggleLoop": "ABループ",
-    "toggleLoopTooltip": "マークされた位置と現在の位置の間にループを設定します。",
+    "loop": "ABループ",
+    "loopTooltip": "マークされた位置と現在の位置の間にループを設定します。",
     "fullscreen": "全画面表示",
     "nativeTooltip": "ネイティブ",
     "PiP": "ピクチャ イン ピクチャ",
-    "setFx": "FX状態",
-    "resetFx": "FXリセット",
-    "flipFx": "FXスワップ",
-    "adjustFilter": "FXフィルター",
-    "adjustPitch": "音高",
-    "adjustGain": "音量+",
-    "adjustDelay": "遅延",
-    "adjustPan": "パン",
-    "tabCapture": "捕捉",
-    "relativeTooltip": "速度に対して",
-    "fastSeekTooltip": "高速ですが精度が低くなります",
-    "showNetTooltip": "ネット期間を表示"
+    "fxState": "FX状態",
+    "fxReset": "FXリセット",
+    "fxSwap": "FXスワップ",
+    "fxFilter": "FXフィルター",
+    "afxPitch": "音高",
+    "afxGain": "音量+",
+    "afxDelay": "遅延",
+    "afxPan": "パン",
+    "afxMono": "モノラル",
+    "afxCapture": "捕捉",
+    "afxReset": "オーディオリセット",
+    "relativeToSpeed": "速度に対して",
+    "showNet": "総再生時間を表示",
+    "drawPage": "ページに描く",
+    "fastSeek": "高速シーク",
+    "fastSeekTooltip": "速いが正確さに欠ける",
+    "mediaInfo": "メディア情報を表示",
+    "intoPopup": "ポップアップへ",
+    "intoPopupTooltip": "現在のタブをポップアップウィンドウにする。",
+    
+    "skip": "ABスキップ",
+    "skipTooltip": "マークされた位置と現在の位置の間のビデオセグメントをスキップする。",
+    "detectiveMode": "探偵モード",
+    "detectiveModeTooltip": "円を通して見えるもの以外全てを隠す。",
+    "cinema": "背景を暗くする",
+    "cinemaTooltip": "ビデオの背景を暗くする。出るには、背景を押すか、再度ショートカットを使用します。"
   },
   "options": {
     "flags": {
       "header": "オプション",
       "language": "言語",
-      "languageTooltip": "英語を除くすべての言語は、オンラインツールを使用して翻訳されました。タブを更新して変更を確認します。",
+      "languageTooltip": "英語を除くすべての言語は、オンラインツールを使用して翻訳されました。",
       "darkTheme": "暗いテーマ",
-      "pinByDefault": "デフォルトでピン留め",
-      "pinByDefaultTooltip": "各タブはデフォルトで固定されます。",
-      "hideBadge": "バッジを隠す",
-      "hideBadgeTooltip": "バッジは、拡張機能アイコン上のテキストです。",
-      "fullscreenSupport": "全画面表示",
+      "showBadge": "バッジを表示",
+      "showBadgeTooltip": "バッジは拡張機能のアイコン上のテキストです。",
+      "showMediaView": "メディアリストを表示",
+      "showIndicator": "インジケーターを表示",
+      "showIndicatorTooltip": "インジケーターはショートカットを使用した時の視覚的フィードバックです。",
       "ghostMode": "ゴーストモード",
       "ghostModeTooltip": "速度の変化からサイトをブロックしてみてください。一部のWebサイトを破壊する可能性があるため、デフォルトでは無効になっています。",
-      "hideMediaView": "メディアリストを隠す",
-      "inheritGlobal": "グローバルを継承",
-      "inheritGlobalTooltip": "新しいタブは、前のタブのコンテキストまたはグローバルコンテキストを継承することができます。"
+      "pinByDefault": "デフォルトでピン留め",
+      "pinByDefaultTooltip": "各タブはデフォルトで固定されます。",
+      "initialState": "初期状態",
+      "previousTab": "前のタブのコンテキスト。",
+      "globalContext": "グローバルコンテキスト",
+      "previousContext": "前のタブのコンテキスト",
+      "newContext": "新しいコンテキスト",
+      "customContext": "カスタムコンテキスト",
+      "customContextTooltip": "このタブの現在のコンテキストのスナップショットを保存します。新しく作成されたタブはこのスナップショットを初期状態として使用します。",
+      "jsShortcutWarning": "古いAPIの廃止により、JavaScriptのショートカットは現在無効になっています。ChromiumがuserScripts.execute()メソッドを実装すると機能が再開されます。",
+      "keyboardInput": "キーボード入力",
+      "keyboardInputTooltip": "仮想キーボードまたは非QWERTYレイアウトのキーボードを使用する場合は、仮想入力モードに切り替えることを検討してください。これは将来のショートカット変更にのみ適用され、既存のショートカットは影響を受けません。",
+      "qwerty": "QWERTY配列",
+      "virtual": "仮想",
+      "grantPermission": "許可を与える",
+      "grantPermissionTooltip": "埋め込み動画サポートを含む完全な機能を有効にするには、この許可が必要です。限定的な機能の場合、ツールバーアイコンを右クリックしてサイトごとに有効にすることができます。",
+      "speedSlider": "速度スライダー",
+      "textSize": "テキストサイズ",
+      "speedPresets": "速度プリセット",
+      "widget": {
+        "option": "円形ウィジェット",
+        "optionTooltip": "（実験的）動画が表示されている間、円形ウィジェットが表示されます:\n - ビデオが表示されている間、円形ウィジェットが表示されます。\n - ビデオをシークするには、左/右にドラッグします。\n - 再生速度を調整するには、上/下にドラッグします。",
+        "movementMobile": "\n - 数秒間円を押して、移動または削除します。",
+        "movementDesktop": "\n - 右クリックして円をドラッグして移動または削除します。",
+        "headerTooltip": "円形ウィジェットを有効にしました。",
+        "showIcon": "アイコンを表示",
+        "showIconTooltip": "メインメニューにアイコンを表示して、円形ウィジェットを簡単に切り替えられるようにします。",
+        "autoHide": "自動非表示"
+      }
     },
     "editor": {
       "header": "ショートカットエディター",
       "toggleMode": "ローカルまたはグローバルのショートカットキーを使用できます。",
       "toggleModeTooltip": "グローバルショートカットは、別のプログラムを使用しているときにビデオまたはオーディオを制御する場合に役立ちます。",
-      "greedyMode": "貪欲モードは、イベントの伝播とデフォルトの動作をブロックしようとします。",
-      "speedPresets": "速度プリセット"
+
+
+      "menuLabel": "メニューラベル",
+      "triggerMode": "複数のトリガーモードがサポートされています。",
+      "triggerModeTooltip": "ローカルショートカット（デフォルト）：柔軟なショートカットキー。\n\nグローバルショートカット：他のアプリケーションを使用中にビデオやオーディオを制御したい場合に便利です。\n\nコンテキストメニュー：あまり使わないコマンドに最適。ページを右クリックしてトリガーします。",
+      "triggerModeTooltipFf": "ローカルショートカット（デフォルト）：柔軟なショートカットキー。\n\nコンテキストメニュー：あまり使わないコマンドに最適。ページを右クリックしてトリガーします。",
+      "triggerModes": {
+        "0": "ローカルショートカット",
+        "1": "グローバルショートカット",
+        "2": "コンテキストメニュー"
+      },
+      "spacing": "間隔",
+      "reversible": "可逆",
+      "reversibleTooltip": "リストを逆転させるための第二のショートカットを設定可能にする。",
+      "wraparound": "折り返し",
+      "wraparoundTooltip": "始点または終点を過ぎると、他の側に折り返す。",
+      "addLabel": "ラベルを追加",
+      "liveScrubbing": "ライブスクラビング",
+      "liveScrubbingTooltip": "カーソルを動かしながら変更を連続的にプレビューする。",
+      "pauseWhileScrubbing": "スクラビング中の一時停止",
+      "adjustModes": {
+        "1": "値に設定",
+        "2": "値による調整",
+        "3": "値のリスト間でサイクル",
+        "4": "インタラクティブに値に設定。",
+        "5": "インタラクティブに値で調整。"
+      },
+      "openModes": {
+        "foregroundTab": "フォアグラウンドタブ",
+        "backgroundTab": "バックグラウンドタブ",
+        "newWindow": "新しいウィンドウ",
+        "newPopup": "新しいポップアップ",
+        "sameTab": "現在のタブ"
+      },
+      "pressAndHold": "押して保持",
+      "pressAndHoldTooltip": "有効にすると、キーを押し続けている間に値をインタラクティブに調整する必要があります。"
     },
     "rules": {
       "header": "URLルール",
@@ -129,8 +233,9 @@
       "startsWith": "で始まる",
       "contains": "含む",
       "regex": "regex",
-      "LAX": "タブごとに1回だけ適用されます。",
-      "ILO": "最初のページの読み込み中にのみチェックします。"
+      "allowlist": "許可リスト",
+      "blocklist": "ブロックリスト",
+      "status": "URLルールが値を変更しました。"
     },
     "help": {
       "header": "助けて",
@@ -140,5 +245,14 @@
       "import": "インポート",
       "areYouSure": "本気ですか？"
     }
+  },
+  "pageDraw": {
+    "_labelScale": 0.8,
+    "_fontScale": 1.1,
+    "draw": "描く",
+    "erase": "消去",
+    "select": "選択",
+    "selectTooltip": "ウェブページと対話",    
+    "tips": "いくつかの便利なショートカット\n1. 右クリックで消去。\n2. Shiftキーを押しながらクリックで線を描画。\n3. Caps Lockキーを使用して$1モードと$2モードを切り替え。\n4. 消しゴムのサイズを調整するには: ミドルクリックを押し続けて左右にドラッグ。\n5. ブラシのサイズを調整するには: ミドルクリックを押し続けて上下にドラッグ。\n6. 色を右クリックしてページを色で満たします。"
   }
 }

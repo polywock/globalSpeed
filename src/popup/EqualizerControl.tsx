@@ -5,8 +5,8 @@ import { getDefaultEq, EQ_PRESETS } from "../defaults"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { formatFreq } from "../utils/helper"
 import { SliderMicro } from "../comps/SliderMicro"
-import produce from "immer"
-import "./EqualizerControl.scss"
+import { produce } from "immer"
+import "./EqualizerControl.css"
 
 type EqualizerControlProps = {
   value: AudioFx["eq"],
@@ -19,18 +19,27 @@ export function EqualizerControl(props: EqualizerControlProps) {
   const presets = (EQ_PRESETS as any)[eq.values.length.toString()] as typeof EQ_PRESETS["10"]
 
   return <div className="EqualizerControl audioTab">
+
+    {/* Controls */}
     <div className="controls">
+
+      {/* Status */}
       <button className={eq.enabled ? "active" : "muted"} onClick={e => {
         props.onChange(produce(eq, d => {
           d.enabled = !d.enabled
         }))
-      }}><FaPowerOff size={15}/></button>
+      }}><FaPowerOff size={"1.07rem"}/></button>
+
+      {/* Reset */}
       <button onClick={e => {
         props.onChange(produce(eq, d => {
          return getDefaultEq()
         }))
-      }}><GiAnticlockwiseRotation size={15}/></button>
+      }}><GiAnticlockwiseRotation size={"1.07rem"}/></button>
+
     </div>
+
+    {/* Band count */}
     <div className="preset">
       <select value={eq.values.length.toString()} onChange={e => {
         const bandCount = parseInt(e.target.value)
@@ -44,6 +53,8 @@ export function EqualizerControl(props: EqualizerControlProps) {
         <option value="20">20</option>
         <option value="30">30</option>
       </select>
+
+      {/* Presets */}
       <select value={eq.name || ""} onChange={e => {
         if (e.target.value === "") {
           props.onChange(produce(eq, d => {
@@ -64,8 +75,11 @@ export function EqualizerControl(props: EqualizerControlProps) {
           <option key={v.name} value={v.name}>{v.name}</option>
         ))}
       </select>
+
     </div>
+
     <div className="values">
+    {/* Power */}
       <SliderMicro
         key="intensity"
         label={"POW"}
@@ -81,6 +95,8 @@ export function EqualizerControl(props: EqualizerControlProps) {
           }))
         }}
       />
+
+      {/* EQ sliders */}
       {eq.values.map((value, i) => {
         const freq = 31.25 * (2 ** (i / Math.round(eq.values.length / 10)))
         return (
@@ -106,6 +122,7 @@ export function EqualizerControl(props: EqualizerControlProps) {
           />
         )
       })}
+      
     </div>
   </div>
 }

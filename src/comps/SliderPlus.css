@@ -1,0 +1,33 @@
+.SliderPlus {
+  background-color: var(--fg-color);
+  --label-color: var(--text-color);
+  --reset-color: var(--icon-color);
+  --font-weight: 400;
+  --opacity: 0.5;
+
+
+  &.highlight {
+    --label-color: var(--header-icon-active-color);
+    --reset-color: var(--header-icon-active-color);
+    --font-weight: 600;
+    --opacity: 1;
+  }
+  
+  & > .header {
+    display: grid;
+    grid-template-columns: 1fr 60px max-content;
+    grid-column-gap: 5px;
+    margin-bottom: 2px;
+    align-items: center;
+
+    & > span {
+      align-self: center;
+      font-weight: var(--font-weight);
+      color: var(--label-color);
+    }
+  }
+
+  & > input[type="range"] {
+    width: 100%;
+  }
+}

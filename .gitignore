@@ -3,5 +3,7 @@ node_modules/
 build/
 buildFf/
 Archive*
-z.md*
+*.md
 .DS_Store
+**/*.env
+private/

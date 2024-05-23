@@ -1,46 +1,51 @@
 
 export type FullHotkey = {
-  code: string,
+  code?: string,
   altKey?: boolean,
   ctrlKey?: boolean,
   shiftKey?: boolean,
-  metaKey?: boolean
+  metaKey?: boolean,
+  key?: string
 }
 
 export type Hotkey = FullHotkey | string
 
-export function formatHotkey(key: Hotkey) {
-  if (!key) {
+export function formatHotkey(hot: Hotkey) {
+  if (!hot) {
     return "NoKey"
   }
-  if (typeof(key) === "string") {
-    return key 
+  if (typeof(hot) === "string") {
+    return hot 
   } else {
     let parts: string[] = []
-    if (key.ctrlKey) {
+    if (hot.ctrlKey) {
       parts.push(`⌃`)
     }
-    if (key.altKey) {
+    if (hot.altKey) {
       parts.push(`⌥`)
     }
-    if (key.shiftKey) {
+    if (hot.shiftKey) {
       parts.push(`⇧`)
     }
-    if (key.metaKey) {
+    if (hot.metaKey) {
       parts.push(`⌘`)
     }
-    parts.push(key.code)
+    let visualKey = hot.key
+    if (visualKey && visualKey.trim() === "") visualKey = "Space"
+
+    parts.push(hot.key ? visualKey : hot.code)
     return parts.join(" ")
   }
 }
 
-export function extractHotkey(event: KeyboardEvent): FullHotkey {
+export function extractHotkey(event: KeyboardEvent, physical = true, virtual?: boolean): FullHotkey {
   return {
     ctrlKey: event.ctrlKey,
     altKey: event.altKey,
     shiftKey: event.shiftKey,
     metaKey: event.metaKey,
-    code: event.code
+    code: physical ? event.code : undefined,
+    key: virtual ? event.key : undefined
   }
 }
 
@@ -55,9 +60,15 @@ export function compareHotkeys(lhs: Hotkey, rhs: Hotkey) {
     rhs = {code: rhs} as FullHotkey
   }
 
-  return (lhs.ctrlKey === true) == (rhs.ctrlKey === true) && 
-        (lhs.altKey === true) == (rhs.altKey === true) && 
-        (lhs.shiftKey === true) == (rhs.shiftKey === true) && 
-        (lhs.metaKey === true) == (rhs.metaKey === true) && 
-        lhs.code === rhs.code
+  const pre = 
+    (lhs.ctrlKey === true) == (rhs.ctrlKey === true) && 
+    (lhs.altKey === true) == (rhs.altKey === true) && 
+    (lhs.shiftKey === true) == (rhs.shiftKey === true) && 
+    (lhs.metaKey === true) == (rhs.metaKey === true)
+
+  if (!pre) return false 
+
+
+  if (lhs.key && rhs.key && lhs.key === rhs.key) return true 
+  if (lhs.code && rhs.code && lhs.code === rhs.code) return true 
 }

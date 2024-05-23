@@ -1,23 +1,23 @@
 import { useState } from "react"
-import ReactDOM from "react-dom"
 import { Header } from "./Header"
-import { getActiveTabInfo } from "../utils/browserUtils"
+import { getLatestActiveTabInfo } from "../utils/browserUtils"
 import { MainPanel } from "./MainPanel"
 import { FxPanel } from "./FxPanel"
 import { AudioPanel } from "notFirefox/popup/AudioPanel"
-import { requestGsm } from "../utils/configUtils"
 import { ErrorFallback } from "../comps/ErrorFallback"
 import { useStateView } from "../hooks/useStateView"
 import { FaPowerOff } from "react-icons/fa"
-import { pushView } from "../background/GlobalState"
 import { useThemeSync } from "src/hooks/useThemeSync"
-import "./popup.scss"
 import { createRoot } from "react-dom/client"
+import { OrlHeader } from "./OrlHeader"
+import { loadGsm } from "src/utils/gsm"
+import "./popup.css"
+import { isFirefox } from "src/utils/helper"
 
 
 export function App(props: {}) {
   const [panel, setPanel] = useState(0)
-  const [view, setView] = useStateView({superDisable: true})
+  const [view, setView] = useStateView({superDisable: true, hideGrant: true})
   useThemeSync()
 
   if (!view) return null 
@@ -27,20 +27,21 @@ export function App(props: {}) {
       <div 
         id={"SuperDisable"}
         onClick={() => {
-          pushView({override: {superDisable: false, enabled: true}, tabId: gvar.tabInfo.tabId})
+          setView({superDisable: false, enabled: true})
         }}
         onContextMenu={e => {
           e.preventDefault()
-          pushView({override: {superDisable: false, enabled: true}, tabId: gvar.tabInfo.tabId})
+          setView({superDisable: false, enabled: true})
         }}
       >
-        <FaPowerOff size="25px"/>
+        <FaPowerOff size="1.78rem"/>
       </div>
     )
   }
 
   return (
-    <div id="App">
+    <div id="App" className={isFirefox() ? 'firefox' : ''}>
+      <OrlHeader/>
       <Header panel={panel} setPanel={v => setPanel(v)}/>
       {panel === 0 && <MainPanel/>}
       {panel === 1 && <FxPanel/>}
@@ -50,10 +51,11 @@ export function App(props: {}) {
 }
 
 Promise.all([
-  requestGsm().then(gsm => {
-    window.gsm = gsm 
+  loadGsm().then(gsm => {
+    gvar.gsm = gsm 
+    document.documentElement.lang = gsm._lang
   }),
-  getActiveTabInfo().then(tabInfo => {
+  getLatestActiveTabInfo().then(tabInfo => {
     gvar.tabInfo = tabInfo
     gvar.tabInfo || window.close()
   })

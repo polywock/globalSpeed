@@ -1,0 +1,132 @@
+
+ 
+/* .ListItem:hover .KeybindControl > .urlRules {
+  display: block;
+} */
+
+.KeybindControl {
+  display: grid;
+  grid-template-columns: repeat(1, max-content) minmax(200px, 1.5fr) max-content 175px 200px max-content;
+  grid-column-gap: 10px;
+  align-items: center;
+
+   & > input[type="text"], & > select, & > .talues > [type="text"] {
+    text-align: center;
+  }
+
+  select {
+    text-align-last: center;
+  }
+  
+  & > .urlRules {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: #0031ff;
+    color: white;
+    padding: 0 5px;
+    border-radius: 10px;
+    display: none; 
+
+    &.active {
+      display: block; 
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  & > .command {
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    & > *:nth-child(1n+3) {
+      margin-left: 10px;
+    }
+    
+    .icon.kebab {
+      margin-left: 5px;
+    }
+
+    & > input[type="color"] {
+      width: 30px;
+    }
+    & > .NumericInput input  {
+      width: 60px;
+    }
+    & > .cinamaInput input {
+      width: 40px;
+      padding: 0px;
+    }
+
+
+
+    & > svg, & > .svg, .captureIcon {
+      color: var(--icon-vibrant-color);
+      margin-right: 10px;
+      font-size: 16px;
+    }
+
+    & > div.captureIcon {
+      @keyframes blink {
+        0% {opacity: 1}
+        50% {opacity: 0}
+      }
+
+      border: 1px solid #4673e8; 
+      
+      &.active {
+        animation: 1.5s ease-out blink 5;
+      }
+      
+      & > div {
+        background-color: #4673e8; 
+        width: 1.14rem;
+        height: 1rem;
+        border: 2px solid var(--fg-color);
+      }
+    }
+
+    & > .Tooltip {
+      margin-left: 5px;
+    }
+
+    & > .adjustMode {
+      margin-left: 11px;
+      padding: 3px;
+      background-color: var(--adjust-color);
+      color: var(--text-color);
+      border: 1px solid var(--ctx-border);
+      font-size: 0.8em;
+      border-radius: 5px;
+    }
+
+    & > .support {
+      & > *:nth-child(1n+2) {
+        margin-left: 4px;
+      }
+    }
+  }
+
+  & > .talues {
+    display: grid;
+    row-gap: 10px;
+
+    & > .globalPicker {
+      display: grid;
+      grid-template-columns: 1fr max-content;
+      column-gap: 7px;
+      align-items: center;
+  
+      & > button {
+        background-color: var(--adjust-color);
+        color: var(--text-color);
+        translate: 0px -2px;
+      }
+    }
+  }
+
+}

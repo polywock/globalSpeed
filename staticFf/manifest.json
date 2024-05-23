@@ -3,11 +3,15 @@
   "version": "2.9.994",
   "default_locale": "en",
   "description": "__MSG_appDesc__",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "optional_permissions": ["clipboardWrite", "clipboardRead"],
-  "permissions": ["storage", "https://*/*", "http://*/*", "file://*/*", "webNavigation"],
-  "web_accessible_resources": ["ctx.js"],
-  "browser_action": {
+  "permissions": ["storage", "webNavigation", "scripting", "contextMenus"],
+  "host_permissions": ["https://*/*", "http://*/*", "file://*/*"],
+  "web_accessible_resources": [
+    {"resources": ["circles/*.svg"], "matches": ["http://*/*", "https://*/*"]},
+    {"resources": ["main.js"], "matches": ["https://*/*", "http://*/*"]}
+  ],
+  "action": {
     "default_popup": "popup.html"
   },
   "icons": { 
@@ -19,7 +23,7 @@
   },
   "content_scripts": [{
     "matches": ["https://*/*", "http://*/*", "file://*/*"],
-    "js": ["contentScript.js"],
+    "js": ["isolated.js", "mainLoader.js"],
     "all_frames": true,
     "match_about_blank": true,
     "run_at": "document_start"

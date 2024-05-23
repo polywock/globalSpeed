@@ -1,13 +1,14 @@
 import { NumericInput } from "./NumericInput"
-import produce from "immer"
-import "./CycleInput.scss"
+import { produce } from "immer"
+import "./CycleInput.css"
+import { FaPlus } from "react-icons/fa"
 
 type CycleInputProps = {
   values: number[],
   onChange: (newValues: number[]) => void 
   min?: number,
   max?: number,
-  defaultValue?: number 
+  defaultValue: number 
 }
 
 export function CycleInput (props: CycleInputProps) {
@@ -16,6 +17,8 @@ export function CycleInput (props: CycleInputProps) {
       {<>
         {props.values.map((value, i) => (
           <div key={i} className="value">
+
+            {/* Value */}
             <NumericInput 
               value={value} 
               onChange={v => {
@@ -27,6 +30,8 @@ export function CycleInput (props: CycleInputProps) {
               max={props.max}
               noNull={true}
             />
+
+            {/* Delete circle */}
             {props.values.length > 0 && (
               <div className="close" onClick={e => {
                 props.onChange(produce(props.values, d => {
@@ -36,12 +41,16 @@ export function CycleInput (props: CycleInputProps) {
             )}
           </div>
         ))}
+
+        {/* Add button */}
         <div>
           <button onClick={e => {
             props.onChange(produce(props.values, d => {
               d.push(props.defaultValue ?? 0)
             }))
-          }}>+</button>
+          }}>
+              <FaPlus/>
+          </button>
         </div>
       </>}
     </div>

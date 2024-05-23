@@ -1,0 +1,102 @@
+.IndicatorModal {
+  background-color: var(--fg-color);
+}
+
+.SectionFlags {
+  --field-name-width: 300px;
+
+  & button.icon.gear {
+    color: var(--text-color);
+  }
+
+  & > .fields, .IndicatorModal, .SpeedPresetModal, .WidgetModal {
+    margin-top: 20px;
+
+    & > .presetControl {
+      margin-top: 20px;
+      margin-left: 20px;
+    }
+    
+    & > .field {
+      display: grid;
+      grid-template-columns: var(--field-name-width) max-content;
+      grid-column-gap: 10px;
+      margin-bottom: 14px;
+      align-items: center;
+
+      & > .SliderMicro {
+        grid-template-columns: 120px max-content;
+      }
+
+      & .showMore {
+        font-size: 1.5rem;
+        font-family: monospace;
+      }
+
+      &.indentFloat > .fieldValue > .float {
+        left: 50px;
+        top: -4px;
+        position: absolute;
+      }
+
+      &.speedSlider {
+        padding-bottom: 10px;
+
+        & > .control {
+          display: grid;
+          grid-template-columns: 8rem max-content;
+          align-items: center;
+          column-gap: 5px;
+          height: 1em;
+          overflow: visible;;
+  
+          input {
+            text-align: center;
+          }
+        }
+
+      } 
+      
+
+      & > .fieldValue {
+        position: relative;
+        line-height: 0;
+      }
+
+      & > .fieldValue div.NumericInput {
+        width: 60px;
+        display: inline-block;
+      }
+
+      &.indent {
+        & > span:first-child, & > div.labelWithTooltip:first-child {
+          margin-left: 20px;
+        }
+      }
+  
+      &.marginTop {
+        margin-top: 30px;
+      }
+
+      & > .colorControl {
+        display: grid;
+        grid-template-columns: repeat(3, max-content);
+        grid-gap: 10px; 
+        align-items: center;
+      }
+      
+      & > .col {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: max-content;
+        grid-column-gap: 20px;
+      }
+    }
+
+    & > .showMore {
+      margin-top: 20px;
+      font-family: monospace;
+    }
+  }
+}
+

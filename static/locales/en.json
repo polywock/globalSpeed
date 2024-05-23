@@ -1,21 +1,27 @@
 {
+  "_scale": 1.0,
+  "_lang": "en", 
   "audio": {
     "captureTab": "capture",
     "releaseTab": "release",
     "split": "split",
-    "mono": "mono",
     "reverse": "reverse"
   },
   "warnings": {
-    "backdropFirefox": "Firefox users need to enable \"gfx.webrender.all\" and \"layout.css.backdrop-filter.enabled\" by going to the \"about:config\" URL. Restart Firefox after enabling the two flags.",
     "unusedGlobal": "Release the unused global shortcut keys",
     "selectTooltip": "Select preferred video for media hotkeys. Useful if you want to control background music from a different tab (or from another program with global hotkeys).",
-    "sliderTooltip": "hold shift key for precise control."
+    "sliderTooltip": "Hold shift key for precise control.",
+    "captureRequired": "Use the $1 shortcut to activate."
   },
   "token": {
     "create": "create",
     "reset": "reset",
-    "hide": "hide",
+    "duplicate": "duplicate",
+
+    "pinTooltip": "Pin if you want current tab to have it's own context (speed, filters, etc).",
+    "mergeBoth": "merge both",
+    "min": "min",
+    "max": "max",
     
     "on": "on",
     "off": "off",
@@ -26,24 +32,54 @@
     "both": "both",
     
     "query": "query",
+    "queryTooltip": "CSS selector used to find elements to filter. For example, 'video, img' will select both videos and images. For advanced usage, view documentation online about CSS selectors.",
+    
+    "intoPane": "into pane",
     "warning": "warning",
     "filters": "filters",
     "transforms": "transforms",
 
     "blockEvents": "block events",
-    "hideIndicator": "hide indicator",
-    "indicator": "indicator",
+    "blockEventsTooltip": "Will try to block event propagation and default behaviors.",
     "color": "color",
     "size": "size",
     "rounding": "rounding",
     "duration": "duration",
     "offset": "offset",
+    "position": "position",
+    "center": "Center",
+    "topLeft": "Top left",
+    "topRight": "Top right",
+    "bottomLeft": "Bottom left",
+    "bottomRight": "Bottom right",
+    "animation": "animation",
+    "default": "Default",
+    "static": "Static",
+    "shrink": "Shrink",
+    "implode": "Implode",
+    "rotate": "Rotate",
+
     "rows": "rows",
-    
-    "any": "any",
-    "all": "all",
     "copy": "copy",
-    "paste": "paste"
+    "paste": "paste",
+    "replaceWith": "replace $1 with?",
+    "invalidNumber": "invalid number",
+    "openPage": "open page",
+    "seconds": "seconds",
+    "percent": "percent",
+    "frames": "frames"
+  },
+  "placer": {
+    "windowBounds": {
+      "left": "Left",
+      "top": "Top",
+      "width": "Width",
+      "height": "Height"
+    },
+    "windowSize": "Interactive window sizing",
+    "windowPrompt": "Adjust this window's size and location and press Apply.",
+    "apply": "Apply",
+    "cancel": "Cancel"
   },
   "filter": {
     "grayscale": "grayscale",
@@ -63,41 +99,49 @@
     "rotateY": "rotateY",
     "rotateZ": "rotateZ"
   },
-  "fxPanel": {
-    "queryTooltip": "CSS selector used to find elements to filter. For example, 'video, img' will select both videos and images. For advanced usage, view documentation online about CSS selectors.",
-    "intoPane": "into pane"
-  },
   "command": {
-    "nothing": "no action",
     "runCode": "javascript",
     "openUrl": "open URL",
-    "adjustSpeed": "speed",
+    "speed": "speed",
     "speedChangesPitch": "speed changes pitch",
-    "setPin": "pin tab",
-    "setState": "state",
+    "pin": "pin tab",
+    "state": "state",
     "seek": "seek",
-    "setPause": "pause",
-    "setMute": "mute",
-    "adjustVolume": "volume",
+    "pause": "pause",
+    "mute": "mute",
+    "volume": "volume",
     "setMark": "set mark",
     "seekMark": "seek mark",
-    "toggleLoop": "AB loop",
-    "toggleLoopTooltip": "Repeat the video from the marked position to the current position.",
+    "loop": "AB loop",
+    "loopTooltip": "Repeat the video from the marked position to the current position.",
     "fullscreen": "fullscreen",
     "nativeTooltip": "native",
     "PiP": "picture-in-picture",
-    "setFx": "FX state",
-    "resetFx": "FX reset",
-    "flipFx": "FX swap",
-    "adjustFilter": "filter",
-    "adjustPitch": "pitch",
-    "adjustGain": "gain",
-    "adjustDelay": "delay",
-    "adjustPan": "pan",
-    "tabCapture": "tab capture",
-    "relativeTooltip": "relative to speed",
+    "fxState": "FX state",
+    "fxReset": "FX reset",
+    "fxSwap": "FX swap",
+    "fxFilter": "filter",
+    "afxPitch": "pitch",
+    "afxGain": "gain",
+    "afxDelay": "delay",
+    "afxPan": "pan",
+    "afxMono": "mono",
+    "afxCapture": "tab capture",
+    "afxReset": "audio reset",
+    "relativeToSpeed": "relative to speed",
+    "showNet": "show total duration",
+    "drawPage": "draw on page",
+    "fastSeek": "fast seek",
     "fastSeekTooltip": "faster but less accurate",
-    "showNetTooltip": "show net duration"
+    "mediaInfo": "show media info",
+    "intoPopup": "into popup",
+    "intoPopupTooltip": "Turn current tab into a popup window.",
+    "skip": "AB skip",
+    "skipTooltip": "Skip a segment of the video between the marked position and current position.",
+    "detectiveMode": "detective mode",
+    "detectiveModeTooltip": "Hide everything except what's visible through a circle.",
+    "cinema": "darken background",
+    "cinemaTooltip": "Darken the background of the video. To exit out, press on the background or use shortcut again."
   },
   "options": {
     "flags": {
@@ -105,23 +149,84 @@
       "language": "language",
       "languageTooltip": "All languages except English were translated using online tools.",
       "darkTheme": "dark theme",
-      "pinByDefault": "pin by default",
-      "pinByDefaultTooltip": "New tabs will automatically be pinned.",
-      "hideBadge": "hide badge",
-      "hideBadgeTooltip": "The badge is the text on the extension icon.",
-      "fullscreenSupport": "fullscreen",
+      "showBadge": "show badge",
+      "showBadgeTooltip": "The badge is the text on the extension icon.",
+      "showMediaView": "show media list",
+      "showIndicator": "show indicator",
+      "showIndicatorTooltip": "The indicator is visual feedback when using shortcuts.",
       "ghostMode": "ghost mode",
       "ghostModeTooltip": "Try to block website from changing speed. Disabled by default because it might break some websites.",
-      "hideMediaView": "hide media list",
-      "inheritGlobal": "inherit global",
-      "inheritGlobalTooltip": "New tab's can inherit from the global context or the previous tab's context?"
+      "pinByDefault": "pin by default",
+      "pinByDefaultTooltip": "New tabs will automatically be pinned.",
+
+      "initialState": "initial state",
+      "previousTab": "Previous tab's context.",
+      "globalContext": "Global context",
+      "previousContext": "Previous tab's context",
+      "newContext": "New context",
+      "customContext": "Custom context",
+      "customContextTooltip": "Saved a snapshot of this tab's current context. Newly created tabs will use this snapshot as an initial state.",
+      "jsShortcutWarning": "JavaScript shortcuts are currently disabled due to depreciation of older APIs. Functionality will resume when Chromium implements the userScripts.execute() method.",
+      "keyboardInput": "keyboard input",
+      "keyboardInputTooltip": "Consider switching to Virtual input mode if using a virtual keyboard or a non-QWERTY layout keyboard. This only applies to future shortcut changes and existing shortcuts won't be affected.",
+      "qwerty": "QWERTY layout",
+      "virtual": "Virtual",
+
+      "grantPermission": "grant permission",
+      "grantPermissionTooltip": "To enable full functionality, including embed video support, this permission must be enabled. For limited functionality, you can enable on a site-by-site basis by right clicking the toolbar icon.",
+
+      "speedSlider": "speed slider",
+      "textSize": "text size",
+      "speedPresets": "speed presets",
+      "widget": {
+        "option": "circle widget",
+        "optionTooltip": "(Experimental) A circle widget will be shown while videos are visible.\n - Drag left/right to seek through video.\n - Drag up/down to adjust playback rate.",
+        "movementMobile": "\n - Press circle for a few seconds to to move or delete it.",
+        "movementDesktop": "\n - With right mouse button, drag circle to move or delete it.",
+        "headerTooltip": "Enabled circle widget.",
+        "showIcon": "show icon",
+        "showIconTooltip": "Show an icon on the main menu to conveniently toggle the circle widget.",
+        "autoHide": "auto hide"
+      }
     },
     "editor": {
       "header": "Shortcut Editor",
       "toggleMode": "You can use local or global shortcut keys.",
       "toggleModeTooltip": "Global shortcuts are useful when you want to control video or audio while using another program.",
-      "greedyMode": "Will try to block event propagation and default behaviors.",
-      "speedPresets": "speed presets"
+      "menuLabel": "menu label",
+      "triggerMode": "Multiple trigger modes are supported.",
+      "triggerModeTooltip": "Local shortcuts (default): Flexible shortcut keys.\n\nGlobal shortcuts: Useful when you want to control video or audio while using another application.\n\nContext menu: Ideal for seldomly used commands. Right click on the page to trigger them.",
+      "triggerModeTooltipFf": "Local shortcuts (default): Flexible shortcut keys.\n\nContext menu: Ideal for seldomly used commands. Right click on the page to trigger them.",
+      "triggerModes": {
+        "0": "Local shortcuts",
+        "1": "Global shortcuts",
+        "2": "Context menu"
+      },
+      "spacing": "spacing",
+      "reversible": "reversible",
+      "reversibleTooltip": "Allows setting a second shortcut to reverse the list.",
+      "wraparound": "wraparound",
+      "wraparoundTooltip": "If you go past the start or end, it loops around to the other side.",
+      "addLabel": "add label",
+      "liveScrubbing": "live scrubbing",
+      "liveScrubbingTooltip": "Continously preview changes while moving cursor.",
+      "pauseWhileScrubbing": "pause while scrubbing",
+      "adjustModes": {
+        "1": "Set to value",
+        "2": "Adjust by value",
+        "3": "Cycle between list of values",
+        "4": "Interactively set to value.",
+        "5": "Interactively adjust by value."
+      },
+      "openModes": {
+        "foregroundTab": "foreground tab",
+        "backgroundTab": "background tab",
+        "newWindow": "new window",
+        "newPopup": "new popup",
+        "sameTab": "current tab"
+      },
+      "pressAndHold": "press-and-hold",
+      "pressAndHoldTooltip": "If enabled, the key must be held down while interactively adjusting the value."
     },
     "rules": {
       "header": "URL Rules",
@@ -129,8 +234,9 @@
       "startsWith": "starts with",
       "contains": "contains",
       "regex": "regex",
-      "LAX": "Only apply once per tab.",
-      "ILO": "Only check during the initial page load."
+      "allowlist": "Allowlist",
+      "blocklist": "Blocklist",
+      "status": "URL rules have changed some values."
     },
     "help": {
       "header": "Help",
@@ -140,5 +246,14 @@
       "import": "import",
       "areYouSure": "Are you sure?"
     }
+  },
+  "pageDraw": {
+    "_labelScale": 1,
+    "_fontScale": 1,
+    "draw": "Draw",
+    "erase": "Erase",
+    "select": "Select",
+    "selectTooltip": "Interact with the webpage",
+    "tips": "Some useful shortcuts\n1. Erase with right mouse button.\n2. Draw lines with shift click.\n3. Toggle between $1 and $2 mode using Caps Lock\n4. To adjust eraser size: hold down the middle mouse button and drag left or right.\n5. To adjust brush size: hold down the middle mouse button and drag up or down.\n6. Flood page with a color by right clicking on the color."
   }
 }

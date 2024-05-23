@@ -1,11 +1,14 @@
 import { CSSProperties } from "react"
-import { NumericControl } from "../comps/NumericControl"
-import { getDefaultSpeedPresets } from "../defaults"
+import { getDefaultSpeedPresets } from "src/defaults/constants"
+import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "../defaults/constants"
 import { useStateView } from "../hooks/useStateView"
 import { BsMusicNoteList } from "react-icons/bs"
-import { pushView } from "../background/GlobalState"
-import { clamp, domRectGetOffset, feedbackText } from "src/utils/helper"
-import "./SpeedControl.scss"
+import { produce } from "immer"
+import { replaceArgs } from "src/utils/gsm"
+import { clamp, domRectGetOffset, feedbackText, isFirefox } from "src/utils/helper"
+import { NumericInput } from "src/comps/NumericInput"
+import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight } from "react-icons/fa"
+import "./SpeedControl.css"
 
 type SpeedControlProps = {
   onChange: (newSpeed: number) => any,
@@ -13,39 +16,84 @@ type SpeedControlProps = {
 }
 
 export function SpeedControl(props: SpeedControlProps) {
-  const [view] = useStateView({speedPresets: true, speedSmallStep: true, speedBigStep: true, speedSlider: true, freePitch: true, speedPresetRows: true, speedPresetPadding: true})
+  const [view, setView] = useStateView({fontSize: true, speedPresets: true, speedSmallStep: true, speedBigStep: true, speedSlider: true, freePitch: true, speedPresetRows: true, speedPresetPadding: true})
   if (!view) return null 
 
   let presets = view.speedPresets?.length === 12 ? view.speedPresets : getDefaultSpeedPresets()
   presets = presets.slice(0, clamp(1, 4, view.speedPresetRows ?? 4) * 3)
+
+  const handleAddDelta = (delta: number) => {
+    let value = props.speed
+    if (value != null) {
+      props.onChange(value + delta)
+    }
+  }
+
+  const smallStep = view.speedSmallStep || 0.01
+  const largeStep = view.speedBigStep || 0.1
   
   return <div className="SpeedControl">
-    <div className="options" style={{"--padding": `${view.speedPresetPadding ?? 0}px`} as CSSProperties}>
-      {presets.map(v => (
+
+    {/* Presets */}
+    <div className="options" style={{"--padding": `${(view.speedPresetPadding ?? 0) * (view.fontSize ?? 1)}px`} as CSSProperties}>
+      {presets.map((v, i) => (
         <button 
-          key={v}
+          key={i}
           className={props.speed === v ? "selected" : ""}
           onClick={() => props.onChange(v)}
+          onContextMenu={e => {
+            e.preventDefault()
+            if (isFirefox()) return 
+            const answer = prompt(replaceArgs(gvar.gsm.token.replaceWith, [v.toString()]))
+            let resetToDefault = false 
+
+            const n = parseFloat(answer ?? "")
+            if (isNaN(n)) {
+              resetToDefault = true
+              answer?.trim() && alert(gvar.gsm.token.invalidNumber)
+            }
+            if (n > MAX_SPEED_CHROMIUM) {
+              resetToDefault = true
+              alert(`<= ${MAX_SPEED_CHROMIUM}`)
+            }
+            if (n < MIN_SPEED_CHROMIUM) {
+              resetToDefault = true
+              alert(`>= ${MIN_SPEED_CHROMIUM}`)
+            }
+
+            setView({
+              speedPresets: produce(presets, d => {
+                d[i] = resetToDefault ? getDefaultSpeedPresets()[i] : n 
+              })
+            })
+          }}
         >{v.toFixed(2)}</button> 
       ))}
     </div>
-    <NumericControl 
-      value={props.speed} 
-      onChange={newValue => props.onChange(newValue)}
-      smallStep={view.speedSmallStep || 0.01}
-      largeStep={view.speedBigStep || 0.1}
-      min={0.07}
-      max={16}
-      inputNoNull={true}
-      rounding={2}
-    />
+
+    {/* Controls */}
+    <div className="NumericControl" onWheel={e => {
+    if (e.deltaMode !== WheelEvent.DOM_DELTA_PIXEL) return 
+    const speedDelta = (e.deltaY / 1080) * -0.15
+    props.onChange(clamp(MIN_SPEED_CHROMIUM, MAX_SPEED_CHROMIUM, props.speed + speedDelta))
+  }}>
+      <button onClick={() =>  handleAddDelta(-largeStep)}><FaAngleDoubleLeft size={"1.14rem"}/></button>
+      <button onClick={() =>  handleAddDelta(-smallStep)}><FaAngleLeft size={"1.14rem"}/></button>
+      <NumericInput rounding={2} noNull={true} min={MIN_SPEED_CHROMIUM} max={MAX_SPEED_CHROMIUM} value={props.speed} onChange={v => {
+        props.onChange(v)
+      }}/>
+      <button onClick={() =>  handleAddDelta(smallStep)}><FaAngleRight size={"1.14rem"}/></button>
+      <button onMouseDown={() => {}} onClick={() =>  handleAddDelta(largeStep)}><FaAngleDoubleRight size={"1.14rem"}/></button>
+    </div>
+
+    {/* Slider */}
     {!!view.speedSlider && (
       <div className="slider">
-        <BsMusicNoteList title={window.gsm.command.speedChangesPitch} size={"17px"} className={`${view.freePitch ? "active" : ""}`} onClick={e => {
+        <BsMusicNoteList title={gvar.gsm.command.speedChangesPitch} size={"1.2rem"} className={`${view.freePitch ? "active" : ""}`} onClick={(e: React.MouseEvent<SVGElement>) => {
           if (!view.freePitch) {
-            feedbackText(window.gsm.command.speedChangesPitch, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
+            feedbackText(gvar.gsm.command.speedChangesPitch, domRectGetOffset((e.currentTarget as any as HTMLButtonElement).getBoundingClientRect(), 8, 30))
           }
-          pushView({override: {freePitch: !view.freePitch}})
+          setView({freePitch: !view.freePitch})
         }}/>
         <input step={0.01} type="range" min={view.speedSlider.min} max={view.speedSlider.max} value={props.speed} onChange={e => {
           props.onChange(e.target.valueAsNumber)

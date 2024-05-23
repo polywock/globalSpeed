@@ -1,7 +1,8 @@
 import { useState } from "react"
 import { ThrottledTextInput } from "./ThrottledTextInput"
 import { ModalBase } from "./ModalBase"
-import "./ModalText.scss"
+import "./ModalText.css"
+import { Gear } from "./svgs"
 
 type ModalTextProps = {
   value: string,
@@ -14,7 +15,7 @@ export function ModalText(props: ModalTextProps) {
 
   return <div className="ModalText">
     {modal ? (
-      <ModalBase keepOnClose={true} onClose={() => {
+      <ModalBase keepOnWheel={true} onClose={() => {
         setModal(false)
       }}>
         <ThrottledTextInput textArea={true} value={props.value} onChange={v => {
@@ -22,9 +23,9 @@ export function ModalText(props: ModalTextProps) {
         }}/>
       </ModalBase>
     ) : (
-      <button onClick={e => {
-        setModal(!modal)
-      }}>{props.label ?? "edit"}</button>
+      <button className="icon gear interactive" onClick={e => setModal(!modal)}>
+          <Gear size="1.57rem"/>
+      </button>
     )}
   </div>
 }

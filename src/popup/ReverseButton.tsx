@@ -1,62 +1,99 @@
 import { useRef, useState } from "react"
 import { FaMicrophone, FaVolumeUp } from "react-icons/fa"
-import "./ReverseButton.scss"
+import { connectReversePort } from "src/background/utils/tabCapture"
+import { getMediaDataWithScopes } from "src/background/utils/getAutoMedia"
+import { sendMediaEvent } from "src/utils/configUtils"
+import "./ReverseButton.css"
+
+declare global {
+  interface Message {
+    PLAYING: {type: "PLAYING"}
+  }
+}
 
 type ReverseButtonProps = {
-  onActivate?: () => void 
+  onActivate?: () => Promise<boolean>
 }
 
 export function ReverseButton(props: ReverseButtonProps) {
   const env = useRef({info: null as Info}).current
-  const [info, setInfo] = useState(null as Info)
+  const [status, setStatus] = useState(null as boolean)
 
-  const disconnect = () => {
-    if (!env.info) return 
-    // disconnecting via popup
-    env.info[0].disconnect()
+  const ensureDisconnect = () => {
+    window.removeEventListener("pointerup", onPointerUp, true)
+    setStatus(null)
+    
+    if (!env.info) return
+    env.info.port.disconnect()
+    env.info.replay?.()
     env.info = null 
-    setInfo(null)
+  }
+
+  const onPointerUp = (e: PointerEvent) => {
+    if (!env) return ensureDisconnect()
+    if (env.info?.status === false) {
+      env.info.port.postMessage({type: "PLAY"})
+    }
+  }
+
+  const onMessage = (msg: Messages) => {
+    if (!env.info) return ensureDisconnect()
+    if (msg.type === "PLAYING") {  
+      env.info.status = true 
+      pauseAll(gvar.tabInfo.tabId).then(replay => {
+        if (env.info) {
+          env.info.replay = replay
+        }
+      })
+      setStatus(true)
+    }
+  }
+
+  const onPointerDown = async (e: React.PointerEvent) => {
+    if (env.info) return ensureDisconnect()
+
+    if (e.button !== 0) return 
+    if (!await props.onActivate()) return 
+    
+    env.info = { port: await connectReversePort(gvar.tabInfo.tabId), status: false}
+    env.info.port.onMessage.addListener(onMessage)
+    env.info.port.onDisconnect.addListener(ensureDisconnect)
+    window.addEventListener("pointerup", onPointerUp, true)
+
+    setStatus(false)
   }
 
   return (
-    <button className={`ReverseButton ${info ? (info[1] ? "playing" : "recording") : "" }`} onMouseDown={e => {
-      if (e.button !== 0) return 
-
-      if (env.info) {
-        disconnect()
-        return 
-      }
-
-      props.onActivate?.()
-      
-      const port = chrome.runtime.connect({name: `REVERSE ${JSON.stringify({tabId: gvar.tabInfo.tabId})}`})
-      env.info = [port, false]
-      setInfo(env.info)
-
-      port.onMessage.addListener(msg => {
-        if (msg.type === "PLAYING") {
-          env.info = [port, true]
-          setInfo(env.info)
-        }
-      })
-
-      port.onDisconnect.addListener(() => {
-        env.info = null 
-        setInfo(null)
-      })
-
-      window.addEventListener("mouseup", e => {
-        if (e.button !== 0) return 
-
-        if (env.info && !env.info[1]) {
-          port.postMessage({type: "PLAY"})
-        }
-      }, {once: true, capture: true})
-      
-
-    }}>{info ? (info[1] ? <FaVolumeUp size="1em"/> : <FaMicrophone size="1em"/>) : window.gsm.audio.reverse}</button>
+    <button className={`ReverseButton ${status == null ? "" : (status ? "playing" : "recording")}`} onPointerDown={onPointerDown}>{status == null ? gvar.gsm.audio.reverse : (status ? <FaVolumeUp size="1em"/> : <FaMicrophone size="1em"/>)}</button>
   )
 }
 
 
-type Info = [chrome.runtime.Port, boolean]
+type Info = {
+  port: chrome.runtime.Port,
+  status?: boolean,
+  replay?: () => void
+}
+
+async function pauseAll(tabId: number): Promise<() => void> {
+  const { scopes } = await getMediaDataWithScopes()
+  let playFns: (() => void)[] = []
+      
+  for (let scope of scopes) {
+    if (scope.tabInfo.tabId !== tabId) continue 
+
+    for (let media of scope.media) {
+      if (!(!media.paused && media.volume)) continue 
+
+      sendMediaEvent({type: "PAUSE", state: "on"}, media.key, tabId, scope.tabInfo.frameId)
+
+      playFns.push(() => {
+        sendMediaEvent({type: "PAUSE", state: "off"},media.key, tabId, scope.tabInfo.frameId)
+      })
+    }
+  }
+
+  return () => {
+    playFns.forEach(v => v())
+  }
+}

@@ -1,0 +1,35 @@
+
+.Toggle {
+  display: inline-block;
+  width: 40px;
+  border-radius: 5px;
+  background-color: var(--ctx-border);
+  border: 1.5px solid var(--ctx-border);
+  cursor: pointer;
+  line-height: 0;
+  user-select: none;
+  cursor: pointer;
+
+  &::after {
+    content: "";
+    display: inline-block;
+    background-color: white;
+    border: 1px solid #aaa;
+    border-radius: inherit;
+    box-sizing: border-box;
+    width: 18px;
+    height: 14px;
+    transition: transform 0.05s linear;
+    transform: translateX(0px);
+    pointer-events: none;
+  }
+
+  &.active {
+    background-color: var(--toggle-color);
+    border-color: var(--ctx-border);
+
+    &::after {
+      transform: translateX(20px);
+    }
+  }
+}

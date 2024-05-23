@@ -1,0 +1,49 @@
+
+
+#App.firefox .FxControl {
+   margin-right: 20px;
+}
+
+.FxControl {
+  font-size: 1rem;
+  background-color: var(--fg-color);
+  user-select: none;
+
+  & > * {
+    margin-bottom: 10px;
+  }
+
+  & > .controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 10px;
+
+    & > button {
+      color: var(--header-icon-color);
+      &.active {
+        color: var(--header-icon-active-color);
+      } 
+      &.muted {
+        color: var(--header-icon-muted-color);
+      } 
+    }
+  }
+
+  & > .buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10px;
+  }
+
+  & > .query {
+    ma12px-top: 10px;
+    display: grid;
+    grid-row-gap: 5px;
+  }
+
+  & > .origin {
+    display: grid;
+    grid-template-columns: 1fr max-content max-content;
+    gr12pxolumn-gap: 10px;
+  }
+}

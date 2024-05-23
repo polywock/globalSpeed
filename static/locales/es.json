@@ -3,20 +3,24 @@
     "captureTab": "capturar",
     "releaseTab": "liberar",
     "split": "dividir",
-    "mono": "mono",
     "reverse": "inverso"
   },
   "warnings": {
-    "backdropFirefox": "Los usuarios de Firefox deben habilitar \"gfx.webrender.all\" y \"layout.css.backdrop-filter.enabled\" yendo a la URL \"about:config\". Reinicie Firefox después de habilitar las dos banderas.",
-    "unusedGlobal": "Suelte las teclas de acceso directo global no utilizadas.",
-    "selectTooltip": "Seleccione el video preferido para las teclas de acceso rápido. Útil si desea controlar la música de fondo desde una pestaña diferente (o desde otro programa con teclas de acceso rápido globales).",
-    "sliderTooltip": "⇧ mantenga presionada la tecla shift para un control preciso."
+    "unusedGlobal": "Libera las teclas de acceso rápido globales no utilizadas.",
+    "selectTooltip": "Selecciona el video preferido para las teclas de acceso rápido de medios. Útil si quieres controlar la música de fondo desde una pestaña diferente (o desde otro programa con teclas de acceso rápido globales)."    ,
+    "sliderTooltip": "Mantén presionada la tecla Shift para un control preciso.",
+    "captureRequired": "Usa el atajo $1 para activar."
   },
   "token": {
     "create": "crear",
     "reset": "restablecer",
-    "hide": "ocultar",
+    "duplicate": "duplicar",
 
+
+    "min": "min",
+    "max": "max",
+    "pinTooltip": "Anclar si quieres que la pestaña actual tenga su propio contexto (velocidad, filtros, etc).",
+    "mergeBoth": "fusionar ambos",
     "on": "encendido",
     "off": "apagado",
     "toggle": "alternar",
@@ -26,24 +30,54 @@
     "both": "ambos",
 
     "query": "selector",
+    "queryTooltip": "Selector CSS utilizado para encontrar los elementos a filtrar. Por ejemplo, 'video, img' seleccionará tanto videos como imágenes. Para un uso avanzado, consulte la documentación en línea sobre selectores CSS.",
+    
+    "intoPane": "crear ventana",
     "warning": "advertencia",
     "filters": "filtros",
     "transforms": "transforma",
 
     "blockEvents": "bloquear eventos",
-    "hideIndicator": "ocultar indicador",
-    "indicator": "indicador",
+    "blockEventsTooltip": "El modo codicioso intentará bloquear la propagación de eventos y los comportamientos predeterminados.",
     "color": "color",
     "size": "tamaño",
     "rounding": "redondeo",
     "duration": "duración",
     "offset": "desplazar",
+    "position": "posición",
+    "center": "Centro",
+    "topLeft": "Superior izquierda",
+    "topRight": "Superior derecha",
+    "bottomLeft": "Inferior izquierda",
+    "bottomRight": "Inferior derecha",
+    "animation": "animación",
+    "default": "Predeterminado",
+    "static": "Estático",
+    "shrink": "Encoger",
+    "implode": "Implodir",
+    "rotate": "Rotar",
     "rows": "filas",
     
-    "any": "cualquiera",
-    "all": "todas",
     "copy": "copiar",
-    "paste": "pegar"
+    "paste": "pegar",
+    "replaceWith": "¿reemplazar $1 por?",
+    "invalidNumber": "número inválido",
+    "openPage": "abrir página",
+    "seconds": "segundos",
+    "percent": "por ciento",
+    "frames": "fotogramas"
+  },
+  "placer": {
+    "windowBounds": {
+      "left": "Izquierda",
+      "top": "Superior",
+      "width": "Ancho",
+      "height": "Alto"
+    },
+    "windowSize": "Tamaño de ventana interactivo",
+    "windowPrompt": "Ajusta el tamaño y ubicación de esta ventana y presiona Aplicar.",
+    "apply": "Aplicar",
+    "cancel": "Cancelar"
   },
   "filter": {
     "grayscale": "escala de grises",
@@ -63,65 +97,134 @@
     "rotateY": "rotar Y",
     "rotateZ": "rotar Z"
   },
-  "fxPanel": {
-    "queryTooltip": "El selector CSS se utiliza para buscar elementos para filtrar. Por ejemplo, \"video, img\" seleccionará videos e imágenes. Para uso avanzado, vea la documentación en línea sobre los selectores CSS.",
-    "intoPane": "crear ventana"
-  },
   "command": {
-    "nothing": "ninguna acción",
     "runCode": "javascript",
     "openUrl": "URL",
-    "adjustSpeed": "velocidad",
+    "speed": "velocidad",
     "speedChangesPitch": "velocidad cambia de tono",
-    "setPin": "pestaña pin",
-    "setState": "estado",
+    "pin": "pestaña pin",
+    "state": "estado",
     "seek": "buscar",
-    "setPause": "pausa",
-    "setMute": "silenciar",
-    "adjustVolume": "volumen",
+    "pause": "pausa",
+    "mute": "silenciar",
+    "volume": "volumen",
     "setMark": "crear marca",
     "seekMark": "ir al marca",
-    "toggleLoop": "repetir AB",
-    "toggleLoopTooltip": "Establecer bucle entre la posición marcada y la posición actual.",
+    "loop": "repetir AB",
+    "loopTooltip": "Establecer bucle entre la posición marcada y la posición actual.",
     "fullscreen": "pantalla completa",
     "nativeTooltip": "nativo",
     "PiP": "imagen en imagen",
-    "setFx": "Estado FX",
-    "resetFx": " restablecer FX",
-    "flipFx": "intercambiar FX",
-    "adjustFilter": "Filtro FX",
-    "adjustPitch": "tono",
-    "adjustGain": "volumen+",
-    "adjustDelay": "retrasar",
-    "adjustPan": "panorámica",
-    "tabCapture": "capturar",
-    "relativeTooltip": "relativa a la velocidad",
+    "fxState": "Estado FX",
+    "fxReset": " restablecer FX",
+    "fxSwap": "intercambiar FX",
+    "fxFilter": "Filtro FX",
+    "afxPitch": "tono",
+    "afxGain": "ganancia",
+    "afxDelay": "retrasar",
+    "afxPan": "panorámica",
+    "afxMono": "mono",
+    "afxCapture": "capturar",
+    "afxReset": "restablecer audio",
+    "relativeToSpeed": "relativa a la velocidad",
+    "showNet": "mostrar duración total",
+    "drawPage": "dibujar en la página",
+    "fastSeek": "búsqueda rápida",
     "fastSeekTooltip": "más rápido pero menos preciso",
-    "showNetTooltip": "mostrar la duración neta"
+    "mediaInfo": "mostrar información del medio",
+    "intoPopup": "en ventana emergente",
+    "intoPopupTooltip": "Convertir la pestaña actual en una ventana emergente.",
+    
+    "skip": "salto AB",
+    "skipTooltip": "Saltar un segmento del video entre la posición marcada y la posición actual.",
+    "detectiveMode": "modo detective",
+    "detectiveModeTooltip": "Ocultar todo excepto lo que es visible a través de un círculo.",
+    "cinema": "oscurecer fondo",
+    "cinemaTooltip": "Oscurece el fondo del video. Para salir, presiona sobre el fondo o usa el atajo nuevamente."
   },
   "options": {
     "flags": {
       "header": "Opciones",
       "language": "idioma",
-      "languageTooltip": "Todos los idiomas, excepto el inglés, se tradujeron utilizando herramientas en línea. Actualizar pestaña para ver los cambios.",
+      "languageTooltip": "Todos los idiomas excepto el inglés fueron traducidos utilizando herramientas en línea.",
       "darkTheme": "tema oscuro",
-      "pinByDefault": "pin automático",
-      "pinByDefaultTooltip": "Las nuevas pestañas se fijarán automáticamente.",
-      "hideBadge": "ocultar insignia",
-      "hideBadgeTooltip": "La insignia es el texto en el icono de extensión.",
-      "fullscreenSupport": "pantalla completa",
+      "showBadge": "mostra distintivo",
+      "showBadgeTooltip": "El distintivo es el texto en el icono de la extensión.",
+      "showMediaView": "mostra elenco dei media",
+      "showIndicator": "mostra indicatore",
+      "showIndicatorTooltip": "El indicador es una retroalimentación visual al usar atajos.",
       "ghostMode": "modo fantasma",
       "ghostModeTooltip": "Intenta bloquear el sitio web para que no cambie de velocidad. Deshabilitado de forma predeterminada porque podría romper algunos sitios web.",
-      "hideMediaView": "ocultar lista de medios",
-      "inheritGlobal": "heredar global",
-      "inheritGlobalTooltip": "Las nuevas pestañas pueden heredar el contexto de la pestaña anterior o el contexto global."
+      "pinByDefault": "pin automático",
+      "pinByDefaultTooltip": "Las nuevas pestañas se fijarán automáticamente.",
+      "initialState": "estado inicial",
+      "previousTab": "Contexto de la pestaña anterior.",
+      "globalContext": "Contexto global",
+      "previousContext": "Contexto de la pestaña anterior",
+      "newContext": "Nuevo contexto",
+      "customContext": "Contexto personalizado",
+      "customContextTooltip": "Guarda una instantánea del contexto actual de esta pestaña. Las pestañas creadas recientemente usarán esta instantánea como estado inicial.",
+      "jsShortcutWarning": "Los atajos de JavaScript están actualmente desactivados debido a la depreciación de APIs antiguas. La funcionalidad se reanudará cuando Chromium implemente el método userScripts.execute().",
+      "keyboardInput": "entrada de teclado",
+      "keyboardInputTooltip": "Considere cambiar al modo de entrada virtual si usa un teclado virtual o un teclado con disposición no QWERTY. Esto solo aplica a los cambios futuros de atajos y los atajos existentes no se verán afectados.",
+      "qwerty": "diseño QWERTY",
+      "virtual": "Virtual",
+      "grantPermission": "conceder permiso",
+      "grantPermissionTooltip": "Para habilitar la funcionalidad completa, incluido el soporte para incrustar videos, se debe habilitar este permiso. Para una funcionalidad limitada, puede habilitarla en cada sitio de manera individual haciendo clic derecho en el ícono de la barra de herramientas.",
+      "speedSlider": "deslizador de velocidad",
+      "textSize": "tamaño del texto",
+      "speedPresets": "presets de velocidad",
+      "widget": {
+        "option": "widget circular",
+        "optionTooltip": "(Experimental) Se mostrará un widget circular mientras los videos estén visibles:\n - Se mostrará un widget circular mientras los videos estén visibles.\n - Arrastra a la izquierda/derecha para avanzar/retroceder en el video.\n - Arrastra hacia arriba/abajo para ajustar la velocidad de reproducción.",
+        "movementMobile": "\n - Presiona el círculo durante unos segundos para moverlo o eliminarlo.",
+        "movementDesktop": "\n - Con el botón derecho del ratón, arrastra el círculo para moverlo o eliminarlo.",
+        "headerTooltip": "Widget circular habilitado.",
+        "showIcon": "mostrar ícono",
+        "showIconTooltip": "Muestra un ícono en el menú principal para alternar cómodamente el widget circular.",
+        "autoHide": "ocultamiento automático"
+      }
     },
     "editor": {
       "header": "Editor de accesos directos",
       "toggleMode": "Puede usar teclas de acceso directo locales o globales.",
       "toggleModeTooltip": "Los accesos directos globales son útiles cuando desea controlar video o audio mientras usa otro programa.",
-      "greedyMode": "El modo codicioso intentará bloquear la propagación de eventos y los comportamientos predeterminados.",
-      "speedPresets": "presets de velocidad"
+
+
+      "menuLabel": "etiqueta del menú",
+      "triggerMode": "Se admiten varios modos de activación.",
+      "triggerModeTooltip": "Atajos locales (por defecto): Teclas de acceso rápido flexibles.\n\nAtajos globales: Útiles cuando quieres controlar vídeo o audio mientras usas otra aplicación.\n\nMenú contextual: Ideal para comandos que se usan raramente. Haz clic derecho en la página para activarlos.",
+      "triggerModeTooltipFf": "Atajos locales (por defecto): Teclas de acceso rápido flexibles.\n\nMenú contextual: Ideal para comandos que se usan raramente. Haz clic derecho en la página para activarlos.",
+      "triggerModes": {
+        "0": "Atajos locales",
+        "1": "Atajos globales",
+        "2": "Menú contextual"
+      },
+      "spacing": "espaciado",
+      "reversible": "reversible",
+      "reversibleTooltip": "Permite establecer un segundo atajo para invertir la lista.",
+      "wraparound": "continuación",
+      "wraparoundTooltip": "Si pasas el principio o el fin, se vuelve al otro lado.",
+      "addLabel": "añadir etiqueta",
+      "liveScrubbing": "fregado en vivo",
+      "liveScrubbingTooltip": "Previsualiza continuamente los cambios mientras mueves el cursor.",
+      "pauseWhileScrubbing": "pausar mientras se frota",
+      "adjustModes": {
+        "1": "Establecer a valor",
+        "2": "Ajustar por valor",
+        "3": "Ciclar entre lista de valores",
+        "4": "Establecer interactivamente a valor.",
+        "5": "Ajustar interactivamente por valor."
+      },
+      "openModes": {
+        "foregroundTab": "pestaña en primer plano",
+        "backgroundTab": "pestaña en segundo plano",
+        "newWindow": "nueva ventana",
+        "newPopup": "nueva ventana emergente",
+        "sameTab": "pestaña actual"
+      },
+      "pressAndHold": "presionar y mantener",
+      "pressAndHoldTooltip": "Si está habilitado, la tecla debe mantenerse presionada mientras se ajusta el valor de manera interactiva."
     },
     "rules": {
       "header": "Reglas de URL",
@@ -129,8 +232,9 @@
       "startsWith": "comienza con",
       "contains": "contiene",
       "regex": "regex",
-      "LAX": "Solo aplique una vez por pestaña.",
-      "ILO": "Solo verifique durante la carga inicial de la página."
+      "allowlist": "Lista de permitidos",
+      "blocklist": "Lista de bloqueados",
+      "status": "Las reglas de URL han cambiado algunos valores."
     },
     "help": {
       "header": "Ayuda",
@@ -138,7 +242,16 @@
       "issueDirective": "Proporciona comentarios sobre Github.",
       "export": "exportar",
       "import": "importar",
-      "areYouSure": "Estas seguro?"
+      "areYouSure": "Estás seguro?"
     }
-  }  
+  },
+  "pageDraw": {
+    "_labelScale": 1.2,
+    "_fontScale": 0.9,
+    "draw": "Dibujar",
+    "erase": "Borrar",
+    "select": "Interactuar",
+    "selectTooltip": "Interactuar con la página web",        
+    "tips": "Algunos atajos útiles\n1. Borrar con el botón derecho del ratón.\n2. Dibujar líneas manteniendo presionado Shift y haciendo clic.\n3. Cambiar entre el modo $1 y $2 usando Bloq Mayús\n4. Para ajustar el tamaño de la goma: mantén presionado el botón central del ratón y arrastra hacia la izquierda o la derecha.\n5. Para ajustar el tamaño del pincel: mantén presionado el botón central del ratón y arrastra hacia arriba o hacia abajo.\n6. Inunde la página con un color haciendo clic derecho en el color."
+  }
 }

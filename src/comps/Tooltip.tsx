@@ -1,18 +1,40 @@
-import { useState, DetailedHTMLProps, HTMLAttributes } from "react"
+import { useState, DetailedHTMLProps, HTMLAttributes, useEffect } from "react"
 import { ModalBase } from "./ModalBase"
-import "./Tooltip.scss"
+import "./Tooltip.css"
 
 type ToolTipProps = {
   label?: string
+  labelAlt?: React.ReactElement
   tooltip: string
   pass?: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
   alert?: boolean
+  noHover?: boolean
 }
 
 export const Tooltip = (props: ToolTipProps) => {
-  const [ref, setRef] = useState(null as {x: number, y: number, w: number}) 
+  const [ref, setRef] = useState(null as {x: number, y: number, w: number, hover?: boolean}) 
+  const hover = !props.noHover && !props.alert
 
-  const updateRef = (x: number, y: number) => {
+  useEffect(() => {
+    const handle = (e: PointerEvent | WheelEvent) => {
+      setRef(null)
+      e.stopImmediatePropagation()
+      e.preventDefault()
+    }
+
+    if (ref?.hover) {
+      window.addEventListener("pointerdown", handle, true)
+      window.addEventListener("wheel", handle, true)
+    }
+
+    return () => {
+      window.removeEventListener("pointerdown", handle, true)
+      window.removeEventListener("wheel", handle, true)
+    }
+
+  }, [ref])
+
+  const updateRef = (x: number, y: number, hover?: boolean) => {
     if (props.alert) {
       return alert(props.tooltip)
     }
@@ -23,20 +45,47 @@ export const Tooltip = (props: ToolTipProps) => {
     setRef({
       x: Math.max(10, Math.min(maxX, x + 20)),
       y: Math.max(10, Math.min(maxY, y + 15)),
-      w
+      w,
+      hover
     })
   }
-  return <div {...(props.pass || {})} className="Tooltip">
-    <span tabIndex={0} onKeyDown={e => {
-      if (e.key === "Enter") {
-        const { x, y } = (e.target as HTMLSpanElement).getBoundingClientRect()
-        updateRef(x, y)
-      }
-    }} onClick={e => {
-      updateRef(e.clientX, e.clientY)
-    }}>{props.label ?? "?"}</span>
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (ref) return 
+    e.stopPropagation()
+    updateRef(e.clientX, e.clientY)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== "Enter") return 
+
+    if (ref) {
+      setRef(null)
+    }  else {
+      const { x, y } = (e.target as HTMLDivElement).getBoundingClientRect()
+      updateRef(x, y)
+    }
+  }
+
+  const handlePointerEnter = (e: React.PointerEvent) => {
+    if (ref) return 
+    updateRef(e.clientX, e.clientY, true)
+  }
+  
+
+  const handlePointerLeave = (e: React.PointerEvent) => {
+    if (ref?.hover) {
+      setRef(null)
+    }
+  }
+
+
+  return <div onPointerEnter={hover ? handlePointerEnter : null} onPointerLeave={handlePointerLeave} tabIndex={0} {...(props.pass || {})} className="Tooltip" onClick={handleClick} onKeyDown={handleKeyDown}>
+    {!props.labelAlt && <span>{props.label ?? "?"}</span>}
+    {props.labelAlt}
+
     {ref && (
-      <ModalBase color={"#00000000"} onClose={() => setRef(null)}>
+      <ModalBase passThrough={ref.hover} color={"#00000000"} onClose={() => setRef(null)}>
         <div
           className="fg" 
           tabIndex={0} 
@@ -49,5 +98,6 @@ export const Tooltip = (props: ToolTipProps) => {
         >{props.tooltip}</div>
       </ModalBase>
     )}
+    
   </div>
 }

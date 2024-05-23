@@ -1,0 +1,54 @@
+
+.SectionRules {
+  & > .List  .Rule {
+    display: grid;
+    grid-column-gap: 10px;
+    grid-template-columns: max-content 600px 1fr repeat(2, max-content);
+    align-items: center;
+
+    & > .show {
+      border-radius: 5px; 
+    }
+
+    & > .left {
+        display: grid;
+        align-items: center;
+        justify-content: left;
+        grid-auto-flow: column;
+        grid-auto-columns: max-content;
+        column-gap: 10px;
+      
+      & > .NumericInput {
+        width: 60px;
+      }
+
+      & > .FxControlButton {
+        & > .wrapper {
+          position: fixed;
+          left: 0;
+          top: 0;
+          width: 100vw;
+          height: 100vh; 
+          z-index: 9999999999;
+          background-color: #00000066;
+          display: grid;
+          justify-content: center;
+          align-content: center;
+
+          & > .FxControl {
+            padding: 8px;
+            max-height: 80vh;
+            overflow-y: scroll;
+            width: 300px;
+            max-width: 400px;
+          }
+        }
+      }
+    }
+  }
+
+  & > button.create {
+    margin-top: 30px;
+    display: block;
+  }
+}

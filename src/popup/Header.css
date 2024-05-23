@@ -1,0 +1,65 @@
+
+.Header {
+  display: grid;
+  grid-template-columns: repeat(2, max-content) 1fr repeat(5, max-content);
+  justify-items: right;
+  align-items: center;
+  padding: 3px 5px 0px 5px;
+  border-bottom: 1px solid var(--ctx-border);
+  background-color: var(--fg-color);
+
+
+  & > div {
+    padding: 0 5px;
+    color: var(--header-icon-color);
+    border: none;
+    cursor: pointer;
+
+    &.noPadding {
+      padding: 0;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    @keyframes beat {
+      0% {transform: scale(1)}
+      90% {transform: scale(0.8)}
+      95% {transform: scale(1.1)}
+    }
+
+    &.active {
+      color: var(--header-icon-active-color);
+
+      &.red {
+        color: red; 
+      }
+
+      &.beat {
+        animation: 1s ease-in beat infinite;
+      }
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    &.muted {
+      color: var(--header-icon-muted-color);
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+
+    & > svg {
+      vertical-align: baseline;
+    }
+  }
+}

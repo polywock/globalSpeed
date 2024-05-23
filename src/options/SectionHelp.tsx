@@ -1,16 +1,21 @@
 import { MouseEvent, useEffect, useRef } from "react"
 import { MdContentCopy, MdContentPaste } from "react-icons/md"
-import { fetchView, pushView } from "../background/GlobalState"
+import { dumpConfig, fetchView, pushView, restoreConfig } from "../utils/state"
 import { State } from "../types"
 import { requestCreateTab } from "../utils/browserUtils"
 import { isFirefox, areYouSure, feedbackText, domRectGetOffset } from "../utils/helper"
-import "./SectionHelp.scss"
+import { getDefaultState } from "src/defaults"
+import { migrateSchema } from "src/background/utils/migrateSchema"
+import "./SectionHelp.css"
+
 let helpClicked = 0 
 
 export function SectionHelp(props: {}) {
 
   return (
     <div className="section SectionHelp">
+
+      {/* Header */}
       <h2 onClick={v => {
         helpClicked++
         if (helpClicked >= 10) {
@@ -18,7 +23,7 @@ export function SectionHelp(props: {}) {
           if (!command) {
             return 
           } else if (command === "fs cache") {
-            chrome.storage.local.get(items => {
+            chrome.storage.local.get().then(items => {
               const entries = Object.entries(items).filter(([key]) => key.startsWith("fs::"))
               const cacheText = entries.map(([key, value]) => `${key.substr(4)} (${value?.length ?? 0})`).join("\n")
               if (entries.length) {
@@ -29,9 +34,6 @@ export function SectionHelp(props: {}) {
                 alert("No fullscreen cache.")
               }
             })
-          } else if (command === "push sound") {
-            if (isFirefox()) return alert("Not supported for Firefox.")
-            chrome.runtime.sendMessage({type: "MEDIA_PUSH_SOUND", volume: parseFloat(prompt("Volume: ", "0.5"))})
           } else if (command === "toggle pip priority") {
             fetchView({ignorePiP: true}).then(view => {
               if (confirm(`Do you want to ${view.ignorePiP ? "" : "de"}prioritize PiP videos? `)) {
@@ -42,19 +44,28 @@ export function SectionHelp(props: {}) {
             alert("Invalid command.")
           }
         }
-      }}>{window.gsm.options.help.header}</h2>
-      <div className="card">{window.gsm.options.help.issuePrompt} <a href="https://github.com/polywock/globalSpeed/issues">{window.gsm.options.help.issueDirective}</a></div>
+      }}>{gvar.gsm.options.help.header}</h2>
+
+      {/* Issue prompt */}
+      <div className="card">{gvar.gsm.options.help.issuePrompt} <a href="https://github.com/polywock/globalSpeed/issues">{gvar.gsm.options.help.issueDirective}</a></div>
+
       <div className="controls">
-        <button className="large" onClick={e => {
+        
+        {/* Reset  */}
+        <button className="large" onClick={async e => {
           if (!areYouSure()) return 
-          pushView({override: {}, overDefault: true})
-          setTimeout(() => {
-            window.location.reload()
-          }, 200)
-        }}>{window.gsm.token.reset}</button>
+
+          window.root.unmount()
+          await chrome.storage.local.clear()
+          await restoreConfig(getDefaultState(), false)
+          window.location.reload()
+          
+        }}>{gvar.gsm.token.reset}</button>
+
+        {/* Export/Import  */}
         <button className="large" onClick={e => {
           requestCreateTab(chrome.runtime.getURL("./faqs.html"))
-        }}>{"FAQs"}</button>
+        }}>{"FAQ"}</button>
         <div className="right">
           <ExportImport/>
         </div>
@@ -78,9 +89,6 @@ function ExportImport(props: {}) {
     const handleChange = (e: Event) => {
       if (!input.files[0]) return 
       loadStateFromFile(input.files[0])
-      setTimeout(() => {
-        input.value = ""
-      }, 100)
     }
 
     input.addEventListener("change", handleChange)
@@ -91,40 +99,28 @@ function ExportImport(props: {}) {
   }, [])
 
   return <>
-    <button className="large" onClick={e => {
-      chrome.runtime.sendMessage({type: "GET_STATE"}, state => {
-        downloadState(state)
-      })
-    }}>{window.gsm.options.help.export}</button>
-    <button className="large" onClick={(e: MouseEvent<HTMLButtonElement>) => {
-      const cb = () => {
-        chrome.runtime.sendMessage({type: "GET_STATE"}, state => {
-          navigator.clipboard.writeText(JSON.stringify(state)).then(() => {
-            feedbackText(window.gsm.token.copy, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect()))
-          }, err => {})
-        })
+    <button className="large" onClick={async e => {
+      downloadState(await dumpConfig())
+    }}>{gvar.gsm.options.help.export}</button>
+    <button className="large" onClick={async (e: MouseEvent<HTMLButtonElement>) => {
+      if (isFirefox()) {
+        if (!(await chrome.permissions.request({permissions: ["clipboardRead", "clipboardWrite"]}))) return 
       }
-      !isFirefox() ? cb() : chrome.permissions.request({permissions: ["clipboardRead", "clipboardWrite"]}, granted => {
-        if (granted) cb()
-      })
-    }}><MdContentCopy/></button>
+      await navigator.clipboard.writeText(JSON.stringify(await dumpConfig()))
+      feedbackText(gvar.gsm.token.copy, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect(), 10, 10))
+    }}><MdContentCopy style={{pointerEvents: 'none'}}/></button>
     <button 
       className="large" 
       onClick={e => {
         ref.current.input.click()
       }}
-    >{window.gsm.options.help.import}</button>
-    <button className="large" onClick={e => {
-      const cb = () => {
-        navigator.clipboard.readText().then(text => {
-          try {
-            loadState(JSON.parse(text))
-          } catch (err) {}
-        })
+    >{gvar.gsm.options.help.import}</button>
+    <button className="large" onClick={async e => {
+      if (isFirefox()) {
+        if (!(await chrome.permissions.request({permissions: ["clipboardRead", "clipboardWrite"]}))) return 
       }
-      !isFirefox() ? cb() : chrome.permissions.request({permissions: ["clipboardRead", "clipboardWrite"]}, granted => {
-        if (granted) cb()
-      })
+
+      loadState(await navigator.clipboard.readText())
     }}><MdContentPaste/></button>
   </>
 }
@@ -153,18 +149,14 @@ function loadStateFromFile(file: File) {
   try {
     readFile(file, result => {
       if (!result) return 
-      loadState( JSON.parse(result))
+      loadState(result)
     })
   } catch (err) {}
 }
 
-function loadState(state: State) {
+
+async function loadState(text: string) {
   if (!areYouSure()) return 
-  chrome.runtime.sendMessage({type: "RELOAD_STATE", state}, status => {
-    if (status) {
-      setTimeout(() => {
-        window.location.reload()
-      }, 100)
-    }
-  })
+  await restoreConfig(migrateSchema(JSON.parse(text)))
+  window.location.reload()
 }

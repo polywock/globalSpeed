@@ -1,4 +1,4 @@
-import "./FloatTooltip.scss"
+import "./FloatTooltip.css"
 
 
 type FloatTooltipProps = {

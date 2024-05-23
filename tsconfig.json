@@ -1,15 +1,21 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "es2022"],
-    "types": ["@types/chrome", "@types/react", "@types/react-dom"],
+    "target": "es2022",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["DOM", "DOM.iterable", "ESNext", "WebWorker"],
+    "types": ["@types/chrome", "@types/react", "@types/react-dom", "@types/audioworklet"],
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+
     "noImplicitAny": true,
-    "target": "es2018",
-    "moduleResolution": "node",
     "allowJs": true,
     "sourceMap": false,
     "jsx": "react-jsx",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    
     "baseUrl": "./",
     "paths": {
         "src/*": ["src/*"],

@@ -1,0 +1,22 @@
+
+.Origin {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  grid-row-gap: 15px;
+  justify-content: space-around;
+
+  & > div {
+    border: 1px solid var(--ctx-border);
+    background-color: var(--fg-color);
+    width: 30px;
+    height: 15px;
+
+    &.active {
+      background-color: var(--ctx-border);
+    }
+
+    &:focus {
+      outline: 1px solid var(--focus-color);
+    }
+  }
+}

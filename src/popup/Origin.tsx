@@ -1,4 +1,4 @@
-import "./Origin.scss"
+import "./Origin.css"
 
 type OriginProps = {
   x: string,

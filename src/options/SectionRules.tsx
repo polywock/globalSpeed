@@ -1,32 +1,42 @@
-import { useState, useRef } from "react"
+import { useState, useRef, MutableRefObject, memo } from "react"
 import { useStateView } from "../hooks/useStateView"
 import { URLRule } from "../types"
-import { GoX, GoZap } from "react-icons/go"
+import { Gear } from "src/comps/svgs"
 import { getDefaultURLRule, getDefaultFx, getDefaultURLCondition } from "../defaults"
-import { FaPowerOff } from "react-icons/fa"
 import { NumericInput } from "../comps/NumericInput"
 import { FxControl } from "../popup/FxControl"
-import { moveItem } from "../utils/helper"
-import { Move } from "../comps/Move"
+import { isFirefox, moveItem, randomId } from "../utils/helper"
 import { ModalText } from "../comps/ModalText"
 import { URLModal } from "./URLModal"
-import produce from "immer"
-import "./SectionRules.scss"
+import { produce } from "immer"
+import "./SectionRules.css"
+import { List } from "./List"
+import { ListItem } from "./ListItem"
+import { KebabList, KebabListProps } from "./KebabList"
 
 
 export function SectionRules(props: {}) {
   const [view, setView] = useStateView({rules: true})
+  const listRef = useRef<HTMLDivElement>()
   if (!view) return <div></div>
 
   const rules = view.rules || []
 
-  const handleChange = (newRule: URLRule, remove?: boolean) => {
+  const handleChange = (newRule: URLRule, remove?: boolean, duplicate?: boolean) => {
     setView({
       rules: produce(rules, d => {
         const idx = d.findIndex(v => v.id === newRule.id)
         if (remove) {
           if (idx < 0) return 
           d.splice(idx, 1)
+          return 
+        }
+
+        if (duplicate) {
+          if (idx < 0) return 
+          const rule = structuredClone(newRule)
+          rule.id = randomId()
+          d.splice(idx, 0, rule)
           return 
         }
 
@@ -39,31 +49,35 @@ export function SectionRules(props: {}) {
     })
   }
 
-  const handleMove = (id: string, down: boolean) => {
+  const handleMove = (id: string, newIndex: number) => {
     setView({rules: produce(rules, d => {
-      moveItem(d, v => v.id === id, down)
+      moveItem(d, v => v.id === id, newIndex)
+    })})
+  }
+
+  const handleSpacingChange = (index: number) => {
+    setView({rules: produce(rules, d => {
+      const rule = rules[index]
+      if (!rule) return 
+      rule.spacing = ((rule.spacing || 0) + 1) % 3
     })})
   }
 
   return (
     <div className="section SectionRules">
-      <h2>{window.gsm.options.rules.header}</h2>
-      {rules.length > 0 && (
-        <div className="dict">
-          <div>
-            <div style={{fontWeight: "bolder", fontSize: "1.2em"}}>ILO:</div>
-            <div>{window.gsm.options.rules.ILO}</div>
-          </div>
-          <div>
-            <div style={{fontWeight: "bolder", fontSize: "1.2em"}}>LAX:</div>
-            <div>{window.gsm.options.rules.LAX}</div>
-          </div>
-        </div>
-      )}
-      <div className="rules">{rules.map((rule, i) => (
-        <Rule key={rule.id} rule={rule} onChange={handleChange} onMove={handleMove}/>
-      ))}</div>
-      <button className="create" onClick={e => handleChange(getDefaultURLRule())}>{window.gsm.token.create}</button>
+      <h2>{gvar.gsm.options.rules.header}</h2>
+      <List listRef={listRef} spacingChange={handleSpacingChange}>
+          {rules.map((rule, i) => (
+            <ListItem key={rule.id} listRef={listRef} onMove={newIdx => handleMove(rule.id, newIdx)} spacing={rule.spacing} onRemove={() => handleChange(rule, true)} label={rule.label} onClearLabel={() => {
+              handleChange(produce(rule, d => {
+                delete d.label
+              }))
+            }}>
+                <Rule isLast={i === rules.length - 1} listRef={listRef} rule={rule} onChange={handleChange}/>
+            </ListItem>
+          ))}
+      </List>
+      <button className="create" onClick={e => handleChange(getDefaultURLRule())}>{gvar.gsm.token.create}</button>
     </div>
   )
 }
@@ -72,86 +86,110 @@ export function SectionRules(props: {}) {
 
 type RuleProps = {
   rule: URLRule,
-  onChange: (rule: URLRule, remove?: boolean) => void,
-  onMove: (id: string, down?: boolean) => void
+  listRef: MutableRefObject<HTMLElement>
+  isLast?: boolean,
+  onChange: (rule: URLRule, remove?: boolean, duplicate?: boolean) => void
 }
 
-function Rule(props: RuleProps) {
+export function Rule(props: RuleProps) {
   const { rule, onChange } = props
   const [ show, setShow ] = useState(false)
 
+  const list: KebabListProps["list"] = [
+    { name: "duplicate", label: gvar.gsm.token.duplicate, close: true },
+    { name: "label", label: gvar.gsm.options.editor.addLabel, close: true },
+  ]
+
+  props.isLast || list.push(
+    { name: "spacing", label: gvar.gsm.options.editor.spacing, preLabel: props.rule.spacing === 2 ? "2" : (props.rule.spacing === 1 ? "1" : null) }
+  )
+
+  let anyRegex = rule.condition?.parts.some(p => p.type === "REGEX")
+
+
   return (
     <div className="Rule">
-      <Move onMove={down => {
-        props.onMove(rule.id, down)
-      }}/>
+
+      {/* Status */}
       <input type="checkbox" checked={!!rule.enabled} onChange={e => {
         onChange(produce(rule, d => {
           d.enabled = !d.enabled
         }))
       }}/>
-      <button className={`toggle ${rule.initialLoadOnly ? "active" : ""}`} onClick={e => {
-        onChange(produce(rule, d => {
-          d.initialLoadOnly = !d.initialLoadOnly
-        }))
-      }}>ILO</button>
-      <button className={`toggle ${rule.strict ? "" : "active"}`} onClick={e => {
-        onChange(produce(rule, d => {
-          d.strict = !d.strict
-        }))
-      }}>LAX</button>
+
+      {/* URL conditions entry */}
       <button className="show" onClick={e => {
         setShow(!show)
-      }}>{`-- ${rule.condition.parts?.length || 0} --`}</button>
-      {show ? <URLModal onReset={() => {
+      }}>{`— ${rule.condition?.parts?.length || 0} —`}</button>
+
+      {/* URL conditions modal */}
+      {show ? <URLModal noRegex={rule.type === "JS" && !isFirefox()} onReset={() => {
         onChange(produce(rule, d => {
-          d.condition = getDefaultURLCondition()
+          delete d.condition
         }))
       }} onChange={v => {
         onChange(produce(rule, d => {
           d.condition = v 
         }))
       }} onClose={() => setShow(false)} value={rule.condition || getDefaultURLCondition()}/> : null}
+
+      {/* Rule type */}
       <select value={rule.type} onChange={e => {
-         onChange(produce(rule, d => {
+        onChange(produce(rule, d => {
           d.type = e.target.value as any
         }))
       }}>
-        <option value="STATE">{window.gsm.command.setState}</option>
-        <option value="SPEED">{window.gsm.command.adjustSpeed}</option>
-        <option value="FX">{window.gsm.command.adjustFilter}</option>
-        <option value="JS">{"javascript"}</option>
+        <option value="ON">{gvar.gsm.token.on}</option>
+        <option value="OFF">{gvar.gsm.token.off}</option>
+        <option value="SPEED">{gvar.gsm.command.speed}</option>
+        <option value="FX">{gvar.gsm.command.fxFilter}</option>
+        {(!anyRegex || rule.type === "JS" || isFirefox()) && <option value="JS">{"javascript"}</option>} 
       </select>
-      {rule.type == "STATE" && (
-        <button onClick={e => {
-          onChange(produce(rule, d => {
-            d.overrideEnabled = !d.overrideEnabled
+
+      <div className="left">
+
+        {/* Speed input  */}
+        {rule.type == "SPEED" && (
+          <NumericInput noNull={true} min={1 / 16} max={16} value={rule.overrideSpeed ?? 1} onChange={v => {
+            onChange(produce(rule, d => {
+              d.overrideSpeed = v
+            }))
+          }}/>
+        )}
+
+        {/* FX input  */}
+        {rule.type == "FX" && (
+          <FxRuleControl rule={rule} onChange={onChange}/>
+        )}
+
+        {/* JS input  */}
+        {rule.type == "JS" && (
+          <ModalText value={rule.overrideJs || ""} onChange={v => {
+            onChange(produce(rule, d => {
+              d.overrideJs = v
+            }))
+          }}/>
+        )}
+      </div>
+
+      <KebabList list={list} onSelect={name => {
+        if (name === "duplicate") {
+          props.onChange(rule, false, true)
+        } else if (name === "label") {
+          props.onChange(produce(rule, d => {
+            d.label = prompt()
+            if (!d.label) delete d.label
           }))
-        }}>{<FaPowerOff className={`icon ${rule.overrideEnabled ? "active" : ""}`} size="17px"/>}</button>
-      )}
-      {rule.type == "SPEED" && (
-        <NumericInput noNull={true} min={1 / 16} max={16} value={rule.overrideSpeed ?? 1} onChange={v => {
-          onChange(produce(rule, d => {
-            d.overrideSpeed = v
+        } else if (name === "spacing") {
+          props.onChange(produce(rule, d => {
+            d.spacing = ((d.spacing || 0) + 1) % 3 
           }))
-        }}/>
-      )}
-      {rule.type == "FX" && (
-        <FxRuleControl rule={rule} onChange={onChange}/>
-      )}
-      {rule.type == "JS" && (
-        <ModalText value={rule.overrideJs || ""} onChange={v => {
-          onChange(produce(rule, d => {
-            d.overrideJs = v
-          }))
-        }}/>
-      )}
-      <button className="close icon" onClick={e => props.onChange(rule, true)}>
-        <GoX size="23px"/>
-      </button>
+        }
+      }}/>
     </div>
   )
 }
+
 
 type FxRuleControlProps = {
   rule: URLRule,
@@ -172,22 +210,19 @@ function FxRuleControl(props: FxRuleControlProps) {
   }
 
   return <div className="FxControlButton">
-    <button onClick={e => {
-      setOpen(!open)
-    }}>{<GoZap className="icon active" size="20px"/>}</button>
+    <button className="icon gear interactive" onClick={e => setOpen(!open)}>
+          <Gear size="1.57rem"/>
+    </button>
     {open && (
       <div ref={wrapperRef} className="wrapper" onClick={e => {
         if (e.target === wrapperRef.current) setOpen(false)
       }}>
-        <FxControl enabled={true} elementFx={overrideFx.elementFx} backdropFx={overrideFx.backdropFx} swapFx={() => {
+        <FxControl enabled={true} elementFx={overrideFx.elementFx} backdropFx={overrideFx.backdropFx} handleChange={(elementFx, backdropFx) => {
           props.onChange(produce(props.rule, d => {
-            d.overrideFx = d.overrideFx ?? overrideFx;
-            [d.overrideFx.backdropFx, d.overrideFx.elementFx] = [d.overrideFx.elementFx, d.overrideFx.backdropFx]
-          }))
-        }} handleFxChange={(backdrop, newFx) => {
-          props.onChange(produce(props.rule, d => {
-            d.overrideFx = d.overrideFx ?? overrideFx;
-            d.overrideFx[backdrop ? "backdropFx" : "elementFx"] = newFx
+            d.overrideFx = {
+              elementFx,
+              backdropFx
+            }
           }))
         }}/>
       </div>

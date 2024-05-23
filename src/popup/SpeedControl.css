@@ -1,0 +1,81 @@
+
+.SpeedControl {
+  user-select: none;
+  font-size: 1.1em;
+  background-color: var(--fg-color);  
+
+  & > .options {
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    grid-gap: 3px;
+  
+    & > button {
+      width: 100%;
+      text-align: center;
+      border: none;
+      padding: var(--padding) 0px;
+      
+      &:focus {
+        outline: 1px solid var(--focus-color);
+      }
+  
+      &.selected {
+        background-color: var(--speed-focus-bg-color);
+        color: var(--speed-focus-text-color);
+      }
+    }
+  
+  }
+  
+  & > .NumericControl {
+    margin-top: 15px;
+
+    button, input[type="text"] {
+      padding: 0;
+    }
+  }
+
+  & > .slider {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    align-items: center; 
+    margin-top: 15px;
+    column-gap: 5px; 
+
+    & > svg {
+      color: var(--header-icon-color);
+      opacity: 0.5;
+
+      &.active {
+        opacity: 1;
+        color: var(--header-icon-active-color);
+      }
+    }
+  }
+}
+
+
+.NumericControl {
+  display: grid;
+  grid-template-columns: repeat(2, 50fr) 64fr repeat(2, 50fr);
+  column-gap: 5px;
+  align-items: stretch;
+
+  & > button {
+    font-size: 0.75em;
+  }
+
+  & > button, & input[type="text"] {
+    padding: none;
+    text-align: center;
+  }
+
+  & > .NumericInput > input[type="text"] {
+    padding: 2px 0;
+  }
+
+  & > .NumericInput {
+    font-size: 0.9em;
+  }
+}

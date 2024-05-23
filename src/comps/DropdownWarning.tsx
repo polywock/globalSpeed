@@ -1,7 +1,7 @@
 import { useState, ReactNode } from "react"
 import { MdWarning } from "react-icons/md"
 import { GoChevronDown, GoChevronUp } from "react-icons/go"
-import "./DropdownWarning.scss"
+import "./DropdownWarning.css"
 
 type DropdownWarningProps = {
   value: ReactNode,
@@ -16,12 +16,12 @@ export function DropdownWarning (props: DropdownWarningProps) {
     <div className="header" onClick={e => {
       setExpanded(!expanded)
     }}>
-      <MdWarning size={15}/>
-      <span>{props.label ?? window.gsm.token.warning}</span>
+      <MdWarning size={"1.15rem"}/>
+      <span>{props.label ?? gvar.gsm.token.warning}</span>
       {expanded ? (
-        <GoChevronUp size={15}/>
+        <GoChevronUp size={"1.07rem"}/>
       ) : (
-        <GoChevronDown size={15}/>
+        <GoChevronDown size={"1.07rem"}/>
       )}
     </div>
     {expanded && (

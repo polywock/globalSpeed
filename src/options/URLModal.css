@@ -1,0 +1,33 @@
+
+.URLModal {
+
+  & > .header {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+
+    & > div:first-child {
+      font-size: 1.3em;
+    }
+
+    margin-bottom: 10px;
+  }
+
+
+  & > .parts {
+    margin-bottom: 20px;
+    
+    & > div {
+      margin-bottom: 15px;
+      display: grid;
+      grid-template-columns: max-content max-content 1fr max-content;
+      column-gap: 10px;
+      align-items: center;
+    }
+  }
+
+  & > .controls  {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    column-gap: 10px;
+  }
+}

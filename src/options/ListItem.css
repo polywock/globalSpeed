@@ -1,0 +1,61 @@
+.ListItem {
+    position: relative;
+    margin-bottom: 10px;
+
+    &.spacing {
+        margin-bottom: 25px;
+    }
+
+    &.doubleSpacing {
+        margin-bottom: 40px;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &.focus {
+        left: 10px;
+        z-index: 2;
+        box-shadow: -4px 4px 4px var(--shadow-color);
+    }
+
+    & > .ListItemLabel {
+        & > span {
+            display: inline-block;
+            padding: 2px 10px;
+            background-color: blue;
+            color: white;
+            font-size: 0.95em;
+            user-select: none;
+
+            &:hover {
+                svg {
+                    display: inline-block;
+                }
+            }
+            
+            svg {
+                line-height: none;
+                display: none;
+                transform: scale(2);
+                padding-left: 5px;
+            }
+        }
+    }
+
+    & > .ListItemCore {
+        display: grid;
+        grid-template-columns: max-content 1fr max-content;
+        background-color: var(--fg-color);
+        align-items: center;
+        padding-top: 10px;
+        position: relative;
+        column-gap: 5px;
+    }
+
+    & > .ListItemSub {
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--ctx-border);
+    }
+}

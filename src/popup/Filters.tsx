@@ -3,9 +3,9 @@ import { FilterEntry } from "../types"
 import { filterInfos } from "../defaults/filters"
 import { SliderPlus } from "../comps/SliderPlus"
 import { moveItem } from "../utils/helper"
-import produce from "immer"
+import { produce } from "immer"
 import { Move } from "../comps/Move"
-import "./Filters.scss"
+import "./Filters.css"
 
 
 type FiltersProps = {
@@ -24,7 +24,7 @@ export function Filters(props: FiltersProps) {
         entry={entry} 
         onMove={down => {
           props.onChange(produce(props.filters, d => {
-            moveItem(d, v => v.name === entry.name, down)
+            moveItem(d, v => v.name === entry.name, down ? "D" : "U")
           }))
         }} 
         onChange={newValue => {
@@ -57,22 +57,22 @@ type FilterProps = {
 
 export function Filter(props: FilterProps) {
   const { entry } = props 
-  const filterInfo = filterInfos[entry.name]
+  const ref = filterInfos[entry.name].ref 
 
   return <div className="Filter">
     <Move onMove={down => props.onMove(down)}/>
     <SliderPlus
         label={<>
-          {window.gsm.filter[entry.name]}
+          {gvar.gsm.filter[entry.name]}
           {!props.syncChange ? null : <button onClick={() => props.syncChange()} style={{padding: "0px 5px", marginLeft: "10px"}} className={`toggle ${props.syncValue ? "active" : ""}`}>:</button>}
         </>}
-        value={entry.value}
-        sliderMin={filterInfo.sliderMin}
-        sliderMax={filterInfo.sliderMax}
-        sliderStep={filterInfo.sliderStep}
-        min={filterInfo.min}
-        max={filterInfo.max}
-        default={filterInfo.default}
+        value={entry.value ?? ref.default}
+        sliderMin={ref.sliderMin}
+        sliderMax={ref.sliderMax}
+        sliderStep={ref.sliderStep}
+        min={ref.min}
+        max={ref.max}
+        default={ref.default}
         onChange={newValue => {
           props.onChange(produce(entry, d => {
             d.value = newValue

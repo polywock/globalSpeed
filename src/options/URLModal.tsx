@@ -1,127 +1,131 @@
-import produce from "immer"
+import { produce } from "immer"
 import { ModalBase } from "../comps/ModalBase"
-import { URLCondition } from "../types"
+import { URLCondition, URLConditionPart } from "../types"
 import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { GoX } from "react-icons/go"
 import { getDefaultURLConditionPart } from "../defaults"
-import cloneDeep from "lodash.clonedeep"
-import { domRectGetOffset, feedbackText, randomId } from "../utils/helper"
-import "./URLModal.scss"
+import { findRemoveFromArray } from "../utils/helper"
+import "./URLModal.css"
+import { extractURLPartValueKey } from "src/utils/configUtils"
 
 type Props = {
   onClose: () => void,
   onChange: (value: URLCondition) => void,
   onReset: () => void, 
   value: URLCondition,
-  neutralValue?: boolean
+  noRegex?: boolean
 }
 
 export function URLModal(props: Props) {
   const { value } = props  
 
-  return <ModalBase keepOnClose={true} onClose={props.onClose}>
-    <div className="URLModal">
+  const onChange = (part: URLConditionPart) => {
+    props.onChange(produce(value, d => {
+      const idx = d.parts.findIndex(p => p.id === part.id)
+      if (idx >= 0) {
+        d.parts[idx] = part 
+      }
+    }))
+  }
+
+  const onRemove = (part: URLConditionPart) => {
+    props.onChange(produce(value, d => {
+      findRemoveFromArray(d.parts, p => p.id === part.id)
+    }))
+  }
+
+  const hasLength = props.value?.parts?.length
+
+  return <ModalBase keepOnWheel={true} onClose={props.onClose}>
+    <div className="URLModal ModalMain">
+
+      {/* Header */}
       <div className="header">
-        <div>{window.gsm.options.rules.conditions}</div>
-        {value.parts?.length < 2 ? <div/> : (
-          <select onChange={e => {
-            props.onChange(produce(value, d => {
-              d.matchAll = e.target.value === "all"
-            }))
-          }} value={value.matchAll ? "all" : "any"}>
-            <option value="any">{`${window.gsm.token.any || "any"} (OR)`}</option>
-            <option value="all">{`${window.gsm.token.all || "all"} (AND)`}</option>
-          </select>
-        )} 
+
+        {/* Label */}
+        <div>{gvar.gsm.options.rules.conditions}</div>
+
+        {/* Match mode */}
+        {hasLength ? (
+          <select value={value.block ? "BLOCK" : "ALLOW"} onChange={e => {
+              props.onChange(produce(value, d => {
+                d.block = e.target.value === "BLOCK"
+              }))
+            }}>
+            <option value="ALLOW">{gvar.gsm.options.rules.allowlist}</option>
+            <option value="BLOCK">{gvar.gsm.options.rules.blocklist}</option>
+          </select> 
+        ) : <div></div>}
+
       </div>
+
+      {/* Parts  */}
       <div className="parts">
-        {value.parts.map((part, i) => {
-          const changePart = (v: typeof part) => {
-            props.onChange(produce(value, d => {
-              d.parts[i] = v 
-            }))
-          }
-
-          const remove = () => {
-            props.onChange(produce(value, d => {
-              d.parts.splice(i, 1)
-            }))
-          }
-
-          return (
-            <div key={part.id}>
-              <input type="checkbox" checked={!part.disabled} onChange={() => {
-                changePart(produce(part, d => {
-                  d.disabled = !d.disabled
-                }))
-              }}/>
-              <select className={part.inverse ? "red" : "green"} value={part.inverse ? "!=" : "=="} onChange={e => {
-                changePart(produce(part, d => {
-                  d.inverse = e.target.value === "!="
-                }))
-              }}>
-                <option value="==">==</option>
-                <option value="!=">!=</option>
-              </select>
-              <select value={part.type} onChange={e => {
-                changePart(produce(part, d => {
-                  const option = e.target.value as any 
-
-                  // on matchType change, revert URL value to an example. 
-                  if (option !== d.type) {
-                    if (option === "REGEX") {
-                      d.value = String.raw`twitch\.tv`
-                    } else if (option === "CONTAINS") {
-                      d.value = "twitch.tv"
-                    } else if (option === "STARTS_WITH") {
-                      d.value = String.raw`https://www.twitch.tv`
-                    } 
-                  }
-
-                  d.type = option as any 
-                }))
-              }}>
-                <option value={"STARTS_WITH"}>{window.gsm.options.rules.startsWith}</option>
-                <option value={"CONTAINS"}>{window.gsm.options.rules.contains}</option>
-                <option value={"REGEX"}>{window.gsm.options.rules.regex}</option>
-             </select>
-              <ThrottledTextInput value={part.value} onChange={newValue => {
-                changePart(produce(part, d => {
-                  d.value = newValue
-                }))
-              }}/>
-              <button className="close icon" onClick={remove}>
-                <GoX size="23px"/>
-              </button>
-            </div>
-          )
-        })}
+        {value.parts.map(part => (
+          <ULRConditionPart noRegex={props.noRegex} key={part.id} onChange={onChange} onRemove={onRemove} part={part}/>
+        ))}
       </div>
+
+      {/* Controls */}
       <div className="controls">
+
+        {/* Create */}
         <button onClick={e => {
           props.onChange(produce(value, d => {
             d.parts.push(getDefaultURLConditionPart())
           }))
-        }}>{window.gsm.token.create}</button>
-        <button onClick={props.onReset}>{window.gsm.token.reset}</button>
-        <div className="right">
-          <button onClick={e => {
-            (window as any).copiedUrlModal = cloneDeep(value)
-            feedbackText(window.gsm.token.copy, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect(), 5))
-          }}>{window.gsm.token.copy}</button>
-          <button onClick={e => {
-            const newValue = (window as any).copiedUrlModal as URLCondition
-            if (newValue) {
-              props.onChange(produce(newValue, d => {
-                d.parts.forEach(part => {
-                  part.id = randomId()
-                })
-              }))
-              feedbackText(window.gsm.token.paste, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect(), 5))
-            }
-          }}>{window.gsm.token.paste}</button>
-        </div>
+        }}>{gvar.gsm.token.create}</button>
+
+        {/* Reset */}
+        {hasLength ? <button onClick={props.onReset}>{gvar.gsm.token.reset}</button> : <div></div>}
       </div>
     </div>
   </ModalBase>
+}
+
+function ULRConditionPart(props: {
+  part: URLConditionPart,
+  onChange: (part: URLConditionPart) => void,
+  onRemove: (part: URLConditionPart) => void,
+  noRegex?: boolean
+}) {
+  const { part, onChange, onRemove } = props
+  const valueKey = extractURLPartValueKey(part)
+
+  return (
+    <div key={part.id}>
+
+      {/* Status */}
+      <input type="checkbox" checked={!part.disabled} onChange={() => {
+        onChange(produce(part, d => {
+          d.disabled = !d.disabled
+        }))
+      }}/>
+
+      {/* Match type */}
+      <select value={part.type} onChange={e => {
+        onChange(produce(part, d => {
+          d.type = e.target.value as any
+        }))
+      }}>
+        <option value={"STARTS_WITH"}>{gvar.gsm.options.rules.startsWith}</option>
+        <option value={"CONTAINS"}>{gvar.gsm.options.rules.contains}</option>
+        {(!props.noRegex || part.type === "REGEX") && <option value={"REGEX"}>{gvar.gsm.options.rules.regex}</option>}
+     </select>
+
+     {/* Terms */}
+      <ThrottledTextInput value={part[valueKey]} onChange={newValue => {
+        onChange(produce(part, d => {
+          d[valueKey] = newValue
+        }))
+      }}/>
+
+      {/* Delete */}
+      <button className="close icon" onClick={() => {
+        onRemove(part)
+      }}>
+        <GoX size="1.6rem"/>
+      </button>
+    </div>
+  )
 }

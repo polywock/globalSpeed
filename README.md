@@ -10,16 +10,17 @@ Web extension that sets a default speed for HTML media elements (video and audio
 - Optional shortcut keys to control speed. 
 
 ### Media Hotkeys 
-- Rewinding/forwarding, frame by frame analysis, adjusting volume, set mark, go to mark, AB repeating, and more. 
-- Select what video/audio you want prioritized for media hotkeys. 
-- Hotkeys can be in global mode, which allows you to control background music or PiP videos while using another program. **[Chromium only]**
+- Support for seek, frame by frame analysis, darken background, video marks, repeat segment, and more. 
+- Select what vide or audio you want prioritized for media hotkeys. 
+- Shortcuts support multiple trigger modes, including context menu, and global shortcuts, which allows you to control background music or PiP videos while using another application. **[Chromium only]**
 
 ### Filters 
 - Apply filters (invert, grayscale, brightness, contrast, mirroring etc) on videos or even the entire page. 
-- Optionals hotkeys to toggle invert/grayscale, adjust brightness/contrast, and more. 
+- Optionals shortcuts to adjust brightness, contrast, and more.
+- Draw on any page.
 
 ### Audio Effects [Chromium Only]
-- Effects including pitch shifting, volume boosting, EQ, and more. 
+- Effects including pitch shifting, volume boost, EQ, and more. 
 - Reverse audio to listen to [backmasked messages](https://en.wikipedia.org/wiki/List_of_backmasked_messages).
 - You can delay audio to fix sync issues. 
 - Configure hotkeys to adjust pitch, volume boost, and more. 

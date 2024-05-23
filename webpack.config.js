@@ -3,18 +3,26 @@ const { env } = require("process")
 const webpack = require('webpack')
 
 const entry = {
-  contentScript: "./src/contentScript/index.ts",
+  isolated: "./src/contentScript/isolated/index.ts",
   background: "./src/background/index.ts",
   popup: "./src/popup/popup.tsx",
   options: "./src/options/options.tsx",
   faqs: "./src/faqs/faqs.tsx",
-  ctx: "./src/contentScript/ctx.ts"
+  main: "./src/contentScript/main/index.ts",
+  pageDraw: "./src/contentScript/pageDraw/index.ts",
+  pane: "./src/contentScript/pane/index.ts",
+  placer: "./src/placer/index.ts"
 }
 
-if (!env.FIREFOX) {
-  entry["sound-touch-processor"] = "./src/background/SoundTouchProcessor.ts"
-  entry["reverse-sound-processor"] = "./src/background/ReverseProcessor.ts"
-} 
+if (env.FIREFOX) {
+  entry["mainLoader"] = "./src/contentScript/main/loader.ts"
+} else {
+  entry["sound-touch-processor"] = "./src/offscreen/SoundTouchProcessor.ts"
+  entry["reverse-sound-processor"] = "./src/offscreen/ReverseProcessor.ts"
+  entry["offscreen"] = "./src/offscreen/index.ts"
+}
+
+
 
 const common = {
   entry,
@@ -26,11 +34,13 @@ const common = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: "babel-loader"
+        use: "babel-loader",
       },
       {
-        test: /\.scss$/,
+        sideEffects: true,
+        test: /\.css$/,
         exclude: /node_modules/,
+        resourceQuery: { not: [/raw/] },
         use: [
             "style-loader", 
             {
@@ -40,6 +50,15 @@ const common = {
                 importLoaders: 1
               }
             },
+            "postcss-loader"
+        ],
+      },
+      {
+        test: /\.css$/,
+        resourceQuery: /raw/,
+        exclude: [/node_modules/],
+        type: 'asset/source',
+        use: [
             "postcss-loader"
         ]
       }
@@ -55,7 +74,7 @@ const common = {
   },
   plugins: [
     new webpack.ProvidePlugin({
-      gvar: [resolve(__dirname, "src", "globalVar.ts"), "gvar"]
+      gvar: [resolve(__dirname, "src", "globalVar.ts"), 'gvar']
     })
   ]
 }
@@ -70,6 +89,5 @@ if (env.NODE_ENV === "production") {
     ...common,
     mode: "development",
     devtool: false
-    // devtool: "eval-source-map" // requires manifest to be loosened into "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
   }
 }

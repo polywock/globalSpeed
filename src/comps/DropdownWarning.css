@@ -1,0 +1,25 @@
+
+.DropdownWarning {
+  background-color: var(--error-color);
+  color: var(--error-text-color);
+  border: 1px solid var(--error-border-color);
+  padding: 0.6rem;
+
+  & > .header {
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+    grid-column-gap: 10px;
+    font-size: 1.15em;
+    align-items: center;
+    line-height: 1;
+
+    & > svg {
+      color: var(--error-text-color);
+    }
+  }
+
+  & > .body {
+    margin-top: 10px;
+    font-size: 1rem;
+  }
+}

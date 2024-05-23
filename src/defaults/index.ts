@@ -1,29 +1,43 @@
 
-import { Fx, AudioFx, URLRule, State, IndicatorInit, URLCondition, URLConditionPart } from "../types"
+import { Fx, AudioFx, URLRule, IndicatorInit, URLCondition, URLConditionPart, Context, CONTEXT_KEYS, AnyDict, State } from "../types"
 import { FilterName, filterInfos } from "./filters"
 import { getDefaultKeybinds } from "./commands"
-import { chunkByPredicate, randomId } from "../utils/helper"
+import { chunkByPredicate, isMobile, randomId } from "../utils/helper"
 
 export function getDefaultState(): State {
-  return {
-    version: 10,
-    firstUse: new Date().getTime(),
+  let state = {
+    version: 11,
+    firstUse: Date.now(),
     keybinds: getDefaultKeybinds(),
-    common: {
-      speed: 1,
-      enabled: true,
-      backdropFx: getDefaultFx(),
-      elementFx: getDefaultFx(),
-      audioFx: getDefaultAudioFx()
-    }
+    freshKeybinds: true,
+    ...getDefaultContext()
+  } as State;
+
+  if (isMobile()) {
+    state.circleWidget = true
+    state.circleWidgetIcon = true
   }
+  return state 
 }
+
+export function getDefaultContext(withNulls?: boolean): Context {
+  const obj: AnyDict = {
+    speed: 1,
+    enabled: true,
+    audioFx: getDefaultAudioFx()
+  }
+  withNulls && CONTEXT_KEYS.forEach(key=> {
+    obj[key] = obj[key] ?? null
+  })
+  return obj as Context
+}
+
 
 export function getDefaultFx(): Fx  {
   const [passed, failed] = chunkByPredicate(Object.entries(filterInfos), ([k, v]) => v.isTransform)
   return {
-    filters: failed.map(([k, v]) => ({name: k as FilterName, value: v.default})),
-    transforms: passed.map(([k, v]) => ({name: k as FilterName, value: v.default}))
+    filters: failed.map(([k, v]) => ({name: k as FilterName, value: v.ref.default})),
+    transforms: passed.map(([k, v]) => ({name: k as FilterName, value: v.ref.default}))
   }
 }
 
@@ -111,14 +125,17 @@ export const EQ_PRESETS = {
 export function getDefaultURLConditionPart(): URLConditionPart {
   return {
     type: "CONTAINS",
-    value: "twitch.tv",
+    valueContains: "example.com",
+    valueStartsWith: String.raw`https://example.com`,
+    valueRegex: String.raw`example\.com`,
     id: randomId()
   }
 }
 
-export function getDefaultURLCondition(): URLCondition {
+export function getDefaultURLCondition(block?: boolean): URLCondition {
   return {
-    parts: []
+    parts: [],
+    block
   }
 }
 
@@ -126,10 +143,9 @@ export function getDefaultURLRule(): URLRule {
   return {
     id: randomId(),
     enabled: true,
-    condition: getDefaultURLCondition(),
     type: "SPEED",
     overrideSpeed: 1,
-    strict: true 
+    overrideJs: `// code here\n`
   }
 }
 
@@ -141,12 +157,4 @@ export const INDICATOR_INIT: IndicatorInit = {
   rounding: 0,
   duration: 1,
   offset: 1
-}
-
-export function getDefaultSpeedPresets() {
-  return [0.25, 0.5, 0.75, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 16]
-}
-
-export function getDefaultSpeedSlider() {
-  return {min: 0.5, max: 1.5}
 }

@@ -1,0 +1,34 @@
+
+@import "../_common.css";
+
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--fg-color);
+  /* overflow-x: hidden; */
+}
+
+#SuperDisable {
+  padding: 10px;
+  background-color: #fafafa; 
+  color: #666; 
+  cursor: pointer;
+}
+
+#App {
+  & > .panel {
+    width: 300px;
+    padding: 8px;
+    min-height: 40px;
+    max-width: 400px;
+
+    &.MainPanel {
+      max-width: 300px;
+    }
+
+    & > .unloaded {
+      min-height: 9.28rem;
+    }
+  }
+}

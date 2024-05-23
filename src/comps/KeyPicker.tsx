@@ -1,12 +1,13 @@
 import { useState, KeyboardEvent } from "react"
 import { Hotkey, extractHotkey, formatHotkey } from "../utils/keys"
-import "./KeyPicker.scss"
+import "./KeyPicker.css"
 
 
 
 type KeyPickerProps = {
   onChange: (key: Hotkey) => void
   value: Hotkey
+  virtual: boolean
 }
 
 const MODIFIER_KEYS = ["Control", "Alt", "Shift", "Meta"]
@@ -15,7 +16,7 @@ export const KeyPicker = (props: KeyPickerProps) => {
   const [enterState, setEnterState] = useState(false)
 
   const handleOnKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Enter") {
+    if (!enterState && e.key === "Enter") {
       setEnterState(!enterState)
       return 
     }
@@ -32,7 +33,7 @@ export const KeyPicker = (props: KeyPickerProps) => {
 
     e.preventDefault()
 
-    props.onChange && props.onChange(extractHotkey(e.nativeEvent))
+    props.onChange && props.onChange(extractHotkey(e.nativeEvent, !props.virtual, props.virtual))
     setEnterState(false)
   }
 
@@ -42,7 +43,7 @@ export const KeyPicker = (props: KeyPickerProps) => {
       onKeyDown={handleOnKeyDown} 
       onClick={e => setEnterState(!enterState)} 
       tabIndex={0} 
-      onContextMenu={e => {
+      onContextMenuCapture={e => {
         e.preventDefault()
         e.stopPropagation()
         enterState && setEnterState(false)
