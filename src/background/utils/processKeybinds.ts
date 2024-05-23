@@ -468,6 +468,12 @@ async function processAdjustMode(args: CommandHandlerArgs) {
 
   if (adjustMode === AdjustMode.SET) {
     value = kb.valueNumber ?? ref.default
+    if (kb.command === "speed") {
+      let view = (await fetch({'speed': true, 'lastSpeed': true}))
+      if (view.speed === value && view.lastSpeed != null) {
+        value = view.lastSpeed
+      }
+    }
   } else if (kb.adjustMode === AdjustMode.ADD) {
     value = kb.valueNumber ?? ref.step
     isRelative = true 
