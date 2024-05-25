@@ -1,3 +1,4 @@
+import { getDefaultFx } from "src/defaults"
 import { AnyDict, CONTEXT_KEYS, State, URLRule, URLStrictness } from "src/types"
 import { testURL } from "src/utils/configUtils"
 import { isFirefox, listToDict, pickObject, randomId } from "src/utils/helper"
@@ -15,8 +16,8 @@ const RULE_BEHAVIORS: UrlRuleBehavior[] = [
         o[`r:${t}:speed`] = r.overrideSpeed ?? 1
     }],
     [["FX"], (isFake, t, r, o) => {
-        o[`r:${t}:elementFx`] = r.overrideFx["elementFx"]
-        o[`r:${t}:backdropFx`] = r.overrideFx["backdropFx"]
+        o[`r:${t}:elementFx`] = r.overrideFx?.["elementFx"] || getDefaultFx()
+        o[`r:${t}:backdropFx`] = r.overrideFx?.["backdropFx"] || getDefaultFx()
     }],
     [["JS"], async (isFake, t, r, o, d) => {
         if (!isFirefox() || isFake) return 

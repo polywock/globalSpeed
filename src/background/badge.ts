@@ -17,7 +17,7 @@ async function updateVisible(tabs?: chrome.tabs.Tab[]) {
     updateTabs(tabs ?? (await chrome.tabs.query({active: true})))
 }
 
-const updateVisibleDeb = debounce(updateVisible, 500, {leading: true, trailing: true, maxWait: 3000})
+const updateVisibleDeb = debounce(updateVisible, 100, {leading: true, trailing: true, maxWait: 1000})
 
 
 async function updateTabs(tabs: chrome.tabs.Tab[]) {
@@ -57,8 +57,15 @@ async function writeBadge(init: BadgeInit, tabId?: number) {
     chrome.action.setIcon({path: init.badgeIcons, tabId})
 }
 
+const WATCHERS = [
+    /^g:(speed|enabled|superDisable)/,
+    /^[rt]:[\d\w]+:(speed|isPinned|enabled)/,
+    /^[r]:[\d\w]+:(elementFx|backdropFx|latestViaShortcut|)/
+]
 
-chrome.storage.local.onChanged.addListener(() => updateVisibleDeb())
+gvar.es.addWatcher(WATCHERS, changes => {
+    updateVisibleDeb()
+})
 gvar.sess.cbs.add(() => updateVisible())
 chrome.webNavigation.onCommitted.addListener(() => updateVisible())
 chrome.tabs.onActivated.addListener(() => updateVisible())

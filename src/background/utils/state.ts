@@ -13,7 +13,7 @@ type WatcherInit = [
     callback: (changes: chrome.storage.StorageChanges) => void
 ]
 
-/** Used in service worker to keep the latest storage.session state  */
+/** Used in service worker to keep the latest storage state  */
 export class EntireState {
     watchers: WatcherInit[] = []
     private rawMap?: AnyDict
@@ -76,7 +76,7 @@ export class EntireState {
         if (testers.length === 0) return true 
         for (let tester of testers) {
             if (typeof tester === "function" || typeof (tester as RegExp)?.test === "function") {
-                let t = ((tester as RegExp)?.test ?? tester) as RegExp["test"]
+                let t = ((tester as RegExp).test?.bind(tester) ?? tester) as RegExp["test"]
                 const m = changeKeys.some(c => t(c))
                 if (m) return true 
             } else if (typeof tester === "string") {
