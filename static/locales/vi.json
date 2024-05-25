@@ -235,7 +235,9 @@
       "regex": "regex",
       "allowlist": "Danh sách cho phép",
       "blocklist": "Danh sách chặn",
-      "status": "Các quy tắc URL đã thay đổi một số giá trị."
+      "status": "Các quy tắc URL đã thay đổi một số giá trị.",
+      "strictness": "tính nghiêm khắc",
+      "strictnessTooltip": "Kiểm soát tần suất áp dụng quy tắc URL. \n1: Chỉ áp dụng một lần cho đến khi không còn khớp.\n2: Áp dụng lại nếu tên miền khác.\n3: Áp dụng lại mỗi lần tải trang.\n4: Áp dụng lại mỗi khi URL thay đổi."
     },
     "help": {
       "header": "Trợ giúp",

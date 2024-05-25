@@ -236,7 +236,9 @@
       "regex": "regex",
       "allowlist": "Allowlist",
       "blocklist": "Blocklist",
-      "status": "URL rules have changed some values."
+      "status": "URL rules have changed some values.",
+      "strictness": "strictness",
+      "strictnessTooltip": "Control how frequently the URL rule is applied. \n1: Apply only once until no longer matching.\n2: Re-apply if domain name is different.\n3: Re-apply every page load.\n4: Re-apply every time URL changes."
     },
     "help": {
       "header": "Help",

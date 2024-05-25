@@ -235,7 +235,9 @@
       "regex": "正規表示式",
       "allowlist": "白名單",
       "blocklist": "黑名單",
-      "status": "URL規則已更改一些值。"
+      "status": "URL規則已更改一些值。",
+      "strictness": "嚴格性",
+      "strictnessTooltip": "控制 URL 規則應用的頻率。\n1: 僅應用一次，直到不再匹配。\n2: 如果域名不同，則重新應用。\n3: 每次頁面加載時重新應用。\n4: 每次 URL 更改時重新應用。"
     },
     "help": {
       "header": "幫助",

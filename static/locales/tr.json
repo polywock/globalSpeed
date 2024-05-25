@@ -236,7 +236,9 @@
       "regex": "regex",
       "allowlist": "İzin verilenler listesi",
       "blocklist": "Engellenenler listesi",
-      "status": "URL kuralları bazı değerleri değiştirdi."
+      "status": "URL kuralları bazı değerleri değiştirdi.",
+      "strictness": "katılık",
+      "strictnessTooltip": "URL kuralının ne sıklıkla uygulandığını kontrol edin. \n1: Artık eşleşmeyene kadar yalnızca bir kez uygulayın.\n2: Etki alanı adı farklıysa yeniden uygulayın.\n3: Her sayfa yüklendiğinde yeniden uygulayın.\n4: URL değiştiğinde her seferinde yeniden uygulayın."
     },
     "help": {
       "header": "Yardım",

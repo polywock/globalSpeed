@@ -106,5 +106,6 @@ export class Overseer {
         this.configSync?.release(); delete this.configSync
         this.itc?.release(); delete this.itc
         this.circle?.release(); delete this.circle
+        this.speedSync?.release(); delete this.speedSync
     }
 }

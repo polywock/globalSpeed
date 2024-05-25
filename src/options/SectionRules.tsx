@@ -1,6 +1,6 @@
 import { useState, useRef, MutableRefObject, memo } from "react"
 import { useStateView } from "../hooks/useStateView"
-import { URLRule } from "../types"
+import { URLRule, URLStrictness } from "../types"
 import { Gear } from "src/comps/svgs"
 import { getDefaultURLRule, getDefaultFx, getDefaultURLCondition } from "../defaults"
 import { NumericInput } from "../comps/NumericInput"
@@ -13,6 +13,7 @@ import "./SectionRules.css"
 import { List } from "./List"
 import { ListItem } from "./ListItem"
 import { KebabList, KebabListProps } from "./KebabList"
+import { makeLabelWithTooltip } from "./keybindControl/NameArea"
 
 
 export function SectionRules(props: {}) {
@@ -100,6 +101,10 @@ export function Rule(props: RuleProps) {
     { name: "label", label: gvar.gsm.options.editor.addLabel, close: true },
   ]
 
+  if (rule.type !== "JS") {
+    list.push({ name: "strictness", label: makeLabelWithTooltip(gvar.gsm.options.rules.strictness, gvar.gsm.options.rules.strictnessTooltip), preLabel: `${rule.strictness ?? URLStrictness.DIFFERENT_HOST}`})
+  }
+
   props.isLast || list.push(
     { name: "spacing", label: gvar.gsm.options.editor.spacing, preLabel: props.rule.spacing === 2 ? "2" : (props.rule.spacing === 1 ? "1" : null) }
   )
@@ -183,6 +188,10 @@ export function Rule(props: RuleProps) {
         } else if (name === "spacing") {
           props.onChange(produce(rule, d => {
             d.spacing = ((d.spacing || 0) + 1) % 3 
+          }))
+        } else if (name === "strictness") {
+          props.onChange(produce(rule, d => {
+            d.strictness = (d.strictness ?? URLStrictness.DIFFERENT_HOST) % 4 + 1 
           }))
         }
       }}/>

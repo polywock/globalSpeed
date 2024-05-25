@@ -237,7 +237,9 @@
       "regex": "正则表达式",
       "allowlist": "白名单",
       "blocklist": "黑名单",
-      "status": "URL规则已更改一些值。"
+      "status": "URL规则已更改一些值。",
+      "strictness": "严格性",
+      "strictnessTooltip": "控制 URL 规则应用的频率。\n1: 仅应用一次，直到不再匹配。\n2: 如果域名不同，则重新应用。\n3: 每次页面加载时重新应用。\n4: 每次 URL 更改时重新应用。"
     },
     "help": {
       "header": "帮助",

@@ -234,7 +234,9 @@
       "regex": "regex",
       "allowlist": "Lista de permitidos",
       "blocklist": "Lista de bloqueados",
-      "status": "Las reglas de URL han cambiado algunos valores."
+      "status": "Las reglas de URL han cambiado algunos valores.",
+      "strictness": "estrictitud",
+      "strictnessTooltip": "Controla con qué frecuencia se aplica la regla de URL. \n1: Aplicar solo una vez hasta que deje de coincidir.\n2: Volver a aplicar si el nombre de dominio es diferente.\n3: Volver a aplicar cada vez que se carga la página.\n4: Volver a aplicar cada vez que cambia la URL."
     },
     "help": {
       "header": "Ayuda",

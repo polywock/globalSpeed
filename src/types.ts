@@ -349,7 +349,15 @@ export type URLRule = {
     elementFx: Fx,
     backdropFx: Fx
   },
-  overrideJs?: string
+  overrideJs?: string,
+  strictness?: URLStrictness
+}
+
+export enum URLStrictness {
+  FIRST_TIME = 1,
+  DIFFERENT_HOST,
+  EVERY_COMMIT,
+  EVERY_NAVIGATION
 }
 
 

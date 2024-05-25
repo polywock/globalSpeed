@@ -227,7 +227,9 @@ export type Gsm = {
       regex: string,
       allowlist: string,
       blocklist: string,
-      status: string
+      status: string,
+      strictness: string,
+      strictnessTooltip: string
     },
     help: {
       header: string,

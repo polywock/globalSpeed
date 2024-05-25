@@ -168,7 +168,7 @@ function tenToEleven(state: State) {
       }
     }
 
-    if ((kb.adjustMode || AdjustMode.ADD) === AdjustMode.ADD) {
+    if (kb.adjustMode === AdjustMode.ADD) {
       kb.valueNumber = kb.valueNumberAlt
     }
 

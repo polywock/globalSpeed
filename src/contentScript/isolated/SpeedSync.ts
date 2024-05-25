@@ -7,6 +7,9 @@ export class SpeedSync {
   constructor() {
 
   }
+  release = () => {
+    clearInterval(this.intervalId)
+  }
   update = () => {
     if (this.latest) {
       this.intervalId = this.intervalId ?? setInterval(this.realize, 1000)

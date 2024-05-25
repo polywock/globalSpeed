@@ -235,7 +235,9 @@
       "regex": "regex",
       "allowlist": "Lista bianca",
       "blocklist": "Lista nera",
-      "status": "Le regole URL hanno modificato alcuni valori."
+      "status": "Le regole URL hanno modificato alcuni valori.",
+      "strictness": "severità",
+      "strictnessTooltip": "Controlla con quale frequenza viene applicata la regola dell'URL. \n1: Applicare solo una volta fino a quando non corrisponde più.\n2: Riapplicare se il nome di dominio è diverso.\n3: Riapplicare ogni volta che la pagina viene caricata.\n4: Riapplicare ogni volta che l'URL cambia."
     },
     "help": {
       "header": "Aiuto",

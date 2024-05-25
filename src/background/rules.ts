@@ -1,36 +1,25 @@
-import { AnyDict, CONTEXT_KEYS, State, URLRule } from "src/types"
+import { AnyDict, CONTEXT_KEYS, State, URLRule, URLStrictness } from "src/types"
 import { testURL } from "src/utils/configUtils"
 import { isFirefox, listToDict, pickObject, randomId } from "src/utils/helper"
 
-type UrlRuleBehavior = [URLRule["type"][], (isOn: boolean, tabId: number, rule: URLRule, override: AnyDict, deets: Deets) => void]
+type UrlRuleBehavior = [URLRule["type"][], (isfake: boolean, tabId: number, rule: URLRule, override: AnyDict, deets: Deets) => void]
 
 type Deets = chrome.webRequest.WebRequestHeadersDetails & chrome.webNavigation.WebNavigationTransitionCallbackDetails
 
 const RULE_BEHAVIORS: UrlRuleBehavior[] = [
-    [["ON", "OFF"], (isOn, t, r, o) => {
+    [["ON", "OFF"], (isFake, t, r, o) => {
         o[`r:${t}:enabled`] = r.type === "ON" ? true : false 
         o[`r:${t}:latestViaShortcut`] = false 
     }],
-    [["SPEED"], (isOn, t, r, o) => {
+    [["SPEED"], (isFake, t, r, o) => {
         o[`r:${t}:speed`] = r.overrideSpeed ?? 1
     }],
-    [["FX"], (isOn, t, r, o) => {
+    [["FX"], (isFake, t, r, o) => {
         o[`r:${t}:elementFx`] = r.overrideFx["elementFx"]
         o[`r:${t}:backdropFx`] = r.overrideFx["backdropFx"]
     }],
-    [["JS"], async (isOn, t, r, o, d) => {
-        if (!isFirefox()) return 
-        let documentId = d.documentId
-        if (!documentId) {
-            const key = `s:ranJs:${d.tabId}`;
-            const ranJs = (await gvar.es.get(key))[key]
-            if (ranJs) return 
-            gvar.es.set({[key]: true})
-        } else {
-            const k = `r:${d.documentId}:${r.id}:inserted`
-            if ((await chrome.storage.local.get(k))[k]) return 
-        }
-        
+    [["JS"], async (isFake, t, r, o, d) => {
+        if (!isFirefox() || isFake) return 
         setTimeout(() => {
            chrome.tabs.sendMessage(d.tabId, {type: "RUN_JS", value: r.overrideJs}, {frameId: 0})
         }, 500)
@@ -63,29 +52,22 @@ async function handleNavigation(deets: chrome.webRequest.WebRequestHeadersDetail
     const rules = getEnabledRules(raw)
     if (!rules.length) return 
 
-    if (!deets.documentId && isCommit) {
-        let key = `s:ranJs:${deets.tabId}`
-        if (raw[key]) {
-            await gvar.es.set({[key]: null})
-        }
-    }
-
-    const ruleStates = pickObject(raw, rules.map(rule => `s:ro:${deets.tabId}:${rule.id}`))
-
     let override = {} as AnyDict
     let fakeOverride = {} as AnyDict
     const removeKeys = new Set(CONTEXT_KEYS.map(k => `r:${deets.tabId}:${k}`)) 
 
     for (let rule of rules) {
         const isOnKey = `s:ro:${deets.tabId}:${rule.id}`
-        const isOn = ruleStates[isOnKey] === true
+        const oldHost = raw[isOnKey] as string 
+
         const match = testURL(deets.url, rule.condition, false)
         if (match) {
-            override[isOnKey] = true 
-            let o = isOn ? fakeOverride : override
-            RULE_BEHAVIORS.find(([types]) => types.includes(rule.type))?.[1](isOn, deets.tabId, rule, o, deets)
+            override[isOnKey] = (new URL(deets.url)).hostname
+            let apply = oldHost ? shouldReApply(rule.type === "JS" ? URLStrictness.EVERY_COMMIT : (rule.strictness || URLStrictness.DIFFERENT_HOST), oldHost, override[isOnKey], isCommit) : true 
+            let o = apply ? override : fakeOverride
+            RULE_BEHAVIORS.find(([types]) => types.includes(rule.type))?.[1](o === fakeOverride, deets.tabId, rule, o, deets)
         } else {
-            ruleStates[isOnKey] && removeKeys.add(isOnKey)
+            raw[isOnKey] && removeKeys.add(isOnKey)
         }
     }
 
@@ -100,6 +82,16 @@ function getEnabledRules(raw: AnyDict) {
     return ((raw["g:rules"] || []) as State["rules"]).filter(rule => rule.enabled && rule.condition?.parts.some(p => !p.disabled))
 }
 
+function shouldReApply(strictness: URLStrictness, oldHost: string, currentHost: string, isCommit: boolean) {
+    if (strictness === URLStrictness.DIFFERENT_HOST) {
+        return isCommit && currentHost !== oldHost
+    } else if (strictness === URLStrictness.EVERY_COMMIT) {
+        return isCommit
+    } else if (strictness === URLStrictness.EVERY_NAVIGATION) {
+        return true 
+    } 
+    return false 
+}
 
 chrome.webNavigation.onCommitted.addListener(deets => handleNavigation(deets as Deets, true))
 chrome.webNavigation.onHistoryStateUpdated.addListener(deets => handleNavigation(deets as Deets))
