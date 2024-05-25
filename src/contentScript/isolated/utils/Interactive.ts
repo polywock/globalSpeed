@@ -68,7 +68,7 @@ export class Interactive extends Popover {
                     top: calc(50vh - ${REF_HEIGHT * 0.5}px);
                     width: ${REF_WIDTH}px;
                     background-color: #ff0000;
-                    border-radius: ${REF_WIDTH * 0.1}px;
+                    border-radius: 50%;
                     display: ${REF_SHOW ? 'block' : 'none'};
                     opacity: 0.8;
                 }
