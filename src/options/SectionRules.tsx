@@ -110,8 +110,8 @@ export function Rule(props: RuleProps) {
   )
 
   let anyRegex = rule.condition?.parts.some(p => p.type === "REGEX")
-
-
+  let allowJs = rule.type === "JS"  || ((!anyRegex || isFirefox()) && (isFirefox() || chrome.userScripts))
+  console.log(allowJs, rule.type)
   return (
     <div className="Rule">
 
@@ -148,7 +148,7 @@ export function Rule(props: RuleProps) {
         <option value="OFF">{gvar.gsm.token.off}</option>
         <option value="SPEED">{gvar.gsm.command.speed}</option>
         <option value="FX">{gvar.gsm.command.fxFilter}</option>
-        {rule.type === "JS"  || ((!anyRegex || isFirefox()) && (isFirefox() || chrome.userScripts)) && <option value="JS">{"javascript"}</option>} 
+        {allowJs && <option value="JS">{"javascript"}</option>} 
       </select>
 
       <div className="left">
