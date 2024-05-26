@@ -224,6 +224,7 @@ export class SubscribeView {
         delete this.view, delete this.latestView, delete this.rawMap
     }
     handleChange = async (changes: chrome.storage.StorageChanges, forOnLaunch = false) => {
+        if (this.released) return 
         changes = changes ?? {} 
         const changeId = changes["changeId"]?.newValue as string 
 

@@ -148,7 +148,7 @@ export function Rule(props: RuleProps) {
         <option value="OFF">{gvar.gsm.token.off}</option>
         <option value="SPEED">{gvar.gsm.command.speed}</option>
         <option value="FX">{gvar.gsm.command.fxFilter}</option>
-        {(!anyRegex || rule.type === "JS" || isFirefox()) && <option value="JS">{"javascript"}</option>} 
+        {rule.type === "JS"  || ((!anyRegex || isFirefox()) && (isFirefox() || chrome.userScripts)) && <option value="JS">{"javascript"}</option>} 
       </select>
 
       <div className="left">

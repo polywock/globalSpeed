@@ -6,10 +6,12 @@ export class Popover {
     shadow?: ShadowRoot
     div = document.createElement('div')
     main?: HTMLDivElement
+    supportsPopover = !!this.div.togglePopover
 
     shouldShow = false 
     id = `d${randomId()}`
     styleLocation?: HTMLElement | ShadowRoot
+    _sheet?: StyleSheet
     constructor(useShadow?: boolean) {
         if (useShadow) {
             this.wrapper = document.createElement('div')
@@ -26,14 +28,31 @@ export class Popover {
         this.div.id = this.id 
         this.div.style.zIndex = "99999999999"
         gvar.os?.eListen.fsCbs.add(this.handleFsChange)
+        
+        if (!this.supportsPopover) {
+            this._sheet = insertRules([
+                `#${this.id} {
+                    z-index: 99999999999;
+                    display: none;
+                }`,
+                `#${this.id}.popoverOpenYah {
+                    display: block !important;
+                }`
+        ], this.shadow ?? document)
+        }
     }
     update = (show?: boolean) => {
         if (show != null) this.shouldShow = show 
         if (this.shouldShow) {
             document.documentElement.appendChild(this.main)
-            !this.div.togglePopover() && this.div.togglePopover()
+            if (this.supportsPopover) {
+                !this.div.togglePopover() && this.div.togglePopover()
+            } else {
+                this.div.classList.add("popoverOpenYah")
+            }
         } else {
             this.main.isConnected && this.main.remove()
+            this.div.classList.remove("popoverOpenYah")
         }
     }
     _release = () => {
@@ -48,13 +67,15 @@ export class Popover {
 }
 
 
-export function insertRules(rules: string[], document: DocumentOrShadowRoot, disabled = false) {
+export function insertRules(rules: string[], doc: DocumentOrShadowRoot, disabled = false) {
     let sheet = new CSSStyleSheet();
     sheet.disabled = disabled 
-    for (let rule of rules) {
+    for (let rule of rules.filter(v => v)) {
         sheet.insertRule(rule)
+        try {
+        } catch { }
     }
-    getReal(document.adoptedStyleSheets).push(sheet)
+    getReal(doc.adoptedStyleSheets).push(sheet)
     return sheet 
 }
 

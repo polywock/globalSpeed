@@ -631,7 +631,7 @@ export function getDefaultKeybinds(): Keybind[] {
       replaceWithGsm: 5
     }
   ]
-  if (chrome.tabCapture) {
+  if (chrome.tabCapture && chrome.offscreen) {
     kbs.push(
       {
         ...commandInfos.afxPitch.generate(),

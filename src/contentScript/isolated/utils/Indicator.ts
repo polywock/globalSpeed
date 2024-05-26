@@ -45,9 +45,7 @@ export class Indicator extends Popover {
                 30% { transform: scale(1.05) }
                 100% { transform: scale(0) rotateZ(100deg); opacity: 0 }
             }`,
-            
-
-            `#${this.id}:popover-open {
+            `#${this.id}${this.supportsPopover ? ':popover-open' : '.popoverOpenYah'} {
                 border: none;
                 font-family: "Segoe UI", "Avenir", Courier, monospace;
                 position: fixed;
@@ -81,8 +79,13 @@ export class Indicator extends Popover {
         const position = init.position ?? "TL"
         
         if (position === 'C') {
-            this.div.style.position = "static" 
-            this.div.style.inset = "revert"
+            if (this.supportsPopover) {
+                this.div.style.position = "static" 
+                this.div.style.inset = "revert"
+            } else {
+                this.div.style.left = `50vw`
+                this.div.style.top = `50vh`
+            }
             return 
         } 
         

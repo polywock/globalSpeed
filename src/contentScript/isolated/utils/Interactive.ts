@@ -33,74 +33,68 @@ export class Interactive extends Popover {
         this.div.appendChild(this.resetButton)
     
 
-        insertRules([`
-            #${this.id}:popover-open {
-                background-color: transparent;
-                position: fixed;
-                left: 0px;
-                top: 0px;
-                width: 100vw;
-                height: 100vh;
-                border: none;
-                margin: 0;
-                user-select: none;
-                touch-action: none;
-                pointer-events: all !important;
-
-                & > .slider, & > .ref {
-                    pointer-events: none;
-                    left: 0px;
-                    position: fixed; 
-                    border: 1px solid #00000066;
-                }
-                
-                & > .slider {
-                    height: ${SLIDER_HEIGHT}px;
-                    top: calc(50vh - ${SLIDER_HEIGHT * 0.5}px);
-                    pointer-events: none;
-                    width: ${SLIDER_WIDTH}px;
-                    background-color: blue;
-                    border-radius: 50%;
-                    display: ${SLIDER_SHOW ? 'block' : 'none'};
-                }
-                & > .ref {
-                    height: ${REF_HEIGHT}px;
-                    top: calc(50vh - ${REF_HEIGHT * 0.5}px);
-                    width: ${REF_WIDTH}px;
-                    background-color: #ff0000;
-                    border-radius: 50%;
-                    display: ${REF_SHOW ? 'block' : 'none'};
-                    opacity: 0.8;
-                }
-
-                & > .cancel, & > .reset {
-                    position: fixed;
-                    box-sizing: border-box;
-                    font-size: 55px;
-                    line-height: 1;
-                    bottom: calc(10vh - 52px);
-                    background-color: black;
-                    box-shadow: 1px 1px 40px 4px white;
-                    border-radius: 50%;
-                    color: white;
-                    opacity: 0.8;
-                    padding: 25px;
-
-                    &:hover {
-                        opacity: 1;
-                    }
-                }
-                
-                & > .cancel {
-                    right: calc(10vw - 52px);
-                }
-                
-                & > .reset {
-                    left: calc(10vw - 52px);
-                    display: none;
-                }
-            }
-        `], this.shadow)
+        insertRules([
+`#${this.id}${this.supportsPopover ? ':popover-open' : '.popoverOpenYah'} {
+    background-color: transparent;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100vw;
+    height: 100vh;
+    border: none;
+    margin: 0;
+    user-select: none;
+    touch-action: none;
+    pointer-events: all !important;
+`,
+`.slider, .ref {
+    pointer-events: none;
+    left: 0px;
+    position: fixed; 
+    border: 1px solid #00000066;
+}`,
+`.slider {
+    height: ${SLIDER_HEIGHT}px;
+    top: calc(50vh - ${SLIDER_HEIGHT * 0.5}px);
+    pointer-events: none;
+    width: ${SLIDER_WIDTH}px;
+    background-color: blue;
+    border-radius: 50%;
+    display: ${SLIDER_SHOW ? 'block' : 'none'};
+}`,
+`.ref {
+    height: ${REF_HEIGHT}px;
+    top: calc(50vh - ${REF_HEIGHT * 0.5}px);
+    width: ${REF_WIDTH}px;
+    background-color: #ff0000;
+    border-radius: 50%;
+    display: ${REF_SHOW ? 'block' : 'none'};
+    opacity: 0.8;
+}`,
+`.cancel, .reset {
+    position: fixed;
+    box-sizing: border-box;
+    font-size: 55px;
+    line-height: 1;
+    bottom: calc(10vh - 52px);
+    background-color: black;
+    box-shadow: 1px 1px 40px 4px white;
+    border-radius: 50%;
+    color: white;
+    opacity: 0.8;
+    padding: 25px;
+}`,
+`.cancel:hover, .reset:hover {
+    opacity: 1;
+}`,
+`.cancel {
+    right: calc(10vw - 52px);
+}`,
+`.reset {
+    left: calc(10vw - 52px);
+    display: none;
+}`
+    ], this.shadow)
     }
     released = false 
     release = () => { 

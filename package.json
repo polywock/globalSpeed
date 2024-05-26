@@ -2,7 +2,7 @@
   "name": "globalspeed",
   "version": "1.0.0",
   "browserslist": [
-    "chrome >= 120",
+    "chrome >= 104",
     "firefox >= 120"
   ],
   "sideEffects": [

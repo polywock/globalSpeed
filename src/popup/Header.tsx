@@ -15,7 +15,7 @@ import { FaCircleDot } from "react-icons/fa6";
 import { feedbackText } from "src/utils/helper";
 
 
-const SUPPORTS_TAB_CAPTURE = !!chrome.tabCapture?.capture
+const SUPPORTS_TAB_CAPTURE = !!(chrome.tabCapture?.capture && chrome.offscreen?.createDocument)
 
 type HeaderProps = {
   panel: number

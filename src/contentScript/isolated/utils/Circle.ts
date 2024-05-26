@@ -64,7 +64,7 @@ export class Circle extends Popover {
 
 
         insertRules([
-`#${this.id}:popover-open {
+`#${this.id}${this.supportsPopover ? ':popover-open' : '.popoverOpenYah'} {
     background-color: transparent;
     position: fixed;
     left: 0px;
@@ -77,53 +77,50 @@ export class Circle extends Popover {
     margin: 0px;
     border: none;
     transition: 300ms ease-in opacity;
-
-    & > .circle, & .ref, & .delete {
-        position: fixed; 
-        border-radius: 50%;
-        box-sizing: border-box;
-        user-select: none; 
-        transition: transform 50ms ease-out, border-color 100ms ease-out, opacity 100ms ease-out;
+}`, 
+`.circle, .ref, .delete {
+    position: fixed; 
+    border-radius: 50%;
+    box-sizing: border-box;
+    user-select: none; 
+    transition: transform 50ms ease-out, border-color 100ms ease-out, opacity 100ms ease-out;
+}`,
+`.circle, .ref {
+    background-color: white;
+}`,
+`.delete {
+    background-color: black;
+    color: white;
+    left: calc(50vw - 30px);
+    top: calc(50vh + 60px);
+    display: none;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    font-size: 30px;
+    padding: 20px 0;
+    text-align: center;
+    opacity: 0.75;
     }
-
-    & > .circle, & .ref {
-        background-color: white;
-    }
-
-    & > .delete {
-        background-color: black;
-        color: white;
-        left: calc(50vw - 30px);
-        top: calc(50vh + 60px);
-        display: none;
-        width: 60px;
-        height: 60px;
-        overflow: hidden;
-        font-size: 30px;
-        padding: 20px 0;
-        text-align: center;
-        opacity: 0.75;
-    }
-
-    & > .circle {
-        background-color: white;
-        pointer-events: all;
-        border: 5px solid white;
-        box-shadow:  #00000088 0px 0px ${blur}px ${spread}px;
-        width: ${this.size}px;
-        height: ${this.size}px;
-        z-index: 3;
-    }
-
-    & > .ref {
-        pointer-events: none;
-        display: none;
-        z-index: 2;
-        width: ${this.size * 0.5}px;
-        height: ${this.size * 0.5}px;
-    }
-}`
-    ], this.shadow)
+`,
+`.circle {
+    background-color: white;
+    pointer-events: all;
+    border: 5px solid white;
+    box-shadow:  #00000088 0px 0px ${blur}px ${spread}px;
+    width: ${this.size}px;
+    height: ${this.size}px;
+    z-index: 3;
+}`,
+`.ref {
+    pointer-events: none;
+    display: none;
+    z-index: 2;
+    width: ${this.size * 0.5}px;
+    height: ${this.size * 0.5}px;
+}
+`
+], this.shadow)
         
         this.x = this.init.circleInitial?.x ?? this.x
         this.y = this.init.circleInitial?.y ?? this.y
