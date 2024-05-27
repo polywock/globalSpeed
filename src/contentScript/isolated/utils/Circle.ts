@@ -101,8 +101,7 @@ export class Circle extends Popover {
     padding: 20px 0;
     text-align: center;
     opacity: 0.75;
-    }
-`,
+}`,
 `.circle {
     background-color: white;
     pointer-events: all;
@@ -118,8 +117,7 @@ export class Circle extends Popover {
     z-index: 2;
     width: ${this.size * 0.5}px;
     height: ${this.size * 0.5}px;
-}
-`
+}`
 ], this.shadow)
         
         this.x = this.init.circleInitial?.x ?? this.x

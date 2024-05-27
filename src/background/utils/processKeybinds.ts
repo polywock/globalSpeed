@@ -780,9 +780,12 @@ export async function setValue(init: SetValueInit) {
   let preText: string = ''
   if (kb.command === "volume" || kb.command === "afxGain") {
     text = `${round(value * 100, 0)}%`
-  }
-  if (kb.command === "seek") {
+  } else if (kb.command === "seek") {
     text = `${formatDuration(value)}`
+  }else if (kb.command === "speed") {
+    if (!text.includes('.')) {
+      text = `${text}.0`
+    }
   }
 
   if (init.shouldShow && text.length + icons.length) {

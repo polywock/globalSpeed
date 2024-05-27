@@ -26,6 +26,9 @@ export function migrateSchema(state?: State) {
     state = tenToEleven(state)
   }
 
+  if (state.version === 11) {
+    state = elevenToTwelve(state)
+  }
 
   if (!(state?.version === defaultState.version)) {
     return defaultState
@@ -224,6 +227,19 @@ function tenToEleven(state: State) {
   delete (state as any).common
   Object.assign(state, common)
   
+  return state 
+}
+
+
+function elevenToTwelve(state: State) {
+  state.version = 12 
+  let hasDefaultIncrease = state.keybinds.some(kb => kb.command === "speed" && kb.key === "KeyD" && kb.valueNumber === 0.1 && kb.adjustMode === AdjustMode.ADD)
+  if (hasDefaultIncrease) {
+    let kb = state.keybinds.find(kb => kb.command === "speed" && kb.adjustMode === AdjustMode.ADD && kb.key === "KeyA" && kb.valueNumber == null)
+    if (kb) {
+      kb.valueNumber = -0.1 
+    }
+  }
   return state 
 }
 

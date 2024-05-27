@@ -6,7 +6,7 @@ import { chunkByPredicate, isMobile, randomId } from "../utils/helper"
 
 export function getDefaultState(): State {
   let state = {
-    version: 11,
+    version: 12,
     firstUse: Date.now(),
     keybinds: getDefaultKeybinds(),
     freshKeybinds: true,
