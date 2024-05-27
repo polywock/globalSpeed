@@ -273,6 +273,7 @@ export type Keybind = {
   seekOnce?: boolean,
   noHold?: boolean,
   direct?: boolean,
+  ignoreNavigate?: boolean,
   filterOption?: FilterName,
   filterTarget?: TargetFx,
   adjustMode?: AdjustMode,

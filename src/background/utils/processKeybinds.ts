@@ -289,7 +289,7 @@ const commandHandlers: {
         text: ` ${media.inLoop ? "off" : "on"}`,
         small: true,
       })
-      applyToMedia({type: "TOGGLE_LOOP", key: kb.valueString})
+      applyToMedia({type: "TOGGLE_LOOP", key: kb.valueString, indicator: !args.shortcutHideIndicator, ignoreNavigate: kb.ignoreNavigate})
       return 
     } 
 
@@ -307,7 +307,7 @@ const commandHandlers: {
         text: ` ${media.inSkip ? "off" : "on"}`,
         small: true,
       })
-      applyToMedia({type: "TOGGLE_LOOP", key: kb.valueString, skipMode: true})
+      applyToMedia({type: "TOGGLE_LOOP", key: kb.valueString, skipMode: true, indicator: !args.shortcutHideIndicator, ignoreNavigate: kb.ignoreNavigate})
       return 
     } 
 

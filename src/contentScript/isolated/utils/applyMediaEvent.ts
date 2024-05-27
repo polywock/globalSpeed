@@ -167,20 +167,24 @@ function jumpNameless(elem: HTMLMediaElement, next?: boolean) {
   }
 }
 
-export function toggleLoop(elem: HTMLMediaElement, key: string, skipMode?: boolean) {
+export function toggleLoop(elem: HTMLMediaElement, key: string, skipMode?: boolean, indicator?: boolean, ignoreNavigate?: boolean) {
   let markTime = elem.gsMarks?.[key]
   const timeUpdateKey = skipMode ? "gsSkipTimeUpdateHandler" : "gsLoopTimeUpdateHandler"
   const seekingKey = skipMode ? "gsSkipSeekingHandler" : "gsLoopSeekingHandler"
-  const handleRemove = () => {
+  const handleRemove = (noShow?: boolean) => {
     elem.removeEventListener("timeupdate", elem[timeUpdateKey], true)
     elem.removeEventListener("seeking", elem[seekingKey], true)
     delete elem[timeUpdateKey]
     delete elem[seekingKey]
     gvar.os.mediaTower.sendUpdate()
+
+    if (!noShow && indicator) {
+      gvar.os.indicator?.show({text: ' off', icons: [skipMode ? 'skip' : 'loop']})
+    }
   }
 
   if (elem[timeUpdateKey]) {
-    handleRemove()
+    handleRemove(true)
     return 
   }
 
@@ -197,7 +201,7 @@ export function toggleLoop(elem: HTMLMediaElement, key: string, skipMode?: boole
   const delta = Math.abs(endTime - markTime)
 
   elem[timeUpdateKey] = () => {
-    if (!skipMode && elem.currentTime > endTime) {
+    if (!skipMode && (elem.currentTime > endTime || elem.currentTime < markTime)) {
       seekTo(elem, markTime)
     } else if (skipMode && elem.currentTime >= markTime && elem.currentTime < endTime) {
       if (elem.paused) return 
@@ -206,7 +210,7 @@ export function toggleLoop(elem: HTMLMediaElement, key: string, skipMode?: boole
   }
 
   elem[seekingKey] = () => {
-    if (!skipMode && (elem.currentTime < markTime - 2 || elem.currentTime > endTime + 2)) {
+    if (!skipMode && ((elem.currentTime < markTime - 12) || (elem.currentTime > endTime + 12))) {
       handleRemove()
     } else if (skipMode && delta > 12 && elem.currentTime >= markTime + 4 && elem.currentTime < endTime - 4) {
       handleRemove()
@@ -214,7 +218,7 @@ export function toggleLoop(elem: HTMLMediaElement, key: string, skipMode?: boole
   }
 
   elem.addEventListener("timeupdate", elem[timeUpdateKey], {capture: true, passive: true})
-  elem.addEventListener("seeking", elem[seekingKey], {capture: true, passive: true})
+  ignoreNavigate || elem.addEventListener("seeking", elem[seekingKey], {capture: true, passive: true})
 
   gvar.os.mediaTower.sendUpdate()
 }
@@ -414,7 +418,7 @@ export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
   } else if (e.type === "SEEK_MARK") {
     seekMark(elem, e.key, e.fast)
   } else if (e.type === "TOGGLE_LOOP") {
-    toggleLoop(elem, e.key, e.skipMode)
+    toggleLoop(elem, e.key, e.skipMode, e.indicator, e.ignoreNavigate)
   } else if (e.type === "PIP") {
     togglePip(elem as HTMLVideoElement, e.state)
   } else if (e.type === "FULLSCREEN") {
@@ -454,7 +458,7 @@ export type MediaEventMute = {type: "MUTE", state: StateOption}
 export type MediaEventSetVolume = {type: "SET_VOLUME", value: number, relative: boolean}
 export type MediaEventSetMark = {type: "SET_MARK", key: string}
 export type MediaEventSeekMark = {type: "SEEK_MARK", key: string | number, fast: boolean}
-export type MediaEventToggleLoop = {type: "TOGGLE_LOOP", key: string, skipMode?: boolean}
+export type MediaEventToggleLoop = {type: "TOGGLE_LOOP", key: string, skipMode?: boolean, indicator?: boolean, ignoreNavigate?: boolean}
 export type MediaEventTogglePip = {type: "PIP", state?: StateOption}
 export type MediaEventToggleFs = {type: "FULLSCREEN", direct?: boolean}
 export type MediaEventShowInfo = {type: "MEDIA_INFO"}

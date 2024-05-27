@@ -23,7 +23,7 @@ import { isSeekSmall } from "src/utils/configUtils"
 import { PiArrowArcRightFill } from "react-icons/pi"
 import { NumericInput } from "src/comps/NumericInput"
 
-const invertableKeys = new Set(["fastSeek", "autoPause", "skipPauseSmall", "pauseWhileScrubbing", "relativeToSpeed", "wraparound", "itcWraparound", "showNetDuration", "seekOnce", "allowAlt", "noWrap", "noHold"])
+const invertableKeys = new Set(["fastSeek", "autoPause", "skipPauseSmall", "pauseWhileScrubbing", "relativeToSpeed", "wraparound", "itcWraparound", "showNetDuration", "seekOnce", "allowAlt", "noWrap", "noHold", "ignoreNavigate"])
 const memMap = new Map<string, any>()
 
 function saveToMem(kb: Keybind, adjustMode: AdjustMode) {
@@ -82,6 +82,8 @@ export function NameArea(props: NameAreaProps) {
     value.command === "seek" && ensureSeekList(kebabList, kebabListHandlers, value, invertFlag, props.reference)
     ;(value.adjustMode === AdjustMode.ITC || value.adjustMode === AdjustMode.ITC_REL) && ensureItcList(kebabList, kebabListHandlers, value, invertFlag)
     value.adjustMode === AdjustMode.CYCLE && ensureCycleList(kebabList, kebabListHandlers, value, invertFlag)
+
+    if (value.command === "loop" || value.command === "skip") ensureLoopList(kebabList, kebabListHandlers, value, invertFlag)
 
     return (
         <div className="command">
@@ -262,6 +264,19 @@ function ensureCycleList(list: KebabListProps["list"], handlers: KebabListProps[
     )
     value.allowAlt && list.push(
         { name: "noWrap", checked: !value.cycleNoWrap, label: makeLabelWithTooltip(gvar.gsm.options.editor.wraparound, gvar.gsm.options.editor.wraparoundTooltip) }
+    )
+
+    handlers.push((name: string) => {
+        if (invertableKeys.has(name)) {
+            invertFlag(name as keyof Keybind)
+            return true 
+        }
+    })
+}
+
+function ensureLoopList(list: KebabListProps["list"], handlers: KebabListProps["onSelect"][], value: KeybindControlProps["value"], invertFlag: (key: string) => any) {
+    list.push(
+        { name: "ignoreNavigate", checked: !value.ignoreNavigate, label: makeLabelWithTooltip(gvar.gsm.command.autoBreak, value.command === "loop" ? gvar.gsm.command.autoBreakTooltip : gvar.gsm.command.autoBreakTooltipAlt) }
     )
 
     handlers.push((name: string) => {
