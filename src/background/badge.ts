@@ -58,7 +58,7 @@ async function writeBadge(init: BadgeInit, tabId?: number) {
 }
 
 const WATCHERS = [
-    /^g:(speed|enabled|superDisable)/,
+    /^g:(speed|enabled|superDisable|hideBadge)/,
     /^[rt]:[\d\w]+:(speed|isPinned|enabled)/,
     /^[r]:[\d\w]+:(elementFx|backdropFx|latestViaShortcut|)/
 ]

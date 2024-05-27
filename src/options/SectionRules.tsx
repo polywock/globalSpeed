@@ -110,13 +110,18 @@ export function Rule(props: RuleProps) {
   )
 
   let anyRegex = rule.condition?.parts.some(p => p.type === "REGEX")
-  let allowJs = rule.type === "JS"  || ((!anyRegex || isFirefox()) && (isFirefox() || chrome.userScripts))
-  console.log(allowJs, rule.type)
+  let allowJs = rule.type === "JS"  || (!anyRegex || isFirefox())
   return (
     <div className="Rule">
 
       {/* Status */}
       <input type="checkbox" checked={!!rule.enabled} onChange={e => {
+        if (rule.type === "JS") {
+          if (!isFirefox() && !chrome.userScripts) {
+            alert(gvar.gsm.options.flags.jsRuleWarning)
+            return 
+          }
+        }
         onChange(produce(rule, d => {
           d.enabled = !d.enabled
         }))
@@ -140,6 +145,10 @@ export function Rule(props: RuleProps) {
 
       {/* Rule type */}
       <select value={rule.type} onChange={e => {
+        if (e.target.value === "JS" && !isFirefox() && !chrome.userScripts) {
+          alert(gvar.gsm.options.flags.jsRuleWarning)
+          return 
+        }
         onChange(produce(rule, d => {
           d.type = e.target.value as any
         }))

@@ -4,6 +4,7 @@ import { isFirefox, randomId } from "../../utils/helper"
 import { availableCommandNames } from "src/defaults/commands"
 
 export function migrateSchema(state?: State) {
+  const initialVersion = state?.version
   const defaultState = getDefaultState()
 
   if (!state || state.version < 7) {
@@ -27,7 +28,7 @@ export function migrateSchema(state?: State) {
   }
 
   if (state.version === 11) {
-    state = elevenToTwelve(state)
+    state = elevenToTwelve(state, initialVersion)
   }
 
   if (!(state?.version === defaultState.version)) {
@@ -136,6 +137,12 @@ function tenToEleven(state: State) {
       rule.type = (rule as any).overrideEnabled ? "ON" : "OFF"
     } 
 
+    if (rule.type === "JS") {
+      if (!isFirefox() && !chrome.userScripts) {
+        rule.enabled = false 
+      }
+    }
+
     if ((rule as any).condition)  migrateURLCondition((rule as any).condition, rule)
     
     delete (rule as any).overrideEnabled
@@ -199,12 +206,6 @@ function tenToEleven(state: State) {
     if (kb.command === "volume") {
       kb.adjustMode = AdjustMode.ADD
     }
-
-    if ((kb as any).command === "nothing") {
-      kb.command = "speed"
-      kb.adjustMode = AdjustMode.ADD
-      kb.valueNumber = 0
-    }
     
     // Migrate seekMark
     else if (kb.command === "seekMark") {
@@ -231,14 +232,22 @@ function tenToEleven(state: State) {
 }
 
 
-function elevenToTwelve(state: State) {
+function elevenToTwelve(state: State, initialVersion?: number) {
   state.version = 12 
-  let hasDefaultIncrease = state.keybinds.some(kb => kb.command === "speed" && kb.key === "KeyD" && kb.valueNumber === 0.1 && kb.adjustMode === AdjustMode.ADD)
-  if (hasDefaultIncrease) {
-    let kb = state.keybinds.find(kb => kb.command === "speed" && kb.adjustMode === AdjustMode.ADD && kb.key === "KeyA" && kb.valueNumber == null)
-    if (kb) {
-      kb.valueNumber = -0.1 
+  if (initialVersion === 11) {
+    // Restore incorrectly ported 
+    let hasDefaultIncrease = state.keybinds.some(kb => kb.command === "speed" && kb.key === "KeyD" && kb.valueNumber === 0.1 && kb.adjustMode === AdjustMode.ADD)
+    if (hasDefaultIncrease) {
+      let kb = state.keybinds.find(kb => kb.command === "speed" && kb.adjustMode === AdjustMode.ADD && kb.key === "KeyA" && kb.valueNumber == null)
+      if (kb) {
+        kb.valueNumber = -0.1 
+      }
     }
+
+    // Restore nothing
+    state.keybinds.filter(kb => kb.command === "speed" && kb.valueNumber === 0 && kb.adjustMode === AdjustMode.ADD).forEach(kb => {
+      kb.command = "nothing"
+    }) 
   }
   return state 
 }

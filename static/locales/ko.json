@@ -99,7 +99,8 @@
     "rotateZ": "Z 회전"
   },
   "command": {
-        "runCode": "javascript",
+    "nothing": "조치 없음",
+    "runCode": "javascript",
     "openUrl": "열린 URL",
     "speed": "속도",
     "speedChangesPitch": "속도 변화 피치",
@@ -166,6 +167,7 @@
       "customContext": "사용자 정의 컨텍스트",
       "customContextTooltip": "이 탭의 현재 컨텍스트의 스냅샷을 저장합니다. 새로 생성된 탭은 이 스냅샷을 초기 상태로 사용할 것입니다.",
       "jsShortcutWarning": "오래된 API의 폐기로 인해 JavaScript 단축키가 현재 비활성화되어 있습니다. Chromium이 userScripts.execute() 메소드를 구현하면 기능이 재개됩니다.",
+      "jsRuleWarning": "Javascript URL 규칙을 지원하려면 Chrome을 업데이트하십시오.",
       "keyboardInput": "키보드 입력",
       "keyboardInputTooltip": "가상 키보드나 비QWERTY 레이아웃 키보드를 사용하는 경우 가상 입력 모드로 전환하는 것을 고려하세요. 이것은 미래의 단축키 변경에만 적용되며 기존의 단축키는 영향을 받지 않습니다.",
       "qwerty": "QWERTY 레이아웃",

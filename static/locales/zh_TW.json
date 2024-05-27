@@ -99,7 +99,8 @@
     "rotateZ": "Z軸旋轉"
   },
   "command": {
-        "runCode": "javaScript",
+    "nothing": "無動作",
+    "runCode": "javaScript",
     "openUrl": "打開網址",
     "speed": "速度",
     "speedChangesPitch": "速度改變音高",
@@ -166,6 +167,7 @@
       "customContext": "自訂上下文",
       "customContextTooltip": "儲存此標籤目前上下文的快照。新創建的標籤將使用這個快照作為初始狀態。",
       "jsShortcutWarning": "由於舊API的廢棄，JavaScript快捷方式目前已被禁用。功能將在Chromium實施userScripts.execute()方法時恢復。",
+      "jsRuleWarning": "請更新 Chrome 以支持 Javascript URL 規則。",
       "keyboardInput": "鍵盤輸入",
       "keyboardInputTooltip": "如果使用虛擬鍵盤或非QWERTY佈局鍵盤，考慮切換到虛擬輸入模式。這只適用於未來的快捷鍵變更，現有的快捷鍵不會受影響。",
       "qwerty": "QWERTY佈局",

@@ -99,7 +99,8 @@
     "rotateZ": "rotateZ"
   },
   "command": {
-        "runCode": "javascript",
+    "nothing": "không hành động",
+    "runCode": "javascript",
     "openUrl": "mở URL",
     "speed": "tốc độ",
     "speedChangesPitch": "tốc độ thay đổi cao độ",
@@ -166,6 +167,7 @@
       "customContext": "Ngữ cảnh tùy chỉnh",
       "customContextTooltip": "Lưu bản chụp nhanh của ngữ cảnh hiện tại của tab này. Các tab mới tạo sẽ sử dụng bản chụp này làm trạng thái ban đầu.",
       "jsShortcutWarning": "Phím tắt JavaScript hiện đang bị vô hiệu hóa do sự lỗi thời của các API cũ. Chức năng sẽ được tiếp tục khi Chromium triển khai phương thức userScripts.execute().",
+      "jsRuleWarning": "Vui lòng cập nhật Chrome để hỗ trợ các quy tắc URL Javascript.",
       "keyboardInput": "nhập liệu bàn phím",
       "keyboardInputTooltip": "Cân nhắc chuyển sang chế độ nhập liệu ảo nếu bạn sử dụng bàn phím ảo hoặc bàn phím không theo bố cục QWERTY. Điều này chỉ áp dụng cho những thay đổi phím tắt trong tương lai và không ảnh hưởng đến các phím tắt hiện tại.",
       "qwerty": "bố cục QWERTY",

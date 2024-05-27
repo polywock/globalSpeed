@@ -97,6 +97,9 @@ type CommandHandlerArgs = ProcessKeybinds & {
 const commandHandlers: {
   [key in CommandName]: (args: CommandHandlerArgs) => Promise<void>
 } = {
+  nothing: async args => {
+    return 
+  },
   runCode: async args => {
     if (!isFirefox()) return 
     const { kb, tabInfo } = args

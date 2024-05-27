@@ -98,6 +98,7 @@
     "rotateZ": "rotar Z"
   },
   "command": {
+    "nothing": "ninguna acción",
     "runCode": "javascript",
     "openUrl": "URL",
     "speed": "velocidad",
@@ -165,6 +166,7 @@
       "customContext": "Contexto personalizado",
       "customContextTooltip": "Guarda una instantánea del contexto actual de esta pestaña. Las pestañas creadas recientemente usarán esta instantánea como estado inicial.",
       "jsShortcutWarning": "Los atajos de JavaScript están actualmente desactivados debido a la depreciación de APIs antiguas. La funcionalidad se reanudará cuando Chromium implemente el método userScripts.execute().",
+      "jsRuleWarning": "Por favor, actualiza Chrome para admitir las reglas de URL de Javascript.",
       "keyboardInput": "entrada de teclado",
       "keyboardInputTooltip": "Considere cambiar al modo de entrada virtual si usa un teclado virtual o un teclado con disposición no QWERTY. Esto solo aplica a los cambios futuros de atajos y los atajos existentes no se verán afectados.",
       "qwerty": "diseño QWERTY",

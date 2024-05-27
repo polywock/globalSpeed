@@ -98,7 +98,7 @@
     "rotateZ": "回転Z"
   },
   "command": {
-    
+    "nothing": "何もしない",
     "runCode": "javascript",
     "openUrl": "URLを開く",
     "speed": "スピード",
@@ -166,6 +166,7 @@
       "customContext": "カスタムコンテキスト",
       "customContextTooltip": "このタブの現在のコンテキストのスナップショットを保存します。新しく作成されたタブはこのスナップショットを初期状態として使用します。",
       "jsShortcutWarning": "古いAPIの廃止により、JavaScriptのショートカットは現在無効になっています。ChromiumがuserScripts.execute()メソッドを実装すると機能が再開されます。",
+      "jsRuleWarning": "Javascript URLルールをサポートするためにChromeを更新してください。",
       "keyboardInput": "キーボード入力",
       "keyboardInputTooltip": "仮想キーボードまたは非QWERTYレイアウトのキーボードを使用する場合は、仮想入力モードに切り替えることを検討してください。これは将来のショートカット変更にのみ適用され、既存のショートカットは影響を受けません。",
       "qwerty": "QWERTY配列",

@@ -100,7 +100,8 @@
     "rotateZ": "döndür Z"
   },
   "command": {
-        "runCode": "javascript",
+    "nothing": "hiçbiri",
+    "runCode": "javascript",
     "openUrl": "link aç",
     "speed": "hız",
     "speedChangesPitch": "hız değişimi ses aralığı",
@@ -167,6 +168,7 @@
       "customContext": "Özel bağlam",
       "customContextTooltip": "Bu sekmelerin güncel bağlamının bir anlık görüntüsünü kaydeder. Yeni oluşturulan sekmeler bu anlık görüntüyü başlangıç durumu olarak kullanacak.",
       "jsShortcutWarning": "Eski API'lerin kullanımdan kaldırılması nedeniyle JavaScript kısayolları şu anda devre dışı bırakılmıştır. Chromium userScripts.execute() metodunu uyguladığında işlevsellik devam edecektir.",
+      "jsRuleWarning": "Javascript URL kurallarını desteklemek için lütfen Chrome'u güncelleyin.",
       "keyboardInput": "klavye girişi",
       "keyboardInputTooltip": "Sanal klavye kullanıyorsanız veya QWERTY olmayan bir klavye düzeni kullanıyorsanız sanal giriş moduna geçmeyi düşünün. Bu, yalnızca gelecekteki kısayol değişikliklerine uygulanır ve mevcut kısayollar etkilenmez.",
       "qwerty": "QWERTY düzeni",

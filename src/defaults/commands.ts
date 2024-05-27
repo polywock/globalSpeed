@@ -4,7 +4,7 @@ import { Command, Keybind, AdjustMode, CommandGroup, Duration, Trigger } from ".
 import { randomId, groupByKey, flatJoin, isFirefox, getPopupSize } from "../utils/helper"
 import { filterInfos } from "./filters"
 
-export type CommandName = "runCode" | "openUrl" | "intoPopup" |
+export type CommandName = "nothing" | "runCode" | "openUrl" | "intoPopup" |
   "speed" | "speedChangesPitch" | "pin" | "state" | 
   "seek" | "pause" | "mute" | "volume" | "setMark" | "seekMark" | "loop" | "skip" | 
   "fullscreen" | "PiP" | "mediaInfo" | "cinema" |
@@ -13,6 +13,15 @@ export type CommandName = "runCode" | "openUrl" | "intoPopup" |
 
 
 export let commandInfos: {[key in CommandName]: Command} = {
+  nothing: {
+    group: CommandGroup.MISC,
+    generate: () => ({
+      id: randomId(),
+      command: "nothing",
+      enabled: true,
+      greedy: true
+    })
+  },
   runCode: {
     group: CommandGroup.MISC,
     valueType: "modalString",

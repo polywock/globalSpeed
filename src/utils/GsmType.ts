@@ -94,6 +94,7 @@ export type Gsm = {
     rotateZ: string
   },
   command: {
+    nothing: string,
     runCode: string,
     openUrl: string,
     speed: string,
@@ -160,6 +161,7 @@ export type Gsm = {
       customContext: string,
       customContextTooltip: string,
       jsShortcutWarning: string,
+      jsRuleWarning: string,
       keyboardInput: string,
       keyboardInputTooltip: string,
       qwerty: string,

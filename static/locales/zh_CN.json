@@ -101,7 +101,8 @@
     "rotateZ": "Z轴旋转"
   },
   "command": {
-        "runCode": "JavaScript",
+    "nothing": "无动作",
+    "runCode": "JavaScript",
     "openUrl": "打开网址",
     "speed": "速度",
     "speedChangesPitch": "速度改变音高",
@@ -168,6 +169,7 @@
       "customContext": "自定义上下文",
       "customContextTooltip": "保存此标签页当前上下文的快照。新创建的标签页将使用此快照作为初始状态。",
       "jsShortcutWarning": "由于旧API的废弃，JavaScript快捷方式目前被禁用。功能将在Chromium实现userScripts.execute()方法时恢复。",
+      "jsRuleWarning": "请更新 Chrome 以支持 Javascript URL 规则。",
       "keyboardInput": "键盘输入",
       "keyboardInputTooltip": "如果使用虚拟键盘或非QWERTY布局键盘，考虑切换到虚拟输入模式。这仅适用于未来的快捷键更改，现有的快捷键不会受影响。",
       "qwerty": "QWERTY布局",
