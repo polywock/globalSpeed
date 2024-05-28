@@ -28,7 +28,10 @@ export class Cinema extends Popover {
         if (Cinema.sheet) {
             Cinema.sheet.disabled = false 
         } else {
-            Cinema.sheet = insertRules([`::-webkit-scrollbar {display: none !important}`], document)
+            Cinema.sheet = insertRules([
+                `::-webkit-scrollbar {display: none !important}`,
+                `:root, body {scrollbar-width: none !important;}`
+            ], document)
         }
         
 
