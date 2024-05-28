@@ -57,7 +57,8 @@
     & > .NumericInput input  {
       width: 60px;
     }
-    & > .cinamaInput input {
+    & > .nothingInput input {
+      margin-left: 10px;
       width: 40px;
       padding: 0px;
     }

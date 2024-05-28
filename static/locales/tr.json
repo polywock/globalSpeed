@@ -101,6 +101,7 @@
   },
   "command": {
     "nothing": "hiçbiri",
+    "nothingTooltip": "Hiçbir şey yapmaz. Kısayol tuşlarını engellemek için kullanılabilir. Örneğin, yanlışlıkla boşluk çubuğuna basmaya devam ediyorsanız, boşluk çubuğunu hiçbir şey yapmaması için ayarlayabilirsiniz. Bu kısayolla, bir gecikme de yapılandırabilirsiniz. Bu kullanışlıdır çünkü aynı tuşla tetiklenecek birden fazla kısayol ayarlayabilir ve bunlar sıralı olarak çalışacaktır. Örneğin, filtreyle sayfayı ters çevirin, 5 saniye bekleyin ve ardından filtreleri sıfırlayın.",
     "runCode": "javascript",
     "openUrl": "link aç",
     "speed": "hız",
@@ -146,7 +147,10 @@
     "detectiveMode": "dedektif modu",
     "detectiveModeTooltip": "Sadece bir daire aracılığıyla görülebilenleri hariç her şeyi gizler.",
     "cinema": "arkaplanı karart",
-    "cinemaTooltip": "Video arkaplanını karartır. Çıkmak için arkaplana basın veya tekrar kısayol kullanın."
+    "cinemaTooltip": "Video arkaplanını karartır. Çıkmak için arkaplana basın veya tekrar kısayol kullanın.",
+    "presets": "ön ayarlar",
+    "temporarySpeed": "geçici hız",
+    "temporarySpeedTooltip": "Geçici hızı basılı tutun."
   },
   "options": {
     "flags": {

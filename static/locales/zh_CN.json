@@ -102,6 +102,7 @@
   },
   "command": {
     "nothing": "无动作",
+    "nothingTooltip": "它什么也不做。它可以用于阻止快捷键。例如，如果您不小心按下空格键，您可以将空格键设置为不执行任何操作。使用这个快捷方式，您还可以配置延迟。这很有用，因为您可以设置多个快捷方式通过同一个键触发，它们将按顺序运行。例如，使用滤镜反转页面，等待5秒，然后重置滤镜。",
     "runCode": "JavaScript",
     "openUrl": "打开网址",
     "speed": "速度",
@@ -147,7 +148,10 @@
     "detectiveMode": "侦探模式",
     "detectiveModeTooltip": "隐藏除通过一个圆形可见的一切外的所有内容。",
     "cinema": "加深背景",
-    "cinemaTooltip": "加深视频的背景。要退出，按背景或再次使用快捷键。"
+    "cinemaTooltip": "加深视频的背景。要退出，按背景或再次使用快捷键。",
+    "presets": "预设",
+    "temporarySpeed": "临时速度",
+    "temporarySpeedTooltip": "按住临时速度。"
   },
   "options": {
     "flags": {

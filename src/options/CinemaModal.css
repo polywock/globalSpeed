@@ -1,0 +1,6 @@
+
+.CinemaModal {
+    --field-name-width: 200px;
+    width: 600px;
+    max-width: 90vw;
+}

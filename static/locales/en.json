@@ -101,6 +101,7 @@
   },
   "command": {
     "nothing": "no action",
+    "nothingTooltip": "It does nothing. It can be used to block shortcut keys. For example, if you keep accidently pressing spacebar, you can set spacebar to do nothing. With this shortcut, you can also configure a delay. This is useful because you can set multiple shortcuts to be triggered by same key and they will run sequentially. For example, invert page with filter, wait 5 seconds, and then reset filters.",
     "runCode": "javascript",
     "openUrl": "open URL",
     "speed": "speed",
@@ -145,7 +146,10 @@
     "detectiveMode": "detective mode",
     "detectiveModeTooltip": "Hide everything except what's visible through a circle.",
     "cinema": "darken background",
-    "cinemaTooltip": "Darken the background of the video. To exit out, press on the background or use shortcut again."
+    "cinemaTooltip": "Darken the background of the video. To exit out, press on the background or use shortcut again.",
+    "presets": "presets",
+    "temporarySpeed": "temporary speed",
+    "temporarySpeedTooltip": "Press and hold temporary speed."
   },
   "options": {
     "flags": {
@@ -230,7 +234,7 @@
         "newPopup": "new popup",
         "sameTab": "current tab"
       },
-      "pressAndHold": "press-and-hold",
+      "pressAndHold": "press and hold",
       "pressAndHoldTooltip": "If enabled, the key must be held down while interactively adjusting the value."
     },
     "rules": {

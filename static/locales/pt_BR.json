@@ -99,6 +99,7 @@
   },
   "command": {
     "nothing": "nenhuma ação",
+    "nothingTooltip": "Não faz nada. Pode ser usado para bloquear teclas de atalho. Por exemplo, se você continuar pressionando acidentalmente a barra de espaço, pode configurá-la para não fazer nada. Com este atalho, você também pode configurar um atraso. Isso é útil porque você pode configurar vários atalhos para serem ativados pela mesma tecla e eles serão executados sequencialmente. Por exemplo, inverta a página com um filtro, espere 5 segundos e depois redefina os filtros.",
     "runCode": "javascript",
     "openUrl": "Abrir URL",
     "speed": "velocidade",
@@ -144,7 +145,10 @@
     "detectiveMode": "modo detetive",
     "detectiveModeTooltip": "Esconder tudo exceto o que está visível através de um círculo.",
     "cinema": "escurecer fundo",
-    "cinemaTooltip": "Escurece o fundo do vídeo. Para sair, pressione no fundo ou use o atalho novamente."
+    "cinemaTooltip": "Escurece o fundo do vídeo. Para sair, pressione no fundo ou use o atalho novamente.",
+    "presets": "predefinições",
+    "temporarySpeed": "velocidade temporária",
+    "temporarySpeedTooltip": "Pressione e segure a velocidade temporária."
   },
   "options": {
     "flags": {

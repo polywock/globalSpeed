@@ -9,7 +9,6 @@ import { IndicatorModal } from "./IndicatorModal"
 import { SpeedPresetModal } from "./SpeedPresetModal"
 import { SliderMicro } from "src/comps/SliderMicro"
 import { clamp, isFirefox, isMobile } from "src/utils/helper"
-import "./SectionFlags.css"
 import { Gear } from "src/comps/svgs"
 import { Toggle } from "src/comps/Toggle"
 import { CONTEXT_KEYS, Context, InitialContext, StateView } from "src/types"
@@ -20,6 +19,7 @@ import { produce } from "immer"
 import { Minmax } from "src/comps/Minmax"
 import { GoX } from "react-icons/go"
 import { WidgetModal } from "./WidgetModal"
+import "./SectionFlags.css"
 
 export function SectionFlags(props: {}) {
   const [showIndicatorModal, setShowIndicatorModal] = useState(false)

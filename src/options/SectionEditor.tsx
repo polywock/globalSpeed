@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { Keybind, StateView } from "../types"
+import { AdjustMode, Keybind, StateView } from "../types"
 import { areYouSure, isFirefox, moveItem, randomId } from "../utils/helper"
 import { commandInfos, CommandName, getDefaultKeybinds, availableCommandNames } from "../defaults/commands"
 import { KeybindControl } from "./keybindControl"
@@ -133,27 +133,53 @@ function onMove(setView: SetView, view: StateView, id: string, newIndex: number)
   requestSyncContextMenu()
 }
 
+let options = structuredClone(availableCommandNames)
+options.splice(3, 0, "presets")
 
 function EditorControls(props: {view: StateView, setView: SetView}) {
   const { view, setView } = props
   const urlRuleCount = view.keybindsUrlCondition?.parts?.length || 0
   const [commandOption, setCommandOption] = useState("speed")
+  const [presetOption, setPresetOption] = useState(null)
   const [show, setShow] = useState(false)
+  let showPresets = commandOption === "presets"
 
   return (
-    <div className="controls">
+    <div className="controls" style={{"--controls-column-count": showPresets ? 4 : 3} as React.CSSProperties}>
 
-      {/* Command select */}
+      {/* Primary select */}
       <select value={commandOption} onChange={e => {
         setCommandOption(e.target.value)
       }}>
-        {availableCommandNames.map((name, i) => (
+        {options.map((name, i) => (
           <option disabled={name == null} key={name || i} value={name}>{name ? (gvar.gsm.command as any)[name] : "------"}</option>
         ))}
       </select>
 
+      {/* Secondary select */}
+      {showPresets && (
+        <select value={presetOption ?? presets[0].name} onChange={e => {
+            setPresetOption(e.target.value)
+          }}>
+            {presets.map(preset => (
+              <option key={preset.name} value={preset.name}>{(gvar.gsm.command as any)[preset.name]}</option>
+            ))}
+          </select>
+      )}
+
       {/* Create */}
       <button onClick={e => {
+        if (commandOption === "presets") {
+          let preset = presets.find(v => v.name === presetOption) ?? presets[0]
+          if (preset) {
+              setView({
+                keybinds: [...produce(view.keybinds, d => {
+                  d.at(-1).spacing = 2 
+                }), ...preset.getKbs(view.hideIndicator)]
+              })
+          }
+          return 
+        }
         setView({
           keybinds: [...view.keybinds, commandInfos[commandOption as CommandName].generate()]
         })
@@ -217,3 +243,11 @@ function handleFreshKeybinds(view: StateView, setView: SetView) {
   })
   requestSyncContextMenu()
 }
+
+let presets: {name: string, getKbs: (hideIndicator: boolean) => Keybind[]}[] = [
+  {name: "temporarySpeed", getKbs: hideIndicator => ([
+    {...commandInfos.speed.generate(), valueNumber: 3, key: "Space", adjustMode: AdjustMode.SET, label: gvar.gsm.command.temporarySpeedTooltip},
+    {...commandInfos.nothing.generate(), valueNumber: 0.25, key: "Space"},
+    {...commandInfos.speed.generate(), valueNumber: 3, key: "Space", adjustMode: AdjustMode.SET, invertIndicator: hideIndicator ? undefined : true}
+  ])}
+]

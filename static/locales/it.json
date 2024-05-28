@@ -100,6 +100,7 @@
   },
   "command": {
     "nothing": "nessuna azione",
+    "nothingTooltip": "Non fa nulla. Può essere utilizzato per bloccare i tasti di scelta rapida. Ad esempio, se continui a premere accidentalmente la barra spaziatrice, puoi configurarla per non fare nulla. Con questa scorciatoia, puoi anche configurare un ritardo. Questo è utile perché puoi impostare più scorciatoie per essere attivate dallo stesso tasto e verranno eseguite in sequenza. Ad esempio, inverti la pagina con un filtro, attendi 5 secondi e poi ripristina i filtri.",
     "runCode": "javascript",
     "openUrl": "apri URL",
     "speed": "velocità",
@@ -145,7 +146,10 @@
     "detectiveMode": "modalità detective",
     "detectiveModeTooltip": "Nasconde tutto tranne ciò che è visibile attraverso un cerchio.",
     "cinema": "oscura sfondo",
-    "cinemaTooltip": "Oscura lo sfondo del video. Per uscire, premi sullo sfondo o usa di nuovo la scorciatoia."
+    "cinemaTooltip": "Oscura lo sfondo del video. Per uscire, premi sullo sfondo o usa di nuovo la scorciatoia.",
+    "presets": "preimpostazioni",
+    "temporarySpeed": "velocità temporanea",
+    "temporarySpeedTooltip": "Premi e tieni premuta la velocità temporanea."
   },
   "options": {
     "flags": {

@@ -22,6 +22,9 @@ import { KebabList, KebabListProps } from "../KebabList"
 import { isSeekSmall } from "src/utils/configUtils"
 import { PiArrowArcRightFill } from "react-icons/pi"
 import { NumericInput } from "src/comps/NumericInput"
+import { CinemaModal } from "../CinemaModal"
+import { useState } from "react"
+import { IoEllipsisVertical } from "react-icons/io5"
 
 const invertableKeys = new Set(["fastSeek", "autoPause", "skipPauseSmall", "pauseWhileScrubbing", "relativeToSpeed", "wraparound", "itcWraparound", "showNetDuration", "seekOnce", "allowAlt", "noWrap", "noHold", "ignoreNavigate"])
 const memMap = new Map<string, any>()
@@ -397,27 +400,14 @@ function Cinema(props: {
     value: Keybind,
     onChange: (id: string, v: Keybind) => void
 }) {
-    const { value } = props 
+    let [show, setShow] = useState(false)
+    
     return <>
-        <input type="color" value={value.valueString || "#000000"} onChange={e => {
-            props.onChange(value.id, produce(value, d => {
-                d.valueString = e.target.value || null
-            }))
-        }}/>
-        <NumericInput onFocus={e => {
-            feedbackText(gvar.gsm.filter.opacity, domRectGetOffset((e.currentTarget as HTMLInputElement).getBoundingClientRect(), 20, -50, true))
-        }} className="cinamaInput" placeholder={"90"} min={5} max={100} value={value.valueNumber} onChange={v => {
-            props.onChange(value.id, produce(value, d => {
-                d.valueNumber = v 
-            }))
-        }}/>
-        <NumericInput onFocus={e => {
-            feedbackText(gvar.gsm.token.rounding, domRectGetOffset((e.currentTarget as HTMLInputElement).getBoundingClientRect(), 20, -50, true))
-        }}  className="cinamaInput" placeholder={"10"} min={0} value={value.valueNumberAlt} onChange={v => {
-            props.onChange(value.id, produce(value, d => {
-                d.valueNumberAlt = v 
-            }))
-        }}/>
+        <button className="icon kebab" onClick={() => setShow(true)}>
+            <IoEllipsisVertical style={{ pointerEvents: "none" }} title="..." size="1.3em" />
+        </button>
+        {show && (
+            <CinemaModal value={props.value} onChange={props.onChange} onClose={() => setShow(false)}/>
+        )}
     </>
 }
-

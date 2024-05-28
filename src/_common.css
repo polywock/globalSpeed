@@ -378,3 +378,10 @@ select {
   grid-template-columns: 1fr max-content;
   column-gap: 5px;
 }
+
+.mxmx {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  column-gap: 5px;
+  align-items: center;
+}

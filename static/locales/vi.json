@@ -100,6 +100,7 @@
   },
   "command": {
     "nothing": "không hành động",
+    "nothingTooltip": "Nó không làm gì cả. Có thể được sử dụng để chặn các phím tắt. Ví dụ, nếu bạn vô tình nhấn phím cách, bạn có thể đặt phím cách để không làm gì cả. Với phím tắt này, bạn cũng có thể cấu hình một khoảng thời gian trễ. Điều này hữu ích vì bạn có thể đặt nhiều phím tắt được kích hoạt bởi cùng một phím và chúng sẽ chạy tuần tự. Ví dụ: đảo ngược trang bằng bộ lọc, chờ 5 giây, sau đó đặt lại bộ lọc.",
     "runCode": "javascript",
     "openUrl": "mở URL",
     "speed": "tốc độ",
@@ -145,7 +146,10 @@
     "detectiveMode": "chế độ thám tử",
     "detectiveModeTooltip": "Ẩn mọi thứ trừ những gì có thể nhìn thấy qua một vòng tròn.",
     "cinema": "tối màu nền",
-    "cinemaTooltip": "Làm tối nền video. Để thoát, nhấn vào nền hoặc sử dụng phím tắt một lần nữa."
+    "cinemaTooltip": "Làm tối nền video. Để thoát, nhấn vào nền hoặc sử dụng phím tắt một lần nữa.",
+    "presets": "cài đặt sẵn",
+    "temporarySpeed": "tốc độ tạm thời",
+    "temporarySpeedTooltip": "Nhấn và giữ tốc độ tạm thời."
   },
   "options": {
     "flags": {

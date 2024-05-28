@@ -3,7 +3,7 @@ import { CommandName, commandInfos } from "../../defaults/commands"
 import { sendMessageToConfigSync, intoFxFlags, sendMediaEvent, isSeekSmall } from "../../utils/configUtils"
 import { TabInfo } from "../../utils/browserUtils"
 import type { MediaEvent, MediaEventCinema } from "../../contentScript/isolated/utils/applyMediaEvent"
-import { round, clamp, formatDuration, isFirefox, wraparound } from "../../utils/helper"
+import { round, clamp, formatDuration, isFirefox, wraparound, timeout } from "../../utils/helper"
 import { FlatMediaInfo } from "../../contentScript/isolated/utils/genMediaInfo"
 import { getDefaultAudioFx, getDefaultFx } from "../../defaults"
 import { filterInfos } from "../../defaults/filters"
@@ -13,6 +13,8 @@ import { getAutoMedia } from "./getAutoMedia"
 import { initTabCapture, isTabCaptured, releaseTabCapture } from "./tabCapture"
 import { hashWithStoredSalt } from "src/utils/hash"
 import { IndicatorShowOpts } from "src/contentScript/isolated/utils/Indicator"
+import { KeepAlive } from "./KeepAlive"
+import { over } from "lodash"
 
 
 let lastSeek: {key: string, time: number, net: number}
@@ -22,12 +24,23 @@ export class ProcessKeybinds {
   shortcutHideIndicator = false 
   loadedMedia?: {value: FlatMediaInfo}
   loadedMediaVideo?: {value: FlatMediaInfo}
+  stopped = false 
+  isSpecial = false 
   constructor(private matches: KeybindMatch[], public tabInfo: TabInfo) {
     this.init()
   }
+  stop = () => {
+    this.stopped = true 
+  }
   init = async () => {
     this.globalHideIndicator = (await gvar.es.getAllUnsafe())['g:hideIndicator']
+
+    let specialFirst = isTogglePattern(this.matches)
+
     for (let match of this.matches) {
+      this.isSpecial = specialFirst
+      specialFirst = false 
+      if (this.stopped) return 
       await this.processKeybindMatch(match)
     }
   }
@@ -96,10 +109,22 @@ type CommandHandlerArgs = ProcessKeybinds & {
   isAlt?: boolean
 } 
 
+let nothingCalledMap: {[key: string]: Symbol} = {}
+
 const commandHandlers: {
   [key in CommandName]: (args: CommandHandlerArgs) => Promise<void>
 } = {
   nothing: async args => {
+    if (args.kb.valueNumber > 0) {
+      // Note called again 
+      let calledAt = Symbol()
+      nothingCalledMap[args.kb.id] = calledAt 
+      KeepAlive.start(args.kb.valueNumber / 60 + 0.5)
+      await timeout(args.kb.valueNumber * 1000)
+      if (nothingCalledMap[args.kb.id] !== calledAt) {
+        args.stop()
+      }
+    }
     return 
   },
   runCode: async args => {
@@ -367,7 +392,6 @@ const commandHandlers: {
     if (flags.backdrop) {
       override.backdropFx = null 
     }
-    show({icons: ["reset"]})
   },
   fxSwap: async args => {
     const { fetch, show, override } = args 
@@ -475,7 +499,7 @@ async function processAdjustMode(args: CommandHandlerArgs) {
     value = kb.valueNumber ?? ref.default
     if (kb.command === "speed") {
       let view = (await fetch({speed: true, lastSpeed: true}))
-      if (view.speed?.toFixed(2) === value.toFixed(2) && view.lastSpeed != null) {
+      if (!args.isSpecial && (view.speed?.toFixed(2) === value.toFixed(2) && view.lastSpeed != null)) {
         value = view.lastSpeed
       }
     }
@@ -722,6 +746,7 @@ export async function setValue(init: SetValueInit) {
 
   if (kb.command === "speed") {
     override.lastSpeed = (await fetchView({speed: true}, tabInfo.tabId)).speed
+    if (override.lastSpeed === value) delete override.lastSpeed
     override.speed = value 
     override.latestViaShortcut = true 
   } else if (kb.command === "volume") {
@@ -800,4 +825,18 @@ export async function setValue(init: SetValueInit) {
 
 function showIndicator(opts: IndicatorShowOpts, tabId: number, showAlt?: boolean) {
   sendMessageToConfigSync({type: "SHOW_INDICATOR", opts, showAlt}, tabId, 0)
+}
+
+function isTogglePattern(matches: KeybindMatch[]) {
+  // set speed -> (delay < 2) -> set speed 
+  if (matches.length !== 3) return 
+  let lb = matches[0].kb
+  let d = matches[1].kb
+  let rb = matches[2].kb
+
+  if (
+    (lb.command === "speed" && (lb.adjustMode || AdjustMode.SET) === AdjustMode.SET) && 
+    (d.command === "nothing" && d.valueNumber <= 2) &&
+    (rb.command === "speed" && (rb.adjustMode || AdjustMode.SET) === AdjustMode.SET)
+  ) return true 
 }

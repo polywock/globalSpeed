@@ -95,6 +95,7 @@ export type Gsm = {
   },
   command: {
     nothing: string,
+    nothingTooltip: string,
     runCode: string,
     openUrl: string,
     speed: string,
@@ -139,7 +140,10 @@ export type Gsm = {
     detectiveMode: string,
     detectiveModeTooltip: string,
     cinema: string,
-    cinemaTooltip: string
+    cinemaTooltip: string,
+    presets: string,
+    temporarySpeed: string,
+    temporarySpeedTooltip: string
   },
   options: {
     flags: {

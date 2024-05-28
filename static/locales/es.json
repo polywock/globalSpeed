@@ -99,6 +99,7 @@
   },
   "command": {
     "nothing": "ninguna acción",
+    "nothingTooltip": "No hace nada. Se puede usar para bloquear teclas de acceso rápido. Por ejemplo, si accidentalmente sigues presionando la barra espaciadora, puedes configurarla para que no haga nada. Con este atajo, también puedes configurar un retraso. Esto es útil porque puedes configurar varios atajos para que se activen con la misma tecla y se ejecuten secuencialmente. Por ejemplo, invierte la página con un filtro, espera 5 segundos y luego restablece los filtros.",
     "runCode": "javascript",
     "openUrl": "URL",
     "speed": "velocidad",
@@ -144,7 +145,10 @@
     "detectiveMode": "modo detective",
     "detectiveModeTooltip": "Ocultar todo excepto lo que es visible a través de un círculo.",
     "cinema": "oscurecer fondo",
-    "cinemaTooltip": "Oscurece el fondo del video. Para salir, presiona sobre el fondo o usa el atajo nuevamente."
+    "cinemaTooltip": "Oscurece el fondo del video. Para salir, presiona sobre el fondo o usa el atajo nuevamente.",
+    "presets": "preajustes",
+    "temporarySpeed": "velocidad temporal",
+    "temporarySpeedTooltip": "Presiona y mantén la velocidad temporal."
   },
   "options": {
     "flags": {

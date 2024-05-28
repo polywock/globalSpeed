@@ -92,6 +92,11 @@ export const KeybindControl = (props: KeybindControlProps) => {
   props.isLast || kebabList.push(
     { name: "spacing", label: gvar.gsm.options.editor.spacing, preLabel: value.spacing === 2 ? "2" : (value.spacing === 1 ? "1" : null) }
   )
+
+  let onFocusTooltip: string 
+  if (value.command === "nothing") {
+    onFocusTooltip = gvar.gsm.command.afxDelay
+  }
   
 
 
@@ -178,7 +183,9 @@ export const KeybindControl = (props: KeybindControlProps) => {
 
       {/* Numeric input */}
       {showNumericControl && !command.withDuration && (
-        <NumericInput placeholder={defaultValue?.toString() ?? null} min={min} max={max} value={value.valueNumber} onChange={v => {
+        <NumericInput onFocus={onFocusTooltip ? (e => {
+          feedbackText(onFocusTooltip, domRectGetOffset((e.currentTarget as HTMLInputElement).getBoundingClientRect(), 20, -50, true))
+        }) : undefined} placeholder={defaultValue?.toString() ?? null} min={min} max={max} value={value.valueNumber} onChange={v => {
           props.onChange(value.id, produce(value, d => {
             d.valueNumber = v
           }))

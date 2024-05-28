@@ -15,6 +15,12 @@ export type CommandName = "nothing" | "runCode" | "openUrl" | "intoPopup" |
 export let commandInfos: {[key in CommandName]: Command} = {
   nothing: {
     group: CommandGroup.MISC,
+    valueType: 'number',
+    ref: {
+      default: 0,
+      min: 0,
+      max: 600
+    },
     generate: () => ({
       id: randomId(),
       command: "nothing",
