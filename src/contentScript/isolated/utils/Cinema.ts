@@ -1,5 +1,5 @@
 import { clamp } from "src/utils/helper";
-import { Popover } from "./Popover";
+import { Popover, insertRules } from "./Popover";
 
 const BLEED = 1 
 const PADDING = 5 
@@ -8,10 +8,10 @@ export class Cinema extends Popover {
     released = false 
     obs: IntersectionObserver
     roundness = 10
-    currentX: number
-    currentY: number 
+    currentBounds: DOMRect
     index = 0
     static currentCinema: Cinema
+    static sheet: CSSStyleSheet
     
     constructor(private video: HTMLElement, color: string, opacity: number, roundness: number) {
         super(true)
@@ -25,6 +25,12 @@ export class Cinema extends Popover {
         this.div.style.backgroundColor = color ?? "black"
         this.div.style.opacity = `${(opacity ?? 90) / 100}`
         this.roundness = roundness ?? this.roundness
+        if (Cinema.sheet) {
+            Cinema.sheet.disabled = false 
+        } else {
+            Cinema.sheet = insertRules([`::-webkit-scrollbar {display: none !important}`], document)
+        }
+        
 
         this.every()
         this.update(true)
@@ -42,9 +48,8 @@ export class Cinema extends Popover {
         const width = clamp(0, window.innerWidth, b.left + b.width) - clamp(0, window.innerWidth, b.left)
 
         if ((this.video as HTMLMediaElement).ended || width < 150 || height < 150) return this.release()
-        if (b.x === this.currentX && b.y === this.currentY) return 
-        this.currentX = b.x 
-        this.currentY = b.y
+        if (this.currentBounds && b.x === this.currentBounds.x && b.y === this.currentBounds.y && b.width === this.currentBounds.width && b.height === this.currentBounds.height) return 
+        this.currentBounds = b 
 
         if (document.fullscreenElement || (b.width / window.innerWidth > 0.95 && b.height / window.innerHeight > 0.95)) {
             this.release()
@@ -71,6 +76,7 @@ export class Cinema extends Popover {
     release = () => {
         if (this.released) return 
         this.released = true 
+        Cinema.sheet.disabled = true  
         this._release() 
         this.obs?.disconnect()
         delete this.obs

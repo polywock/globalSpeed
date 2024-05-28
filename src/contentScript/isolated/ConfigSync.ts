@@ -18,7 +18,7 @@ export class ConfigSync {
     if (onLaunch) this.init() 
     this.handleChange()
   }, 300)
-  speedClient = new SubscribeView({speed: true, freePitch: true}, gvar.tabInfo.tabId, true, v => {
+  speedClient = new SubscribeView({speed: true, freePitch: true, enabled: true, superDisable: true}, gvar.tabInfo.tabId, true, v => {
     this.handleSpeedChange()
   }, 150, 300)
   ignoreList = new Set<string>() 
@@ -72,10 +72,9 @@ export class ConfigSync {
     }
   } 
   handleSpeedChange = () => {
-    const view = this.client.view
     const speedView = this.speedClient.view
 
-    if (view?.enabled && speedView) {
+    if (speedView && speedView.enabled && !speedView.superDisable) {
       gvar.os.speedSync.latest = {speed: speedView.speed, freePitch: speedView.freePitch}
       gvar.os.speedSync.update()
     } else {
