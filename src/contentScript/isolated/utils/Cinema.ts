@@ -19,6 +19,8 @@ export class Cinema extends Popover {
         Cinema.currentCinema = this 
         this.div.style.position = "fixed"
         this.div.style.margin = "0"
+        this.div.style.left = "0px"
+        this.div.style.top = "0px"
         this.div.style.width = "100vw"
         this.div.style.height = "100vh"
         this.div.style.border = "none"
