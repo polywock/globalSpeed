@@ -4,8 +4,8 @@ import { isFirefox } from "../utils/helper"
 import { requestCreateTab } from "../utils/browserUtils"
 import { FaMousePointer, FaPowerOff } from "react-icons/fa"
 import { createRoot } from "react-dom/client"
-import "./faqs.css"
 import { Pin, Zap } from "src/comps/svgs"
+import "./faqs.css"
 
 
 function Faqs(props: {}) {
