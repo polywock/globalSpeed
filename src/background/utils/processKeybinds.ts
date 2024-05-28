@@ -27,7 +27,9 @@ export class ProcessKeybinds {
   }
   init = async () => {
     this.globalHideIndicator = (await gvar.es.getAllUnsafe())['g:hideIndicator']
-    this.matches.forEach(this.processKeybindMatch)
+    for (let match of this.matches) {
+      await this.processKeybindMatch(match)
+    }
   }
   fetch = async (selector: StateViewSelector) => {
     return fetchView(selector, this.tabInfo?.tabId)
@@ -82,7 +84,7 @@ export class ProcessKeybinds {
     let override: StateView = {}
     this.shortcutHideIndicator = kb.invertIndicator ? !this.globalHideIndicator : this.globalHideIndicator  
     await commandHandlers[kb.command]({media, override, commandInfo, kb, isAlt: match.alt, ...this})
-    Object.keys(override).length && pushView({override, tabId: this.tabInfo?.tabId})
+    if (Object.keys(override).length) await pushView({override, tabId: this.tabInfo?.tabId})
   }
 }
 
@@ -554,7 +556,7 @@ async function processAdjustMode(args: CommandHandlerArgs) {
   }
 
   // set value 
-  setValue({kb, mediaKey: media?.key, mediaTabInfo: media?.tabInfo, tabInfo, value: main, valueAlt: secondary, shouldShow: !args.shortcutHideIndicator, ref, wasDirect: true})
+  await setValue({kb, mediaKey: media?.key, mediaTabInfo: media?.tabInfo, tabInfo, value: main, valueAlt: secondary, shouldShow: !args.shortcutHideIndicator, ref, wasDirect: true})
 }
 
 async function getItcInit(args: CommandHandlerArgs): Promise<ItcInit> {

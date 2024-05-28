@@ -8,7 +8,7 @@ export class Cinema extends Popover {
     released = false 
     obs: IntersectionObserver
     roundness = 10
-    currentBounds: DOMRect
+    currentBounds: DOMRect & {innerWidth: number, innerHeight: number}
     index = 0
     static currentCinema: Cinema
     static sheet: CSSStyleSheet
@@ -48,8 +48,8 @@ export class Cinema extends Popover {
         const width = clamp(0, window.innerWidth, b.left + b.width) - clamp(0, window.innerWidth, b.left)
 
         if ((this.video as HTMLMediaElement).ended || width < 150 || height < 150) return this.release()
-        if (this.currentBounds && b.x === this.currentBounds.x && b.y === this.currentBounds.y && b.width === this.currentBounds.width && b.height === this.currentBounds.height) return 
-        this.currentBounds = b 
+        if (this.currentBounds && window.innerWidth === this.currentBounds.innerWidth && window.innerHeight === this.currentBounds.innerHeight && b.x === this.currentBounds.x && b.y === this.currentBounds.y && b.width === this.currentBounds.width && b.height === this.currentBounds.height) return 
+        this.currentBounds = {...b, innerWidth: window.innerWidth, innerHeight: window.innerHeight} 
 
         if (document.fullscreenElement || (b.width / window.innerWidth > 0.95 && b.height / window.innerHeight > 0.95)) {
             this.release()
