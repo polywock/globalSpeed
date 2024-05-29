@@ -12,7 +12,6 @@ import { MessageTower } from "./MessageTower";
 import { SpeedSync } from "./SpeedSync";
 import { EventsListener } from "./utils/EventsListener";
 import { Indicator } from "./utils/Indicator";
-import type { Backdrop } from "./utils/Backdrop";
 import { Interactive } from "./utils/Interactive";
 import type { Circle } from "./utils/Circle";
 
@@ -30,7 +29,6 @@ export class Overseer {
     configSync: ConfigSync
     indicator: Indicator
     indicatorAlt: Indicator
-    backdrop: Backdrop
     itc?: Interactive
     circle: Circle
 
@@ -99,7 +97,6 @@ export class Overseer {
         
         this.indicator?.release(); delete this.indicator
         this.indicatorAlt?.release(); delete this.indicatorAlt
-        this.backdrop?.release(); delete this.backdrop
         this.smartFs?.release(); delete this.smartFs
         this.nativeFs?.release(); delete this.nativeFs
         this.visibleSync?.release(); delete this.visibleSync

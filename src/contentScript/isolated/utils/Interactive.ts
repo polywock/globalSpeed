@@ -1,5 +1,6 @@
 import { between, clamp, extractClient, inverseLerp, lerp } from "src/utils/helper";
-import { Popover, insertStyle } from "./Popover";
+import { Popover } from "./Popover";
+import { insertStyle } from "src/utils/nativeUtils";
 import { ItcInit } from "src/types";
 import { requestApplyMediaEvent } from "./applyMediaEvent";
 import { createElement as m } from "src/utils/helper"

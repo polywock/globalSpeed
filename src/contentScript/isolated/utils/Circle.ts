@@ -1,5 +1,6 @@
 import { CircleInit } from "src/types";
-import { Popover, insertStyle } from "./Popover";
+import { Popover } from "./Popover";
+import { insertStyle } from "src/utils/nativeUtils";
 import { fetchView, pushView } from "src/utils/state";
 import { conformSpeed, formatSpeed } from "src/utils/configUtils";
 import { Indicator } from "./Indicator";

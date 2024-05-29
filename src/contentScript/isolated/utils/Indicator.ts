@@ -1,5 +1,6 @@
 import { createOverlayIcons } from "src/defaults/icons";
-import { Popover, insertStyle } from "./Popover";
+import { Popover } from "./Popover";
+import { insertStyle } from "src/utils/nativeUtils";
 import { IndicatorInit } from "src/types";
 import { INDICATOR_INIT } from "src/defaults";
 import styles from "./Indicator.css?raw"

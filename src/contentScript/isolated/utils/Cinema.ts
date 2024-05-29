@@ -1,5 +1,6 @@
 import { clamp } from "src/utils/helper";
-import { Popover, insertStyle } from "./Popover";
+import { Popover } from "./Popover";
+import { insertStyle } from "src/utils/nativeUtils";
 import styles from "./Cinema.css?raw"
 
 const BLEED = 1 

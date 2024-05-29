@@ -18,3 +18,10 @@ export function getLeaf(document: DocumentOrShadowRoot, key: keyof DocumentOrSha
 export function getReal<T>(v: T): T {
     return ((v as any)?.wrappedJSObject ?? v) as T 
 }
+
+export function insertStyle(styles: string, root: Element | ShadowRoot) {
+    let style = document.createElement("style")
+    style.innerHTML = styles
+    root.appendChild(style)
+    return style
+}

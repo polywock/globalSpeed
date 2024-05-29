@@ -1,3 +1,4 @@
+import { insertStyle } from "src/utils/nativeUtils"
 import styles from "./Popover.css?raw"
 
 export class Popover {
@@ -47,10 +48,4 @@ export class Popover {
     }
 }
 
-export function insertStyle(styles: string, root: Element | ShadowRoot) {
-    let style = document.createElement("style")
-    style.innerHTML = styles 
-    root.appendChild(style)
-    return style  
-}
 

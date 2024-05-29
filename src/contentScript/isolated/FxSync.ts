@@ -3,6 +3,7 @@ import { SubscribeView } from "../../utils/state";
 import { StateView } from "../../types";
 import { getDefaultFx } from "src/defaults";
 import { Backdrop } from "./utils/Backdrop";
+import { insertStyle } from "src/utils/nativeUtils";
 
 export class FxSync {
   released: boolean
@@ -10,8 +11,9 @@ export class FxSync {
   elementIntervalId: number 
   backdropIntervalId: number 
 
-  styleJail = new StyleJail()
-  documentTransform = new LazyDocumentTransform()
+  backdrop: Backdrop
+  tempStyle: TemporaryStyle
+  documentTransform: LazyDocumentTransform
 
   elemFilter: string
   elemTransform: string 
@@ -20,8 +22,6 @@ export class FxSync {
   backdropFilter: string
   backdropTransform: string 
   backdropTransformOrigin: string 
-
-  lastResult: {time: number, elems: HTMLElement[]}
 
   client = new SubscribeView({elementFx: true, backdropFx: gvar.isTopFrame}, gvar.tabInfo.tabId, true, view => {
     view.elementFx = view.elementFx ?? getDefaultFx()
@@ -34,170 +34,68 @@ export class FxSync {
     this.released = true 
 
     this.client?.release(); delete this.client
+    
+    this.tempStyle?.release()
+    delete this.tempStyle
 
-    this.backdropIntervalId = clearInterval(this.backdropIntervalId) as null 
-    this.elementIntervalId = clearInterval(this.elementIntervalId) as null 
-    this.styleJail.clear()
-    gvar.os.backdrop?.show()
-    this.documentTransform.clear()
+    this.backdrop?.release()
+    delete this.backdrop
+
+    this.documentTransform?.clear()
+    delete this.documentTransform
   }
   handleChange = (view: StateView) => {
 
-    // cache results to avoid recalculating
-    this.elemFilter = formatFilters(view.elementFx?.filters)
-    this.elemTransform = formatFilters(view.elementFx?.transforms.slice().reverse())
-    this.elemTransformOrigin = `${view.elementFx.originX || "center"} ${view.elementFx.originY || "center"}`
 
-    
-    const elementFxActive = view.elementFx.enabled && !!(this.elemFilter || this.elemTransform)
-    
-    // cache results to avoid recalculating 
-    this.elementQuery = view.elementFx.query || "video"
-    
-    // If any element FX active, ensure we got our PollQuery.
-    if (elementFxActive) {
-      this.elementIntervalId = this.elementIntervalId ?? setInterval(this.handleElementInterval, 1000)
-      this.handleElementInterval()
+    let style = calculateStyle(view.elementFx.enabled, view.elementFx.query || "video", formatFilters(view.elementFx.filters), formatFilters(view.elementFx.transforms.slice().reverse()), `${view.elementFx.originX || "center"} ${view.elementFx.originY || "center"}`)
+
+    if (style) {
+      if (this.tempStyle && this.tempStyle.style !== style) {
+        this.tempStyle.release()
+        delete this.tempStyle
+      }
+      this.tempStyle = this.tempStyle || new TemporaryStyle(style)
     } else {
-      clearInterval(this.elementIntervalId); delete this.elementIntervalId
-      this.styleJail.clear()
+      this.tempStyle?.release()
+      delete this.tempStyle
     }
     
     if (!gvar.isTopFrame) return 
-    gvar.os.backdrop = gvar.os.backdrop ?? new Backdrop()
     
     this.backdropFilter = formatFilters(view.backdropFx.filters)
     this.backdropTransform = formatFilters(view.backdropFx.transforms.slice().reverse())
     this.backdropTransformOrigin = `${view.backdropFx.originX || "center"} ${view.backdropFx.originY || "top"}`
-    const backdropFxActive = view.backdropFx.enabled && !!(this.backdropFilter || this.backdropTransform)
-
-    // If any element FX active, ensure we got our PollQuery.
-    if (backdropFxActive) {
-      this.backdropIntervalId = this.backdropIntervalId ?? setInterval(this.handleBackdropInterval, 1000)
-      this.handleBackdropInterval()
+    const backdropEnabled = view.backdropFx.enabled
+    
+    if (backdropEnabled && this.backdropFilter) {
+      this.backdrop = this.backdrop || new Backdrop()
+      this.backdrop.show(this.backdropFilter)
     } else {
-      clearInterval(this.backdropIntervalId); delete this.backdropIntervalId
-      this.documentTransform.clear()
-      gvar.os.backdrop.show()
-    }
-  }
-  handleElementInterval = () => {
-    let elems: HTMLElement[] = []
-    if (this.elementQuery === "video") {
-      elems = [...gvar.os.mediaTower.media].filter(v => v.isConnected && v instanceof HTMLVideoElement)
-    } else {
-      elems = CachedSelector.get(this.elementQuery)
+      this.backdrop?.release()
+      delete this.backdrop
     }
 
-    this.styleJail.set(elems, {filter: this.elemFilter}, {transform: this.elemTransform, origin: this.elemTransformOrigin})
-  }
-  handleBackdropInterval = () => {
-
-    // backdrop filter 
-    if (this.backdropFilter) {
-      gvar.os.backdrop.show(this.backdropFilter)
-    } else {
-      gvar.os.backdrop.show()
-    }
-
-    // backdrop transform
-    if (this.backdropTransform) {
+    if (backdropEnabled && this.backdropTransform) {
+      this.documentTransform = this.documentTransform || new LazyDocumentTransform()
       this.documentTransform.set(this.backdropTransform, this.backdropTransformOrigin)
     } else {
-      this.documentTransform.clear()
+      this.documentTransform?.clear()
+      delete this.documentTransform
     }
   }
 }
 
 
-
-type FilterInit = {
-  filter: string
-}
-
-type TransformInit = {
-  transform: string,
-  origin: string
-}
-
-
-
-
-type HTMLElementJailed = HTMLElement & {
-  ogFilter?: FilterInit,
-  ogTransform?: TransformInit
-}
-
-
-class StyleJail {
-  elems: HTMLElementJailed[] = []
-
-  set = (elems: HTMLElementJailed[], filterInit: FilterInit, transformInit: TransformInit) => {  
-    // clear non-reinforced 
-    this.elems.forEach(elem => {
-      if (!elems.includes(elem)) {
-        this.clearFilter(elem)
-        this.clearTransform(elem)
-      }
-    })
-
-    this.elems = elems 
-
-    this.elems.forEach(elem => {
-      if (filterInit) {
-        if (!elem.ogFilter) {
-          elem.ogFilter = {filter: elem.style.filter}
-        }
-
-        if (elem.style.filter != filterInit.filter) {
-          elem.style.filter = filterInit.filter
-        }
-      } else {
-        this.clearFilter(elem)
-      }
-
-      if (transformInit) {
-        if (!elem.ogTransform) {
-          elem.ogTransform = {transform: elem.style.transform, origin: elem.style.transformOrigin}
-        }
-        if (elem.style.transform != transformInit.transform) {
-          elem.style.transform = transformInit.transform
-        }
-        if (elem.style.transformOrigin != transformInit.origin) {
-          elem.style.transformOrigin = transformInit.origin
-        }
-      } else {
-        this.clearTransform(elem)
-      }
-    })
+function calculateStyle(enabled: boolean, selector: string, filters: string, transforms: string, origin: string) {
+  if (!enabled || !selector || !(filters || transforms)) return null 
+  let statements = []
+  if (filters) statements.push(`filter: ${filters} !important`)
+  if (transforms) {
+    statements.push(`transform: ${transforms} !important`)
+    origin && statements.push(`transform-origin: ${origin} !important`)
   }
-  clear = () => {
-    this.elems.forEach(elem => {
-      if (!elem.style) return 
-      this.clearFilter(elem)
-      this.clearTransform(elem)
-    })  
-    this.elems = []
-  }
-  clearFilter = (elem: HTMLElementJailed) => {
-    if (elem.ogFilter) {
-      if (elem.style.filter != elem.ogFilter.filter) {
-        elem.style.filter = elem.ogFilter.filter
-      }
-      delete elem.ogFilter
-    }
-  }
-  clearTransform = (elem: HTMLElementJailed) => {
-    if (elem.ogTransform) {
-      if (elem.style.transform != elem.ogTransform.transform) {
-        elem.style.transform = elem.ogTransform.transform
-      }
-      if (elem.style.transformOrigin != elem.ogTransform.origin) {
-        elem.style.transformOrigin = elem.ogTransform.origin
-      }
-      delete elem.ogTransform
-    }
-  }
+
+  return `:is(${selector}, #proooof > #essi > #onal) {${statements.join(";")}}`
 }
 
 
@@ -223,65 +121,31 @@ class LazyDocumentTransform {
 }
 
 
-
-
-
-//#region CachedSelector
-class CachedSelector {
-  static prev: {query: string, tagNames?: string[], time: number, value: HTMLElement[]}
-  static get(query: string, duration = 500) {
-    const { prev } = CachedSelector
-
-    const time = Date.now()
-    if (prev && prev.query === query && time - prev.time < duration) {
-      return prev.value
-    } 
-    const tagNames = (prev && prev.query === query) ? prev.tagNames : queryIntoTagNames(query)
-    const value = selector(query, tagNames)
-    
-    CachedSelector.prev = {query, tagNames, time, value}
-    return value 
+class TemporaryStyle {
+  processed: Set<ShadowRoot | HTMLElement> = new Set() 
+  styles: HTMLStyleElement[] = []
+  released = false 
+  constructor(public style: string) {
+    console.log("STYLE: ", style)
+    this.processAll()
+  }
+  release = () => {
+    if (this.released) return 
+    this.released = true 
+    gvar.os.mediaTower.newDocCallbacks.delete(this.processAll)
+    this.styles.forEach(s => s.remove())
+    delete this.styles
+    this.processed.clear()
+    delete this.processed
+  }
+  processAll = () => {
+    this.process(document.documentElement)
+    let shadowRoots = ([...gvar.os.mediaTower.docs].filter(v => v instanceof ShadowRoot) as ShadowRoot[]).filter(v => v.host.isConnected)
+    shadowRoots.forEach(this.process)
+  }
+  process = (doc: ShadowRoot | HTMLElement) => {
+    if (this.processed.has(doc)) return 
+    this.processed.add(doc)
+    this.styles.push(insertStyle(this.style, doc))
   }
 }
-
-function selector(query: string, tagNames?: string[]) {
-  let elems: Element[] = []
-
-  if (tagNames?.length) {
-    tagNames.forEach(tag => {
-      elems = [...elems, ...document.getElementsByTagName(tag)]
-    })
-  } else {
-    try {
-      elems = [...document.querySelectorAll(query)]
-    } catch (err) {
-      return elems.filter(v => v instanceof HTMLElement) as HTMLElement[] 
-    }
-  }
-
-  gvar.os.mediaTower.docs.forEach(doc => {
-    if (!(doc instanceof ShadowRoot && doc.isConnected)) return
-    try {
-      elems = [...elems, ...doc.querySelectorAll(query)]
-    } catch (err) {
-      return elems.filter(v => v instanceof HTMLElement) as HTMLElement[] 
-    }
-  })
-
-  return elems.filter(v => v instanceof HTMLElement) as HTMLElement[]
-}
-
-const CSS_NAME = /^[_a-z]+[_a-z0-9-]*$/i
-export function queryIntoTagNames(query: string) {
-  let tagNames: string[] = []
-  for (let part of query.trim().split(",").map(v => v.trim())) {
-    if (CSS_NAME.test(part)) {
-      tagNames.push(part)
-    } else {
-      return 
-    }
-  }
-  
-  return tagNames
-}
-//#endregion 
