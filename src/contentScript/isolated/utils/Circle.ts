@@ -1,11 +1,12 @@
 import { CircleInit } from "src/types";
-import { Popover, autoInsertRules, deleteSheet, insertRules } from "./Popover";
+import { Popover, insertStyle } from "./Popover";
 import { fetchView, pushView } from "src/utils/state";
 import { conformSpeed, formatSpeed } from "src/utils/configUtils";
 import { Indicator } from "./Indicator";
 import { between, clamp, extractClient, formatDuration, inverseLerp, isMobile, lerp, roundTo, timeout } from "src/utils/helper";
 import { seekTo, setPause } from "./applyMediaEvent";
 import debounce from "lodash.debounce";
+import styles from "./Circle.css?raw"
 
 const MIN_TO_ACTIVATE = 50
 const MIN_STRONG = 115
@@ -40,7 +41,7 @@ export class Circle extends Popover {
     hiddenTimeout: number 
     conflictWithDelete = false 
     constructor(private init: CircleInit) {
-        super(true)
+        super()
         this.init = init || {}
         this.x = this.init.circleInitial?.x ?? this.x
         this.y = this.init.circleInitial?.y ?? this.y
@@ -58,67 +59,19 @@ export class Circle extends Popover {
         this.ref.className = "ref"
         this.delete.className = "delete"
         this.delete.textContent = "X"
-        this.div.appendChild(this.circle)
-        this.div.appendChild(this.ref)
-        this.div.appendChild(this.delete)
+        this._div.appendChild(this.circle)
+        this._div.appendChild(this.ref)
+        this._div.appendChild(this.delete)
 
 
-        insertRules([
-`#${this.id}${this.supportsPopover ? ':popover-open' : '.popoverOpenYah'} {
-    background-color: transparent;
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    user-select: none;
-    touch-action: none;
-    margin: 0px;
-    border: none;
-    transition: 300ms ease-in opacity;
-}`, 
-`.circle, .ref, .delete {
-    position: fixed; 
-    border-radius: 50%;
-    box-sizing: border-box;
-    user-select: none; 
-    transition: transform 50ms ease-out, border-color 100ms ease-out, opacity 100ms ease-out;
-}`,
-`.circle, .ref {
-    background-color: white;
-}`,
-`.delete {
-    background-color: black;
-    color: white;
-    left: calc(50vw - 30px);
-    top: calc(50vh + 60px);
-    display: none;
-    width: 60px;
-    height: 60px;
-    overflow: hidden;
-    font-size: 30px;
-    padding: 20px 0;
-    text-align: center;
-    opacity: 0.75;
-}`,
-`.circle {
-    background-color: white;
-    pointer-events: all;
-    border: 5px solid white;
-    box-shadow:  #00000088 0px 0px ${blur}px ${spread}px;
-    width: ${this.size}px;
-    height: ${this.size}px;
-    z-index: 3;
-}`,
-`.ref {
-    pointer-events: none;
-    display: none;
-    z-index: 2;
-    width: ${this.size * 0.5}px;
-    height: ${this.size * 0.5}px;
-}`
-], this.shadow)
+        insertStyle(styles, this._shadow)
+
+        this.circle.style.width = `${this.size}px`
+        this.circle.style.height = `${this.size}px`
+        this.circle.style.boxShadow = `#00000088 0px 0px ${blur}px ${spread}px`
+        
+        this.ref.style.width = `${this.size * 0.5}px`
+        this.ref.style.height = `${this.size * 0.5}px`
         
         this.x = this.init.circleInitial?.x ?? this.x
         this.y = this.init.circleInitial?.y ?? this.y
@@ -153,14 +106,14 @@ export class Circle extends Popover {
         gvar.os.eListen.mouseMoveCbs.add(this.handleGuard)
         gvar.os.eListen.clickCbs.add(this.handleGuard)
         gvar.os.eListen.dblClickCbs.add(this.handleGuard)
-        this.update(true)
+        this._update(true)
     }
     stop = () => {
         if (!this.video) return 
         this.clearSession()
         clearTimeout(this.hiddenTimeout); delete this.hiddenTimeout
         delete this.video
-        this.update(false)
+        this._update(false)
         gvar.os.eListen.pointerDownCbs.delete(this.handlePointerDown)
         gvar.os.eListen.pointerUpCbs.delete(this.handlePointerUp)
         gvar.os.eListen.touchEndCbs.delete(this.handlePointerUp)
@@ -185,11 +138,11 @@ export class Circle extends Popover {
     }
     makeHidden = () => {
         this.hidden = true 
-        this.div.style.opacity = "0"
+        this._div.style.opacity = "0"
     }
     makeVisible = () => {
         this.hidden = false 
-        this.div.style.opacity = "1"
+        this._div.style.opacity = "1"
     }
     clearPreventSecond = () => {
         delete this.preventSecond
@@ -212,7 +165,7 @@ export class Circle extends Popover {
         if (this.isAtCircle(extractClient(e))) {
             this.downAt = Date.now() 
             this.drawCircleOpacity()
-            this.div.style.pointerEvents = "all !important"
+            this._div.style.pointerEvents = "all !important"
             this.preventDefault(e)
         } 
     }
@@ -271,7 +224,7 @@ export class Circle extends Popover {
         }
     }
     clearSession = () => {
-        this.div.style.pointerEvents = "none"
+        this._div.style.pointerEvents = "none"
         this.clearDirectional()
         this.clearMovingMode()
         delete this.downAt       

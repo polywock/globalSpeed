@@ -150,12 +150,6 @@
     "presets": "프리셋...",
     "temporarySpeed": "임시 속도",
     "temporarySpeedTooltip": "임시 속도를 누르고 유지합니다.",
-    "temporaryMirror": "임시 미러",
-    "temporaryMirrorTooltip": "임시 미러를 누르고 유지합니다.",
-    "temporaryInvert": "임시 반전",
-    "temporaryInvertTooltip": "임시 반전을 누르고 유지합니다.",
-    "temporaryGrayscale": "임시 회색조",
-    "temporaryGrayscaleTooltip": "임시 회색조를 누르고 유지합니다.",
     "toggleSpeed": "속도 전환",
     "toggleSpeedTooltip": "단축키 속도와 마지막 속도를 전환합니다."    
   },

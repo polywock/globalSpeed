@@ -150,12 +150,6 @@
     "presets": "預設...",
     "temporarySpeed": "臨時速度",
     "temporarySpeedTooltip": "按住臨時速度。",
-    "temporaryMirror": "臨時鏡像",
-    "temporaryMirrorTooltip": "按住臨時鏡像。",
-    "temporaryInvert": "臨時反轉",
-    "temporaryInvertTooltip": "按住臨時反轉。",
-    "temporaryGrayscale": "臨時灰階",
-    "temporaryGrayscaleTooltip": "按住臨時灰階。",
     "toggleSpeed": "切換速度",
     "toggleSpeedTooltip": "在快捷速度和最後的速度之間切換。"    
   },

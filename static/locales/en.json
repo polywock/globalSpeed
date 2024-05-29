@@ -150,12 +150,6 @@
     "presets": "presets...",
     "temporarySpeed": "temporary speed",
     "temporarySpeedTooltip": "Press and hold temporary speed.",
-    "temporaryMirror": "temporary mirror",
-    "temporaryMirrorTooltip": "Press and hold temporary mirroring.",
-    "temporaryInvert": "temporary invert",
-    "temporaryInvertTooltip": "Press and hold temporary invert.",
-    "temporaryGrayscale": "temporary grayscale",
-    "temporaryGrayscaleTooltip": "Press and hold temporary grayscale.",
     "toggleSpeed": "toggle speed",
     "toggleSpeedTooltip": "Toggle between shortcut speed and the last speed."
   },

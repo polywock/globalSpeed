@@ -151,12 +151,6 @@
     "presets": "предустановки...",
     "temporarySpeed": "временная скорость",
     "temporarySpeedTooltip": "Нажмите и удерживайте временную скорость.",
-    "temporaryMirror": "временное зеркало",
-    "temporaryMirrorTooltip": "Нажмите и удерживайте временное зеркало.",
-    "temporaryInvert": "временное инвертирование",
-    "temporaryInvertTooltip": "Нажмите и удерживайте временное инвертирование.",
-    "temporaryGrayscale": "временные оттенки серого",
-    "temporaryGrayscaleTooltip": "Нажмите и удерживайте временные оттенки серого.",
     "toggleSpeed": "переключение скорости",
     "toggleSpeedTooltip": "Переключение между скоростью ярлыка и последней скоростью."    
   },

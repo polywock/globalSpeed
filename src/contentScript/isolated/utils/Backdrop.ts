@@ -1,28 +1,24 @@
-import { Popover, insertRules } from "./Popover";
-import { randomId } from "src/utils/helper";
+import { Popover, insertStyle } from "./Popover";
+import styles from "./Backdrop.css?raw"
 
 export class Backdrop extends Popover {
-    filterName = `d${randomId()}`
     constructor() {
-        super(true)
-        insertRules([
-            this.supportsPopover ? (
-                `#${this.id}:popover-open { width: 0px; height: 0px; margin: 0px; opacity: 0; position: fixed; left: -5000px; border: none }`
-            ) : (
-                `#${this.id}.popoverOpenYah { position: fixed; width: 100vw; height: 100vh; left: 0px; top: 0px; margin: 0px; pointer-events: none; border: none }`
-            ),
-            this.supportsPopover && `#${this.id}::backdrop { backdrop-filter: var(--${this.filterName}) }`
-    ], this.shadow)
+        super()
+        insertStyle(styles, this._shadow)
     }
     release = () => {
         this._release()
     }
+    lastFilter: string
     show = (filter?: string) => {
-        if (this.supportsPopover) {
-            this.div.setAttribute('style', filter ? `--${this.filterName}: ${filter}` : undefined)
+        if (filter === this.lastFilter) return 
+        this.lastFilter = filter 
+
+        if (this._supportsPopover) {
+            this._div.setAttribute('style', filter ? `--filter: ${filter}` : undefined)
         } else {
-            this.div.style.backdropFilter = filter
+            this._div.style.backdropFilter = filter
         }
-        this.update(!!filter)
+        this._update(!!filter)
     }
 }

@@ -151,12 +151,6 @@
     "presets": "ön ayarlar...",
     "temporarySpeed": "geçici hız",
     "temporarySpeedTooltip": "Geçici hızı basılı tutun.",
-    "temporaryMirror": "geçici ayna",
-    "temporaryMirrorTooltip": "Geçici aynayı basılı tutun.",
-    "temporaryInvert": "geçici ters çevirme",
-    "temporaryInvertTooltip": "Geçici ters çevirme tuşunu basılı tutun.",
-    "temporaryGrayscale": "geçici gri tonlama",
-    "temporaryGrayscaleTooltip": "Geçici gri tonlamayı basılı tutun.",
     "toggleSpeed": "hız değiştirme",
     "toggleSpeedTooltip": "Kısayol hızı ve son hız arasında geçiş yapın."    
   },

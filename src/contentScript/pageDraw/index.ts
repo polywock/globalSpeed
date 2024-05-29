@@ -58,11 +58,11 @@ class PageDraw extends Popover {
         window.addEventListener("keydown", this.handleKeyDown, true)
         window.addEventListener("keyup", this.handleKeyUp, true)
 
-        this.div.addEventListener("contextmenu", this.handleContext, true)
-        this.div.addEventListener("pointerdown", this.handlePointerDown, { capture: true, passive: true })
-        this.div.addEventListener("pointerup", this.handlePointerUp, { capture: true, passive: true })
-        this.div.addEventListener("pointermove", this.handlePointerMoveDeb, { capture: true, passive: true })
-        this.wrapper.addEventListener("pointerleave", this.handlePointerLeave)
+        this._div.addEventListener("contextmenu", this.handleContext, true)
+        this._div.addEventListener("pointerdown", this.handlePointerDown, { capture: true, passive: true })
+        this._div.addEventListener("pointerup", this.handlePointerUp, { capture: true, passive: true })
+        this._div.addEventListener("pointermove", this.handlePointerMoveDeb, { capture: true, passive: true })
+        this._wrapper.addEventListener("pointerleave", this.handlePointerLeave)
         document.addEventListener("pointerleave", this.clearIsDrawing)
 
         this.pageStyle.innerHTML = pageStyles
@@ -70,14 +70,14 @@ class PageDraw extends Popover {
 
         this.style.innerHTML = styles
         this.resist.appendChild(this.canvas)
-        this.div.appendChild(this.style)
-        this.div.appendChild(this.mask)
-        this.div.appendChild(this.resist)
+        this._div.appendChild(this.style)
+        this._div.appendChild(this.mask)
+        this._div.appendChild(this.resist)
         this.controls = new Controls(this)
 
         this.sync()
         this.handleResize()
-        this.update(true)
+        this._update(true)
     }
     release = () => {
         if (this.released) return
@@ -91,11 +91,11 @@ class PageDraw extends Popover {
         window.removeEventListener("keydown", this.handleKeyUp, true)
         window.removeEventListener("keyup", this.handleKeyUp, true)
 
-        this.div.removeEventListener("contextmenu", this.handleContext, true)
-        this.div.removeEventListener("pointerdown", this.handlePointerDown, true)
-        this.div.removeEventListener("pointerup", this.handlePointerUp, true)
-        this.div.removeEventListener("pointermove", this.handlePointerMove, true)
-        this.wrapper.removeEventListener("pointerleave", this.handlePointerLeave)
+        this._div.removeEventListener("contextmenu", this.handleContext, true)
+        this._div.removeEventListener("pointerdown", this.handlePointerDown, true)
+        this._div.removeEventListener("pointerup", this.handlePointerUp, true)
+        this._div.removeEventListener("pointermove", this.handlePointerMove, true)
+        this._wrapper.removeEventListener("pointerleave", this.handlePointerLeave)
         document.removeEventListener("pointerleave", this.clearIsDrawing)
         delete this.eraseCursor, delete this.sizeCursor
         this._release()
@@ -149,8 +149,8 @@ class PageDraw extends Popover {
         this.resist.style.display = "block"
         if (e && this.latestDimension.width === rect.width && this.latestDimension.height === rect.height) return
         this.latestDimension = rect
-        this.resist.style.width = this.div.style.width = `${rect.width}px` 
-        this.resist.style.height = this.div.style.height = `${rect.height}px`
+        this.resist.style.width = this._div.style.width = `${rect.width}px` 
+        this.resist.style.height = this._div.style.height = `${rect.height}px`
         if (this.canvas.width >= rect.width && this.canvas.height >= rect.height) return
 
         let data: ImageData
@@ -180,7 +180,7 @@ class PageDraw extends Popover {
         if (this.on) return
         document.documentElement.classList.add("noUseraSelect")
         this.on = true
-        this.wrapper.style.pointerEvents = "all"
+        this._wrapper.style.pointerEvents = "all"
         this.resist.style.pointerEvents = "all"
         this.mask.style.pointerEvents = "all"
     }
@@ -188,7 +188,7 @@ class PageDraw extends Popover {
         if (!this.on) return
         document.documentElement.classList.remove("noUseraSelect")
         this.on = false
-        this.wrapper.style.pointerEvents = this.scrolling ? "none" : "all"
+        this._wrapper.style.pointerEvents = this.scrolling ? "none" : "all"
         this.resist.style.pointerEvents = "none"
         this.mask.style.pointerEvents = "none"
         this.points = []
@@ -341,10 +341,10 @@ class Controls {
 
     constructor(private pd: PageDraw) {
         gvar.gsm.pageDraw._labelScale && this.wrapper.div.style.setProperty("--label-scale", gvar.gsm.pageDraw._labelScale.toString())
-        pd.div.appendChild(this.m.wrapper)
-        pd.div.addEventListener("click", this.handleClick, true)
-        pd.div.addEventListener("contextmenu", this.handleContextMenu, true)
-        pd.div.addEventListener("input", this.handleInput, true)
+        pd._div.appendChild(this.m.wrapper)
+        pd._div.addEventListener("click", this.handleClick, true)
+        pd._div.addEventListener("contextmenu", this.handleContextMenu, true)
+        pd._div.addEventListener("input", this.handleInput, true)
         this.m.brushSizeRange.value = pd.brushSize.toString()
         this.m.eraserSizeRange.value = pd.eraserSize.toString()
         this.m.colorInput.addEventListener("input", this.handleColorInput, true)
@@ -353,8 +353,8 @@ class Controls {
         if (this.released) return
         this.released = true
 
-        this.pd.div.removeEventListener("click", this.handleClick, true);
-        this.pd.div.removeEventListener("input", this.handleInput, true)
+        this.pd._div.removeEventListener("click", this.handleClick, true);
+        this.pd._div.removeEventListener("input", this.handleInput, true)
         this.m.colorInput.removeEventListener("input", this.handleColorInput, true)
         this.wrapper.release()
         this.m.wrapper.remove()

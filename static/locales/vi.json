@@ -150,12 +150,6 @@
     "presets": "cài đặt sẵn...",
     "temporarySpeed": "tốc độ tạm thời",
     "temporarySpeedTooltip": "Nhấn và giữ tốc độ tạm thời.",
-    "temporaryMirror": "gương tạm thời",
-    "temporaryMirrorTooltip": "Nhấn và giữ gương tạm thời.",
-    "temporaryInvert": "đảo ngược tạm thời",
-    "temporaryInvertTooltip": "Nhấn và giữ đảo ngược tạm thời.",
-    "temporaryGrayscale": "thang độ xám tạm thời",
-    "temporaryGrayscaleTooltip": "Nhấn và giữ thang độ xám tạm thời.",
     "toggleSpeed": "chuyển đổi tốc độ",
     "toggleSpeedTooltip": "Chuyển đổi giữa tốc độ phím tắt và tốc độ cuối cùng."    
   },

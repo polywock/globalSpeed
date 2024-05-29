@@ -1,5 +1,6 @@
 import { clamp } from "src/utils/helper";
-import { Popover, insertRules } from "./Popover";
+import { Popover, insertStyle } from "./Popover";
+import styles from "./Cinema.css?raw"
 
 const BLEED = 1 
 const PADDING = 5 
@@ -10,36 +11,30 @@ export class Cinema extends Popover {
     roundness = 10
     currentBounds: DOMRect & {innerWidth: number, innerHeight: number}
     index = 0
+    style: HTMLStyleElement
     static currentCinema: Cinema
-    static sheet: CSSStyleSheet
+    
     
     constructor(private video: HTMLElement, color: string, opacity: number, roundness: number) {
-        super(true)
+        super()
         Cinema.currentCinema?.release()
         Cinema.currentCinema = this 
-        this.div.style.position = "fixed"
-        this.div.style.margin = "0"
-        this.div.style.left = "0px"
-        this.div.style.top = "0px"
-        this.div.style.width = "100vw"
-        this.div.style.height = "100vh"
-        this.div.style.border = "none"
-        this.div.style.backgroundColor = color ?? "black"
-        this.div.style.opacity = `${(opacity ?? 90) / 100}`
+        this._div.style.position = "fixed"
+        this._div.style.margin = "0"
+        this._div.style.left = "0px"
+        this._div.style.top = "0px"
+        this._div.style.width = "100vw"
+        this._div.style.height = "100vh"
+        this._div.style.border = "none"
+        this._div.style.backgroundColor = color ?? "black"
+        this._div.style.opacity = `${(opacity ?? 90) / 100}`
         this.roundness = roundness ?? this.roundness
-        if (Cinema.sheet) {
-            Cinema.sheet.disabled = false 
-        } else {
-            Cinema.sheet = insertRules([
-                `::-webkit-scrollbar {display: none !important}`,
-                `:root, body {scrollbar-width: none !important;}`
-            ], document)
-        }
+        this.style = insertStyle(styles, document.documentElement)
         
 
         this.every()
-        this.update(true)
-        this.div.addEventListener("click", this.release)
+        this._update(true)
+        this._div.addEventListener("click", this.release)
     }
     every = () => {
         if (this.released) return 
@@ -69,7 +64,7 @@ export class Cinema extends Popover {
         let xx = window.innerWidth
         let yy = window.innerHeight
 
-        this.div.style.clipPath = `path("\
+        this._div.style.clipPath = `path("\
             M0,0V${yy}H${xx}V0H${xx / 2 - PADDING}V${top}\
             H${right - radii} A${radii},${radii},${0},${0},${1},${right},${top + radii}\
             V${bottom - radii} A${radii},${radii},${0},${0},${1},${right - radii},${bottom}\
@@ -81,7 +76,8 @@ export class Cinema extends Popover {
     release = () => {
         if (this.released) return 
         this.released = true 
-        Cinema.sheet.disabled = true  
+        this.style.remove()
+        delete this.style
         this._release() 
         this.obs?.disconnect()
         delete this.obs
