@@ -146,7 +146,7 @@
     "detectiveModeTooltip": "Ocultar todo excepto lo que es visible a través de un círculo.",
     "cinema": "oscurecer fondo",
     "cinemaTooltip": "Oscurece el fondo del video. Para salir, presiona sobre el fondo o usa el atajo nuevamente.",
-    "presets": "preajustes",
+    "presets": "preajustes...",
     "temporarySpeed": "velocidad temporal",
     "temporarySpeedTooltip": "Presiona y mantén la velocidad temporal.",
     "temporaryMirror": "espejo temporal",

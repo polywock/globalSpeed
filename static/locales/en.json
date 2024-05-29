@@ -147,7 +147,7 @@
     "detectiveModeTooltip": "Hide everything except what's visible through a circle.",
     "cinema": "darken background",
     "cinemaTooltip": "Darken the background of the video. To exit out, press on the background or use shortcut again.",
-    "presets": "presets",
+    "presets": "presets...",
     "temporarySpeed": "temporary speed",
     "temporarySpeedTooltip": "Press and hold temporary speed.",
     "temporaryMirror": "temporary mirror",
