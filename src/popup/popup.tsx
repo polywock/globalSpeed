@@ -11,8 +11,8 @@ import { useThemeSync } from "src/hooks/useThemeSync"
 import { createRoot } from "react-dom/client"
 import { OrlHeader } from "./OrlHeader"
 import { loadGsm } from "src/utils/gsm"
-import "./popup.css"
 import { isFirefox } from "src/utils/helper"
+import "./popup.css"
 
 
 export function App(props: {}) {

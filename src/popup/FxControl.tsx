@@ -76,7 +76,7 @@ export function FxControl(props: FxControlProps) {
       {!backdropTab && (
         <div className="query">
           <span>{gvar.gsm.token.query} <Tooltip tooltip={gvar.gsm.token.queryTooltip}/></span>
-          <ThrottledTextInput passInput={{placeholder: `video`}} value={fx.query || ""} onChange={v => {
+          <ThrottledTextInput passInput={{placeholder: `video, img`}} value={fx.query || ""} onChange={v => {
             setCurrent(produce(fx, d => {
               d.query = v 
             }))

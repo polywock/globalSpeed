@@ -47,7 +47,7 @@ export class FxSync {
   handleChange = (view: StateView) => {
 
 
-    let style = calculateStyle(view.elementFx.enabled, view.elementFx.query || "video", formatFilters(view.elementFx.filters), formatFilters(view.elementFx.transforms.slice().reverse()), `${view.elementFx.originX || "center"} ${view.elementFx.originY || "center"}`)
+    let style = calculateStyle(view.elementFx.enabled, view.elementFx.query || "video, img", formatFilters(view.elementFx.filters), formatFilters(view.elementFx.transforms.slice().reverse()), `${view.elementFx.originX || "center"} ${view.elementFx.originY || "center"}`)
 
     if (style) {
       if (this.tempStyle && this.tempStyle.style !== style) {
