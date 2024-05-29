@@ -13,12 +13,7 @@ export class Backdrop extends Popover {
     show = (filter?: string) => {
         if (filter === this.lastFilter) return 
         this.lastFilter = filter 
-
-        if (this._supportsPopover) {
-            this._div.setAttribute('style', filter ? `--filter: ${filter}` : undefined)
-        } else {
-            this._div.style.backdropFilter = filter
-        }
+        this._div.style.backdropFilter = filter
         this._update(!!filter)
     }
 }
