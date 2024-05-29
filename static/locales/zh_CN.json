@@ -151,7 +151,15 @@
     "cinemaTooltip": "加深视频的背景。要退出，按背景或再次使用快捷键。",
     "presets": "预设",
     "temporarySpeed": "临时速度",
-    "temporarySpeedTooltip": "按住临时速度。"
+    "temporarySpeedTooltip": "按住临时速度。",
+    "temporaryMirror": "临时镜像",
+    "temporaryMirrorTooltip": "按住临时镜像。",
+    "temporaryInvert": "临时反转",
+    "temporaryInvertTooltip": "按住临时反转。",
+    "temporaryGrayscale": "临时灰度",
+    "temporaryGrayscaleTooltip": "按住临时灰度。",
+    "toggleSpeed": "切换速度",
+    "toggleSpeedTooltip": "在快捷速度和最后的速度之间切换。"    
   },
   "options": {
     "flags": {

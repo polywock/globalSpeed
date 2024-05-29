@@ -148,7 +148,15 @@
     "cinemaTooltip": "ビデオの背景を暗くする。出るには、背景を押すか、再度ショートカットを使用します。",
     "presets": "プリセット",
     "temporarySpeed": "一時速度",
-    "temporarySpeedTooltip": "一時速度を押し続けてください。"
+    "temporarySpeedTooltip": "一時速度を押し続けてください。",
+    "temporaryMirror": "一時ミラー",
+    "temporaryMirrorTooltip": "一時ミラーを押し続けてください。",
+    "temporaryInvert": "一時反転",
+    "temporaryInvertTooltip": "一時反転を押し続けてください。",
+    "temporaryGrayscale": "一時グレースケール",
+    "temporaryGrayscaleTooltip": "一時グレースケールを押し続けてください。",
+    "toggleSpeed": "速度切替",
+    "toggleSpeedTooltip": "ショートカット速度と最後の速度を切り替えます。"    
   },
   "options": {
     "flags": {

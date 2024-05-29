@@ -272,6 +272,7 @@ export type Keybind = {
   pauseWhileScrubbing?: boolean, 
   seekOnce?: boolean,
   noHold?: boolean,
+  skipToggleSpeed?: boolean,
   direct?: boolean,
   ignoreNavigate?: boolean,
   filterOption?: FilterName,

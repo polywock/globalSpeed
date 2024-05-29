@@ -148,7 +148,15 @@
     "cinemaTooltip": "Escurece o fundo do vídeo. Para sair, pressione no fundo ou use o atalho novamente.",
     "presets": "predefinições",
     "temporarySpeed": "velocidade temporária",
-    "temporarySpeedTooltip": "Pressione e segure a velocidade temporária."
+    "temporarySpeedTooltip": "Pressione e segure a velocidade temporária.",
+    "temporaryMirror": "espelho temporário",
+    "temporaryMirrorTooltip": "Pressione e segure o espelho temporário.",
+    "temporaryInvert": "inversão temporária",
+    "temporaryInvertTooltip": "Pressione e segure a inversão temporária.",
+    "temporaryGrayscale": "tons de cinza temporários",
+    "temporaryGrayscaleTooltip": "Pressione e segure os tons de cinza temporários.",
+    "toggleSpeed": "alternar velocidade",
+    "toggleSpeedTooltip": "Alterna entre a velocidade do atalho e a última velocidade."    
   },
   "options": {
     "flags": {

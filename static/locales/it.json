@@ -149,7 +149,15 @@
     "cinemaTooltip": "Oscura lo sfondo del video. Per uscire, premi sullo sfondo o usa di nuovo la scorciatoia.",
     "presets": "preimpostazioni",
     "temporarySpeed": "velocità temporanea",
-    "temporarySpeedTooltip": "Premi e tieni premuta la velocità temporanea."
+    "temporarySpeedTooltip": "Premi e tieni premuta la velocità temporanea.",
+    "temporaryMirror": "specchio temporaneo",
+    "temporaryMirrorTooltip": "Premi e tieni premuto lo specchio temporaneo.",
+    "temporaryInvert": "inverti temporaneo",
+    "temporaryInvertTooltip": "Premi e tieni premuto inverti temporaneo.",
+    "temporaryGrayscale": "scala di grigi temporanea",
+    "temporaryGrayscaleTooltip": "Premi e tieni premuta la scala di grigi temporanea.",
+    "toggleSpeed": "velocità toggle",
+    "toggleSpeedTooltip": "Alterna tra la velocità della scorciatoia e l'ultima velocità."    
   },
   "options": {
     "flags": {

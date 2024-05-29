@@ -148,7 +148,15 @@
     "cinemaTooltip": "Oscurece el fondo del video. Para salir, presiona sobre el fondo o usa el atajo nuevamente.",
     "presets": "preajustes",
     "temporarySpeed": "velocidad temporal",
-    "temporarySpeedTooltip": "Presiona y mantén la velocidad temporal."
+    "temporarySpeedTooltip": "Presiona y mantén la velocidad temporal.",
+    "temporaryMirror": "espejo temporal",
+    "temporaryMirrorTooltip": "Presiona y mantén el espejo temporal.",
+    "temporaryInvert": "inversión temporal",
+    "temporaryInvertTooltip": "Presiona y mantén la inversión temporal.",
+    "temporaryGrayscale": "escala de grises temporal",
+    "temporaryGrayscaleTooltip": "Presiona y mantén la escala de grises temporal.",
+    "toggleSpeed": "alternar velocidad",
+    "toggleSpeedTooltip": "Alterna entre la velocidad del atajo y la última velocidad."    
   },
   "options": {
     "flags": {

@@ -21,12 +21,11 @@ import { FaRegWindowRestore } from "react-icons/fa6"
 import { KebabList, KebabListProps } from "../KebabList"
 import { isSeekSmall } from "src/utils/configUtils"
 import { PiArrowArcRightFill } from "react-icons/pi"
-import { NumericInput } from "src/comps/NumericInput"
 import { CinemaModal } from "../CinemaModal"
 import { useState } from "react"
 import { IoEllipsisVertical } from "react-icons/io5"
 
-const invertableKeys = new Set(["fastSeek", "autoPause", "skipPauseSmall", "pauseWhileScrubbing", "relativeToSpeed", "wraparound", "itcWraparound", "showNetDuration", "seekOnce", "allowAlt", "noWrap", "noHold", "ignoreNavigate"])
+const invertableKeys = new Set(["fastSeek", "autoPause", "skipPauseSmall", "pauseWhileScrubbing", "relativeToSpeed", "wraparound", "itcWraparound", "showNetDuration", "seekOnce", "allowAlt", "noWrap", "noHold", "ignoreNavigate", "skipToggleSpeed"])
 const memMap = new Map<string, any>()
 
 function saveToMem(kb: Keybind, adjustMode: AdjustMode) {
@@ -83,6 +82,7 @@ export function NameArea(props: NameAreaProps) {
     }
 
     value.command === "seek" && ensureSeekList(kebabList, kebabListHandlers, value, invertFlag, props.reference)
+    value.command === "speed" && ensureSpeedList(kebabList, kebabListHandlers, value, invertFlag)
     ;(value.adjustMode === AdjustMode.ITC || value.adjustMode === AdjustMode.ITC_REL) && ensureItcList(kebabList, kebabListHandlers, value, invertFlag)
     value.adjustMode === AdjustMode.CYCLE && ensureCycleList(kebabList, kebabListHandlers, value, invertFlag)
 
@@ -280,6 +280,21 @@ function ensureCycleList(list: KebabListProps["list"], handlers: KebabListProps[
 function ensureLoopList(list: KebabListProps["list"], handlers: KebabListProps["onSelect"][], value: KeybindControlProps["value"], invertFlag: (key: string) => any) {
     list.push(
         { name: "ignoreNavigate", checked: !value.ignoreNavigate, label: makeLabelWithTooltip(gvar.gsm.command.autoBreak, value.command === "loop" ? gvar.gsm.command.autoBreakTooltip : gvar.gsm.command.autoBreakTooltipAlt) }
+    )
+
+    handlers.push((name: string) => {
+        if (invertableKeys.has(name)) {
+            invertFlag(name as keyof Keybind)
+            return true 
+        }
+    })
+}
+
+function ensureSpeedList(list: KebabListProps["list"], handlers: KebabListProps["onSelect"][], value: KeybindControlProps["value"], invertFlag: (key: string) => any) {
+    if ((value.adjustMode || AdjustMode.SET) !== AdjustMode.SET) return 
+
+    list.push(
+        { name: "skipToggleSpeed", checked: !value.skipToggleSpeed, label: makeLabelWithTooltip(gvar.gsm.command.toggleSpeed, gvar.gsm.command.toggleSpeedTooltip) }
     )
 
     handlers.push((name: string) => {

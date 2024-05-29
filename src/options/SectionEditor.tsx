@@ -158,7 +158,7 @@ function EditorControls(props: {view: StateView, setView: SetView}) {
 
       {/* Secondary select */}
       {showPresets && (
-        <select value={presetOption ?? presets[0].name} onChange={e => {
+        <select style={{marginRight: "10px"}} value={presetOption ?? presets[0].name} onChange={e => {
             setPresetOption(e.target.value)
           }}>
             {presets.map(preset => (
@@ -246,8 +246,23 @@ function handleFreshKeybinds(view: StateView, setView: SetView) {
 
 let presets: {name: string, getKbs: (hideIndicator: boolean) => Keybind[]}[] = [
   {name: "temporarySpeed", getKbs: hideIndicator => ([
-    {...commandInfos.speed.generate(), valueNumber: 3, key: "Space", adjustMode: AdjustMode.SET, label: gvar.gsm.command.temporarySpeedTooltip},
-    {...commandInfos.nothing.generate(), valueNumber: 0.25, key: "Space"},
-    {...commandInfos.speed.generate(), valueNumber: 3, key: "Space", adjustMode: AdjustMode.SET, invertIndicator: hideIndicator ? undefined : true}
+    {...commandInfos.speed.generate(), skipToggleSpeed: true, valueNumber: 3, key: "KeyG", adjustMode: AdjustMode.SET, label: gvar.gsm.command.temporarySpeedTooltip},
+    {...commandInfos.nothing.generate(), valueNumber: 0.15, key: "KeyG"},
+    {...commandInfos.speed.generate(), valueNumber: 3, key: "KeyG", adjustMode: AdjustMode.SET, invertIndicator: hideIndicator ? undefined : true}
+  ])},
+  {name: "temporaryMirror", getKbs: hideIndicator => ([
+    {...commandInfos.fxFilter.generate(), filterOption: "scaleX", filterTarget: "element", valueNumber: -1, key: "Space", adjustMode: AdjustMode.SET, label: gvar.gsm.command.temporaryMirrorTooltip},
+    {...commandInfos.nothing.generate(), valueNumber: 0.15, key: "Space"},
+    {...commandInfos.fxFilter.generate(),  filterOption: "scaleX", filterTarget: "element", valueNumber: 1, key: "Space", adjustMode: AdjustMode.SET, invertIndicator: hideIndicator ? undefined : true}
+  ])},
+  {name: "temporaryInvert", getKbs: hideIndicator => ([
+    {...commandInfos.fxFilter.generate(), filterOption: "invert", filterTarget: "element", valueNumber: 1, key: "Space", adjustMode: AdjustMode.SET, label: gvar.gsm.command.temporaryInvertTooltip},
+    {...commandInfos.nothing.generate(), valueNumber: 0.15, key: "Space"},
+    {...commandInfos.fxFilter.generate(),  filterOption: "invert", filterTarget: "element", valueNumber: 0, key: "Space", adjustMode: AdjustMode.SET, invertIndicator: hideIndicator ? undefined : true}
+  ])},
+  {name: "temporaryGrayscale", getKbs: hideIndicator => ([
+    {...commandInfos.fxFilter.generate(), filterOption: "grayscale", filterTarget: "element", valueNumber: 1, key: "Space", adjustMode: AdjustMode.SET, label: gvar.gsm.command.temporaryGrayscaleTooltip},
+    {...commandInfos.nothing.generate(), valueNumber: 0.15, key: "Space"},
+    {...commandInfos.fxFilter.generate(),  filterOption: "grayscale", filterTarget: "element", valueNumber: 0, key: "Space", adjustMode: AdjustMode.SET, invertIndicator: hideIndicator ? undefined : true}
   ])}
 ]

@@ -143,7 +143,15 @@ export type Gsm = {
     cinemaTooltip: string,
     presets: string,
     temporarySpeed: string,
-    temporarySpeedTooltip: string
+    temporarySpeedTooltip: string,
+    temporaryMirror: string,
+    temporaryMirrorTooltip: string,
+    temporaryInvert: string,
+    temporaryInvertTooltip: string,
+    temporaryGrayscale: string,
+    temporaryGrayscaleTooltip: string,
+    toggleSpeed: string,
+    toggleSpeedTooltip: string
   },
   options: {
     flags: {

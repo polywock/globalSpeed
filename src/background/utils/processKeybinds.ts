@@ -14,7 +14,6 @@ import { initTabCapture, isTabCaptured, releaseTabCapture } from "./tabCapture"
 import { hashWithStoredSalt } from "src/utils/hash"
 import { IndicatorShowOpts } from "src/contentScript/isolated/utils/Indicator"
 import { KeepAlive } from "./KeepAlive"
-import { over } from "lodash"
 
 
 let lastSeek: {key: string, time: number, net: number}
@@ -25,7 +24,6 @@ export class ProcessKeybinds {
   loadedMedia?: {value: FlatMediaInfo}
   loadedMediaVideo?: {value: FlatMediaInfo}
   stopped = false 
-  isSpecial = false 
   constructor(private matches: KeybindMatch[], public tabInfo: TabInfo) {
     this.init()
   }
@@ -35,11 +33,7 @@ export class ProcessKeybinds {
   init = async () => {
     this.globalHideIndicator = (await gvar.es.getAllUnsafe())['g:hideIndicator']
 
-    let specialFirst = isTogglePattern(this.matches)
-
-    for (let match of this.matches) {
-      this.isSpecial = specialFirst
-      specialFirst = false 
+    for (let match of this.matches) { 
       if (this.stopped) return 
       await this.processKeybindMatch(match)
     }
@@ -109,23 +103,35 @@ type CommandHandlerArgs = ProcessKeybinds & {
   isAlt?: boolean
 } 
 
-let nothingCalledMap: {[key: string]: Symbol} = {}
+let nothingSymbolMap: {[key: string]: Symbol} = {}
+let nothingLastCalledAt: {[key: string]: number} = {}
 
 const commandHandlers: {
   [key in CommandName]: (args: CommandHandlerArgs) => Promise<void>
 } = {
   nothing: async args => {
-    if (args.kb.valueNumber > 0) {
-      // Note called again 
-      let calledAt = Symbol()
-      nothingCalledMap[args.kb.id] = calledAt 
-      KeepAlive.start(args.kb.valueNumber / 60 + 0.5)
-      await timeout(args.kb.valueNumber * 1000)
-      if (nothingCalledMap[args.kb.id] !== calledAt) {
-        args.stop()
+    if (!(args.kb.valueNumber > 0)) return
+
+    const now = Date.now() 
+    
+    // first in series, make it 0.35
+    let delay = args.kb.valueNumber
+
+    if (delay < 0.35)  {
+      let delta = now - nothingLastCalledAt[args.kb.id]
+      if (delta > 300 || isNaN(delta)) {
+        delay = 0.35 
       }
+      nothingLastCalledAt[args.kb.id] = now
     }
-    return 
+
+    let symbol = Symbol()
+    nothingSymbolMap[args.kb.id] = symbol 
+    delay > 10 && KeepAlive.start(delay / 60 + 0.5)
+    await timeout(delay * 1000)
+    if (nothingSymbolMap[args.kb.id] !== symbol) {
+      args.stop()
+    }
   },
   runCode: async args => {
     if (!isFirefox()) return 
@@ -499,7 +505,7 @@ async function processAdjustMode(args: CommandHandlerArgs) {
     value = kb.valueNumber ?? ref.default
     if (kb.command === "speed") {
       let view = (await fetch({speed: true, lastSpeed: true}))
-      if (!args.isSpecial && (view.speed?.toFixed(2) === value.toFixed(2) && view.lastSpeed != null)) {
+      if (!kb.skipToggleSpeed && (view.speed?.toFixed(2) === value.toFixed(2) && view.lastSpeed != null)) {
         value = view.lastSpeed
       }
     }
@@ -825,18 +831,4 @@ export async function setValue(init: SetValueInit) {
 
 function showIndicator(opts: IndicatorShowOpts, tabId: number, showAlt?: boolean) {
   sendMessageToConfigSync({type: "SHOW_INDICATOR", opts, showAlt}, tabId, 0)
-}
-
-function isTogglePattern(matches: KeybindMatch[]) {
-  // set speed -> (delay < 2) -> set speed 
-  if (matches.length !== 3) return 
-  let lb = matches[0].kb
-  let d = matches[1].kb
-  let rb = matches[2].kb
-
-  if (
-    (lb.command === "speed" && (lb.adjustMode || AdjustMode.SET) === AdjustMode.SET) && 
-    (d.command === "nothing" && d.valueNumber <= 2) &&
-    (rb.command === "speed" && (rb.adjustMode || AdjustMode.SET) === AdjustMode.SET)
-  ) return true 
 }

@@ -136,7 +136,6 @@ isFirefox() || chrome.commands.onCommand.addListener(
       new ProcessKeybinds(matches, tabInfo)
     }
 )
-
 chrome.contextMenus.onClicked.addListener(async (item, tab) => {
     const keybinds = (await fetchView({keybinds: true})).keybinds
     const matches = findMatchingKeybindsContext(keybinds, item.menuItemId as string)
@@ -162,7 +161,6 @@ declare global {
         setValue: {type: 'SET_STATEFUL', init: SetValueInit}
     }
 }
-
 
 chrome.runtime.onMessage.addListener((msg: Messages, sender, reply) => {
 
