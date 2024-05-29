@@ -1,0 +1,37 @@
+@keyframes keyframe_1 {
+    from { transform: scale(0.95); opacity: 1 }
+    to { transform: scale(1.05); opacity: 0 }
+}
+
+@keyframes keyframe_3 {
+    0% { transform: scale(1) }
+    80% { transform: scale(0.75) }
+    100% { transform: scale(0) }
+}
+
+@keyframes keyframe_4 {
+    0% { transform: scale(1) }
+    60% { transform: scale(0.95) }
+    90% { transform: scale(0.5); opacity: 0.5 }
+    100% { transform: scale(1.2); opacity: 0 }
+}
+
+@keyframes keyframe_5 {
+    0% { transform: scale(0.95) }
+    30% { transform: scale(1.05) }
+    100% { transform: scale(0) rotateZ(100deg); opacity: 0 }
+}
+
+
+:is(div:popover-open, div.popoverOpenYah) {
+    border: none;
+    font-family: "Segoe UI", "Avenir", Courier, monospace;
+    position: fixed;
+    left: 20px;
+
+    white-space: pre;
+    grid-auto-flow: column;
+    align-items: center;
+    pointer-events: none;
+    display: grid;
+}

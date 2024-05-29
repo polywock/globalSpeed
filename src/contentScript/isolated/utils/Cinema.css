@@ -1,0 +1,6 @@
+:is(::-webkit-scrollbar) {
+    display: none !important
+}
+:root, body {
+    scrollbar-width: none !important
+}
