@@ -20,6 +20,8 @@ export function generateMediaState(elem: HTMLMediaElement): MediaInfo {
   if (rootNode) {
     if (rootNode instanceof ShadowRoot) info.shadowMode = rootNode.mode 
     if (rootNode.pictureInPictureElement === elem) info.pipMode = true
+    // let fs = rootNode.fullscreenElement
+    // if (fs && (fs === elem || fs.contains(elem))) info.fsMode = true
   }
   if (elem.gsLoopTimeUpdateHandler) info.inLoop = true
   if (elem.gsSkipTimeUpdateHandler) info.inSkip = true
@@ -96,6 +98,7 @@ export type MediaInfo = {
   volume: number,
   muted?: boolean,
   pipMode?: boolean,
+  fsMode?: boolean,
   isConnected?: boolean,
   shadowMode?: ShadowRootMode,
   readyState: number,

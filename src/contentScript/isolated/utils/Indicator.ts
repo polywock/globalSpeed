@@ -12,6 +12,7 @@ const SMALL_SCALING = 0.83
 const BASE_OFFSET = 30 
 
 export class Indicator extends Popover {
+    main = document.createElement("div")
     icons = createOverlayIcons()
     scaling = 1
     duration = 1 
@@ -20,46 +21,40 @@ export class Indicator extends Popover {
 
     constructor() {
         super()
+        this._div.append(this.main)
         insertStyle(styles, this._shadow)
     }
     setInit = (init: IndicatorInit) => {
         init = init || {}
 
-        this._div.removeAttribute('style')
-        this._div.style.backgroundColor = init.backgroundColor || INDICATOR_INIT.backgroundColor
-        this._div.style.color = init.textColor || INDICATOR_INIT.textColor
-        if (init.showShadow) this._div.style.boxShadow = `1px 1px 35px 3px #ffffff88`
+        this.main.removeAttribute('style')
+        this.main.style.backgroundColor = init.backgroundColor || INDICATOR_INIT.backgroundColor
+        this.main.style.color = init.textColor || INDICATOR_INIT.textColor
+        if (init.showShadow) this.main.style.boxShadow = `1px 1px 35px 3px #ffffff88`
 
         this.animation = init.animation || 1 
         this.duration = init.duration ?? 1
         this.scaling = init.scaling ?? INDICATOR_INIT.scaling
         const rounding = (init.rounding ?? INDICATOR_INIT.rounding) * this.scaling
     
-        this._div.style.padding = `${BASE_PADDING * (this.scaling + rounding * 0.12)}px`
-        this._div.style.fontSize = `${BASE_FONT_SIZE * this.scaling}px`
-        this._div.style.borderRadius = rounding ? `${BASE_BORDER_RADIUS * rounding}px` : "0px"
+        this.main.style.padding = `${BASE_PADDING * (this.scaling + rounding * 0.12)}px`
+        this.main.style.fontSize = `${BASE_FONT_SIZE * this.scaling}px`
+        this.main.style.borderRadius = rounding ? `${BASE_BORDER_RADIUS * rounding}px` : "0px"
 
         const position = init.position ?? "TL"
-        
         if (position === 'C') {
-            if (this._supportsPopover) {
-                this._div.style.position = "static" 
-                this._div.style.inset = "revert"
-            } else {
-                this._div.style.left = `50vw`
-                this._div.style.top = `50vh`
-            }
+            this.main.style.position = "revert"
             return 
-        } 
+        } else {
+            this.main.style.position = "fixed"
+        }
         
         let offset = BASE_OFFSET * (init.offset ?? 1)
         const isTop = position.includes('T')
         const isLeft = position.includes('L')
-        this._div.style.position = 'fixed'
-        this._div.style.inset = 'unset'
 
-        this._div.style[isTop ? 'top' : 'bottom'] = `${offset}px`
-        this._div.style[isLeft ? 'left' : 'right'] = `${offset}px`
+        this.main.style[isTop ? 'top' : 'bottom'] = `${offset}px`
+        this.main.style[isLeft ? 'left' : 'right'] = `${offset}px`
     }
     release = () => {
         delete this.icons
@@ -68,11 +63,11 @@ export class Indicator extends Popover {
     }
     show = (opts: IndicatorShowOpts) => {
         clearTimeout(this.timeoutId)
-        this._div.innerText = opts.preText || "";
+        this.main.innerText = opts.preText || "";
         (opts.icons || []).forEach(v => {
-            this._div.appendChild(this.icons[v])
+            this.main.appendChild(this.icons[v])
         })
-        this._div.append(opts.text || "")
+        this.main.append(opts.text || "")
 
         const duration = (opts.duration ?? 900) * this.duration
 
@@ -81,9 +76,9 @@ export class Indicator extends Popover {
         if (!(opts.static || this.animation === 2)) {
             animation = `keyframe_${this.animation} ${duration}ms ease-in forwards`
         } 
-        this._div.style.animation = animation
+        this.main.style.animation = animation
         
-        this._div.style.fontSize = opts.fontSize ?? size 
+        this.main.style.fontSize = opts.fontSize ?? size 
         this._wrapper.remove()
         this._update(true)
 

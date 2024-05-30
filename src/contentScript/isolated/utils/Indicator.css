@@ -23,15 +23,20 @@
 }
 
 
-:is(div:popover-open, div.popoverOpenYah) {
+:is(div:popover-open, div.popoverOpenYah, #proo) {
     border: none;
-    font-family: "Segoe UI", "Avenir", Courier, monospace;
     position: fixed;
-    left: 20px;
-
+    width: 100vw;
+    left: 0px;
+    top: 0px;
+    height: 100vh;
+    margin: 0px;
+    pointer-events: none;
     white-space: pre;
     grid-auto-flow: column;
     align-items: center;
-    pointer-events: none;
-    display: grid;
+    justify-content: center;
+    display: grid !important;
+    background-color: transparent;
+    font-family: "Segoe UI", "Avenir", Courier, monospace;
 }

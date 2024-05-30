@@ -126,7 +126,6 @@ class TemporaryStyle {
   styles: HTMLStyleElement[] = []
   released = false 
   constructor(public style: string) {
-    console.log("STYLE: ", style)
     this.processAll()
   }
   release = () => {

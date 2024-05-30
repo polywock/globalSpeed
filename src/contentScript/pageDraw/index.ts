@@ -51,7 +51,7 @@ class PageDraw extends Popover {
     sizeCursor: string
 
     constructor() {
-        super(true)
+        super()
         window.addEventListener("resize", this.handleResizeDeb, { capture: true, passive: true })
         this.canvas.addEventListener("contextlost", this.handleContextLost, { capture: true, passive: true })
         window.addEventListener("wheel", this.handleWheel, { capture: true, passive: true })
@@ -249,6 +249,7 @@ class PageDraw extends Popover {
             this.isDrawing = { scaleMode: e.altKey || e.button === 1, erase, button: e.button, id: e.pointerId, refX: e.clientX, refY: e.clientY, refE: this.eraserSize, refD: this.brushSize }
             if (this.isDrawing.scaleMode) this.renewSizeCursor()
             this.syncCursor()
+            this.handlePointerMove(e)
         }
     }
     handlePointerUp = (e: PointerEvent) => {

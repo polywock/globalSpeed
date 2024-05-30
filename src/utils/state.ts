@@ -417,7 +417,7 @@ export async function localSetAuto(override: AnyDict): Promise<void> {
 
 const TR_REGEX = /(?:t|r|c):\d+\:/
 
-export function extractKey(storedKey: string) {
+function extractKey(storedKey: string) {
     if (storedKey.startsWith("g:")) return storedKey.slice(2)
     if (["t", "r", "c"].some(scheme => storedKey.startsWith(scheme))) {
         const match = TR_REGEX.exec(storedKey)
