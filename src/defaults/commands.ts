@@ -678,7 +678,7 @@ export function getDefaultKeybinds(): Keybind[] {
 export const availableCommandNames = flatJoin(
   groupByKey(
     Object.entries(commandInfos)
-      .filter(v => !v[1].requiresTabCapture || chrome.tabCapture)
+      .filter(v => !v[1].requiresTabCapture || (chrome.tabCapture && chrome.offscreen))
       .filter(v => !v[1].requiresPiPApi || !isFirefox())
       .filter(v => v[0] !== "runCode" || isFirefox())
       .map(([name, info]) => [name, info.group] as [string, CommandGroup]),
