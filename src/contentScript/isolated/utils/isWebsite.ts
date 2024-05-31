@@ -9,9 +9,9 @@ export let IS_VIMEO = false
 export let IS_REDDIT = false
 export let IS_FACEBOOK = false
 
-if ((document.URL || "").startsWith("https://www.netflix.com")) {
+if (location.hostname === "www.netflix.com") {
     IS_NETFLIX = true 
-} else if ((document.URL || "").startsWith("https://www.amazon")) {
+} else if ((document.URL || "").startsWith("www.amazon")) {
     IS_AMAZON = true 
 } else if (location.hostname === "www.bilibili.com") {
     IS_BILIBILI = true 

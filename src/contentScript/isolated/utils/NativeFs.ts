@@ -1,11 +1,12 @@
+import { insertStyle } from "src/utils/nativeUtils"
 import { IS_NATIVE } from "./isWebsite"
 
 export class NativeFs {
   lock?: {
     video: HTMLMediaElement,
     mo: MutationObserver,
-    originalValues: {controls: boolean, pointerEvents: string, background: string, scrollX: number, scrollY: number},
-    modifiedSheets: {sheet: StyleSheet, original: boolean}[],
+    originalValues: {controls: boolean,scrollX: number, scrollY: number},
+    style?: HTMLStyleElement,
     resetCount: number 
   }
   operationLock: boolean
@@ -40,71 +41,53 @@ export class NativeFs {
   }
   async activate(video: HTMLVideoElement) {
     await video.requestFullscreen()
+    if (!document.fullscreenElement) return
     this.ensureClickListeners()
+
+    let rootNode = video.getRootNode()
 
     this.lock = {
       video,
       originalValues: {
         controls: video.controls, 
-        pointerEvents: video.style.pointerEvents,
-        background: video.style.background,
         scrollX: window.scrollX,
         scrollY: window.scrollY
       },
       mo: new MutationObserver(this.ensureProper),
-      modifiedSheets: [],
+      style: insertStyle(`:is(*, #proooo > #fesss > #sion > #al) { all: revert !important; pointer-events: all; }`, rootNode instanceof ShadowRoot ? rootNode : document.documentElement),
       resetCount: 0
     }
 
-    let { mo, modifiedSheets  } = this.lock 
-
-    mo.observe(video, {attributeFilter: ["controls", "style"]});
-    
-    [...document.styleSheets].forEach(sheet => {
-      try {
-        const original = sheet.disabled
-        sheet.disabled = true 
-        modifiedSheets.push({sheet, original})
-      } catch (err) { }
-    }) 
+    this.lock.mo.observe(video, {attributeFilter: ["controls"]});
 
     this.ensureProper()
   }
   ensureProper = () => {
     if (!this.lock) return 
     let { video, resetCount } = this.lock
-    if (!video) return 
     
     if (!video.controls) {
       video.controls = true   
       resetCount++ > 1000 && this.releaseLock()
     }
-
-    if (video.style.pointerEvents !== "initial") {
-      video.style.pointerEvents = "initial"
-      resetCount++ > 1000 && this.releaseLock()
-    }
-
-    if (video.style.background !== "none") {
-      video.style.background = "none"
-      resetCount++ > 1000 && this.releaseLock()
-    }
   }
   ensureClickListeners = () => {
-    window.addEventListener("click", this.handleClick, true)
-    window.addEventListener("pointerdown", this.handleClick, true)
-    window.addEventListener("pointerup", this.handleClick, true)
-    window.addEventListener("mouseup", this.handleClick, true)
-    window.addEventListener("mousedown", this.handleClick, true)
+    gvar.os.eListen.clickCbs.add(this.handleClick)
+    gvar.os.eListen.pointerDownCbs.add(this.handleClick)
+    gvar.os.eListen.pointerUpCbs.add(this.handleClick)
+    gvar.os.eListen.mouseDownCbs.add(this.handleClick)
+    gvar.os.eListen.mouseUpCbs.add(this.handleClick)
+    gvar.os.eListen.touchStartCbs.add(this.handleClick)
   }
   removeClickListeners = () => {
-    window.removeEventListener("click", this.handleClick, true)
-    window.removeEventListener("pointerdown", this.handleClick, true)
-    window.removeEventListener("pointerup", this.handleClick, true)
-    window.removeEventListener("mouseup", this.handleClick, true)
-    window.removeEventListener("mousedown", this.handleClick, true)
+    gvar.os.eListen.clickCbs.delete(this.handleClick)
+    gvar.os.eListen.pointerDownCbs.delete(this.handleClick)
+    gvar.os.eListen.pointerUpCbs.delete(this.handleClick)
+    gvar.os.eListen.mouseDownCbs.delete(this.handleClick)
+    gvar.os.eListen.mouseUpCbs.delete(this.handleClick)
+    gvar.os.eListen.touchStartCbs.delete(this.handleClick)
   }
-  handleClick = (e: MouseEvent) => {
+  handleClick = (e: Event) => {
     e.stopImmediatePropagation()
   }
   releaseLock = async () => {
@@ -114,12 +97,8 @@ export class NativeFs {
     let { video, originalValues: {scrollX, scrollY}} = this.lock 
 
     lock.mo?.disconnect(); delete lock.mo
-    lock.modifiedSheets.forEach(({sheet, original}) => {
-      sheet.disabled = original 
-    })
+    lock.style?.remove(); delete lock.style
     video.controls = lock.originalValues.controls
-    video.style.pointerEvents = lock.originalValues.pointerEvents
-    video.style.background = lock.originalValues.background
     if (document.fullscreenElement) {
       await document.exitFullscreen()
     }

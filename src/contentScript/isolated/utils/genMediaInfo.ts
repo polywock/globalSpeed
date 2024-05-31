@@ -35,6 +35,15 @@ export function generateMediaState(elem: HTMLMediaElement): MediaInfo {
       info.videoSize = {w, h}
       if (elem.intersectionRatio) info.intersectionRatio = elem.intersectionRatio
     }
+    if (elem.isConnected) {
+      try {
+        info.isVisible = (elem.checkVisibility as any)({contentVisibilityAuto: true, opacityProperty: true, visibilityProperty: true})
+      } catch {}
+
+      let b = elem.isConnected ? elem.getBoundingClientRect() : null 
+      if (b) info.elementSize = {w: b.width, h: b.height}
+
+    }
     
     if (elem.gsFpsCount > 5) {
       const fps = elem.gsFpsSum / elem.gsFpsCount
@@ -105,6 +114,8 @@ export type MediaInfo = {
   hasVideoTrack?: boolean,
   hasAudioTrack?: boolean,
   videoSize?: {w: number, h: number},
+  elementSize?: {w: number, h: number},
+  isVisible?: boolean,
   inLoop?: boolean,
   inSkip?: boolean,
   marks: string[],

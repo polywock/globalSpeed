@@ -72,6 +72,22 @@ export async function getAutoMedia (tabInfo: TabInfo, videoOnly?: boolean) {
       }
       if (info.intersectionRatio > 0.05 && info.intersectionRatio === peakIntersect) {
         score += 0b10000
+      } else {
+        if (info.intersectionRatio > 0.9) {
+          score += 0b1000
+        } else if (info.intersectionRatio > 0.5) {
+          score += 0b100
+        } else if (info.intersectionRatio > 0.1) {
+          score += 0b10
+        }
+      }
+
+      if (info.isVisible) {
+        score += 0b10000
+      }
+
+      if (info.elementSize && info.elementSize.w > 200 && info.elementSize.h > 200) {
+        score += 0b1000
       }
       if (info.infinity || info.duration >= 30 * 60) {
         score += 0b1000
