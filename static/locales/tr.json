@@ -158,7 +158,7 @@
     "flags": {
       "header": "Seçenekler",
       "language": "dil",
-      "languageTooltip": "Bazı Türkçe çeviriler @FoofAPP tarafından yapılmıştır.",
+      "_languageTooltip": "Türkçe çevirilere katkıda bulunan kullanıcılar: @FoofAPP",
       "darkTheme": "karanlık tema",
       "showBadge": "rozet göster",
       "showBadgeTooltip": "Rozet, uzantı simgesi üzerindeki metindir.",

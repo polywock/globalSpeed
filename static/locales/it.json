@@ -157,7 +157,7 @@
     "flags": {
       "header": "Opzioni",
       "language": "lingua",
-      "languageTooltip": "Tutte le lingue, tranne l'inglese, sono state tradotte utilizzando strumenti online. (@albertopasqualetto ha apportato alcune modifiche alle traduzioni in italiano.)",
+      "_languageTooltip": "Utenti che hanno contribuito alle traduzioni italiane: @albertopasqualetto",
       "darkTheme": "tema scuro",
       "showBadge": "mostra distintivo",
       "showBadgeTooltip": "Il distintivo è il testo sull'icona dell'estensione.",

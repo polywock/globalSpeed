@@ -156,7 +156,6 @@
     "flags": {
       "header": "オプション",
       "language": "言語",
-      "languageTooltip": "英語を除くすべての言語は、オンラインツールを使用して翻訳されました。",
       "darkTheme": "暗いテーマ",
       "showBadge": "バッジを表示",
       "showBadgeTooltip": "バッジは拡張機能のアイコン上のテキストです。",

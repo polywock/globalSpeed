@@ -144,12 +144,6 @@ export type Gsm = {
     presets: string,
     temporarySpeed: string,
     temporarySpeedTooltip: string,
-    temporaryMirror: string,
-    temporaryMirrorTooltip: string,
-    temporaryInvert: string,
-    temporaryInvertTooltip: string,
-    temporaryGrayscale: string,
-    temporaryGrayscaleTooltip: string,
     toggleSpeed: string,
     toggleSpeedTooltip: string
   },
@@ -157,7 +151,7 @@ export type Gsm = {
     flags: {
       header: string,
       language: string,
-      languageTooltip: string,
+      _languageTooltip?: string,
       darkTheme: string,
       showBadge: string,
       showBadgeTooltip: string,

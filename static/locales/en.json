@@ -157,7 +157,7 @@
     "flags": {
       "header": "Options",
       "language": "language",
-      "languageTooltip": "All languages except English were translated using online tools.",
+      "_languageTooltip": "",
       "darkTheme": "dark theme",
       "showBadge": "show badge",
       "showBadgeTooltip": "The badge is the text on the extension icon.",

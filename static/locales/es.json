@@ -156,7 +156,6 @@
     "flags": {
       "header": "Opciones",
       "language": "idioma",
-      "languageTooltip": "Todos los idiomas excepto el inglés fueron traducidos utilizando herramientas en línea.",
       "darkTheme": "tema oscuro",
       "showBadge": "mostra distintivo",
       "showBadgeTooltip": "El distintivo es el texto en el icono de la extensión.",

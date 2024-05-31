@@ -157,7 +157,6 @@
     "flags": {
       "header": "옵션",
       "language": "언어",
-      "languageTooltip": "영어를 제외한 모든 언어는 온라인 도구를 사용하여 번역되었습니다.",
       "darkTheme": "어두운 테마",
       "showBadge": "배지 표시",
       "showBadgeTooltip": "배지는 확장 프로그램 아이콘의 텍스트입니다.",

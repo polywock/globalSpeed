@@ -12,7 +12,7 @@ const { exit } = require("process")
 
 
 
-const locales = ["en", "it", "es", "ja", "ko", "pt_BR", "ru", "tr", "zh_CN", "zh_TW"]
+const locales = ["en", "es", "it", "ja", "ko", "pt_BR", "ru", "tr", "uk", "vi", "zh_CN", "zh_TW"]
 
 let targetLeaves;
 
@@ -46,8 +46,8 @@ for (let locale of locales) {
   const omitted = new Set(targetLeaves.filter(v => !leaves.includes(v)))
   const extra = new Set(leaves.filter(v => !targetLeaves.includes(v)))
 
-  omitted.forEach(o => o.startsWith("_") && omitted.delete(o))
-  extra.forEach(o => o.startsWith("_") && extra.delete(o))
+  omitted.forEach(o => (o.startsWith("_") || o.includes("._")) && omitted.delete(o))
+  extra.forEach(o => (o.startsWith("_") || o.includes("._")) && extra.delete(o))
 
   if (omitted.size) {
     console.log("OMITTED", "\n=========")

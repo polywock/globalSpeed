@@ -159,7 +159,7 @@
     "flags": {
       "header": "选项",
       "language": "语言",
-      "languageTooltip": "除了英语以外的所有语言都是使用在线工具翻译的。(@liangjiancang 对中文翻译做了一些调整。)",
+      "_languageTooltip": "对中文翻译做出贡献的用户：@liangjiancang",
       "darkTheme": "深色主题",
       "showBadge": "显示徽章",
       "showBadgeTooltip": "徽章是扩展图标上的文字。",

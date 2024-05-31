@@ -157,7 +157,7 @@
     "flags": {
       "header": "選項",
       "language": "語言",
-      "languageTooltip": "除了英文之外的所有語言都是使用線上工具翻譯的。(@nathan60107 對中文翻譯作了一些調整。)",
+      "_languageTooltip": "對中文翻譯做出貢獻的用戶：@nathan60107",
       "darkTheme": "深色佈景主題",
       "showBadge": "顯示徽章",
       "showBadgeTooltip": "徽章是擴展圖標上的文字。",

@@ -157,7 +157,7 @@
     "flags": {
       "header": "Tùy chọn",
       "language": "ngôn ngữ",
-      "languageTooltip": "Tất cả các ngôn ngữ trừ tiếng Anh đều được dịch bằng công cụ trực tuyến.",
+      "_languageTooltip": "Những người dùng đã đóng góp cho bản dịch tiếng Việt: @zeref-dragneel",
       "darkTheme": "chủ đề tối",
       "showBadge": "hiển thị huy hiệu",
       "showBadgeTooltip": "Huy hiệu là văn bản trên biểu tượng mở rộng.",

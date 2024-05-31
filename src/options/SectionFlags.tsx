@@ -69,7 +69,7 @@ export function SectionFlags(props: {}) {
         <div className="field">
           <div className="labelWithTooltip">
             <span>{gvar.gsm.options.flags.language}</span>
-            <Tooltip tooltip={gvar.gsm.options.flags.languageTooltip}/>
+            {gvar.gsm.options.flags._languageTooltip && <Tooltip tooltip={gvar.gsm.options.flags._languageTooltip}/>}
           </div>
           <select className="padded" value={view.language || "detect"} onChange={e => {
             setView({language: e.target.value})
