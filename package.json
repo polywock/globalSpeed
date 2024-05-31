@@ -16,8 +16,8 @@
     "build:commonFf": "rm -rf buildFf && FIREFOX=true webpack --config webpack.config.js && cp -r static/. staticFf/. buildFf/unpacked && node tools/replaceCtx.js && find buildFf -name '.DS_Store' -type f -delete",
     "build:dev": "    export NODE_ENV=development && npm run build:common",
     "build:devFf": "  export NODE_ENV=development && npm run build:commonFf",
-    "build:prod": "   export NODE_ENV=production && npm run build:common   && cd build/unpacked   && zip -r '../global-speed-chromium.zip' .",
-    "build:prodFf": " export NODE_ENV=production && npm run build:commonFf && cd buildFf/unpacked && zip -r '../global-speed-firefox.zip' ."
+    "build:prod": "   export NODE_ENV=production && npm run build:common   &&              node tools/minifyJson.js && cd build/unpacked   && zip -r '../global-speed-chromium.zip' .",
+    "build:prodFf": " export NODE_ENV=production && npm run build:commonFf && FIREFOX=true node tools/minifyJson.js && cd buildFf/unpacked && zip -r '../global-speed-firefox.zip' ."
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",
