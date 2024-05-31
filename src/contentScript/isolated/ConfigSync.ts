@@ -20,7 +20,7 @@ export class ConfigSync {
   }, 300)
   speedClient = new SubscribeView({speed: true, freePitch: true, enabled: true, superDisable: true}, gvar.tabInfo.tabId, true, v => {
     this.handleSpeedChange()
-  }, 150, 300)
+  }, 50, 150)
   ignoreList = new Set<string>() 
   init = () => {
     gvar.os.eListen.keyDownCbs.add(this.handleKeyDown)

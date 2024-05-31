@@ -43,7 +43,9 @@ export class MessageTower {
           reply(true)
           return 
         } else if (msg.type === "BG_SPEED_OVERRIDE") {
+          if (!gvar.os?.speedSync) return 
           gvar.os.speedSync.latest = msg.value
+          gvar.os.speedSync.update()
         } else if (msg.type === "TRACK_FOCUS") {
           if (!gvar.latestFocus) {
             gvar.latestFocus = new LatestFocus(msg.tabKey, msg.otherTabKey)

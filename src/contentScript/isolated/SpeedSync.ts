@@ -8,7 +8,7 @@ export class SpeedSync {
 
   }
   release = () => {
-    clearInterval(this.intervalId)
+    clearInterval(this.intervalId); delete this.intervalId
   }
   update = () => {
     if (this.latest) {
