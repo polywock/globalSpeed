@@ -5,6 +5,7 @@ import { Gsm } from "./GsmType";
 // Add language information to LOCALE_MAP (this file) 
 // Add language to static/_locales folder for name, description. 
 // Add language to static/locales folder for all other translations. 
+// Add language to tools/valideLocale.js "locales" list.
 // run "node tools/validateLocale.js" to verify the locales/ file has all the same properties as static/en.json (reference)
 
 declare global {
@@ -59,6 +60,7 @@ export const LOCALE_MAP: {
   "detect": {display: "Auto", title: "Try to find a match using browser language settings, system language settings, or fallback to English."},
   "en": { display: "English", title: "English" },
   "es": { display: "Español", title: "Spanish" },
+  "id": { display: "Bahasa Indonesia", title: "Indonesian" },
   "it": { display: "Italiano", title: "Italian" },
   "ja": { display: "日本語", title: "Japanese" },
   "ko": { display: "한국어", title: "Korean" },
@@ -72,5 +74,5 @@ export const LOCALE_MAP: {
 }
 
 
-const AVAILABLE_LOCALES = new Set(["en", "es", "it", "ja", "ko", "pt_BR", "ru", "tr", "uk", "vi", "zh_CN", "zh_TW"])
+const AVAILABLE_LOCALES = new Set(["en", "es", "id", "it", "ja", "ko", "pt_BR", "ru", "tr", "uk", "vi", "zh_CN", "zh_TW"])
 

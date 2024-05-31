@@ -12,7 +12,7 @@ const { exit } = require("process")
 
 
 
-const locales = ["en", "es", "it", "ja", "ko", "pt_BR", "ru", "tr", "uk", "vi", "zh_CN", "zh_TW"]
+const locales = ["en", "es", "id", "it", "ja", "ko", "pt_BR", "ru", "tr", "uk", "vi", "zh_CN", "zh_TW"]
 
 let targetLeaves;
 
