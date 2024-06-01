@@ -25,7 +25,7 @@ import { CinemaModal } from "../CinemaModal"
 import { useState } from "react"
 import { IoEllipsisVertical } from "react-icons/io5"
 
-const invertableKeys = new Set(["fastSeek", "autoPause", "skipPauseSmall", "pauseWhileScrubbing", "relativeToSpeed", "wraparound", "itcWraparound", "showNetDuration", "seekOnce", "allowAlt", "noWrap", "noHold", "ignoreNavigate", "skipToggleSpeed"])
+const invertableKeys = new Set(["fastSeek", "autoPause", "skipPauseSmall", "pauseWhileScrubbing", "relativeToSpeed", "wraparound", "itcWraparound", "showNetDuration", "seekOnce", "allowAlt", "cycleNoWrap", "noHold", "ignoreNavigate", "skipToggleSpeed"])
 const memMap = new Map<string, any>()
 
 function saveToMem(kb: Keybind, adjustMode: AdjustMode) {
@@ -263,10 +263,10 @@ function ensureItcList(list: KebabListProps["list"], handlers: KebabListProps["o
 
 function ensureCycleList(list: KebabListProps["list"], handlers: KebabListProps["onSelect"][], value: KeybindControlProps["value"], invertFlag: (key: string) => any) {
     list.push(
-        { name: "allowAlt", checked: value.allowAlt, label: makeLabelWithTooltip(gvar.gsm.options.editor.reversible, gvar.gsm.options.editor.reversibleTooltip) }
+        { name: "allowAlt", close: true, checked: value.allowAlt, label: makeLabelWithTooltip(gvar.gsm.options.editor.reversible, gvar.gsm.options.editor.reversibleTooltip) }
     )
     value.allowAlt && list.push(
-        { name: "noWrap", checked: !value.cycleNoWrap, label: makeLabelWithTooltip(gvar.gsm.options.editor.wraparound, gvar.gsm.options.editor.wraparoundTooltip) }
+        { name: "cycleNoWrap", checked: !value.cycleNoWrap, label: makeLabelWithTooltip(gvar.gsm.options.editor.wraparound, gvar.gsm.options.editor.wraparoundTooltip) }
     )
 
     handlers.push((name: string) => {
