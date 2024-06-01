@@ -218,14 +218,9 @@ function FxRuleControl(props: FxRuleControlProps) {
   const [open, setOpen] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>()
 
-  let { overrideFx } = props.rule 
-  if (!overrideFx) {
-    const fx = getDefaultFx()
-    overrideFx = {
-      elementFx: fx,
-      backdropFx: fx
-    }
-  }
+  let overrideFx = (props.rule.overrideFx || {}) as typeof props.rule.overrideFx
+  overrideFx.backdropFx = overrideFx.backdropFx || getDefaultFx()
+  overrideFx.elementFx = overrideFx.elementFx || getDefaultFx()
 
   return <div className="FxControlButton">
     <button className="icon gear interactive" onClick={e => setOpen(!open)}>
