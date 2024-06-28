@@ -25,7 +25,7 @@ import { CinemaModal } from "../CinemaModal"
 import { useState } from "react"
 import { IoEllipsisVertical } from "react-icons/io5"
 
-const invertableKeys = new Set(["fastSeek", "autoPause", "skipPauseSmall", "pauseWhileScrubbing", "relativeToSpeed", "wraparound", "itcWraparound", "showNetDuration", "seekOnce", "allowAlt", "cycleNoWrap", "noHold", "ignoreNavigate", "skipToggleSpeed"])
+const invertableKeys = new Set(["fastSeek", "autoPause", "skipPauseSmall", "pauseWhileScrubbing", "relativeToSpeed", "wraparound", "itcWraparound", "showNetDuration", "seekOnce", "allowAlt", "cycleNoWrap", "noHold", "ignoreNavigate", "skipToggleSpeed", "alwaysOn"])
 const memMap = new Map<string, any>()
 
 function saveToMem(kb: Keybind, adjustMode: AdjustMode) {
@@ -63,7 +63,14 @@ export function NameArea(props: NameAreaProps) {
     const { command, value, hasSpecial } = props
 
     const kebabList: KebabListProps["list"] = []
-    const kebabListHandlers: KebabListProps["onSelect"][] = []
+    const kebabListHandlers: KebabListProps["onSelect"][] = [
+        (name: string) => {
+            if (invertableKeys.has(name)) {
+                invertFlag(name as keyof Keybind)
+                return true 
+            }
+        }
+    ]
 
     let label = (gvar.gsm.command as any)[value.command]
     let tooltip = (gvar.gsm.command as any)[value.command.concat("Tooltip")]
@@ -85,8 +92,8 @@ export function NameArea(props: NameAreaProps) {
     value.command === "speed" && ensureSpeedList(kebabList, kebabListHandlers, value, invertFlag)
     ;(value.adjustMode === AdjustMode.ITC || value.adjustMode === AdjustMode.ITC_REL) && ensureItcList(kebabList, kebabListHandlers, value, invertFlag)
     value.adjustMode === AdjustMode.CYCLE && ensureCycleList(kebabList, kebabListHandlers, value, invertFlag)
-
-    if (value.command === "loop" || value.command === "skip") ensureLoopList(kebabList, kebabListHandlers, value, invertFlag)
+    if (value.command === "state" && value.trigger !== Trigger.CONTEXT) kebabList.push({name: "alwaysOn", checked: value.alwaysOn, label: makeLabelWithTooltip(gvar.gsm.command.alwaysOn, gvar.gsm.command.alwaysOnTooltip) })
+    if (value.command === "loop" || value.command === "skip") kebabList.push({name: "ignoreNavigate", checked: !value.ignoreNavigate, label: makeLabelWithTooltip(gvar.gsm.command.autoBreak, value.command === "loop" ? gvar.gsm.command.autoBreakTooltip : gvar.gsm.command.autoBreakTooltipAlt) })
 
     return (
         <div className="command">
@@ -236,13 +243,6 @@ function ensureSeekList(list: KebabListProps["list"], handlers: KebabListProps["
             { name: "itcWraparound", checked: value.itcWraparound, label: makeLabelWithTooltip(gvar.gsm.options.editor.wraparound, gvar.gsm.options.editor.wraparoundTooltip) },
         )
     }
-    
-    handlers.push((name: string) => {
-        if (invertableKeys.has(name)) {
-            invertFlag(name as keyof Keybind)
-            return true 
-        }
-    })
 }
 
 function ensureItcList(list: KebabListProps["list"], handlers: KebabListProps["onSelect"][], value: KeybindControlProps["value"], invertFlag: (key: string) => any) {
@@ -252,13 +252,6 @@ function ensureItcList(list: KebabListProps["list"], handlers: KebabListProps["o
     if ((value.trigger || Trigger.LOCAL) === Trigger.LOCAL) {
         list.push({name: "noHold", label: makeLabelWithTooltip(gvar.gsm.options.editor.pressAndHold, gvar.gsm.options.editor.pressAndHoldTooltip), checked: !value.noHold})
     }
-
-    handlers.push((name: string) => {
-        if (invertableKeys.has(name)) {
-            invertFlag(name as keyof Keybind)
-            return true 
-        }
-    })
 }
 
 function ensureCycleList(list: KebabListProps["list"], handlers: KebabListProps["onSelect"][], value: KeybindControlProps["value"], invertFlag: (key: string) => any) {
@@ -269,26 +262,8 @@ function ensureCycleList(list: KebabListProps["list"], handlers: KebabListProps[
         { name: "cycleNoWrap", checked: !value.cycleNoWrap, label: makeLabelWithTooltip(gvar.gsm.options.editor.wraparound, gvar.gsm.options.editor.wraparoundTooltip) }
     )
 
-    handlers.push((name: string) => {
-        if (invertableKeys.has(name)) {
-            invertFlag(name as keyof Keybind)
-            return true 
-        }
-    })
 }
 
-function ensureLoopList(list: KebabListProps["list"], handlers: KebabListProps["onSelect"][], value: KeybindControlProps["value"], invertFlag: (key: string) => any) {
-    list.push(
-        { name: "ignoreNavigate", checked: !value.ignoreNavigate, label: makeLabelWithTooltip(gvar.gsm.command.autoBreak, value.command === "loop" ? gvar.gsm.command.autoBreakTooltip : gvar.gsm.command.autoBreakTooltipAlt) }
-    )
-
-    handlers.push((name: string) => {
-        if (invertableKeys.has(name)) {
-            invertFlag(name as keyof Keybind)
-            return true 
-        }
-    })
-}
 
 function ensureSpeedList(list: KebabListProps["list"], handlers: KebabListProps["onSelect"][], value: KeybindControlProps["value"], invertFlag: (key: string) => any) {
     if ((value.adjustMode || AdjustMode.SET) !== AdjustMode.SET) return 

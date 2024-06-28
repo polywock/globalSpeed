@@ -282,7 +282,8 @@ export type Keybind = {
   cycleIncrement?: number,
   spacing?: number,
   condition?: URLCondition,
-  oncePerUp?: boolean
+  oncePerUp?: boolean,
+  alwaysOn?: boolean
 }
 
 export type KeybindMatch = {

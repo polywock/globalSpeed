@@ -221,7 +221,6 @@ const commandHandlers: {
   state: async args => {
     const { kb, show, override, fetch } = args 
     const view = await fetch({enabled: true, latestViaShortcut: true})
-    if (!(view.enabled || view.latestViaShortcut)) return 
     override.latestViaShortcut = true 
     if (kb.valueState === "off" || (kb.valueState === "toggle" && view.enabled)) {
       override.enabled = false 

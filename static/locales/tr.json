@@ -152,7 +152,9 @@
     "temporarySpeed": "geçici hız",
     "temporarySpeedTooltip": "Geçici hızı basılı tutun.",
     "toggleSpeed": "hız değiştirme",
-    "toggleSpeedTooltip": "Kısayol hızı ve son hız arasında geçiş yapın."    
+    "toggleSpeedTooltip": "Kısayol hızı ve son hız arasında geçiş yapın.",
+    "alwaysOn": "her zaman açık",
+    "alwaysOnTooltip": "Varsayılan olarak, kısayol, aynı kısayol kullanılarak en son devre dışı bırakıldıysa yalnızca uzantıyı yeniden etkinleştirebilir. Kısayolun, UI menüsü aracılığıyla kapatılsa bile uzantıyı etkinleştirmek için her zaman çalışmasını sağlamak için bu ayarı etkinleştirin."   
   },
   "options": {
     "flags": {

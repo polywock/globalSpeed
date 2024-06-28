@@ -150,7 +150,9 @@
     "temporarySpeed": "velocidade temporária",
     "temporarySpeedTooltip": "Pressione e segure a velocidade temporária.",
     "toggleSpeed": "alternar velocidade",
-    "toggleSpeedTooltip": "Alterna entre a velocidade do atalho e a última velocidade."    
+    "toggleSpeedTooltip": "Alterna entre a velocidade do atalho e a última velocidade.",
+    "alwaysOn": "sempre ligado",
+    "alwaysOnTooltip": "Por padrão, o atalho só pode reativar a extensão se ela foi desativada pela última vez usando o mesmo atalho. Ative esta configuração para garantir que o atalho sempre funcione para habilitar a extensão, mesmo que ela tenha sido desligada pelo menu da UI."    
   },
   "options": {
     "flags": {

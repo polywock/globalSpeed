@@ -150,7 +150,9 @@
     "temporarySpeed": "一時速度",
     "temporarySpeedTooltip": "一時速度を押し続けてください。",
     "toggleSpeed": "速度切替",
-    "toggleSpeedTooltip": "ショートカット速度と最後の速度を切り替えます。"    
+    "toggleSpeedTooltip": "ショートカット速度と最後の速度を切り替えます。",
+    "alwaysOn": "常にオン",
+    "alwaysOnTooltip": "デフォルトでは、ショートカットは同じショートカットを使用して最後に無効にした場合にのみ拡張機能を再有効化できます。この設定を有効にすると、ショートカットがUIメニューを介してオフにされた場合でも、拡張機能を有効にするために常に機能するようにします。"    
   },
   "options": {
     "flags": {

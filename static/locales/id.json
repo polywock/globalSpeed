@@ -142,7 +142,9 @@
     "temporarySpeed": "kecepatan sementara",
     "temporarySpeedTooltip": "Tekan dan tahan kecepatan sementara.",
     "toggleSpeed": "alih kecepatan",
-    "toggleSpeedTooltip": "Beralih antara kecepatan pintasan dan kecepatan terakhir."
+    "toggleSpeedTooltip": "Beralih antara kecepatan pintasan dan kecepatan terakhir.",
+    "alwaysOn": "selalu aktif",
+    "alwaysOnTooltip": "Secara default, pintasan hanya dapat mengaktifkan kembali ekstensi jika terakhir kali dinonaktifkan menggunakan pintasan yang sama. Aktifkan pengaturan ini untuk memastikan pintasan selalu berfungsi untuk mengaktifkan ekstensi, bahkan jika dimatikan melalui menu UI."
   },
   "options": {
     "flags": {

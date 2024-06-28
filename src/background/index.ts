@@ -4,7 +4,7 @@ import "./badge"
 import "./rules"
 import "./capture"
 
-import { AnyDict, CONTEXT_KEYS, Context, InitialContext, KeybindMatch, KeybindMatchId, State, URLRule} from "src/types"
+import { AnyDict, CONTEXT_KEYS, Context, InitialContext, Keybind, KeybindMatch, KeybindMatchId, State, Trigger, URLRule} from "src/types"
 import { PREFIX_SETS, dumpConfig, fetchView, getKeysByPrefix, pushView, restoreConfig } from "src/utils/state"
 import { migrateSchema } from "src/background/utils/migrateSchema"
 import { getDefaultContext, getDefaultState } from "src/defaults"
@@ -109,12 +109,19 @@ chrome.tabs.onCreated.addListener(async tab => {
 isFirefox() || chrome.commands.onCommand.addListener(
     async (command: string, tab: chrome.tabs.Tab) => {
       const isGlobal = !tab
-      const view = await fetchView({enabled: true, superDisable: true, keybinds: true, keybindsUrlCondition: true})
-      if (!view.enabled || view.superDisable) return 
-      let matches = findMatchingKeybindsGlobal(view.keybinds || [], command)
+      const view = await fetchView({enabled: true, superDisable: true, keybinds: true, keybindsUrlCondition: true, latestViaShortcut: true})
+      if (view.superDisable) return 
+
+      let keybinds: Keybind[] = view.keybinds || []
+      if (!view.enabled) {
+        keybinds = keybinds.filter(kb => kb.command === "state" && kb.enabled && (kb.trigger || Trigger.LOCAL) === Trigger.LOCAL && (view.latestViaShortcut || kb.alwaysOn))
+        if (!keybinds.length) return 
+      }
+
+      let matches = findMatchingKeybindsGlobal(keybinds, command)
     
       if (!matches.length) return 
-      // Latest is fine? Play around later.s
+      // Latest is fine? Play around later.
       let tabInfo = tab ? tabToTabInfo(tab) : (await getLatestActiveTabInfo())
       tabInfo = await getCorrectPane(tabInfo)
     

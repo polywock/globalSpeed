@@ -151,7 +151,9 @@
     "temporarySpeed": "臨時速度",
     "temporarySpeedTooltip": "按住臨時速度。",
     "toggleSpeed": "切換速度",
-    "toggleSpeedTooltip": "在快捷速度和最後的速度之間切換。"    
+    "toggleSpeedTooltip": "在快捷速度和最後的速度之間切換。",
+    "alwaysOn": "始終開啟",
+    "alwaysOnTooltip": "默認情況下，如果快捷鍵上次使用相同快捷鍵禁用擴充功能，則快捷鍵只能重新激活擴充功能。啟用此設置可確保快捷鍵始終可用於啟用擴充功能，即使它是通過UI菜單關閉的。"    
   },
   "options": {
     "flags": {

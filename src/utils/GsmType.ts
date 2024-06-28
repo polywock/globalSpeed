@@ -145,7 +145,9 @@ export type Gsm = {
     temporarySpeed: string,
     temporarySpeedTooltip: string,
     toggleSpeed: string,
-    toggleSpeedTooltip: string
+    toggleSpeedTooltip: string,
+    alwaysOn: string,
+    alwaysOnTooltip: string
   },
   options: {
     flags: {

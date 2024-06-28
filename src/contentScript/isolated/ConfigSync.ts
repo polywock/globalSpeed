@@ -2,7 +2,7 @@ import { extractHotkey  } from "../../utils/keys"
 import { SubscribeView } from "../../utils/state"
 import { FxSync } from "./FxSync"
 import { findMatchingKeybindsLocal, testURL } from "../../utils/configUtils"
-import { AdjustMode } from "src/types"
+import { AdjustMode, Keybind, Trigger } from "src/types"
 import { Circle } from "./utils/Circle"
 import { getLeaf } from "src/utils/nativeUtils"
 
@@ -98,10 +98,14 @@ export class ConfigSync {
     if (!chrome.runtime?.id) return gvar.os.handleOrphan()
     if (!this.client?.view) return 
     if (this.client.view.superDisable) return 
-    const enabled = this.client.view.enabled && !this.client.view.superDisable
-    if (!enabled && !this.client.view.latestViaShortcut) return 
+    const enabled = this.client.view.enabled
+    let keybinds = this.client.view.keybinds
+    if (!enabled) {
+      keybinds = this.client.view.keybinds.filter(kb => kb.command === "state" && kb.enabled && (kb.trigger || Trigger.LOCAL) === Trigger.LOCAL && (this.client.view.latestViaShortcut || kb.alwaysOn))
+      console.log("KEYBINDS: ,", keybinds)
+      if (!keybinds.length) return 
+    }
 
-    const keybinds = this.client.view.keybinds
     this.blockKeyUp = false 
 
 
@@ -125,7 +129,7 @@ export class ConfigSync {
     }
   
     const eventHotkey = extractHotkey(e, true, true)
-    let matches = findMatchingKeybindsLocal(enabled ? keybinds : keybinds.filter(v => v.command === "state"), eventHotkey)
+    let matches = findMatchingKeybindsLocal(keybinds, eventHotkey)
 
     matches = matches.filter(match => {
       if (match.kb.condition?.parts.length > 0) {

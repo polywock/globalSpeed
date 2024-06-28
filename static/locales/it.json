@@ -151,7 +151,9 @@
     "temporarySpeed": "velocità temporanea",
     "temporarySpeedTooltip": "Premi e tieni premuta la velocità temporanea.",
     "toggleSpeed": "velocità toggle",
-    "toggleSpeedTooltip": "Alterna tra la velocità della scorciatoia e l'ultima velocità."    
+    "toggleSpeedTooltip": "Alterna tra la velocità della scorciatoia e l'ultima velocità.",
+    "alwaysOn": "sempre acceso",
+    "alwaysOnTooltip": "Per impostazione predefinita, la scorciatoia può riattivare l'estensione solo se è stata disabilitata l'ultima volta utilizzando la stessa scorciatoia. Abilita questa impostazione per assicurarti che la scorciatoia funzioni sempre per abilitare l'estensione, anche se è stata disattivata tramite il menu UI."
   },
   "options": {
     "flags": {

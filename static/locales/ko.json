@@ -151,7 +151,9 @@
     "temporarySpeed": "임시 속도",
     "temporarySpeedTooltip": "임시 속도를 누르고 유지합니다.",
     "toggleSpeed": "속도 전환",
-    "toggleSpeedTooltip": "단축키 속도와 마지막 속도를 전환합니다."    
+    "toggleSpeedTooltip": "단축키 속도와 마지막 속도를 전환합니다.",
+    "alwaysOn": "항상 켜짐",
+    "alwaysOnTooltip": "기본적으로 바로 가기는 동일한 바로 가기를 사용하여 마지막으로 비활성화된 경우에만 확장 기능을 다시 활성화할 수 있습니다. 이 설정을 활성화하면 UI 메뉴를 통해 비활성화된 경우에도 바로 가기가 항상 확장 기능을 활성화하는 데 작동하도록 합니다."    
   },
   "options": {
     "flags": {

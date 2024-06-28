@@ -153,7 +153,9 @@
     "temporarySpeed": "临时速度",
     "temporarySpeedTooltip": "按住临时速度。",
     "toggleSpeed": "切换速度",
-    "toggleSpeedTooltip": "在快捷速度和最后的速度之间切换。"    
+    "toggleSpeedTooltip": "在快捷速度和最后的速度之间切换。",
+    "alwaysOn": "始终开启",
+    "alwaysOnTooltip": "默认情况下，快捷键只能在上次使用相同快捷键禁用扩展后重新激活该扩展。启用此设置可确保快捷键始终可用于启用扩展，即使它是通过UI菜单关闭的。"    
   },
   "options": {
     "flags": {
