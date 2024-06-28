@@ -114,7 +114,7 @@ isFirefox() || chrome.commands.onCommand.addListener(
 
       let keybinds: Keybind[] = view.keybinds || []
       if (!view.enabled) {
-        keybinds = keybinds.filter(kb => kb.command === "state" && kb.enabled && (kb.trigger || Trigger.LOCAL) === Trigger.LOCAL && (view.latestViaShortcut || kb.alwaysOn))
+        keybinds = keybinds.filter(kb => kb.command === "state" && kb.enabled && kb.trigger === Trigger.GLOBAL && (view.latestViaShortcut || kb.alwaysOn))
         if (!keybinds.length) return 
       }
 
