@@ -17,10 +17,10 @@ export class ConfigSync {
   client = new SubscribeView({ghostMode: true, ghostModeUrlCondition: true, enabled: true, superDisable: true, latestViaShortcut: true, keybinds: true, keybindsUrlCondition: true, indicatorInit: true, circleWidget: true, circleInit: true}, gvar.tabInfo.tabId, true, (v, onLaunch) => {
     if (onLaunch) this.init() 
     this.handleChange()
-  }, 100)
+  }, 300)
   speedClient = new SubscribeView({speed: true, freePitch: true, enabled: true, superDisable: true}, gvar.tabInfo.tabId, true, v => {
     this.handleSpeedChange()
-  })
+  }, 100, 150)
   ignoreList = new Set<string>() 
   init = () => {
     gvar.os.eListen.keyDownCbs.add(this.handleKeyDown)

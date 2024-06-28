@@ -301,6 +301,7 @@ class StratumClient {
   wiggleOn = (parent: HTMLElement | ShadowRoot) => {
     native.appendChild.call(parent, this.#parasite)
     native.dispatchEvent.call(this.#parasiteRoot, new native.CustomEvent(this.#serverName, {detail: native.JSON.stringify({type: "WIGGLE"})}))
+    this.#parasite.remove()
   }
 }
 

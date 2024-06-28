@@ -272,7 +272,7 @@ export class Circle extends Popover {
             let delta = this.strong ? 0.25 : 0.1
             const view = await fetchView({speed: true, lastSpeed: true}, gvar.tabInfo.tabId)
             let speed = conformSpeed(roundTo(view.speed + (this.direction === Direction.TOP ? delta : -delta), delta))
-            pushView({override: {speed, latestViaShortcut: false, lastSpeed: view.speed}, tabId: gvar.tabInfo.tabId})
+            pushView({override: {speed, lastSpeed: view.speed}, tabId: gvar.tabInfo.tabId})
             this.indicator.show({text: formatSpeed(speed)})
         } else {
             let delta = this.strong ? 30 : 10

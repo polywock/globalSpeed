@@ -197,7 +197,7 @@ export class SubscribeView {
 
     constructor(_selector: StateViewSelector | string[], private tabId?: number, private onLaunch?: boolean, cb?: SubViewCallback, public wait?: number, public maxWait?: number) {
         this.triggerCbs = this.wait ? (
-            debounce(this._triggerCbs, this.wait ?? 0, {trailing: true, leading: true, ...(this.maxWait == null ? {} : {maxWait: this.maxWait})})
+            debounce(this._triggerCbs, this.wait, {trailing: true, leading: true, ...(this.maxWait == null ? {} : {maxWait: this.maxWait})})
         ) : this._triggerCbs
 
         this.tabId = tabId ?? 0

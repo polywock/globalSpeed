@@ -23,7 +23,7 @@ declare global {
   
         showIndicator: { type: "SHOW_INDICATOR", opts: IndicatorShowOpts, requiresFocus?: boolean, showAlt?: boolean  }
         addPane: { type: "ADD_PANE", filter: any }
-        itc: {type: "ITC", init: ItcInit}
+        itc: {type: "ITC", inits: ItcInit[]}
         cinema: {type: "CINEMA", event: MediaEventCinema}
     }
 }
@@ -77,10 +77,9 @@ export class MessageTower {
           } else {
             if (!document.fullscreenElement) return 
           }
-
           gvar.os.itc?.stop()
           gvar.os.itc = gvar.os.itc ?? new Interactive()
-          gvar.os.itc.start(msg.init)
+          gvar.os.itc.start(msg.inits)
           reply(true)
           return 
         } else if (msg.type === "MEDIA_PROBE") {

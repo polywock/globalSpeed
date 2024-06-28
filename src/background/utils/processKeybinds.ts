@@ -24,6 +24,8 @@ export class ProcessKeybinds {
   loadedMedia?: {value: FlatMediaInfo}
   loadedMediaVideo?: {value: FlatMediaInfo}
   stopped = false 
+  itcList: ItcInit[] = []
+  immediateItc = false 
   constructor(private matches: KeybindMatch[], public tabInfo: TabInfo) {
     this.init()
   }
@@ -32,11 +34,14 @@ export class ProcessKeybinds {
   }
   init = async () => {
     this.globalHideIndicator = (await gvar.es.getAllUnsafe())['g:hideIndicator']
+    this.immediateItc = this.matches.some(m => m.kb.command === "nothing" && m.kb.valueNumber != null)
 
     for (let match of this.matches) { 
       if (this.stopped) return 
       await this.processKeybindMatch(match)
     }
+
+    this.flushItcList()
   }
   fetch = async (selector: StateViewSelector) => {
     return fetchView(selector, this.tabInfo?.tabId)
@@ -49,6 +54,24 @@ export class ProcessKeybinds {
     if (this.shortcutHideIndicator) return 
 
     sendMessageToConfigSync({type: "SHOW_INDICATOR", opts, requiresFocus: this.tabInfo.frameId == null ? true : false}, this.tabInfo.tabId, this.tabInfo.frameId)
+  }
+  processItc = (init: ItcInit) => {
+    if (this.immediateItc) {
+      this.sendItcs([init])
+      return 
+    } 
+    this.itcList.push(init)
+  }
+  flushItcList = () => {
+    if (!this.itcList.length) return
+    this.sendItcs(this.itcList)
+    this.itcList = []
+  }
+  sendItcs = (inits: ItcInit[]) => {
+    chrome.tabs.sendMessage(this.tabInfo.tabId, {
+      type: "ITC",
+      inits 
+    } as Messages)
   }
   applyToMedia = async (e: MediaEvent, requiresVideo = false) => {
     const media = await this.getMediaAny(requiresVideo)
@@ -511,7 +534,7 @@ async function processAdjustMode(args: CommandHandlerArgs) {
 
     chrome.tabs.sendMessage(tabInfo.tabId, {
       type: "ITC",
-      init
+      inits: [init]
     } as Messages)
     return 
   }
@@ -774,7 +797,6 @@ export async function setValue(init: SetValueInit) {
     override.lastSpeed = (await fetchView({speed: true}, tabInfo.tabId)).speed
     if (override.lastSpeed === value) delete override.lastSpeed
     override.speed = value 
-    override.latestViaShortcut = true 
   } else if (kb.command === "volume") {
     init.dry || sendMediaEvent({type: 'SET_VOLUME', value, relative: false}, mediaKey, mediaTabInfo.tabId, mediaTabInfo.frameId)
   } else if (kb.command === "seek") {
