@@ -269,6 +269,6 @@
     "erase": "Sil",
     "select": "Etkileşim",
     "selectTooltip": "Web sayfasıyla etkileşim",    
-    "tips": "Bazı faydalı kısayollar\n1. Sağ tıklayarak sil.\n2. Shift'i basılı tutarak tıklayarak çizgi çiz.\n3. Caps Lock kullanarak $1 ve $2 modları arasında geçiş yap\n4. Silgi boyutunu ayarlamak için: orta düğmeye basılı tutarak sola veya sağa sürükle.\n5. Fırça boyutunu ayarlamak için: orta düğmeye basılı tutarak yukarı veya aşağı sürükle.\n6. Renge sağ tıklayarak sayfayı bir renkle doldurun."
+    "tips": "Bazı faydalı kısayollar\n1. Sağ tıklayarak sil.\n2. Shift'i basılı tutarak tıklayarak çizgi çiz.\n3. Caps Lock kullanarak $1 ve $2 modları arasında geçiş yap\n4. Silgi boyutunu ayarlamak için: orta düğmeye basılı tutarak sola veya sağa sürükle.\n5. Fırça boyutunu ayarlamak için: orta düğmeye basılı tutarak yukarı veya aşağı sürükle.\n6. Renge sağ tıklayarak sayfayı bir renkle doldurun.\n7. Rengin üzerine üç kez tıklayarak arka plan rengini değiştirin."
   }
 }

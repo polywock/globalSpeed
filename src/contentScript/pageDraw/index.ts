@@ -34,13 +34,14 @@ class PageDraw extends Popover {
     pageStyle = document.createElement("style")
     ctx = this.canvas.getContext("2d")
     controls: Controls
-
+    
     on = false
     isDrawing: { scaleMode: boolean, erase: boolean, button: number, id: PointerEvent["pointerId"], refX: number, refY: number, refD: number, refE: number } = null
     latestPoint: Point
     points: Point[] = []
     hidden = false
     scrolling = false
+    eraseColor?: string 
     drewSomething = false
 
     mode: Mode = "DRAW"
@@ -320,7 +321,11 @@ class PageDraw extends Popover {
         this.ctx.strokeStyle = this.color
 
         if (this.isDrawing?.erase || oneTimeErase) {
-            this.ctx.globalCompositeOperation = 'destination-out'
+            if (this.eraseColor) {
+                this.ctx.strokeStyle = this.eraseColor
+            } else {
+                this.ctx.globalCompositeOperation = 'destination-out'
+            }
             this.ctx.lineWidth = this.eraserSize
         } else {
             this.drewSomething = true
@@ -345,6 +350,7 @@ class Controls {
         pd._div.appendChild(this.m.wrapper)
         pd._div.addEventListener("click", this.handleClick, true)
         pd._div.addEventListener("contextmenu", this.handleContextMenu, true)
+        pd._div.addEventListener("mid", this.handleContextMenu, true)
         pd._div.addEventListener("input", this.handleInput, true)
         this.m.brushSizeRange.value = pd.brushSize.toString()
         this.m.eraserSizeRange.value = pd.eraserSize.toString()
@@ -377,6 +383,7 @@ class Controls {
         this.m.dropper.classList.add("selected")
         this.m.colors.forEach(c => c.classList.remove("selected"))
     }
+    lastClicked?: {color: string, times: number[]}
     handleClick = (e: MouseEvent) => {
         assertType<HTMLButtonElement>(e.target)
         if (e.target.classList.contains("color")) {
@@ -384,6 +391,27 @@ class Controls {
             this.m.colors.forEach(c => c.classList.remove("selected"))
             this.m.dropper.classList.remove("selected")
             e.target.classList.add("selected")
+            
+            if (!(this.lastClicked?.color === e.target.style.backgroundColor)) {
+                delete this.lastClicked
+                this.lastClicked = {color: e.target.style.backgroundColor, times: []}
+            }
+            let now = Date.now()
+            this.lastClicked.times.push(now)
+            this.lastClicked.times = this.lastClicked.times.slice(-3)
+            if (this.lastClicked.times.length === 3 && this.lastClicked.times.every(t => (now - t) < 4000)) {
+                this.lastClicked.times = []
+                if (areYouSure()) {
+                    if (this.pd.eraseColor === this.lastClicked.color) {
+                        delete this.pd.eraseColor
+                        return 
+                    }
+                    this.pd.eraseColor = this.lastClicked.color
+                    this.pd.ctx.fillStyle = this.lastClicked.color
+                    this.pd.ctx.fillRect(0, 0, this.pd.canvas.width, this.pd.canvas.height)
+                    this.pd.ctx.fillStyle = ""
+                }
+            }
         } else if (e.target === this.m.remove) {
             if (!this.pd.drewSomething || document.fullscreenElement || confirm(gvar.gsm.options.help.areYouSure)) {
                 gvar.pageDraw?.release()
