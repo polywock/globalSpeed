@@ -150,7 +150,6 @@
     "flags": {
       "header": "Opsi",
       "language": "bahasa",
-      "_languageTooltip": "",
       "darkTheme": "tema gelap",
       "showBadge": "tampilkan badge",
       "showBadgeTooltip": "Badge adalah teks pada ikon ekstensi.",

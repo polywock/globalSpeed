@@ -37,7 +37,7 @@
     "transforms": "transformations",
 
     "blockEvents": "bloquer les événements",
-    "blockEventsTooltip": "Le mode avide tentera de bloquer la propagation des événements et les comportements par défaut.",
+    "blockEventsTooltip": "Tentera de bloquer la propagation des événements et les comportements par défaut.",
     "color": "couleur",
     "size": "taille",
     "rounding": "arrondi",
@@ -157,6 +157,7 @@
     "flags": {
       "header": "Options",
       "language": "langue",
+      "_languageTooltip": "Utilisateurs ayant contribué aux traductions françaises : @bounis67",
       "darkTheme": "thème sombre",
       "showBadge": "afficher le badge",
       "showBadgeTooltip": "Le badge est le texte sur l'icône de l'extension.",
