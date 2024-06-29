@@ -1,0 +1,8 @@
+{
+  "appName": {
+    "message": "Global Speed: Contrôle de vitesse des vidéo"
+  },
+  "appDesc": {
+    "message": "Définissez une vitesse par défaut pour la vidéo et l'audio."
+  }
+}
