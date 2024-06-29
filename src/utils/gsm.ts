@@ -60,6 +60,7 @@ export const LOCALE_MAP: {
   "detect": {display: "Auto", title: "Try to find a match using browser language settings, system language settings, or fallback to English."},
   "en": { display: "English", title: "English" },
   "es": { display: "Español", title: "Spanish" },
+  "fr": { display: "Français", title: "French" },
   "id": { display: "Bahasa Indonesia", title: "Indonesian" },
   "it": { display: "Italiano", title: "Italian" },
   "ja": { display: "日本語", title: "Japanese" },
@@ -74,5 +75,5 @@ export const LOCALE_MAP: {
 }
 
 
-const AVAILABLE_LOCALES = new Set(["en", "es", "id", "it", "ja", "ko", "pt_BR", "ru", "tr", "uk", "vi", "zh_CN", "zh_TW"])
+const AVAILABLE_LOCALES = new Set(["en", "es", "fr", "id", "it", "ja", "ko", "pt_BR", "ru", "tr", "uk", "vi", "zh_CN", "zh_TW"])
 
