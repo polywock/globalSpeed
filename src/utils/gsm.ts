@@ -71,9 +71,10 @@ export const LOCALE_MAP: {
   "uk": { display: "Українська", title: "Ukrainian" },
   "vi": { display: "Tiếng Việt", title: "Vietnamese" },
   "zh_CN": { display: "中文 (简体)", title: "Chinese (Simplified)" },
-  "zh_TW": { display: "中文 (繁體)", title: "Chinese (Traditional)" }
+  "zh_TW": { display: "中文 (繁體)", title: "Chinese (Traditional)" },
+  "ar": { display: "عربي", title: "Arabic" }
 }
 
 
-const AVAILABLE_LOCALES = new Set(["en", "es", "fr", "id", "it", "ja", "ko", "pt_BR", "ru", "tr", "uk", "vi", "zh_CN", "zh_TW"])
+const AVAILABLE_LOCALES = new Set(["en", "es", "fr", "id", "it", "ja", "ko", "pt_BR", "ru", "tr", "uk", "vi", "zh_CN", "zh_TW", "ar"])
 
