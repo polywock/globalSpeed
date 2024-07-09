@@ -156,6 +156,7 @@
   "options": {
     "flags": {
       "header": "Options",
+      "gptPromo": "Recherchez dans vos conversations ChatGPT avec $1.",
       "language": "langue",
       "_languageTooltip": "Utilisateurs ayant contribué aux traductions françaises : @bounis67",
       "darkTheme": "thème sombre",

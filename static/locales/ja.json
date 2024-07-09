@@ -157,6 +157,7 @@
   "options": {
     "flags": {
       "header": "オプション",
+      "gptPromo": "ChatGPTの会話を$1で検索します。",
       "language": "言語",
       "darkTheme": "暗いテーマ",
       "showBadge": "バッジを表示",

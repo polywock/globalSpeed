@@ -158,6 +158,7 @@
   "options": {
     "flags": {
       "header": "選項",
+      "gptPromo": "使用 $1 搜尋您的 ChatGPT 對話。",
       "language": "語言",
       "_languageTooltip": "對中文翻譯做出貢獻的用戶：@nathan60107",
       "darkTheme": "深色佈景主題",

@@ -152,6 +152,7 @@ export type Gsm = {
   options: {
     flags: {
       header: string,
+      gptPromo: string,
       language: string,
       _languageTooltip?: string,
       darkTheme: string,

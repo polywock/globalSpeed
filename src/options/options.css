@@ -27,6 +27,37 @@
     margin-bottom: 40px;
     box-shadow: var(--card-shadow);
 
+    &.promo {
+      display: inline-block;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.9;
+      }
+
+      .a {
+        color: var(--link-color);
+        &:hover {
+          text-decoration: underline;
+        }
+        font-weight: bold;
+        font-size: 1.2em;
+
+        img {
+          width: 1.3em;
+          vertical-align: middle;
+        }
+      }
+
+      svg {
+        margin-left: 10px;
+
+        & * {
+          pointer-events: none;
+        }
+      }
+    }
+
     & > h2 {
       margin-top: 0;
     }

@@ -159,6 +159,7 @@
   "options": {
     "flags": {
       "header": "Параметры",
+      "gptPromo": "Ищите в своих разговорах ChatGPT с помощью $1.",
       "language": "язык",
       "darkTheme": "темная тема",
       "showBadge": "показать значок",

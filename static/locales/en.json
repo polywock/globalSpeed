@@ -158,6 +158,7 @@
   "options": {
     "flags": {
       "header": "Options",
+      "gptPromo": "Search your ChatGPT conversations with $1.",
       "language": "language",
       "_languageTooltip": "",
       "darkTheme": "dark theme",

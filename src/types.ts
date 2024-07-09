@@ -53,6 +53,7 @@ export type AnyDict = {[key: string]: any}
 
 export type State = {
   version: number,
+  gptWebsiteCounter?: number,
   language?: string,
   fontSize?: number,
   pinByDefault?: boolean,

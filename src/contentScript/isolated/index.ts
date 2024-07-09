@@ -22,8 +22,18 @@ async function main() {
   gvar.isTopFrame = window.self === window.top
   gvar.os = new Overseer()
   gvar.os.init()
+  selfPromotionHelper()
 }
 
 
 main()
 
+// Used to self-promote another extension I made. 
+function selfPromotionHelper() {
+  if (location.hostname !== "chatgpt.com") return 
+  const key = "g:gptWebsiteCounter"
+  chrome.storage.local.get({[key]: 0}, items => {
+    if (items[key] === -1) return 
+    chrome.storage.local.set({[key]: Math.min(items[key] + 1, 5)})
+  })
+}

@@ -149,6 +149,7 @@
   "options": {
     "flags": {
       "header": "Opsi",
+      "gptPromo": "Cari percakapan ChatGPT Anda dengan $1.",
       "language": "bahasa",
       "darkTheme": "tema gelap",
       "showBadge": "tampilkan badge",

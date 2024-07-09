@@ -141,8 +141,9 @@ body {
 }
 
 button, input, select, textarea {
-  font-size: inherit;
-  font-family: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
 
   &:focus {
     outline: 1px solid var(--focus-color);

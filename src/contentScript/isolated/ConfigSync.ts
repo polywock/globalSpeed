@@ -102,7 +102,6 @@ export class ConfigSync {
     let keybinds = this.client.view.keybinds
     if (!enabled) {
       keybinds = this.client.view.keybinds.filter(kb => kb.command === "state" && kb.enabled && (kb.trigger || Trigger.LOCAL) === Trigger.LOCAL && (this.client.view.latestViaShortcut || kb.alwaysOn))
-      console.log("KEYBINDS: ,", keybinds)
       if (!keybinds.length) return 
     }
 
