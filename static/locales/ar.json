@@ -156,8 +156,9 @@
     "options": {
         "flags": {
             "header": "الخيارات",
+            "gptPromo": "ابحث في محادثاتك في ChatGPT باستخدام $1.",
             "language": "اللغة",
-            "_languageTooltip": "",
+            "_languageTooltip": "المستخدمون الذين ساهموا في الترجمات العربية: @LotfiBoukhemerra",
             "darkTheme": "الوضع الداكن",
             "showBadge": "عرض الشارة",
             "showBadgeTooltip": "الشارة هي النص الموجود على أيقونة الإضافة.",

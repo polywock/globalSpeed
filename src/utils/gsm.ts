@@ -58,6 +58,7 @@ export const LOCALE_MAP: {
   }
 } = {
   "detect": {display: "Auto", title: "Try to find a match using browser language settings, system language settings, or fallback to English."},
+  "ar": { display: "عربي", title: "Arabic" },
   "en": { display: "English", title: "English" },
   "es": { display: "Español", title: "Spanish" },
   "fr": { display: "Français", title: "French" },
@@ -71,10 +72,9 @@ export const LOCALE_MAP: {
   "uk": { display: "Українська", title: "Ukrainian" },
   "vi": { display: "Tiếng Việt", title: "Vietnamese" },
   "zh_CN": { display: "中文 (简体)", title: "Chinese (Simplified)" },
-  "zh_TW": { display: "中文 (繁體)", title: "Chinese (Traditional)" },
-  "ar": { display: "عربي", title: "Arabic" }
+  "zh_TW": { display: "中文 (繁體)", title: "Chinese (Traditional)" }
 }
 
 
-const AVAILABLE_LOCALES = new Set(["en", "es", "fr", "id", "it", "ja", "ko", "pt_BR", "ru", "tr", "uk", "vi", "zh_CN", "zh_TW", "ar"])
+const AVAILABLE_LOCALES = new Set(["ar", "en", "es", "fr", "id", "it", "ja", "ko", "pt_BR", "ru", "tr", "uk", "vi", "zh_CN", "zh_TW"])
 
