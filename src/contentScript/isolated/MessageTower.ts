@@ -1,7 +1,6 @@
 import { MessageCallback } from "src/utils/browserUtils"
 import { MediaEvent, MediaEventCinema, applyCinema, getMediaProbe, realizeMediaEvent } from "./utils/applyMediaEvent"
 import { documentHasFocus, injectScript } from "./utils"
-import { LatestFocus } from "./utils/LatestFocus"
 import { Indicator, IndicatorShowOpts } from "./utils/Indicator"
 import { Interactive } from "./utils/Interactive"
 import type { ItcInit } from "src/types"
@@ -16,7 +15,6 @@ declare global {
         mediaProbe: {type: "MEDIA_PROBE", key: string, formatted?: boolean},
         runJs:  {type: "RUN_JS", value: string},
         bgSpeedOverride: {type: "BG_SPEED_OVERRIDE", value: {speed: number, freePitch: boolean}},
-        trackFocus: {type: "TRACK_FOCUS", tabKey: string, otherTabKey: string},
   
         ytRequestRate: {type: "YT_REQUEST_RATE"},
         ytRateChange: {type: "YT_RATE_CHANGE", value: number},
@@ -46,10 +44,6 @@ export class MessageTower {
           if (!gvar.os?.speedSync) return 
           gvar.os.speedSync.latest = msg.value
           gvar.os.speedSync.update()
-        } else if (msg.type === "TRACK_FOCUS") {
-          if (!gvar.latestFocus) {
-            gvar.latestFocus = new LatestFocus(msg.tabKey, msg.otherTabKey)
-          }
         } else if (msg.type === "SHOW_INDICATOR") {
           if (msg.requiresFocus && !documentHasFocus()) return 
           if (msg.showAlt) {

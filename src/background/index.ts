@@ -9,7 +9,7 @@ import { PREFIX_SETS, dumpConfig, fetchView, getKeysByPrefix, pushView, restoreC
 import { migrateSchema } from "src/background/utils/migrateSchema"
 import { getDefaultContext, getDefaultState } from "src/defaults"
 import { isFirefox } from "src/utils/helper"
-import { getCorrectPane, getLatestActiveTabInfo, tabToTabInfo } from "src/utils/browserUtils"
+import { getLatestActiveTabInfo, tabToTabInfo } from "src/utils/browserUtils"
 import { ProcessKeybinds, setValue, type SetValueInit } from "./utils/processKeybinds"
 import { findMatchingKeybindsContext, findMatchingKeybindsGlobal, testURL } from "src/utils/configUtils"
 import { loadGsm } from "src/utils/gsm"
@@ -79,10 +79,7 @@ chrome.tabs.onRemoved.addListener(async tab => {
     chrome.storage.local.remove([
         ...[...CONTEXT_KEYS, "isPinned"].map(k => `t:${tab}:${k}`),
         ...CONTEXT_KEYS.map(k => `r:${tab}:${k}`),
-        `s:ranJs:${tab}`,
-        ...rules.map(r => `s:ro:${tab}:${r.id}`),
-        `s:pf:${tab}`,
-        `s:pp:${tab}`
+        ...rules.map(r => `s:ro:${tab}:${r.id}`)
     ])
 
     if (Math.random() > 0.95) clearClosed()
@@ -121,9 +118,8 @@ isFirefox() || chrome.commands.onCommand.addListener(
       let matches = findMatchingKeybindsGlobal(keybinds, command)
     
       if (!matches.length) return 
-      // Latest is fine? Play around later.
+
       let tabInfo = tab ? tabToTabInfo(tab) : (await getLatestActiveTabInfo())
-      tabInfo = await getCorrectPane(tabInfo)
     
     
       const url = tabInfo?.url || ""
@@ -157,7 +153,6 @@ declare global {
         requestGsm: { type: "REQUEST_GSM" }
         requestCreateTab: { type: "REQUEST_CREATE_TAB", url: string}
         triggerKeybinds: { type: "TRIGGER_KEYBINDS", ids: KeybindMatchId[]}
-        edgePing: { type: "EDGE_PING" }
         requestPane: { type: "REQUEST_PANE"}
         setSession: { type: "SET_SESSION", override: AnyDict}
         getSession: { type: "GET_SESSION", keys: any}
@@ -199,22 +194,6 @@ chrome.runtime.onMessage.addListener((msg: Messages, sender, reply) => {
                 } as KeybindMatch
             })
             new ProcessKeybinds(matches, {tabId: sender.tab.id, frameId: sender.frameId, windowId: sender.tab.windowId})
-        })
-        reply(true)
-    } else if (msg.type === "EDGE_PING") {
-        if (sender.tab?.index !== -1) return 
-        chrome.tabs.get(sender.tab.id, info => {
-        if (!info || !(info.index > 0)) return 
-        chrome.tabs.query({windowId: sender.tab.windowId, index: info.index}, tabs => {
-            if (tabs.length !== 1 && tabs[0].id !== info.id) return 
-            // this tab is left pane. 
-            const leftTabId = tabs[0].id
-            chrome.storage.local.set({
-            [`s:pp:${leftTabId}`]: info.id
-            })
-            chrome.tabs.sendMessage(leftTabId, {type: "TRACK_FOCUS", tabKey: `s:pf:${leftTabId}`, otherTabKey: `s:pf:${info.id}`})
-            chrome.tabs.sendMessage(info.id, {type: "TRACK_FOCUS", tabKey: `s:pf:${info.id}`, otherTabKey: `s:pf:${leftTabId}`})
-        })
         })
         reply(true)
     } else if (msg.type === "SET_SESSION") {

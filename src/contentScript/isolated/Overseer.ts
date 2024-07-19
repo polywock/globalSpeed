@@ -6,7 +6,7 @@ import { NativeFs } from "./utils/NativeFs";
 import { SmartFs } from "./utils/SmartFs";
 import { StratumServer } from "./utils/StratumServer";
 import { VisibleSync } from "./utils/VisibleSync";
-import { isEdge, timeout } from "src/utils/helper";
+import { timeout } from "src/utils/helper";
 import { fetchView } from "src/utils/state";
 import { MessageTower } from "./MessageTower";
 import { SpeedSync } from "./SpeedSync";
@@ -58,7 +58,6 @@ export class Overseer {
     }
     initAsync = async () => {
         gvar.tabInfo = await requestTabInfo()
-        isEdge() && chrome.runtime.sendMessage({type: "EDGE_PING"})
 
         // if failed to get, try again after a few seconds. (firefox sometimes)
         if (!gvar.tabInfo) {
