@@ -13,6 +13,7 @@ declare global {
     interface Message {
         applyMediaEvent: {type: "APPLY_MEDIA_EVENT", key: string, event: MediaEvent},
         mediaProbe: {type: "MEDIA_PROBE", key: string, formatted?: boolean},
+        csAlive: {type: "CS_ALIVE"},
         runJs:  {type: "RUN_JS", value: string},
         bgSpeedOverride: {type: "BG_SPEED_OVERRIDE", value: {speed: number, freePitch: boolean}},
   
@@ -78,6 +79,9 @@ export class MessageTower {
           return 
         } else if (msg.type === "MEDIA_PROBE") {
           reply(getMediaProbe([...(gvar.os.mediaTower?.media || [])].find(m => m.gsKey === msg.key), msg.formatted))
+          return 
+        } else if (msg.type === "CS_ALIVE") {
+          reply(true)
           return 
         } else if (msg.type === "CINEMA") {
           prepareCinema(msg.event)

@@ -1,6 +1,7 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { MediaData, MediaPath, MediaScope, flattenMediaInfos } from "../contentScript/isolated/utils/genMediaInfo"
+import { checkContentScript } from "src/utils/browserUtils"
 
 type Env = {
   client: SubscribeMedia
@@ -39,18 +40,23 @@ export class SubscribeMedia {
   }
   start = async () => {
     const raw = await chrome.storage.session.get()
-    
-    for (let key in raw) {
-      if (!key.startsWith("m:")) continue 
-      if (key.startsWith("m:pin")) {
-        this.pinned = raw[key]
-      } else if (key.startsWith("m:scope:")) {
-        this.scopes[key] = raw[key]
-      }
-    }
-
+    await Promise.all(Object.entries(raw).map(([key, value]) => this.processKeyForStart(key, value)))
     chrome.storage.session.onChanged.addListener(this.handleChange)
     this.handleChange(null)
+  }
+  processKeyForStart = async (key: string, value: any) => {
+    if (!key.startsWith("m:")) return  
+    if (key.startsWith("m:pin")) {
+      this.pinned = value 
+    } else if (key.startsWith("m:scope:")) {
+      let info = value as MediaScope
+      if (!info) return 
+      if (await checkContentScript(info.tabInfo.tabId, info.tabInfo.frameId)) {
+        this.scopes[key] = value
+      } else {
+        chrome.storage.session.remove(key)
+      }
+    }
   }
   release = () => {
       if (this.released) return 
@@ -100,3 +106,5 @@ export class SubscribeMedia {
       this.cbs.forEach(cb => cb(this.latestData))
   }
 }
+
+

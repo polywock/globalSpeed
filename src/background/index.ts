@@ -73,15 +73,16 @@ async function ensureContentScripts() {
 }
 
 
-chrome.tabs.onRemoved.addListener(async tab => {
+chrome.tabs.onRemoved.addListener(async tabId => {
     const rules = ((await fetchView(["rules"])).rules || []) as URLRule[]
 
     chrome.storage.local.remove([
-        ...[...CONTEXT_KEYS, "isPinned"].map(k => `t:${tab}:${k}`),
-        ...CONTEXT_KEYS.map(k => `r:${tab}:${k}`),
-        ...rules.map(r => `s:ro:${tab}:${r.id}`)
+        ...[...CONTEXT_KEYS, "isPinned"].map(k => `t:${tabId}:${k}`),
+        ...CONTEXT_KEYS.map(k => `r:${tabId}:${k}`),
+        ...rules.map(r => `s:ro:${tabId}:${r.id}`)
     ])
 
+    chrome.storage.session.remove(`m:scope:${tabId}:0`)
     if (Math.random() > 0.95) clearClosed()
 })
 

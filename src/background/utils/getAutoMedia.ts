@@ -1,5 +1,5 @@
 import { FlatMediaInfo, MediaData, MediaDataWithScopes, MediaPath, MediaScope, flattenMediaInfos } from "src/contentScript/isolated/utils/genMediaInfo"
-import { TabInfo, compareFrame } from "src/utils/browserUtils"
+import { TabInfo, checkContentScript, compareFrame } from "src/utils/browserUtils"
 import { fetchView } from "src/utils/state"
 
 export async function getMediaDataWithScopes() {
@@ -44,71 +44,71 @@ export async function getAutoMedia (tabInfo: TabInfo, videoOnly?: boolean) {
     getMediaData()
   ])
   
-    infos = infos.filter(info => info.readyState)
-    infos = videoOnly ? infos.filter(info => info.videoSize) : infos 
-    
-    const pinnedInfo = infos.find(info => info.key === pinned?.key)
-    if (pinnedInfo) return pinnedInfo
+  infos = infos.filter(info => info.readyState)
+  infos = videoOnly ? infos.filter(info => info.videoSize) : infos 
+  
+  const pinnedInfo = infos.find(info => info.key === pinned?.key)
+  if (pinnedInfo && await checkContentScript(pinnedInfo.tabInfo.tabId, pinnedInfo.tabInfo.frameId)) return pinnedInfo
 
-    infos.sort((a, b) => b.creationTime - a.creationTime)
-    const pippedInfo = infos.find(info => info.pipMode)
-    if (!ignorePiP && pippedInfo) return pippedInfo
+  infos.sort((a, b) => b.creationTime - a.creationTime)
+  const pippedInfo = infos.find(info => info.pipMode)
+  if (!ignorePiP && pippedInfo) return pippedInfo
 
-    if (!tabInfo) return (pippedInfo || undefined)
-    infos = infos.filter(info => info.tabInfo.tabId === tabInfo.tabId)
+  if (!tabInfo) return (pippedInfo || undefined)
+  infos = infos.filter(info => info.tabInfo.tabId === tabInfo.tabId)
 
-    if (!infos.length) return (pippedInfo || undefined)
+  if (!infos.length) return (pippedInfo || undefined)
 
 
-    let peakIntersect = infos.filter(v => v.intersectionRatio != null).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.intersectionRatio
+  let peakIntersect = infos.filter(v => v.intersectionRatio != null).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.intersectionRatio
 
-    let highest: {info: FlatMediaInfo, score: number}
-    infos.forEach(info => {
-      let score = 0
+  let highest: {info: FlatMediaInfo, score: number}
+  infos.forEach(info => {
+    let score = 0
 
-      const sameFrame = compareFrame(info.tabInfo, tabInfo)
-      if (sameFrame && tabInfo.frameId !== 0) {
-        score += 0b100000
-      }
-      if (info.intersectionRatio > 0.05 && info.intersectionRatio === peakIntersect) {
-        score += 0b10000
-      } else {
-        if (info.intersectionRatio > 0.9) {
-          score += 0b1000
-        } else if (info.intersectionRatio > 0.5) {
-          score += 0b100
-        } else if (info.intersectionRatio > 0.1) {
-          score += 0b10
-        }
-      }
-
-      if (info.isVisible) {
-        score += 0b10000
-      }
-
-      if (info.elementSize && info.elementSize.w > 200 && info.elementSize.h > 200) {
+    const sameFrame = compareFrame(info.tabInfo, tabInfo)
+    if (sameFrame && tabInfo.frameId !== 0) {
+      score += 0b100000
+    }
+    if (info.intersectionRatio > 0.05 && info.intersectionRatio === peakIntersect) {
+      score += 0b10000
+    } else {
+      if (info.intersectionRatio > 0.9) {
         score += 0b1000
-      }
-      if (info.infinity || info.duration >= 30 * 60) {
-        score += 0b1000
-      }
-      if (info.duration >= 10 * 60) {
+      } else if (info.intersectionRatio > 0.5) {
         score += 0b100
-      }
-      if (info.duration >= 3 * 60) {
+      } else if (info.intersectionRatio > 0.1) {
         score += 0b10
       }
-      if (info.duration >= 1 * 60) {
-        score += 0b1
-      }
-      if (info.isVideo && location.hostname !== "www.spotify.com" && !info.isConnected) {
-        score = -0b1
-      }
+    }
 
-      if (!highest || score > highest.score || (score === highest.score && (info.infinity ? 60 : info.duration) > highest.info.duration)) {
-        highest = {info, score}
-      }
-    })
+    if (info.isVisible) {
+      score += 0b10000
+    }
 
-    return highest?.info
-  }
+    if (info.elementSize && info.elementSize.w > 200 && info.elementSize.h > 200) {
+      score += 0b1000
+    }
+    if (info.infinity || info.duration >= 30 * 60) {
+      score += 0b1000
+    }
+    if (info.duration >= 10 * 60) {
+      score += 0b100
+    }
+    if (info.duration >= 3 * 60) {
+      score += 0b10
+    }
+    if (info.duration >= 1 * 60) {
+      score += 0b1
+    }
+    if (info.isVideo && location.hostname !== "www.spotify.com" && !info.isConnected) {
+      score = -0b1
+    }
+
+    if (!highest || score > highest.score || (score === highest.score && (info.infinity ? 60 : info.duration) > highest.info.duration)) {
+      highest = {info, score}
+    }
+  })
+
+  return highest?.info
+}

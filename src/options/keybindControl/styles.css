@@ -17,26 +17,7 @@
   select {
     text-align-last: center;
   }
-  
-  & > .urlRules {
-    position: absolute;
-    top: -5px;
-    right: -10px;
-    background-color: #0031ff;
-    color: white;
-    padding: 0 5px;
-    border-radius: 10px;
-    display: none; 
-
-    &.active {
-      display: block; 
-    }
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
+ 
   & > .command {
 
     display: flex;
@@ -115,6 +96,7 @@
   & > .talues {
     display: grid;
     row-gap: 10px;
+    width: 175px;
 
     & > .globalPicker {
       display: grid;

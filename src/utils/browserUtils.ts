@@ -63,5 +63,9 @@ export function setSession(override?: any) {
 }
 
 
-
-
+export async function checkContentScript(tabId: number, frameId: number) {
+  try {
+    await chrome.tabs.sendMessage(tabId, {type: "CS_ALIVE"}, {frameId: frameId || 0})
+    return true 
+  } catch (err) {}
+}
