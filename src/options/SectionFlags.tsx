@@ -92,7 +92,7 @@ export function SectionFlags(props: {}) {
         </div>     
 
         {/* Permission */}
-        {(isFirefox() || !has) && (
+        {!has && (
           <div className="field">
             <div className="labelWithTooltip">
               <span>{gvar.gsm.options.flags.grantPermission}</span>

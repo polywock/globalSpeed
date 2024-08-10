@@ -11,6 +11,12 @@
     "sliderTooltip": "Удерживайте клавишу Shift для точного управления.",
     "captureRequired": "Используйте комбинацию клавиш $1 для активации."
   },
+  "menuLabels": {
+    "invertPage": "инвертировать страницу",
+    "grayscalePage": "оттенки серого на странице",
+    "videoBrightness": "яркость видео",
+    "videoContrast": "контраст видео"
+  },
   "token": {
     "create": "создать",
     "reset": "сброс настроек",

@@ -11,6 +11,12 @@
     "sliderTooltip": "Tahan tombol shift untuk kontrol presisi.",
     "captureRequired": "Gunakan pintasan $1 untuk mengaktifkan."
   },
+  "menuLabels": {
+    "invertPage": "balik halaman",
+    "grayscalePage": "halaman skala abu-abu",
+    "videoBrightness": "kecerahan video",
+    "videoContrast": "kontras video"
+  },
   "token": {
     "create": "buat",
     "reset": "atur ulang",

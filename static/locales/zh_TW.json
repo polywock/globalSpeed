@@ -12,6 +12,12 @@
     "sliderTooltip": "按住 Shift 鍵以精確控制。",
     "captureRequired": "使用 $1 快捷鍵來啟動。"
   },
+  "menuLabels": {
+    "invertPage": "反轉頁面",
+    "grayscalePage": "灰階頁面",
+    "videoBrightness": "影片亮度",
+    "videoContrast": "影片對比度"
+  },
   "token": {
     "create": "建立",
     "reset": "重設",

@@ -12,6 +12,12 @@
     "sliderTooltip": "정밀한 조정을 위해 Shift 키를 누르고 있으세요.",
     "captureRequired": "$1 단축키를 사용하여 활성화하세요."
   },
+  "menuLabels": {
+    "invertPage": "페이지 반전",
+    "grayscalePage": "그레이스케일 페이지",
+    "videoBrightness": "비디오 밝기",
+    "videoContrast": "비디오 대비"
+  },
   "token": {
     "create": "창조하다",
     "reset": "초기화",

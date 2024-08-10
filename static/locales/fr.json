@@ -11,6 +11,12 @@
     "sliderTooltip": "Maintenez la touche Shift pour un contrôle précis.",
     "captureRequired": "Utilisez le raccourci $1 pour activer."
   },
+  "menuLabels": {
+    "invertPage": "inverser la page",
+    "grayscalePage": "page en niveaux de gris",
+    "videoBrightness": "luminosité de la vidéo",
+    "videoContrast": "contraste de la vidéo"
+  },
   "token": {
     "create": "créer",
     "reset": "réinitialiser",

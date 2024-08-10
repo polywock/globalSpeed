@@ -11,6 +11,12 @@
     "sliderTooltip": "シフトキーを押し続けて精密な調整を行ってください。",
     "captureRequired": "$1 ショートカットを使用してアクティブにしてください。"
   },
+  "menuLabels": {
+    "invertPage": "ページを反転",
+    "grayscalePage": "グレースケールページ",
+    "videoBrightness": "ビデオの明るさ",
+    "videoContrast": "ビデオのコントラスト"
+  },
   "token": {
     "create": "作成",
     "reset": "リセット",

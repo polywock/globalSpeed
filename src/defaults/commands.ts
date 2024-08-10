@@ -594,56 +594,60 @@ export function getDefaultKeybinds(): Keybind[] {
       spacing: 2
     },
     {
-      ...commandInfos.fxFilter.generate(),
-      key: {code: "KeyE"},
-      filterOption: "invert",
-      filterTarget: "both",
-      adjustMode: AdjustMode.CYCLE,
-      valueCycle: [0, 1],
-      enabled: false
-    },
-    {
-      ...commandInfos.fxFilter.generate(),
-      key: {code: "KeyE", shiftKey: true},
-      filterOption: "grayscale",
-      filterTarget: "both",
-      adjustMode: AdjustMode.CYCLE,
-      valueCycle: [0, 1],
-      spacing: 1,
-      enabled: false
-    },
-
-    {
-      ...commandInfos.fxFilter.generate(),
-      filterOption: "brightness",
-      adjustMode: AdjustMode.ITC,
-      valueItcMin: 0.5,
-      valueItcMax: 3,
-      key: {code: "KeyT"},
-      enabled: false
-    },
-    {
-      ...commandInfos.fxFilter.generate(),
-      filterOption: "contrast",
-      adjustMode: AdjustMode.ITC,
-      valueItcMin: 0.75,
-      valueItcMax: 1.25,
-      key: {code: "KeyT", shiftKey: true},
-      enabled: false,
-      spacing: 1
-    },
-    {
       ...commandInfos.drawPage.generate(),
       trigger: Trigger.CONTEXT,
       contextLabel: "- draw on page",
       replaceWithGsm: 4
     },
+    
+    {
+      ...commandInfos.fxFilter.generate(),
+      trigger: Trigger.CONTEXT,
+      replaceWithGsm: 6,
+      contextLabel: "- fx :: invert page",
+      filterOption: "invert",
+      filterTarget: "both",
+      adjustMode: AdjustMode.CYCLE,
+      valueCycle: [0, 1]
+    },
+    {
+      ...commandInfos.fxFilter.generate(),
+      trigger: Trigger.CONTEXT,
+      replaceWithGsm: 7,
+      contextLabel: "- fx :: grayscale page",
+      filterOption: "grayscale",
+      filterTarget: "backdrop",
+      adjustMode: AdjustMode.ITC,
+      valueItcMin: 0,
+      valueItcMax: 1,
+    },
+    {
+      ...commandInfos.fxFilter.generate(),
+      trigger: Trigger.CONTEXT,
+      replaceWithGsm: 8,
+      contextLabel: "- fx :: video brightness",
+      filterOption: "brightness",
+      adjustMode: AdjustMode.ITC,
+      valueItcMin: 0.5,
+      valueItcMax: 3,
+    },
+    {
+      ...commandInfos.fxFilter.generate(),
+      trigger: Trigger.CONTEXT,
+      replaceWithGsm: 9,
+      contextLabel: "- fx :: video contrast",
+      filterOption: "contrast",
+      adjustMode: AdjustMode.ITC,
+      valueItcMin: 0.75,
+      valueItcMax: 1.25
+    },
     {
       ...commandInfos.fxReset.generate(),
       trigger: Trigger.CONTEXT,
       filterTarget: "both",
-      contextLabel: "- FX reset",
-      replaceWithGsm: 5
+      contextLabel: "- fx :: reset",
+      replaceWithGsm: 5,
+      spacing: 1,
     }
   ]
   if (chrome.tabCapture && chrome.offscreen) {

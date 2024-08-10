@@ -17,7 +17,8 @@
     "build:dev": "    export NODE_ENV=development && npm run build:common",
     "build:devFf": "  export NODE_ENV=development && npm run build:commonFf",
     "build:prod": "   export NODE_ENV=production && npm run build:common   &&              node tools/minifyJson.js && cd build/unpacked   && zip -r '../global-speed-chromium.zip' .",
-    "build:prodFf": " export NODE_ENV=production && npm run build:commonFf && FIREFOX=true node tools/minifyJson.js && cd buildFf/unpacked && zip -r '../global-speed-firefox.zip' ."
+    "build:prodFf": " export NODE_ENV=production && npm run build:commonFf && FIREFOX=true node tools/minifyJson.js && cd buildFf/unpacked && zip -r '../global-speed-firefox.zip' .",
+    "build:prodFff": "npm run build:prodFf && rm -rf zed && mkdir -p zed/unpacked && cp -r src static staticCh staticFf tools .babelrc package-lock.json package.json postcss.config.js tsconfig.json webpack.config.js zed/unpacked && (cd zed/unpacked && zip -r ../packed.zip .) && mv zed/packed.zip buildFf/source.zip && rm -rf zed"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",

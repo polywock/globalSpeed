@@ -103,9 +103,6 @@ function ExportImport(props: {}) {
       downloadState(await dumpConfig())
     }}>{gvar.gsm.options.help.export}</button>
     <button className="large" onClick={async (e: MouseEvent<HTMLButtonElement>) => {
-      if (isFirefox()) {
-        if (!(await chrome.permissions.request({permissions: ["clipboardRead", "clipboardWrite"]}))) return 
-      }
       await navigator.clipboard.writeText(JSON.stringify(await dumpConfig()))
       feedbackText(gvar.gsm.token.copy, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect(), 10, 10))
     }}><MdContentCopy style={{pointerEvents: 'none'}}/></button>
@@ -127,7 +124,7 @@ function ExportImport(props: {}) {
 
 export function downloadState(state: State){
   const a = document.createElement("a")
-  a.setAttribute("href", window.URL.createObjectURL(new Blob([JSON.stringify(state)], {type: "octet/stream"})));
+  a.setAttribute("href", window.URL.createObjectURL(new Blob([JSON.stringify(state)], {type: "application/json"})));
   a.setAttribute('download', `Global Speed - ${new Date().toDateString()}.json`)
   a.setAttribute("style", "position: fixed; left: -1000px; top: 1000px; opacity: 0;")
   document.documentElement.append(a)

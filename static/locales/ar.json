@@ -11,6 +11,12 @@
         "sliderTooltip": "اضغط على مفتاح Shift للحصول على تحكم دقيق",
         "captureRequired": "إستخدم إختصار $1 للتفعيل."
     },
+    "menuLabels": {
+        "invertPage": "عكس الصفحة",
+        "grayscalePage": "تدرج الرمادي للصفحة",
+        "videoBrightness": "سطوع الفيديو",
+        "videoContrast": "تباين الفيديو"
+    },
     "token": {
         "create": "إنشاء",
         "reset": "إعادة التعيين",

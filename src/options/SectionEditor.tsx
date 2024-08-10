@@ -233,7 +233,19 @@ function handleFreshKeybinds(view: StateView, setView: SetView) {
             kb.contextLabel = gvar.gsm.command.drawPage
             break 
           case 5:
-            kb.contextLabel = gvar.gsm.command.fxReset
+            kb.contextLabel = `fx :: ${gvar.gsm.token.reset}`
+            break 
+          case 6:
+            kb.contextLabel = `fx :: ${gvar.gsm.menuLabels.invertPage}`
+            break 
+          case 7:
+            kb.contextLabel = `fx :: ${gvar.gsm.menuLabels.grayscalePage}`
+            break 
+          case 8:
+            kb.contextLabel = `fx :: ${gvar.gsm.menuLabels.videoBrightness}`
+            break 
+          case 9:
+            kb.contextLabel = `fx :: ${gvar.gsm.menuLabels.videoContrast}`
             break 
         }
         delete kb.replaceWithGsm 

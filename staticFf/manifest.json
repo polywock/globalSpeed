@@ -4,7 +4,6 @@
   "default_locale": "en",
   "description": "__MSG_appDesc__",
   "manifest_version": 3,
-  "optional_permissions": ["clipboardWrite", "clipboardRead"],
   "permissions": ["storage", "webNavigation", "scripting", "contextMenus"],
   "host_permissions": ["https://*/*", "http://*/*", "file://*/*"],
   "web_accessible_resources": [

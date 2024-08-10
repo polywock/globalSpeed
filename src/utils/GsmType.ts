@@ -14,6 +14,12 @@ export type Gsm = {
     sliderTooltip: string,
     captureRequired: string
   },
+  menuLabels: {
+    invertPage: string,
+    grayscalePage: string,
+    videoBrightness: string,
+    videoContrast: string
+  },
   token: {
     create: string,
     reset: string,

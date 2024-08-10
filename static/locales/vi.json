@@ -11,6 +11,12 @@
     "sliderTooltip": "Giữ phím Shift để điều chỉnh chính xác.",
     "captureRequired": "Sử dụng phím tắt $1 để kích hoạt."
   },
+  "menuLabels": {
+    "invertPage": "đảo ngược trang",
+    "grayscalePage": "trang thang độ xám",
+    "videoBrightness": "độ sáng video",
+    "videoContrast": "độ tương phản video"
+  },
   "token": {
     "create": "tạo mới",
     "reset": "cài lại",

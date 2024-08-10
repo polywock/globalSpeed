@@ -11,6 +11,12 @@
     "sliderTooltip": "Mantén presionada la tecla Shift para un control preciso.",
     "captureRequired": "Usa el atajo $1 para activar."
   },
+  "menuLabels": {
+    "invertPage": "invertir página",
+    "grayscalePage": "página en escala de grises",
+    "videoBrightness": "brillo del video",
+    "videoContrast": "contraste del video"
+  },
   "token": {
     "create": "crear",
     "reset": "restablecer",

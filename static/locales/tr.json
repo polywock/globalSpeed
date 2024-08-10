@@ -11,6 +11,12 @@
     "sliderTooltip": "Kesin kontrol için Shift tuşunu basılı tutun.",
     "captureRequired": "$1 kısayolunu kullanarak etkinleştir."
   },
+  "menuLabels": {
+    "invertPage": "sayfayı ters çevir",
+    "grayscalePage": "gri tonlama sayfası",
+    "videoBrightness": "video parlaklığı",
+    "videoContrast": "video kontrastı"
+  },
   "token": {
     "create": "ekle",
     "reset": "sıfırla",

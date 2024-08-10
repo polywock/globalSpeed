@@ -13,6 +13,12 @@
     "sliderTooltip": "Hold shift key for precise control.",
     "captureRequired": "Use the $1 shortcut to activate."
   },
+  "menuLabels": {
+    "invertPage": "invert page",
+    "grayscalePage": "grayscale page",
+    "videoBrightness": "video brightness",
+    "videoContrast": "video contrast"
+  },
   "token": {
     "create": "create",
     "reset": "reset",
@@ -26,7 +32,7 @@
     "on": "on",
     "off": "off",
     "toggle": "toggle",
-    
+
     "element": "element",
     "backdrop": "backdrop",
     "both": "both",
