@@ -247,6 +247,9 @@ function handleFreshKeybinds(view: StateView, setView: SetView) {
           case 9:
             kb.contextLabel = `fx :: ${gvar.gsm.menuLabels.videoContrast}`
             break 
+          case 10:
+            kb.contextLabel = gvar.gsm.command.cinema
+            break 
         }
         delete kb.replaceWithGsm 
       })

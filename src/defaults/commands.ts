@@ -571,11 +571,7 @@ export function getDefaultKeybinds(): Keybind[] {
       key: {code: "Backquote"},
       adjustMode: AdjustMode.ITC,
       duration: Duration.PERCENT,
-    },
-    {
-      ...commandInfos.cinema.generate(),
-      key: {code: "Backquote", shiftKey: true},
-      spacing: 2
+      spacing: 1
     },
     {
       ...commandInfos.setMark.generate(),
@@ -599,7 +595,12 @@ export function getDefaultKeybinds(): Keybind[] {
       contextLabel: "- draw on page",
       replaceWithGsm: 4
     },
-    
+    {
+      ...commandInfos.cinema.generate(),
+      trigger: Trigger.CONTEXT,
+      contextLabel: "- darken background",
+      replaceWithGsm: 10
+    },
     {
       ...commandInfos.fxFilter.generate(),
       trigger: Trigger.CONTEXT,
@@ -646,8 +647,7 @@ export function getDefaultKeybinds(): Keybind[] {
       trigger: Trigger.CONTEXT,
       filterTarget: "both",
       contextLabel: "- fx :: reset",
-      replaceWithGsm: 5,
-      spacing: 1,
+      replaceWithGsm: 5
     }
   ]
   if (chrome.tabCapture && chrome.offscreen) {
