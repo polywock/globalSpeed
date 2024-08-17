@@ -90,13 +90,13 @@ gvar.sess.safeStartupCbs.add(async () => {
     let tabs = await chrome.tabs.query({})
     const view = await fetchView({pinByDefault: true, initialContext: true, customContext: true})
     if (!view.pinByDefault) return 
-    tabs.forEach(tab => processNewTab(tab, view))
+    tabs.forEach(tab => processNewTab(tab, view, true))
 })
 
-async function processNewTab(tab: chrome.tabs.Tab, view?: StateView) {
+async function processNewTab(tab: chrome.tabs.Tab, view?: StateView, ignorePreviousTab?: boolean) {
     view = view || (await fetchView({pinByDefault: true, initialContext: true, customContext: true}) )
     if (!view.pinByDefault) return 
-    let openerId = tab.openerTabId
+    let openerId = ignorePreviousTab ? null : tab.openerTabId
     let mode = view.initialContext ?? InitialContext.PREVIOUS
     
     let newContext = getDefaultContext(true)
