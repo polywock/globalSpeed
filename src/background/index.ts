@@ -4,11 +4,11 @@ import "./badge"
 import "./rules"
 import "./capture"
 
-import { AnyDict, CONTEXT_KEYS, Context, InitialContext, Keybind, KeybindMatch, KeybindMatchId, State, Trigger, URLRule} from "src/types"
+import { AnyDict, CONTEXT_KEYS, Context, InitialContext, Keybind, KeybindMatch, KeybindMatchId, State, StateView, Trigger, URLRule} from "src/types"
 import { PREFIX_SETS, dumpConfig, fetchView, getKeysByPrefix, pushView, restoreConfig } from "src/utils/state"
 import { migrateSchema } from "src/background/utils/migrateSchema"
 import { getDefaultContext, getDefaultState } from "src/defaults"
-import { isFirefox } from "src/utils/helper"
+import { isFirefox, timeout } from "src/utils/helper"
 import { getLatestActiveTabInfo, tabToTabInfo } from "src/utils/browserUtils"
 import { ProcessKeybinds, setValue, type SetValueInit } from "./utils/processKeybinds"
 import { findMatchingKeybindsContext, findMatchingKeybindsGlobal, testURL } from "src/utils/configUtils"
@@ -51,9 +51,7 @@ gvar.sess.installCbs.add(() => {
     isFirefox() || ensureContentScripts()
 })
 
-gvar.sess.cbs.add(async () => {
-    if (gvar.installPromise) await gvar.installPromise
-
+gvar.sess.safeCbs.add(async () => {
     const items = await chrome.storage.local.get()
     let keys = Object.keys(items).filter(k => items[k] == null)
 
@@ -86,8 +84,17 @@ chrome.tabs.onRemoved.addListener(async tabId => {
     if (Math.random() > 0.95) clearClosed()
 })
 
-chrome.tabs.onCreated.addListener(async tab => {
-    const view = await fetchView({pinByDefault: true, initialContext: true, customContext: true}) 
+chrome.tabs.onCreated.addListener(processNewTab)
+
+gvar.sess.safeStartupCbs.add(async () => {
+    let tabs = await chrome.tabs.query({})
+    const view = await fetchView({pinByDefault: true, initialContext: true, customContext: true})
+    if (!view.pinByDefault) return 
+    tabs.forEach(tab => processNewTab(tab, view))
+})
+
+async function processNewTab(tab: chrome.tabs.Tab, view?: StateView) {
+    view = view || (await fetchView({pinByDefault: true, initialContext: true, customContext: true}) )
     if (!view.pinByDefault) return 
     let openerId = tab.openerTabId
     let mode = view.initialContext ?? InitialContext.PREVIOUS
@@ -102,7 +109,7 @@ chrome.tabs.onCreated.addListener(async tab => {
     }
 
     pushView({override: {...newContext, isPinned: true}, tabId: tab.id})
-})
+}
 
 isFirefox() || chrome.commands.onCommand.addListener(
     async (command: string, tab: chrome.tabs.Tab) => {

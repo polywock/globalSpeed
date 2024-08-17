@@ -99,7 +99,7 @@ chrome.webNavigation.onHistoryStateUpdated.addListener(deets => handleNavigation
 gvar.es.addWatcher([], handleChange)
 
 
-gvar.sess.cbs.add(async () => {
+gvar.sess.safeCbs.add(async () => {
     const raw = await gvar.es.getAllUnsafe()
     ;syncUserScripts(raw["g:rules"] || [], raw["g:superDisable"])
 })

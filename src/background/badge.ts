@@ -66,6 +66,6 @@ const WATCHERS = [
 gvar.es.addWatcher(WATCHERS, changes => {
     updateVisibleDeb()
 })
-gvar.sess.cbs.add(() => updateVisible())
+gvar.sess.safeCbs.add(() => updateVisible())
 chrome.webNavigation.onCommitted.addListener(() => updateVisible())
 chrome.tabs.onActivated.addListener(() => updateVisible())
