@@ -29,14 +29,13 @@
         color: white;
         left: calc(50vw - 30px);
         top: calc(50vh + 60px);
-        display: none;
         width: 60px;
         height: 60px;
         overflow: hidden;
         font-size: 30px;
         padding: 20px 0;
         text-align: center;
-        opacity: 0.75;
+        opacity: 0;
     }
 
     .circle {

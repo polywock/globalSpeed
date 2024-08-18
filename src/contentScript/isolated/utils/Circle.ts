@@ -198,7 +198,7 @@ export class Circle extends Popover {
         if (this.movingMode) {
             this.x = clientX / window.innerWidth * 100
             this.y = clientY / window.innerHeight * 100
-            if (this.isAtDelete({clientX, clientY})) {
+            if (this.isAtDelete()) {
                 pushView({override: {circleWidget: false}, tabId: gvar.tabInfo.tabId})
                 setNewPosition.cancel()
                 return 
@@ -234,24 +234,30 @@ export class Circle extends Popover {
     isAtCircle = (xy: ReturnType<typeof extractClient>) => {
         if (this.hidden) return 
         let { clientX, clientY } = xy 
-        let x = this.x * 0.01 * window.innerWidth
-        let y = this.y * 0.01 * window.innerHeight
-        let aura = Math.max(this.size * (isMobile() ? 1.5 : 1.1 ), 30)
-
+        const circleXY = this.circle.getBoundingClientRect()
+        let x = circleXY.x + circleXY.width * 0.5
+        let y = circleXY.y + circleXY.height * 0.5
+        let half = 0.5 * (isMobile() ? 1.5 : 1.1)
         if (
-            between(x - aura * 0.5, x + aura * 0.5, clientX) && 
-            between(y - aura * 0.5, y + aura * 0.5, clientY)
+            between(x - circleXY.width * half, x + circleXY.width * half, clientX) && 
+            between(y - circleXY.height * half, y + circleXY.height * half, clientY)
         ) return true 
         
     }
-    isAtDelete = (xy: ReturnType<typeof extractClient>, large?: boolean) => {
-        let size = large ? 120 : 60
-        let x = window.innerWidth * 0.5 - size / 2
-        let y = window.innerHeight * (this.conflictWithDelete ? 0.7 : 0.5) + 90 - size / 2
+    isAtDelete = (large?: boolean) => {
+        let circleBounds = this.circle.getBoundingClientRect()
+        let circleXY:  ReturnType<typeof extractClient> = {clientX: circleBounds.x + circleBounds.width * 0.5, clientY: circleBounds.y + circleBounds.height * 0.5}
+
+        let deleteBounds = this.delete.getBoundingClientRect()
+
+        let deleteX = deleteBounds.x + deleteBounds.width * 0.5
+        let deleteY = deleteBounds.y + deleteBounds.height * 0.5
+
+        let half = 0.5 * (large ? 3 : 1)
 
         if (
-            between(x, x + size, xy.clientX) && 
-            between(y, y + size, xy.clientY)
+            between(deleteX - deleteBounds.width * half, deleteX + deleteBounds.width * half, circleXY.clientX) && 
+            between(deleteY - deleteBounds.height * half, deleteY + deleteBounds.height * half, circleXY.clientY)
         ) return true 
     }
     togglePause = async () => {
@@ -319,9 +325,10 @@ export class Circle extends Popover {
         if (this.movingMode) return 
         this.indicator.show({text: 'Positioning', duration: 2000})
         this.movingMode = true 
-        this.conflictWithDelete = this.isAtDelete({clientX: this.x / 100 * window.innerWidth, clientY: this.y / 100 * window.innerHeight}, true)
+        if (this.delete.style.top) this.delete.style.top = null
+        this.conflictWithDelete = this.isAtDelete(true)
         this.circle.style.border = "5px solid yellow"
-        this.delete.style.display = "block"
+        this.delete.style.opacity = "0.75"
         this.delete.style.top = this.conflictWithDelete ? `calc(70vh + 60px)` : null
     }
     clearMovingMode = () => {
@@ -330,7 +337,7 @@ export class Circle extends Popover {
         this.movingMode = false 
         this.conflictWithDelete = false 
         this.circle.style.border = "5px solid white"
-        this.delete.style.display = "none"
+        this.delete.style.opacity = "0"
     }
     drawPosition = () => {
         this.circle.style.left = `calc(${this.x}vw - ${this.size / 2}px)`

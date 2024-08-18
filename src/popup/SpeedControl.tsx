@@ -5,7 +5,7 @@ import { useStateView } from "../hooks/useStateView"
 import { BsMusicNoteList } from "react-icons/bs"
 import { produce } from "immer"
 import { replaceArgs } from "src/utils/gsm"
-import { clamp, domRectGetOffset, feedbackText, isFirefox } from "src/utils/helper"
+import { clamp, domRectGetOffset, feedbackText, isFirefox, isMobile } from "src/utils/helper"
 import { NumericInput } from "src/comps/NumericInput"
 import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight } from "react-icons/fa"
 import "./SpeedControl.css"
@@ -31,11 +31,14 @@ export function SpeedControl(props: SpeedControlProps) {
 
   const smallStep = view.speedSmallStep || 0.01
   const largeStep = view.speedBigStep || 0.1
+
+  let padding = (view.speedPresetPadding ?? 0) * (view.fontSize ?? 1)
+  if (isMobile()) padding = Math.max(padding, 10)
   
-  return <div className="SpeedControl">
+  return <div className="SpeedControl" style={{"--padding": `${padding}px`} as CSSProperties}>
 
     {/* Presets */}
-    <div className="options" style={{"--padding": `${(view.speedPresetPadding ?? 0) * (view.fontSize ?? 1)}px`} as CSSProperties}>
+    <div className="options">
       {presets.map((v, i) => (
         <button 
           key={i}

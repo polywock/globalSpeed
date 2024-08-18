@@ -148,7 +148,7 @@ isFirefox() || chrome.commands.onCommand.addListener(
     }
 )
 
-chrome.contextMenus.onClicked.addListener(async (item, tab) => {
+chrome.contextMenus?.onClicked.addListener(async (item, tab) => {
     const keybinds = (await fetchView({keybinds: true})).keybinds
     const matches = findMatchingKeybindsContext(keybinds, item.menuItemId as string)
     if (matches.length !== 1) return 

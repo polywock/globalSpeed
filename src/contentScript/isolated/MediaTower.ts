@@ -204,10 +204,10 @@ export class MediaTower {
     }
     const scope = generateScopeState(gvar.tabInfo, [...this.media])
     const override = {[this.scopeStorageKey]: scope}
-    if (isFirefox()) {
-      chrome.runtime.sendMessage({type: "SET_SESSION", override} as Messages)
-    } else {
+    if (chrome.storage.session) {
       chrome.storage.session.set(override)
+    } else {
+      chrome.runtime.sendMessage({type: "SET_SESSION", override} as Messages)
     }
   }
   private sendUpdateDeb = debounce(this.sendUpdate, 500, {leading: true, trailing: true, maxWait: 2000})

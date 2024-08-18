@@ -1,7 +1,7 @@
 
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "./constants"
 import { Command, Keybind, AdjustMode, CommandGroup, Duration, Trigger } from "../types"
-import { randomId, groupByKey, flatJoin, isFirefox, getPopupSize } from "../utils/helper"
+import { randomId, groupByKey, flatJoin, isFirefox, getPopupSize, isMobile } from "../utils/helper"
 import { filterInfos } from "./filters"
 
 export type CommandName = "nothing" | "runCode" | "openUrl" | "intoPopup" |
@@ -506,6 +506,8 @@ export let commandInfos: {[key in CommandName]: Command} = {
 
 
 export function getDefaultKeybinds(): Keybind[] {
+  if (isMobile()) return []
+  
   let kbs: Keybind[] = [
     {
       ...commandInfos.speed.generate(),
@@ -630,7 +632,7 @@ export function getDefaultKeybinds(): Keybind[] {
       filterOption: "brightness",
       adjustMode: AdjustMode.ITC,
       valueItcMin: 0.5,
-      valueItcMax: 3,
+      valueItcMax: 2,
     },
     {
       ...commandInfos.fxFilter.generate(),

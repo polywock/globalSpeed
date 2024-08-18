@@ -2,7 +2,13 @@
 @import "../_common.css";
 
 
+:root.mobile body {
+  width: unset;
+}
+
+
 body {
+  width: 300px;
   margin: 0;
   padding: 0;
   background-color: var(--fg-color);
@@ -17,15 +23,15 @@ body {
 }
 
 #App {
+
+  &.mobile {
+    width: unset;
+    --font-size-scalar: 1.2;
+  }
+
   & > .panel {
-    width: 300px;
     padding: 8px;
     min-height: 40px;
-    max-width: 400px;
-
-    &.MainPanel {
-      max-width: 300px;
-    }
 
     & > .unloaded {
       min-height: 9.28rem;

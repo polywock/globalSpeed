@@ -152,9 +152,12 @@ export function SectionFlags(props: {}) {
             setView({hideMediaView: !view.hideMediaView})
           }}/>
         </div>
-
+        
         {/* Circle widget */}
-        <CircleWidget setView={setView} active={view.circleWidget} setShowWidgetModal={setShowWidgetModal} showOption={view.circleWidget || view.circleWidgetIcon}/>
+        {!(isFirefox() && isMobile()) && (
+          <CircleWidget setView={setView} active={view.circleWidget} setShowWidgetModal={setShowWidgetModal} showOption={view.circleWidget || view.circleWidgetIcon}/>
+        )}
+
 
         {/* Pin by default */}
         <div className="field marginTop">

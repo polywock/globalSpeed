@@ -11,7 +11,7 @@ import { useThemeSync } from "src/hooks/useThemeSync"
 import { createRoot } from "react-dom/client"
 import { OrlHeader } from "./OrlHeader"
 import { loadGsm } from "src/utils/gsm"
-import { isFirefox } from "src/utils/helper"
+import { isFirefox, isMobile } from "src/utils/helper"
 import "./popup.css"
 
 
@@ -50,6 +50,7 @@ export function App(props: {}) {
   )
 }
 
+if (isMobile())  document.documentElement.classList.add("mobile") 
 Promise.all([
   loadGsm().then(gsm => {
     gvar.gsm = gsm 

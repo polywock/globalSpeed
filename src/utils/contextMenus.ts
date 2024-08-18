@@ -4,6 +4,7 @@ import { fetchView } from "./state";
 
 
 export async function syncContextMenu(keybinds?: Keybind[]) {
+    if (!chrome.contextMenus) return 
     let createdParents = new Set<string>()
     await removeAll()
     keybinds = (await fetchView(['keybinds'])).keybinds

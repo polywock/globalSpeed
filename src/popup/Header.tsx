@@ -12,7 +12,7 @@ import { Gear, Pin, Zap } from "src/comps/svgs";
 import { pushView } from "src/utils/state";
 import "./Header.css"
 import { FaCircleDot } from "react-icons/fa6";
-import { feedbackText } from "src/utils/helper";
+import { feedbackText, isFirefox, isMobile } from "src/utils/helper";
 
 
 const SUPPORTS_TAB_CAPTURE = !!(chrome.tabCapture?.capture && chrome.offscreen?.createDocument)
@@ -70,9 +70,8 @@ export function Header(props: HeaderProps) {
       >
         <Pin size="1.42rem"/>
       </div>
-
       {/* Circle gesture */}
-      {(props.panel === 0 && view.circleWidgetIcon) ? (
+      {(props.panel === 0 && view.circleWidgetIcon && !(isFirefox() && isMobile())) ? (
         <CircleIcon active={view.circleWidget} onClick={() => {}}/>
       ) : <div className="noPadding"/>}
 
@@ -96,8 +95,9 @@ export function Header(props: HeaderProps) {
       ) : <div className="noPadding"/>}
 
       {/* Options page */}
-      <div title="open options page." onClick={e => {
-        chrome.runtime.openOptionsPage()
+      <div title="open options page." onClick={async e => {
+        await chrome.runtime.openOptionsPage()
+        if (isFirefox()) window.close()
       }}>
         <Gear size="1.42rem"/>
       </div>

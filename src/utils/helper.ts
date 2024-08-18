@@ -57,6 +57,20 @@ export function isFirefox() {
   return isFirefoxResult
 }
 
+let firefoxVersionResult: number = undefined
+export function getFirefoxVersion() {
+  if (firefoxVersionResult !== undefined) return firefoxVersionResult
+  firefoxVersionResult = null
+  const firefoxInfo = navigator.userAgent.split(" ").find(v => v.includes("Firefox/"))
+  if (firefoxInfo) {
+    const version = parseInt(firefoxInfo.slice(8))
+    if (version > 1) {
+      firefoxVersionResult = version 
+    }
+  }
+  return firefoxVersionResult
+}
+
 let isEdgeResult: boolean
 export function isEdge() {
   isEdgeResult = isEdgeResult ?? navigator.userAgent.includes("Edg")

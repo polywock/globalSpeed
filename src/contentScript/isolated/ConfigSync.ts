@@ -5,6 +5,7 @@ import { findMatchingKeybindsLocal, testURL } from "../../utils/configUtils"
 import { AdjustMode, Keybind, Trigger } from "src/types"
 import { Circle } from "./utils/Circle"
 import { getLeaf } from "src/utils/nativeUtils"
+import { isFirefox, isMobile } from "src/utils/helper"
 
 const FORCED_GHOST_SITES = ["v.qq.com", "www.qq.com", "sports.qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com", "onedrive.live.com", "open.spotify.com", "www.instagram.com"]
 
@@ -48,7 +49,7 @@ export class ConfigSync {
       this.fxSync?.release(); delete this.fxSync
     }
 
-    if (enabled && view.circleWidget)  {
+    if (enabled && view.circleWidget && !(isFirefox() && isMobile()))  {
       gvar.os.circle = gvar.os.circle || new Circle(view.circleInit)
     } else {
       gvar.os.circle?.release()

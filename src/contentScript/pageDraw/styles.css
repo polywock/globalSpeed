@@ -45,7 +45,7 @@
     border: 2px solid #aaa;
     width: 300px;
     font-size: 14px;
-    font-family: "Segoe UI", "Avenir", Courier, monospace;
+    font-family: "Segoe UI", "Avenir", system-ui, Courier, monospace;
     user-select: none;
     opacity: 0.8;
     pointer-events: all;

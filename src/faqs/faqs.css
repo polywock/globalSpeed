@@ -1,7 +1,7 @@
 
 body {
   background-color: #ddd;
-  font-family: "Segoe UI", "Avenir", Courier, monospace;
+  font-family: "Segoe UI", "Avenir", system-ui, Courier, monospace;
   font-size: 1rem; 
   display: grid;
   justify-content: center;

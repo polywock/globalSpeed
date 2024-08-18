@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { useStateView } from "../hooks/useStateView"
+import { isMobile } from "src/utils/helper"
 
 
 export function useThemeSync() {
@@ -11,7 +12,7 @@ export function useThemeSync() {
       document.documentElement.classList.remove("darkTheme")
     }
 
-    document.documentElement.style.setProperty("--font-size-scalar", `${view?.fontSize ?? 1.0}`)
+    document.documentElement.style.setProperty("--font-size-scalar", `${view?.fontSize ?? (isMobile() ? 1.3 : 1)}`)
   }, [view?.darkTheme, view?.fontSize])
 
   if (gvar.gsm._scale) {

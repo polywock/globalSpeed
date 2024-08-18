@@ -10,7 +10,7 @@ import "./options.css"
 import { requestCreateTab, requestTabInfo } from "src/utils/browserUtils"
 import type { Indicator } from "src/contentScript/isolated/utils/Indicator"
 import { useStateView } from "src/hooks/useStateView"
-import { isEdge, isFirefox } from "src/utils/helper"
+import { isEdge, isFirefox, isMobile } from "src/utils/helper"
 import { GoX } from "react-icons/go"
 
 declare global {
@@ -36,7 +36,7 @@ const Options = (props: {}) => {
   </div>
 }
 
-
+if (isMobile())  document.documentElement.classList.add("mobile") 
 Promise.all([loadGsm(), requestTabInfo()]).then(([gsm, tabInfo]) => {
   gvar.isOptionsPage = true 
   gvar.gsm = gsm 
