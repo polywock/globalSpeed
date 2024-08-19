@@ -201,7 +201,11 @@
         "headerTooltip": "Widget circular habilitado.",
         "showIcon": "mostrar ícono",
         "showIconTooltip": "Muestra un ícono en el menú principal para alternar cómodamente el widget circular.",
-        "autoHide": "ocultamiento automático"
+        "autoHide": "ocultamiento automático",
+        "fullscreenOnly": "solo pantalla completa",
+        "fullscreenOnlyTooltip": "Mostrar widget solo cuando el video está en pantalla completa.",
+        "pressAction": "acción de pulsación",
+        "togglePause": "alternar pausa"
       }
     },
     "editor": {

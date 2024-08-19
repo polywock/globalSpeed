@@ -5,6 +5,8 @@ import { useStateView } from "../hooks/useStateView"
 import { Tooltip } from "src/comps/Tooltip"
 import { Toggle } from "src/comps/Toggle"
 import "./WidgetModal.css"
+import { NumericInput } from "src/comps/NumericInput"
+import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "src/defaults/constants"
 
 type Props = {
   onClose: () => void 
@@ -75,6 +77,44 @@ export function WidgetModal(props: Props) {
             })})
           }}/>
       </div>
+
+      {/* Fullscreen only */}
+      <div className="field">
+        <div className="labelWithTooltip">
+          <span>{gvar.gsm.options.flags.widget.fullscreenOnly}</span>
+          <Tooltip tooltip={gvar.gsm.options.flags.widget.fullscreenOnlyTooltip}/>
+        </div>
+        <Toggle value={init.fullscreenOnly} onChange={e => {
+            setView({circleInit: produce(init, d => {
+              d.fullscreenOnly = !d.fullscreenOnly
+            })})
+          }}/>
+      </div>
+
+      {/* Press action */}
+      <div className="field">
+        <span>{gvar.gsm.options.flags.widget.pressAction}</span>
+        <select value={init.mainAction || "SPEED"} onChange={e => {
+          setView({circleInit: produce(init, d => {
+            d.mainAction = e.target.value as any 
+          })})
+        }}>
+          <option value="SPEED">{gvar.gsm.command.toggleSpeed}</option>
+          <option value="PAUSE">{gvar.gsm.options.flags.widget.togglePause}</option>
+        </select>
+      </div>
+
+      {/* Speed  */}
+      {((init.mainAction || "SPEED" )=== "SPEED") && (
+        <div className="field">
+          <span>{gvar.gsm.command.speed}</span>
+          <NumericInput rounding={2} noNull={true} min={MIN_SPEED_CHROMIUM} max={MAX_SPEED_CHROMIUM} value={init.mainActionSpeed ?? 3} onChange={v => {
+            setView({circleInit: produce(init, d => {
+              d.mainActionSpeed = v 
+            })})
+          }}/>
+        </div>
+      )}
 
       {/* Reset */}
       <button onClick={e => {

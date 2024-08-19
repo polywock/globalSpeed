@@ -115,7 +115,10 @@ export type CircleInit = {
   circleSize?: number,
   circleInitial?: Point,
   autoHideDisabled?: boolean,
-  opacity?: number 
+  opacity?: number,
+  fullscreenOnly?: boolean,
+  mainAction?: "PAUSE" | "SPEED",
+  mainActionSpeed?: number
 }
 
 export enum InitialContext {

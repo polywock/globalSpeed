@@ -203,7 +203,11 @@
         "headerTooltip": "Đã bật widget hình tròn.",
         "showIcon": "hiển thị biểu tượng",
         "showIconTooltip": "Hiển thị biểu tượng trên menu chính để dễ dàng chuyển đổi widget hình tròn.",
-        "autoHide": "tự động ẩn"
+        "autoHide": "tự động ẩn",
+        "fullscreenOnly": "chỉ toàn màn hình",
+        "fullscreenOnlyTooltip": "Chỉ hiển thị widget khi video ở chế độ toàn màn hình.",
+        "pressAction": "hành động nhấn",
+        "togglePause": "chuyển đổi tạm dừng"
       }
     },
     "editor": {

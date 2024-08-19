@@ -201,7 +201,11 @@
         "headerTooltip": "Widget circulaire activé.",
         "showIcon": "afficher l'icône",
         "showIconTooltip": "Affiche une icône dans le menu principal pour basculer facilement le widget circulaire.",
-        "autoHide": "masquage automatique"
+        "autoHide": "masquage automatique",
+        "fullscreenOnly": "plein écran uniquement",
+        "fullscreenOnlyTooltip": "Afficher le widget uniquement lorsque la vidéo est en plein écran.",
+        "pressAction": "action de pression",
+        "togglePause": "basculer la pause"
       }
     },
     "editor": {

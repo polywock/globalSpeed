@@ -38,8 +38,9 @@ export class Circle extends Popover {
         initialTime: number 
     }
     strong = true 
-    hidden = true  
-    hiddenTimeout: number 
+
+    autoHidden = true
+    autoHiddenTimeout: number 
     conflictWithDelete = false 
     constructor(private init: CircleInit) {
         super()
@@ -79,7 +80,8 @@ export class Circle extends Popover {
         this.drawPosition()
         this.drawCircleOpacity()
         gvar.os.mediaTower.reobserveAllVideos()
-        this.autoHide ? this.makeHidden() : this.makeVisible()
+        this.autoHidden = true 
+        this.syncVisibility()
     }
     release = () => {
         this.stop()
@@ -98,6 +100,7 @@ export class Circle extends Popover {
         gvar.os.eListen.pointerMoveCbs.add(this.handlePointerMove)
         gvar.os.eListen.touchMoveCbs.add(this.handlePointerMove)
         gvar.os.eListen.contextMenuCbs.add(this.handleContextMenu)
+        gvar.os.eListen.fsCbs.add(this.syncVisibility)
 
         gvar.os.eListen.touchStartCbs.add(this.handleGuard)
         gvar.os.eListen.touchEndCbs.add(this.handleGuard)
@@ -112,7 +115,7 @@ export class Circle extends Popover {
     stop = () => {
         if (!this.video) return 
         this.clearSession()
-        clearTimeout(this.hiddenTimeout); delete this.hiddenTimeout
+        clearTimeout(this.autoHiddenTimeout); delete this.autoHiddenTimeout
         delete this.video
         this._update(false)
         gvar.os.eListen.pointerDownCbs.delete(this.handlePointerDown)
@@ -121,6 +124,7 @@ export class Circle extends Popover {
         gvar.os.eListen.pointerMoveCbs.delete(this.handlePointerMove)
         gvar.os.eListen.touchMoveCbs.delete(this.handlePointerMove)
         gvar.os.eListen.contextMenuCbs.delete(this.handleContextMenu)
+        gvar.os.eListen.fsCbs.delete(this.syncVisibility)
 
         gvar.os.eListen.touchStartCbs.delete(this.handleGuard)
         gvar.os.eListen.touchEndCbs.delete(this.handleGuard)
@@ -131,19 +135,22 @@ export class Circle extends Popover {
         gvar.os.eListen.clickCbs.delete(this.handleGuard)
         gvar.os.eListen.dblClickCbs.delete(this.handleGuard)
     }
-    startHiddenTimeout = (show?: boolean) => {
-        show === true && this.makeVisible()
-        show === false && this.makeHidden()
-        clearTimeout(this.hiddenTimeout)
-        this.hiddenTimeout = setTimeout(this.makeHidden, 5_000)
+    startShowTimeout = () => {
+        this.autoHidden = false   
+        clearTimeout(this.autoHiddenTimeout)
+        this.autoHiddenTimeout = setTimeout(this.clearShow, 5_000)
+        this.syncVisibility()
     }
-    makeHidden = () => {
-        this.hidden = true 
-        this._div.style.opacity = "0"
+    clearShow = () => {
+        this.autoHidden = true  
+        this.syncVisibility()
     }
-    makeVisible = () => {
-        this.hidden = false 
-        this._div.style.opacity = "1"
+    syncVisibility = () => {
+        if (this.autoHidden || (this.init.fullscreenOnly && !document.fullscreenElement)) {
+            this._div.style.opacity = "0"
+        } else {
+            this._div.style.opacity = "1"
+        }
     }
     clearPreventSecond = () => {
         delete this.preventSecond
@@ -161,7 +168,7 @@ export class Circle extends Popover {
         }
     }
     handlePointerDown = (e: PointerEvent) => {
-        this.autoHide && this.startHiddenTimeout(true)
+        this.autoHide && this.startShowTimeout()
         if (this.downAt) this.clearSession()
         if (this.isAtCircle(extractClient(e))) {
             this.downAt = Date.now() 
@@ -176,16 +183,14 @@ export class Circle extends Popover {
             this.preventDefault(e)
             return
         }
-        this.autoHide && this.startHiddenTimeout(true)
+        this.autoHide && this.startShowTimeout()
         this.preventDefault(e)
         
-        if (!this.movingMode && !this.leftCircle) {
-            this.togglePause()
-        }
+        if (!this.movingMode && !this.leftCircle) this.doMain()
         this.clearSession()
     }
     handlePointerMove = async (e: PointerEvent | TouchEvent) => {
-        this.autoHide && this.startHiddenTimeout(true)
+        this.autoHide && this.startShowTimeout()
         if (!this.downAt) return 
         if (e instanceof PointerEvent && e.pointerType !== "mouse") {
             this.preventDefault(e)
@@ -217,7 +222,7 @@ export class Circle extends Popover {
         direction ? this.startDirectional(direction) : this.clearDirectional()
     }
     handleContextMenu = (e: MouseEvent) => {
-        this.autoHide && this.startHiddenTimeout(true)
+        this.autoHide && this.startShowTimeout()
         if (this.isAtCircle(extractClient(e))) {
             this.activateMovingMode()
             e.cancelable && e.preventDefault()
@@ -232,7 +237,7 @@ export class Circle extends Popover {
         this.drawCircleOpacity()
     }
     isAtCircle = (xy: ReturnType<typeof extractClient>) => {
-        if (this.hidden) return 
+        if (this.autoHidden) return 
         let { clientX, clientY } = xy 
         const circleXY = this.circle.getBoundingClientRect()
         let x = circleXY.x + circleXY.width * 0.5
@@ -260,13 +265,28 @@ export class Circle extends Popover {
             between(deleteY - deleteBounds.height * half, deleteY + deleteBounds.height * half, circleXY.clientY)
         ) return true 
     }
+    doMain = () => {
+        this.init.mainAction === "PAUSE" ? this.togglePause() : this.toggleSpeed()
+    }
     togglePause = async () => {
         let paused = !this.video.paused
         setPause(this.video, paused ? 'on' : 'off')
     }
+    toggleSpeed = async () => {
+        let speed = this.init.mainActionSpeed || 3  
+        const view = await fetchView({speed: true, lastSpeed: true}, gvar.tabInfo.tabId)
+        let lastSpeed = view.lastSpeed
+
+        if (view.speed?.toFixed(2) === speed.toFixed(2)) {
+            [speed, lastSpeed] = [view.lastSpeed, view.speed]
+        }
+
+        pushView({override: {speed, lastSpeed: view.speed}, tabId: gvar.tabInfo.tabId})
+        this.indicator.show({text: formatSpeed(speed)})
+    }
     handleDirectionalInterval = async () => {
         if (!this.combo) this.clearDirectional() 
-        this.autoHide && this.startHiddenTimeout(true)
+        this.autoHide && this.startShowTimeout()
         this.combo.combo++
         let isVertical = this.direction === Direction.TOP || this.direction === Direction.BOTTOM
         let isNegative = this.direction === Direction.LEFT || this.direction === Direction.TOP

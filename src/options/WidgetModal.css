@@ -2,4 +2,8 @@
 .WidgetModal {
     width: 600px;
     max-width: 90vw;
+
+    .NumericInput {
+        width: 50px;
+    }
 }

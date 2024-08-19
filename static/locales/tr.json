@@ -204,7 +204,11 @@
         "headerTooltip": "Daire widget'ı etkinleştirildi.",
         "showIcon": "simgesini göster",
         "showIconTooltip": "Daire widget'ını kolayca açıp kapatmak için ana menüde bir simge göster.",
-        "autoHide": "otomatik gizleme"
+        "autoHide": "otomatik gizleme",
+        "fullscreenOnly": "yalnızca tam ekran",
+        "fullscreenOnlyTooltip": "Widget'ı yalnızca video tam ekranda olduğunda göster.",
+        "pressAction": "basma eylemi",
+        "togglePause": "durdurmayı geçiş yap"
       }  
     },
     "editor": {

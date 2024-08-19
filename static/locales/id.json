@@ -193,7 +193,11 @@
         "headerTooltip": "Widget lingkaran diaktifkan.",
         "showIcon": "tampilkan ikon",
         "showIconTooltip": "Tampilkan ikon di menu utama untuk dengan mudah mengaktifkan widget lingkaran.",
-        "autoHide": "sembunyikan otomatis"
+        "autoHide": "sembunyikan otomatis",
+        "fullscreenOnly": "hanya layar penuh",
+        "fullscreenOnlyTooltip": "Hanya tampilkan widget saat video dalam layar penuh.",
+        "pressAction": "tindakan tekan",
+        "togglePause": "alih jeda"
       }
     },
     "editor": {

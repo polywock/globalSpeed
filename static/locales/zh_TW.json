@@ -203,7 +203,11 @@
         "headerTooltip": "啟用圓形小工具。",
         "showIcon": "顯示圖示",
         "showIconTooltip": "在主選單上顯示圖示以方便切換圓形小工具。",
-        "autoHide": "自動隱藏"
+        "autoHide": "自動隱藏",
+        "fullscreenOnly": "僅全螢幕",
+        "fullscreenOnlyTooltip": "僅在影片全螢幕時顯示小工具。",
+        "pressAction": "按下動作",
+        "togglePause": "切換暫停"
       }
     },
     "editor": {

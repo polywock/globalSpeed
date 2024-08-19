@@ -197,7 +197,11 @@ export type Gsm = {
         headerTooltip: string,
         showIcon: string,
         showIconTooltip: string,
-        autoHide: string
+        autoHide: string,
+        fullscreenOnly: string,
+        fullscreenOnlyTooltip: string,
+        pressAction: string,
+        togglePause: string
       }
     },
     editor: {

@@ -206,7 +206,11 @@
         "headerTooltip": "Enabled circle widget.",
         "showIcon": "show icon",
         "showIconTooltip": "Show an icon on the main menu to conveniently toggle the circle widget.",
-        "autoHide": "auto hide"
+        "autoHide": "auto hide",
+        "fullscreenOnly": "fullscreen only",
+        "fullscreenOnlyTooltip": "Only show widget when the video is fullscreen.",
+        "pressAction": "press action",
+        "togglePause": "toggle pause"
       }
     },
     "editor": {

@@ -202,7 +202,11 @@
         "headerTooltip": "원형 위젯을 활성화했습니다.",
         "showIcon": "아이콘 표시",
         "showIconTooltip": "메인 메뉴에 아이콘을 표시하여 원형 위젯을 쉽게 전환할 수 있습니다.",
-        "autoHide": "자동 숨기기"
+        "autoHide": "자동 숨기기",
+        "fullscreenOnly": "전체 화면 전용",
+        "fullscreenOnlyTooltip": "비디오가 전체 화면일 때만 위젯을 표시합니다.",
+        "pressAction": "눌러서 실행",
+        "togglePause": "일시 정지 전환"
       }
     },
     "editor": {

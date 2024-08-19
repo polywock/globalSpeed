@@ -205,7 +205,11 @@
         "headerTooltip": "启用圆形小部件。",
         "showIcon": "显示图标",
         "showIconTooltip": "在主菜单上显示图标以方便切换圆形小部件。",
-        "autoHide": "自动隐藏"
+        "autoHide": "自动隐藏",
+        "fullscreenOnly": "仅全屏",
+        "fullscreenOnlyTooltip": "仅在视频全屏时显示小部件。",
+        "pressAction": "按下动作",
+        "togglePause": "切换暂停"
       }
     },
     "editor": {
