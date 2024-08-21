@@ -9,6 +9,7 @@
     user-select: none;
     touch-action: none;
     margin: 0px;
+    padding: 0px;
     border: none;
     transition: 300ms ease-in opacity;
 
@@ -40,14 +41,15 @@
 
     .circle {
         background-color: white;
-        pointer-events: all;
+        pointer-events: none;
+        touch-action: none;
         border: 5px solid white;
         z-index: 3;
     }
 
     .ref {
         pointer-events: none;
-        display: none;
+        opacity: 0;
         z-index: 2;
     }
 }

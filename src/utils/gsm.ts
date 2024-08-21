@@ -15,7 +15,7 @@ declare global {
 }
 
 export async function loadGsm(): Promise<Gsm> {
-  const language = (await chrome.storage.local.get("g:language"))["g:language"]
+  const language = (await chrome.storage.local.get("g:language"))["g:language"] as string
   return readLocaleFile(getValidLocale(language))
 }
 
@@ -32,13 +32,11 @@ export async function readLocaleFile(locale: string): Promise<Gsm> {
 
 function getValidLocale(overrideLang?: string) {
   if (overrideLang && AVAILABLE_LOCALES.has(overrideLang)) return overrideLang
-  const languages = new Set(navigator.languages.map(l => l.replace("-", "_")))
-  languages.forEach(l => {
-    if (l.includes("_")) {
-      const langPart = l.split("_")[0]
-      languages.add(langPart)
-    }
-  })
+  const languages: Set<string> = new Set()
+  for (let lang of navigator.languages.map(l => l.replace("-", "_"))) {
+    languages.add(lang)
+    languages.add(lang.split("_")[0])
+  }
   languages.add("en")
   return [...languages].find(l => AVAILABLE_LOCALES.has(l))
 }

@@ -14,7 +14,6 @@ export function getDefaultState(): State {
   } as State;
 
   if (isMobile()) {
-    state.circleWidget = true
     state.circleWidgetIcon = true
   }
   return state 

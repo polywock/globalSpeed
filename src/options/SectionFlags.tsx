@@ -154,9 +154,7 @@ export function SectionFlags(props: {}) {
         </div>
         
         {/* Circle widget */}
-        {!(isFirefox() && isMobile()) && (
-          <CircleWidget setView={setView} active={view.circleWidget} setShowWidgetModal={setShowWidgetModal} showOption={view.circleWidget || view.circleWidgetIcon}/>
-        )}
+        <CircleWidget setView={setView} active={view.circleWidget} setShowWidgetModal={setShowWidgetModal} showOption={view.circleWidget || view.circleWidgetIcon}/>
 
 
         {/* Pin by default */}
