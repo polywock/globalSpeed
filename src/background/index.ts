@@ -8,7 +8,7 @@ import { AnyDict, CONTEXT_KEYS, Context, InitialContext, Keybind, KeybindMatch, 
 import { PREFIX_SETS, dumpConfig, fetchView, getKeysByPrefix, pushView, restoreConfig } from "src/utils/state"
 import { migrateSchema } from "src/background/utils/migrateSchema"
 import { getDefaultContext, getDefaultState } from "src/defaults"
-import { isFirefox, timeout } from "src/utils/helper"
+import { isFirefox, isMobile, timeout } from "src/utils/helper"
 import { getLatestActiveTabInfo, tabToTabInfo } from "src/utils/browserUtils"
 import { ProcessKeybinds, setValue, type SetValueInit } from "./utils/processKeybinds"
 import { findMatchingKeybindsContext, findMatchingKeybindsGlobal, testURL } from "src/utils/configUtils"
@@ -111,7 +111,7 @@ async function processNewTab(tab: chrome.tabs.Tab, view?: StateView, ignorePrevi
     pushView({override: {...newContext, isPinned: true}, tabId: tab.id})
 }
 
-isFirefox() || chrome.commands.onCommand.addListener(
+;(isFirefox() && isMobile()) || chrome.commands.onCommand.addListener(
     async (command: string, tab: chrome.tabs.Tab) => {
       const isGlobal = !tab
       const view = await fetchView({enabled: true, superDisable: true, keybinds: true, keybindsUrlCondition: true, latestViaShortcut: true})

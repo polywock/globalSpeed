@@ -12,10 +12,10 @@ import { Gear, Pin, Zap } from "src/comps/svgs";
 import { pushView } from "src/utils/state";
 import "./Header.css"
 import { FaCircleDot } from "react-icons/fa6";
-import { feedbackText, isFirefox, isMobile } from "src/utils/helper";
+import { feedbackText, isEdgeMobile, isFirefox, isMobile } from "src/utils/helper";
 
 
-const SUPPORTS_TAB_CAPTURE = !!(chrome.tabCapture?.capture && chrome.offscreen?.createDocument)
+const SUPPORTS_TAB_CAPTURE = !!(chrome.tabCapture?.capture && chrome.offscreen?.createDocument && !isEdgeMobile())
 
 type HeaderProps = {
   panel: number

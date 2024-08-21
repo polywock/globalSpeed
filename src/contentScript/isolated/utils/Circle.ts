@@ -4,7 +4,7 @@ import { insertStyle } from "src/utils/nativeUtils";
 import { fetchView, pushView } from "src/utils/state";
 import { conformSpeed, formatSpeed } from "src/utils/configUtils";
 import { Indicator } from "./Indicator";
-import { between, clamp, extractClient, formatDuration, inverseLerp, isFirefox, isMobile, lerp, roundTo, timeout } from "src/utils/helper";
+import { between, clamp, extractClient, formatDuration, inverseLerp, isFirefox, isFirefoxMobile, isMobile, lerp, roundTo, timeout } from "src/utils/helper";
 import { seekTo, setPause } from "./applyMediaEvent";
 import debounce from "lodash.debounce";
 import styles from "./Circle.css?raw"
@@ -213,7 +213,7 @@ export class Circle extends Popover {
 
         if (this.movingMode) {
             this.updateClientDimensions()
-            if (isFirefox() && isMobile()) clientY -= (window.visualViewport.height - window.innerHeight) / 2
+            if (isFirefoxMobile()) clientY -= (window.visualViewport.height - window.innerHeight) / 2
             this.x = clientX / this.clientWidth * 100
             this.y = clientY / this.clientHeight * 100
 
@@ -259,7 +259,7 @@ export class Circle extends Popover {
         let x = circleXY.x + circleXY.width * 0.5
         let y = circleXY.y + circleXY.height * 0.5
         let half = 0.5 * (isMobile() ? 1.5 : 1.1)
-        if (isFirefox() && isMobile()) y += (window.visualViewport.height - window.innerHeight) / 2 
+        if (isFirefoxMobile()) y += (window.visualViewport.height - window.innerHeight) / 2 
         if (
             between(x - this.size * half, x + this.size * half, clientX) && 
             between(y - this.size * half, y + this.size * half, clientY)
@@ -336,7 +336,7 @@ export class Circle extends Popover {
         let x = circleXY.x + circleXY.width * 0.5
         let y = circleXY.y + circleXY.height * 0.5
 
-        if (isFirefox() && isMobile()) y += (window.visualViewport.height - window.innerHeight) / 2 
+        if (isFirefoxMobile()) y += (window.visualViewport.height - window.innerHeight) / 2 
         
         const deltaX = clientX - x
         const deltaY = clientY - y

@@ -89,6 +89,14 @@ export function isMobile() {
   return isMobileResult
 }
 
+export function isEdgeMobile() {
+  return isEdge() && isMobile()
+}
+
+export function isFirefoxMobile() {
+  return isFirefox() && isMobile()
+}
+
 export function chunkByPredicate<T>(arr: T[], predicate: (v: T) => boolean) {
   let passed: T[] = []
   let failed: T[] = [] 
