@@ -111,7 +111,7 @@ async function processNewTab(tab: chrome.tabs.Tab, view?: StateView, ignorePrevi
     pushView({override: {...newContext, isPinned: true}, tabId: tab.id})
 }
 
-;(isFirefox() && isMobile()) || chrome.commands.onCommand.addListener(
+;(!isFirefox() && !isMobile()) && chrome.commands?.onCommand.addListener(
     async (command: string, tab: chrome.tabs.Tab) => {
       const isGlobal = !tab
       const view = await fetchView({enabled: true, superDisable: true, keybinds: true, keybindsUrlCondition: true, latestViaShortcut: true})
