@@ -1,5 +1,4 @@
 import { AUDIO_CONTEXT_KEYS } from "src/types"
-import { isEdgeMobile } from "src/utils/helper"
 import { fetchView } from "src/utils/state"
 
 const offscreenUrl = chrome.runtime.getURL("offscreen.html")
@@ -23,7 +22,6 @@ export async function ensureOffscreen() {
 }
 
 export async function initTabCapture(tabId: number): Promise<boolean> {
-    if (isEdgeMobile()) return false 
     await ensureOffscreen()
     try {
         const [streamId, view] = await Promise.all([

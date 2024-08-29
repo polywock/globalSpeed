@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { checkFilterDeviation, requestSyncContextMenu } from "../utils/configUtils"
 import { GoArrowLeft} from "react-icons/go"
-import { FaGithub, FaRegCircle } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { FaPowerOff, FaVolumeUp } from "react-icons/fa"
 import { useStateView } from "../hooks/useStateView"
 import { getDefaultAudioFx, getDefaultFx } from "../defaults"
@@ -10,12 +10,12 @@ import { AnyDict, ORL_CONTEXT_KEYS } from "src/types"
 import { releaseTabCapture } from "src/background/utils/tabCapture"
 import { Gear, Pin, Zap } from "src/comps/svgs";
 import { pushView } from "src/utils/state";
-import "./Header.css"
 import { FaCircleDot } from "react-icons/fa6";
-import { feedbackText, isEdgeMobile, isFirefox, isMobile } from "src/utils/helper";
+import { feedbackText, isFirefox } from "src/utils/helper";
+import "./Header.css"
 
 
-const SUPPORTS_TAB_CAPTURE = !!(chrome.tabCapture?.capture && chrome.offscreen?.createDocument && !isEdgeMobile())
+const SUPPORTS_TAB_CAPTURE = !!(chrome.tabCapture?.capture && chrome.offscreen?.createDocument)
 
 type HeaderProps = {
   panel: number

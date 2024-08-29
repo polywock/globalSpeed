@@ -18,7 +18,7 @@ async function main() {
 
 async function walkDir(dir, paths) {
     await Promise.all((await readdir(dir, {withFileTypes: true})).map(async item => {
-        let itemPath = join(item.parentPath, item.name)
+        let itemPath = join(dir, item.name)
         if (item.isDirectory()) {
             await walkDir(itemPath, paths)
         } else {

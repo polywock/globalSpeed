@@ -89,10 +89,6 @@ export function isMobile() {
   return isMobileResult
 }
 
-export function isEdgeMobile() {
-  return isEdge() && isMobile()
-}
-
 export function isFirefoxMobile() {
   return isFirefox() && isMobile()
 }

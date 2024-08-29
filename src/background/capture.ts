@@ -1,6 +1,5 @@
 import debounce from "lodash.debounce"
 import { AUDIO_CONTEXT_KEYS, AnyDict } from "src/types"
-import { isEdgeMobile } from "src/utils/helper"
 import { fetchView } from "src/utils/state"
 
 
@@ -45,4 +44,4 @@ function checkTabsToPush(changes: chrome.storage.StorageChanges, raw: AnyDict, c
 const handleChangeDeb = debounce(handleChange, 500, {maxWait: 500, leading: true, trailing: true})
 
 
-chrome.tabCapture && chrome.offscreen && !isEdgeMobile() && gvar.es.addWatcher([], handleChangeDeb)
+chrome.tabCapture && chrome.offscreen && gvar.es.addWatcher([], handleChangeDeb)
