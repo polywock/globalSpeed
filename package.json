@@ -14,10 +14,10 @@
   "scripts": {
     "build:common": "  rm -rf build   &&              webpack --config webpack.config.js && cp -r static/. staticCh/. build/unpacked   &&                             find build   -name '.DS_Store' -type f -delete",
     "build:commonFf": "rm -rf buildFf && FIREFOX=true webpack --config webpack.config.js && cp -r static/. staticFf/. buildFf/unpacked && node tools/replaceCtx.js && find buildFf -name '.DS_Store' -type f -delete",
-    "build:dev": "    export NODE_ENV=development && npm run build:common",
-    "build:devFf": "  export NODE_ENV=development && npm run build:commonFf",
-    "build:prod": "   export NODE_ENV=production && npm run build:common   &&              node tools/minifyJson.js && cd build/unpacked   && zip -r '../global-speed-chromium.zip' .",
-    "build:prodFf": " export NODE_ENV=production && npm run build:commonFf && FIREFOX=true node tools/minifyJson.js && cd buildFf/unpacked && zip -r '../global-speed-firefox.zip' .",
+    "build:dev": "   export NODE_ENV=development && npm run build:common",
+    "build:devFf": " export NODE_ENV=development && npm run build:commonFf",
+    "build:prod": "  export NODE_ENV=production && npm run build:common   && node tools/minifyJson.js && cd build/unpacked   && zip -r '../global-speed-chromium.zip' .",
+    "build:prodFf": "export NODE_ENV=production && npm run build:commonFf                             && cd buildFf/unpacked && zip -r '../global-speed-firefox.zip' .",
     "build:prodFff": "npm run build:prodFf && rm -rf zed && mkdir -p zed/unpacked && cp -r src static staticCh staticFf tools .babelrc package-lock.json package.json postcss.config.js tsconfig.json webpack.config.js zed/unpacked && (cd zed/unpacked && zip -r ../packed.zip .) && mv zed/packed.zip buildFf/source.zip && rm -rf zed"
   },
   "devDependencies": {
@@ -34,7 +34,6 @@
     "babel-loader": "^9.1.3",
     "babel-polyfill": "^6.26.0",
     "css-loader": "^7.1.1",
-    "file-loader": "^6.2.0",
     "postcss": "^8.4.38",
     "postcss-loader": "^8.1.1",
     "postcss-nested": "^6.0.1",
