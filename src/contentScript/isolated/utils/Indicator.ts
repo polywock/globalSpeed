@@ -18,6 +18,7 @@ export class Indicator extends Popover {
     duration = 1 
     animation = 1
     timeoutId: number
+    key: string 
 
     constructor() {
         super()
@@ -26,6 +27,7 @@ export class Indicator extends Popover {
     }
     setInit = (init: IndicatorInit) => {
         init = init || {}
+        this.key = init.key
 
         this.main.removeAttribute('style')
         this.main.style.backgroundColor = init.backgroundColor || INDICATOR_INIT.backgroundColor

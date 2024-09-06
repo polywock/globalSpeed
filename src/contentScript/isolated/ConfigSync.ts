@@ -8,7 +8,6 @@ import { getLeaf } from "src/utils/nativeUtils"
 
 const FORCED_GHOST_SITES = ["v.qq.com", "www.qq.com", "sports.qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com", "onedrive.live.com", "open.spotify.com", "www.instagram.com"]
 
-
 export class ConfigSync {
   released = false
   blockKeyUp = false 
@@ -40,7 +39,10 @@ export class ConfigSync {
     const view = this.client.view
     const enabled = view?.enabled && !view.superDisable
 
-    gvar.os.indicator?.setInit(view?.indicatorInit || {})
+    if (gvar.os.indicator && gvar.os.indicator.key !== view?.indicatorInit?.key) {
+      gvar.os.indicator.setInit(view?.indicatorInit || {})
+    }
+
 
     if (enabled) {
       this.fxSync = this.fxSync ?? new FxSync()
@@ -49,6 +51,14 @@ export class ConfigSync {
     }
 
     if (enabled && view.circleWidget)  {
+
+      // Update when settings change. 
+      console.log(view.circleInit?.key, "KEY")
+      if (gvar.os.circle && gvar.os.circle.key !== view.circleInit?.key) {
+        gvar.os.circle?.release()
+        delete gvar.os.circle
+      }
+
       gvar.os.circle = gvar.os.circle || new Circle(view.circleInit)
     } else {
       gvar.os.circle?.release()

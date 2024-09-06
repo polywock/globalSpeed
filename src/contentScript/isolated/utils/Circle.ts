@@ -38,6 +38,7 @@ export class Circle extends Popover {
         initialTime: number 
     }
     strong = true 
+    key: string 
 
     autoHidden = true
     autoHiddenTimeout: number 
@@ -48,6 +49,7 @@ export class Circle extends Popover {
     constructor(private init: CircleInit) {
         super()
         this.init = init || {}
+        this.key = this.init.key
         this.x = this.init.circleInitial?.x ?? this.x
         this.y = this.init.circleInitial?.y ?? this.y
         this.autoHide = !this.init.autoHideDisabled

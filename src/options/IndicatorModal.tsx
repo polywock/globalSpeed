@@ -7,6 +7,7 @@ import { Reset } from "src/comps/Reset"
 import { SliderMicro } from "src/comps/SliderMicro"
 import "./IndicatorModal.css"
 import { Indicator } from "src/contentScript/isolated/utils/Indicator"
+import { randomId } from "src/utils/helper"
 
 type Props = {
   view: StateView, 
@@ -29,6 +30,7 @@ export function IndicatorModal(props: Props) {
           <select className="padded" style={{marginRight: '10px'}} value={init?.position ?? "TL"} onChange={e => {
             const indicatorInit = produce(init ?? {}, d => {
               d.position = e.target.value as any
+              d.key = randomId()
             })
             showIndicator(indicatorInit)
             setView({indicatorInit})
@@ -42,6 +44,7 @@ export function IndicatorModal(props: Props) {
           <Reset onClick={() => {
             const indicatorInit = produce(init ?? {}, d => {
               delete d.position
+              d.key = randomId()
             })
             showIndicator(indicatorInit)
             setView({indicatorInit})
@@ -57,6 +60,7 @@ export function IndicatorModal(props: Props) {
           <input type="color" value={init?.backgroundColor || INDICATOR_INIT.backgroundColor} onChange={e => {
             const indicatorInit = produce(init ?? {}, d => {
               d.backgroundColor = e.target.value
+              d.key = randomId()
             })
             showIndicator(indicatorInit)
             setView({indicatorInit})
@@ -64,6 +68,7 @@ export function IndicatorModal(props: Props) {
           <input type="color" value={init?.textColor || INDICATOR_INIT.textColor} onChange={e => {
             const indicatorInit = produce(init ?? {}, d => {
               d.textColor = e.target.value
+              d.key = randomId()
             })
             showIndicator(indicatorInit)
             setView({indicatorInit})
@@ -72,6 +77,7 @@ export function IndicatorModal(props: Props) {
             const indicatorInit = produce(init ?? {}, d => {
               d.textColor = null 
               d.backgroundColor = null
+              d.key = randomId()
             })
             showIndicator(indicatorInit)
             setView({indicatorInit})
@@ -90,6 +96,7 @@ export function IndicatorModal(props: Props) {
           onChange={v => {
             const indicatorInit = produce(init ?? {}, d => {
               d.scaling = v
+              d.key = randomId()
             })
             showIndicator(indicatorInit)
             setView({indicatorInit})
@@ -109,6 +116,7 @@ export function IndicatorModal(props: Props) {
           onChange={v => {
             const indicatorInit = produce(init ?? {}, d => {
               d.rounding = v
+              d.key = randomId()
             })
             showIndicator(indicatorInit)
             setView({indicatorInit})
@@ -129,6 +137,7 @@ export function IndicatorModal(props: Props) {
             onChange={v => {
               const indicatorInit = produce(init ?? {}, d => {
                 d.offset = v
+                d.key = randomId()
               })
               showIndicator(indicatorInit)
               setView({indicatorInit})
@@ -148,6 +157,7 @@ export function IndicatorModal(props: Props) {
           <select className="padded" style={{marginRight: '10px'}} value={init?.animation || 1} onChange={e => {
             const indicatorInit = produce(init ?? {}, d => {
               d.animation = parseInt(e.target.value) as any
+              d.key = randomId()
             })
             showIndicator(indicatorInit, true)
             setView({indicatorInit})
@@ -161,6 +171,7 @@ export function IndicatorModal(props: Props) {
           <Reset onClick={() => {
             const indicatorInit = produce(init ?? {}, d => {
               delete d.animation
+              d.key = randomId()
             })
             showIndicator(indicatorInit, true)
             setView({indicatorInit})
@@ -177,6 +188,7 @@ export function IndicatorModal(props: Props) {
             onChange={v => {
               const indicatorInit = produce(init ?? {}, d => {
                 d.duration = v
+                d.key = randomId()
               })
               setView({indicatorInit})
             }}

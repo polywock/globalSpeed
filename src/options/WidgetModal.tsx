@@ -7,6 +7,7 @@ import { Toggle } from "src/comps/Toggle"
 import "./WidgetModal.css"
 import { NumericInput } from "src/comps/NumericInput"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "src/defaults/constants"
+import { randomId } from "src/utils/helper"
 
 type Props = {
   onClose: () => void 
@@ -42,6 +43,7 @@ export function WidgetModal(props: Props) {
           onChange={v => {
             setView({circleInit: produce(init, d => {
               d.circleSize = v
+              d.key = randomId()
             })})
           }}
           default={45}
@@ -59,6 +61,7 @@ export function WidgetModal(props: Props) {
           onChange={v => {
             setView({circleInit: produce(init, d => {
               d.opacity = v
+              d.key = randomId()
             })})
           }}
           default={0.5}
@@ -74,6 +77,7 @@ export function WidgetModal(props: Props) {
         <Toggle value={!init.autoHideDisabled} onChange={e => {
             setView({circleInit: produce(init, d => {
               d.autoHideDisabled = !d.autoHideDisabled
+              d.key = randomId()
             })})
           }}/>
       </div>
@@ -87,6 +91,7 @@ export function WidgetModal(props: Props) {
         <Toggle value={init.fullscreenOnly} onChange={e => {
             setView({circleInit: produce(init, d => {
               d.fullscreenOnly = !d.fullscreenOnly
+              d.key = randomId()
             })})
           }}/>
       </div>
@@ -97,6 +102,7 @@ export function WidgetModal(props: Props) {
         <select value={init.mainAction || "SPEED"} onChange={e => {
           setView({circleInit: produce(init, d => {
             d.mainAction = e.target.value as any 
+            d.key = randomId()
           })})
         }}>
           <option value="SPEED">{gvar.gsm.command.toggleSpeed}</option>
@@ -111,6 +117,7 @@ export function WidgetModal(props: Props) {
           <NumericInput rounding={2} noNull={true} min={MIN_SPEED_CHROMIUM} max={MAX_SPEED_CHROMIUM} value={init.mainActionSpeed ?? 3} onChange={v => {
             setView({circleInit: produce(init, d => {
               d.mainActionSpeed = v 
+              d.key = randomId()
             })})
           }}/>
         </div>

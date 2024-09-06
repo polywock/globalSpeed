@@ -108,7 +108,8 @@ export type IndicatorInit = {
   static?: boolean,
   position?: "TL" | "TR" | "BL" | "BR" | "C",
   animation?: 1 | 2 | 3 | 4 | 5,
-  showShadow?: boolean
+  showShadow?: boolean,
+  key?: string 
 }
 
 export type CircleInit = {
@@ -118,7 +119,8 @@ export type CircleInit = {
   opacity?: number,
   fullscreenOnly?: boolean,
   mainAction?: "PAUSE" | "SPEED",
-  mainActionSpeed?: number
+  mainActionSpeed?: number,
+  key?: string
 }
 
 export enum InitialContext {
