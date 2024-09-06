@@ -13,6 +13,7 @@ export class MediaTower {
   docs: Set<Window | ShadowRoot> = new Set() 
   newDocCallbacks: Set<() => void> = new Set()
   newMediaCallbacks: Set<() => void> = new Set()
+  playbackChangeCallbacks: Set<() => void> = new Set()
   observer: IntersectionObserver
   trackFps = true 
   previousTimeUpdate: TimeUpdateInfo
@@ -171,11 +172,6 @@ export class MediaTower {
     e.processed = true  
     
     let elem = e.target as HTMLMediaElement
-    if (!(elem instanceof HTMLMediaElement)) {
-      let shadow = getShadow(elem)
-      return
-    } 
-
 
     this.processMedia(elem)
     this.sendUpdate()
@@ -184,6 +180,7 @@ export class MediaTower {
       gvar.ghostMode && e.stopImmediatePropagation()
       delete (e.target as HTMLMediaElement).gsFpsCount
       delete (e.target as HTMLMediaElement).gsFpsSum
+      // this.playbackChangeCallbacks.forEach(cb => cb())
     } else if (e.type === "emptied") {
       delete elem.gsMarks
       delete elem.gsNameless

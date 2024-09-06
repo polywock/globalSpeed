@@ -14,10 +14,12 @@ export class SpeedSync {
     if (this.latest) {
       this.intervalId = this.intervalId ?? setInterval(this.realize, 1000)
       gvar.os.mediaTower.newMediaCallbacks.add(this.realize)
+      // gvar.os.mediaTower.playbackChangeCallbacks.add(this.realize)
       this.realize()
     } else {
       this.intervalId = (clearInterval(this.intervalId), null)
       gvar.os.mediaTower.newMediaCallbacks.delete(this.realize)
+      // gvar.os.mediaTower.playbackChangeCallbacks.delete(this.realize)
     }
   }
   realize = () => {

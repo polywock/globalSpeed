@@ -195,7 +195,7 @@
       "speedPresets": "préréglages de vitesse",
       "widget": {
         "option": "widget circulaire",
-        "optionTooltip": "(Expérimental) Un widget circulaire s'affichera tant que les vidéos seront visibles :\n - Un widget circulaire s'affichera tant que les vidéos seront visibles.\n - Faites glisser à gauche/droite pour avancer/reculer dans la vidéo.\n - Faites glisser vers le haut/bas pour ajuster la vitesse de lecture.",
+        "optionTooltip": "(Expérimental) Un widget circulaire s'affichera tant que les vidéos seront visibles :\n - Faites glisser à gauche/droite pour avancer/reculer dans la vidéo.\n - Faites glisser vers le haut/bas pour ajuster la vitesse de lecture.",
         "movementMobile": "\n - Appuyez sur le cercle pendant quelques secondes pour le déplacer ou le supprimer.",
         "movementDesktop": "\n - Faites glisser le cercle avec le bouton droit de la souris pour le déplacer ou le supprimer.",
         "headerTooltip": "Widget circulaire activé.",

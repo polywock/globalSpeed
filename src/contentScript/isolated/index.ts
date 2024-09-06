@@ -1,7 +1,6 @@
 
 import type { TabInfo } from '../../utils/browserUtils'
 import { Overseer } from './Overseer'
-import type { LatestFocus } from './utils/LatestFocus';
 
 
 declare global {
@@ -10,7 +9,6 @@ declare global {
     os: Overseer,
     fallbackId: number,
     ghostMode?: boolean,
-    latestFocus: LatestFocus,
     isTopFrame?: boolean
   }
 }

@@ -17,6 +17,17 @@
   select {
     text-align-last: center;
   }
+
+  & > .urlBubble {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff0000;
+    color: white;
+    padding: 0 5px;
+    border-radius: 10px;
+    display: block;
+  }
  
   & > .command {
 

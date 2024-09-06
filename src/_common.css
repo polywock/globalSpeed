@@ -239,6 +239,10 @@ code {
   border: 1px solid currentColor;
 }
 
+.displaynone {
+  display: none;
+}
+
 .card {
   padding: 10px;
   background-color: var(--fg-color);

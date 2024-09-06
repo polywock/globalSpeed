@@ -46,17 +46,26 @@ async function onInstallAsync() {
 }
 
 gvar.sess.installCbs.add(() => {
-    chrome.storage.session.setAccessLevel?.({accessLevel: chrome.storage.AccessLevel.TRUSTED_AND_UNTRUSTED_CONTEXTS})
     gvar.installPromise = onInstallAsync()
-    isFirefox() || ensureContentScripts()
 })
 
 gvar.sess.safeCbs.add(async () => {
     const items = await chrome.storage.local.get()
     let keys = Object.keys(items).filter(k => items[k] == null)
-
+    
     keys = [...keys, ...(await getKeysByPrefix(PREFIX_SETS.SESSION, items))]
     if (keys.length) await chrome.storage.local.remove(keys)
+
+    isFirefox() || ensureContentScripts()
+    chrome.storage.session?.setAccessLevel?.({accessLevel: chrome.storage.AccessLevel.TRUSTED_AND_UNTRUSTED_CONTEXTS})
+})
+
+
+gvar.sess.safeStartupCbs.add(async () => {
+    let tabs = await chrome.tabs.query({})
+    const view = await fetchView({pinByDefault: true, initialContext: true, customContext: true})
+    if (!view.pinByDefault) return 
+    tabs.forEach(tab => processNewTab(tab, view, true))
 })
 
 async function ensureContentScripts() {
@@ -85,13 +94,6 @@ chrome.tabs.onRemoved.addListener(async tabId => {
 })
 
 chrome.tabs.onCreated.addListener(processNewTab)
-
-gvar.sess.safeStartupCbs.add(async () => {
-    let tabs = await chrome.tabs.query({})
-    const view = await fetchView({pinByDefault: true, initialContext: true, customContext: true})
-    if (!view.pinByDefault) return 
-    tabs.forEach(tab => processNewTab(tab, view, true))
-})
 
 async function processNewTab(tab: chrome.tabs.Tab, view?: StateView, ignorePreviousTab?: boolean) {
     view = view || (await fetchView({pinByDefault: true, initialContext: true, customContext: true}) )

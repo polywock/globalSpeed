@@ -102,6 +102,22 @@ export const KeybindControl = (props: KeybindControlProps) => {
 
   return <div className="KeybindControl">
 
+    {/* Url condition bubble */}
+    {value.condition?.parts?.length ? (
+      <div 
+        className={`urlBubble`} 
+        onClick={() => setShow(!show)}
+        onContextMenu={e => {
+          if (value.condition) {
+            props.onChange(value.id, produce(value, d => {
+              d.condition = getDefaultURLCondition()
+            }))
+            e.preventDefault()
+          }
+        }}
+      >{value.condition.parts.length}</div>
+    ) : <div className="displaynone"/>}
+
       {/* URL modal */}
       {!show ? null : (
         <URLModal onReset={() => {
