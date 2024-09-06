@@ -53,7 +53,6 @@ export class ConfigSync {
     if (enabled && view.circleWidget)  {
 
       // Update when settings change. 
-      console.log(view.circleInit?.key, "KEY")
       if (gvar.os.circle && gvar.os.circle.key !== view.circleInit?.key) {
         gvar.os.circle?.release()
         delete gvar.os.circle
