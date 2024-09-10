@@ -63,5 +63,6 @@ Promise.all([
 ]).then(() => {
   const root = createRoot(document.querySelector("#root"))
   root.render(<ErrorFallback><App/></ErrorFallback>)
+  chrome.storage.session?.setAccessLevel?.({accessLevel: chrome.storage.AccessLevel.TRUSTED_AND_UNTRUSTED_CONTEXTS})
 })
 
