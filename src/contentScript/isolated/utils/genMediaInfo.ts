@@ -56,7 +56,7 @@ export function generateMediaState(elem: HTMLMediaElement): MediaInfo {
 
   if (
     (elem.duration && !info.isVideo) || 
-    elem.audioTracks?.some(t => t.enabled) || 
+    [...(elem.audioTracks || [])].some(t => t.enabled) || 
     (elem as any).webkitAudioDecodedByteCount ||
     (elem as any).mozHasAudio
   ) info.hasAudioTrack = true 
