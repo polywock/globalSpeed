@@ -81,6 +81,7 @@ export type State = {
   speedSlider?: {min: number, max: number},
   ignorePiP?: boolean, // PiP videos are deprioritized for hotkeys.
   minimizeOrlBanner?: boolean,
+  hideOrlBanner?: boolean,
   virtualInput?: boolean,
   hideGrant?: boolean,
   circleWidget?: boolean,

@@ -6,8 +6,8 @@ import "./OrlHeader.css"
 type OrlHeaderProps = {}
   
 export function OrlHeader(props: OrlHeaderProps) {
-    const [view, setView] = useStateView({hasOrl: true, minimizeOrlBanner: true})
-    if (!view?.hasOrl) return <div/>
+    const [view, setView] = useStateView({hasOrl: true, minimizeOrlBanner: true, hideOrlBanner: true})
+    if (!view || !view.hasOrl || view.hideOrlBanner) return <div/>
     const m = view.minimizeOrlBanner
     
     return <div className="OrmHeader" onClick={e => {

@@ -8,7 +8,6 @@ import { getDefaultState } from "src/defaults"
 import { migrateSchema } from "src/background/utils/migrateSchema"
 import "./SectionHelp.css"
 
-let helpClicked = 0 
 
 export function SectionHelp(props: {}) {
 
@@ -16,35 +15,7 @@ export function SectionHelp(props: {}) {
     <div className="section SectionHelp">
 
       {/* Header */}
-      <h2 onClick={v => {
-        helpClicked++
-        if (helpClicked >= 10) {
-          const command = prompt("Command? ")
-          if (!command) {
-            return 
-          } else if (command === "fs cache") {
-            chrome.storage.local.get().then(items => {
-              const entries = Object.entries(items).filter(([key]) => key.startsWith("fs::"))
-              const cacheText = entries.map(([key, value]) => `${key.substr(4)} (${value?.length ?? 0})`).join("\n")
-              if (entries.length) {
-                if (confirm(`Delete fullscreen cache? \n${cacheText}`)) {
-                  chrome.storage.local.remove(entries.map(([key]) => key))
-                }
-              } else {
-                alert("No fullscreen cache.")
-              }
-            })
-          } else if (command === "toggle pip priority") {
-            fetchView({ignorePiP: true}).then(view => {
-              if (confirm(`Do you want to ${view.ignorePiP ? "" : "de"}prioritize PiP videos? `)) {
-                pushView({override: {ignorePiP: !view.ignorePiP}})
-              }
-            })
-          } else {
-            alert("Invalid command.")
-          }
-        }
-      }}>{gvar.gsm.options.help.header}</h2>
+      <h2 onClick={handleSecretMenu}>{gvar.gsm.options.help.header}</h2>
 
       {/* Issue prompt */}
       <div className="card">{gvar.gsm.options.help.issuePrompt} <a href="https://github.com/polywock/globalSpeed/issues">{gvar.gsm.options.help.issueDirective}</a></div>
@@ -72,6 +43,32 @@ export function SectionHelp(props: {}) {
       </div>
     </div>
   )
+}
+
+let helpClicked = 0 
+
+function handleSecretMenu(e: MouseEvent) {
+  helpClicked++
+  if (helpClicked >= 10) {
+    const command = prompt("Command? ")?.toLowerCase()
+    if (!command) {
+      return 
+    } else if (command === "toggle url banner") {
+      fetchView({hideOrlBanner: true}).then(view => {
+        if (confirm(`Do you want to ${view.hideOrlBanner ? "show" : "hide"} the URL banner? `)) {
+          pushView({override: {hideOrlBanner: !view.hideOrlBanner}})
+        }
+      })
+    } else if (command === "toggle pip priority") {
+      fetchView({ignorePiP: true}).then(view => {
+        if (confirm(`Do you want to ${view.ignorePiP ? "" : "de"}prioritize PiP videos? `)) {
+          pushView({override: {ignorePiP: !view.ignorePiP}})
+        }
+      })
+    } else {
+      alert("Invalid command.")
+    }
+  }
 }
 
 
