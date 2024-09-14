@@ -3,9 +3,6 @@ import { seekNetflix } from "./utils/seekNetflix"
 import { native } from "./utils/nativeCodes"
 import { isFirefox, randomId } from "../../utils/helper"
 
-if (isFirefox()) document.currentScript?.remove()
-
-
 declare global {
   interface Window {
     loadedGsCtx: boolean
@@ -20,7 +17,6 @@ let toStringHijack: ToStringHijack
 
 let ensureYtLastSpeed: number 
 let handleYtRateChange: (newSpeed: number) => void 
-
 
 function main() {
   if (isFirefox()) {

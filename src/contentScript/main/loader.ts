@@ -18,6 +18,7 @@ function mainAlt() {
     s.async = true 
     s.src = chrome.runtime.getURL('main.js')
     document.documentElement.appendChild(s) 
+    s.remove()
 }
 
 main()
