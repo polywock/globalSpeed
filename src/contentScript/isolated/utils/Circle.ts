@@ -11,7 +11,7 @@ import styles from "./Circle.css?raw"
 
 const MIN_TO_ACTIVATE = 50
 const MIN_STRONG = 115
-const DELAY = isMobile() ? 700 : 350
+const DELAY = isMobile() ? 450 : 350
 
 export class Circle extends Popover {
     released = false 

@@ -12,8 +12,7 @@ export class MediaTower {
   media: Set<HTMLMediaElement> = new Set()
   docs: Set<Window | ShadowRoot> = new Set() 
   newDocCallbacks: Set<() => void> = new Set()
-  newMediaCallbacks: Set<() => void> = new Set()
-  playbackChangeCallbacks: Set<() => void> = new Set()
+  forceSpeedCallbacks: Set<() => void> = new Set()
   observer: IntersectionObserver
   trackFps = true 
   previousTimeUpdate: TimeUpdateInfo
@@ -111,7 +110,7 @@ export class MediaTower {
     this.media.add(elem)
     this.sendUpdate()
 
-    this.newMediaCallbacks.forEach(cb => cb())
+    this.forceSpeedCallbacks.forEach(cb => cb())
   }
   private ensureDocEventListeners = (doc: Window | ShadowRoot) => {
     doc.addEventListener("play", this.handleMediaEvent, {capture: true, passive: true})
@@ -130,6 +129,7 @@ export class MediaTower {
   }
   private ensureMediaEventListeners = (elem: HTMLMediaElement) => {
     elem.addEventListener("play", this.handleMediaEvent, {capture: true, passive: true})
+    elem.addEventListener("playing", this.handleInterrupt, {capture: true, passive: true})
     elem.addEventListener("pause", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("volumechange", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("loadedmetadata", this.handleMediaEvent, {capture: true, passive: true})
@@ -145,7 +145,10 @@ export class MediaTower {
     value && gvar.os.stratumServer.send({type: "YT_RATE_CHANGE", value})
   }
   private handleInterrupt = (e: Event) => {
+    if (e.processed) return 
+    e.processed = true  
     delete this.previousTimeUpdate 
+    this.forceSpeedCallbacks.forEach(cb => cb())
   }
   private handleMediaEventTimeUpdate = (e: Event) => {
     if (!(e.target instanceof HTMLMediaElement)) return 
