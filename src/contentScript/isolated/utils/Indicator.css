@@ -38,5 +38,5 @@
     justify-content: center;
     display: grid !important;
     background-color: transparent;
-    font-family: "Segoe UI", "Avenir", system-ui Courier, monospace;
+    font-family: "Segoe UI", "Avenir", system-ui, Courier, monospace;
 }
