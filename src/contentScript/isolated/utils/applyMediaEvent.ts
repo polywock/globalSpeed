@@ -38,12 +38,15 @@ export function seek(elem: HTMLMediaElement, value: number, relative: boolean, f
 
     newTime = elem.currentTime + value 
 
-    if (wraparound && newTime < 0) {
-      const adjusted = (elem.duration - Math.abs(newTime) % elem.duration) % elem.duration 
-      newTime = adjusted
-    } else if (wraparound && newTime > elem.duration) {
-      newTime = newTime % elem.duration
+    if (wraparound && elem.duration > 60) {
+      if (newTime < 0) {
+        const adjusted = (elem.duration - Math.abs(newTime) % elem.duration) % elem.duration 
+        newTime = adjusted
+      } else if (newTime > elem.duration) {
+        newTime = newTime % elem.duration
+      }
     }
+
   } 
 
   seekTo(elem, newTime, fast, autoPause)

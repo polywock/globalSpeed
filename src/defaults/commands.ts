@@ -161,8 +161,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
       command: "seek",
       enabled: true,
       greedy: true,
-      valueNumber: 10,
-      wraparound: true 
+      valueNumber: 10
     })
   },
   pause: {
