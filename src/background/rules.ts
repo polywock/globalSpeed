@@ -1,5 +1,6 @@
 import { getDefaultFx } from "src/defaults"
 import { AnyDict, CONTEXT_KEYS, State, URLRule, URLStrictness } from "src/types"
+import { isUserScriptsAvailable } from "src/utils/browserUtils"
 import { testURL } from "src/utils/configUtils"
 import { isFirefox, listToDict, pickObject, randomId } from "src/utils/helper"
 
@@ -34,7 +35,7 @@ async function handleChange(changes: chrome.storage.StorageChanges) {
 }
 
 export async function syncUserScripts(rules: URLRule[], superDisable: boolean) {
-    if (!chrome.userScripts) return 
+    if (!isUserScriptsAvailable()) return 
     await chrome.userScripts.unregister()
     if (superDisable) return 
     rules.filter(r => r.condition).forEach(rule => {

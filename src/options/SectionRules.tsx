@@ -5,7 +5,7 @@ import { Gear } from "src/comps/svgs"
 import { getDefaultURLRule, getDefaultFx, getDefaultURLCondition } from "../defaults"
 import { NumericInput } from "../comps/NumericInput"
 import { FxControl } from "../popup/FxControl"
-import { isFirefox, moveItem, randomId } from "../utils/helper"
+import { isEdge, isFirefox, moveItem, randomId } from "../utils/helper"
 import { ModalText } from "../comps/ModalText"
 import { URLModal } from "./URLModal"
 import { produce } from "immer"
@@ -14,6 +14,7 @@ import { List } from "./List"
 import { ListItem } from "./ListItem"
 import { KebabList, KebabListProps } from "./KebabList"
 import { makeLabelWithTooltip } from "./keybindControl/NameArea"
+import { isUserScriptsAvailable } from "src/utils/browserUtils"
 
 
 export function SectionRules(props: {}) {
@@ -117,7 +118,7 @@ export function Rule(props: RuleProps) {
       {/* Status */}
       <input type="checkbox" checked={!!rule.enabled} onChange={e => {
         if (rule.type === "JS") {
-          if (!isFirefox() && !chrome.userScripts) {
+          if (!isFirefox() && !isUserScriptsAvailable()) {
             alert(gvar.gsm.options.flags.jsRuleWarning)
             return 
           }
@@ -145,8 +146,12 @@ export function Rule(props: RuleProps) {
 
       {/* Rule type */}
       <select value={rule.type} onChange={e => {
-        if (e.target.value === "JS" && !isFirefox() && !chrome.userScripts) {
-          alert(gvar.gsm.options.flags.jsRuleWarning)
+        if (e.target.value === "JS" && !isFirefox() && !isUserScriptsAvailable()) {
+          if (isUserScriptsAvailable() === false) {
+            alert(`${gvar.gsm.options.flags.jsRuleWarningAlt} -> ${isEdge() ? "edge" : "chrome"}://extensions`)
+          } else {
+            alert(gvar.gsm.options.flags.jsRuleWarning)
+          }
           return 
         }
         onChange(produce(rule, d => {

@@ -2,6 +2,7 @@ import { AdjustMode, Context, Duration, InitialContext, Keybind, State, Trigger,
 import { getDefaultState } from "../../defaults"
 import { isFirefox, randomId } from "../../utils/helper"
 import { availableCommandNames } from "src/defaults/commands"
+import { isUserScriptsAvailable } from "src/utils/browserUtils"
 
 export function migrateSchema(state?: State) {
   const initialVersion = state?.version
@@ -138,7 +139,7 @@ function tenToEleven(state: State) {
     } 
 
     if (rule.type === "JS") {
-      if (!isFirefox() && !chrome.userScripts) {
+      if (!isFirefox() && !isUserScriptsAvailable()) {
         rule.enabled = false 
       }
     }

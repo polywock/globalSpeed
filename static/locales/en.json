@@ -187,6 +187,7 @@
       "customContextTooltip": "Saved a snapshot of this tab's current context. Newly created tabs will use this snapshot as an initial state.",
       "jsShortcutWarning": "JavaScript shortcuts are currently disabled due to depreciation of older APIs. Functionality will resume when Chromium implements the userScripts.execute() method.",
       "jsRuleWarning": "Please update Chrome to support Javascript URL rules.",
+      "jsRuleWarningAlt": "Please enable developer mode to use javascript features.",
       "keyboardInput": "keyboard input",
       "keyboardInputTooltip": "Consider switching to Virtual input mode if using a virtual keyboard or a non-QWERTY layout keyboard. This only applies to future shortcut changes and existing shortcuts won't be affected.",
       "qwerty": "QWERTY layout",

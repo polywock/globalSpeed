@@ -184,6 +184,7 @@
       "customContextTooltip": "Salva uma captura do contexto atual desta aba. Abas criadas recentemente usarão esta captura como estado inicial.",
       "jsShortcutWarning": "Atalhos de JavaScript estão atualmente desativados devido à depreciação de APIs antigas. A funcionalidade será retomada quando o Chromium implementar o método userScripts.execute().",
       "jsRuleWarning": "Por favor, atualize o Chrome para suportar as regras de URL de Javascript.",
+      "jsRuleWarningAlt": "Por favor, ative o modo de desenvolvedor para usar os recursos do JavaScript.",
       "keyboardInput": "entrada de teclado",
       "keyboardInputTooltip": "Considere mudar para o modo de entrada virtual se estiver usando um teclado virtual ou um teclado de layout não-QWERTY. Isso só se aplica a mudanças futuras de atalhos e atalhos existentes não serão afetados.",
       "qwerty": "layout QWERTY",

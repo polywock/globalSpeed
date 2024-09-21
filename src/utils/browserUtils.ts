@@ -69,3 +69,9 @@ export async function checkContentScript(tabId: number, frameId: number) {
     return true 
   } catch (err) {}
 }
+
+export function isUserScriptsAvailable() {
+  try {
+    if (chrome.userScripts) return true 
+  } catch { return false }
+}

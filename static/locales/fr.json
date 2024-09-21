@@ -184,6 +184,7 @@
       "customContextTooltip": "Enregistre un instantané du contexte actuel de cet onglet. Les onglets récemment créés utiliseront cet instantané comme état initial.",
       "jsShortcutWarning": "Les raccourcis JavaScript sont actuellement désactivés en raison de la dépréciation des anciennes API. La fonctionnalité reprendra lorsque Chromium mettra en œuvre la méthode userScripts.execute().",
       "jsRuleWarning": "Veuillez mettre à jour Chrome pour prendre en charge les règles d'URL JavaScript.",
+      "jsRuleWarningAlt": "Veuillez activer le mode développeur pour utiliser les fonctionnalités JavaScript.",
       "keyboardInput": "entrée clavier",
       "keyboardInputTooltip": "Envisagez de passer au mode d'entrée virtuelle si vous utilisez un clavier virtuel ou un clavier avec une disposition non QWERTY. Cela s'applique uniquement aux futurs changements de raccourcis et les raccourcis existants ne seront pas affectés.",
       "qwerty": "disposition QWERTY",

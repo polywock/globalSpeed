@@ -180,6 +180,7 @@ export type Gsm = {
       customContextTooltip: string,
       jsShortcutWarning: string,
       jsRuleWarning: string,
+      jsRuleWarningAlt: string,
       keyboardInput: string,
       keyboardInputTooltip: string,
       qwerty: string,

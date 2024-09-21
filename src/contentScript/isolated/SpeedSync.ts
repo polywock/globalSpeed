@@ -17,7 +17,6 @@ export class SpeedSync {
       this.realize()
     } else {
       this.intervalId = (clearInterval(this.intervalId), null)
-      // gvar.os.mediaTower.playbackChangeCallbacks.delete(this.realize)
     }
   }
   realize = () => {

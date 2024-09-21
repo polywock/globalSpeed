@@ -176,6 +176,7 @@
       "customContextTooltip": "Simpan snapshot dari konteks tab saat ini. Tab yang baru dibuat akan menggunakan snapshot ini sebagai status awal.",
       "jsShortcutWarning": "Pintasan JavaScript saat ini dinonaktifkan karena penghentian API lama. Fungsi akan dilanjutkan ketika Chromium mengimplementasikan metode userScripts.execute().",
       "jsRuleWarning": "Harap perbarui Chrome untuk mendukung aturan URL Javascript.",
+      "jsRuleWarningAlt": "Harap aktifkan mode pengembang untuk menggunakan fitur JavaScript.",
       "keyboardInput": "input keyboard",
       "keyboardInputTooltip": "Pertimbangkan beralih ke mode input Virtual jika menggunakan keyboard virtual atau tata letak keyboard non-QWERTY. Ini hanya berlaku untuk perubahan pintasan di masa depan dan pintasan yang ada tidak akan terpengaruh.",
       "qwerty": "Tata letak QWERTY",

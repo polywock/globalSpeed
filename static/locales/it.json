@@ -186,6 +186,7 @@
       "customContextTooltip": "Salva uno snapshot del contesto attuale di questa scheda. Le schede create di recente utilizzeranno questo snapshot come stato iniziale.",
       "jsShortcutWarning": "Le scorciatoie JavaScript sono attualmente disabilitate a causa della deprecazione delle API più vecchie. La funzionalità riprenderà quando Chromium implementerà il metodo userScripts.execute().",
       "jsRuleWarning": "Si prega di aggiornare Chrome per supportare le regole URL di Javascript.",
+      "jsRuleWarningAlt": "Abilita la modalità sviluppatore per utilizzare le funzionalità JavaScript.",
       "keyboardInput": "input da tastiera",
       "keyboardInputTooltip": "Considerare di passare alla modalità di input virtuale se si utilizza una tastiera virtuale o una tastiera non QWERTY. Questo si applica solo ai cambiamenti futuri degli shortcut e gli shortcut esistenti non saranno interessati.",
       "qwerty": "layout QWERTY",
