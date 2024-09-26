@@ -148,8 +148,6 @@
     
     "skip": "ABスキップ",
     "skipTooltip": "マークされた位置と現在の位置の間のビデオセグメントをスキップする。",
-    "detectiveMode": "探偵モード",
-    "detectiveModeTooltip": "円を通して見えるもの以外全てを隠す。",
     "cinema": "背景を暗くする",
     "cinemaTooltip": "ビデオの背景を暗くする。出るには、背景を押すか、再度ショートカットを使用します。",
     "presets": "プリセット...",

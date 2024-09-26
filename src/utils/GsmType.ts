@@ -143,8 +143,6 @@ export type Gsm = {
     intoPopupTooltip: string,
     skip: string,
     skipTooltip: string,
-    detectiveMode: string,
-    detectiveModeTooltip: string,
     cinema: string,
     cinemaTooltip: string,
     presets: string,

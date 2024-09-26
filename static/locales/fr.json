@@ -147,8 +147,6 @@
 
     "skip": "saut AB",
     "skipTooltip": "Sauter un segment de la vidéo entre la position marquée et la position actuelle.",
-    "detectiveMode": "mode détective",
-    "detectiveModeTooltip": "Masquer tout sauf ce qui est visible à travers un cercle.",
     "cinema": "obscurcir l'arrière-plan",
     "cinemaTooltip": "Obscurcit l'arrière-plan de la vidéo. Pour quitter, appuyez sur l'arrière-plan ou utilisez à nouveau le raccourci.",
     "presets": "préréglages...",

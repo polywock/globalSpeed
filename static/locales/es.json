@@ -148,8 +148,6 @@
     
     "skip": "salto AB",
     "skipTooltip": "Saltar un segmento del video entre la posición marcada y la posición actual.",
-    "detectiveMode": "modo detective",
-    "detectiveModeTooltip": "Ocultar todo excepto lo que es visible a través de un círculo.",
     "cinema": "oscurecer fondo",
     "cinemaTooltip": "Oscurece el fondo del video. Para salir, presiona sobre el fondo o usa el atajo nuevamente.",
     "presets": "preajustes...",

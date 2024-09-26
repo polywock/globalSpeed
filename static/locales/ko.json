@@ -149,8 +149,6 @@
     
     "skip": "AB 스킵", 
     "skipTooltip": "표시된 위치와 현재 위치 사이의 비디오 세그먼트를 건너뛰기.",
-    "detectiveMode": "탐정 모드",
-    "detectiveModeTooltip": "원형을 통해 보이는 것을 제외하고 모든 것을 숨깁니다.",
     "cinema": "배경 어둡게",
     "cinemaTooltip": "비디오의 배경을 어둡게 합니다. 종료하려면 배경을 누르거나 다시 단축키를 사용하세요.",
     "presets": "프리셋...",

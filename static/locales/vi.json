@@ -149,8 +149,6 @@
     
     "skip": "Bỏ qua AB", 
     "skipTooltip": "Bỏ qua một phân đoạn của video giữa vị trí đánh dấu và vị trí hiện tại.",
-    "detectiveMode": "chế độ thám tử",
-    "detectiveModeTooltip": "Ẩn mọi thứ trừ những gì có thể nhìn thấy qua một vòng tròn.",
     "cinema": "tối màu nền",
     "cinemaTooltip": "Làm tối nền video. Để thoát, nhấn vào nền hoặc sử dụng phím tắt một lần nữa.",
     "presets": "cài đặt sẵn...",

@@ -150,8 +150,6 @@
     
     "skip": "AB atlama", 
     "skipTooltip": "İşaretlenmiş pozisyon ile mevcut pozisyon arasındaki video segmentini atlayın.",
-    "detectiveMode": "dedektif modu",
-    "detectiveModeTooltip": "Sadece bir daire aracılığıyla görülebilenleri hariç her şeyi gizler.",
     "cinema": "arkaplanı karart",
     "cinemaTooltip": "Video arkaplanını karartır. Çıkmak için arkaplana basın veya tekrar kısayol kullanın.",
     "presets": "ön ayarlar...",

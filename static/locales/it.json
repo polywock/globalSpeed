@@ -149,8 +149,6 @@
     
     "skip": "salta AB",
     "skipTooltip": "Salta un segmento del video tra la posizione contrassegnata e la posizione attuale.",
-    "detectiveMode": "modalità detective",
-    "detectiveModeTooltip": "Nasconde tutto tranne ciò che è visibile attraverso un cerchio.",
     "cinema": "oscura sfondo",
     "cinemaTooltip": "Oscura lo sfondo del video. Per uscire, premi sullo sfondo o usa di nuovo la scorciatoia.",
     "presets": "preimpostazioni...",

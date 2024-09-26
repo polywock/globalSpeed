@@ -246,7 +246,7 @@ gvar.es.addWatcher([], async changes => {
     let tabs = await chrome.tabs.query({audible: true, active: false})
 
     tabs.forEach(tab => {
-        if (raw[`t:${tab.id}:isPinned`] || raw[`r:${tab.id}:speed`]) return 
+        if (raw[`t:${tab.id}:isPinned`] || raw[`r:${tab.id}:speed`] || raw[`r:${tab.id}:enabled`] === false) return 
         chrome.tabs.sendMessage(tab.id, {type: "BG_SPEED_OVERRIDE", value} as Messages)
     })
 })

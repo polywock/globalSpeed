@@ -149,8 +149,6 @@
     
     "skip": "AB跳過", 
     "skipTooltip": "跳過標記位置和當前位置之間的視頻段。",
-    "detectiveMode": "偵探模式",
-    "detectiveModeTooltip": "隱藏除通過一個圓形可見的一切外的所有內容。",
     "cinema": "加深背景",
     "cinemaTooltip": "加深視頻的背景。要退出，按背景或再次使用快捷鍵。",
     "presets": "預設...",

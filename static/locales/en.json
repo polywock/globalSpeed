@@ -8,7 +8,7 @@
     "reverse": "reverse"
   },
   "warnings": {
-    "unusedGlobal": "Release the unused global shortcut keys",
+    "unusedGlobal": "Release unused global shortcut keys",
     "selectTooltip": "Select preferred video for media hotkeys. Useful if you want to control background music from a different tab (or from another program with global hotkeys).",
     "sliderTooltip": "Hold shift key for precise control.",
     "captureRequired": "Use the $1 shortcut to activate."
@@ -24,7 +24,7 @@
     "reset": "reset",
     "duplicate": "duplicate",
 
-    "pinTooltip": "Pin if you want current tab to have it's own context (speed, filters, etc).",
+    "pinTooltip": "Pin if you want the current tab to have it's own context (speed, filters, etc).",
     "mergeBoth": "merge both",
     "min": "min",
     "max": "max",
@@ -149,8 +149,6 @@
     "intoPopupTooltip": "Turn current tab into a popup window.",
     "skip": "AB skip",
     "skipTooltip": "Skip a segment of the video between the marked position and current position.",
-    "detectiveMode": "detective mode",
-    "detectiveModeTooltip": "Hide everything except what's visible through a circle.",
     "cinema": "darken background",
     "cinemaTooltip": "Darken the background of the video. To exit out, press on the background or use shortcut again.",
     "presets": "presets...",

@@ -140,8 +140,6 @@
     "intoPopupTooltip": "Ubah tab saat ini menjadi jendela popup.",
     "skip": "skip AB",
     "skipTooltip": "Lewati segmen video antara posisi yang ditandai dan posisi saat ini.",
-    "detectiveMode": "mode detektif",
-    "detectiveModeTooltip": "Sembunyikan semuanya kecuali yang terlihat melalui lingkaran.",
     "cinema": "gelapkan latar belakang",
     "cinemaTooltip": "Gelapkan latar belakang video. Untuk keluar, tekan latar belakang atau gunakan pintasan lagi.",
     "presets": "preset...",

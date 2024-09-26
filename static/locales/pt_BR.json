@@ -148,8 +148,6 @@
     
     "skip": "Pular AB", 
     "skipTooltip": "Pular um segmento do vídeo entre a posição marcada e a posição atual.",
-    "detectiveMode": "modo detetive",
-    "detectiveModeTooltip": "Esconder tudo exceto o que está visível através de um círculo.",
     "cinema": "escurecer fundo",
     "cinemaTooltip": "Escurece o fundo do vídeo. Para sair, pressione no fundo ou use o atalho novamente.",
     "presets": "predefinições...",
