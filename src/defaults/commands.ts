@@ -402,8 +402,8 @@ export let commandInfos: {[key in CommandName]: Command} = {
     valueType: "adjustMode",
     requiresTabCapture: true,
     ref: {
-      min: -36,
-      max: 36,
+      min: -144,
+      max: 144,
       step: 1,
       default: 0,
       sliderMin: -6,
