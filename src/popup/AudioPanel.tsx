@@ -92,8 +92,8 @@ export function AudioPanel(props: {}) {
       value={starAudioFx.pitch ?? 1}
       sliderMin={-6}
       sliderMax={6}
-      min={-144}
-      max={144}
+      min={-100}
+      max={100}
       sliderStep={0.1}
       default={0}
       onChange={newValue => {
