@@ -162,7 +162,8 @@
     "flags": {
       "header": "Opções",
       "language": "língua",
-      "gptPromo": "Pesquise suas conversas do ChatGPT com $1.",
+      "qrCodeTop": "Escaneie para usar no...",
+      "qrCodeBottom": "Edge para Android",
       "darkTheme": "tema escuro",
       "showBadge": "mostrar distintivo",
       "showBadgeTooltip": "O distintivo é o texto no ícone da extensão.",

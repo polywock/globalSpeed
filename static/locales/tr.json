@@ -163,7 +163,8 @@
   "options": {
     "flags": {
       "header": "Seçenekler",
-      "gptPromo": "ChatGPT konuşmalarınızı $1 ile arayın.",
+      "qrCodeTop": "Kullanmak için tara...",
+      "qrCodeBottom": "Android için Edge",
       "language": "dil",
       "_languageTooltip": "Türkçe çevirilere katkıda bulunan kullanıcılar: @FoofAPP",
       "darkTheme": "karanlık tema",

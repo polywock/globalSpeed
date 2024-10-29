@@ -1,10 +1,23 @@
 
+:root.noBottomBorderMediaItem {
+  .MediaView {
+    &:last-child {
+      border-bottom: none !important; 
+    }
+  }
+}
+
 .MediaView {
   padding: 10px 0;
   border-top: 1px solid var(--ctx-border);
   
-  &:nth-child(2) {
+  &:first-child {
     margin-top: 16px;
+  }
+
+  &:last-child {
+    /* margin-top: 16px; */
+    border-bottom: 1px solid var(--ctx-border);
   }
 
   & > .header {

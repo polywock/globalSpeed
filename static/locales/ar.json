@@ -160,7 +160,8 @@
     "options": {
         "flags": {
             "header": "الخيارات",
-            "gptPromo": "ابحث في محادثاتك في ChatGPT باستخدام $1.",
+            "qrCodeTop": "امسح للاستخدام على...",
+            "qrCodeBottom": "إيدج لنظام أندرويد",
             "language": "اللغة",
             "_languageTooltip": "المستخدمون الذين ساهموا في الترجمات العربية: @LotfiBoukhemerra",
             "darkTheme": "الوضع الداكن",

@@ -1,0 +1,32 @@
+
+.QrPromo {
+    display: grid;
+    grid-template-columns: 1fr max-content max-content;
+    column-gap: 7px;
+    padding-left: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    align-items: center;
+    user-select: none;
+
+    & > div {
+
+        & .top {
+            font-size: 14px;
+        }
+
+        & .bottom {
+            font-size: 18px;
+            font-weight: bold;
+            color: #006439;
+        }
+    }
+
+    & > img {
+        cursor: pointer; 
+    }
+
+    & > button {
+        line-height: 0;
+    }
+}

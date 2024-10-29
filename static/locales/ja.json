@@ -161,7 +161,8 @@
   "options": {
     "flags": {
       "header": "オプション",
-      "gptPromo": "ChatGPTの会話を$1で検索します。",
+      "qrCodeTop": "スキャンして開始...",
+      "qrCodeBottom": "Android 用 Edge",
       "language": "言語",
       "darkTheme": "暗いテーマ",
       "showBadge": "バッジを表示",

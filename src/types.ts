@@ -53,7 +53,9 @@ export type AnyDict = {[key: string]: any}
 
 export type State = {
   version: number,
-  gptWebsiteCounter?: number,
+  qrCodeHide?: boolean,
+  qrCodeSeenCounter?: number, 
+  speedChangeCounter?: number,
   language?: string,
   fontSize?: number,
   pinByDefault?: boolean,

@@ -160,7 +160,8 @@
   "options": {
     "flags": {
       "header": "Options",
-      "gptPromo": "Recherchez dans vos conversations ChatGPT avec $1.",
+      "qrCodeTop": "Scannez pour utiliser sur...",
+      "qrCodeBottom": "Edge pour Android",
       "language": "langue",
       "_languageTooltip": "Utilisateurs ayant contribué aux traductions françaises : @bounis67",
       "darkTheme": "thème sombre",

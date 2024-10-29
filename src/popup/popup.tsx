@@ -14,6 +14,12 @@ import { loadGsm } from "src/utils/gsm"
 import { isFirefox, isMobile } from "src/utils/helper"
 import "./popup.css"
 
+declare global {
+  
+  interface GlobalVar {
+    speedCounterAtLaunch: number   
+  }
+}
 
 export function App(props: {}) {
   const [panel, setPanel] = useState(0)

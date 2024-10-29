@@ -162,7 +162,8 @@
   "options": {
     "flags": {
       "header": "Tùy chọn",
-      "gptPromo": "Tìm kiếm các cuộc trò chuyện ChatGPT của bạn với $1.",
+      "qrCodeTop": "Quét để sử dụng trên...",
+      "qrCodeBottom": "Edge cho Android",
       "language": "ngôn ngữ",
       "_languageTooltip": "Những người dùng đã đóng góp cho bản dịch tiếng Việt: @zeref-dragneel",
       "darkTheme": "chủ đề tối",

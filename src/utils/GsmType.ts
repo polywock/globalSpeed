@@ -156,7 +156,10 @@ export type Gsm = {
   options: {
     flags: {
       header: string,
-      gptPromo: string,
+      _qrCodeCompact?: boolean,
+      _qrCodeBottomSize?: number,
+      qrCodeTop: string,
+      qrCodeBottom: string,
       language: string,
       _languageTooltip?: string,
       darkTheme: string,

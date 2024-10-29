@@ -163,7 +163,8 @@
   "options": {
     "flags": {
       "header": "Параметры",
-      "gptPromo": "Ищите в своих разговорах ChatGPT с помощью $1.",
+      "qrCodeTop": "Сканируйте для входа...",
+      "qrCodeBottom": "Edge для Android",
       "language": "язык",
       "darkTheme": "темная тема",
       "showBadge": "показать значок",

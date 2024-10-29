@@ -77,6 +77,12 @@ export function isEdge() {
   return isEdgeResult
 }
 
+let isMacResult: boolean
+export function isMac() {
+  isMacResult = isMacResult ?? navigator.userAgent.includes("Mac OS")
+  return isMacResult
+}
+
 let isMobileResult: boolean
 export function isMobile() {
   if (isMobileResult != null) return isMobileResult

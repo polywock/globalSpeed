@@ -163,7 +163,8 @@
     "flags": {
       "header": "옵션",
       "language": "언어",
-      "gptPromo": "$1 으로 ChatGPT 대화를 검색하세요.",
+      "qrCodeTop": "스캔하여 사용하세요...",
+      "qrCodeBottom": "Android용 Edge",
       "darkTheme": "어두운 테마",
       "showBadge": "배지 표시",
       "showBadgeTooltip": "배지는 확장 프로그램 아이콘의 텍스트입니다.",

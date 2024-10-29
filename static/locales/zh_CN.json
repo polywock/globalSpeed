@@ -164,7 +164,8 @@
   "options": {
     "flags": {
       "header": "选项",
-      "gptPromo": "使用 $1 搜索您的 ChatGPT 对话。",
+      "qrCodeTop": "扫描二维码",
+      "qrCodeBottom": "在安卓版Edge上使用",
       "language": "语言",
       "_languageTooltip": "对中文翻译做出贡献的用户：@liangjiancang",
       "darkTheme": "深色主题",
