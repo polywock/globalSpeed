@@ -3,7 +3,7 @@ import { TiDelete } from "react-icons/ti"
 import { useStateView } from "src/hooks/useStateView"
 import "./QrPromo.css"
 import { pushView } from "src/utils/state"
-import { isMac, isMobile } from "src/utils/helper"
+import { isFirefox, isMac, isMobile } from "src/utils/helper"
 
 const ALWAYS_SHOW = false  
 
@@ -42,5 +42,5 @@ function indicateSeen(seenX: number) {
 }
 
 function validUserAgent() {
-    return !isMobile() && !isMac()
+    return !isMobile() && !isFirefox()
 }
