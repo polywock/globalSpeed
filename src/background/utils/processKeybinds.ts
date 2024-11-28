@@ -547,9 +547,11 @@ async function processAdjustMode(args: CommandHandlerArgs) {
     value = kb.valueNumber ?? ref.default
     if (kb.command === "speed") {
       let view = (await fetch({speed: true, lastSpeed: true}))
+      console.log(`Shortcut = ${value}x, Previous: ${view.lastSpeed}, Current: ${view.speed}`)
       if (!kb.skipToggleSpeed && (view.speed?.toFixed(2) === value.toFixed(2) && view.lastSpeed != null)) {
         value = view.lastSpeed
       }
+      console.log(`New speed: ${value}`)
     }
   } else if (kb.adjustMode === AdjustMode.ADD) {
     value = kb.valueNumber ?? ref.step

@@ -3,8 +3,7 @@ import { randomId } from "src/utils/helper"
 
 declare global {
     interface GlobalVar {
-      es: EntireState,
-      init: () => Promise<void> 
+      es: EntireState
     }
 }
 
@@ -134,7 +133,3 @@ export class EntireState {
 }   
 
 gvar.es = new EntireState()
-
-gvar.init = async () => {
-    
-}
