@@ -1,4 +1,6 @@
 {
+  ":appName": "Global Speed: Video hız kontrolü",
+  ":appDesc": "Video ve ses için varsayılan bir hız belirleyin.",
   "audio": {
     "captureTab": "yakala",
     "releaseTab": "bırak",
@@ -254,6 +256,10 @@
     },
     "rules": {
       "header": "URL Kuralları",
+      "setTitleConditions": "sayfa başlığı koşullarını ayarla",
+      "clearTitleConditions": "sayfa başlığı koşullarını temizle",
+      "titleConditionsLabel": "Sayfa başlığı şunları içermelidir:",
+      "titleConditionsTooltip": "Virgülle ayrılmış bir terim listesi belirtin ve bunlardan en az biri sayfa başlığında olmalıdır. Örneğin, YouTube'da müzik videoları için hızı 1x olarak ayarlamak için kullanılabilir.",
       "conditions": "URL koşulları",
       "startsWith": "ile başlar",
       "contains": "içeren",

@@ -1,4 +1,6 @@
 {
+  ":appName": "Global Speed",
+  ":appDesc": "Set a default speed for video and audio.",
   "_scale": 1.0,
   "_lang": "en", 
   "audio": {
@@ -254,6 +256,10 @@
     },
     "rules": {
       "header": "URL Rules",
+      "setTitleConditions": "set page title conditions",
+      "clearTitleConditions": "clear page title conditions",
+      "titleConditionsLabel": "Page title must include:",
+      "titleConditionsTooltip": "Specify a comma separated list of terms and at least one must be in the page title. For example, it can be used on Youtube to set speed to 1x for music videos.",
       "conditions": "URL conditions",
       "startsWith": "starts with",
       "contains": "contains",

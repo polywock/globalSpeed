@@ -57,6 +57,7 @@ export const LOCALE_MAP: {
 } = {
   "detect": {display: "Auto", title: "Try to find a match using browser language settings, system language settings, or fallback to English."},
   "ar": { display: "عربي", title: "Arabic" },
+  "de": { display: "Deutsch", title: "German" },
   "en": { display: "English", title: "English" },
   "es": { display: "Español", title: "Spanish" },
   "fr": { display: "Français", title: "French" },
@@ -64,8 +65,11 @@ export const LOCALE_MAP: {
   "it": { display: "Italiano", title: "Italian" },
   "ja": { display: "日本語", title: "Japanese" },
   "ko": { display: "한국어", title: "Korean" },
+  "ms": { display: "Bahasa Melayu", title: "Malay" },
+  "pl": { display: "Polski", title: "Polish" },
   "pt_BR": { display: "Português", title: "Portuguese" },
   "ru": { display: "Русский", title: "Russian" },
+  "th": { display: "ภาษาไทย", title: "Thai" },
   "tr": { display: "Türkçe", title: "Turkish" },
   "uk": { display: "Українська", title: "Ukrainian" },
   "vi": { display: "Tiếng Việt", title: "Vietnamese" },
@@ -74,5 +78,5 @@ export const LOCALE_MAP: {
 }
 
 
-const AVAILABLE_LOCALES = new Set(["ar", "en", "es", "fr", "id", "it", "ja", "ko", "pt_BR", "ru", "tr", "uk", "vi", "zh_CN", "zh_TW"])
+const AVAILABLE_LOCALES = new Set(["ar", "de", "en", "es", "fr", "id", "it", "ja", "ko", "ms", "pl", "pt_BR", "ru", "th", "tr", "uk", "vi", "zh_CN", "zh_TW"])
 

@@ -1,4 +1,6 @@
 {
+  ":appName": "Global Speed: Kiểm soát tốc độ video",
+  ":appDesc": "Cài đặt tốc độ mặc định cho video và âm thanh.",
   "audio": {
     "captureTab": "capture",
     "releaseTab": "release",
@@ -253,6 +255,10 @@
     },
     "rules": {
       "header": "Quy tắc URL",
+      "setTitleConditions": "đặt điều kiện tiêu đề trang",
+      "clearTitleConditions": "xóa điều kiện tiêu đề trang",
+      "titleConditionsLabel": "Tiêu đề trang phải bao gồm:",
+      "titleConditionsTooltip": "Chỉ định danh sách các thuật ngữ được phân tách bằng dấu phẩy và ít nhất một thuật ngữ phải có trong tiêu đề trang. Ví dụ, nó có thể được sử dụng trên YouTube để đặt tốc độ thành 1x cho các video âm nhạc.",
       "conditions": "điều kiện URL",
       "startsWith": "bắt đầu với",
       "contains": "chứa đựng",

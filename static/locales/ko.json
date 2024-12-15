@@ -1,4 +1,6 @@
 {
+  ":appName": "Global Speed: 비디오 속도 제어",
+  ":appDesc": "비디오 및 오디오의 기본 속도를 설정하십시오.",
   "_scale": 1.03,
   "audio": {
     "captureTab": "캡처",
@@ -252,6 +254,10 @@
     },
     "rules": {
       "header": "URL 규칙",
+      "setTitleConditions": "페이지 제목 조건 설정",
+      "clearTitleConditions": "페이지 제목 조건 지우기",
+      "titleConditionsLabel": "페이지 제목에 포함되어야 합니다:",
+      "titleConditionsTooltip": "쉼표로 구분된 용어 목록을 지정하고 최소한 하나는 페이지 제목에 포함되어야 합니다. 예를 들어, 음악 비디오의 속도를 1x로 설정하기 위해 YouTube에서 사용할 수 있습니다.",
       "conditions": "URL 조건",
       "startsWith": "로 시작",
       "contains": "포함",

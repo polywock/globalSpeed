@@ -11,7 +11,7 @@ const { join } = require("path")
 const { exit } = require("process")
 
 
-const locales = ["en", "ar", "es", "fr", "id", "it", "ja", "ko", "pt_BR", "ru", "tr", "uk", "vi", "zh_CN", "zh_TW"]
+const locales = ["en", "ar", "de", "es", "fr", "id", "it", "ja", "ko", "ms", "pl", "pt_BR", "ru", "th", "tr", "uk", "vi", "zh_CN", "zh_TW"]
 
 let targetLeaves;
 

@@ -19,6 +19,7 @@ function walk(d, level = 0) {
     if (level === 0) newData =  "\nexport type Gsm = {"
     const e = Object.entries(d)
     for (let i = 0; i < e.length; i++) {
+        if (e[i][0].startsWith(":")) continue 
         let postfix = (i === e.length - 1) ? "" : ","
         let l = level + 1 
         let p = "\n".concat(" ".repeat(l * 2))

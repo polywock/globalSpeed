@@ -100,6 +100,7 @@ export function Rule(props: RuleProps) {
   const list: KebabListProps["list"] = [
     { name: "duplicate", label: gvar.gsm.token.duplicate, close: true },
     { name: "label", label: gvar.gsm.options.editor.addLabel, close: true },
+    { name: "titleRestrict", label: makeLabelWithTooltip(rule.titleRestrict ? gvar.gsm.options.rules.clearTitleConditions : gvar.gsm.options.rules.setTitleConditions, gvar.gsm.options.rules.titleConditionsTooltip), close: true },
   ]
 
   if (rule.type !== "JS") {
@@ -206,6 +207,10 @@ export function Rule(props: RuleProps) {
         } else if (name === "strictness") {
           props.onChange(produce(rule, d => {
             d.strictness = (d.strictness ?? URLStrictness.DIFFERENT_HOST) % 4 + 1 
+          }))
+        } else if (name === "titleRestrict") {
+          props.onChange(produce(rule, d => {
+            d.titleRestrict = d.titleRestrict ? null : prompt(gvar.gsm.options.rules.titleConditionsLabel, "top hits, music, official video, live, lyrics")
           }))
         }
       }}/>

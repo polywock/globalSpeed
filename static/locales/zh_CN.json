@@ -1,4 +1,6 @@
 {
+  ":appName": "Global Speed: 视频速度控制",
+  ":appDesc": "设置视频和音频的默认速度。",
   "_scale": 1.05,
   "audio": {
     "captureTab": "捕获",
@@ -255,6 +257,10 @@
     },
     "rules": {
       "header": "URL规则",
+      "setTitleConditions": "设置页面标题条件",
+      "clearTitleConditions": "清除页面标题条件",
+      "titleConditionsLabel": "页面标题必须包含：",
+      "titleConditionsTooltip": "指定一个用逗号分隔的术语列表，页面标题中必须至少包含一个。例如，可在YouTube上用于将音乐视频的播放速度设置为1倍速。",
       "conditions": "URL条件",
       "startsWith": "以…开始",
       "contains": "包含",

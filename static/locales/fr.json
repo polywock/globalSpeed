@@ -1,4 +1,6 @@
 {
+  ":appName": "Global Speed: Contrôle de vitesse des vidéo",
+  ":appDesc": "Définissez une vitesse par défaut pour la vidéo et l'audio.",
   "audio": {
     "captureTab": "capturer",
     "releaseTab": "libérer",
@@ -250,6 +252,10 @@
     },
     "rules": {
       "header": "Règles d'URL",
+      "setTitleConditions": "définir les conditions du titre de la page",
+      "clearTitleConditions": "effacer les conditions du titre de la page",
+      "titleConditionsLabel": "Le titre de la page doit inclure :",
+      "titleConditionsTooltip": "Spécifiez une liste de termes séparés par des virgules et au moins un doit figurer dans le titre de la page. Par exemple, cela peut être utilisé sur YouTube pour définir la vitesse à 1x pour les vidéos musicales.",
       "conditions": "conditions d'URL",
       "startsWith": "commence par",
       "contains": "contient",

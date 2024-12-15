@@ -362,7 +362,8 @@ export type URLRule = {
     backdropFx: Fx
   },
   overrideJs?: string,
-  strictness?: URLStrictness
+  strictness?: URLStrictness,
+  titleRestrict?: string 
 }
 
 export enum URLStrictness {

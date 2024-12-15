@@ -2,7 +2,7 @@ import { getDefaultFx } from "src/defaults"
 import { AnyDict, CONTEXT_KEYS, State, URLRule, URLStrictness } from "src/types"
 import { isUserScriptsAvailable } from "src/utils/browserUtils"
 import { testURL } from "src/utils/configUtils"
-import { isFirefox, listToDict, pickObject, randomId } from "src/utils/helper"
+import { isFirefox, listToDict, pickObject, randomId, timeout } from "src/utils/helper"
 
 type UrlRuleBehavior = [URLRule["type"][], (isfake: boolean, tabId: number, rule: URLRule, override: AnyDict, deets: Deets) => void]
 
@@ -57,12 +57,23 @@ async function handleNavigation(deets: chrome.webRequest.WebRequestHeadersDetail
     let override = {} as AnyDict
     let fakeOverride = {} as AnyDict
     const removeKeys = new Set(CONTEXT_KEYS.map(k => `r:${deets.tabId}:${k}`)) 
+    let pageTitle: string = undefined  
 
     for (let rule of rules) {
         const isOnKey = `s:ro:${deets.tabId}:${rule.id}`
         const oldHost = raw[isOnKey] as string 
 
-        const match = testURL(deets.url, rule.condition, false)
+        let match = testURL(deets.url, rule.condition, false)
+        if (match && rule.titleRestrict && !deets.frameId) {
+            if (pageTitle === undefined) {
+                await timeout(2500)
+                const tabInfo = await chrome.tabs.get(deets.tabId)
+                pageTitle = tabInfo.title || null 
+            }
+            if (!(pageTitle && matchesPageTitle(pageTitle.toLowerCase(), rule.titleRestrict))) {
+                match = false 
+            }
+        }
         if (match) {
             override[isOnKey] = (new URL(deets.url)).hostname
             let apply = oldHost ? shouldReApply(rule.type === "JS" ? URLStrictness.EVERY_COMMIT : (rule.strictness || URLStrictness.DIFFERENT_HOST), oldHost, override[isOnKey], isCommit) : true 
@@ -77,6 +88,12 @@ async function handleNavigation(deets: chrome.webRequest.WebRequestHeadersDetail
     ;[...overrideKeys, ...Object.keys(fakeOverride)].forEach(k => removeKeys.delete(k))
     removeKeys.size && gvar.es.set(listToDict([...removeKeys], null))
     overrideKeys.length && gvar.es.set(override)
+}
+
+function matchesPageTitle(pageTitle: string, condition: string) {
+    if (!condition) return true  
+    const tags = condition.toLowerCase().split(/,+\s+/)
+    return tags.some(tag => pageTitle.includes(tag))
 }
 
 function getEnabledRules(raw: AnyDict) {
@@ -104,4 +121,5 @@ gvar.sess.safeCbs.add(async () => {
     const raw = await gvar.es.getAllUnsafe()
     ;syncUserScripts(raw["g:rules"] || [], raw["g:superDisable"])
 })
+
 

@@ -1,4 +1,6 @@
 {
+  ":appName": "Global Speed: ビデオ速度制御",
+  ":appDesc": "ビデオとオーディオのデフォルト速度を設定します。",
   "audio": {
     "captureTab": "捕捉",
     "releaseTab": "手放す",
@@ -252,6 +254,10 @@
     },
     "rules": {
       "header": "URLルール",
+      "setTitleConditions": "ページタイトル条件を設定",
+      "clearTitleConditions": "ページタイトル条件をクリア",
+      "titleConditionsLabel": "ページタイトルには以下を含む必要があります:",
+      "titleConditionsTooltip": "カンマで区切られた用語のリストを指定し、少なくとも1つがページタイトルに含まれている必要があります。たとえば、YouTubeで音楽ビデオの速度を1xに設定するのに使用できます。",
       "conditions": "URL条件",
       "startsWith": "で始まる",
       "contains": "含む",

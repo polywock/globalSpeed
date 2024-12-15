@@ -156,8 +156,6 @@ export type Gsm = {
   options: {
     flags: {
       header: string,
-      _qrCodeCompact?: boolean,
-      _qrCodeBottomSize?: number,
       qrCodeTop: string,
       qrCodeBottom: string,
       language: string,
@@ -247,6 +245,10 @@ export type Gsm = {
     },
     rules: {
       header: string,
+      setTitleConditions: string,
+      clearTitleConditions: string,
+      titleConditionsLabel: string,
+      titleConditionsTooltip: string,
       conditions: string,
       startsWith: string,
       contains: string,

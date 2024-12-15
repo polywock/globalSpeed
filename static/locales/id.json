@@ -1,4 +1,6 @@
 {
+  ":appName": "Global Speed: Kontrol kecepatan video",
+  ":appDesc": "Atur kecepatan default untuk video dan audio.",
   "audio": {
     "captureTab": "tangkap",
     "releaseTab": "lepas",
@@ -241,6 +243,10 @@
     },
     "rules": {
       "header": "Aturan URL",
+      "setTitleConditions": "tetapkan kondisi judul halaman",
+      "clearTitleConditions": "hapus kondisi judul halaman",
+      "titleConditionsLabel": "Judul halaman harus mencakup:",
+      "titleConditionsTooltip": "Tentukan daftar istilah yang dipisahkan koma dan setidaknya satu harus ada dalam judul halaman. Misalnya, ini dapat digunakan di YouTube untuk mengatur kecepatan ke 1x untuk video musik.",
       "conditions": "kondisi URL",
       "startsWith": "dimulai dengan",
       "contains": "mengandung",
