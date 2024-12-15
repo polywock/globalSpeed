@@ -12,13 +12,15 @@
     "./src/background/capture.ts"
   ],
   "scripts": {
-    "build:common": "  rm -rf build   &&              webpack --config webpack.config.js && cp -r static/. staticCh/. build/unpacked   &&                             find build   -name '.DS_Store' -type f -delete",
-    "build:commonFf": "rm -rf buildFf && FIREFOX=true webpack --config webpack.config.js && cp -r static/. staticFf/. buildFf/unpacked && node tools/replaceCtx.js && find buildFf -name '.DS_Store' -type f -delete",
+    "build:common": "  rm -rf build   &&              webpack --config webpack.config.js && cp -r static/. staticCh/. build/unpacked                               &&              node tools/processLocale.js --build && find build   -name '.DS_Store' -type f -delete",
+    "build:commonFf": "rm -rf buildFf && FIREFOX=true webpack --config webpack.config.js && cp -r static/. staticFf/. buildFf/unpacked && node tools/replaceCtx.js && FIREFOX=true node tools/processLocale.js --build && find buildFf -name '.DS_Store' -type f -delete",
     "build:dev": "   export NODE_ENV=development && npm run build:common",
     "build:devFf": " export NODE_ENV=development && npm run build:commonFf",
-    "build:prod": "  export NODE_ENV=production && npm run build:common   && node tools/minifyJson.js && cd build/unpacked   && zip -r '../global-speed-chromium.zip' .",
-    "build:prodFf": "export NODE_ENV=production && npm run build:commonFf                             && cd buildFf/unpacked && zip -r '../global-speed-firefox.zip' .",
-    "build:prodFff": "npm run build:prodFf && rm -rf zed && mkdir -p zed/unpacked && cp -r src static staticCh staticFf tools .babelrc package-lock.json package.json postcss.config.js tsconfig.json webpack.config.js zed/unpacked && (cd zed/unpacked && zip -r ../packed.zip .) && mv zed/packed.zip buildFf/source.zip && rm -rf zed"
+    "build:prod": "  export NODE_ENV=production && npm run build:common   && cd build/unpacked   && zip -r '../global-speed-chromium.zip' .",
+    "build:prodFf": "export NODE_ENV=production && npm run build:commonFf && cd buildFf/unpacked && zip -r '../global-speed-firefox.zip' .",
+    "build:prodFff": "npm run build:prodFf && rm -rf zed && mkdir -p zed/unpacked && cp -r src static staticCh staticFf tools .babelrc package-lock.json package.json postcss.config.js tsconfig.json webpack.config.js zed/unpacked && (cd zed/unpacked && zip -r ../packed.zip .) && mv zed/packed.zip buildFf/source.zip && rm -rf zed",
+    "validate": "node tools/processLocale.js --validate",
+    "casing": "node tools/processLocale.js --casing"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",

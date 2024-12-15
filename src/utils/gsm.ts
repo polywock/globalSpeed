@@ -1,12 +1,9 @@
 import { Gsm } from "./GsmType";
 
-// adding a language guide
+// Adding a language guide
 // Add language code to AVAILABLE_LOCALES (this file) 
 // Add language information to LOCALE_MAP (this file) 
-// Add language to static/_locales folder for name, description. 
-// Add language to static/locales folder for all other translations. 
-// Add language to tools/valideLocale.js "locales" list.
-// run "node tools/validateLocale.js" to verify the locales/ file has all the same properties as static/en.json (reference)
+// Add language to static/locales folder for translations. 
 
 declare global {
   interface Window {

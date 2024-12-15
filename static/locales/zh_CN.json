@@ -24,30 +24,22 @@
     "create": "创建",
     "reset": "重置",
     "duplicate": "复制",
-    
-
-
     "pinTooltip": "固定如果你想要当前标签页拥有它自己的上下文（速度，过滤器等）。",
     "mergeBoth": "合并两者",
     "min": "最小",
     "max": "最大",
-    
     "on": "打开",
     "off": "关闭",
     "toggle": "切换",
-
     "element": "元素",
     "backdrop": "背景",
     "both": "两者",
-
     "query": "选择器",
     "queryTooltip": "用于查找要过滤的元素的CSS选择器。例如，'video, img' 将选择视频和图片。有关CSS选择器的高级用法，请查看在线文档。",
-    
     "intoPane": "制成窗格",
     "warning": "警告",
     "filters": "滤镜",
     "transforms": "变换",
-
     "blockEvents": "阻止事件",
     "blockEventsTooltip": "贪婪模式会尝试阻止事件的默认行为及其传播。",
     "color": "颜色",
@@ -68,7 +60,6 @@
     "implode": "内爆",
     "rotate": "旋转",
     "rows": "行",
-
     "copy": "复制",
     "paste": "粘贴",
     "replaceWith": "替换$1为？",
@@ -150,8 +141,7 @@
     "mediaInfo": "显示媒体信息",
     "intoPopup": "转为弹出窗口",
     "intoPopupTooltip": "将当前标签页转换为弹出窗口。",
-    
-    "skip": "AB跳过", 
+    "skip": "AB跳过",
     "skipTooltip": "跳过标记位置和当前位置之间的视频段。",
     "cinema": "加深背景",
     "cinemaTooltip": "加深视频的背景。要退出，按背景或再次使用快捷键。",
@@ -161,7 +151,7 @@
     "toggleSpeed": "切换速度",
     "toggleSpeedTooltip": "在快捷速度和最后的速度之间切换。",
     "alwaysOn": "始终开启",
-    "alwaysOnTooltip": "默认情况下，快捷键只能在上次使用相同快捷键禁用扩展后重新激活该扩展。启用此设置可确保快捷键始终可用于启用扩展，即使它是通过UI菜单关闭的。"    
+    "alwaysOnTooltip": "默认情况下，快捷键只能在上次使用相同快捷键禁用扩展后重新激活该扩展。启用此设置可确保快捷键始终可用于启用扩展，即使它是通过UI菜单关闭的。"
   },
   "options": {
     "flags": {
@@ -218,8 +208,6 @@
       "header": "热键编辑器",
       "toggleMode": "您可以使用本地热键或全局热键。",
       "toggleModeTooltip": "全局热键可以让您在使用其他应用程序时控制视频或音频。",
-
-    
       "menuLabel": "菜单标签",
       "triggerMode": "支持多种触发模式。",
       "triggerModeTooltip": "本地快捷键（默认）：灵活的快捷键。\n\n全局快捷键：当您想在使用其他应用程序时控制视频或音频时非常有用。\n\n上下文菜单：适用于不常用的命令。右键点击页面触发。",
@@ -229,7 +217,7 @@
         "1": "全局快捷键",
         "2": "上下文菜单"
       },
-      "spacing": "间距", 
+      "spacing": "间距",
       "reversible": "可逆",
       "reversibleTooltip": "允许设置第二个快捷键以反转列表。",
       "wraparound": "环绕",
@@ -286,7 +274,7 @@
     "draw": "绘制",
     "erase": "擦除",
     "select": "互动",
-    "selectTooltip": "与网页互动",    
+    "selectTooltip": "与网页互动",
     "tips": "一些有用的快捷方式\n1. 使用鼠标右键擦除。\n2. 按住Shift点击画线。\n3. 使用Caps Lock切换$1和$2模式\n4. 要调整橡皮擦大小：按住鼠标中键并左右拖动。\n5. 要调整画笔大小：按住鼠标中键并上下拖动。\n6. 右键单击颜色，将页面填充为该颜色。\n7. 三次点击颜色以更改背景颜色。"
   }
 }
