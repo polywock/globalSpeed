@@ -2,14 +2,24 @@
 .Menu {
   position: fixed;
   z-index: 99999999;
-  background-color: var(--bg-color);
-  color: var(--text-color); 
-  filter: invert(1);
+  background-color: var(--text-color);
+  color: var(--pure-color); 
   user-select: none;
+  border-radius: 5px;
   
   & > div {
     padding: 5px 10px;
     border-bottom: 1px solid var(--ctx-border);
     padding-right: 20px;
+    opacity: 0.75;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .RegularTooltip > div > span {
+    margin-left: 10px;
+    filter: invert(1);
   }
 }

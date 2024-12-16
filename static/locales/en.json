@@ -25,6 +25,7 @@
     "create": "Create",
     "reset": "Reset",
     "duplicate": "Duplicate",
+    "delete": "Delete",
 
     "pinTooltip": "Pin if you want the current tab to have it's own context (speed, filters, etc).",
     "mergeBoth": "Merge both",
@@ -220,7 +221,7 @@
       "toggleMode": "You can use local or global shortcut keys.",
       "toggleModeTooltip": "Global shortcuts are useful when you want to control video or audio while using another program.",
       "menuLabel": "Menu label",
-      "triggerMode": "Multiple trigger modes are supported.",
+      "triggerMode": "Multiple trigger modes are supported",
       "triggerModeTooltip": "Local shortcuts (default): Flexible shortcut keys.\n\nGlobal shortcuts: Useful when you want to control video or audio while using another application.\n\nContext menu: Ideal for seldomly used commands. Right click on the page to trigger them.",
       "triggerModeTooltipFf": "Local shortcuts (default): Flexible shortcut keys.\n\nContext menu: Ideal for seldomly used commands. Right click on the page to trigger them.",
       "triggerModes": {

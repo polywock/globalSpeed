@@ -208,7 +208,7 @@
       "toggleMode": "Możesz używać lokalnych lub globalnych skrótów klawiszowych.",
       "toggleModeTooltip": "Globalne skróty są przydatne, gdy chcesz sterować wideo lub dźwiękiem podczas korzystania z innego programu.",
       "menuLabel": "Etykieta menu",
-      "triggerMode": "Obsługiwane są różne tryby wyzwalania.",
+      "triggerMode": "Obsługiwane są różne tryby wyzwalania",
       "triggerModeTooltip": "Lokalne skróty (domyślne): Elastyczne skróty klawiszowe.\n\nGlobalne skróty: Przydatne, gdy chcesz sterować wideo lub dźwiękiem podczas korzystania z innej aplikacji.\n\nMenu kontekstowe: Idealne do rzadko używanych poleceń. Kliknij prawym przyciskiem myszy na stronie, aby je wywołać.",
       "triggerModeTooltipFf": "Lokalne skróty (domyślne): Elastyczne skróty klawiszowe.\n\nMenu kontekstowe: Idealne do rzadko używanych poleceń. Kliknij prawym przyciskiem myszy na stronie, aby je wywołać.",
       "triggerModes": {

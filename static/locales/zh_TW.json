@@ -209,7 +209,7 @@
       "toggleMode": "您可以使用本機快速鍵或全域快速鍵。",
       "toggleModeTooltip": "全域快速鍵可以讓您在使用其他應用程式時控制影片或音訊。",
       "menuLabel": "菜單標籤",
-      "triggerMode": "支持多種觸發模式。",
+      "triggerMode": "支持多種觸發模式",
       "triggerModeTooltip": "本地快捷鍵（預設）：靈活的快捷鍵。\n\n全局快捷鍵：當您想在使用其他應用程序時控制視頻或音頻時非常有用。\n\n上下文菜單：適用於不常用的命令。右鍵點擊頁面觸發。",
       "triggerModeTooltipFf": "本地快捷鍵（預設）：靈活的快捷鍵。\n\n上下文菜單：適用於不常用的命令。右鍵點擊頁面觸發。",
       "triggerModes": {

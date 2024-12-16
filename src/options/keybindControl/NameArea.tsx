@@ -1,17 +1,16 @@
 
 import { TargetFx, AdjustMode, Command, Keybind, Duration, ReferenceValues, Trigger } from "../../types"
 import { produce, Draft } from "immer"
-import { Tooltip } from "../../comps/Tooltip"
 import { filterInfos, FilterName, filterTargets } from "../../defaults/filters"
 import { GoCode, GoRepoForked, GoHistory } from "react-icons/go"
 import { FaPowerOff, FaPause, FaEquals, FaBookmark, FaLink, FaVolumeUp, FaVolumeMute, FaBackward, FaForward, FaArrowRight, FaExchangeAlt, FaPlus, FaMusic, FaList, FaStar, FaInfoCircle, FaMousePointer } from "react-icons/fa"
 import { BsFillBrushFill } from "react-icons/bs"
 import { TbArrowsHorizontal } from "react-icons/tb"
-import { GiAnticlockwiseRotation, GiJumpAcross } from "react-icons/gi"
+import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { BsMusicNoteList } from "react-icons/bs"
 import { TiArrowLoop } from "react-icons/ti"
 import { MdDarkMode, MdFullscreen, MdPictureInPictureAlt, MdWarning } from "react-icons/md"
-import { assertType, domRectGetOffset, feedbackText, getPopupSize } from "../../utils/helper"
+import { assertType, getPopupSize } from "../../utils/helper"
 import { MenuProps } from "../../comps/Menu"
 import { replaceArgs } from "src/utils/gsm"
 import { MdSpeed } from "react-icons/md";
@@ -23,7 +22,10 @@ import { isSeekSmall } from "src/utils/configUtils"
 import { PiArrowArcRightFill } from "react-icons/pi"
 import { CinemaModal } from "../CinemaModal"
 import { useState } from "react"
-import { IoEllipsisVertical } from "react-icons/io5"
+import { IoEllipsisVertical, IoHelp } from "react-icons/io5"
+import { NewTooltip } from "src/comps/NewTooltip"
+import { IoMdHelpCircleOutline } from "react-icons/io"
+import { RegularTooltip } from "src/comps/RegularTooltip"
 
 const invertableKeys = new Set(["fastSeek", "autoPause", "skipPauseSmall", "pauseWhileScrubbing", "relativeToSpeed", "wraparound", "itcWraparound", "showNetDuration", "seekOnce", "allowAlt", "cycleNoWrap", "noHold", "ignoreNavigate", "skipToggleSpeed", "alwaysOn"])
 const memMap = new Map<string, any>()
@@ -142,20 +144,23 @@ export function NameArea(props: NameAreaProps) {
             <span>{label}</span>
 
             {/* Capture shortcut warning */}
-            {tabCaptureWarning && <Tooltip labelAlt={
-                <MdWarning size="1.35rem" style={{ color: "#ff8888" }} />
-            } tooltip={replaceArgs(gvar.gsm.warnings.captureRequired, [`[ ${gvar.gsm.command.afxCapture} ]`])} />}
+            {tabCaptureWarning && (
+                <NewTooltip allowClick={true} withClass="warningTooltip" align="top" title={replaceArgs(gvar.gsm.warnings.captureRequired, [`[ ${gvar.gsm.command.afxCapture} ]`])}>
+                    <MdWarning size="1.35rem" style={{ color: "#ff8888" }} />
+                </NewTooltip>
+            )}
+            
 
             {/* cycle adjustMode */}
-            {command.valueType === "adjustMode" && <button className="adjustMode" onClick={e => {
+            {command.valueType === "adjustMode" && <NewTooltip  withClass="adjustMode" align="top" title={gvar.gsm.options.editor.adjustModes[value.adjustMode || AdjustMode.SET]}><button onClick={e => {
 
                 props.onChange(value.id, produce(value, d => {
                     saveToMem(value, adjustMode)
                     d.adjustMode = adjustMode % 5 + 1
                     restoreFromMem(d, d.adjustMode, true)
-                    feedbackText(gvar.gsm.options.editor.adjustModes[d.adjustMode], domRectGetOffset((e.currentTarget as HTMLButtonElement).getBoundingClientRect(), 40, 40, true))
                 }))
             }}>
+                
                 {(value.adjustMode || AdjustMode.SET) === AdjustMode.SET && <FaEquals size="1em" />}
                 {value.adjustMode === AdjustMode.ADD && <FaPlus size="1em" />}
                 {value.adjustMode === AdjustMode.CYCLE && <FaList size="1em" />}
@@ -167,10 +172,11 @@ export function NameArea(props: NameAreaProps) {
                     <FaMousePointer size="1em"/>
                     <FaPlus size="1em" />
                 </>}
-            </button>}
+            </button></NewTooltip>}
+            
 
             {/* Tooltip */}
-            {tooltip && <Tooltip label="?" tooltip={tooltip} />}
+            {tooltip && <RegularTooltip align="top" title={tooltip}/>}
 
 
             {value.command === "cinema" && <Cinema value={value} onChange={props.onChange}/>}
@@ -281,7 +287,7 @@ function ensureSpeedList(list: KebabListProps["list"], handlers: KebabListProps[
 }
 
 export function makeLabelWithTooltip(name: string, tooltip: string) {
-    return <>{name}<Tooltip noHover={true} alert={true} pass={{ style: { paddingLeft: "10px" } }} tooltip={tooltip}/></>
+    return <>{name}<RegularTooltip offset={30} align="right" title={tooltip}/></>
 }
 
 type FilterSelectProps = {

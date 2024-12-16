@@ -1,6 +1,45 @@
 
 .SectionEditor {
 
+  & > .header {
+    display: grid;
+    margin-bottom: 25px;
+    grid-auto-flow: column;
+    justify-content: start;
+    column-gap: 15px;
+
+    & > div:first-child {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: max-content;
+      grid-column-gap: 10px;
+      
+      & > div {
+        width: 2px;
+        background-color: var(--icon-vibrant-color);
+        transform: rotateZ(20deg) scaleY(1.3);
+      }
+    }
+
+    .modeSpan {
+      padding: 8px;
+      border: 1px solid var(--ctx-border);
+      opacity: 0.6;
+      border-radius: 5px;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      & > svg {
+        margin-left: 8px;
+        transform: scale(1.2);
+        margin-right: 5px;
+      }
+    }
+  }
+
+
   & > .keybindControls {
     margin-top: 20px;
 

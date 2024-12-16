@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react"
-import { Tooltip } from "../comps/Tooltip"
 import { LOCALE_MAP } from "../utils/gsm"
 import { SetView, useStateView } from "../hooks/useStateView"
 import { getDefaultSpeedSlider } from "src/defaults/constants"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "../defaults/constants"
-
 import { IndicatorModal } from "./IndicatorModal"
 import { SpeedPresetModal } from "./SpeedPresetModal"
 import { SliderMicro } from "src/comps/SliderMicro"
@@ -20,6 +18,7 @@ import { Minmax } from "src/comps/Minmax"
 import { GoX } from "react-icons/go"
 import { WidgetModal } from "./WidgetModal"
 import "./SectionFlags.css"
+import { RegularTooltip } from "src/comps/RegularTooltip"
 
 export function SectionFlags(props: {}) {
   const [showIndicatorModal, setShowIndicatorModal] = useState(false)
@@ -69,7 +68,8 @@ export function SectionFlags(props: {}) {
         <div className="field">
           <div className="labelWithTooltip">
             <span>{gvar.gsm.options.flags.language}</span>
-            {gvar.gsm.options.flags._languageTooltip && <Tooltip tooltip={gvar.gsm.options.flags._languageTooltip}/>}
+            
+            {gvar.gsm.options.flags._languageTooltip && <RegularTooltip title={gvar.gsm.options.flags._languageTooltip} align="right"/>}
           </div>
           <select className="padded" value={view.language || "detect"} onChange={e => {
             setView({language: e.target.value})
@@ -96,7 +96,7 @@ export function SectionFlags(props: {}) {
           <div className="field">
             <div className="labelWithTooltip">
               <span>{gvar.gsm.options.flags.grantPermission}</span>
-              <Tooltip tooltip={gvar.gsm.options.flags.grantPermissionTooltip}/>
+              <RegularTooltip title={gvar.gsm.options.flags.grantPermissionTooltip} align="right"/>
             </div>
             <Toggle value={has} onChange={e => {
               chrome.permissions[has ? "remove" : "request"]({origins: ["https://*/*", "http://*/*"]}).then(v => {
@@ -111,7 +111,7 @@ export function SectionFlags(props: {}) {
         <div className="field marginTop">
           <div className="labelWithTooltip">
             <span>{gvar.gsm.options.flags.showBadge}</span>
-            <Tooltip tooltip={gvar.gsm.options.flags.showBadgeTooltip}/>
+            <RegularTooltip title={gvar.gsm.options.flags.showBadgeTooltip} align="right"/>
           </div>
           <Toggle value={!view.hideBadge} onChange={e => {
             setView({hideBadge: !view.hideBadge})
@@ -122,7 +122,7 @@ export function SectionFlags(props: {}) {
         <div className="field indentFloat">
           <div className="labelWithTooltip">
             <span>{gvar.gsm.options.flags.showIndicator}</span>
-            <Tooltip tooltip={gvar.gsm.options.flags.showIndicatorTooltip}/>
+            <RegularTooltip title={gvar.gsm.options.flags.showIndicatorTooltip} align="right"/>
           </div>
           <div className="fieldValue">
             <Toggle value={!viewAlt.hideIndicator} onChange={async e => {
@@ -161,7 +161,7 @@ export function SectionFlags(props: {}) {
         <div className="field marginTop">
           <div className="labelWithTooltip">
             <span>{gvar.gsm.options.flags.pinByDefault}</span>
-            <Tooltip tooltip={gvar.gsm.options.flags.pinByDefaultTooltip}/>
+            <RegularTooltip title={gvar.gsm.options.flags.pinByDefaultTooltip} align="right"/>
           </div>
           <Toggle value={!!view.pinByDefault} onChange={e => {
             setView({pinByDefault: !view.pinByDefault})
@@ -193,7 +193,7 @@ export function SectionFlags(props: {}) {
         <div className="field indentFloat">
           <div className="labelWithTooltip">
             <span>{gvar.gsm.options.flags.ghostMode}</span>
-            <Tooltip tooltip={gvar.gsm.options.flags.ghostModeTooltip}/>
+            <RegularTooltip title={gvar.gsm.options.flags.ghostModeTooltip} align="right"/>
           </div>
           <div className="fieldValue">
             <Toggle value={!!view.ghostMode} onChange={e => {
@@ -259,7 +259,7 @@ export function SectionFlags(props: {}) {
           <div className="field">
             <div className="labelWithTooltip">
               <span>{gvar.gsm.options.flags.keyboardInput}</span>
-              <Tooltip tooltip={gvar.gsm.options.flags.keyboardInputTooltip}/>
+              <RegularTooltip title={gvar.gsm.options.flags.keyboardInputTooltip} align="right"/>
             </div>
             <select className="padded" value={view.virtualInput ? "v" : "q"} onChange={async e => {
               setView({virtualInput: e.target.value === "v"})
@@ -293,7 +293,7 @@ function CircleWidget(props: {
     <div className="field indentFloat">
       <div className="labelWithTooltip">
         <span>{gvar.gsm.options.flags.widget.option}</span>
-        <Tooltip tooltip={gvar.gsm.options.flags.widget.optionTooltip.concat(isMobile() ? gvar.gsm.options.flags.widget.movementMobile : gvar.gsm.options.flags.widget.movementDesktop)}/>
+        <RegularTooltip title={gvar.gsm.options.flags.widget.optionTooltip.concat(isMobile() ? gvar.gsm.options.flags.widget.movementMobile : gvar.gsm.options.flags.widget.movementDesktop)} align="right"/>
       </div>
       <div className="fieldValue">
         <Toggle value={!!props.active} onChange={e => {

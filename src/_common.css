@@ -8,6 +8,7 @@
   font-size: var(--font-size);
 
 
+  --pure-color: white;
   --bg-color: lightgray;
   --mg-color: #eee;
   --fg-color: #fafafa; 
@@ -57,7 +58,6 @@
   
   --select-red: red;
   --select-green: green;
-
   --ctx-border-ke: #00000022;
   --ctx-border: #00000044;
   --ctx-border-ko: #00000066;
@@ -68,6 +68,7 @@
 }
 
 :root.darkTheme {
+  --pure-color: black;
   --bg-color: #111;
   --mg-color: #181818;
   --fg-color: #222; 

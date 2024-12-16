@@ -207,7 +207,7 @@
       "toggleMode": "Você pode usar teclas de atalho locais ou globais.",
       "toggleModeTooltip": "Atalhos globais são úteis quando você deseja controlar vídeo ou áudio enquanto usa outro programa.",
       "menuLabel": "Etiqueta do menu",
-      "triggerMode": "Vários modos de ativação são suportados.",
+      "triggerMode": "Vários modos de ativação são suportados",
       "triggerModeTooltip": "Atalhos locais (padrão): Teclas de atalho flexíveis.\n\nAtalhos globais: Úteis quando você quer controlar vídeo ou áudio enquanto usa outro aplicativo.\n\nMenu de contexto: Ideal para comandos raramente usados. Clique com o botão direito na página para ativá-los.",
       "triggerModeTooltipFf": "Atalhos locais (padrão): Teclas de atalho flexíveis.\n\nMenu de contexto: Ideal para comandos raramente usados. Clique com o botão direito na página para ativá-los.",
       "triggerModes": {

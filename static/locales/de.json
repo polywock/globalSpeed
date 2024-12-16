@@ -208,7 +208,7 @@
       "toggleMode": "Du kannst lokale oder globale Tastenkombinationen verwenden.",
       "toggleModeTooltip": "Globale Tastenkombinationen sind nützlich, wenn du Videos oder Audios steuern möchtest, während du ein anderes Programm verwendest.",
       "menuLabel": "Menülabel",
-      "triggerMode": "Mehrere Auslösemodi werden unterstützt.",
+      "triggerMode": "Mehrere Auslösemodi werden unterstützt",
       "triggerModeTooltip": "Lokale Tastenkombinationen (Standard): Flexible Tastenkombinationen.\n\nGlobale Tastenkombinationen: Nützlich, wenn du Videos oder Audios steuern möchtest, während du eine andere Anwendung verwendest.\n\nKontextmenü: Ideal für selten genutzte Befehle. Rechtsklick auf die Seite, um sie auszulösen.",
       "triggerModeTooltipFf": "Lokale Tastenkombinationen (Standard): Flexible Tastenkombinationen.\n\nKontextmenü: Ideal für selten genutzte Befehle. Rechtsklick auf die Seite, um sie auszulösen.",
       "triggerModes": {

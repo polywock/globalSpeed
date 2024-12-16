@@ -1,5 +1,5 @@
 
-/// <reference types="@types/node" />
+// /// <reference types="@types/node" />
 
 const { readdir, readFile, writeFile, mkdir } = require("fs/promises")
 const { join, parse } = require("path")
@@ -55,6 +55,10 @@ async function validate() {
     return outputs.every(o => o)
 }
 
+/**
+ * 
+ * @returns 
+ */
 async function ensureCasing() {
     if (!(await validate())) return exit(1)
     let rootLocales = join("static", "locales")
@@ -71,16 +75,18 @@ async function ensureCasing() {
     for (let lang of CASING_SENSITIVE_LANGUAGES) {
         const path = join(rootLocales, `${lang}.json`)
         const otherJson = JSON.parse(await readFile(path, {encoding: 'utf8'}))
+        let adjustedCount = 0
 
         for (let leave of englishLeaves) {
             let locale = lang.replace('_', '-')
             const value = getNestedValue(otherJson, leave.path)
             if (!isCapitalized(value, locale)) {
-                // console.log(lang, leave.value, ' -> ', value)
                 setNestedValue(otherJson, leave.path, capitalize(value, locale))
+                adjustedCount++
             }
         }
-        await writeFile(path, JSON.stringify(otherJson, null, 2), {encoding: 'utf8'})
+        adjustedCount && (await writeFile(path, JSON.stringify(otherJson, null, 2), {encoding: 'utf8'}))
+        console.log(`${lang}.json requires ${adjustedCount} adjustments.`)
     }
 }
 

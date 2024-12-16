@@ -1,6 +1,5 @@
 import { useState, useMemo } from "react"
 import { checkFilterDeviation, sendMessageToConfigSync, formatFilters } from "../utils/configUtils"
-import { Tooltip } from "../comps/Tooltip"
 import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { Filters } from "./Filters"
 import { Origin } from "./Origin"
@@ -10,6 +9,7 @@ import { getDefaultFx } from "../defaults"
 import { Fx } from "../types"
 import { produce } from "immer"
 import "./FxControl.css"
+import { RegularTooltip } from "src/comps/RegularTooltip"
 
 type FxControlProps = {
   live?: boolean,
@@ -75,7 +75,7 @@ export function FxControl(props: FxControlProps) {
       {/* Query */}
       {!backdropTab && (
         <div className="query">
-          <span>{gvar.gsm.token.query} <Tooltip tooltip={gvar.gsm.token.queryTooltip}/></span>
+          <span>{gvar.gsm.token.query} <RegularTooltip align={"right"} title={gvar.gsm.token.queryTooltip}/></span>
           <ThrottledTextInput passInput={{placeholder: `video`}} value={fx.query || ""} onChange={v => {
             setCurrent(produce(fx, d => {
               d.query = v 

@@ -1,6 +1,7 @@
 import { VscGripper } from "react-icons/vsc"
 import { useRef, MutableRefObject, useEffect } from "react"
 import "./MoveDrag.css"
+import { NewTooltip } from "./NewTooltip"
 
 type MoveDragProps = {
   onMove: (newIndex: number) => void
@@ -78,8 +79,8 @@ export function MoveDrag(props: MoveDragProps) {
   }
 
   return (
-  <button onPointerDown={handlePointerDown} className="icon MoveDrag">
+    <button onPointerDown={handlePointerDown} className="MoveDrag icon">
         <VscGripper size="1.42rem"/>
-  </button>
+    </button>
 )
 }

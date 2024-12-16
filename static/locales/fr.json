@@ -208,7 +208,7 @@
       "toggleMode": "Vous pouvez utiliser des raccourcis locaux ou globaux.",
       "toggleModeTooltip": "Les raccourcis globaux sont utiles lorsque vous souhaitez contrôler la vidéo ou l'audio tout en utilisant un autre programme.",
       "menuLabel": "Étiquette du menu",
-      "triggerMode": "Plusieurs modes de déclenchement sont pris en charge.",
+      "triggerMode": "Plusieurs modes de déclenchement sont pris en charge",
       "triggerModeTooltip": "Raccourcis locaux (par défaut) : Raccourcis flexibles.\n\nRaccourcis globaux : Utile lorsque vous souhaitez contrôler la vidéo ou l'audio tout en utilisant une autre application.\n\nMenu contextuel : Idéal pour les commandes rarement utilisées. Faites un clic droit sur la page pour les activer.",
       "triggerModeTooltipFf": "Raccourcis locaux (par défaut) : Raccourcis flexibles.\n\nMenu contextuel : Idéal pour les commandes rarement utilisées. Faites un clic droit sur la page pour les activer.",
       "triggerModes": {

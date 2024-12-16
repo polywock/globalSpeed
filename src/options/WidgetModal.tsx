@@ -2,12 +2,12 @@ import { produce } from "immer"
 import { ModalBase } from "../comps/ModalBase"
 import { SliderMicro } from "src/comps/SliderMicro"
 import { useStateView } from "../hooks/useStateView"
-import { Tooltip } from "src/comps/Tooltip"
 import { Toggle } from "src/comps/Toggle"
 import "./WidgetModal.css"
 import { NumericInput } from "src/comps/NumericInput"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "src/defaults/constants"
 import { randomId } from "src/utils/helper"
+import { RegularTooltip } from "src/comps/RegularTooltip"
 
 type Props = {
   onClose: () => void 
@@ -27,7 +27,7 @@ export function WidgetModal(props: Props) {
       <div className="field">
         <div className="labelWithTooltip">
           <span>{gvar.gsm.options.flags.widget.showIcon}</span>
-          <Tooltip tooltip={gvar.gsm.options.flags.widget.showIconTooltip}/>
+          <RegularTooltip title={gvar.gsm.options.flags.widget.showIconTooltip} align="right"/>
         </div>
         <Toggle value={!!view.circleWidgetIcon} onChange={e => {
             setView({circleWidgetIcon: !view.circleWidgetIcon})
@@ -86,7 +86,7 @@ export function WidgetModal(props: Props) {
       <div className="field">
         <div className="labelWithTooltip">
           <span>{gvar.gsm.options.flags.widget.fullscreenOnly}</span>
-          <Tooltip tooltip={gvar.gsm.options.flags.widget.fullscreenOnlyTooltip}/>
+          <RegularTooltip title={gvar.gsm.options.flags.widget.fullscreenOnlyTooltip} align="right"/>
         </div>
         <Toggle value={init.fullscreenOnly} onChange={e => {
             setView({circleInit: produce(init, d => {

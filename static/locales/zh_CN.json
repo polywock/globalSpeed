@@ -209,7 +209,7 @@
       "toggleMode": "您可以使用本地热键或全局热键。",
       "toggleModeTooltip": "全局热键可以让您在使用其他应用程序时控制视频或音频。",
       "menuLabel": "菜单标签",
-      "triggerMode": "支持多种触发模式。",
+      "triggerMode": "支持多种触发模式",
       "triggerModeTooltip": "本地快捷键（默认）：灵活的快捷键。\n\n全局快捷键：当您想在使用其他应用程序时控制视频或音频时非常有用。\n\n上下文菜单：适用于不常用的命令。右键点击页面触发。",
       "triggerModeTooltipFf": "本地快捷键（默认）：灵活的快捷键。\n\n上下文菜单：适用于不常用的命令。右键点击页面触发。",
       "triggerModes": {

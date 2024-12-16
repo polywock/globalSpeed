@@ -55,8 +55,6 @@
       padding: 0px;
     }
 
-
-
     & > svg, & > .svg, .captureIcon {
       color: var(--icon-vibrant-color);
       margin-right: 10px;
@@ -83,19 +81,23 @@
       }
     }
 
-    & > .Tooltip {
+    & > .RegularTooltip, & > .warningTooltip {
       margin-left: 5px;
     }
 
     & > .adjustMode {
       margin-left: 11px;
-      padding: 3px;
-      background-color: var(--adjust-color);
-      color: var(--text-color);
-      border: 1px solid var(--ctx-border);
-      font-size: 0.8em;
-      border-radius: 5px;
+
+      & > div > button {
+        padding: 3px;
+        background-color: var(--adjust-color);
+        color: var(--text-color);
+        border: 1px solid var(--ctx-border);
+        font-size: 0.8em;
+        border-radius: 5px;
+      }
     }
+
 
     & > .support {
       & > *:nth-child(1n+2) {

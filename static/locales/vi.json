@@ -208,7 +208,7 @@
       "toggleMode": "Bạn có thể sử dụng các phím tắt cục bộ hoặc chung.",
       "toggleModeTooltip": "Các phím tắt chung rất hữu ích khi bạn muốn điều khiển video hoặc âm thanh trong khi sử dụng một chương trình khác.",
       "menuLabel": "Nhãn menu",
-      "triggerMode": "Hỗ trợ nhiều chế độ kích hoạt.",
+      "triggerMode": "Hỗ trợ nhiều chế độ kích hoạt",
       "triggerModeTooltip": "Phím tắt cục bộ (mặc định): Phím tắt linh hoạt.\n\nPhím tắt toàn cục: Hữu ích khi bạn muốn điều khiển video hoặc âm thanh khi sử dụng ứng dụng khác.\n\nMenu ngữ cảnh: Lý tưởng cho các lệnh ít được sử dụng. Nhấp chuột phải vào trang để kích hoạt.",
       "triggerModeTooltipFf": "Phím tắt cục bộ (mặc định): Phím tắt linh hoạt.\n\nMenu ngữ cảnh: Lý tưởng cho các lệnh ít được sử dụng. Nhấp chuột phải vào trang để kích hoạt.",
       "triggerModes": {

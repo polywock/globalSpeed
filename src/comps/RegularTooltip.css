@@ -1,0 +1,9 @@
+
+.RegularTooltip > div > span {
+    user-select: none;
+    padding: 0px 2px;
+    background-color: var(--fg-color);
+    color: var(--text-color);
+    border: 1px solid var(--ctx-border);
+    border-radius: 4px;
+}

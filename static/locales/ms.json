@@ -208,7 +208,7 @@
       "toggleMode": "Anda boleh menggunakan kekunci pintasan tempatan atau global.",
       "toggleModeTooltip": "Pintasan global berguna apabila anda mahu mengawal video atau audio semasa menggunakan program lain.",
       "menuLabel": "Label menu",
-      "triggerMode": "Beberapa mod pencetus disokong.",
+      "triggerMode": "Beberapa mod pencetus disokong",
       "triggerModeTooltip": "Pintasan tempatan (lalai): Kekunci pintasan fleksibel.\n\nPintasan global: Berguna apabila anda mahu mengawal video atau audio semasa menggunakan aplikasi lain.\n\nMenu konteks: Ideal untuk arahan yang jarang digunakan. Klik kanan pada halaman untuk mencetuskannya.",
       "triggerModeTooltipFf": "Pintasan tempatan (lalai): Kekunci pintasan fleksibel.\n\nMenu konteks: Ideal untuk arahan yang jarang digunakan. Klik kanan pada halaman untuk mencetuskannya.",
       "triggerModes": {

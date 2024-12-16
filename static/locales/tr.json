@@ -208,7 +208,7 @@
       "toggleMode": "Yerel veya genel kısayol tuşlarını kullanabilirsiniz.",
       "toggleModeTooltip": "Genel kısayollar, başka bir program kullanırken video veya sesi kontrol etmek istediğinizde yararlıdır.",
       "menuLabel": "Menü etiketi",
-      "triggerMode": "Çoklu tetikleme modları desteklenmektedir.",
+      "triggerMode": "Çoklu tetikleme modları desteklenmektedir",
       "triggerModeTooltip": "Yerel kısayollar (varsayılan): Esnek kısayol tuşları.\n\nGlobal kısayollar: Başka bir uygulama kullanırken video veya sesi kontrol etmek istediğinizde kullanışlıdır.\n\nBağlam menüsü: Nadiren kullanılan komutlar için idealdir. Tetiklemek için sayfaya sağ tıklayın.",
       "triggerModeTooltipFf": "Yerel kısayollar (varsayılan): Esnek kısayol tuşları.\n\nBağlam menüsü: Nadiren kullanılan komutlar için idealdir. Tetiklemek için sayfaya sağ tıklayın.",
       "triggerModes": {

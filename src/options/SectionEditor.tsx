@@ -3,7 +3,6 @@ import { AdjustMode, Keybind, StateView } from "../types"
 import { areYouSure, isFirefox, moveItem, randomId } from "../utils/helper"
 import { commandInfos, CommandName, getDefaultKeybinds, availableCommandNames } from "../defaults/commands"
 import { KeybindControl } from "./keybindControl"
-import { Tooltip } from "../comps/Tooltip"
 import { CommandWarning } from "./CommandWarning"
 import { SetView, useStateView } from "../hooks/useStateView"
 import { FaFile, FaGlobe } from "react-icons/fa"
@@ -14,6 +13,9 @@ import { requestSyncContextMenu } from "src/utils/configUtils"
 import { ListItem } from "./ListItem"
 import { List } from "./List"
 import "./SectionEditor.css"
+import { RegularTooltip } from "src/comps/RegularTooltip"
+import { NewTooltip } from "src/comps/NewTooltip"
+import { GrTooltip } from "react-icons/gr"
 
 export function SectionEditor(props: {}) {
   const [view, setView] = useStateView({keybinds: true, keybindsUrlCondition: true, hideIndicator: true, virtualInput: true, freshKeybinds: true})
@@ -38,18 +40,15 @@ export function SectionEditor(props: {}) {
 
 function EditorDescription(props: {hasKeybinds: boolean}) {
   return (!props.hasKeybinds || isFirefox()) ? null : (
-    <div className="dict">
+    <div className="header">
       <div>
-        <div className="toggleMode">
           <FaFile className="icon active" size={"1.214rem"}/>
-          <div className="divider"></div>
+          <div></div>
           <FaGlobe className="icon active" size={"1.214rem"}/>
         </div>
-        <div>
-          <span>{gvar.gsm.options.editor.triggerMode}</span>
-          <Tooltip pass={{style: {marginLeft: "10px"}}} tooltip={gvar.gsm.options.editor[isFirefox() ? 'triggerModeTooltipFf' : 'triggerModeTooltip']}/>
-        </div>
-      </div>
+        <NewTooltip rawOffsetX={60} offset={30} align="top" title={gvar.gsm.options.editor[isFirefox() ? 'triggerModeTooltipFf' : 'triggerModeTooltip']}>
+            <span className="modeSpan">{gvar.gsm.options.editor.triggerMode}<GrTooltip/></span>
+        </NewTooltip>
     </div>
   )
 }

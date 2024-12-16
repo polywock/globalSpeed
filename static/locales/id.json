@@ -207,7 +207,7 @@
       "toggleMode": "Anda dapat menggunakan kunci pintas lokal atau global.",
       "toggleModeTooltip": "Pintasan global berguna saat Anda ingin mengontrol video atau audio saat menggunakan program lain.",
       "menuLabel": "Label menu",
-      "triggerMode": "Beberapa mode pemicu didukung.",
+      "triggerMode": "Beberapa mode pemicu didukung",
       "triggerModeTooltip": "Pintasan lokal (default): Kunci pintas fleksibel.\n\nPintasan global: Berguna saat Anda ingin mengontrol video atau audio saat menggunakan aplikasi lain.\n\nMenu konteks: Ideal untuk perintah yang jarang digunakan. Klik kanan pada halaman untuk memicunya.",
       "triggerModeTooltipFf": "Pintasan lokal (default): Kunci pintas fleksibel.\n\nMenu konteks: Ideal untuk perintah yang jarang digunakan. Klik kanan pada halaman untuk memicunya.",
       "triggerModes": {

@@ -207,7 +207,7 @@
       "toggleMode": "Puede usar teclas de acceso directo locales o globales.",
       "toggleModeTooltip": "Los accesos directos globales son útiles cuando desea controlar video o audio mientras usa otro programa.",
       "menuLabel": "Etiqueta del menú",
-      "triggerMode": "Se admiten varios modos de activación.",
+      "triggerMode": "Se admiten varios modos de activación",
       "triggerModeTooltip": "Atajos locales (por defecto): Teclas de acceso rápido flexibles.\n\nAtajos globales: Útiles cuando quieres controlar vídeo o audio mientras usas otra aplicación.\n\nMenú contextual: Ideal para comandos que se usan raramente. Haz clic derecho en la página para activarlos.",
       "triggerModeTooltipFf": "Atajos locales (por defecto): Teclas de acceso rápido flexibles.\n\nMenú contextual: Ideal para comandos que se usan raramente. Haz clic derecho en la página para activarlos.",
       "triggerModes": {

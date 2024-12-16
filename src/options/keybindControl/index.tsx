@@ -17,6 +17,7 @@ import { DurationSelect, NameArea, makeLabelWithTooltip } from "./NameArea"
 import { Minmax } from "src/comps/Minmax"
 import { KebabList, KebabListProps } from "../KebabList"
 import "./styles.css"
+import { NewTooltip } from "src/comps/NewTooltip"
 
 
 export type KeybindControlProps = {
@@ -155,26 +156,28 @@ export const KeybindControl = (props: KeybindControlProps) => {
       <NameArea command={command} onChange={props.onChange} value={value} hasSpecial={hasSpecial} reference={ref} />
 
       {/* Shortcut mode */}
-      <button className={`icon`} onClick={e => {
-        let options = value.trigger === 2 ? [0, 1, 2] : (
-          value.trigger === 1 ? [2, 0, 1] : [1, 2, 0]
-        )
-        if (value.command === "afxCapture") options.splice(options.indexOf(0), 1)
-        if (isFirefox()) options.splice(options.indexOf(1), 1)
+      <NewTooltip align="top" title={gvar.gsm.options.editor.triggerModes[value.trigger || Trigger.LOCAL]}>
+        <button className={`buttonTooltip icon`} onClick={e => {
+          alert("WOO")
+          let options = value.trigger === 2 ? [0, 1, 2] : (
+            value.trigger === 1 ? [2, 0, 1] : [1, 2, 0]
+          )
+          if (value.command === "afxCapture") options.splice(options.indexOf(0), 1)
+          if (isFirefox()) options.splice(options.indexOf(1), 1)
 
-          let newest = options.shift() as Trigger
+            let newest = options.shift() as Trigger
 
-          props.onChange(value.id, produce(value, d => {
-            d.trigger = newest
-          }))
+            props.onChange(value.id, produce(value, d => {
+              d.trigger = newest
+            }))
 
-        feedbackText(gvar.gsm.options.editor.triggerModes[newest], domRectGetOffset((e.currentTarget as HTMLButtonElement).getBoundingClientRect(), -40, 60, true))
-
-        requestSyncContextMenu()
-      }}>{value.trigger === Trigger.GLOBAL ? <FaGlobe className="tr115"/> : (
-        value.trigger === Trigger.CONTEXT ? <FaBars className="tr115"/> : <FaFile className="tr115" />
-      )}</button>
-
+          requestSyncContextMenu()
+        }}>
+          {value.trigger === Trigger.GLOBAL ? <FaGlobe className="tr115"/> : (
+            value.trigger === Trigger.CONTEXT ? <FaBars className="tr115"/> : <FaFile className="tr115" />
+          )}
+        </button>
+      </NewTooltip>
       <div className="talues">
         <TriggerValues value={value} onChange={props.onChange} virtualInput={props.virtualInput} />
         {(value.allowAlt && adjustMode === AdjustMode.CYCLE) && <TriggerValues value={value} onChange={props.onChange} virtualInput={props.virtualInput} isAlt={true} />}

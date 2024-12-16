@@ -208,7 +208,7 @@
       "toggleMode": "Puoi usare scorciatoie locali o globali.",
       "toggleModeTooltip": "Le scorciatoie globali sono utili quando vuoi controllare video o audio mentre stai usando un altro programma.",
       "menuLabel": "Etichetta del menu",
-      "triggerMode": "Sono supportate molteplici modalità di attivazione.",
+      "triggerMode": "Sono supportate molteplici modalità di attivazione",
       "triggerModeTooltip": "Scorciatoie locali (predefinite): Tasti di scelta rapida flessibili.\n\nScorciatoie globali: Utili quando vuoi controllare video o audio mentre usi un'altra applicazione.\n\nMenu contestuale: Ideale per comandi usati raramente. Clicca con il tasto destro sulla pagina per attivarli.",
       "triggerModeTooltipFf": "Scorciatoie locali (predefinite): Tasti di scelta rapida flessibili.\n\nMenu contestuale: Ideale per comandi usati raramente. Clicca con il tasto destro sulla pagina per attivarli.",
       "triggerModes": {
