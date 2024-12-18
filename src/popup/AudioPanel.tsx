@@ -9,8 +9,8 @@ import { getDefaultAudioFx } from "../defaults";
 import { ReverseButton } from "./ReverseButton";
 import { produce } from "immer";
 import { initTabCapture, releaseTabCapture } from "src/background/utils/tabCapture";
-import "./AudioPanel.css"
 import { Tooltip } from "src/comps/Tooltip";
+import "./AudioPanel.css"
 
 export function AudioPanel(props: {}) {
   const [view, setView] = useStateView({audioFx: true, audioFxAlt: true, monoOutput: true, audioPan: true})

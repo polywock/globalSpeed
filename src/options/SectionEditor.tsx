@@ -12,10 +12,9 @@ import { getDefaultURLCondition } from "../defaults"
 import { requestSyncContextMenu } from "src/utils/configUtils"
 import { ListItem } from "./ListItem"
 import { List } from "./List"
-import "./SectionEditor.css"
-import { RegularTooltip } from "src/comps/RegularTooltip"
 import { Tooltip } from "src/comps/Tooltip"
 import { GrTooltip } from "react-icons/gr"
+import "./SectionEditor.css"
 
 export function SectionEditor(props: {}) {
   const [view, setView] = useStateView({keybinds: true, keybindsUrlCondition: true, hideIndicator: true, virtualInput: true, freshKeybinds: true})

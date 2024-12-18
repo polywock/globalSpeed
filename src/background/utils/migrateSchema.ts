@@ -1,4 +1,4 @@
-import { AdjustMode, Context, Duration, InitialContext, Keybind, State, Trigger, URLCondition, URLConditionPart, URLRule } from "../../types"
+import { AdjustMode, Context, Duration, Keybind, State, Trigger, URLCondition, URLConditionPart, URLRule } from "../../types"
 import { getDefaultState } from "../../defaults"
 import { isFirefox, randomId } from "../../utils/helper"
 import { availableCommandNames } from "src/defaults/commands"

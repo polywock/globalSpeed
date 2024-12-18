@@ -4,8 +4,8 @@ import { SliderMicro } from "src/comps/SliderMicro"
 import { useStateView } from "../hooks/useStateView"
 import { Reset } from "src/comps/Reset"
 import { Keybind } from "src/types"
-import "./CinemaModal.css"
 import { NumericInput } from "src/comps/NumericInput"
+import "./CinemaModal.css"
 
 type Props = {
   value: Keybind,

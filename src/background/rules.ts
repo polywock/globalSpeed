@@ -2,7 +2,7 @@ import { getDefaultFx } from "src/defaults"
 import { AnyDict, CONTEXT_KEYS, State, URLRule, URLStrictness } from "src/types"
 import { isUserScriptsAvailable } from "src/utils/browserUtils"
 import { testURL } from "src/utils/configUtils"
-import { isFirefox, listToDict, pickObject, randomId, timeout } from "src/utils/helper"
+import { isFirefox, listToDict, timeout } from "src/utils/helper"
 
 type UrlRuleBehavior = [URLRule["type"][], (isfake: boolean, tabId: number, rule: URLRule, override: AnyDict, deets: Deets) => void]
 

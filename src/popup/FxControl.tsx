@@ -8,8 +8,8 @@ import { FaPowerOff, FaExchangeAlt } from "react-icons/fa"
 import { getDefaultFx } from "../defaults"
 import { Fx } from "../types"
 import { produce } from "immer"
-import "./FxControl.css"
 import { RegularTooltip } from "src/comps/RegularTooltip"
+import "./FxControl.css"
 
 type FxControlProps = {
   live?: boolean,

@@ -1,6 +1,6 @@
 import { NumericInput } from "./NumericInput"
-import "./Minmax.css"
 import { domRectGetOffset, feedbackText } from "src/utils/helper"
+import "./Minmax.css"
 
 type MinmaxProps = {
   onChange: (min: number, max: number) => void 

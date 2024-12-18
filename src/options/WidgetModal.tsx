@@ -3,11 +3,11 @@ import { ModalBase } from "../comps/ModalBase"
 import { SliderMicro } from "src/comps/SliderMicro"
 import { useStateView } from "../hooks/useStateView"
 import { Toggle } from "src/comps/Toggle"
-import "./WidgetModal.css"
 import { NumericInput } from "src/comps/NumericInput"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "src/defaults/constants"
 import { randomId } from "src/utils/helper"
 import { RegularTooltip } from "src/comps/RegularTooltip"
+import "./WidgetModal.css"
 
 type Props = {
   onClose: () => void 

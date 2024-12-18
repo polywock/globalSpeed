@@ -1,4 +1,4 @@
-import { isEdge, timeout } from "./helper"
+import { timeout } from "./helper"
 
 export async function queryTabsRepeat(queryInfo: chrome.tabs.QueryInfo, attempts = 5, delay = 100): Promise<chrome.tabs.Tab[]> {
   for (let i = 0; i < Math.max(0, attempts ?? 3); i++) {

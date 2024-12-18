@@ -5,8 +5,8 @@ import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { GoX } from "react-icons/go"
 import { getDefaultURLConditionPart } from "../defaults"
 import { findRemoveFromArray } from "../utils/helper"
-import "./URLModal.css"
 import { extractURLPartValueKey } from "src/utils/configUtils"
+import "./URLModal.css"
 
 type Props = {
   onClose: () => void,

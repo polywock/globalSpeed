@@ -1,6 +1,6 @@
 
 import * as React from "react"
-import { assertType } from "src/utils/helper"
+
 
 type SvgPropsBase = {
   width?: React.SVGAttributes<SVGElement>["width"],

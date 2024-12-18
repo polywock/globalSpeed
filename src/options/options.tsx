@@ -6,12 +6,10 @@ import { SectionRules } from "./SectionRules"
 import { ErrorFallback } from "../comps/ErrorFallback"
 import { useThemeSync } from "src/hooks/useThemeSync"
 import { loadGsm } from "src/utils/gsm"
-import "./options.css"
-import { requestCreateTab, requestTabInfo } from "src/utils/browserUtils"
+import { requestTabInfo } from "src/utils/browserUtils"
 import type { Indicator } from "src/contentScript/isolated/utils/Indicator"
-import { useStateView } from "src/hooks/useStateView"
-import { isEdge, isFirefox, isMobile } from "src/utils/helper"
-import { GoX } from "react-icons/go"
+import { isMobile } from "src/utils/helper"
+import "./options.css"
 
 declare global {
   interface Window {

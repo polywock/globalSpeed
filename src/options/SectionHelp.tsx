@@ -3,11 +3,11 @@ import { MdContentCopy, MdContentPaste } from "react-icons/md"
 import { dumpConfig, fetchView, pushView, restoreConfig } from "../utils/state"
 import { State } from "../types"
 import { requestCreateTab } from "../utils/browserUtils"
-import { isFirefox, areYouSure, feedbackText, domRectGetOffset } from "../utils/helper"
+import { isFirefox, areYouSure } from "../utils/helper"
 import { getDefaultState } from "src/defaults"
 import { migrateSchema } from "src/background/utils/migrateSchema"
-import "./SectionHelp.css"
 import { Tooltip } from "src/comps/Tooltip"
+import "./SectionHelp.css"
 
 
 export function SectionHelp(props: {}) {

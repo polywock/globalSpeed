@@ -5,9 +5,9 @@ import { INDICATOR_INIT } from "../defaults"
 import { SetView } from "src/hooks/useStateView"
 import { Reset } from "src/comps/Reset"
 import { SliderMicro } from "src/comps/SliderMicro"
-import "./IndicatorModal.css"
 import { Indicator } from "src/contentScript/isolated/utils/Indicator"
 import { randomId } from "src/utils/helper"
+import "./IndicatorModal.css"
 
 type Props = {
   view: StateView, 

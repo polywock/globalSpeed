@@ -1,7 +1,7 @@
 import { Component, ReactElement } from "react"
 import { restoreConfig } from "../utils/state"
-import "./ErrorFallback.css"
 import { getDefaultState } from "src/defaults"
+import "./ErrorFallback.css"
 
 export class ErrorFallback extends Component<{children: ReactElement}, {hasError: boolean}> {
   state = {hasError: false}

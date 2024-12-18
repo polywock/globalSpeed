@@ -1,4 +1,4 @@
-import { assertType, between, isFirefox, randomId } from "../../utils/helper";
+import { assertType, between, randomId } from "../../utils/helper";
 import { conformSpeed } from "../../utils/configUtils";
 import { applyMediaEvent, MediaEvent } from "./utils/applyMediaEvent";
 import { generateScopeState } from "./utils/genMediaInfo";

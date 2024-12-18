@@ -1,7 +1,6 @@
-import { useState, useRef, MutableRefObject, memo } from "react"
+import { useState, useRef, MutableRefObject } from "react"
 import { useStateView } from "../hooks/useStateView"
 import { URLRule, URLStrictness } from "../types"
-import { Gear } from "src/comps/svgs"
 import { getDefaultURLRule, getDefaultFx, getDefaultURLCondition } from "../defaults"
 import { NumericInput } from "../comps/NumericInput"
 import { FxControl } from "../popup/FxControl"
@@ -9,13 +8,13 @@ import { isEdge, isFirefox, moveItem, randomId } from "../utils/helper"
 import { ModalText } from "../comps/ModalText"
 import { URLModal } from "./URLModal"
 import { produce } from "immer"
-import "./SectionRules.css"
 import { List } from "./List"
 import { ListItem } from "./ListItem"
 import { KebabList, KebabListProps } from "./KebabList"
 import { makeLabelWithTooltip } from "./keybindControl/NameArea"
 import { isUserScriptsAvailable } from "src/utils/browserUtils"
 import { GearIcon } from "src/comps/GearIcon"
+import "./SectionRules.css"
 
 
 export function SectionRules(props: {}) {

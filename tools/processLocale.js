@@ -1,5 +1,5 @@
 
-/// <reference types="@types/node" />
+// /// <reference types="@types/node" />
 
 const { readdir, readFile, writeFile, mkdir } = require("fs/promises")
 const { join, parse } = require("path")
