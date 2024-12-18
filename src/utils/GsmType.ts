@@ -24,6 +24,7 @@ export type Gsm = {
     create: string,
     reset: string,
     duplicate: string,
+    delete: string,
     pinTooltip: string,
     mergeBoth: string,
     min: string,
@@ -60,14 +61,17 @@ export type Gsm = {
     implode: string,
     rotate: string,
     rows: string,
-    copy: string,
-    paste: string,
     replaceWith: string,
     invalidNumber: string,
     openPage: string,
     seconds: string,
     percent: string,
-    frames: string
+    frames: string,
+    more: string,
+    assign: string,
+    none: string,
+    edit: string,
+    customize: string
   },
   placer: {
     windowBounds: {
@@ -265,7 +269,12 @@ export type Gsm = {
       issueDirective: string,
       export: string,
       import: string,
-      areYouSure: string
+      areYouSure: string,
+      copy: string,
+      copied: string,
+      paste: string,
+      exportTooltip: string,
+      importTooltip: string
     }
   },
   pageDraw: {

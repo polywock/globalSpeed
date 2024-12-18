@@ -96,7 +96,7 @@ export function Header(props: HeaderProps) {
       ) : <div className="noPadding"/>}
 
       {/* Options page */}
-      <div title="open options page." onClick={async e => {
+      <div  onClick={async e => {
         await chrome.runtime.openOptionsPage()
         if (isFirefox()) window.close()
       }}>
@@ -104,7 +104,7 @@ export function Header(props: HeaderProps) {
       </div>
 
       {/* Github */}
-      <div title="open github page." onClick={e => {
+      <div onClick={e => {
         window.open("https://github.com/polywock/globalSpeed", "_blank")
       }}>
         <FaGithub size="1.28rem"/>

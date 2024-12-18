@@ -59,14 +59,18 @@
     "implode": "Имплозия",
     "rotate": "Вращать",
     "rows": "Строки",
-    "copy": "Копировать",
-    "paste": "Вставить",
     "replaceWith": "Заменить $1 на?",
     "invalidNumber": "Неправильное число",
     "openPage": "Открыть страницу",
     "seconds": "Секунды",
     "percent": "Проценты",
-    "frames": "Кадры"
+    "frames": "Кадры",
+    "delete": "Удалить",
+    "more": "Больше",
+    "assign": "Назначить",
+    "none": "Нет",
+    "edit": "Редактировать",
+    "customize": "Настроить"
   },
   "placer": {
     "windowBounds": {
@@ -263,7 +267,12 @@
       "issueDirective": "Оставьте отзыв о Github.",
       "export": "Экспорт",
       "import": "Импорт",
-      "areYouSure": "Ты уверен?"
+      "areYouSure": "Ты уверен?",
+      "copy": "Копировать настройки",
+      "paste": "Вставить настройки",
+      "exportTooltip": "Экспорт настроек",
+      "importTooltip": "Импорт настроек",
+      "copied": "Скопировано!"
     }
   },
   "pageDraw": {

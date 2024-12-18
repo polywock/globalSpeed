@@ -1,7 +1,7 @@
 import { VscGripper } from "react-icons/vsc"
 import { useRef, MutableRefObject, useEffect } from "react"
 import "./MoveDrag.css"
-import { NewTooltip } from "./NewTooltip"
+import { Tooltip } from "./Tooltip"
 
 type MoveDragProps = {
   onMove: (newIndex: number) => void

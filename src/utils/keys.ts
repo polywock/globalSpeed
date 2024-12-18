@@ -12,7 +12,7 @@ export type Hotkey = FullHotkey | string
 
 export function formatHotkey(hot: Hotkey) {
   if (!hot) {
-    return "NoKey"
+    return gvar.gsm?.token.none || "None"
   }
   if (typeof(hot) === "string") {
     return hot 

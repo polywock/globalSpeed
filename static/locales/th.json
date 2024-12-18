@@ -59,14 +59,18 @@
     "implode": "หดตัว",
     "rotate": "หมุน",
     "rows": "แถว",
-    "copy": "คัดลอก",
-    "paste": "วาง",
     "replaceWith": "แทนที่ $1 ด้วย?",
     "invalidNumber": "ตัวเลขไม่ถูกต้อง",
     "openPage": "เปิดหน้า",
     "seconds": "วินาที",
     "percent": "เปอร์เซ็นต์",
-    "frames": "เฟรม"
+    "frames": "เฟรม",
+    "delete": "ลบ",
+    "more": "เพิ่มเติม",
+    "assign": "กำหนด",
+    "none": "ไม่มี",
+    "edit": "แก้ไข",
+    "customize": "ปรับแต่ง"
   },
   "placer": {
     "windowBounds": {
@@ -264,7 +268,12 @@
       "issueDirective": "ส่งข้อเสนอแนะบน Github",
       "export": "ส่งออก",
       "import": "นำเข้า",
-      "areYouSure": "คุณแน่ใจหรือไม่?"
+      "areYouSure": "คุณแน่ใจหรือไม่?",
+      "copy": "คัดลอกการตั้งค่า",
+      "paste": "วางการตั้งค่า",
+      "exportTooltip": "ส่งออกการตั้งค่า",
+      "importTooltip": "นำเข้าการตั้งค่า",
+      "copied": "คัดลอกแล้ว!"
     }
   },
   "pageDraw": {

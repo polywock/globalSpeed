@@ -59,14 +59,18 @@
     "implode": "内部崩壊",
     "rotate": "回転",
     "rows": "行",
-    "copy": "コピー",
-    "paste": "ペースト",
     "replaceWith": "$1を何に置き換えますか？",
     "invalidNumber": "無効な数字",
     "openPage": "ページを開く",
     "seconds": "秒",
     "percent": "%",
-    "frames": "フレーム"
+    "frames": "フレーム",
+    "delete": "削除",
+    "more": "もっと",
+    "assign": "割り当て",
+    "none": "なし",
+    "edit": "編集",
+    "customize": "カスタマイズ"
   },
   "placer": {
     "windowBounds": {
@@ -263,7 +267,12 @@
       "issueDirective": "Githubにフィードバックを提供します。",
       "export": "エクスポート",
       "import": "インポート",
-      "areYouSure": "本気ですか？"
+      "areYouSure": "本気ですか？",
+      "copy": "設定をコピー",
+      "paste": "設定を貼り付け",
+      "exportTooltip": "設定をエクスポート",
+      "importTooltip": "設定をインポート",
+      "copied": "コピーしました！"
     }
   },
   "pageDraw": {

@@ -23,9 +23,10 @@ import { PiArrowArcRightFill } from "react-icons/pi"
 import { CinemaModal } from "../CinemaModal"
 import { useState } from "react"
 import { IoEllipsisVertical, IoHelp } from "react-icons/io5"
-import { NewTooltip } from "src/comps/NewTooltip"
+import { Tooltip, TooltipProps } from "src/comps/Tooltip"
 import { IoMdHelpCircleOutline } from "react-icons/io"
 import { RegularTooltip } from "src/comps/RegularTooltip"
+import { GearIcon } from "src/comps/GearIcon"
 
 const invertableKeys = new Set(["fastSeek", "autoPause", "skipPauseSmall", "pauseWhileScrubbing", "relativeToSpeed", "wraparound", "itcWraparound", "showNetDuration", "seekOnce", "allowAlt", "cycleNoWrap", "noHold", "ignoreNavigate", "skipToggleSpeed", "alwaysOn"])
 const memMap = new Map<string, any>()
@@ -145,14 +146,14 @@ export function NameArea(props: NameAreaProps) {
 
             {/* Capture shortcut warning */}
             {tabCaptureWarning && (
-                <NewTooltip allowClick={true} withClass="warningTooltip" align="top" title={replaceArgs(gvar.gsm.warnings.captureRequired, [`[ ${gvar.gsm.command.afxCapture} ]`])}>
+                <Tooltip allowClick={true} withClass="warningTooltip" align="top" title={replaceArgs(gvar.gsm.warnings.captureRequired, [`[ ${gvar.gsm.command.afxCapture} ]`])}>
                     <MdWarning size="1.35rem" style={{ color: "#ff8888" }} />
-                </NewTooltip>
+                </Tooltip>
             )}
             
 
             {/* cycle adjustMode */}
-            {command.valueType === "adjustMode" && <NewTooltip  withClass="adjustMode" align="top" title={gvar.gsm.options.editor.adjustModes[value.adjustMode || AdjustMode.SET]}><button onClick={e => {
+            {command.valueType === "adjustMode" && <Tooltip  withClass="adjustMode" align="top" title={gvar.gsm.options.editor.adjustModes[value.adjustMode || AdjustMode.SET]}><button onClick={e => {
 
                 props.onChange(value.id, produce(value, d => {
                     saveToMem(value, adjustMode)
@@ -172,7 +173,7 @@ export function NameArea(props: NameAreaProps) {
                     <FaMousePointer size="1em"/>
                     <FaPlus size="1em" />
                 </>}
-            </button></NewTooltip>}
+            </button></Tooltip>}
             
 
             {/* Tooltip */}
@@ -206,11 +207,7 @@ export function NameArea(props: NameAreaProps) {
             {/* URL mode */}
             <UrlMode value={value} onChange={props.onChange} />
             {value.command === "intoPopup" && (
-                <button className="icon gear interactive" onClick={() => {
-                    chrome.windows.create({url: chrome.runtime.getURL(`placer.html?id=${value.id}`), type: "popup", ...(value.valuePopupRect ?? getPopupSize())})
-                }}>
-                    <Gear size="1.57rem"/>
-                </button>
+                <GearIcon onClick={() => chrome.windows.create({url: chrome.runtime.getURL(`placer.html?id=${value.id}`), type: "popup", ...(value.valuePopupRect ?? getPopupSize())})}/>
             )}
         </div>
     )
@@ -286,8 +283,8 @@ function ensureSpeedList(list: KebabListProps["list"], handlers: KebabListProps[
     })
 }
 
-export function makeLabelWithTooltip(name: string, tooltip: string) {
-    return <>{name}<RegularTooltip offset={30} align="right" title={tooltip}/></>
+export function makeLabelWithTooltip(name: string, tooltip: string, align: TooltipProps['align'] = 'right') {
+    return <>{name}<RegularTooltip offset={30} align={align} title={tooltip}/></>
 }
 
 type FilterSelectProps = {

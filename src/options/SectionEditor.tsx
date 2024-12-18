@@ -14,7 +14,7 @@ import { ListItem } from "./ListItem"
 import { List } from "./List"
 import "./SectionEditor.css"
 import { RegularTooltip } from "src/comps/RegularTooltip"
-import { NewTooltip } from "src/comps/NewTooltip"
+import { Tooltip } from "src/comps/Tooltip"
 import { GrTooltip } from "react-icons/gr"
 
 export function SectionEditor(props: {}) {
@@ -46,9 +46,9 @@ function EditorDescription(props: {hasKeybinds: boolean}) {
           <div></div>
           <FaGlobe className="icon active" size={"1.214rem"}/>
         </div>
-        <NewTooltip rawOffsetX={60} offset={30} align="top" title={gvar.gsm.options.editor[isFirefox() ? 'triggerModeTooltipFf' : 'triggerModeTooltip']}>
+        <Tooltip rawOffsetX={60} offset={30} align="top" title={gvar.gsm.options.editor[isFirefox() ? 'triggerModeTooltipFf' : 'triggerModeTooltip']}>
             <span className="modeSpan">{gvar.gsm.options.editor.triggerMode}<GrTooltip/></span>
-        </NewTooltip>
+        </Tooltip>
     </div>
   )
 }

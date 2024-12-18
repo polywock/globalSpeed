@@ -59,14 +59,18 @@
     "implode": "Імплозія",
     "rotate": "Обертати",
     "rows": "Рядки",
-    "copy": "Копіювати",
-    "paste": "Вставити",
     "replaceWith": "Замінити $1 на?",
     "invalidNumber": "Невірне число",
     "openPage": "Відкрити сторінку",
     "seconds": "Секунди",
     "percent": "Відсотки",
-    "frames": "Кадри"
+    "frames": "Кадри",
+    "delete": "Видалити",
+    "more": "Більше",
+    "assign": "Призначити",
+    "none": "Жоден",
+    "edit": "Редагувати",
+    "customize": "Налаштувати"
   },
   "placer": {
     "windowBounds": {
@@ -264,7 +268,12 @@
       "issueDirective": "Залиште відгук на Github.",
       "export": "Експорт",
       "import": "Імпорт",
-      "areYouSure": "Ви впевнені?"
+      "areYouSure": "Ви впевнені?",
+      "copy": "Копіювати налаштування",
+      "paste": "Вставити налаштування",
+      "exportTooltip": "Експортувати налаштування",
+      "importTooltip": "Імпортувати налаштування",
+      "copied": "Скопійовано!"
     }
   },
   "pageDraw": {

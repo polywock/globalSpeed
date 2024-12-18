@@ -30,11 +30,6 @@
       grid-template-columns: 120px max-content;
     }
 
-    & .showMore {
-      font-size: 1.5rem;
-      font-family: monospace;
-    }
-
     &.indentFloat > .fieldValue > .float {
       left: 50px;
       top: -4px;
@@ -95,8 +90,11 @@
     }
   }
 
-  & > .showMore {
+  & > .showMoreTooltip {
     margin-top: 20px;
-    font-family: monospace;
+
+    & > div > button {
+      font-family: monospace;
+    }
   }
 }

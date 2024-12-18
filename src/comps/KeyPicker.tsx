@@ -49,8 +49,9 @@ export const KeyPicker = (props: KeyPickerProps) => {
         enterState && setEnterState(false)
         props.onChange?.(null)
       }}
+      style={{fontFamily: enterState ? 'monospace' : null}}
       className="KeyPicker">
-      {enterState ? "..." : formatHotkey(props.value)}
+      {enterState ? '...' : formatHotkey(props.value)}
     </div>
   )
 }

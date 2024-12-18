@@ -59,14 +59,18 @@
     "implode": "Imploduj",
     "rotate": "Obróć",
     "rows": "Wiersze",
-    "copy": "Kopiuj",
-    "paste": "Wklej",
     "replaceWith": "Zastąpić $1?",
     "invalidNumber": "Nieprawidłowy numer",
     "openPage": "Otwórz stronę",
     "seconds": "Sekundy",
     "percent": "Procent",
-    "frames": "Klatki"
+    "frames": "Klatki",
+    "delete": "Usuń",
+    "more": "Więcej",
+    "assign": "Przypisz",
+    "none": "Brak",
+    "edit": "Edytuj",
+    "customize": "Dostosuj"
   },
   "placer": {
     "windowBounds": {
@@ -264,7 +268,12 @@
       "issueDirective": "Prześlij opinię na Github.",
       "export": "Eksportuj",
       "import": "Importuj",
-      "areYouSure": "Czy jesteś pewien?"
+      "areYouSure": "Czy jesteś pewien?",
+      "copy": "Skopiuj ustawienia",
+      "paste": "Wklej ustawienia",
+      "exportTooltip": "Eksportuj ustawienia",
+      "importTooltip": "Importuj ustawienia",
+      "copied": "Skopiowano!"
     }
   },
   "pageDraw": {

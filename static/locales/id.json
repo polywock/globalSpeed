@@ -59,14 +59,18 @@
     "implode": "Meledak ke dalam",
     "rotate": "Putar",
     "rows": "Baris",
-    "copy": "Salin",
-    "paste": "Tempel",
     "replaceWith": "Ganti $1 dengan?",
     "invalidNumber": "Nomor tidak valid",
     "openPage": "Buka halaman",
     "seconds": "Detik",
     "percent": "Persen",
-    "frames": "Bingkai"
+    "frames": "Bingkai",
+    "delete": "Hapus",
+    "more": "Lebih",
+    "assign": "Tetapkan",
+    "none": "Tidak ada",
+    "edit": "Edit",
+    "customize": "Sesuaikan"
   },
   "placer": {
     "windowBounds": {
@@ -263,7 +267,12 @@
       "issueDirective": "Berikan umpan balik di Github.",
       "export": "Ekspor",
       "import": "Impor",
-      "areYouSure": "Apakah Anda yakin?"
+      "areYouSure": "Apakah Anda yakin?",
+      "copy": "Salin pengaturan",
+      "paste": "Tempel pengaturan",
+      "exportTooltip": "Ekspor pengaturan",
+      "importTooltip": "Impor pengaturan",
+      "copied": "Disalin!"
     }
   },
   "pageDraw": {

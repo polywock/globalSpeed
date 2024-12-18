@@ -60,14 +60,18 @@
     "implode": "내부 붕괴",
     "rotate": "회전",
     "rows": "행",
-    "copy": "복사",
-    "paste": "붙여 넣기",
     "replaceWith": "$1을(를) 어떤 값으로 교체하시겠습니까?",
     "invalidNumber": "잘못된 숫자",
     "openPage": "페이지 열기",
     "seconds": "초",
     "percent": "%",
-    "frames": "프레임"
+    "frames": "프레임",
+    "delete": "삭제",
+    "more": "더보기",
+    "assign": "할당",
+    "none": "없음",
+    "edit": "편집",
+    "customize": "사용자 정의"
   },
   "placer": {
     "windowBounds": {
@@ -264,7 +268,12 @@
       "issueDirective": "Github에 대한 피드백을 제공하십시오.",
       "export": "내보내기",
       "import": "가져오기",
-      "areYouSure": "확실합니까?"
+      "areYouSure": "확실합니까?",
+      "copy": "설정 복사",
+      "paste": "설정 붙여넣기",
+      "exportTooltip": "설정 내보내기",
+      "importTooltip": "설정 가져오기",
+      "copied": "복사됨!"
     }
   },
   "pageDraw": {

@@ -1,8 +1,8 @@
 
-import { useRef, useState } from "react"
-import "./NewTooltip.css"
+import { useRef } from "react"
 import { clamp } from "src/utils/helper"
 import clsx from "clsx"
+import "./Tooltip.css"
 
 type Env = {
     isActive?: boolean,
@@ -13,7 +13,7 @@ type Env = {
 
 let latestClear: Function
 
-export type NewTooltipProps = {
+export type TooltipProps = {
     children: React.ReactNode,
     title: string,
     align: 'top' | 'bottom' | 'left' | 'right',
@@ -27,7 +27,7 @@ export type NewTooltipProps = {
     timeout?: number
 }
 
-export function NewTooltip(props: NewTooltipProps) {
+export function Tooltip(props: TooltipProps) {
     const env = useRef({} as Env).current
     const mainRef = useRef<HTMLDivElement>()
     const tipRef = useRef<HTMLDivElement>()
@@ -40,39 +40,60 @@ export function NewTooltip(props: NewTooltipProps) {
         latestClear = clear 
 
         clearTimeout(env.timeoutId)
+        let align = props.align
         let offset = props.offset ?? 8 
         
         let mainBounds = mainRef.current.getBoundingClientRect()
         let maxWidth = props.maxWidth ?? 400
-        if (props.align === "right") {
+        if (align === "right") {
             maxWidth = clamp(0, window.innerWidth - mainBounds.x - offset - 40, maxWidth)
-        } else if (props.align === 'left') {
+        } else if (align === 'left') {
             maxWidth = clamp(0, mainBounds.x - offset - 15, maxWidth)
         }
-        maxWidth = clamp(0, window.innerWidth * 0.85, maxWidth)
-
+        maxWidth = clamp(0, window.innerWidth * 0.95, maxWidth)
+        console.log(maxWidth)
         tipRef.current.style.maxWidth = `${maxWidth}px`
 
         env.isActive = true 
         tipRef.current.style.display = "block"
         let tipBounds = tipRef.current.getBoundingClientRect()
+
+        
+        // Swap directions if need be.
+        let remainingTop = mainBounds.y - offset
+        let remainingBottom = window.innerHeight - (mainBounds.y + mainBounds.height + offset)
+        if (align === 'top') {
+            if (tipBounds.height > remainingTop && remainingBottom > remainingTop) {
+                align = 'bottom'
+            } 
+        } else if (align === 'bottom') {
+            if (tipBounds.height > remainingBottom && remainingTop > remainingBottom) {
+                align = 'top'
+            }
+        }
+
+
+
+        
         let x = 0
         let y = 0
         let fixX = false
         let fixY = false
-        if (props.align === 'top') {
+        if (align === 'top') {
             y = mainBounds.y - (tipBounds.height + offset)
             x = mainBounds.x + (mainBounds.width - tipBounds.width) * 0.5 
             fixX = true 
-        } else if (props.align === 'bottom') {
+        } else if (align === 'bottom') {
             y = (mainBounds.y + mainBounds.height) + offset
             x = mainBounds.x + (mainBounds.width - tipBounds.width) * 0.5 
             fixX = true 
-        } else if (props.align === 'left') {
+        } else if (align === 'left') {
             x = mainBounds.x - offset - tipBounds.width
             y = mainBounds.y + (mainBounds.height - tipBounds.height) * 0.5 
+            console.log(tipBounds.width, mainBounds.x, offset)
+            console.log(x, y)
             fixY = true 
-        } else if (props.align === 'right') {
+        } else if (align === 'right') {
             x = mainBounds.x + mainBounds.width + offset
             y = mainBounds.y + (mainBounds.height - tipBounds.height) * 0.5 
             fixY = true 
@@ -108,7 +129,7 @@ export function NewTooltip(props: NewTooltipProps) {
         clear()
     }
 
-    return <div ref={mainRef} className={clsx('NewTooltip', props.withClass)}>
+    return <div ref={mainRef} className={clsx('Tooltip', props.withClass)}>
         <div tabIndex={0} 
             onPointerEnter={handlePointerEnter} 
             onPointerLeave={handlePointerLeave} 

@@ -59,14 +59,18 @@
     "implode": "Sụp đổ",
     "rotate": "Xoay",
     "rows": "Hàng",
-    "copy": "Sao chép",
-    "paste": "Dán",
     "replaceWith": "Thay $1 bằng?",
     "invalidNumber": "Số không hợp lệ",
     "openPage": "Mở trang",
     "seconds": "Giây",
     "percent": "Phần trăm",
-    "frames": "Khung hình"
+    "frames": "Khung hình",
+    "delete": "Xóa",
+    "more": "Thêm",
+    "assign": "Gán",
+    "none": "Không có",
+    "edit": "Chỉnh sửa",
+    "customize": "Tùy chỉnh"
   },
   "placer": {
     "windowBounds": {
@@ -264,7 +268,12 @@
       "issueDirective": "Cung cấp phản hồi trên Github.",
       "export": "Xuất",
       "import": "Nhập",
-      "areYouSure": "Bạn có chắc?"
+      "areYouSure": "Bạn có chắc?",
+      "copy": "Sao chép cài đặt",
+      "paste": "Dán cài đặt",
+      "exportTooltip": "Xuất cài đặt",
+      "importTooltip": "Nhập cài đặt",
+      "copied": "Đã sao chép!"
     }
   },
   "pageDraw": {

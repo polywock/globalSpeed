@@ -19,6 +19,8 @@ import { GoX } from "react-icons/go"
 import { WidgetModal } from "./WidgetModal"
 import "./SectionFlags.css"
 import { RegularTooltip } from "src/comps/RegularTooltip"
+import { Tooltip } from "src/comps/Tooltip"
+import { GearIcon } from "src/comps/GearIcon"
 
 export function SectionFlags(props: {}) {
   const [showIndicatorModal, setShowIndicatorModal] = useState(false)
@@ -137,9 +139,7 @@ export function SectionFlags(props: {}) {
             }}/>
             <div className="float">
               {viewAlt.hideIndicator ? null : <>
-                <button className="icon gear interactive" onClick={e => setShowIndicatorModal(true)}>
-                   <Gear size="1.57rem"/>
-                </button>
+                <GearIcon onClick={() => setShowIndicatorModal(true)}/>
               </>}
             </div> 
           </div>
@@ -201,9 +201,7 @@ export function SectionFlags(props: {}) {
             }}/>
             <div className="float">
               {!view.ghostMode ? null : <>
-                <button className="icon gear interactive" onClick={e => setShowGhostModal(true)}>
-                   <Gear size="1.57rem"/>
-                </button>
+                <GearIcon onClick={e => setShowGhostModal(true)}/>
               </>}
             </div> 
           </div>
@@ -238,7 +236,7 @@ export function SectionFlags(props: {}) {
             )}
         </div>
 
-        {!showMore ? <button className="showMore" onClick={() => setShowMore(true)}>...</button> : <>
+        {!showMore ? <Tooltip withClass="showMoreTooltip" align="top" title={gvar.gsm.token.more}><button onClick={() => setShowMore(true)}>...</button></Tooltip> : <>
           {/* Font size */}
           <div className="field marginDoubleTop">
             <span>{gvar.gsm.options.flags.textSize}</span>
@@ -272,9 +270,7 @@ export function SectionFlags(props: {}) {
           {/* Speed presets */}
           <div className="field">
             <span>{gvar.gsm.options.flags.speedPresets}</span>
-            <button className="icon gear interactive" onClick={e => setShowPresetModal(true)}>
-                  <Gear size="1.57rem"/>
-            </button>
+            <GearIcon onClick={e => setShowPresetModal(true)}/>
           </div>
         </>}
       </div>
@@ -301,9 +297,7 @@ function CircleWidget(props: {
         }}/>
         <div className="float">
           {!!props.showOption && (
-            <button className="icon gear interactive" onClick={e => props.setShowWidgetModal(true)}>
-              <Gear size="1.57rem"/>
-            </button>
+            <GearIcon onClick={e => props.setShowWidgetModal(true)}/>
           )}
         </div> 
       </div>

@@ -15,6 +15,7 @@ import { ListItem } from "./ListItem"
 import { KebabList, KebabListProps } from "./KebabList"
 import { makeLabelWithTooltip } from "./keybindControl/NameArea"
 import { isUserScriptsAvailable } from "src/utils/browserUtils"
+import { GearIcon } from "src/comps/GearIcon"
 
 
 export function SectionRules(props: {}) {
@@ -100,11 +101,11 @@ export function Rule(props: RuleProps) {
   const list: KebabListProps["list"] = [
     { name: "duplicate", label: gvar.gsm.token.duplicate, close: true },
     { name: "label", label: gvar.gsm.options.editor.addLabel, close: true },
-    { name: "titleRestrict", label: makeLabelWithTooltip(rule.titleRestrict ? gvar.gsm.options.rules.clearTitleConditions : gvar.gsm.options.rules.setTitleConditions, gvar.gsm.options.rules.titleConditionsTooltip), close: true },
+    { name: "titleRestrict", label: makeLabelWithTooltip(rule.titleRestrict ? gvar.gsm.options.rules.clearTitleConditions : gvar.gsm.options.rules.setTitleConditions, gvar.gsm.options.rules.titleConditionsTooltip, 'left'), close: true },
   ]
 
   if (rule.type !== "JS") {
-    list.push({ name: "strictness", label: makeLabelWithTooltip(gvar.gsm.options.rules.strictness, gvar.gsm.options.rules.strictnessTooltip), preLabel: `${rule.strictness ?? URLStrictness.DIFFERENT_HOST}`})
+    list.push({ name: "strictness", label: makeLabelWithTooltip(gvar.gsm.options.rules.strictness, gvar.gsm.options.rules.strictnessTooltip, 'left'), preLabel: `${rule.strictness ?? URLStrictness.DIFFERENT_HOST}`})
   }
 
   props.isLast || list.push(
@@ -163,7 +164,7 @@ export function Rule(props: RuleProps) {
         <option value="OFF">{gvar.gsm.token.off}</option>
         <option value="SPEED">{gvar.gsm.command.speed}</option>
         <option value="FX">{gvar.gsm.command.fxFilter}</option>
-        {allowJs && <option value="JS">{"javascript"}</option>} 
+        {allowJs && <option value="JS">{"Javascript"}</option>} 
       </select>
 
       <div className="left">
@@ -233,9 +234,7 @@ function FxRuleControl(props: FxRuleControlProps) {
   overrideFx.elementFx = overrideFx.elementFx || getDefaultFx()
 
   return <div className="FxControlButton">
-    <button className="icon gear interactive" onClick={e => setOpen(!open)}>
-          <Gear size="1.57rem"/>
-    </button>
+    <GearIcon onClick={e => setOpen(!open)}/>
     {open && (
       <div ref={wrapperRef} className="wrapper" onClick={e => {
         if (e.target === wrapperRef.current) setOpen(false)

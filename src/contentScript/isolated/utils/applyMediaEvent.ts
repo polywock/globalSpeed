@@ -373,7 +373,7 @@ function getMediaInfo(elem: HTMLMediaElement) {
     if (fps) res = `${res} (~${fps.toFixed(0)} FPS)`
     lines.push(res)
   }
-  let dur = `${formatDuration(elem.currentTime)} / ${formatDuration(elem.duration)}`
+  let dur = `${formatDuration(elem.currentTime)} / ${elem.duration === Infinity ? '∞' : formatDuration(elem.duration)}`
   if (elem.playbackRate !== 1) {
     dur = `${dur} → ${formatDuration(elem.currentTime / elem.playbackRate)} / ${formatDuration(elem.duration / elem.playbackRate)}`
   }

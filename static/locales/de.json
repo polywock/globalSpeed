@@ -59,14 +59,18 @@
     "implode": "Implodieren",
     "rotate": "Drehen",
     "rows": "Zeilen",
-    "copy": "Kopieren",
-    "paste": "Einfügen",
     "replaceWith": "Ersetze $1 durch?",
     "invalidNumber": "Ungültige Zahl",
     "openPage": "Seite öffnen",
     "seconds": "Sekunden",
     "percent": "Prozent",
-    "frames": "Bilder"
+    "frames": "Bilder",
+    "delete": "Löschen",
+    "more": "Mehr",
+    "assign": "Zuweisen",
+    "none": "Keine",
+    "edit": "Bearbeiten",
+    "customize": "Anpassen"
   },
   "placer": {
     "windowBounds": {
@@ -264,7 +268,12 @@
       "issueDirective": "Feedback auf Github geben.",
       "export": "Exportieren",
       "import": "Importieren",
-      "areYouSure": "Bist du sicher?"
+      "areYouSure": "Bist du sicher?",
+      "copy": "Einstellungen kopieren",
+      "paste": "Einstellungen einfügen",
+      "exportTooltip": "Einstellungen exportieren",
+      "importTooltip": "Einstellungen importieren",
+      "copied": "Kopiert!"
     }
   },
   "pageDraw": {

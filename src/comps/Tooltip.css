@@ -1,8 +1,9 @@
 
-.NewTooltip {
+.Tooltip {
     display: inline-block;
 
     & > .tip {
+        line-height: normal !important;
         pointer-events: none;
         position: fixed;
         display: none;
@@ -16,9 +17,7 @@
         z-index: 9999999999999;
         overflow-wrap: break-word;
         font-size: 1rem;
+        user-select: none;
     }
 
-    & > div {
-        
-    }
 }

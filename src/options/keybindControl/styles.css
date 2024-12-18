@@ -39,7 +39,7 @@
       margin-left: 10px;
     }
     
-    .icon.kebab {
+    .kebabTooltip {
       margin-left: 5px;
     }
 
@@ -117,7 +117,7 @@
       column-gap: 7px;
       align-items: center;
   
-      & > button {
+      & button {
         background-color: var(--adjust-color);
         color: var(--text-color);
         translate: 0px -2px;

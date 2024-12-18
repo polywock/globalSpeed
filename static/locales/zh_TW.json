@@ -60,14 +60,18 @@
     "implode": "內爆",
     "rotate": "旋轉",
     "rows": "列",
-    "copy": "複製",
-    "paste": "貼上",
     "replaceWith": "替換$1為？",
     "invalidNumber": "無效數字",
     "openPage": "開啟頁面",
     "seconds": "秒",
     "percent": "%",
-    "frames": "幀"
+    "frames": "幀",
+    "delete": "刪除",
+    "more": "更多",
+    "assign": "分配",
+    "none": "無",
+    "edit": "編輯",
+    "customize": "自訂"
   },
   "placer": {
     "windowBounds": {
@@ -265,7 +269,12 @@
       "issueDirective": "在Github上提供回饋。",
       "export": "匯出​​",
       "import": "匯入",
-      "areYouSure": "確定嗎？"
+      "areYouSure": "確定嗎？",
+      "copy": "複製設定",
+      "paste": "貼上設定",
+      "exportTooltip": "匯出設定",
+      "importTooltip": "匯入設定",
+      "copied": "已複製！"
     }
   },
   "pageDraw": {

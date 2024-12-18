@@ -6,6 +6,7 @@
   color: var(--pure-color); 
   user-select: none;
   border-radius: 5px;
+  text-wrap-mode: nowrap;
   
   & > div {
     padding: 5px 10px;

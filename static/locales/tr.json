@@ -59,14 +59,18 @@
     "implode": "İçe çökme",
     "rotate": "Döndürmek",
     "rows": "Satırlar",
-    "copy": "Kopyala",
-    "paste": "Yapıştır",
     "replaceWith": "$1 yerine ne koymalı?",
     "invalidNumber": "Geçersiz numara",
     "openPage": "Sayfayı aç",
     "seconds": "Sn",
     "percent": "%",
-    "frames": "Kare"
+    "frames": "Kare",
+    "delete": "Sil",
+    "more": "Daha fazla",
+    "assign": "Ata",
+    "none": "Hiçbiri",
+    "edit": "Düzenle",
+    "customize": "Özelleştir"
   },
   "placer": {
     "windowBounds": {
@@ -264,7 +268,12 @@
       "issueDirective": "Github ile ilgili geri bildirimde bulunun.",
       "export": "Dışarı aktar",
       "import": "İ̇çeri",
-      "areYouSure": "Emin misiniz?"
+      "areYouSure": "Emin misiniz?",
+      "copy": "Ayarları kopyala",
+      "paste": "Ayarları yapıştır",
+      "exportTooltip": "Ayarları dışa aktar",
+      "importTooltip": "Ayarları içe aktar",
+      "copied": "Kopyalandı!"
     }
   },
   "pageDraw": {

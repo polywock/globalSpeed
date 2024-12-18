@@ -59,14 +59,18 @@
     "implode": "انفجار للداخل",
     "rotate": "دوران",
     "rows": "صفوف",
-    "copy": "نسخ",
-    "paste": "لصق",
     "replaceWith": "استبدل $1 بـ؟",
     "invalidNumber": "رقم غير صالح",
     "openPage": "إفتح الصفحة",
     "seconds": "ثواني",
     "percent": " بالمئة",
-    "frames": "إطارات"
+    "frames": "إطارات",
+    "delete": "حذف",
+    "more": "المزيد",
+    "assign": "تعيين",
+    "none": "لا شيء",
+    "edit": "تحرير",
+    "customize": "تخصيص"
   },
   "placer": {
     "windowBounds": {
@@ -264,7 +268,12 @@
       "issueDirective": "تقديم ملاحظاتك على GitHub.",
       "export": "تصدير",
       "import": "إستراد",
-      "areYouSure": "هل أنت متأكد؟"
+      "areYouSure": "هل أنت متأكد؟",
+      "copy": "نسخ الإعدادات",
+      "paste": "لصق الإعدادات",
+      "exportTooltip": "تصدير الإعدادات",
+      "importTooltip": "استيراد الإعدادات",
+      "copied": "تم النسخ!"
     }
   },
   "pageDraw": {

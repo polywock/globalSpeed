@@ -60,14 +60,18 @@
     "implode": "内爆",
     "rotate": "旋转",
     "rows": "行",
-    "copy": "复制",
-    "paste": "粘贴",
     "replaceWith": "替换$1为？",
     "invalidNumber": "无效数字",
     "openPage": "打开页面",
     "seconds": "秒",
     "percent": "%",
-    "frames": "帧"
+    "frames": "帧",
+    "delete": "删除",
+    "more": "更多",
+    "assign": "分配",
+    "none": "无",
+    "edit": "编辑",
+    "customize": "自定义"
   },
   "placer": {
     "windowBounds": {
@@ -265,7 +269,12 @@
       "issueDirective": "在Github上提供反馈。",
       "export": "导出",
       "import": "导入",
-      "areYouSure": "确定吗？"
+      "areYouSure": "确定吗？",
+      "copy": "复制设置",
+      "paste": "粘贴设置",
+      "exportTooltip": "导出设置",
+      "importTooltip": "导入设置",
+      "copied": "已复制！"
     }
   },
   "pageDraw": {

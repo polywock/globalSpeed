@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useRef } from "react"
+import { MouseEvent, useEffect, useRef, useState } from "react"
 import { MdContentCopy, MdContentPaste } from "react-icons/md"
 import { dumpConfig, fetchView, pushView, restoreConfig } from "../utils/state"
 import { State } from "../types"
@@ -7,6 +7,7 @@ import { isFirefox, areYouSure, feedbackText, domRectGetOffset } from "../utils/
 import { getDefaultState } from "src/defaults"
 import { migrateSchema } from "src/background/utils/migrateSchema"
 import "./SectionHelp.css"
+import { Tooltip } from "src/comps/Tooltip"
 
 
 export function SectionHelp(props: {}) {
@@ -74,6 +75,7 @@ function handleSecretMenu(e: MouseEvent) {
 
 function ExportImport(props: {}) {
   const ref = useRef({} as {input?: HTMLInputElement})
+  const [showWasCopied, setShowWasCopied] = useState(false)
 
   useEffect(() => {
     const input = document.createElement("input")
@@ -96,26 +98,35 @@ function ExportImport(props: {}) {
   }, [])
 
   return <>
-    <button className="large" onClick={async e => {
-      downloadState(await dumpConfig())
-    }}>{gvar.gsm.options.help.export}</button>
-    <button className="large" onClick={async (e: MouseEvent<HTMLButtonElement>) => {
-      await navigator.clipboard.writeText(JSON.stringify(await dumpConfig()))
-      feedbackText(gvar.gsm.token.copy, domRectGetOffset((e.target as HTMLButtonElement).getBoundingClientRect(), 10, 10))
-    }}><MdContentCopy style={{pointerEvents: 'none'}}/></button>
-    <button 
-      className="large" 
-      onClick={e => {
-        ref.current.input.click()
-      }}
-    >{gvar.gsm.options.help.import}</button>
-    <button className="large" onClick={async e => {
-      if (isFirefox()) {
-        if (!(await chrome.permissions.request({permissions: ["clipboardRead", "clipboardWrite"]}))) return 
-      }
+    <Tooltip title={gvar.gsm.options.help.exportTooltip} align="top">
+      <button className="large" onClick={async () => {
+        downloadState(await dumpConfig())
+      }}>{gvar.gsm.options.help.export}</button>  
+    </Tooltip>
+    <Tooltip title={showWasCopied ? gvar.gsm.options.help.copied : gvar.gsm.options.help.copy} align="top">
+      <button className="large" onClick={async e => {
+        await navigator.clipboard.writeText(JSON.stringify(await dumpConfig()))
+        setShowWasCopied(true)
+        setTimeout(() => setShowWasCopied(false), 1000)
+      }}><MdContentCopy style={{pointerEvents: 'none'}}/></button>
+    </Tooltip>
+    <Tooltip title={gvar.gsm.options.help.importTooltip} align="top">
+      <button 
+        className="large" 
+        onClick={e => {
+          ref.current.input.click()
+        }}
+      >{gvar.gsm.options.help.import}</button>
+    </Tooltip>
+    <Tooltip title={gvar.gsm.options.help.paste} align="top">
+      <button className="large" onClick={async e => {
+        if (isFirefox()) {
+          if (!(await chrome.permissions.request({permissions: ["clipboardRead", "clipboardWrite"]}))) return 
+        }
 
-      loadState(await navigator.clipboard.readText())
-    }}><MdContentPaste/></button>
+        loadState(await navigator.clipboard.readText())
+      }}><MdContentPaste/></button>
+    </Tooltip>
   </>
 }
 

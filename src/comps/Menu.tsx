@@ -8,12 +8,13 @@ export type MenuProps = {
   onClose: () => void, 
   onSelect: (name: string) => void, 
   items: {name: string, checked?: boolean, close?: boolean, preLabel?: string, label?: string | React.ReactElement}[],
+  menuRef: React.Ref<HTMLDivElement>
 }
 
 export const Menu = (props: MenuProps) => {
 
   return <ModalBase color={"transparent"} onClose={props.onClose}>
-    <div style={{left: `${props.position.x}px`, top: `${props.position.y}px`}} className="Menu">
+    <div ref={props.menuRef} style={{left: `${props.position.x}px`, top: `${props.position.y}px`}} className="Menu">
       {props.items.map(v => {
         const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
           props.onSelect(v.name)

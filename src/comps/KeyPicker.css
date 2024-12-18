@@ -7,6 +7,7 @@
   text-align: center;
   user-select: none;
   cursor: pointer;
+  line-height: 1;
 
   &:focus {
     outline: 1px solid var(--focus-color);

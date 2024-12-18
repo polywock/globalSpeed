@@ -10,7 +10,7 @@ import { ReverseButton } from "./ReverseButton";
 import { produce } from "immer";
 import { initTabCapture, releaseTabCapture } from "src/background/utils/tabCapture";
 import "./AudioPanel.css"
-import { domRectGetOffset, feedbackText } from "src/utils/helper";
+import { Tooltip } from "src/comps/Tooltip";
 
 export function AudioPanel(props: {}) {
   const [view, setView] = useStateView({audioFx: true, audioFxAlt: true, monoOutput: true, audioPan: true})
@@ -147,12 +147,13 @@ export function AudioPanel(props: {}) {
       label={<div>
         <MdAccessTime size="1.42rem"/>
         <span style={{marginLeft: "10px"}}>{gvar.gsm.command.afxDelay}</span>
-        <button style={{marginLeft: "10px"}} className={`toggle ${starAudioFx.delayMerge ? "active" : ""}`} onClick={e => {
-          setView(produce(view, d => {
-            d[starKey].delayMerge = !starAudioFx.delayMerge
-            if(d[starKey].delayMerge) feedbackText(gvar.gsm.token.mergeBoth, domRectGetOffset((e.currentTarget as any as HTMLButtonElement).getBoundingClientRect(), 8, 30))
-          }))
-        }}>+</button>
+        <Tooltip align="top" title={gvar.gsm.token.mergeBoth}>
+          <button style={{marginLeft: "10px"}} className={`toggle ${starAudioFx.delayMerge ? "active" : ""}`} onClick={e => {
+            setView(produce(view, d => {
+              d[starKey].delayMerge = !starAudioFx.delayMerge
+            }))
+          }}>+</button>
+        </Tooltip>
       </div>}
       value={starAudioFx.delay ?? 0}
       sliderMin={0}

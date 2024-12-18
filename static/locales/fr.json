@@ -59,14 +59,18 @@
     "implode": "Imploser",
     "rotate": "Tourner",
     "rows": "Lignes",
-    "copy": "Copier",
-    "paste": "Coller",
     "replaceWith": "Remplacer $1 par ?",
     "invalidNumber": "Numéro invalide",
     "openPage": "Ouvrir la page",
     "seconds": "Secondes",
     "percent": "Pour cent",
-    "frames": "Images"
+    "frames": "Images",
+    "delete": "Supprimer",
+    "more": "Plus",
+    "assign": "Attribuer",
+    "none": "Aucun",
+    "edit": "Modifier",
+    "customize": "Personnaliser"
   },
   "placer": {
     "windowBounds": {
@@ -264,7 +268,12 @@
       "issueDirective": "Fournissez des commentaires sur Github.",
       "export": "Exporter",
       "import": "Importer",
-      "areYouSure": "Êtes-vous sûr ?"
+      "areYouSure": "Êtes-vous sûr ?",
+      "copy": "Copier les paramètres",
+      "paste": "Coller les paramètres",
+      "exportTooltip": "Exporter les paramètres",
+      "importTooltip": "Importer les paramètres",
+      "copied": "Copié !"
     }
   },
   "pageDraw": {

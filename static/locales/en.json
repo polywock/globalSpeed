@@ -69,14 +69,17 @@
     "rotate": "Rotate",
 
     "rows": "Rows",
-    "copy": "Copy",
-    "paste": "Paste",
     "replaceWith": "Replace $1 with?",
     "invalidNumber": "Invalid number",
     "openPage": "Open page",
     "seconds": "Seconds",
     "percent": "Percent",
-    "frames": "Frames"
+    "frames": "Frames",
+    "more": "More",
+    "assign": "Assign",
+    "none": "None",
+    "edit": "Edit",
+    "customize": "Customize"
   },
   "placer": {
     "windowBounds": {
@@ -277,7 +280,12 @@
       "issueDirective": "Provide feedback on Github.",
       "export": "Export",
       "import": "Import",
-      "areYouSure": "Are you sure?"
+      "areYouSure": "Are you sure?",
+      "copy": "Copy settings",
+      "copied": "Copied!",
+      "paste": "Paste settings",
+      "exportTooltip": "Export settings",
+      "importTooltip": "Import settings"
     }
   },
   "pageDraw": {

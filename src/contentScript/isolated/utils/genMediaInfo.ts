@@ -13,7 +13,10 @@ export function generateMediaState(elem: HTMLMediaElement): MediaInfo {
     playbackRate: elem.playbackRate
   }
 
-  if (elem.duration === Infinity) info.infinity = true
+  if (elem.duration === Infinity) {
+    info.infinity = true
+    info.duration = 999999999
+  }
   if (elem.isConnected) info.isConnected = true
   if (elem.paused) info.paused = true
   if (elem.muted) info.muted = true
