@@ -70,7 +70,9 @@
     "assign": "Asignar",
     "none": "Ninguno",
     "edit": "Editar",
-    "customize": "Personalizar"
+    "customize": "Personalizar",
+    "allowShortcuts": "Permitir atajos en $1",
+    "allowOn": "Permitir en $1"
   },
   "placer": {
     "windowBounds": {
@@ -192,18 +194,16 @@
       "textSize": "Tamaño del texto",
       "speedPresets": "Presets de velocidad",
       "widget": {
-        "option": "Widget circular",
         "optionTooltip": "(Experimental) Se mostrará un widget circular mientras los videos estén visibles:\n - Se mostrará un widget circular mientras los videos estén visibles.\n - Arrastra a la izquierda/derecha para avanzar/retroceder en el video.\n - Arrastra hacia arriba/abajo para ajustar la velocidad de reproducción.",
         "movementMobile": "\n - Presiona el círculo durante unos segundos para moverlo o eliminarlo.",
         "movementDesktop": "\n - Con el botón derecho del ratón, arrastra el círculo para moverlo o eliminarlo.",
         "headerTooltip": "Widget circular habilitado.",
-        "showIcon": "Mostrar ícono",
-        "showIconTooltip": "Muestra un ícono en el menú principal para alternar cómodamente el widget circular.",
         "autoHide": "Ocultamiento automático",
         "fullscreenOnly": "Solo pantalla completa",
         "fullscreenOnlyTooltip": "Mostrar widget solo cuando el video está en pantalla completa.",
         "pressAction": "Acción de pulsación",
-        "togglePause": "Alternar pausa"
+        "togglePause": "Alternar pausa",
+        "option": "Mostrar widget circular"
       }
     },
     "editor": {

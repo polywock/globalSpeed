@@ -15,7 +15,7 @@ let latestClear: Function
 
 export type TooltipProps = {
     children: React.ReactNode,
-    title: string,
+    title?: string,
     align: 'top' | 'bottom' | 'left' | 'right',
     offset?: number,
     maxWidth?: number,
@@ -33,6 +33,7 @@ export function Tooltip(props: TooltipProps) {
     const tipRef = useRef<HTMLDivElement>()
 
     const handlePointerEnter = (e: React.PointerEvent | React.MouseEvent | React.FocusEvent) => {
+        if (!props.title) return 
         if (env.isActive) return 
 
         // Little failsafe, no reason two tooltips should be visible at once.

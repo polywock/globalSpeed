@@ -87,7 +87,6 @@ export type State = {
   virtualInput?: boolean,
   hideGrant?: boolean,
   circleWidget?: boolean,
-  circleWidgetIcon?: boolean,
   circleInit?: CircleInit,
   freshKeybinds?: boolean
 } & Context

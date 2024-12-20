@@ -14,7 +14,7 @@ type Props = {
 }
 
 export function CinemaModal(props: Props) {
-  const [view, setView] = useStateView({circleWidgetIcon: true, circleInit: true})
+  const [view, setView] = useStateView({circleInit: true})
   if (!view) return null 
   let value = props.value || {} as Keybind
 

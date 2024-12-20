@@ -70,7 +70,9 @@
     "assign": "Przypisz",
     "none": "Brak",
     "edit": "Edytuj",
-    "customize": "Dostosuj"
+    "customize": "Dostosuj",
+    "allowShortcuts": "Zezwól na skróty na $1",
+    "allowOn": "Zezwól na $1"
   },
   "placer": {
     "windowBounds": {
@@ -193,18 +195,16 @@
       "textSize": "Rozmiar tekstu",
       "speedPresets": "Ustawienia prędkości",
       "widget": {
-        "option": "Widżet w formie koła",
         "optionTooltip": "(Eksperymentalny) Widżet w formie koła będzie widoczny, gdy filmy są widoczne.\n - Przeciągnij w lewo/prawo, aby przewinąć wideo.\n - Przeciągnij w górę/dół, aby dostosować szybkość odtwarzania.",
         "movementMobile": "\n - Przytrzymaj kółko przez kilka sekund, aby je przenieść lub usunąć.",
         "movementDesktop": "\n - Kliknij prawym przyciskiem myszy i przeciągnij kółko, aby je przenieść lub usunąć.",
         "headerTooltip": "Włącz widżet w formie koła.",
-        "showIcon": "Pokaż ikonę",
-        "showIconTooltip": "Pokaż ikonę w głównym menu, aby wygodnie przełączać widżet w formie koła.",
         "autoHide": "Auto ukrywanie",
         "fullscreenOnly": "Tylko na pełnym ekranie",
         "fullscreenOnlyTooltip": "Widżet będzie widoczny tylko w trybie pełnoekranowym.",
         "pressAction": "Akcja po naciśnięciu",
-        "togglePause": "Przełącz pauzę"
+        "togglePause": "Przełącz pauzę",
+        "option": "Pokaż okrągły widżet"
       }
     },
     "editor": {

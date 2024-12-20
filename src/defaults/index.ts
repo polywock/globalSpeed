@@ -13,9 +13,6 @@ export function getDefaultState(): State {
     ...getDefaultContext()
   } as State;
 
-  if (isMobile()) {
-    state.circleWidgetIcon = true
-  }
   return state 
 }
 

@@ -79,7 +79,9 @@
     "assign": "Assign",
     "none": "None",
     "edit": "Edit",
-    "customize": "Customize"
+    "customize": "Customize",
+    "allowShortcuts": "Allow shortcuts on $1",
+    "allowOn": "Allow on $1"
   },
   "placer": {
     "windowBounds": {
@@ -205,13 +207,11 @@
       "textSize": "Text size",
       "speedPresets": "Speed presets",
       "widget": {
-        "option": "Circle widget",
+        "option": "Show circle widget",
         "optionTooltip": "(Experimental) A circle widget will be shown while videos are visible.\n - Drag left/right to seek through video.\n - Drag up/down to adjust playback rate.",
         "movementMobile": "\n - Press circle for a few seconds to to move or delete it.",
         "movementDesktop": "\n - With right mouse button, drag circle to move or delete it.",
         "headerTooltip": "Enabled circle widget.",
-        "showIcon": "Show icon",
-        "showIconTooltip": "Show an icon on the main menu to conveniently toggle the circle widget.",
         "autoHide": "Auto hide",
         "fullscreenOnly": "Fullscreen only",
         "fullscreenOnlyTooltip": "Only show widget when the video is fullscreen.",

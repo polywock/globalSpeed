@@ -71,7 +71,9 @@ export type Gsm = {
     assign: string,
     none: string,
     edit: string,
-    customize: string
+    customize: string,
+    allowShortcuts: string,
+    allowOn: string
   },
   placer: {
     windowBounds: {
@@ -199,8 +201,6 @@ export type Gsm = {
         movementMobile: string,
         movementDesktop: string,
         headerTooltip: string,
-        showIcon: string,
-        showIconTooltip: string,
         autoHide: string,
         fullscreenOnly: string,
         fullscreenOnlyTooltip: string,

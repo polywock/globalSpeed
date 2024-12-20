@@ -71,7 +71,9 @@
     "assign": "할당",
     "none": "없음",
     "edit": "편집",
-    "customize": "사용자 정의"
+    "customize": "사용자 정의",
+    "allowShortcuts": "단축키를 $1에서 허용",
+    "allowOn": "$1에서 허용"
   },
   "placer": {
     "windowBounds": {
@@ -193,18 +195,16 @@
       "textSize": "텍스트 크기",
       "speedPresets": "속도 사전 설정",
       "widget": {
-        "option": "원형 위젯",
         "optionTooltip": "(실험적인 기능) 동영상이 표시되는 동안 원형 위젯이 표시됩니다:\n - 동영상이 표시되는 동안 원형 위젯이 표시됩니다.\n - 동영상을 탐색하려면 왼쪽/오른쪽으로 드래그하세요.\n - 재생 속도를 조절하려면 위/아래로 드래그하세요.",
         "movementMobile": "\n - 원을 몇 초 동안 눌러 이동하거나 삭제하세요.",
         "movementDesktop": "\n - 오른쪽 마우스 버튼을 사용하여 원을 드래그하여 이동하거나 삭제하세요.",
         "headerTooltip": "원형 위젯을 활성화했습니다.",
-        "showIcon": "아이콘 표시",
-        "showIconTooltip": "메인 메뉴에 아이콘을 표시하여 원형 위젯을 쉽게 전환할 수 있습니다.",
         "autoHide": "자동 숨기기",
         "fullscreenOnly": "전체 화면 전용",
         "fullscreenOnlyTooltip": "비디오가 전체 화면일 때만 위젯을 표시합니다.",
         "pressAction": "눌러서 실행",
-        "togglePause": "일시 정지 전환"
+        "togglePause": "일시 정지 전환",
+        "option": "원형 위젯 표시"
       }
     },
     "editor": {

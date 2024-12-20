@@ -71,7 +71,9 @@
     "assign": "分配",
     "none": "無",
     "edit": "編輯",
-    "customize": "自訂"
+    "customize": "自訂",
+    "allowShortcuts": "允許在 $1 使用快捷鍵",
+    "allowOn": "允許於 $1 使用"
   },
   "placer": {
     "windowBounds": {
@@ -194,18 +196,16 @@
       "textSize": "文字大小",
       "speedPresets": "速度預設",
       "widget": {
-        "option": "圓形小工具",
         "optionTooltip": "（實驗性）影片可見時將顯示圓形小工具：\n - 影片可見時將顯示圓形小工具。\n - 向左/右拖動以在影片中尋找。\n - 向上/下拖動以調整播放速度。",
         "movementMobile": "\n - 按住圓圈幾秒鐘以移動或刪除它。",
         "movementDesktop": "\n - 使用右鍵拖動圓圈以移動或刪除它。",
         "headerTooltip": "啟用圓形小工具。",
-        "showIcon": "顯示圖示",
-        "showIconTooltip": "在主選單上顯示圖示以方便切換圓形小工具。",
         "autoHide": "自動隱藏",
         "fullscreenOnly": "僅全螢幕",
         "fullscreenOnlyTooltip": "僅在影片全螢幕時顯示小工具。",
         "pressAction": "按下動作",
-        "togglePause": "切換暫停"
+        "togglePause": "切換暫停",
+        "option": "顯示圓形小工具"
       }
     },
     "editor": {

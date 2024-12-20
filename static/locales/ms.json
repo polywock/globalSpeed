@@ -70,7 +70,9 @@
     "assign": "Tetapkan",
     "none": "Tiada",
     "edit": "Edit",
-    "customize": "Sesuaikan"
+    "customize": "Sesuaikan",
+    "allowShortcuts": "Benarkan pintasan pada $1",
+    "allowOn": "Benarkan pada $1"
   },
   "placer": {
     "windowBounds": {
@@ -193,18 +195,16 @@
       "textSize": "Saiz teks",
       "speedPresets": "Pratetap kelajuan",
       "widget": {
-        "option": "Widget bulat",
         "optionTooltip": "(Eksperimen) Widget bulat akan ditunjukkan semasa video kelihatan.\n - Seret kiri/kanan untuk cari melalui video.\n - Seret atas/bawah untuk melaraskan kadar main semula.",
         "movementMobile": "\n - Tekan bulatan selama beberapa saat untuk menggerakkan atau memadamkannya.",
         "movementDesktop": "\n - Dengan butang tetikus kanan, seret bulatan untuk menggerakkan atau memadamkannya.",
         "headerTooltip": "Dayakan widget bulat.",
-        "showIcon": "Tunjukkan ikon",
-        "showIconTooltip": "Tunjukkan ikon pada menu utama untuk menukar widget bulat dengan mudah.",
         "autoHide": "Auto sembunyi",
         "fullscreenOnly": "Hanya skrin penuh",
         "fullscreenOnlyTooltip": "Hanya tunjukkan widget apabila video dalam skrin penuh.",
         "pressAction": "Tindakan tekan",
-        "togglePause": "Tukar jeda"
+        "togglePause": "Tukar jeda",
+        "option": "Tunjukkan widget bulatan"
       }
     },
     "editor": {

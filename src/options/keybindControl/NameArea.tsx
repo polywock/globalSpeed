@@ -12,7 +12,7 @@ import { TiArrowLoop } from "react-icons/ti"
 import { MdDarkMode, MdFullscreen, MdPictureInPictureAlt, MdWarning } from "react-icons/md"
 import { assertType, getPopupSize } from "../../utils/helper"
 import { MenuProps } from "../../comps/Menu"
-import { replaceArgs } from "src/utils/gsm"
+import { replaceArgs } from "src/utils/helper"
 import { MdSpeed } from "react-icons/md";
 import { Pin, Zap } from "src/comps/svgs"
 import { KeybindControlProps } from "."

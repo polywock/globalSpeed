@@ -68,7 +68,7 @@ export function sendMessageToConfigSync(msg: any, tabId: number, frameId?: numbe
   chrome.tabs.sendMessage(tabId, msg, frameId == null ? undefined : {frameId})
 }
 
-function testURLWithPart(url: string, p: URLConditionPart) {
+export function testURLWithPart(url: string, p: URLConditionPart) {
   if (p.type === "STARTS_WITH") {
     return url.startsWith(p.valueStartsWith)
   } else if (p.type === "CONTAINS") {

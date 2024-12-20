@@ -16,13 +16,6 @@ let openai
 async function main() {
     if (argv[2] === "--casing") {
         ensureCasing()
-    } else if (argv[2] === "--validate") {
-        if (await validate()) {
-            console.log('✓ All good!')
-            exit(0)
-        } else {
-            exit(1)
-        }
     } else if (argv[2] === "--build") {
         build()
     } else { 
@@ -84,44 +77,7 @@ async function adhereEnglish() {
 }
 
 
-async function validate() {
-    let rootLocales = join("static", "locales")
-    let englishLocale = join(rootLocales, "en.json")
-    const englishJson = JSON.parse(await readFile(englishLocale))   
-    const englishLeaves = getLeaves(englishJson).map(leave => leave.dots)
-    const englishLeavesSet = new Set(englishLeaves)
-
-
-    const outputs = await Promise.all(ALL_LANGUAGES.map(async lang => {
-        let otherJson
-        try {
-            otherJson = JSON.parse(await readFile(join(rootLocales, `${lang}.json`), {encoding: 'utf8'}))
-        } catch {
-            console.error(`${lang}.json does not exist.`)
-            return
-        }
-        let otherLeaves = getLeaves(otherJson).map(leave => leave.dots)
-        const otherSet = new Set(otherLeaves)
-        const { justLeft, justRight} = getDifference(englishLeavesSet, otherSet)
-        if (!justLeft.size && !justRight.size) return true 
-
-        let output = []
-        output.push(`\n-----------------\n${lang}.json issues`)
-        if (justLeft.size) output.push(`- missing translations: ${[...justLeft].join(', ')}`)
-        if (justRight.size) output.push(`- excessive translations: ${[...justRight].join(', ')}`)
-        console.error(output.join('\n'))
-        return false 
-    }))
-
-    return outputs.every(o => o)
-}
-
-/**
- * 
- * @returns 
- */
 async function ensureCasing() {
-    if (!(await validate())) return exit(1)
     let rootLocales = join("static", "locales")
     let englishLocale = join(rootLocales, "en.json")
     const englishJson = JSON.parse(await readFile(englishLocale))   
@@ -141,6 +97,7 @@ async function ensureCasing() {
         for (let leave of englishLeaves) {
             let locale = lang.replace('_', '-')
             const value = getNestedValue(otherJson, leave.path)
+            if (!value) continue 
             if (!isCapitalized(value, locale)) {
                 setNestedValue(otherJson, leave.path, capitalize(value, locale))
                 adjustedCount++

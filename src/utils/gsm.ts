@@ -38,14 +38,6 @@ function getValidLocale(overrideLang?: string) {
   return [...languages].find(l => AVAILABLE_LOCALES.has(l))
 }
 
-export function replaceArgs(raw: string, args: string[]) {
-  let idx = 0
-  for (let arg of args) {
-    raw = raw.replaceAll(`$${++idx}`, arg)
-  }
-  return raw 
-}
-
 export const LOCALE_MAP: {
   [key: string]: {
     display: string,

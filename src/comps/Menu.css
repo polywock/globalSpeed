@@ -6,13 +6,15 @@
   color: var(--pure-color); 
   user-select: none;
   border-radius: 5px;
-  text-wrap-mode: nowrap;
   
   & > div {
+    display: grid;
+    grid-template-columns: 20px auto;
     padding: 5px 10px;
     border-bottom: 1px solid var(--ctx-border);
     padding-right: 20px;
     opacity: 0.75;
+    line-height: 1.5;
 
     &:hover {
       opacity: 1;

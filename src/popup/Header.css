@@ -1,12 +1,21 @@
 
 .Header {
   display: grid;
-  grid-template-columns: repeat(2, max-content) 1fr repeat(5, max-content);
+  grid-template-columns: repeat(3, max-content) 1fr repeat(5, max-content);
   justify-items: right;
   align-items: center;
   padding: 3px 5px 0px 5px;
   border-bottom: 1px solid var(--ctx-border);
   background-color: var(--fg-color);
+
+  & > .Tooltip {
+    margin-top: -3px;
+    padding-left: 2px;
+
+    &, & > div, & button {
+      line-height: 0;
+    }
+  }
 
 
   & > div {

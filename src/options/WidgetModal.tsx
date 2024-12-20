@@ -14,26 +14,13 @@ type Props = {
 }
 
 export function WidgetModal(props: Props) {
-  const [view, setView] = useStateView({circleWidgetIcon: true, circleInit: true})
+  const [view, setView] = useStateView({circleInit: true})
   if (!view) return null 
   let init = view.circleInit || {}
 
 
   return <ModalBase keepOnWheel={true} onClose={props.onClose}>
     <div className="WidgetModal ModalMain">
-
-     
-      {/* Header icon */}
-      <div className="field">
-        <div className="labelWithTooltip">
-          <span>{gvar.gsm.options.flags.widget.showIcon}</span>
-          <RegularTooltip title={gvar.gsm.options.flags.widget.showIconTooltip} align="right"/>
-        </div>
-        <Toggle value={!!view.circleWidgetIcon} onChange={e => {
-            setView({circleWidgetIcon: !view.circleWidgetIcon})
-          }}/>
-      </div>
-
 
       {/* Size */}
       <div className="field">
@@ -125,7 +112,7 @@ export function WidgetModal(props: Props) {
 
       {/* Reset */}
       <button onClick={e => {
-        setView({circleWidgetIcon: null, circleInit: null})
+        setView({circleInit: null})
       }} className="reset">{gvar.gsm.token.reset}</button>
     </div>
   </ModalBase>

@@ -70,7 +70,9 @@
     "assign": "Gán",
     "none": "Không có",
     "edit": "Chỉnh sửa",
-    "customize": "Tùy chỉnh"
+    "customize": "Tùy chỉnh",
+    "allowShortcuts": "Cho phép phím tắt trên $1",
+    "allowOn": "Cho phép trên $1"
   },
   "placer": {
     "windowBounds": {
@@ -193,18 +195,16 @@
       "textSize": "Kích thước văn bản",
       "speedPresets": "Cài đặt trước tốc độ",
       "widget": {
-        "option": "Widget hình tròn",
         "optionTooltip": "(Thử nghiệm) Một widget hình tròn sẽ được hiển thị khi video hiển thị:\n - Một widget hình tròn sẽ được hiển thị khi video hiển thị.\n - Kéo trái/phải để tua video.\n - Kéo lên/xuống để điều chỉnh tốc độ phát.",
         "movementMobile": "\n - Nhấn vào hình tròn trong vài giây để di chuyển hoặc xóa nó.",
         "movementDesktop": "\n - Nhấn chuột phải và kéo hình tròn để di chuyển hoặc xóa nó.",
         "headerTooltip": "Đã bật widget hình tròn.",
-        "showIcon": "Hiển thị biểu tượng",
-        "showIconTooltip": "Hiển thị biểu tượng trên menu chính để dễ dàng chuyển đổi widget hình tròn.",
         "autoHide": "Tự động ẩn",
         "fullscreenOnly": "Chỉ toàn màn hình",
         "fullscreenOnlyTooltip": "Chỉ hiển thị widget khi video ở chế độ toàn màn hình.",
         "pressAction": "Hành động nhấn",
-        "togglePause": "Chuyển đổi tạm dừng"
+        "togglePause": "Chuyển đổi tạm dừng",
+        "option": "Hiển thị tiện ích vòng tròn"
       }
     },
     "editor": {

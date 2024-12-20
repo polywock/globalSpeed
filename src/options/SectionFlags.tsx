@@ -35,7 +35,7 @@ export function SectionFlags(props: {}) {
       })
   }, [])
 
-  const [view, setView] = useStateView({language: true, darkTheme: true, fontSize: true, hideBadge: true, pinByDefault: true, initialContext: true, ghostMode: true, ghostModeUrlCondition: true, hideMediaView: true, freePitch: true, speedSlider: true, virtualInput: true, circleWidget: true, circleWidgetIcon: true})
+  const [view, setView] = useStateView({language: true, darkTheme: true, fontSize: true, hideBadge: true, pinByDefault: true, initialContext: true, ghostMode: true, ghostModeUrlCondition: true, hideMediaView: true, freePitch: true, speedSlider: true, virtualInput: true, circleWidget: true})
   const [ viewAlt ] = useStateView({indicatorInit: true, hideIndicator: true})
   if (!view || !viewAlt) return <div></div>
 
@@ -153,7 +153,7 @@ export function SectionFlags(props: {}) {
         </div>
         
         {/* Circle widget */}
-        <CircleWidget setView={setView} active={view.circleWidget} setShowWidgetModal={setShowWidgetModal} showOption={view.circleWidget || view.circleWidgetIcon}/>
+        <CircleWidget setView={setView} active={view.circleWidget} setShowWidgetModal={setShowWidgetModal}/>
 
 
         {/* Pin by default */}
@@ -280,7 +280,6 @@ export function SectionFlags(props: {}) {
 
 function CircleWidget(props: {
   active?: boolean,
-  showOption?: boolean
   setView: SetView,
   setShowWidgetModal: (v: boolean) => void 
 }) {
@@ -295,7 +294,7 @@ function CircleWidget(props: {
           props.setView({circleWidget: !props.active})
         }}/>
         <div className="float">
-          {!!props.showOption && (
+          {!!props.active && (
             <GearIcon onClick={e => props.setShowWidgetModal(true)}/>
           )}
         </div> 

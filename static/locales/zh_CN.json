@@ -71,7 +71,9 @@
     "assign": "分配",
     "none": "无",
     "edit": "编辑",
-    "customize": "自定义"
+    "customize": "自定义",
+    "allowShortcuts": "允许在 $1 上使用快捷键",
+    "allowOn": "允许在 $1 上使用"
   },
   "placer": {
     "windowBounds": {
@@ -194,18 +196,16 @@
       "textSize": "文字大小",
       "speedPresets": "速度预设",
       "widget": {
-        "option": "圆形小部件",
         "optionTooltip": "（实验性）视频可见时将显示圆形小部件：\n - 视频可见时将显示圆形小部件。\n - 向左/右拖动以在视频中寻找。\n - 向上/下拖动以调整播放速度。",
         "movementMobile": "\n - 按住圆圈几秒钟以移动或删除它。",
         "movementDesktop": "\n - 使用右键拖动圆圈以移动或删除它。",
         "headerTooltip": "启用圆形小部件。",
-        "showIcon": "显示图标",
-        "showIconTooltip": "在主菜单上显示图标以方便切换圆形小部件。",
         "autoHide": "自动隐藏",
         "fullscreenOnly": "仅全屏",
         "fullscreenOnlyTooltip": "仅在视频全屏时显示小部件。",
         "pressAction": "按下动作",
-        "togglePause": "切换暂停"
+        "togglePause": "切换暂停",
+        "option": "显示圆形小部件"
       }
     },
     "editor": {

@@ -1,18 +1,21 @@
 import { useMemo } from "react"
-import { checkFilterDeviation, requestSyncContextMenu } from "../utils/configUtils"
+import { checkFilterDeviation, requestSyncContextMenu, testURL, testURLWithPart } from "../utils/configUtils"
 import { GoArrowLeft} from "react-icons/go"
 import { FaGithub } from "react-icons/fa";
 import { FaPowerOff, FaVolumeUp } from "react-icons/fa"
-import { useStateView } from "../hooks/useStateView"
-import { getDefaultAudioFx, getDefaultFx } from "../defaults"
+import { SetView, useStateView } from "../hooks/useStateView"
+import { getDefaultAudioFx, getDefaultFx, getDefaultURLCondition, getDefaultURLConditionPart } from "../defaults"
 import { useCaptureStatus } from "../hooks/useCaptureStatus"
-import { AnyDict, ORL_CONTEXT_KEYS } from "src/types"
+import { AnyDict, ORL_CONTEXT_KEYS, State, StateView, URLConditionPart } from "src/types"
 import { releaseTabCapture } from "src/background/utils/tabCapture"
 import { Gear, Pin, Zap } from "src/comps/svgs";
 import { pushView } from "src/utils/state";
 import { FaCircleDot } from "react-icons/fa6";
-import { feedbackText, isFirefox } from "src/utils/helper";
+import { feedbackText, isFirefox, isMobile, randomId } from "src/utils/helper";
 import "./Header.css"
+import { KebabList, KebabListProps } from "src/options/KebabList";
+import { replaceArgs } from "src/utils/helper";
+import { produce } from "immer";
 
 
 const SUPPORTS_TAB_CAPTURE = !!(chrome.tabCapture?.capture && chrome.offscreen?.createDocument)
@@ -23,7 +26,15 @@ type HeaderProps = {
 }
 
 export function Header(props: HeaderProps) {
-  const [view, setView] = useStateView({enabled: true, isPinned: true, superDisable: true, circleWidget: true, circleWidgetIcon: true})
+  const [view, setView] = useStateView({enabled: true, isPinned: true, superDisable: true, circleWidget: true, keybindsUrlCondition: true})
+
+  let kebabInfo: {
+    list: KebabListProps['list'],
+    onSelect: (name: string) => void 
+  } = useMemo(() => {
+    return getKebabList(view, setView)
+  }, [view?.keybindsUrlCondition, view?.circleWidget])
+
 
   if (!view) return <div></div>
 
@@ -43,6 +54,7 @@ export function Header(props: HeaderProps) {
     setView({...orlTransfer, isPinned: !view.isPinned})
   }
 
+  
   return (
     <div className="Header">
 
@@ -70,11 +82,17 @@ export function Header(props: HeaderProps) {
       >
         <Pin size="1.42rem"/>
       </div>
+
+      {/* Kebab list */}
+      {(props.panel === 0 && kebabInfo?.list.length > 0 && !isMobile()) ? (
+        <KebabList centered={true} title="" list={kebabInfo.list} onSelect={kebabInfo.onSelect}/>
+      ) : <div className="noPadding"/>}
       
       {/* Circle gesture */}
-      {(props.panel === 0 && view.circleWidgetIcon) ? (
+      {(props.panel === 0 && isMobile()) ? (
         <CircleIcon active={view.circleWidget} onClick={() => {}}/>
       ) : <div className="noPadding"/>}
+
 
       {/* Audio FX */}
       {(props.panel === 0 && SUPPORTS_TAB_CAPTURE) ? (
@@ -201,4 +219,62 @@ export function CircleIcon(props: CircleIconProps) {
       <FaCircleDot size="1.02rem"/>
     </div>
   )
+}
+
+function getKebabList(view: StateView, setView: SetView): {
+  list: KebabListProps['list'],
+  onSelect: (name: string) => void 
+} {
+  if (!view) return { list: [], onSelect: () => {}}
+
+  let list: KebabListProps['list'] = []
+  let fns: {[key: string]: () => void } = {}
+
+  const onSelect = (name: string) => fns[name]?.()
+
+
+  // widget 
+  list.push({label: gvar.gsm.options.flags.widget.option, name: 'widget', checked: !!view.circleWidget})
+  fns['widget'] = () => {
+    setView({circleWidget: !view.circleWidget})
+  }
+
+  // guard if not http(s) protocol 
+  if (!gvar.tabInfo.url || !gvar.tabInfo.url.startsWith('http')) return { list, onSelect } 
+
+  let url = new URL(gvar.tabInfo.url)
+  let shortcutsInfo = getEnableShortcutsKebabInfo(view, setView, url)
+  if (shortcutsInfo) {
+    fns['shortcuts'] = shortcutsInfo.fn 
+    list.push({checked: shortcutsInfo.checked, label: replaceArgs(gvar.gsm.token.allowShortcuts, [url.hostname.replace('www.', '')]), name: 'shortcuts'})
+  }
+
+
+  return { list, onSelect }
+}
+
+function getEnableShortcutsKebabInfo(view: StateView, setView: SetView, url: URL): {checked: boolean, fn: () => void} {
+  let conditions = view.keybindsUrlCondition || getDefaultURLCondition(true)
+  let enabledParts = conditions.parts.filter(p => !p.disabled)
+  let matchingParts = enabledParts.filter(p => testURLWithPart(url.origin, p))
+  let isBlock = conditions.block
+  let checked = isBlock ? matchingParts.length === 0 : matchingParts.length > 0
+
+  return {checked, fn: () => {
+    setView({
+      keybindsUrlCondition: produce(conditions, d => {
+        if ((!checked && isBlock) || (checked && !isBlock)) {
+          const ids = new Set(d.parts.map(p => p.id))
+          matchingParts.forEach(part => ids.delete(part.id))
+          d.parts = [...ids].map(id => d.parts.find(p => p.id === id))
+        } else {
+          const part = getDefaultURLConditionPart()
+          part.valueStartsWith = url.origin
+          part.type = 'STARTS_WITH'
+          d.parts.push(part)
+        }
+      })
+    })
+    
+  }}
 }

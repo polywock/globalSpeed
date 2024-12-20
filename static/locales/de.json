@@ -70,7 +70,9 @@
     "assign": "Zuweisen",
     "none": "Keine",
     "edit": "Bearbeiten",
-    "customize": "Anpassen"
+    "customize": "Anpassen",
+    "allowShortcuts": "Abkürzungen auf $1 zulassen",
+    "allowOn": "Zulassen auf $1"
   },
   "placer": {
     "windowBounds": {
@@ -193,18 +195,16 @@
       "textSize": "Textgröße",
       "speedPresets": "Geschwindigkeitsvoreinstellungen",
       "widget": {
-        "option": "Kreis-Widget",
         "optionTooltip": "(Experimentell) Ein Kreis-Widget wird angezeigt, während Videos sichtbar sind.\n - Ziehe nach links/rechts, um durch das Video zu suchen.\n - Ziehe nach oben/unten, um die Wiedergabegeschwindigkeit anzupassen.",
         "movementMobile": "\n - Drücke den Kreis für einige Sekunden, um ihn zu bewegen oder zu löschen.",
         "movementDesktop": "\n - Mit der rechten Maustaste, ziehe den Kreis, um ihn zu bewegen oder zu löschen.",
         "headerTooltip": "Aktiviertes Kreis-Widget.",
-        "showIcon": "Symbol anzeigen",
-        "showIconTooltip": "Zeige ein Symbol im Hauptmenü, um das Kreis-Widget bequem umzuschalten.",
         "autoHide": "Automatisch ausblenden",
         "fullscreenOnly": "Nur im Vollbild",
         "fullscreenOnlyTooltip": "Widget nur anzeigen, wenn das Video im Vollbild ist.",
         "pressAction": "Aktion beim Drücken",
-        "togglePause": "Pause umschalten"
+        "togglePause": "Pause umschalten",
+        "option": "Kreis-Widget anzeigen"
       }
     },
     "editor": {

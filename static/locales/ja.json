@@ -70,7 +70,9 @@
     "assign": "割り当て",
     "none": "なし",
     "edit": "編集",
-    "customize": "カスタマイズ"
+    "customize": "カスタマイズ",
+    "allowShortcuts": "ショートカットを $1 で許可する",
+    "allowOn": "$1 で許可する"
   },
   "placer": {
     "windowBounds": {
@@ -192,18 +194,16 @@
       "textSize": "テキストサイズ",
       "speedPresets": "速度プリセット",
       "widget": {
-        "option": "円形ウィジェット",
         "optionTooltip": "（実験的）動画が表示されている間、円形ウィジェットが表示されます:\n - ビデオが表示されている間、円形ウィジェットが表示されます。\n - ビデオをシークするには、左/右にドラッグします。\n - 再生速度を調整するには、上/下にドラッグします。",
         "movementMobile": "\n - 数秒間円を押して、移動または削除します。",
         "movementDesktop": "\n - 右クリックして円をドラッグして移動または削除します。",
         "headerTooltip": "円形ウィジェットを有効にしました。",
-        "showIcon": "アイコンを表示",
-        "showIconTooltip": "メインメニューにアイコンを表示して、円形ウィジェットを簡単に切り替えられるようにします。",
         "autoHide": "自動非表示",
         "fullscreenOnly": "フルスクリーンのみ",
         "fullscreenOnlyTooltip": "ビデオがフルスクリーンの場合にのみウィジェットを表示します。",
         "pressAction": "押下アクション",
-        "togglePause": "一時停止を切り替える"
+        "togglePause": "一時停止を切り替える",
+        "option": "円形ウィジェットを表示する"
       }
     },
     "editor": {

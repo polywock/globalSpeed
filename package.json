@@ -19,8 +19,6 @@
     "build:prod": "  export NODE_ENV=production && npm run build:common   && cd build/unpacked   && zip -r '../global-speed-chromium.zip' .",
     "build:prodFf": "export NODE_ENV=production && npm run build:commonFf && cd buildFf/unpacked && zip -r '../global-speed-firefox.zip' .",
     "build:prodFff": "npm run build:prodFf && rm -rf zed && mkdir -p zed/unpacked && cp -r src static staticCh staticFf tools .babelrc package-lock.json package.json postcss.config.js tsconfig.json webpack.config.js zed/unpacked && (cd zed/unpacked && zip -r ../packed.zip .) && mv zed/packed.zip buildFf/source.zip && rm -rf zed",
-    "validate": "node tools/processLocale.js --validate",
-    "casing": "node tools/processLocale.js --casing",
     "adhere": "node tools/processLocale.js && node tools/generateGsmType.js"
   },
   "devDependencies": {

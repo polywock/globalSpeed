@@ -70,7 +70,9 @@
     "assign": "Ata",
     "none": "Hiçbiri",
     "edit": "Düzenle",
-    "customize": "Özelleştir"
+    "customize": "Özelleştir",
+    "allowShortcuts": "Kısayollara izin ver $1",
+    "allowOn": "$1 üzerinde izin ver"
   },
   "placer": {
     "windowBounds": {
@@ -193,18 +195,16 @@
       "textSize": "Metin boyutu",
       "speedPresets": "Hız ön ayarları",
       "widget": {
-        "option": "Daire widget'ı",
         "optionTooltip": "(Deneysel) Videolar görünürken bir daire widget'ı gösterilecektir:\n - Videolar görünürken bir daire widget'ı gösterilecektir.\n - Videoyu ileri/geri almak için sola/sağa sürükleyin.\n - Oynatma hızını ayarlamak için yukarı/aşağı sürükleyin.",
         "movementMobile": "\n - Hareket ettirmek veya silmek için daireye birkaç saniye basılı tutun.",
         "movementDesktop": "\n - Sağ fare düğmesi ile daireyi sürükleyerek hareket ettirin veya silin.",
         "headerTooltip": "Daire widget'ı etkinleştirildi.",
-        "showIcon": "Simgesini göster",
-        "showIconTooltip": "Daire widget'ını kolayca açıp kapatmak için ana menüde bir simge göster.",
         "autoHide": "Otomatik gizleme",
         "fullscreenOnly": "Yalnızca tam ekran",
         "fullscreenOnlyTooltip": "Widget'ı yalnızca video tam ekranda olduğunda göster.",
         "pressAction": "Basma eylemi",
-        "togglePause": "Durdurmayı geçiş yap"
+        "togglePause": "Durdurmayı geçiş yap",
+        "option": "Daire widget'ını göster"
       }
     },
     "editor": {

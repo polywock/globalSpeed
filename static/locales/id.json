@@ -70,7 +70,9 @@
     "assign": "Tetapkan",
     "none": "Tidak ada",
     "edit": "Edit",
-    "customize": "Sesuaikan"
+    "customize": "Sesuaikan",
+    "allowShortcuts": "Izinkan pintasan di $1",
+    "allowOn": "Izinkan di $1"
   },
   "placer": {
     "windowBounds": {
@@ -192,18 +194,16 @@
       "textSize": "Ukuran teks",
       "speedPresets": "Preset kecepatan",
       "widget": {
-        "option": "Widget lingkaran",
         "optionTooltip": "(Eksperimental) Widget lingkaran akan ditampilkan saat video terlihat.\n - Seret kiri/kanan untuk mencari melalui video.\n - Seret atas/bawah untuk menyesuaikan kecepatan pemutaran.",
         "movementMobile": "\n - Tekan lingkaran selama beberapa detik untuk memindahkan atau menghapusnya.",
         "movementDesktop": "\n - Dengan tombol mouse kanan, seret lingkaran untuk memindahkan atau menghapusnya.",
         "headerTooltip": "Widget lingkaran diaktifkan.",
-        "showIcon": "Tampilkan ikon",
-        "showIconTooltip": "Tampilkan ikon di menu utama untuk dengan mudah mengaktifkan widget lingkaran.",
         "autoHide": "Sembunyikan otomatis",
         "fullscreenOnly": "Hanya layar penuh",
         "fullscreenOnlyTooltip": "Hanya tampilkan widget saat video dalam layar penuh.",
         "pressAction": "Tindakan tekan",
-        "togglePause": "Alih jeda"
+        "togglePause": "Alih jeda",
+        "option": "Tampilkan widget lingkaran"
       }
     },
     "editor": {

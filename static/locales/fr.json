@@ -70,7 +70,9 @@
     "assign": "Attribuer",
     "none": "Aucun",
     "edit": "Modifier",
-    "customize": "Personnaliser"
+    "customize": "Personnaliser",
+    "allowShortcuts": "Autoriser les raccourcis sur $1",
+    "allowOn": "Autoriser sur $1"
   },
   "placer": {
     "windowBounds": {
@@ -193,18 +195,16 @@
       "textSize": "Taille du texte",
       "speedPresets": "Préréglages de vitesse",
       "widget": {
-        "option": "Widget circulaire",
         "optionTooltip": "(Expérimental) Un widget circulaire s'affichera tant que les vidéos seront visibles :\n - Faites glisser à gauche/droite pour avancer/reculer dans la vidéo.\n - Faites glisser vers le haut/bas pour ajuster la vitesse de lecture.",
         "movementMobile": "\n - Appuyez sur le cercle pendant quelques secondes pour le déplacer ou le supprimer.",
         "movementDesktop": "\n - Faites glisser le cercle avec le bouton droit de la souris pour le déplacer ou le supprimer.",
         "headerTooltip": "Widget circulaire activé.",
-        "showIcon": "Afficher l'icône",
-        "showIconTooltip": "Affiche une icône dans le menu principal pour basculer facilement le widget circulaire.",
         "autoHide": "Masquage automatique",
         "fullscreenOnly": "Plein écran uniquement",
         "fullscreenOnlyTooltip": "Afficher le widget uniquement lorsque la vidéo est en plein écran.",
         "pressAction": "Action de pression",
-        "togglePause": "Basculer la pause"
+        "togglePause": "Basculer la pause",
+        "option": "Afficher le widget cercle"
       }
     },
     "editor": {
