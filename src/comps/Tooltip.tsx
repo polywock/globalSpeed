@@ -52,7 +52,6 @@ export function Tooltip(props: TooltipProps) {
             maxWidth = clamp(0, mainBounds.x - offset - 15, maxWidth)
         }
         maxWidth = clamp(0, window.innerWidth * 0.95, maxWidth)
-        console.log(maxWidth)
         tipRef.current.style.maxWidth = `${maxWidth}px`
 
         env.isActive = true 
@@ -91,8 +90,6 @@ export function Tooltip(props: TooltipProps) {
         } else if (align === 'left') {
             x = mainBounds.x - offset - tipBounds.width
             y = mainBounds.y + (mainBounds.height - tipBounds.height) * 0.5 
-            console.log(tipBounds.width, mainBounds.x, offset)
-            console.log(x, y)
             fixY = true 
         } else if (align === 'right') {
             x = mainBounds.x + mainBounds.width + offset
