@@ -33,8 +33,7 @@ export function Header(props: HeaderProps) {
     onSelect: (name: string) => void 
   } = useMemo(() => {
     return getKebabList(view, setView)
-  }, [view?.keybindsUrlCondition, view?.circleWidget])
-
+  }, [!!view, view?.keybindsUrlCondition, view?.circleWidget])
 
   if (!view) return <div></div>
 
@@ -226,7 +225,6 @@ function getKebabList(view: StateView, setView: SetView): {
   onSelect: (name: string) => void 
 } {
   if (!view) return { list: [], onSelect: () => {}}
-
   let list: KebabListProps['list'] = []
   let fns: {[key: string]: () => void } = {}
 
