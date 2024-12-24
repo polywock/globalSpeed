@@ -4,14 +4,14 @@ Web extension that sets a default speed for HTML media elements (video and audio
 ## Install the [Chrome](https://chrome.google.com/webstore/detail/global-speed-youtube-netf/jpbjcnkcffbooppibceonlgknpkniiff), [Firefox](https://addons.mozilla.org/firefox/addon/global-speed/), or [Edge](https://microsoftedge.microsoft.com/addons/detail/mjhlabbcmjflkpjknnicihkfnmbdfced) extension. 
 
 ### Speed Control 
-- Compatible with nearly all video and audio streaming sites including Youtube, Netflix, Twitch, Spotify, podcast sites, etc. 
+- Supports nearly all video and audio streaming sites including Youtube, Netflix, Twitch, Spotify, podcast sites, etc. 
 - If pinned, tabs can have their own playback rate.
 - URL rules to automatically set a custom playback rate depending on the website. 
 - Optional shortcut keys to control speed. 
 
 ### Media Hotkeys 
 - Support for seek, frame by frame analysis, darken background, video marks, repeat segment, and more. 
-- Select what vide or audio you want prioritized for media hotkeys. 
+- Select what video or audio you want prioritized for media hotkeys. 
 - Shortcuts support multiple trigger modes, including context menu, and global shortcuts, which allows you to control background music or PiP videos while using another application. **[Chromium only]**
 
 ### Filters 
