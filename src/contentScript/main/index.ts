@@ -13,7 +13,6 @@ let mediaReferences: HTMLMediaElement[] = []
 let shadowRoots: ShadowRoot[] = []
 let client: StratumClient
 let ghostMode: GhostMode
-let toStringHijack: ToStringHijack
 
 let ensureYtLastSpeed: number 
 let handleYtRateChange: (newSpeed: number) => void 
@@ -22,15 +21,11 @@ function main() {
   if (isFirefox()) {
     if (window.loadedGsCtx) return 
     window.loadedGsCtx = true 
-
+    
     ensureSoundcloud()
   }
   ensureBaidu()
-
   
-  
-  toStringHijack = new ToStringHijack() 
-  ensureBilibili()
   ghostMode = new GhostMode()
   client = new StratumClient()
   ensureYt()
@@ -53,9 +48,6 @@ function overridePrototypeMethod(type: any, methodName: string, eventCb: (args: 
     eventCb(args, this, _return)
     return _return
   }
-  try {
-    toStringHijack.set(type.prototype[methodName], ogFunc)
-  } catch (err) {}
 }
 
 function handleOverrideMedia(args: any, _this: HTMLMediaElement, _return: any) {
@@ -130,54 +122,6 @@ function handleYoutube(e: Event) {
   window.removeEventListener("timeupdate", handleYoutube, {capture: true})
 }
 
-function ensureBilibili() {
-  if (!location.hostname.includes("bilibili.com")) return 
-
-  let og = window.localStorage.getItem;
-  window.localStorage.getItem = function(...args) {
-    let out = og.apply(this, args)
-    try {
-      if (args[0] === "bwphevc_supported") {
-        let parsed = JSON.parse(out);
-        if (parsed.supported && !(parsed?.info?.isBrowserHEVCTypeSupported)) {
-          parsed.supported = false  
-          return JSON.stringify(parsed)
-        }
-      }
-    } catch (err) {}
-    return out 
-  }
-  toStringHijack.set(window.localStorage.getItem, og)
-}
-
-class ToStringHijack {
-  originalFn = Function.prototype.toString
-  outputMap = new Map<any, string> ()
-  constructor() {  
-    if (location.hostname.includes("twitch")) {
-      return 
-    }
-
-    let we = this
-
-    Function.prototype.toString = function(...args) {
-      try {
-        const output = native.map.get.call(we.outputMap, this)
-        if (output) return output
-      } catch (err) { }
-      return we.originalFn.apply(this, args)
-    }
-
-    this.set(Function.prototype.toString, this.originalFn)
-  }
-  set = (replacement: Function, original: Function) => {
-    try {
-      const output = this.originalFn.call(original)
-      output && native.map.set.call(this.outputMap, replacement, output)
-    } catch (err) {}
-  }
-}
-
 class GhostMode {
   active = false 
   tempTimeout?: number
@@ -219,11 +163,6 @@ class GhostMode {
             }
           }
         })
-  
-        const newDesc = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, key)
-  
-        toStringHijack.set(newDesc.get, ogDesc.get)
-        toStringHijack.set(newDesc.set, ogDesc.set)
       } catch (err) { }
     }
 
