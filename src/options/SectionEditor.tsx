@@ -131,8 +131,26 @@ function onMove(setView: SetView, view: StateView, id: string, newIndex: number)
   requestSyncContextMenu()
 }
 
-let options = structuredClone(availableCommandNames)
-options.splice(3, 0, "presets")
+let cachedOptions: {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}[] 
+
+function getOptions() {
+  if (cachedOptions) return cachedOptions 
+  let available = [...availableCommandNames]
+  available.splice(3, 0, 'presets')
+
+  cachedOptions = available.map((name, i) => {
+    let label = "------"
+    if (name) {
+      label = (gvar.gsm.command as any)[name]
+    }
+    return {value: name, label, disabled: name == null}
+  })
+  return cachedOptions 
+}
 
 function EditorControls(props: {view: StateView, setView: SetView}) {
   const { view, setView } = props
@@ -149,9 +167,9 @@ function EditorControls(props: {view: StateView, setView: SetView}) {
       <select value={commandOption} onChange={e => {
         setCommandOption(e.target.value)
       }}>
-        {options.map((name, i) => (
-          <option disabled={name == null} key={name || i} value={name}>{name ? (gvar.gsm.command as any)[name] : "------"}</option>
-        ))}
+        {getOptions().map(v => {
+          return <option key={v.value} disabled={v.disabled} value={v.value}>{v.label}</option>
+        })}
       </select>
 
       {/* Secondary select */}

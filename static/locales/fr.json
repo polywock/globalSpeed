@@ -156,7 +156,8 @@
     "toggleSpeed": "Basculer la vitesse",
     "toggleSpeedTooltip": "Bascule entre la vitesse du raccourci et la dernière vitesse.",
     "alwaysOn": "Toujours activé",
-    "alwaysOnTooltip": "Par défaut, le raccourci ne peut réactiver l'extension que si elle a été désactivée en utilisant le même raccourci. Activez ce paramètre pour vous assurer que le raccourci fonctionne toujours pour activer l'extension, même si elle a été désactivée via le menu de l'interface utilisateur."
+    "alwaysOnTooltip": "Par défaut, le raccourci ne peut réactiver l'extension que si elle a été désactivée en utilisant le même raccourci. Activez ce paramètre pour vous assurer que le raccourci fonctionne toujours pour activer l'extension, même si elle a été désactivée via le menu de l'interface utilisateur.",
+    "muteTab": "Couper l'onglet"
   },
   "options": {
     "flags": {

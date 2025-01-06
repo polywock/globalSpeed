@@ -206,6 +206,7 @@ export type Command = {
   withDuration?: boolean,
   withFilterTarget?: boolean,
   withFilterOption?: boolean,
+  ffName?: string,
   valueType?: "number" | "string" | "modalString" | "adjustMode" | "state",
   hasFeedback?: boolean,
   requiresMedia?: boolean,

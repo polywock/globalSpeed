@@ -6,7 +6,7 @@ import { filterInfos } from "./filters"
 
 export type CommandName = "nothing" | "runCode" | "openUrl" | "intoPopup" |
   "speed" | "speedChangesPitch" | "pin" | "state" | 
-  "seek" | "pause" | "mute" | "volume" | "setMark" | "seekMark" | "loop" | "skip" | 
+  "seek" | "pause" | "mute" | "muteTab" | "volume" | "setMark" | "seekMark" | "loop" | "skip" | 
   "fullscreen" | "PiP" | "mediaInfo" | "cinema" |
   "fxState" | "fxReset" | "fxSwap" | "fxFilter" | "drawPage" |
   "afxGain" | "afxPitch" | "afxDelay" | "afxPan" | "afxMono" | "afxCapture"  | "afxReset"
@@ -185,6 +185,19 @@ export let commandInfos: {[key in CommandName]: Command} = {
     generate: () => ({
       id: randomId(),
       command: "mute",
+      enabled: true,
+      greedy: true,
+      valueState: "toggle"
+    })
+  },
+  muteTab: {
+    group: CommandGroup.MEDIA,
+    hasFeedback: true,
+    valueType: "state",
+    requiresMedia: true,
+    generate: () => ({
+      id: randomId(),
+      command: "muteTab",
       enabled: true,
       greedy: true,
       valueState: "toggle"

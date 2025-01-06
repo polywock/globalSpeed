@@ -156,7 +156,8 @@
     "toggleSpeed": "Velocità toggle",
     "toggleSpeedTooltip": "Alterna tra la velocità della scorciatoia e l'ultima velocità.",
     "alwaysOn": "Sempre acceso",
-    "alwaysOnTooltip": "Per impostazione predefinita, la scorciatoia può riattivare l'estensione solo se è stata disabilitata l'ultima volta utilizzando la stessa scorciatoia. Abilita questa impostazione per assicurarti che la scorciatoia funzioni sempre per abilitare l'estensione, anche se è stata disattivata tramite il menu UI."
+    "alwaysOnTooltip": "Per impostazione predefinita, la scorciatoia può riattivare l'estensione solo se è stata disabilitata l'ultima volta utilizzando la stessa scorciatoia. Abilita questa impostazione per assicurarti che la scorciatoia funzioni sempre per abilitare l'estensione, anche se è stata disattivata tramite il menu UI.",
+    "muteTab": "Silenzia scheda"
   },
   "options": {
     "flags": {

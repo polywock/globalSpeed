@@ -156,7 +156,8 @@
     "toggleSpeed": "Alih kecepatan",
     "toggleSpeedTooltip": "Beralih antara kecepatan pintasan dan kecepatan terakhir.",
     "alwaysOn": "Selalu aktif",
-    "alwaysOnTooltip": "Secara default, pintasan hanya dapat mengaktifkan kembali ekstensi jika terakhir kali dinonaktifkan menggunakan pintasan yang sama. Aktifkan pengaturan ini untuk memastikan pintasan selalu berfungsi untuk mengaktifkan ekstensi, bahkan jika dimatikan melalui menu UI."
+    "alwaysOnTooltip": "Secara default, pintasan hanya dapat mengaktifkan kembali ekstensi jika terakhir kali dinonaktifkan menggunakan pintasan yang sama. Aktifkan pengaturan ini untuk memastikan pintasan selalu berfungsi untuk mengaktifkan ekstensi, bahkan jika dimatikan melalui menu UI.",
+    "muteTab": "Bisukan tab"
   },
   "options": {
     "flags": {

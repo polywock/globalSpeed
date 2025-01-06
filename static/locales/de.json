@@ -156,7 +156,8 @@
     "toggleSpeed": "Geschwindigkeit umschalten",
     "toggleSpeedTooltip": "Zwischen der Shortcut-Geschwindigkeit und der letzten Geschwindigkeit umschalten.",
     "alwaysOn": "Immer an",
-    "alwaysOnTooltip": "Standardmäßig kann die Tastenkombination die Erweiterung nur erneut aktivieren, wenn sie zuletzt mit derselben Tastenkombination deaktiviert wurde. Aktiviere diese Einstellung, um sicherzustellen, dass die Tastenkombination immer funktioniert, um die Erweiterung zu aktivieren, auch wenn sie über das UI-Menü deaktiviert wurde."
+    "alwaysOnTooltip": "Standardmäßig kann die Tastenkombination die Erweiterung nur erneut aktivieren, wenn sie zuletzt mit derselben Tastenkombination deaktiviert wurde. Aktiviere diese Einstellung, um sicherzustellen, dass die Tastenkombination immer funktioniert, um die Erweiterung zu aktivieren, auch wenn sie über das UI-Menü deaktiviert wurde.",
+    "muteTab": "Tab stummschalten"
   },
   "options": {
     "flags": {

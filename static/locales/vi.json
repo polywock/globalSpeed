@@ -156,7 +156,8 @@
     "toggleSpeed": "Chuyển đổi tốc độ",
     "toggleSpeedTooltip": "Chuyển đổi giữa tốc độ phím tắt và tốc độ cuối cùng.",
     "alwaysOn": "Luôn bật",
-    "alwaysOnTooltip": "Theo mặc định, phím tắt chỉ có thể kích hoạt lại tiện ích mở rộng nếu nó được tắt lần cuối bằng cách sử dụng cùng một phím tắt. Bật cài đặt này để đảm bảo phím tắt luôn hoạt động để bật tiện ích mở rộng, ngay cả khi nó đã bị tắt qua menu giao diện người dùng."
+    "alwaysOnTooltip": "Theo mặc định, phím tắt chỉ có thể kích hoạt lại tiện ích mở rộng nếu nó được tắt lần cuối bằng cách sử dụng cùng một phím tắt. Bật cài đặt này để đảm bảo phím tắt luôn hoạt động để bật tiện ích mở rộng, ngay cả khi nó đã bị tắt qua menu giao diện người dùng.",
+    "muteTab": "Tắt tiếng tab"
   },
   "options": {
     "flags": {

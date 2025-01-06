@@ -74,7 +74,7 @@ export function NameArea(props: NameAreaProps) {
         }
     ]
 
-    let label = (gvar.gsm.command as any)[value.command]
+    let label = (gvar.gsm.command as any)[command.ffName || value.command]
     let tooltip = (gvar.gsm.command as any)[value.command.concat("Tooltip")]
     let tabCaptureWarning = command.requiresTabCapture && !(value.command === "afxCapture" || value.command === "afxReset") && (value.trigger || Trigger.LOCAL) === Trigger.LOCAL
     let adjustMode = command.valueType === "adjustMode" ? (value.adjustMode || AdjustMode.SET) : null 
@@ -112,7 +112,7 @@ export function NameArea(props: NameAreaProps) {
             {(value.command === "fxReset" || value.command === "afxReset") && <GiAnticlockwiseRotation className="hoverYes tr110" />}
             {value.command === "fxSwap" && <FaExchangeAlt className="hoverYes tr110" />}
             {value.command === "pause" && <FaPause className="tr95" />}
-            {value.command === "mute" && <FaVolumeMute className="tr105" />}
+            {(value.command === "mute" || value.command === "muteTab") && <FaVolumeMute className="tr105" />}
             {value.command === "volume" && <FaVolumeUp className="tr105" />}
             {value.command === "PiP" && <MdPictureInPictureAlt className="tr105" />}
             {value.command === "cinema" && <MdDarkMode/>}

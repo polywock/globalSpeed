@@ -157,7 +157,8 @@ export type Gsm = {
     toggleSpeed: string,
     toggleSpeedTooltip: string,
     alwaysOn: string,
-    alwaysOnTooltip: string
+    alwaysOnTooltip: string,
+    muteTab: string
   },
   options: {
     flags: {

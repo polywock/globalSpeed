@@ -156,7 +156,8 @@
     "toggleSpeed": "Tukar kelajuan",
     "toggleSpeedTooltip": "Tukar antara kelajuan pintasan dan kelajuan terakhir.",
     "alwaysOn": "Sentiasa hidup",
-    "alwaysOnTooltip": "Secara lalai, pintasan hanya boleh mengaktifkan semula sambungan jika ia terakhir dilumpuhkan menggunakan pintasan yang sama. Dayakan tetapan ini untuk memastikan pintasan sentiasa berfungsi untuk menghidupkan sambungan, walaupun ia dimatikan melalui menu UI."
+    "alwaysOnTooltip": "Secara lalai, pintasan hanya boleh mengaktifkan semula sambungan jika ia terakhir dilumpuhkan menggunakan pintasan yang sama. Dayakan tetapan ini untuk memastikan pintasan sentiasa berfungsi untuk menghidupkan sambungan, walaupun ia dimatikan melalui menu UI.",
+    "muteTab": "Senyapkan tab"
   },
   "options": {
     "flags": {
