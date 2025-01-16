@@ -221,8 +221,9 @@ const commandHandlers: {
   muteTab: async args => {
     if (!args.tabInfo?.tabId) return 
     let tabId = args.tabInfo.tabId
-    const tab = await chrome.tabs.get(tabId)
-    chrome.tabs.update(tabId, {muted: !tab.mutedInfo?.muted})
+    const isMuted = (await chrome.tabs.get(tabId))?.mutedInfo?.muted
+    args.show({text: isMuted ? '100%' : '0%'})
+    chrome.tabs.update(tabId, {muted: !isMuted})
   },
   state: async args => {
     const { kb, show, override, fetch } = args 
