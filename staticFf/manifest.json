@@ -13,7 +13,7 @@
   "permissions": ["storage", "webNavigation", "scripting", "contextMenus"],
   "host_permissions": ["https://*/*", "http://*/*", "file://*/*"],
   "web_accessible_resources": [
-    {"resources": ["circles/*.svg"], "matches": ["http://*/*", " https://*/*"]},
+    {"resources": ["circles/*.svg"], "matches": ["http://*/*", "https://*/*"]},
     {"resources": ["main.js"], "matches": ["https://*/*", "http://*/*"]}
   ],
   "action": {
@@ -28,6 +28,7 @@
   },
   "content_scripts": [{
     "matches": ["https://*/*", "http://*/*", "file://*/*"],
+    "exclude_matches": ["https://*.ubs.com/*"],
     "js": ["isolated.js", "mainLoader.js"],
     "all_frames": true,
     "match_about_blank": true,

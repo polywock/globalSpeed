@@ -1,7 +1,7 @@
 {
   "name": "__MSG_appName__",
   "short_name": "Global Speed",
-  "version": "3.2.13",
+  "version": "3.2.14",
   "default_locale": "en",
   "description": "__MSG_appDesc__",
   "manifest_version": 3,
@@ -24,6 +24,7 @@
   "content_scripts": [
     {
       "matches": ["https://*/*", "http://*/*", "file://*/*"],
+      "exclude_matches": ["https://*.ubs.com/*"],
       "js": ["isolated.js"],
       "all_frames": true,
       "match_about_blank": true,
@@ -31,6 +32,7 @@
     },
     {
       "matches": ["https://*/*", "http://*/*", "file://*/*"],
+      "exclude_matches": ["https://*.ubs.com/*"],
       "js": ["main.js"],
       "all_frames": true,
       "match_about_blank": true,
