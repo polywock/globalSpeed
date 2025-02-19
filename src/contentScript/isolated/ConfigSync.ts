@@ -108,10 +108,19 @@ export class ConfigSync {
     if (!chrome.runtime?.id) return gvar.os.handleOrphan()
     if (!this.client?.view) return 
     if (this.client.view.superDisable) return 
+
     const enabled = this.client.view.enabled
+    if (!this.client.view.keybinds) return
+
     let keybinds = this.client.view.keybinds
     if (!enabled) {
-      keybinds = this.client.view.keybinds.filter(kb => kb.command === "state" && kb.enabled && (kb.trigger || Trigger.LOCAL) === Trigger.LOCAL && (this.client.view.latestViaShortcut || kb.alwaysOn))
+      keybinds = this.client.view.keybinds?.filter(kb => 
+        kb?.command === "state" && 
+        kb?.enabled && 
+        (kb?.trigger || Trigger.LOCAL) === Trigger.LOCAL && 
+        (this.client.view?.latestViaShortcut || kb?.alwaysOn)
+      ) || []
+      
       if (!keybinds.length) return 
     }
 
