@@ -30,7 +30,7 @@ export class Overseer {
     indicator: Indicator
     indicatorAlt: Indicator
     itc?: Interactive
-    circle: Circle
+    circle?: Circle
 
     orphaned = false 
     released = false 
@@ -81,9 +81,9 @@ export class Overseer {
         if (document.hidden) {
             this.configSync?.release(); 
             delete this.configSync
-          } else {
+        } else {
             this.configSync = this.configSync ?? new ConfigSync() 
-          }
+        }
     }
     handleOrphan = () => {
         if (this.orphaned) return 

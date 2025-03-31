@@ -1,21 +1,21 @@
 import { useMemo } from "react"
-import { checkFilterDeviation, requestSyncContextMenu, testURL, testURLWithPart } from "../utils/configUtils"
+import { checkFilterDeviation, requestSyncContextMenu, testURLWithPart } from "../utils/configUtils"
 import { GoArrowLeft} from "react-icons/go"
 import { FaGithub } from "react-icons/fa";
 import { FaPowerOff, FaVolumeUp } from "react-icons/fa"
 import { SetView, useStateView } from "../hooks/useStateView"
 import { getDefaultAudioFx, getDefaultFx, getDefaultURLCondition, getDefaultURLConditionPart } from "../defaults"
 import { useCaptureStatus } from "../hooks/useCaptureStatus"
-import { AnyDict, ORL_CONTEXT_KEYS, State, StateView, URLConditionPart } from "src/types"
+import { AnyDict, ORL_CONTEXT_KEYS, StateView } from "src/types"
 import { releaseTabCapture } from "src/background/utils/tabCapture"
 import { Gear, Pin, Zap } from "src/comps/svgs";
 import { pushView } from "src/utils/state";
 import { FaCircleDot } from "react-icons/fa6";
-import { feedbackText, isFirefox, isMobile, randomId } from "src/utils/helper";
-import "./Header.css"
+import { feedbackText, isFirefox, isMobile } from "src/utils/helper";
 import { KebabList, KebabListProps } from "src/options/KebabList";
 import { replaceArgs } from "src/utils/helper";
 import { produce } from "immer";
+import "./Header.css"
 
 
 const SUPPORTS_TAB_CAPTURE = !!(chrome.tabCapture?.capture && chrome.offscreen?.createDocument)

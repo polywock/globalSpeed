@@ -35,8 +35,6 @@ function main() {
   overridePrototypeMethod(HTMLMediaElement, "play", handleOverrideMedia)
   overridePrototypeMethod(HTMLMediaElement, "pause", handleOverrideMedia)
   overridePrototypeMethod(HTMLMediaElement, "load", handleOverrideMedia)
-  
-  overridePrototypeMethod(Element, "createShadowRoot", handleOverrideShadow)
   overridePrototypeMethod(Element, "attachShadow", handleOverrideShadow)
 }
 
@@ -48,6 +46,7 @@ function overridePrototypeMethod(type: any, methodName: string, eventCb: (args: 
     eventCb(args, this, _return)
     return _return
   }
+  type.prototype[methodName].toString = () => `function ${methodName}() { [native code] }`
 }
 
 function handleOverrideMedia(args: any, _this: HTMLMediaElement, _return: any) {
