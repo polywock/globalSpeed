@@ -31,7 +31,6 @@ function main() {
   ensureYt()
   
   
-  
   overridePrototypeMethod(HTMLMediaElement, "play", handleOverrideMedia)
   overridePrototypeMethod(HTMLMediaElement, "pause", handleOverrideMedia)
   overridePrototypeMethod(HTMLMediaElement, "load", handleOverrideMedia)
@@ -41,12 +40,15 @@ function main() {
 function overridePrototypeMethod(type: any, methodName: string, eventCb: (args: any, _this: any, _return: any) => void) {
   const ogFunc = type?.prototype[methodName]
   if (!ogFunc) return 
+  const ogString = ogFunc.toString()
   type.prototype[methodName] = function(...args: any[]) {
     const _return = ogFunc.apply(this, args)
     eventCb(args, this, _return)
     return _return
   }
-  type.prototype[methodName].toString = () => `function ${methodName}() { [native code] }`
+
+  // For amazon music's sake.
+  type.prototype[methodName].toString = () => ogString
 }
 
 function handleOverrideMedia(args: any, _this: HTMLMediaElement, _return: any) {
