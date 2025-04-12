@@ -6,7 +6,7 @@ import { AdjustMode, Trigger } from "src/types"
 import { Circle } from "./utils/Circle"
 import { getLeaf } from "src/utils/nativeUtils"
 
-const forceForThisDomain = [".qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com", "onedrive.live.com", "open.spotify.com", ".instagram.com", ".descript.com", "www.ccmtv.cn"]
+const FORCED_GHOST_LIST = [".qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com", "onedrive.live.com", "open.spotify.com", ".instagram.com", ".descript.com", "www.ccmtv.cn", ".douyin.com", ".tiktok.com"]
   .some(site => (location.hostname || "").includes(site))
 
 export class ConfigSync {
@@ -70,7 +70,7 @@ export class ConfigSync {
       calcGhostMode = true 
     }
 
-    if (view?.enabled && (calcGhostMode || forceForThisDomain)) {
+    if (view?.enabled && (calcGhostMode || FORCED_GHOST_LIST)) {
       if (gvar.ghostMode) return 
       gvar.ghostMode = true 
       gvar.os.stratumServer.initialized ? this.sendGhostOn() : gvar.os.stratumServer.initCbs.add(this.sendGhostOn)
