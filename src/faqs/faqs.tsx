@@ -6,6 +6,7 @@ import { FaMousePointer, FaPowerOff } from "react-icons/fa"
 import { createRoot } from "react-dom/client"
 import { Pin, Zap } from "src/comps/svgs"
 import "./faqs.css"
+import { IoEllipsisVertical } from "react-icons/io5"
 
 
 function Faqs(props: {}) {
@@ -38,16 +39,15 @@ function Faqs(props: {}) {
     <Group label="shortcuts">
       <Item q={"How do I block hotkeys on some sites? "} a={<ul>
         <li>In this example, I'll block hotkeys for <code>geforcenow.com</code>, a game streaming website.</li>
-        <li>1. Click on the <code>{"URL conditions"}</code> button at the bottom-right of the Shortcut Editor section.</li>
-        <li>2. Ensure <code>Blocklist</code> is selected. This way we can block specific websites.</li>
-        <li>3. Add a <code>contains</code> <code>geforcenow.com</code> condition.</li>
-        <li><code className="yellow">Tip:</code> If you want shortcuts to only be enabled for specific website, you can change the mode to <code>Allowlist</code>.</li>
+        <li>1. Go to <code>geforcenow.com</code>.</li>
+        <li>2. Open the Global Speed menu.</li>
+        <li>3. Near the power-off button <FaPowerOff color={"#02a"} size="1.21rem"/>, click on the 3 vertical dots <IoEllipsisVertical style={{verticalAlign: 'middle'}} size="1.2em"/> to show more options.</li>
+        <li>4. It should show an option to disable shortcuts for <code>geforcenow.com</code>.</li>
       </ul>}/>
       <Item q={"I can't type because the Global Speed hotkeys are being triggered."} a={<>
         <ol>
-          <li>Suspend Global Speed using the  <FaPowerOff color={"#02a"} size="1.21rem"/> button. This disables all hotkeys.</li>
-          <li>Or, Suspend Global Speed using the  <FaPowerOff color={"#02a"} size="1.21rem"/> hotkey <code>Shift + Q</code>. This disables all hotkeys except itself so you can later reactivate Global Speed.</li>
-          <li>Or, add a URL condition to the hotkeys so it doesn't run on that website.</li>
+          <li>Suspend Global Speed using the  <FaPowerOff color={"#02a"} size="1.21rem"/> button.</li>
+          <li>For a permenant solution, while on the website, open Global Speed, click the 3 dots menu, and disable shortcuts for that website</li>
         </ol>
       </>}/>
       <Item q={"Why do hotkeys display incorrectly for my keyboard layout? "} a={<div>Global Speed uses a QWERTY input by default. If using a non-QWERTY keyboard, you change the keyboard input type to virtual in the options page. The option is hidden under the 3 dots. <code>[...]</code></div>}/>

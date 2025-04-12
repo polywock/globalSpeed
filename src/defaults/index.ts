@@ -2,7 +2,19 @@
 import { Fx, AudioFx, URLRule, IndicatorInit, URLCondition, URLConditionPart, Context, CONTEXT_KEYS, AnyDict, State } from "../types"
 import { FilterName, filterInfos } from "./filters"
 import { getDefaultKeybinds } from "./commands"
-import { chunkByPredicate, isMobile, randomId } from "../utils/helper"
+import { chunkByPredicate, randomId } from "../utils/helper"
+
+const DEFAULT_WEBSITES_SHORTCUTS_DISABLED = ['https://docs.google.com', 'https://play.geforcenow.com', 'https://meet.google.com', 'https://zoom.us', 'teams.microsoft.com', 'https://www.figma.com', "https://docs.qq.com"]
+
+function generateUrlPart(origin: string): URLConditionPart {
+    return {
+      id: randomId(),
+      type: 'STARTS_WITH',
+      valueStartsWith: origin,
+      valueContains: origin,
+      valueRegex: ''
+    }
+}
 
 export function getDefaultState(): State {
   let state = {
@@ -10,7 +22,11 @@ export function getDefaultState(): State {
     firstUse: Date.now(),
     keybinds: getDefaultKeybinds(),
     freshKeybinds: true,
-    ...getDefaultContext()
+    ...getDefaultContext(),
+    keybindsUrlCondition: {
+      block: true,
+      parts: DEFAULT_WEBSITES_SHORTCUTS_DISABLED.map(origin => generateUrlPart(origin))
+    }
   } as State;
 
   return state 

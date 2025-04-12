@@ -540,15 +540,6 @@ export function getDefaultKeybinds(): Keybind[] {
       spacing: 1
     },
     {
-      ...commandInfos.pin.generate(),
-      key: "KeyQ"
-    },
-    {
-      ...commandInfos.state.generate(),
-      key: {code: "KeyQ", shiftKey: true},
-      spacing: 2
-    },
-    {
       ...commandInfos.seek.generate(),
       key: "KeyZ",
       adjustMode: AdjustMode.ADD,
