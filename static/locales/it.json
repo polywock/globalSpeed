@@ -1,6 +1,6 @@
 {
   ":appName": "Global Speed: Controllo della velocità dei video",
-  ":appDesc": "Imposta una velocità predefinita per video e audio.",
+  ":appDesc": "Controllo universale della velocità per video e audio.",
   "audio": {
     "captureTab": "Cattura",
     "releaseTab": "Rilascia",
@@ -157,7 +157,8 @@
     "toggleSpeedTooltip": "Alterna tra la velocità della scorciatoia e l'ultima velocità.",
     "alwaysOn": "Sempre acceso",
     "alwaysOnTooltip": "Per impostazione predefinita, la scorciatoia può riattivare l'estensione solo se è stata disabilitata l'ultima volta utilizzando la stessa scorciatoia. Abilita questa impostazione per assicurarti che la scorciatoia funzioni sempre per abilitare l'estensione, anche se è stata disattivata tramite il menu UI.",
-    "muteTab": "Silenzia scheda"
+    "muteTab": "Silenzia scheda",
+    "loopEntire": "Loop completo"
   },
   "options": {
     "flags": {

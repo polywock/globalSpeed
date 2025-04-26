@@ -124,7 +124,7 @@ export function NameArea(props: NameAreaProps) {
             {(value.command === "setMark" && !hasSpecial) && <FaBookmark className="tr95" />}
             {hasSpecial && <FaStar />}
             {value.command === "seekMark" && <FaArrowRight className="tr95" />}
-            {value.command === "loop" && <TiArrowLoop className="tr140" />}
+            {(value.command === "loop" || value.command === "loopEntire") && <TiArrowLoop className="tr140" />}
             {value.command === "skip" && <PiArrowArcRightFill />}
 
             {/* FaRightArrowLeft */}

@@ -343,6 +343,20 @@ const commandHandlers: {
     })
     applyToMedia({type: "SEEK_MARK", key: jumpTo ?? kb.valueString, fast: kb.fastSeek})
   },
+  loopEntire: async args => {
+    const { media, kb, applyToMedia, show } = args 
+
+    let probe = (await chrome.tabs.sendMessage(media.tabInfo.tabId, {type: "MEDIA_PROBE", key: media.key} as Messages, {frameId: media.tabInfo.frameId || 0})) as MediaProbe
+
+    let on = (!probe.fullyLooped && kb.valueState === "toggle") || kb.valueState === "on"
+
+    show({
+      icons: ["loop"],
+      text: ` ${on ? 'on' : 'off'}`,
+      small: true,
+    })
+    applyToMedia({type: "LOOP_ENTIRE", key: media.key, state: on ? 'on' : 'off'})
+  },
   loop: async args => {
     const { media, kb, applyToMedia, show } = args 
     if (media.marks.includes(kb.valueString)) {

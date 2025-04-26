@@ -1,6 +1,6 @@
 {
   ":appName": "Global Speed: Kawalan Kelajuan Video",
-  ":appDesc": "Tetapkan kelajuan lalai untuk video dan audio.",
+  ":appDesc": "Kawalan kelajuan universal untuk video dan audio.",
   "audio": {
     "captureTab": "Tangkap",
     "releaseTab": "Lepaskan",
@@ -157,7 +157,8 @@
     "toggleSpeedTooltip": "Tukar antara kelajuan pintasan dan kelajuan terakhir.",
     "alwaysOn": "Sentiasa hidup",
     "alwaysOnTooltip": "Secara lalai, pintasan hanya boleh mengaktifkan semula sambungan jika ia terakhir dilumpuhkan menggunakan pintasan yang sama. Dayakan tetapan ini untuk memastikan pintasan sentiasa berfungsi untuk menghidupkan sambungan, walaupun ia dimatikan melalui menu UI.",
-    "muteTab": "Senyapkan tab"
+    "muteTab": "Senyapkan tab",
+    "loopEntire": "Ulang sepenuhnya"
   },
   "options": {
     "flags": {

@@ -8,7 +8,7 @@ import { SetView, useStateView } from "../hooks/useStateView"
 import { FaFile, FaGlobe } from "react-icons/fa"
 import { produce } from "immer"
 import { URLModal } from "./URLModal"
-import { getDefaultURLCondition } from "../defaults"
+import { getDefaultKeybindsUrlConditions, getDefaultURLCondition } from "../defaults"
 import { requestSyncContextMenu } from "src/utils/configUtils"
 import { ListItem } from "./ListItem"
 import { List } from "./List"
@@ -206,7 +206,7 @@ function EditorControls(props: {view: StateView, setView: SetView}) {
         if (!areYouSure()) return 
         setView({
           keybinds: getDefaultKeybinds(),
-          keybindsUrlCondition: null,
+          keybindsUrlCondition: getDefaultKeybindsUrlConditions(),
           freshKeybinds: true
         })
         requestSyncContextMenu()

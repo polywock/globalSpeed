@@ -7,7 +7,7 @@ import { filterInfos } from "./filters"
 export type CommandName = "nothing" | "runCode" | "openUrl" | "intoPopup" |
   "speed" | "speedChangesPitch" | "pin" | "state" | 
   "seek" | "pause" | "mute" | "muteTab" | "volume" | "setMark" | "seekMark" | "loop" | "skip" | 
-  "fullscreen" | "PiP" | "mediaInfo" | "cinema" |
+  "fullscreen" | "PiP" | "mediaInfo" | "cinema" | "loopEntire" |
   "fxState" | "fxReset" | "fxSwap" | "fxFilter" | "drawPage" |
   "afxGain" | "afxPitch" | "afxDelay" | "afxPan" | "afxMono" | "afxCapture"  | "afxReset"
 
@@ -321,6 +321,18 @@ export let commandInfos: {[key in CommandName]: Command} = {
       command: "mediaInfo",
       enabled: true,
       greedy: true
+    })
+  },
+  loopEntire: {
+    group: CommandGroup.MEDIA,
+    requiresMedia: true,
+    valueType: "state",
+    generate: () => ({
+      id: randomId(),
+      command: "loopEntire",
+      enabled: true,
+      greedy: true,
+      valueState: "toggle"
     })
   },
   fxState: {

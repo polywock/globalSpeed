@@ -4,7 +4,7 @@ import { FilterName, filterInfos } from "./filters"
 import { getDefaultKeybinds } from "./commands"
 import { chunkByPredicate, randomId } from "../utils/helper"
 
-const DEFAULT_WEBSITES_SHORTCUTS_DISABLED = ['https://docs.google.com', 'https://play.geforcenow.com', 'https://meet.google.com', 'https://zoom.us', 'teams.microsoft.com', 'https://www.figma.com', "https://docs.qq.com"]
+const DEFAULT_WEBSITES_SHORTCUTS_DISABLED = ['https://docs.google.com', 'https://play.geforcenow.com', "https://docs.qq.com"]
 
 function generateUrlPart(origin: string): URLConditionPart {
     return {
@@ -23,13 +23,17 @@ export function getDefaultState(): State {
     keybinds: getDefaultKeybinds(),
     freshKeybinds: true,
     ...getDefaultContext(),
-    keybindsUrlCondition: {
-      block: true,
-      parts: DEFAULT_WEBSITES_SHORTCUTS_DISABLED.map(origin => generateUrlPart(origin))
-    }
+    keybindsUrlCondition: getDefaultKeybindsUrlConditions()
   } as State;
 
   return state 
+}
+
+export function getDefaultKeybindsUrlConditions() {
+  return {
+    block: true,
+    parts: DEFAULT_WEBSITES_SHORTCUTS_DISABLED.map(origin => generateUrlPart(origin))
+  }
 }
 
 export function getDefaultContext(withNulls?: boolean): Context {

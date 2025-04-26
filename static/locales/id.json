@@ -1,6 +1,6 @@
 {
   ":appName": "Global Speed: Kontrol kecepatan video",
-  ":appDesc": "Atur kecepatan default untuk video dan audio.",
+  ":appDesc": "Kontrol kecepatan universal untuk video dan audio.",
   "audio": {
     "captureTab": "Tangkap",
     "releaseTab": "Lepas",
@@ -157,7 +157,8 @@
     "toggleSpeedTooltip": "Beralih antara kecepatan pintasan dan kecepatan terakhir.",
     "alwaysOn": "Selalu aktif",
     "alwaysOnTooltip": "Secara default, pintasan hanya dapat mengaktifkan kembali ekstensi jika terakhir kali dinonaktifkan menggunakan pintasan yang sama. Aktifkan pengaturan ini untuk memastikan pintasan selalu berfungsi untuk mengaktifkan ekstensi, bahkan jika dimatikan melalui menu UI.",
-    "muteTab": "Bisukan tab"
+    "muteTab": "Bisukan tab",
+    "loopEntire": "Putar Sepenuhnya"
   },
   "options": {
     "flags": {

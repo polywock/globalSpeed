@@ -1,6 +1,6 @@
 {
   ":appName": "Global Speed: Contrôle de vitesse des vidéo",
-  ":appDesc": "Définissez une vitesse par défaut pour la vidéo et l'audio.",
+  ":appDesc": "Contrôle universel de la vitesse pour la vidéo et l'audio.",
   "audio": {
     "captureTab": "Capturer",
     "releaseTab": "Libérer",
@@ -157,7 +157,8 @@
     "toggleSpeedTooltip": "Bascule entre la vitesse du raccourci et la dernière vitesse.",
     "alwaysOn": "Toujours activé",
     "alwaysOnTooltip": "Par défaut, le raccourci ne peut réactiver l'extension que si elle a été désactivée en utilisant le même raccourci. Activez ce paramètre pour vous assurer que le raccourci fonctionne toujours pour activer l'extension, même si elle a été désactivée via le menu de l'interface utilisateur.",
-    "muteTab": "Couper l'onglet"
+    "muteTab": "Couper l'onglet",
+    "loopEntire": "Boucle complète"
   },
   "options": {
     "flags": {

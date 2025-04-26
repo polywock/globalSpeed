@@ -1,6 +1,6 @@
 {
   ":appName": "Global Speed",
-  ":appDesc": "Set a default speed for video and audio.",
+  ":appDesc": "Univeral speed control for video and audio.",
   "_scale": 1.0,
   "_lang": "en", 
   "audio": {
@@ -166,7 +166,8 @@
     "toggleSpeedTooltip": "Toggle between shortcut speed and the last speed.",
     "alwaysOn": "Always on",
     "alwaysOnTooltip": "By default, the shortcut can only reactivate the extension if it was last disabled using the same shortcut. Enable this setting to ensure the shortcut always works for enabling the extension, even if it was turned off via the UI menu.",
-    "muteTab": "Mute tab"
+    "muteTab": "Mute tab",
+    "loopEntire": "Fully loop"
   },
   "options": {
     "flags": {

@@ -396,7 +396,8 @@ export type MediaProbe = {
   paused: boolean,
   volume: number,
   fps: number,
-  formatted?: string
+  formatted?: string,
+  fullyLooped?: boolean
 }
 
 export type ItcInit = {

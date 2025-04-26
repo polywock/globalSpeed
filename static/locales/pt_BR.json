@@ -1,6 +1,6 @@
 {
   ":appName": "Global Speed: Controle de velocidade de vídeo",
-  ":appDesc": "Defina uma velocidade padrão para vídeo e áudio.",
+  ":appDesc": "Controle universal de velocidade para vídeo e áudio.",
   "audio": {
     "captureTab": "Capturar",
     "releaseTab": "Libertar",
@@ -157,7 +157,8 @@
     "toggleSpeedTooltip": "Alterna entre a velocidade do atalho e a última velocidade.",
     "alwaysOn": "Sempre ligado",
     "alwaysOnTooltip": "Por padrão, o atalho só pode reativar a extensão se ela foi desativada pela última vez usando o mesmo atalho. Ative esta configuração para garantir que o atalho sempre funcione para habilitar a extensão, mesmo que ela tenha sido desligada pelo menu da UI.",
-    "muteTab": "Silenciar guia"
+    "muteTab": "Silenciar guia",
+    "loopEntire": "Repetir totalmente"
   },
   "options": {
     "flags": {

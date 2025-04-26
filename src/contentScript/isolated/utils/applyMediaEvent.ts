@@ -14,7 +14,8 @@ export function getMediaProbe(media: HTMLMediaElement, includeFormatted?: boolea
     duration: media.duration, 
     volume: media.volume, 
     fps: media.tagName === "VIDEO" ? getFps(media as HTMLVideoElement) : null,
-    formatted: includeFormatted ? getMediaInfo(media) : null
+    formatted: includeFormatted ? getMediaInfo(media) : null,
+    fullyLooped: media.loop
   }
 }
 
@@ -226,6 +227,10 @@ export function toggleLoop(elem: HTMLMediaElement, key: string, skipMode?: boole
   gvar.os.mediaTower.sendUpdate()
 }
 
+function toggleLoopEntire(elem: HTMLMediaElement, state: StateOption = "toggle") {
+  elem.loop = (!elem.loop && state === "toggle") || state === "on"
+}
+
 function togglePip(elem: HTMLVideoElement, state: StateOption = "toggle") {
   if (!HAS_PIP_API) return 
   let exit = state === "off"
@@ -430,7 +435,9 @@ export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
     applyFullscreen(elem as HTMLVideoElement, e.direct)
   } else if (e.type === "MEDIA_INFO") {
     showMediaInfo(elem)
-  } 
+  } else if (e.type === "LOOP_ENTIRE") {
+    toggleLoopEntire(elem, e.state)
+  }
 }
 
 export function realizeMediaEvent(key: string, e: MediaEvent) {
@@ -464,6 +471,7 @@ export type MediaEventSetVolume = {type: "SET_VOLUME", value: number, relative: 
 export type MediaEventSetMark = {type: "SET_MARK", key: string}
 export type MediaEventSeekMark = {type: "SEEK_MARK", key: string | number, fast: boolean}
 export type MediaEventToggleLoop = {type: "TOGGLE_LOOP", key: string, skipMode?: boolean, indicator?: boolean, ignoreNavigate?: boolean}
+export type MediaEventLoopEntire = {type: "LOOP_ENTIRE", key: string, state: StateOption}
 export type MediaEventTogglePip = {type: "PIP", state?: StateOption}
 export type MediaEventToggleFs = {type: "FULLSCREEN", direct?: boolean}
 export type MediaEventShowInfo = {type: "MEDIA_INFO"}
@@ -472,4 +480,4 @@ export type MediaEventCinema = {type: "CINEMA", color?: string, opacity?: number
 export type MediaEvent = 
   MediaEventPlaybackRate | MediaEventSeek | MediaEventPause | MediaEventMute | MediaEventSetVolume |
   MediaEventSetMark | MediaEventSeekMark | MediaEventToggleLoop | MediaEventTogglePip | 
-  MediaEventToggleFs | MediaEventShowInfo | MediaEventCinema
+  MediaEventToggleFs | MediaEventShowInfo | MediaEventCinema | MediaEventLoopEntire

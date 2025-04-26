@@ -1,6 +1,6 @@
 {
   ":appName": "Global Speed: 影片速度控制",
-  ":appDesc": "設定影片與音訊的預設速度。",
+  ":appDesc": "影音通用速率控制器。",
   "_scale": 1.08,
   "audio": {
     "captureTab": "擷取",
@@ -25,28 +25,22 @@
     "reset": "重設",
     "duplicate": "複製",
     "delete": "刪除",
-
     "pinTooltip": "若要讓目前分頁擁有自己的內容（速度、濾鏡等），請固定此分頁。",
     "mergeBoth": "合併兩者",
     "min": "最小",
     "max": "最大",
-
     "on": "開啟",
     "off": "關閉",
     "toggle": "切換",
-
     "element": "元素",
     "backdrop": "背景",
     "both": "兩者",
-
     "query": "查詢",
     "queryTooltip": "用來尋找要套用濾鏡元素的 CSS 選擇器。例如，'video, img' 會同時選取影片和圖片。如需進階用法，請參閱線上 CSS 選擇器文件。",
-
     "intoPane": "轉為視窗",
     "warning": "警告",
     "filters": "濾鏡",
     "transforms": "轉換",
-
     "blockEvents": "阻擋事件",
     "blockEventsTooltip": "將嘗試阻擋事件傳播與預設行為。",
     "color": "顏色",
@@ -66,7 +60,6 @@
     "shrink": "縮小",
     "implode": "內縮",
     "rotate": "旋轉",
-
     "rows": "列數",
     "replaceWith": "將 $1 取代為？",
     "invalidNumber": "無效數字",
@@ -165,7 +158,8 @@
     "toggleSpeedTooltip": "在快速鍵速度與上次速度之間切換。",
     "alwaysOn": "永遠開啟",
     "alwaysOnTooltip": "預設情況下，快速鍵只能在上次是透過相同快速鍵停用擴充功能時重新啟用擴充功能。啟用此設定可確保快速鍵永遠能啟用擴充功能，即使是透過介面選單關閉的。",
-    "muteTab": "分頁靜音"
+    "muteTab": "分頁靜音",
+    "loopEntire": "完整循環"
   },
   "options": {
     "flags": {
@@ -184,7 +178,6 @@
       "ghostModeTooltip": "嘗試阻止網站變更速度。預設停用因為可能會造成某些網站無法正常運作。",
       "pinByDefault": "預設固定",
       "pinByDefaultTooltip": "新分頁將自動固定。",
-
       "initialState": "初始狀態",
       "previousTab": "前一個分頁的內容。",
       "globalContext": "全域內容",
@@ -199,10 +192,8 @@
       "keyboardInputTooltip": "如果使用虛擬鍵盤或非 QWERTY 配置鍵盤，請考慮切換到虛擬輸入模式。這只會影響未來的快速鍵變更，現有的快速鍵不會受影響。",
       "qwerty": "QWERTY 配置",
       "virtual": "虛擬",
-
       "grantPermission": "授予權限",
       "grantPermissionTooltip": "要啟用完整功能（包含嵌入影片支援），必須啟用此權限。如需有限功能，您可以透過在工具列圖示上按右鍵逐一啟用各個網站。",
-
       "speedSlider": "速度滑桿",
       "textSize": "文字大小",
       "speedPresets": "速度預設設定",
