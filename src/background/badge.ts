@@ -46,7 +46,7 @@ async function getBadgeInit(tabId: number) {
     }
 
     if (showBadge) {
-        badgeColor = hasOrl ? "#7fffd4" :  (isPinned ? "#44a" : "#a64646") 
+        badgeColor = hasOrl ? "#7fffd4" :  (isPinned ? "#44a" : "#a33") 
     }
     return {badgeText, badgeColor, badgeIcons}
 }

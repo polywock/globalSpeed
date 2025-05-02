@@ -10,25 +10,30 @@ import { Fx } from "../types"
 import { produce } from "immer"
 import { RegularTooltip } from "src/comps/RegularTooltip"
 import "./FxControl.css"
+import equal from "fast-deep-equal"
 
 type FxControlProps = {
   live?: boolean,
-  elementFx: Fx,
-  backdropFx: Fx,
+  _elementFx: Fx,
+  _backdropFx: Fx,
   enabled: boolean,
   handleChange: (elementFx: Fx, backdropFx: Fx) => void,
   className?: string
 }
 
 export function FxControl(props: FxControlProps) {
-  const { elementFx, backdropFx } = props 
   const [backdropTab, setBackdropTab] = useState(false)
   const [transformTab, setTransformTab] = useState(false)
 
+  const elementFx = props._elementFx || getDefaultFx()
+  const backdropFx = props._backdropFx || getDefaultFx()
+
+  const rawFx = backdropTab ? props._backdropFx : props._elementFx 
   const fx = backdropTab ? backdropFx : elementFx
 
   const setCurrent = (newValue?: Fx) => {
-    props.handleChange(backdropTab ? elementFx : newValue, backdropTab ? newValue : backdropFx)
+    // Use original value for unchanged
+    props.handleChange(backdropTab ? props._elementFx : newValue, backdropTab ? newValue : props._backdropFx)
   }
 
   const active = useMemo(() => ({
@@ -37,6 +42,10 @@ export function FxControl(props: FxControlProps) {
     backdropFilter: checkFilterDeviation(backdropFx.filters),
     backdropTransform: checkFilterDeviation(backdropFx.transforms)
   }), [elementFx, backdropFx]) 
+
+  const isEmpty = useMemo(() => (
+    rawFx == null ? true : equal(rawFx, getDefaultFx())
+  ), [rawFx])
 
 
   return (
@@ -67,7 +76,7 @@ export function FxControl(props: FxControlProps) {
         }}><FaExchangeAlt size={"1.07rem"}/></button>
 
         {/* Reset */}
-        <button onClick={e => {
+        <button className={isEmpty ? '' : 'active levelup'} onClick={e => {
           setCurrent(null)
         }}><GiAnticlockwiseRotation size={"1.07rem"}/></button>
       </div>

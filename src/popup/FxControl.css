@@ -26,6 +26,13 @@
       &.muted {
         color: var(--header-icon-muted-color);
       } 
+
+      &.active.levelup {
+        outline: 1px solid var(--header-icon-active-color);
+        & > svg {
+          transform: scale(1.15);
+        }
+      }
     }
   }
 

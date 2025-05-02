@@ -238,7 +238,7 @@ function FxRuleControl(props: FxRuleControlProps) {
       <div ref={wrapperRef} className="wrapper" onClick={e => {
         if (e.target === wrapperRef.current) setOpen(false)
       }}>
-        <FxControl enabled={true} elementFx={overrideFx.elementFx} backdropFx={overrideFx.backdropFx} handleChange={(elementFx, backdropFx) => {
+        <FxControl enabled={true} _elementFx={overrideFx.elementFx} _backdropFx={overrideFx.backdropFx} handleChange={(elementFx, backdropFx) => {
           props.onChange(produce(props.rule, d => {
             d.overrideFx = {
               elementFx,

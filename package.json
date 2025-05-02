@@ -28,33 +28,34 @@
     "@babel/preset-react": "^7.24.1",
     "@babel/preset-typescript": "^7.24.1",
     "@babel/runtime": "^7.24.5",
-    "@types/chrome": "^0.0.268",
     "@types/audioworklet": "^0.0.55",
+    "@types/chrome": "^0.0.268",
     "@types/node": "^20.12.12",
     "autoprefixer": "^10.4.19",
     "babel-loader": "^9.1.3",
     "babel-polyfill": "^6.26.0",
     "css-loader": "^7.1.1",
+    "openai": "^4.76.3",
     "postcss": "^8.4.38",
     "postcss-loader": "^8.1.1",
     "postcss-nested": "^6.0.1",
     "style-loader": "^4.0.0",
     "typescript": "^5.4.5",
     "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4",
-    "openai": "^4.76.3"
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "@types/lodash": "^4.17.4",
+    "@types/lodash.debounce": "^4.0.9",
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.3.0",
     "clsx": "^2.1.1",
+    "fast-deep-equal": "^3.1.3",
     "immer": "^10.1.1",
     "lodash.debounce": "^4.0.8",
     "react": "^18.1.0",
     "react-dom": "^18.3.1",
-    "@types/react": "^18.3.2",
-    "@types/react-dom": "^18.3.0",
     "react-icons": "^5.2.1",
-    "soundtouchjs": "^0.1.27",
-    "@types/lodash": "^4.17.4",
-    "@types/lodash.debounce": "^4.0.9"
+    "soundtouchjs": "^0.1.27"
   }
 }

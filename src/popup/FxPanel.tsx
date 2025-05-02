@@ -12,7 +12,7 @@ export function FxPanel(props: FxPanelProps) {
   if (!view || !enabledView) return <div className="panel unloaded"></div>
 
   return (
-    <FxControl live={true} className="panel" elementFx={view.elementFx ?? getDefaultFx()} backdropFx={view.backdropFx ?? getDefaultFx()} enabled={enabledView.enabled} handleChange={(elementFx, backdropFx) => {
+    <FxControl live={true} className="panel" _elementFx={view.elementFx} _backdropFx={view.backdropFx} enabled={enabledView.enabled} handleChange={(elementFx, backdropFx) => {
       setView(produce(view, d => {
         d["elementFx"] = elementFx
         d["backdropFx"] = backdropFx

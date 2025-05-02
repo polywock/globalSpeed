@@ -7,6 +7,8 @@ import { formatFreq } from "../utils/helper"
 import { SliderMicro } from "../comps/SliderMicro"
 import { produce } from "immer"
 import "./EqualizerControl.css"
+import { useMemo } from "react"
+import equal from "fast-deep-equal"
 
 type EqualizerControlProps = {
   value: AudioFx["eq"],
@@ -17,6 +19,10 @@ export function EqualizerControl(props: EqualizerControlProps) {
   const eq = props.value
 
   const presets = (EQ_PRESETS as any)[eq.values.length.toString()] as typeof EQ_PRESETS["10"]
+
+  const isEmpty = useMemo(() => (
+    equal(eq || getDefaultEq(), getDefaultEq())
+  ), [eq])
 
   return <div className="EqualizerControl audioTab">
 
@@ -31,7 +37,7 @@ export function EqualizerControl(props: EqualizerControlProps) {
       }}><FaPowerOff size={"1.07rem"}/></button>
 
       {/* Reset */}
-      <button onClick={e => {
+      <button className={isEmpty ? '' : 'active levelup'} onClick={e => {
         props.onChange(produce(eq, d => {
          return getDefaultEq()
         }))
