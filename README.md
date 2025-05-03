@@ -1,29 +1,24 @@
 # Global Speed
-Web extension that sets a default speed for HTML media elements (video and audio). 
+Univeral speed control for video and audio.
 
 ## Install the [Chrome](https://chrome.google.com/webstore/detail/global-speed-youtube-netf/jpbjcnkcffbooppibceonlgknpkniiff), [Firefox](https://addons.mozilla.org/firefox/addon/global-speed/), or [Edge](https://microsoftedge.microsoft.com/addons/detail/mjhlabbcmjflkpjknnicihkfnmbdfced) extension. 
 
 ### Speed Control 
-- Supports nearly all video and audio streaming sites including Youtube, Netflix, Twitch, Spotify, podcast sites, etc. 
-- If pinned, tabs can have their own playback rate.
-- URL rules to automatically set a custom playback rate depending on the website. 
-- Optional shortcut keys to control speed. 
+- Set the speed once and forget: it automatically applies to all video and audio
+- Define URL rules to auto-apply your favorite speeds on specific sites  
+- Compatible with YouTube, Netflix, Spotify, podcast sites, and more  
 
 ### Media Hotkeys 
-- Support for seek, frame by frame analysis, darken background, video marks, repeat segment, and more. 
-- Select what video or audio you want prioritized for media hotkeys. 
-- Shortcuts support multiple trigger modes, including context menu, and global shortcuts, which allows you to control background music or PiP videos while using another application. **[Chromium only]**
+- Conveniently change speed through customizable shortcuts  
+- Rewind/forward, frame-by-frame analysis, volume up/down and more  
+- Support for multiple trigger modes, including context menu and global shortcuts; control background music or PiP videos while using another app  
 
-### Filters 
-- Apply filters (invert, grayscale, brightness, contrast, mirroring etc) on videos or even the entire page. 
-- Optionals shortcuts to adjust brightness, contrast, and more.
-- Draw on any page.
-
-### Audio Effects [Chromium Only]
-- Effects including pitch shifting, volume boost, EQ, and more. 
-- Reverse audio to listen to [backmasked messages](https://en.wikipedia.org/wiki/List_of_backmasked_messages).
-- You can delay audio to fix sync issues. 
-- Configure hotkeys to adjust pitch, volume boost, and more. 
+### Filters & Effects 
+- Netflix movie too dark? Brighten it and dial in the contrast  
+- Video too quiet? Boost volume up to 600%  
+- Listen to songs or shows in a new way with pitch shift
+- Optionally assign hotkeys to toggle filters and effects on the fly  
+_Audio Effects [Chromium Only]_
 
 
 <img src="https://github.com/polywock/globalSpeed/blob/master/screenshot.png?raw=true" width="600">
