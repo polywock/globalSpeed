@@ -52,9 +52,7 @@ function overridePrototypeMethod(type: any, methodName: string, eventCb: (args: 
 }
 
 function handleOverrideMedia(args: any, _this: HTMLMediaElement, _return: any) {
-  if (!(_this instanceof native.HTMLMediaElement)) {
-    return 
-  }
+  if (!(_this instanceof native.HTMLMediaElement)) return
   if (native.array.includes.call(mediaReferences, _this)) return 
   native.array.push.call(mediaReferences, _this)
   client.wiggleOn(_this)

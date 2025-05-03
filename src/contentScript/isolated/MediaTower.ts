@@ -113,6 +113,9 @@ export class MediaTower {
     this.forceSpeedCallbacks.forEach(cb => cb())
   }
   private ensureDocEventListeners = (doc: Window | ShadowRoot) => {
+    doc.addEventListener("playing", this.handleMediaLastPlayedEvent, {capture: true, passive: true})
+    doc.addEventListener("pause", this.handleMediaLastPlayedEvent, {capture: true, passive: true})
+
     doc.addEventListener("play", this.handleMediaEvent, {capture: true, passive: true})
     doc.addEventListener("playing", this.handleInterrupt, {capture: true, passive: true})
     doc.addEventListener("timeupdate", this.handleMediaEventTimeUpdate, {capture: true, passive: true})
@@ -128,6 +131,9 @@ export class MediaTower {
     IS_YOUTUBE && doc.addEventListener("ratechange", this.handleYoutubeRateChange, {capture: true, passive: true})
   }
   private ensureMediaEventListeners = (elem: HTMLMediaElement) => {
+    elem.addEventListener("playing", this.handleMediaLastPlayedEvent, {capture: true, passive: true})
+    elem.addEventListener("pause", this.handleMediaLastPlayedEvent, {capture: true, passive: true})
+
     elem.addEventListener("play", this.handleMediaEvent, {capture: true, passive: true})
     elem.addEventListener("playing", this.handleInterrupt, {capture: true, passive: true})
     elem.addEventListener("pause", this.handleMediaEvent, {capture: true, passive: true})
@@ -149,6 +155,12 @@ export class MediaTower {
     e.processed = true  
     delete this.previousTimeUpdate 
     this.forceSpeedCallbacks.forEach(cb => cb())
+  }
+  private handleMediaLastPlayedEvent = (e: Event) => {
+    if (!(e.target instanceof HTMLMediaElement)) return 
+    assertType<HTMLVideoElement>(e.target)
+
+    e.target.gsLastPlayed = Date.now()
   }
   private handleMediaEventTimeUpdate = (e: Event) => {
     if (!(e.target instanceof HTMLMediaElement)) return 

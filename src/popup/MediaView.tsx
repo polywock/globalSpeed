@@ -5,7 +5,7 @@ import { FaVolumeMute, FaVolumeUp, FaVolumeDown } from "react-icons/fa"
 import { sendMediaEvent } from "../utils/configUtils"
 import type { MediaEvent } from "../contentScript/isolated/utils/applyMediaEvent"
 import { FlatMediaInfo, MediaPath } from "../contentScript/isolated/utils/genMediaInfo"
-import { useState } from "react"
+import { GrRevert } from "react-icons/gr"
 import "./MediaView.css"
 
 const HAS_REQUEST_PIP = !!(HTMLVideoElement.prototype.requestPictureInPicture)
@@ -14,25 +14,34 @@ const HAS_REQUEST_PIP = !!(HTMLVideoElement.prototype.requestPictureInPicture)
 export function MediaView(props: {info: FlatMediaInfo, pinned: boolean}) {
   const { info, pinned } = props
   const { tabId, frameId } = info.tabInfo
-  const [ show, setShow ] = useState(false)
 
   let parts: string[] = [
-    formatDomain(info.domain)
+    info.displayDomain || formatDomain(info.domain)
   ]
 
   if (!info.infinity && info.duration) parts.push(formatDuration(info.duration))
+
+  const differentTab = gvar.tabInfo && gvar.tabInfo.tabId !== tabId
 
   return (
     <div className={`MediaView`}>
 
       {/* Header */}
-      <span onClick={async e => {
-        let probe = await chrome.tabs.sendMessage(info.tabInfo.tabId, {type: 'MEDIA_PROBE', key: info.key, formatted: true} as Messages, {frameId: info.tabInfo.frameId || 0})
-        if (!probe) return
-        feedbackText(probe.formatted, {y: (e.target as HTMLDivElement).getBoundingClientRect().top - 50}, 1000 * 30) 
-      }} className="header" title={info.metaTitle || info.title}>{parts.join(info.shadowMode == null ? " • " : info.shadowMode === "open" ? " / " : ` \ `)}
-      </span>
-      <br />
+      <div className="header">
+        <span onClick={async e => {
+          let probe = await chrome.tabs.sendMessage(info.tabInfo.tabId, {type: 'MEDIA_PROBE', key: info.key, formatted: true} as Messages, {frameId: info.tabInfo.frameId || 0})
+          if (!probe) return
+          feedbackText(probe.formatted, {y: (e.target as HTMLDivElement).getBoundingClientRect().top - 50}, 1000 * 30) 
+        }} className="meta" title={info.domain}>
+          {parts.join(info.shadowMode == null ? " • " : info.shadowMode === "open" ? " / " : ` \ `)}
+        </span>
+        {differentTab && (
+          <button className="jump" onClick={() => {
+            chrome.tabs.update(tabId, {active: true})
+          }}><GrRevert/></button>
+        )}
+        {info.displayTitle && <div className="title" title={info.title}>{info.displayTitle}</div>}
+      </div>
 
       {/* Controls */}
       <div className="controls" key={info.key}>

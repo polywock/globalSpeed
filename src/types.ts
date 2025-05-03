@@ -41,6 +41,7 @@ declare global {
     gsRateBanned?: boolean,
     gsFpsSum?: number,
     gsFpsCount?: number,
+    gsLastPlayed?: number,
     mozPreservesPitch?: boolean,
     webkitPreservesPitch?: boolean,
     videoTracks: any[],

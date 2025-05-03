@@ -1,3 +1,4 @@
+import { capitalize, parseDomain, removeDomainFromTitle } from "src/utils/helper"
 import { TabInfo } from "../../../utils/browserUtils"
 
 
@@ -10,7 +11,8 @@ export function generateMediaState(elem: HTMLMediaElement): MediaInfo {
     volume: elem.volume,
     readyState: elem.readyState,
     marks: Object.keys(elem.gsMarks || {}),
-    playbackRate: elem.playbackRate
+    playbackRate: elem.playbackRate,
+    lastPlayed: elem.gsLastPlayed
   }
 
   if (elem.duration === Infinity) {
@@ -69,16 +71,19 @@ export function generateMediaState(elem: HTMLMediaElement): MediaInfo {
 
 
 export function generateScopeState(tabInfo: TabInfo, media: HTMLMediaElement[]): MediaScope {
+  const parsedDomain = parseDomain(location.hostname)
   return {
     tabInfo: {...tabInfo},
-    metaTitle: (navigator as any).mediaSession?.metadata?.title, 
     title:  document.title,
+    displayTitle: removeDomainFromTitle((navigator as any).mediaSession?.metadata?.title || document.title, parsedDomain), 
     domain: location.hostname,
+    displayDomain: capitalize(parsedDomain?.baseName),
     url: document.URL,
     media: media.map(m => generateMediaState(m)),
     creationTime: Date.now()
   }
 }
+
 
 export function flattenMediaInfos(scopes: MediaScope[]): FlatMediaInfo[] {
   const infos: FlatMediaInfo[] = []
@@ -94,8 +99,9 @@ export type MediaScope = {
   tabInfo: TabInfo
   url: string,
   domain: string,
+  displayDomain: string,
   title: string,
-  metaTitle?: string,
+  displayTitle?: string,
   media?: MediaInfo[],
   creationTime?: number,
   latest?: string
@@ -124,7 +130,8 @@ export type MediaInfo = {
   marks: string[],
   intersectionRatio?: number,
   fps?: number,
-  playbackRate: number
+  playbackRate: number,
+  lastPlayed?: number
 }
 
 export type FlatMediaInfo = MediaScope & MediaInfo
@@ -137,4 +144,5 @@ export type MediaPath = {
 export type MediaData = {infos: FlatMediaInfo[], pinned: MediaPath} 
 
 export type MediaDataWithScopes = {scopes: MediaScope[], pinned: MediaPath} 
+
 

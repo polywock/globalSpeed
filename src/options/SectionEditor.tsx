@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { AdjustMode, Keybind, StateView } from "../types"
+import { AdjustMode, CommandGroup, Keybind, StateView } from "../types"
 import { areYouSure, isFirefox, moveItem, randomId } from "../utils/helper"
 import { commandInfos, CommandName, getDefaultKeybinds, availableCommandNames } from "../defaults/commands"
 import { KeybindControl } from "./keybindControl"
@@ -142,13 +142,17 @@ function getOptions() {
   let available = [...availableCommandNames]
   available.splice(3, 0, 'presets')
 
-  cachedOptions = available.map((name, i) => {
-    let label = "------"
-    if (name) {
-      label = (gvar.gsm.command as any)[name]
+  cachedOptions = []
+  let previousGroup: {group: CommandGroup}
+  availableCommandNames.forEach(command => {
+    const info = commandInfos[command as keyof typeof commandInfos]
+    if (previousGroup && previousGroup.group !== info.group) {
+      cachedOptions.push({label: "------", value: `${command}_group`, disabled: true})
     }
-    return {value: name, label, disabled: name == null}
+    cachedOptions.push({label: (gvar.gsm.command as any)[command], value: command})
+    previousGroup = {group: info.group}
   })
+
   return cachedOptions 
 }
 

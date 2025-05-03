@@ -1,7 +1,7 @@
 
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "./constants"
 import { Command, Keybind, AdjustMode, CommandGroup, Duration, Trigger } from "../types"
-import { randomId, groupByKey, flatJoin, isFirefox, getPopupSize, isMobile } from "../utils/helper"
+import { randomId, isFirefox, getPopupSize, isMobile } from "../utils/helper"
 import { filterInfos } from "./filters"
 
 export type CommandName = "nothing" | "runCode" | "openUrl" | "intoPopup" |
@@ -695,17 +695,8 @@ export function getDefaultKeybinds(): Keybind[] {
   return kbs 
 }
 
-
-export const availableCommandNames = flatJoin(
-  groupByKey(
-    Object.entries(commandInfos)
-      .filter(v => !v[1].requiresTabCapture || (chrome.tabCapture && chrome.offscreen))
-      .filter(v => !v[1].requiresPiPApi || !isFirefox())
-      .filter(v => v[0] !== "runCode" || isFirefox())
-      .map(([name, info]) => [name, info.group] as [string, CommandGroup]),
-    v => v[1]
-  )
-    .map(g => g.map(v => v[0])),
-  null
-)
-
+export const availableCommandNames = Object.entries(commandInfos)
+.filter(v => !v[1].requiresTabCapture || (chrome.tabCapture && chrome.offscreen))
+.filter(v => !v[1].requiresPiPApi || !isFirefox())
+.filter(v => v[0] !== "runCode" || isFirefox())
+.map(v => v[0])

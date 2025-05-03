@@ -1,7 +1,8 @@
 
 import { useState, useEffect, useMemo } from "react"
-import { MediaData, MediaPath, MediaScope, flattenMediaInfos } from "../contentScript/isolated/utils/genMediaInfo"
+import { FlatMediaInfo, MediaData, MediaPath, MediaScope, flattenMediaInfos } from "../contentScript/isolated/utils/genMediaInfo"
 import { checkContentScript } from "src/utils/browserUtils"
+import { groupByKey } from "src/utils/helper"
 
 type Env = {
   client: SubscribeMedia
@@ -22,21 +23,21 @@ export function useMediaWatch(): MediaData {
   return watchInfo
 }
 
-
+const MINIMUM_DURATION = 10 
 
 type SubscribeMediaCallback = (infos: MediaData) => void
 
 export class SubscribeMedia {
-  cbs: Set<SubscribeMediaCallback> = new Set() 
-  scopes: {[key: string]: MediaScope} = {}
+  cbs: Set<SubscribeMediaCallback> = new Set()
+  scopes: { [key: string]: MediaScope } = {}
   pinned: MediaPath
   latestData: MediaData
-  released = false 
-  seenMedia: Set<string> = new Set() 
+  released = false
+  seenMedia: Set<string> = new Set()
 
   constructor(private tabId: number, cb: SubscribeMediaCallback) {
-      cb && this.cbs.add(cb)
-      this.start()
+    cb && this.cbs.add(cb)
+    this.start()
   }
   start = async () => {
     const raw = await chrome.storage.session.get()
@@ -45,12 +46,12 @@ export class SubscribeMedia {
     this.handleChange(null)
   }
   processKeyForStart = async (key: string, value: any) => {
-    if (!key.startsWith("m:")) return  
+    if (!key.startsWith("m:")) return
     if (key.startsWith("m:pin")) {
-      this.pinned = value 
+      this.pinned = value
     } else if (key.startsWith("m:scope:")) {
       let info = value as MediaScope
-      if (!info) return 
+      if (!info) return
       if (await checkContentScript(info.tabInfo.tabId, info.tabInfo.frameId)) {
         this.scopes[key] = value
       } else {
@@ -59,21 +60,21 @@ export class SubscribeMedia {
     }
   }
   release = () => {
-      if (this.released) return 
-      this.released = true 
-      delete this.latestData, delete this.scopes, delete this.seenMedia, 
+    if (this.released) return
+    this.released = true
+    delete this.latestData, delete this.scopes, delete this.seenMedia,
       delete this.triggerCbs, delete this.pinned
-      chrome.storage.session.onChanged.removeListener(this.handleChange)
-      this.cbs.clear()
+    chrome.storage.session.onChanged.removeListener(this.handleChange)
+    this.cbs.clear()
   }
   handleChange = async (changes: chrome.storage.StorageChanges) => {
-    let hadChanges = !changes 
-    changes = changes ?? {} 
+    let hadChanges = !changes
+    changes = changes ?? {}
 
     for (let key in changes) {
-      if (!key.startsWith("m:")) continue 
+      if (!key.startsWith("m:")) continue
 
-      hadChanges = true 
+      hadChanges = true
       if (key.startsWith("m:pin")) {
         this.pinned = changes[key].newValue
       } else if (key.startsWith("m:scope:")) {
@@ -84,26 +85,41 @@ export class SubscribeMedia {
       }
     }
 
-    if (!hadChanges) return 
-    
-    const infos = flattenMediaInfos(Object.values(this.scopes) as MediaScope[]).filter(info => {
-      const sameTab = this.tabId === info.tabInfo.tabId
-      if (info.readyState && (info.key === this.pinned?.key || this.seenMedia.has(info.key) || sameTab || !info.paused)) {
-        this.seenMedia.add(info.key)
-        return true 
-      }
-    })
+    if (!hadChanges) return
 
-
-    this.latestData = {
-      infos,
-      pinned: this.pinned 
-    }
+    this.calcLatest()
 
     this.triggerCbs()
   }
   triggerCbs = () => {
-      this.cbs.forEach(cb => cb(this.latestData))
+    this.cbs.forEach(cb => cb(this.latestData))
+  }
+  calcLatest = () => {
+    const toShow = new Set<string>()
+    const pinnedKey = this.pinned?.key
+    const infos = flattenMediaInfos(Object.values(this.scopes) as MediaScope[]).filter(info => info.readyState && (info.key === pinnedKey || info.duration > MINIMUM_DURATION)).sort((a, b) => {
+      if (a.tabInfo.tabId === this.tabId) return -Infinity
+      return a.tabInfo.tabId - b.tabInfo.tabId
+    })
+
+    // Add pinned, current tab items, and previously shown. 
+    infos.forEach(info => {
+      if ((info.key || "z") === pinnedKey || info.tabInfo.tabId === this.tabId || this.seenMedia.has(info.key)) {
+        toShow.add(info.key)
+      }
+    })
+
+    // Add three most recently played.
+    infos.filter(info => info.tabInfo.tabId !== this.tabId && info.lastPlayed).sort((a, b) => {
+      return b.lastPlayed - a.lastPlayed
+    }).slice(0, 3).forEach(info => toShow.add(info.key))
+
+    this.seenMedia = this.seenMedia.union(toShow)
+
+    this.latestData = {
+      infos: infos.filter(info => toShow.has(info.key)),
+      pinned: this.pinned
+    }
   }
 }
 

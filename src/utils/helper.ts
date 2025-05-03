@@ -245,21 +245,6 @@ export function groupByKey<T>(items: T[], getKey: (v: T) => any): T[][] {
   return groups 
 }
 
-export function flatJoin<T>(groups: T[][], value: T) {
-  let flatGroup: T[] = []
-  let flag = false 
-  for (let group of groups) {
-    if (flag) {
-      flatGroup.push(value)
-      flag = false 
-    }
-    flatGroup = [...flatGroup, ...group]
-    flag = true 
-  }
-  return flatGroup
-}
-
-
 export function domRectGetOffset(rect: DOMRect, xOffset = 10, yOffset = 10, topLeft?: boolean) {
   if (topLeft) return {x: rect.x + xOffset, y: rect.y - yOffset}
   return {x: rect.x + rect.width + xOffset, y: rect.y - rect.height - yOffset}
@@ -371,4 +356,61 @@ export function replaceArgs(raw: string, args: string[]) {
     raw = raw.replaceAll(`$${++idx}`, arg);
   }
   return raw;
+}
+
+
+export function parseDomain(host: string): { baseName: string; registeredDomain: string } {
+  const parts = host.split('.')
+  if (parts.length < 2) return null
+
+  const last = parts[parts.length - 1]
+  const second = parts[parts.length - 2]
+  const hasTwoPartTLD = last.length === 2 && second.length <= 3 && parts.length > 2
+  const tldCount = hasTwoPartTLD ? 2 : 1
+
+  const baseName = parts[parts.length - 1 - tldCount]
+  const registeredDomain = parts.slice(parts.length - 1 - tldCount).join('.')
+
+  return { baseName, registeredDomain }
+}
+
+function escapeRegex(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+export function removeDomainFromTitle(rawTitle: string, parsed: ReturnType<typeof parseDomain>, minWords = 3) {
+  let title = rawTitle.trim()
+  if (!parsed) return title
+
+  const { baseName, registeredDomain } = parsed
+
+  // if title consists only of domain/baseName plus delimiters, return null
+  for (const domain of [registeredDomain, baseName]) {
+    const d = escapeRegex(domain)
+    const stripped = title
+      .replace(new RegExp(d, 'gi'), '')
+      .replace(/[\s\-:]/g, '')
+    if (stripped === '') return null
+  }
+
+  // try removing domain or baseName at start/end
+  let result = title
+  for (const domain of [registeredDomain, baseName]) {
+    const d = escapeRegex(domain)
+    let m = result.match(new RegExp(`^(.*?)(?:\\s*[-:]\\s*${d})$`, 'i'))
+    if (m && m[1].trim()) { result = m[1].trim(); break }
+    m = result.match(new RegExp(`^(?:${d}\\s*[-:]\\s*)(.*)$`, 'i'))
+    if (m && m[1].trim()) { result = m[1].trim(); break }
+  }
+
+  // enforce minimum words
+  const words = result.trim().split(/\s+/).filter(w => w.length > 0)
+  if (words.length < minWords) return null
+
+  return result
+}
+
+export function capitalize(str: string): string {
+  if (!str) return ''
+  return str[0].toUpperCase() + str.slice(1).toLowerCase()
 }
