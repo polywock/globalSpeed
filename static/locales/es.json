@@ -11,7 +11,10 @@
     "unusedGlobal": "Libera las teclas de acceso rápido globales no utilizadas.",
     "selectTooltip": "Selecciona el video preferido para las teclas de acceso rápido de medios. Útil si quieres controlar la música de fondo desde una pestaña diferente (o desde otro programa con teclas de acceso rápido globales).",
     "sliderTooltip": "Mantén presionada la tecla Shift para un control preciso.",
-    "captureRequired": "Usa el atajo $1 para activar."
+    "captureRequired": "Usa el atajo $1 para activar.",
+    "jsWarning": "Habilita el modo desarrollador para usar accesos directos de JavaScript",
+    "jsWarningRules": "Habilita el modo desarrollador para usar reglas de URL de JavaScript",
+    "jsUpdate": "Los atajos de Javascript requieren Chrome o Edge versión 136 o más reciente"
   },
   "menuLabels": {
     "invertPage": "Invertir página",
@@ -183,9 +186,6 @@
       "newContext": "Nuevo contexto",
       "customContext": "Contexto personalizado",
       "customContextTooltip": "Guarda una instantánea del contexto actual de esta pestaña. Las pestañas creadas recientemente usarán esta instantánea como estado inicial.",
-      "jsShortcutWarning": "Los atajos de JavaScript están actualmente desactivados debido a la depreciación de APIs antiguas. La funcionalidad se reanudará cuando Chromium implemente el método userScripts.execute().",
-      "jsRuleWarning": "Por favor, actualiza Chrome para admitir las reglas de URL de Javascript.",
-      "jsRuleWarningAlt": "Por favor, habilita el modo desarrollador para usar las funciones de JavaScript.",
       "keyboardInput": "Entrada de teclado",
       "keyboardInputTooltip": "Considere cambiar al modo de entrada virtual si usa un teclado virtual o un teclado con disposición no QWERTY. Esto solo aplica a los cambios futuros de atajos y los atajos existentes no se verán afectados.",
       "qwerty": "Diseño QWERTY",

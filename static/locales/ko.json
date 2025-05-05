@@ -12,7 +12,10 @@
     "unusedGlobal": "사용되지 않는 글로벌 단축키를 해제하세요.",
     "selectTooltip": "미디어 핫키를 위해 선호하는 비디오를 선택하세요. 다른 탭(또는 글로벌 핫키가 있는 다른 프로그램)에서 배경 음악을 제어하려면 유용합니다.",
     "sliderTooltip": "정밀한 조정을 위해 Shift 키를 누르고 있으세요.",
-    "captureRequired": "$1 단축키를 사용하여 활성화하세요."
+    "captureRequired": "$1 단축키를 사용하여 활성화하세요.",
+    "jsWarning": "JavaScript 바로가기를 사용하려면 개발자 모드를 활성화하세요",
+    "jsWarningRules": "JavaScript URL 규칙을 사용하려면 개발자 모드를 활성화하세요",
+    "jsUpdate": "자바스크립트 단축키를 사용하려면 Chrome 또는 Edge 버전 136 이상이 필요합니다"
   },
   "menuLabels": {
     "invertPage": "페이지 반전",
@@ -184,9 +187,6 @@
       "newContext": "새 컨텍스트",
       "customContext": "사용자 정의 컨텍스트",
       "customContextTooltip": "이 탭의 현재 컨텍스트의 스냅샷을 저장합니다. 새로 생성된 탭은 이 스냅샷을 초기 상태로 사용할 것입니다.",
-      "jsShortcutWarning": "오래된 API의 폐기로 인해 JavaScript 단축키가 현재 비활성화되어 있습니다. Chromium이 userScripts.execute() 메소드를 구현하면 기능이 재개됩니다.",
-      "jsRuleWarning": "Javascript URL 규칙을 지원하려면 Chrome을 업데이트하십시오.",
-      "jsRuleWarningAlt": "JavaScript 기능을 사용하려면 개발자 모드를 활성화하십시오.",
       "keyboardInput": "키보드 입력",
       "keyboardInputTooltip": "가상 키보드나 비QWERTY 레이아웃 키보드를 사용하는 경우 가상 입력 모드로 전환하는 것을 고려하세요. 이것은 미래의 단축키 변경에만 적용되며 기존의 단축키는 영향을 받지 않습니다.",
       "qwerty": "QWERTY 레이아웃",

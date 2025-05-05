@@ -12,7 +12,10 @@ export type Gsm = {
     unusedGlobal: string,
     selectTooltip: string,
     sliderTooltip: string,
-    captureRequired: string
+    captureRequired: string,
+    jsUpdate: string,
+    jsWarning: string,
+    jsWarningRules: string
   },
   menuLabels: {
     invertPage: string,
@@ -185,9 +188,6 @@ export type Gsm = {
       newContext: string,
       customContext: string,
       customContextTooltip: string,
-      jsShortcutWarning: string,
-      jsRuleWarning: string,
-      jsRuleWarningAlt: string,
       keyboardInput: string,
       keyboardInputTooltip: string,
       qwerty: string,

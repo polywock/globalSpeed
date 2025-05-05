@@ -11,7 +11,10 @@
     "unusedGlobal": "Zwolnij nieużywane globalne skróty klawiszowe",
     "selectTooltip": "Wybierz preferowane wideo dla skrótów multimedialnych. Przydatne, jeśli chcesz sterować muzyką w tle z innej karty (lub innego programu z globalnymi skrótami).",
     "sliderTooltip": "Przytrzymaj klawisz shift dla precyzyjnej kontroli.",
-    "captureRequired": "Użyj skrótu $1, aby aktywować."
+    "captureRequired": "Użyj skrótu $1, aby aktywować.",
+    "jsWarning": "Włącz tryb deweloperski, aby używać skrótów JavaScript",
+    "jsWarningRules": "Włącz tryb deweloperski, aby używać reguł URL JavaScript",
+    "jsUpdate": "Skróty Javascript wymagają przeglądarki Chrome lub Edge w wersji 136 lub nowszej"
   },
   "menuLabels": {
     "invertPage": "Odwróć stronę",
@@ -184,9 +187,6 @@
       "newContext": "Nowy kontekst",
       "customContext": "Własny kontekst",
       "customContextTooltip": "Zapisz migawkę bieżącego kontekstu tej karty. Nowo utworzone karty będą korzystać z tej migawki jako stanu początkowego.",
-      "jsShortcutWarning": "Skróty JavaScript są obecnie wyłączone z powodu przestarzałości starszych interfejsów API. Funkcjonalność zostanie wznowiona po wdrożeniu metody userScripts.execute() przez Chromium.",
-      "jsRuleWarning": "Zaktualizuj Chrome, aby obsługiwać reguły adresów URL JavaScript.",
-      "jsRuleWarningAlt": "Włącz tryb deweloperski, aby używać funkcji JavaScript.",
       "keyboardInput": "Wejście klawiatury",
       "keyboardInputTooltip": "Rozważ przełączenie na tryb Wirtualny, jeśli używasz wirtualnej klawiatury lub klawiatury z układem innym niż QWERTY. Dotyczy to tylko przyszłych zmian skrótów, istniejące skróty nie będą miały wpływu.",
       "qwerty": "Układ QWERTY",

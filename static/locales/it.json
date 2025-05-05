@@ -11,7 +11,10 @@
     "unusedGlobal": "Rilascia i tasti di scelta rapida globali non utilizzati.",
     "selectTooltip": "Seleziona il video preferito per i tasti di scelta rapida multimediali. Utile se vuoi controllare la musica di sottofondo da una scheda diversa (o da un altro programma con tasti di scelta rapida globali).",
     "sliderTooltip": "Tieni premuto il tasto Shift per un controllo preciso.",
-    "captureRequired": "Usa la scorciatoia $1 per attivare."
+    "captureRequired": "Usa la scorciatoia $1 per attivare.",
+    "jsWarning": "Attiva la modalità sviluppatore per utilizzare le scorciatoie javascript",
+    "jsWarningRules": "Attiva la modalità sviluppatore per utilizzare le regole URL javascript",
+    "jsUpdate": "Le scorciatoie Javascript richiedono Chrome o Edge versione 136 o successiva"
   },
   "menuLabels": {
     "invertPage": "Inverti pagina",
@@ -184,9 +187,6 @@
       "newContext": "Nuovo contesto",
       "customContext": "Contesto personalizzato",
       "customContextTooltip": "Salva uno snapshot del contesto attuale di questa scheda. Le schede create di recente utilizzeranno questo snapshot come stato iniziale.",
-      "jsShortcutWarning": "Le scorciatoie JavaScript sono attualmente disabilitate a causa della deprecazione delle API più vecchie. La funzionalità riprenderà quando Chromium implementerà il metodo userScripts.execute().",
-      "jsRuleWarning": "Si prega di aggiornare Chrome per supportare le regole URL di Javascript.",
-      "jsRuleWarningAlt": "Abilita la modalità sviluppatore per utilizzare le funzionalità JavaScript.",
       "keyboardInput": "Input da tastiera",
       "keyboardInputTooltip": "Considerare di passare alla modalità di input virtuale se si utilizza una tastiera virtuale o una tastiera non QWERTY. Questo si applica solo ai cambiamenti futuri degli shortcut e gli shortcut esistenti non saranno interessati.",
       "qwerty": "Layout QWERTY",

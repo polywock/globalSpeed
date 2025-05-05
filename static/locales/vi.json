@@ -11,7 +11,10 @@
     "unusedGlobal": "Giải phóng các phím tắt toàn cầu không được sử dụng.",
     "selectTooltip": "Chọn video ưa thích cho các phím tắt phương tiện. Hữu ích nếu bạn muốn điều khiển âm nhạc nền từ một tab khác (hoặc từ một chương trình khác với các phím tắt toàn cầu).",
     "sliderTooltip": "Giữ phím Shift để điều chỉnh chính xác.",
-    "captureRequired": "Sử dụng phím tắt $1 để kích hoạt."
+    "captureRequired": "Sử dụng phím tắt $1 để kích hoạt.",
+    "jsWarning": "Bật chế độ nhà phát triển để sử dụng các phím tắt javascript",
+    "jsWarningRules": "Bật chế độ nhà phát triển để sử dụng các quy tắc URL javascript",
+    "jsUpdate": "Phím tắt Javascript yêu cầu Chrome hoặc Edge phiên bản 136 trở lên"
   },
   "menuLabels": {
     "invertPage": "Đảo ngược trang",
@@ -184,9 +187,6 @@
       "newContext": "Ngữ cảnh mới",
       "customContext": "Ngữ cảnh tùy chỉnh",
       "customContextTooltip": "Lưu bản chụp nhanh của ngữ cảnh hiện tại của tab này. Các tab mới tạo sẽ sử dụng bản chụp này làm trạng thái ban đầu.",
-      "jsShortcutWarning": "Phím tắt JavaScript hiện đang bị vô hiệu hóa do sự lỗi thời của các API cũ. Chức năng sẽ được tiếp tục khi Chromium triển khai phương thức userScripts.execute().",
-      "jsRuleWarning": "Vui lòng cập nhật Chrome để hỗ trợ các quy tắc URL Javascript.",
-      "jsRuleWarningAlt": "Vui lòng bật chế độ nhà phát triển để sử dụng các tính năng JavaScript.",
       "keyboardInput": "Nhập liệu bàn phím",
       "keyboardInputTooltip": "Cân nhắc chuyển sang chế độ nhập liệu ảo nếu bạn sử dụng bàn phím ảo hoặc bàn phím không theo bố cục QWERTY. Điều này chỉ áp dụng cho những thay đổi phím tắt trong tương lai và không ảnh hưởng đến các phím tắt hiện tại.",
       "qwerty": "Bố cục QWERTY",

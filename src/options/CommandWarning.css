@@ -1,18 +1,27 @@
 
-.CommandWarningBody {
-    
+.CommandWarning {
+    display: flex;
+    align-items: center;
+    background-color: var(--error-color);
+    color: var(--error-text-color);
+    border: 1px solid var(--error-border-color);
+    padding: 0.6rem;
+    margin-bottom: 10px;
+
+    & > svg {
+        margin-right: 5px;
+    }
+
     button {
+        padding: 4px 8px;
         margin-left: 10px;
-        color: var(--text-color);
-        background-color: var(--adjust-color);
+        background-color: inherit;
+        color: inherit;
+        border: 1px solid var(--error-border-color);
+        border-radius: 10px;
 
         span {
             margin-left: 5px;
         }
-    }
-
-    code {
-        margin-left: 5px;
-        cursor: default;
     }
 }

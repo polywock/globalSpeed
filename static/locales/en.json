@@ -13,7 +13,10 @@
     "unusedGlobal": "Release unused global shortcut keys",
     "selectTooltip": "Select preferred video for media hotkeys. Useful if you want to control background music from a different tab (or from another program with global hotkeys).",
     "sliderTooltip": "Hold shift key for precise control.",
-    "captureRequired": "Use the $1 shortcut to activate."
+    "captureRequired": "Use the $1 shortcut to activate.",
+    "jsUpdate": "Javascript shortcuts require Chrome or Edge version 136 or newer",
+    "jsWarning": "Enable developer mode to use javascript shortcuts",
+    "jsWarningRules": "Enable developer mode to use javascript URL rules"
   },
   "menuLabels": {
     "invertPage": "Invert page",
@@ -194,9 +197,6 @@
       "newContext": "New context",
       "customContext": "Custom context",
       "customContextTooltip": "Saved a snapshot of this tab's current context. Newly created tabs will use this snapshot as an initial state.",
-      "jsShortcutWarning": "JavaScript shortcuts are currently disabled due to depreciation of older APIs. Functionality will resume when Chromium implements the userScripts.execute() method.",
-      "jsRuleWarning": "Please update Chrome to support Javascript URL rules.",
-      "jsRuleWarningAlt": "Please enable developer mode to use javascript features.",
       "keyboardInput": "Keyboard input",
       "keyboardInputTooltip": "Consider switching to Virtual input mode if using a virtual keyboard or a non-QWERTY layout keyboard. This only applies to future shortcut changes and existing shortcuts won't be affected.",
       "qwerty": "QWERTY layout",

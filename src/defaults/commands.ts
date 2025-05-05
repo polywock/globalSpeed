@@ -698,5 +698,4 @@ export function getDefaultKeybinds(): Keybind[] {
 export const availableCommandNames = Object.entries(commandInfos)
 .filter(v => !v[1].requiresTabCapture || (chrome.tabCapture && chrome.offscreen))
 .filter(v => !v[1].requiresPiPApi || !isFirefox())
-.filter(v => v[0] !== "runCode" || isFirefox())
 .map(v => v[0])

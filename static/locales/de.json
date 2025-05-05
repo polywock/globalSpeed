@@ -11,7 +11,10 @@
     "unusedGlobal": "Freigabe nicht genutzter globaler Tastenkombinationen",
     "selectTooltip": "Wähle ein bevorzugtes Video für Medientastenkombinationen aus. Nützlich, wenn du Hintergrundmusik von einem anderen Tab (oder einem anderen Programm mit globalen Hotkeys) steuern möchtest.",
     "sliderTooltip": "Halte die Umschalttaste gedrückt für präzise Steuerung.",
-    "captureRequired": "Verwende die $1-Tastenkombination, um zu aktivieren."
+    "captureRequired": "Verwende die $1-Tastenkombination, um zu aktivieren.",
+    "jsWarning": "Aktivieren Sie den Entwicklermodus, um JavaScript-Verknüpfungen zu verwenden",
+    "jsWarningRules": "Aktivieren Sie den Entwicklermodus, um JavaScript-URL-Regeln zu verwenden",
+    "jsUpdate": "Javascript-Verknüpfungen erfordern Chrome oder Edge Version 136 oder neuer"
   },
   "menuLabels": {
     "invertPage": "Seite umkehren",
@@ -184,9 +187,6 @@
       "newContext": "Neuer Kontext",
       "customContext": "Benutzerdefinierter Kontext",
       "customContextTooltip": "Speichert einen Snapshot des aktuellen Kontexts dieses Tabs. Neu erstellte Tabs verwenden diesen Snapshot als Anfangszustand.",
-      "jsShortcutWarning": "JavaScript-Tastenkombinationen sind derzeit deaktiviert, da ältere APIs veraltet sind. Die Funktionalität wird fortgesetzt, wenn Chromium die Methode userScripts.execute() implementiert.",
-      "jsRuleWarning": "Bitte aktualisiere Chrome, um Javascript-URL-Regeln zu unterstützen.",
-      "jsRuleWarningAlt": "Bitte aktiviere den Entwicklermodus, um Javascript-Funktionen zu verwenden.",
       "keyboardInput": "Tastatureingabe",
       "keyboardInputTooltip": "Wechsle zu Virtual Input Mode, wenn du eine virtuelle Tastatur oder eine Tastatur mit Nicht-QWERTY-Layout verwendest. Dies gilt nur für zukünftige Tastenkombinationsänderungen, vorhandene Tastenkombinationen bleiben unverändert.",
       "qwerty": "QWERTY-Layout",

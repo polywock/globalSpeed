@@ -15,6 +15,7 @@ import { List } from "./List"
 import { Tooltip } from "src/comps/Tooltip"
 import { GrTooltip } from "react-icons/gr"
 import "./SectionEditor.css"
+import { DevWarning } from "./DevWarning"
 
 export function SectionEditor(props: {}) {
   const [view, setView] = useStateView({keybinds: true, keybindsUrlCondition: true, hideIndicator: true, virtualInput: true, freshKeybinds: true})
@@ -31,6 +32,7 @@ export function SectionEditor(props: {}) {
       <h2>{gvar.gsm.options.editor.header}</h2>
       <EditorDescription hasKeybinds={view.keybinds.length >= 0}/>
       {isFirefox() ? null : <CommandWarning keybinds={view.keybinds || []}/>}
+      {isFirefox() ? null : <DevWarning hasJs={view.keybinds?.some(kb => kb.enabled && kb.command === "runCode")}/>}
       {<EditorKeybinds view={view} setView={setView}/>}
       <EditorControls view={view} setView={setView}/>
     </div>
@@ -217,7 +219,7 @@ function EditorControls(props: {view: StateView, setView: SetView}) {
       }}>{gvar.gsm.token.reset}</button>
 
       {/* URL conditions */}
-      <button  onClick={() => setShow(!show)}className={`${urlRuleCount ? "error" : "blue"}`}>{`${gvar.gsm.options.rules.conditions}: ${urlRuleCount}`}</button>
+      <button  onClick={() => setShow(!show)}className="blue">{`${gvar.gsm.options.rules.conditions}: ${urlRuleCount}`}</button>
 
       {/* URL conditions modal */}
       {show && <URLModal 

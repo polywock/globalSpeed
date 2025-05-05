@@ -248,11 +248,7 @@ function elevenToTwelve(state: State, initialVersion?: number) {
 }
 
 function migrateForChrome(state: State) {
-  state.keybinds.forEach(kb => {
-    if (kb.command === "runCode") {
-      kb.enabled = false 
-    }
-  })
+  
 
   return state
 }

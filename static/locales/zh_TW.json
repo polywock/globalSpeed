@@ -12,7 +12,10 @@
     "unusedGlobal": "釋出未使用的全域快速鍵",
     "selectTooltip": "選擇要使用媒體快速鍵的影片。當您想要從不同分頁（或使用全域快速鍵的其他程式）控制背景音樂時很有用。",
     "sliderTooltip": "按住 Shift 鍵以精確控制。",
-    "captureRequired": "使用 $1 快速鍵來啟用。"
+    "captureRequired": "使用 $1 快速鍵來啟用。",
+    "jsWarning": "啟用開發人員模式以使用 JavaScript 快捷方式",
+    "jsWarningRules": "啟用開發人員模式以使用 JavaScript 網址規則",
+    "jsUpdate": "Javascript 快捷方式需要 Chrome 或 Edge 版本 136 或更新版本"
   },
   "menuLabels": {
     "invertPage": "頁面反相",
@@ -185,9 +188,6 @@
       "newContext": "新內容",
       "customContext": "自訂內容",
       "customContextTooltip": "儲存此分頁目前內容的快照。新建立的分頁將使用此快照作為初始狀態。",
-      "jsShortcutWarning": "由於舊版 API 已棄用，JavaScript 快速鍵目前已停用。功能將在 Chromium 實作 userScripts.execute() 方法時恢復。",
-      "jsRuleWarning": "請更新 Chrome 以支援 JavaScript URL 規則。",
-      "jsRuleWarningAlt": "請啟用開發者模式以使用 JavaScript 功能。",
       "keyboardInput": "鍵盤輸入",
       "keyboardInputTooltip": "如果使用虛擬鍵盤或非 QWERTY 配置鍵盤，請考慮切換到虛擬輸入模式。這只會影響未來的快速鍵變更，現有的快速鍵不會受影響。",
       "qwerty": "QWERTY 配置",

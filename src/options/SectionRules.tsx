@@ -4,7 +4,7 @@ import { URLRule, URLStrictness } from "../types"
 import { getDefaultURLRule, getDefaultFx, getDefaultURLCondition } from "../defaults"
 import { NumericInput } from "../comps/NumericInput"
 import { FxControl } from "../popup/FxControl"
-import { isEdge, isFirefox, moveItem, randomId } from "../utils/helper"
+import { isFirefox, moveItem, randomId } from "../utils/helper"
 import { ModalText } from "../comps/ModalText"
 import { URLModal } from "./URLModal"
 import { produce } from "immer"
@@ -12,9 +12,9 @@ import { List } from "./List"
 import { ListItem } from "./ListItem"
 import { KebabList, KebabListProps } from "./KebabList"
 import { makeLabelWithTooltip } from "./keybindControl/NameArea"
-import { canUserScript } from "src/utils/browserUtils"
 import { GearIcon } from "src/comps/GearIcon"
 import "./SectionRules.css"
+import { DevWarning } from "./DevWarning"
 
 
 export function SectionRules(props: {}) {
@@ -68,6 +68,7 @@ export function SectionRules(props: {}) {
   return (
     <div className="section SectionRules">
       <h2>{gvar.gsm.options.rules.header}</h2>
+      {isFirefox() ? null : <DevWarning forUrlRules={true} hasJs={rules?.some(r => r.enabled && r.type === "JS")}/>}
       <List listRef={listRef} spacingChange={handleSpacingChange}>
           {rules.map((rule, i) => (
             <ListItem key={rule.id} listRef={listRef} onMove={newIdx => handleMove(rule.id, newIdx)} spacing={rule.spacing} onRemove={() => handleChange(rule, true)} label={rule.label} onClearLabel={() => {

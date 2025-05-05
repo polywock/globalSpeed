@@ -143,10 +143,6 @@ export const KeybindControl = (props: KeybindControlProps) => {
       {/* Status */}
       <input type="checkbox" checked={!!value.enabled} onChange={e => {
         props.onChange(value.id, produce(value, d => {
-          if (value.command === "runCode" && !isFirefox()) {
-            alert(gvar.gsm.options.flags.jsShortcutWarning)
-            return
-          }
           d.enabled = !value.enabled
           requestSyncContextMenu()
         }))

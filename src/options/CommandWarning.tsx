@@ -1,8 +1,8 @@
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Keybind, Trigger } from "../types"
-import { DropdownWarning } from "../comps/DropdownWarning"
 import { requestCreateTab } from "../utils/browserUtils"
 import { FaLink } from "react-icons/fa"
+import { MdWarning } from "react-icons/md"
 import "./CommandWarning.css"
 
 
@@ -12,44 +12,40 @@ type Props = {
 }
 
 export function CommandWarning(props: Props) {
-  const [unusedShortcuts, setUnusedShortcuts] = useState([] as chrome.commands.Command[])
+  const [show, setShow] = useState(false)
  
-  const env = useMemo(() => ({} as {keybinds?: Keybind[]}), [])
+  const env = useRef({} as {keybinds?: Keybind[], show?: boolean}).current
+  env.show = show
   env.keybinds = props.keybinds
 
   useEffect(() => {
     
     const handleInterval = () => {
       chrome.commands.getAll(cc => {
-        setUnusedShortcuts(cc.filter(c => c.name.startsWith("command") && c.shortcut && (
+        const target = cc.some(c => c.name.startsWith("command") && c.shortcut && (
           !env.keybinds.some(kb => kb.enabled && kb.trigger === Trigger.GLOBAL && (kb.globalKey || "commandA") === c.name)
-        )))
+        ))
+        target !== env.show && setShow(target)
       }) 
     }
 
-    const intervalId = setInterval(() => {
-      handleInterval()
-    }, 1000)
+    const intervalId = setInterval(handleInterval, 1000)
 
     return () => {
       clearInterval(intervalId)
     }
   }, [])
 
-  if (!unusedShortcuts.length) return null
+  if (!show) return null
 
-  return (
-    <DropdownWarning defaultExpanded={true} value={<div className="CommandWarningBody">
-      <div>
-        <span>{gvar.gsm.warnings.unusedGlobal}</span>
-        <button onClick={() => requestCreateTab(`chrome://extensions/shortcuts#:~:text=${encodeURIComponent("Global Speed")}`)}>
-          <FaLink size={"1.21rem"}/>
-          <span>{gvar.gsm.token.openPage}</span>
-        </button>
-      </div>
-      {unusedShortcuts.map(b => (
-        <div style={{marginTop: "15px"}} key={b.name}><b>{b.description}</b> = <code>{b.shortcut}</code></div>
-      ))}
-    </div>}/>
-  )
+  return <div className="CommandWarning">
+    <MdWarning size={"1.15rem"}/>
+    <span>{gvar.gsm.warnings.unusedGlobal}</span>
+    <button onClick={() => requestCreateTab(`chrome://extensions/shortcuts#:~:text=${encodeURIComponent("Global Speed")}`)}>
+      <FaLink size={"1.21rem"}/>
+      <span>{gvar.gsm.token.openPage}</span>
+    </button>
+  </div>
+
+ 
 }

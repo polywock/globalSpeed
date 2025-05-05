@@ -11,7 +11,10 @@
     "unusedGlobal": "Lepaskan kekunci pintasan global yang tidak digunakan",
     "selectTooltip": "Pilih video pilihan untuk kekunci pintasan media. Berguna jika anda mahu mengawal muzik latar dari tab lain (atau dari program lain dengan kekunci pintasan global).",
     "sliderTooltip": "Tekan kekunci shift untuk kawalan yang lebih tepat.",
-    "captureRequired": "Gunakan pintasan $1 untuk mengaktifkan."
+    "captureRequired": "Gunakan pintasan $1 untuk mengaktifkan.",
+    "jsWarning": "Aktifkan mod pembangun untuk menggunakan pintasan javascript",
+    "jsWarningRules": "Aktifkan mod pembangun untuk menggunakan peraturan URL javascript",
+    "jsUpdate": "Pintasan Javascript memerlukan Chrome atau Edge versi 136 atau lebih baru"
   },
   "menuLabels": {
     "invertPage": "Terbalikkan halaman",
@@ -184,9 +187,6 @@
       "newContext": "Konteks baru",
       "customContext": "Konteks tersuai",
       "customContextTooltip": "Simpan snapshot konteks semasa tab ini. Tab yang baru dibuat akan menggunakan snapshot ini sebagai keadaan awal.",
-      "jsShortcutWarning": "Pintasan JavaScript kini dinyahaktifkan kerana penyusutan API lama. Fungsi akan diteruskan apabila Chromium melaksanakan kaedah userScripts.execute().",
-      "jsRuleWarning": "Sila kemas kini Chrome untuk menyokong peraturan URL JavaScript.",
-      "jsRuleWarningAlt": "Sila aktifkan mod pembangun untuk menggunakan ciri JavaScript.",
       "keyboardInput": "Input papan kekunci",
       "keyboardInputTooltip": "Pertimbangkan untuk beralih ke mod Input Maya jika menggunakan papan kekunci maya atau papan kekunci susun atur bukan QWERTY. Ini hanya terpakai untuk perubahan pintasan masa depan dan pintasan sedia ada tidak akan terjejas.",
       "qwerty": "Susun atur QWERTY",

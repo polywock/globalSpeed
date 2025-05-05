@@ -1,7 +1,7 @@
 import { Keybind, Command, StateView, StateViewSelector, AdjustMode, ReferenceValues, MediaProbe, ItcInit, Duration, KeybindMatch, Trigger } from "../../types"
 import { CommandName, commandInfos } from "../../defaults/commands"
 import { sendMessageToConfigSync, intoFxFlags, sendMediaEvent, isSeekSmall } from "../../utils/configUtils"
-import { TabInfo } from "../../utils/browserUtils"
+import { checkContentScript, TabInfo } from "../../utils/browserUtils"
 import type { MediaEvent, MediaEventCinema } from "../../contentScript/isolated/utils/applyMediaEvent"
 import { round, clamp, formatDuration, isFirefox, wraparound, timeout } from "../../utils/helper"
 import { FlatMediaInfo } from "../../contentScript/isolated/utils/genMediaInfo"
@@ -157,10 +157,24 @@ const commandHandlers: {
     }
   },
   runCode: async args => {
-    if (!isFirefox()) return 
     const { kb, tabInfo } = args
-    if (!tabInfo) return
-    chrome.tabs.sendMessage(tabInfo.tabId, {type: "RUN_JS", value: kb.valueString}, {frameId: 0})
+    if (!tabInfo || !(await checkContentScript(tabInfo.tabId, tabInfo.frameId || 0))) return
+
+    if (isFirefox()) {
+      chrome.tabs.sendMessage(tabInfo.tabId, {type: "RUN_JS", value: kb.valueString}, {frameId: 0})
+    } else {
+      try {
+        chrome.userScripts.execute({
+          injectImmediately: true,
+          js: [{code: kb.valueString}],
+          world: 'MAIN',
+          target: {
+            tabId: tabInfo.tabId,
+            frameIds: [0]
+          }
+        })
+      } catch {}
+    }
   },
   openUrl: async args => {
     const { kb, tabInfo } = args 
