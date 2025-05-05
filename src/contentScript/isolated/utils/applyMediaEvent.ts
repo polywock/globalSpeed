@@ -70,11 +70,7 @@ export function seekTo(elem: HTMLMediaElement, value: number, fast?: boolean, au
     return 
   } 
 
-  if (fast && elem.fastSeek) {
-    elem.fastSeek(value)
-  } else {
-    elem.currentTime = value
-  }
+  elem.currentTime = value
 
   if (IS_AMAZON && !autoPause) {
     paused ? elem.play() : elem.pause() 

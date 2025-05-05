@@ -71,12 +71,30 @@ export async function checkContentScript(tabId: number, frameId: number) {
     await chrome.tabs.sendMessage(tabId, {type: "CS_ALIVE"}, {frameId: frameId || 0})
     return true 
   } catch (err) {}
-
-  return null
 }
 
-export function isUserScriptsAvailable() {
+
+export function canPotentiallyUserScript() {
+  return Object.hasOwn(chrome, 'userScripts')
+}
+
+let cachedCanUserScriptExecute: {result: boolean}
+export function canPotentiallyUserScriptExecute() {
+  if (cachedCanUserScriptExecute) return cachedCanUserScriptExecute.result
+
+  try {
+    cachedCanUserScriptExecute = {result: !!(
+      canPotentiallyUserScript() && 
+      (navigator as any).userAgentData.brands.some((v: any) => v.brand === "Chromium" && parseInt(v.version) >= 136))}
+  } catch {
+    cachedCanUserScriptExecute = {result: false}
+  } 
+  return cachedCanUserScriptExecute.result
+}
+
+export function canUserScript() {
   try {
     if (chrome.userScripts) return true 
   } catch { return false }
+  return null
 }

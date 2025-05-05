@@ -12,7 +12,7 @@ import { List } from "./List"
 import { ListItem } from "./ListItem"
 import { KebabList, KebabListProps } from "./KebabList"
 import { makeLabelWithTooltip } from "./keybindControl/NameArea"
-import { isUserScriptsAvailable } from "src/utils/browserUtils"
+import { canUserScript } from "src/utils/browserUtils"
 import { GearIcon } from "src/comps/GearIcon"
 import "./SectionRules.css"
 
@@ -118,12 +118,6 @@ export function Rule(props: RuleProps) {
 
       {/* Status */}
       <input type="checkbox" checked={!!rule.enabled} onChange={e => {
-        if (rule.type === "JS") {
-          if (!isFirefox() && !isUserScriptsAvailable()) {
-            alert(gvar.gsm.options.flags.jsRuleWarning)
-            return 
-          }
-        }
         onChange(produce(rule, d => {
           d.enabled = !d.enabled
         }))
@@ -147,14 +141,6 @@ export function Rule(props: RuleProps) {
 
       {/* Rule type */}
       <select value={rule.type} onChange={e => {
-        if (e.target.value === "JS" && !isFirefox() && !isUserScriptsAvailable()) {
-          if (isUserScriptsAvailable() === false) {
-            alert(`${gvar.gsm.options.flags.jsRuleWarningAlt} -> ${isEdge() ? "edge" : "chrome"}://extensions`)
-          } else {
-            alert(gvar.gsm.options.flags.jsRuleWarning)
-          }
-          return 
-        }
         onChange(produce(rule, d => {
           d.type = e.target.value as any
         }))

@@ -33,7 +33,7 @@ export function MediaView(props: {info: FlatMediaInfo, pinned: boolean}) {
           if (!probe) return
           feedbackText(probe.formatted, {y: (e.target as HTMLDivElement).getBoundingClientRect().top - 50}, 1000 * 30) 
         }} className="meta" title={info.domain}>
-          {parts.join(info.shadowMode == null ? " • " : info.shadowMode === "open" ? " / " : ` \ `)}
+          {parts.join(info.shadowMode == null ? " - " : ` • `)}
         </span>
         {differentTab && (
           <button className="jump" onClick={() => {

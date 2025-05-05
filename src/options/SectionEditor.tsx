@@ -217,10 +217,7 @@ function EditorControls(props: {view: StateView, setView: SetView}) {
       }}>{gvar.gsm.token.reset}</button>
 
       {/* URL conditions */}
-      <button  onClick={() => setShow(!show)} onContextMenu={e => {
-        e.preventDefault()
-        setView({keybindsUrlCondition: null})
-      }} className={`${urlRuleCount ? "error" : "blue"}`}>{`${gvar.gsm.options.rules.conditions}: ${urlRuleCount}`}</button>
+      <button  onClick={() => setShow(!show)}className={`${urlRuleCount ? "error" : "blue"}`}>{`${gvar.gsm.options.rules.conditions}: ${urlRuleCount}`}</button>
 
       {/* URL conditions modal */}
       {show && <URLModal 

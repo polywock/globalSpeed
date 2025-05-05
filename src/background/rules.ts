@@ -1,6 +1,6 @@
 import { getDefaultFx } from "src/defaults"
 import { AnyDict, CONTEXT_KEYS, State, URLRule, URLStrictness } from "src/types"
-import { isUserScriptsAvailable } from "src/utils/browserUtils"
+import { canUserScript } from "src/utils/browserUtils"
 import { testURL } from "src/utils/configUtils"
 import { isFirefox, listToDict, timeout } from "src/utils/helper"
 
@@ -35,8 +35,9 @@ async function handleChange(changes: chrome.storage.StorageChanges) {
 }
 
 export async function syncUserScripts(rules: URLRule[], superDisable: boolean) {
-    if (!isUserScriptsAvailable()) return 
-    await chrome.userScripts.unregister()
+    try {
+        await chrome.userScripts.unregister()
+    } catch { return }
     if (superDisable) return 
     rules.filter(r => r.condition).forEach(rule => {
         const parts = (rule.condition.parts ?? []).filter(p => !p.disabled && p.type !== "REGEX")

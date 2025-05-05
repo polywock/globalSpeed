@@ -30,7 +30,7 @@
 
     & > .meta {
       font-size: 0.85em;
-      opacity: 0.8;
+      opacity: 0.55;
 
       &:hover {
         opacity: 1;

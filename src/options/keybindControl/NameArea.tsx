@@ -22,12 +22,12 @@ import { isSeekSmall } from "src/utils/configUtils"
 import { PiArrowArcRightFill } from "react-icons/pi"
 import { CinemaModal } from "../CinemaModal"
 import { useState } from "react"
-import { IoEllipsisVertical, IoHelp } from "react-icons/io5"
+import { IoEllipsisVertical } from "react-icons/io5"
 import { Tooltip, TooltipProps } from "src/comps/Tooltip"
 import { RegularTooltip } from "src/comps/RegularTooltip"
 import { GearIcon } from "src/comps/GearIcon"
 
-const invertableKeys = new Set(["fastSeek", "autoPause", "skipPauseSmall", "pauseWhileScrubbing", "relativeToSpeed", "wraparound", "itcWraparound", "showNetDuration", "seekOnce", "allowAlt", "cycleNoWrap", "noHold", "ignoreNavigate", "skipToggleSpeed", "alwaysOn"])
+const invertableKeys = new Set(["autoPause", "skipPauseSmall", "pauseWhileScrubbing", "relativeToSpeed", "wraparound", "itcWraparound", "showNetDuration", "seekOnce", "allowAlt", "cycleNoWrap", "noHold", "ignoreNavigate", "skipToggleSpeed", "alwaysOn"])
 const memMap = new Map<string, any>()
 
 function saveToMem(kb: Keybind, adjustMode: AdjustMode) {
@@ -215,10 +215,6 @@ export function NameArea(props: NameAreaProps) {
 
 function ensureSeekList(list: KebabListProps["list"], handlers: KebabListProps["onSelect"][], value: KeybindControlProps["value"], invertFlag: (key: string) => any, reference?: ReferenceValues) {
     let adjustMode = value.adjustMode || AdjustMode.SET
-
-    HTMLMediaElement.prototype.fastSeek && list.push(
-        { name: "fastSeek", checked: !!value.fastSeek, label: makeLabelWithTooltip(gvar.gsm.command.fastSeek, gvar.gsm.command.fastSeekTooltip) },
-    )
 
     const pauseNormal = { name: "autoPause", label: gvar.gsm.command.pause, checked: !!value.autoPause } as MenuProps["items"][number]
     const pauseSmall = { name: "skipPauseSmall", label: gvar.gsm.command.pause, checked: !value.skipPauseSmall } as MenuProps["items"][number]

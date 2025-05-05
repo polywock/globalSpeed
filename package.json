@@ -29,7 +29,7 @@
     "@babel/preset-typescript": "^7.24.1",
     "@babel/runtime": "^7.24.5",
     "@types/audioworklet": "^0.0.55",
-    "@types/chrome": "^0.0.268",
+    "@types/chrome": "^0.0.318",
     "@types/node": "^20.12.12",
     "autoprefixer": "^10.4.19",
     "babel-loader": "^9.1.3",
