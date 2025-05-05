@@ -65,9 +65,14 @@ export function setSession(override?: any) {
 
 export async function checkContentScript(tabId: number, frameId: number) {
   try {
+    const result = await chrome.tabs.get(tabId)
+    if (result.frozen) return false 
+    if (result.discarded) return null 
     await chrome.tabs.sendMessage(tabId, {type: "CS_ALIVE"}, {frameId: frameId || 0})
     return true 
   } catch (err) {}
+
+  return null
 }
 
 export function isUserScriptsAvailable() {

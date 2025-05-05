@@ -1,8 +1,7 @@
 
 import { useState, useEffect, useMemo } from "react"
-import { FlatMediaInfo, MediaData, MediaPath, MediaScope, flattenMediaInfos } from "../contentScript/isolated/utils/genMediaInfo"
+import { MediaData, MediaPath, MediaScope, flattenMediaInfos } from "../contentScript/isolated/utils/genMediaInfo"
 import { checkContentScript } from "src/utils/browserUtils"
-import { groupByKey } from "src/utils/helper"
 
 type Env = {
   client: SubscribeMedia
@@ -52,9 +51,11 @@ export class SubscribeMedia {
     } else if (key.startsWith("m:scope:")) {
       let info = value as MediaScope
       if (!info) return
-      if (await checkContentScript(info.tabInfo.tabId, info.tabInfo.frameId)) {
+      let status: boolean
+      // False means frozen, null means no content script, and true is all good.
+      if (status = await checkContentScript(info.tabInfo.tabId, info.tabInfo.frameId)) {
         this.scopes[key] = value
-      } else {
+      } else if (status == null) {
         chrome.storage.session.remove(key)
       }
     }

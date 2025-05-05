@@ -227,23 +227,6 @@ export function feedbackText(text: string, pos?: {x?: number, y?: number}, decay
   }, decay || 1000)
 }
 
-export function groupByKey<T>(items: T[], getKey: (v: T) => any): T[][] {
-  let map = new Map<any, T[]>()
-
-  for (let item of items) {
-    const key = getKey(item)
-    const arr = map.get(key) ?? []
-    arr.push(item)
-    map.set(key, arr)
-  }
-
-  const groups: T[][] = []
-  map.forEach(v => {
-    groups.push(v)
-  })
-
-  return groups 
-}
 
 export function domRectGetOffset(rect: DOMRect, xOffset = 10, yOffset = 10, topLeft?: boolean) {
   if (topLeft) return {x: rect.x + xOffset, y: rect.y - yOffset}
