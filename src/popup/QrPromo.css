@@ -1,4 +1,8 @@
 
+:root.darkTheme .QrPromo {
+    display: none;
+}
+
 .QrPromo {
     display: grid;
     grid-template-columns: 1fr max-content max-content;

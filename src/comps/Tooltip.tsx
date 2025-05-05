@@ -117,6 +117,7 @@ export function Tooltip(props: TooltipProps) {
         clearTimeout(env.timeoutId)
         env.signal?.abort()    
         env.isActive = false 
+        if (!tipRef.current) return 
         tipRef.current.style.left = null 
         tipRef.current.style.top = null 
         tipRef.current.style.display = null 

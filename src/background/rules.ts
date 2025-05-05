@@ -1,6 +1,5 @@
 import { getDefaultFx } from "src/defaults"
 import { AnyDict, CONTEXT_KEYS, State, URLRule, URLStrictness } from "src/types"
-import { canUserScript } from "src/utils/browserUtils"
 import { testURL } from "src/utils/configUtils"
 import { isFirefox, listToDict, timeout } from "src/utils/helper"
 
