@@ -53,7 +53,7 @@ export class SubscribeMedia {
       if (!info) return
       let status: boolean
       // False means frozen, null means no content script, and true is all good.
-      if (status = await checkContentScript(info.tabInfo.tabId, info.tabInfo.frameId)) {
+      if (status = await checkContentScript(info.tabInfo?.tabId, info.tabInfo.frameId)) {
         this.scopes[key] = value
       } else if (status == null) {
         chrome.storage.session.remove(key)

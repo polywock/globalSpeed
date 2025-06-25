@@ -166,8 +166,6 @@
   "options": {
     "flags": {
       "header": "الخيارات",
-      "qrCodeTop": "امسح للاستخدام على...",
-      "qrCodeBottom": "إيدج لنظام أندرويد",
       "language": "اللغة",
       "_languageTooltip": "المستخدمون الذين ساهموا في الترجمات العربية: @LotfiBoukhemerra",
       "darkTheme": "الوضع الداكن",
@@ -207,7 +205,9 @@
         "pressAction": "إجراء الضغط",
         "togglePause": "تبديل الإيقاف المؤقت",
         "option": "عرض واجهة دائرية"
-      }
+      },
+      "qrCodeTop": "امسح للاستخدام على...",
+      "qrCodeBottom": "إيدج للجوال"
     },
     "editor": {
       "header": "محرر الاختصارات",

@@ -166,8 +166,6 @@
   "options": {
     "flags": {
       "header": "ตัวเลือก",
-      "qrCodeTop": "สแกนเพื่อใช้บน...",
-      "qrCodeBottom": "Edge สำหรับ Android",
       "language": "ภาษา",
       "_languageTooltip": "",
       "darkTheme": "ธีมมืด",
@@ -207,7 +205,9 @@
         "pressAction": "การกระทำเมื่อกด",
         "togglePause": "สลับหยุดชั่วคราว",
         "option": "แสดงวิดเจ็ตวงกลม"
-      }
+      },
+      "qrCodeTop": "สแกนเพื่อใช้งานบน...",
+      "qrCodeBottom": "Edge สำหรับมือถือ"
     },
     "editor": {
       "header": "ตัวแก้ไขคีย์ลัด",

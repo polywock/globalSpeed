@@ -342,28 +342,70 @@ export function replaceArgs(raw: string, args: string[]) {
 }
 
 
-export function parseDomain(host: string): { baseName: string; registeredDomain: string } {
-  const parts = host.split('.')
-  if (parts.length < 2) return null
+let cachedDomainResult: {result: ReturnType<typeof parseDomain>}
+export function parseDomain(hostname: string): { baseName: string; registeredDomain: string } {
+  if (cachedDomainResult) return cachedDomainResult.result
+  cachedDomainResult = {result: _parseDomain(hostname)}
+  return cachedDomainResult.result
+}
 
-  const last = parts[parts.length - 1]
-  const second = parts[parts.length - 2]
-  const hasTwoPartTLD = last.length === 2 && second.length <= 3 && parts.length > 2
-  const tldCount = hasTwoPartTLD ? 2 : 1
+function _parseDomain(hostname: string): { baseName: string; registeredDomain: string } {
+  const parts = hostname.toLowerCase().split('.')
+  if (parts.length < 2) {
+    return { baseName: parts[0], registeredDomain: parts[0] }
+  }
 
-  const baseName = parts[parts.length - 1 - tldCount]
-  const registeredDomain = parts.slice(parts.length - 1 - tldCount).join('.')
+  let domainParts: string[]
 
-  return { baseName, registeredDomain }
+  if (parts[0] === 'www' && parts.length > 1) {
+    domainParts = parts.slice(1)
+  } else {
+    const ccSLDs: Record<string, string[]> = {
+      uk: ['co','org','ac','gov','mod','nhs','ltd','plc','me'],
+      au: ['com','net','org','edu','gov','asn','id'],
+      nz: ['ac','co','net','org','govt','school','geek','gen','maori'],
+      in: ['co','com','net','org','firm','gen','ind','ac','ernet','nic'],
+      ng: ['com','net','org','sch'],
+      jp: ['co','or','ne','ac','ad','ed','go','gr','lg'],
+      br: ['com','net','org','gov','edu','mil'],
+      cn: ['com','net','org','gov','edu','mil'],
+      ua: ['com','net','org','gov','edu'],
+      za: ['co','org','net','gov','edu','ac'],
+      mx: ['com','org','net','edu','gob'],
+      kr: ['co','or','ne','re','pe','go','ac','hs','ms'],
+      pl: ['com','net','org','edu','gov']
+    }
+
+    const tld = parts[parts.length - 1]
+    const sld = parts[parts.length - 2]
+
+    if (ccSLDs[tld]?.includes(sld) && parts.length >= 3) {
+      domainParts = parts.slice(-3)
+    } else {
+      domainParts = parts.slice(-2)
+    }
+  }
+  
+  return {
+    baseName: domainParts[0],
+    registeredDomain: domainParts.join('.')
+  }
 }
 
 function escapeRegex(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
+let cachedRemoveDomainResult: {result: string, title: string}
 export function removeDomainFromTitle(rawTitle: string, parsed: ReturnType<typeof parseDomain>, minWords = 3) {
-  let title = rawTitle.trim()
-  if (!parsed) return title
+  if (cachedRemoveDomainResult && cachedRemoveDomainResult.title === rawTitle) return cachedRemoveDomainResult.result
+  cachedRemoveDomainResult = {title: rawTitle, result: _removeDomainFromTitle(rawTitle, parsed, minWords)}
+  return cachedRemoveDomainResult.result
+}
+
+function _removeDomainFromTitle(rawTitle: string, parsed: ReturnType<typeof parseDomain>, minWords = 3) {
+  let title = rawTitle?.trim() || ""
+  if (!title || !parsed || !parsed.baseName || !parsed.registeredDomain) return title
 
   const { baseName, registeredDomain } = parsed
 

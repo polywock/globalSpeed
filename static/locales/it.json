@@ -166,8 +166,6 @@
   "options": {
     "flags": {
       "header": "Opzioni",
-      "qrCodeTop": "Scansiona per usare su...",
-      "qrCodeBottom": "Edge per Android",
       "language": "Lingua",
       "_languageTooltip": "Utenti che hanno contribuito alle traduzioni italiane: @albertopasqualetto",
       "darkTheme": "Tema scuro",
@@ -207,7 +205,9 @@
         "pressAction": "Azione di pressione",
         "togglePause": "Attiva/disattiva pausa",
         "option": "Mostra il widget circolare"
-      }
+      },
+      "qrCodeTop": "Scansiona per utilizzare su...",
+      "qrCodeBottom": "Edge per dispositivi mobili"
     },
     "editor": {
       "header": "Modifica Scorciatoie",

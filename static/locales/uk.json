@@ -166,8 +166,6 @@
   "options": {
     "flags": {
       "header": "Параметри",
-      "qrCodeTop": "Скануйте для входу...",
-      "qrCodeBottom": "Edge для Android",
       "language": "Мова",
       "_languageTooltip": "Користувачі, які зробили внесок у переклади українською: @nn-bit1",
       "darkTheme": "Темна тема",
@@ -207,7 +205,9 @@
         "pressAction": "Дія при натисканні",
         "togglePause": "Перемикання паузи",
         "option": "Показати віджет кола"
-      }
+      },
+      "qrCodeTop": "Скануйте для використання",
+      "qrCodeBottom": "Edge для мобільних"
     },
     "editor": {
       "header": "Редактор ярликів",

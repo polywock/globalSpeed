@@ -166,8 +166,6 @@
   "options": {
     "flags": {
       "header": "オプション",
-      "qrCodeTop": "スキャンして開始...",
-      "qrCodeBottom": "Android 用 Edge",
       "language": "言語",
       "darkTheme": "暗いテーマ",
       "showBadge": "バッジを表示",
@@ -206,7 +204,9 @@
         "pressAction": "押下アクション",
         "togglePause": "一時停止を切り替える",
         "option": "円形ウィジェットを表示する"
-      }
+      },
+      "qrCodeTop": "スキャンして使用開始...",
+      "qrCodeBottom": "モバイル版 Edge"
     },
     "editor": {
       "header": "ショートカットエディター",

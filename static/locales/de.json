@@ -166,8 +166,6 @@
   "options": {
     "flags": {
       "header": "Optionen",
-      "qrCodeTop": "Scanne, um zu verwenden auf...",
-      "qrCodeBottom": "Edge für Android",
       "language": "Sprache",
       "_languageTooltip": "",
       "darkTheme": "Dunkles Thema",
@@ -207,7 +205,9 @@
         "pressAction": "Aktion beim Drücken",
         "togglePause": "Pause umschalten",
         "option": "Kreis-Widget anzeigen"
-      }
+      },
+      "qrCodeTop": "Zum Verwenden auf ... scanne",
+      "qrCodeBottom": "Edge für Mobilgeräte"
     },
     "editor": {
       "header": "Tastenkombinationen-Editor",

@@ -175,8 +175,6 @@
   "options": {
     "flags": {
       "header": "Options",
-      "qrCodeTop": "Scan to use on...",
-      "qrCodeBottom": "Edge for Android",
       "language": "Language",
       "_languageTooltip": "",
       "darkTheme": "Dark theme",
@@ -219,7 +217,9 @@
         "fullscreenOnlyTooltip": "Only show widget when the video is fullscreen.",
         "pressAction": "Press action",
         "togglePause": "Toggle pause"
-      }
+      },
+      "qrCodeTop": "Scan to use on...",
+      "qrCodeBottom": "Edge for Mobile"
     },
     "editor": {
       "header": "Shortcut Editor",

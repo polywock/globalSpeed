@@ -166,8 +166,6 @@
   "options": {
     "flags": {
       "header": "Seçenekler",
-      "qrCodeTop": "Kullanmak için tara...",
-      "qrCodeBottom": "Android için Edge",
       "language": "Dil",
       "_languageTooltip": "Türkçe çevirilere katkıda bulunan kullanıcılar: @FoofAPP",
       "darkTheme": "Karanlık tema",
@@ -207,7 +205,9 @@
         "pressAction": "Basma eylemi",
         "togglePause": "Durdurmayı geçiş yap",
         "option": "Daire widget'ını göster"
-      }
+      },
+      "qrCodeTop": "Kullanmak için tarayın...",
+      "qrCodeBottom": "Mobil için Edge"
     },
     "editor": {
       "header": "Kısayol Düzenleyici",

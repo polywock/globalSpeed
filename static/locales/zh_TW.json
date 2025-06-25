@@ -167,8 +167,6 @@
   "options": {
     "flags": {
       "header": "選項",
-      "qrCodeTop": "掃描以在下列裝置使用...",
-      "qrCodeBottom": "Android 版 Edge",
       "language": "語言",
       "_languageTooltip": "對繁體中文翻譯做出貢獻的使用者：@PeterDaveHello @nathan60107",
       "darkTheme": "深色主題",
@@ -208,7 +206,9 @@
         "fullscreenOnlyTooltip": "只在影片全螢幕時顯示小工具。",
         "pressAction": "點選動作",
         "togglePause": "切換暫停"
-      }
+      },
+      "qrCodeTop": "掃碼使用",
+      "qrCodeBottom": "Edge 手機版"
     },
     "editor": {
       "header": "快速鍵編輯器",

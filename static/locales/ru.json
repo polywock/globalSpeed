@@ -166,8 +166,6 @@
   "options": {
     "flags": {
       "header": "Параметры",
-      "qrCodeTop": "Сканируйте для входа...",
-      "qrCodeBottom": "Edge для Android",
       "language": "Язык",
       "darkTheme": "Темная тема",
       "showBadge": "Показать значок",
@@ -206,7 +204,9 @@
         "pressAction": "Действие при нажатии",
         "togglePause": "Переключение паузы",
         "option": "Показать виджет круга"
-      }
+      },
+      "qrCodeTop": "Сканируйте для использования",
+      "qrCodeBottom": "Edge для мобильных"
     },
     "editor": {
       "header": "Редактор ярлыков",

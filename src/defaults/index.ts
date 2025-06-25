@@ -4,7 +4,7 @@ import { FilterName, filterInfos } from "./filters"
 import { getDefaultKeybinds } from "./commands"
 import { chunkByPredicate, randomId } from "../utils/helper"
 
-const DEFAULT_WEBSITES_SHORTCUTS_DISABLED = ['https://docs.google.com', 'https://play.geforcenow.com', "https://docs.qq.com"]
+const DEFAULT_WEBSITES_SHORTCUTS_DISABLED = ['https://docs.google.com', 'https://play.geforcenow.com', "https://www.xbox.com", "https://docs.qq.com", "https://www.playstation.com", "https://excalidraw.com", "https://www.photopea.com", "https://www.canva.com", "http://luna.amazon.com"]
 
 function generateUrlPart(origin: string): URLConditionPart {
     return {

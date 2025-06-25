@@ -166,8 +166,6 @@
   "options": {
     "flags": {
       "header": "Opciones",
-      "qrCodeTop": "Escanea para usar en...",
-      "qrCodeBottom": "Edge para Android",
       "language": "Idioma",
       "darkTheme": "Tema oscuro",
       "showBadge": "Mostra distintivo",
@@ -206,7 +204,9 @@
         "pressAction": "Acción de pulsación",
         "togglePause": "Alternar pausa",
         "option": "Mostrar widget circular"
-      }
+      },
+      "qrCodeTop": "Escanea para usar en...",
+      "qrCodeBottom": "Edge para móviles"
     },
     "editor": {
       "header": "Editor de accesos directos",

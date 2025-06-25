@@ -167,8 +167,6 @@
     "flags": {
       "header": "Opções",
       "language": "Língua",
-      "qrCodeTop": "Escaneie para usar no...",
-      "qrCodeBottom": "Edge para Android",
       "darkTheme": "Tema escuro",
       "showBadge": "Mostrar distintivo",
       "showBadgeTooltip": "O distintivo é o texto no ícone da extensão.",
@@ -206,7 +204,9 @@
         "pressAction": "Ação de pressão",
         "togglePause": "Alternar pausa",
         "option": "Mostrar widget circular"
-      }
+      },
+      "qrCodeTop": "Escaneie para usar no...",
+      "qrCodeBottom": "Edge para celular"
     },
     "editor": {
       "header": "Editor de Atalhos",

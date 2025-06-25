@@ -167,8 +167,6 @@
   "options": {
     "flags": {
       "header": "选项",
-      "qrCodeTop": "扫描二维码",
-      "qrCodeBottom": "在安卓版Edge上使用",
       "language": "语言",
       "_languageTooltip": "对中文翻译做出贡献的用户：@liangjiancang",
       "darkTheme": "深色主题",
@@ -208,7 +206,9 @@
         "pressAction": "按下动作",
         "togglePause": "切换暂停",
         "option": "显示圆形小部件"
-      }
+      },
+      "qrCodeTop": "扫码使用",
+      "qrCodeBottom": "Edge 手机版"
     },
     "editor": {
       "header": "热键编辑器",

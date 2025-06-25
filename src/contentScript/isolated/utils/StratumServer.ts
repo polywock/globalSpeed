@@ -1,7 +1,7 @@
 
 export class StratumServer {
-    private parasite: HTMLDivElement
-    private parasiteRoot: ShadowRoot
+    parasite: HTMLDivElement
+    parasiteRoot: ShadowRoot
     wiggleCbs = new Set<(target: Node & ParentNode) => void>()
     msgCbs = new Set<(data: any) => void>()
     initCbs = new Set<() => void>()

@@ -168,8 +168,6 @@
     "flags": {
       "header": "옵션",
       "language": "언어",
-      "qrCodeTop": "스캔하여 사용하세요...",
-      "qrCodeBottom": "Android용 Edge",
       "darkTheme": "어두운 테마",
       "showBadge": "배지 표시",
       "showBadgeTooltip": "배지는 확장 프로그램 아이콘의 텍스트입니다.",
@@ -207,7 +205,9 @@
         "pressAction": "눌러서 실행",
         "togglePause": "일시 정지 전환",
         "option": "원형 위젯 표시"
-      }
+      },
+      "qrCodeTop": "스캔하여 사용해 보세요...",
+      "qrCodeBottom": "모바일용 Edge"
     },
     "editor": {
       "header": "바로 가기 편집기",

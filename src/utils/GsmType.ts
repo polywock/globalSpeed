@@ -167,8 +167,6 @@ export type Gsm = {
   options: {
     flags: {
       header: string,
-      qrCodeTop: string,
-      qrCodeBottom: string,
       language: string,
       _languageTooltip?: string,
       darkTheme: string,
@@ -208,7 +206,9 @@ export type Gsm = {
         fullscreenOnlyTooltip: string,
         pressAction: string,
         togglePause: string
-      }
+      },
+      qrCodeTop: string,
+      qrCodeBottom: string
     },
     editor: {
       header: string,

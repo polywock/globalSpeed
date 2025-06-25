@@ -166,8 +166,6 @@
   "options": {
     "flags": {
       "header": "Opsi",
-      "qrCodeTop": "Pindai untuk digunakan pada...",
-      "qrCodeBottom": "Edge untuk Android",
       "language": "Bahasa",
       "darkTheme": "Tema gelap",
       "showBadge": "Tampilkan badge",
@@ -206,7 +204,9 @@
         "pressAction": "Tindakan tekan",
         "togglePause": "Alih jeda",
         "option": "Tampilkan widget lingkaran"
-      }
+      },
+      "qrCodeTop": "Pindai untuk digunakan di...",
+      "qrCodeBottom": "Edge untuk seluler"
     },
     "editor": {
       "header": "Editor Pintasan",

@@ -26,7 +26,7 @@ export function QrPromo(props: {}) {
             <div className="bottom">{gvar.gsm.options.flags.qrCodeBottom}</div>
         </div>
         <img onClick={() => {
-            chrome.tabs.create({url: "https://www.microsoft.com/edge/emmx/globalspeedcollaboration"})
+            chrome.tabs.create({url: "https://edgemobileapp.microsoft.com?adjustId=1mhapodf_1mwtc6ik"})
         }} src={chrome.runtime.getURL("icons/qr.png")}/>
         <button onClick={() => {
             setView({qrCodeHide: true})

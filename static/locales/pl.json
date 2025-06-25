@@ -166,8 +166,6 @@
   "options": {
     "flags": {
       "header": "Opcje",
-      "qrCodeTop": "Zeskanuj, aby używać na...",
-      "qrCodeBottom": "Edge na Androidzie",
       "language": "Język",
       "_languageTooltip": "",
       "darkTheme": "Ciemny motyw",
@@ -207,7 +205,9 @@
         "pressAction": "Akcja po naciśnięciu",
         "togglePause": "Przełącz pauzę",
         "option": "Pokaż okrągły widżet"
-      }
+      },
+      "qrCodeTop": "Zeskanuj, aby użyć na...",
+      "qrCodeBottom": "Edge na urządzenia mobilne"
     },
     "editor": {
       "header": "Edytor skrótów",

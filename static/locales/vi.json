@@ -166,8 +166,6 @@
   "options": {
     "flags": {
       "header": "Tùy chọn",
-      "qrCodeTop": "Quét để sử dụng trên...",
-      "qrCodeBottom": "Edge cho Android",
       "language": "Ngôn ngữ",
       "_languageTooltip": "Những người dùng đã đóng góp cho bản dịch tiếng Việt: @zeref-dragneel",
       "darkTheme": "Chủ đề tối",
@@ -207,7 +205,9 @@
         "pressAction": "Hành động nhấn",
         "togglePause": "Chuyển đổi tạm dừng",
         "option": "Hiển thị tiện ích vòng tròn"
-      }
+      },
+      "qrCodeTop": "Quét để sử dụng trên...",
+      "qrCodeBottom": "Edge cho di động"
     },
     "editor": {
       "header": "Chỉnh sửa phím tắt",

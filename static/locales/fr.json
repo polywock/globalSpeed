@@ -166,8 +166,6 @@
   "options": {
     "flags": {
       "header": "Options",
-      "qrCodeTop": "Scannez pour utiliser sur...",
-      "qrCodeBottom": "Edge pour Android",
       "language": "Langue",
       "_languageTooltip": "Utilisateurs ayant contribué aux traductions françaises : @bounis67",
       "darkTheme": "Thème sombre",
@@ -207,7 +205,9 @@
         "pressAction": "Action de pression",
         "togglePause": "Basculer la pause",
         "option": "Afficher le widget cercle"
-      }
+      },
+      "qrCodeTop": "Scannez pour utiliser sur...",
+      "qrCodeBottom": "Edge pour mobile"
     },
     "editor": {
       "header": "Éditeur de raccourcis",
