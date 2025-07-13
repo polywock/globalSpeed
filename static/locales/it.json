@@ -12,9 +12,11 @@
     "selectTooltip": "Seleziona il video preferito per i tasti di scelta rapida multimediali. Utile se vuoi controllare la musica di sottofondo da una scheda diversa (o da un altro programma con tasti di scelta rapida globali).",
     "sliderTooltip": "Tieni premuto il tasto Shift per un controllo preciso.",
     "captureRequired": "Usa la scorciatoia $1 per attivare.",
-    "jsWarning": "Attiva la modalità sviluppatore per utilizzare le scorciatoie javascript",
-    "jsWarningRules": "Attiva la modalità sviluppatore per utilizzare le regole URL javascript",
-    "jsUpdate": "Le scorciatoie Javascript richiedono Chrome o Edge versione 136 o successiva"
+    "jsUpdate": "Le scorciatoie Javascript richiedono Chrome o Edge versione 136 o successiva",
+    "jsWarning": "Abilita 'Consenti script utente' per usare scorciatoie javascript",
+    "jsWarningRules": "Abilita 'Consenti script utente' per usare le regole URL javascript",
+    "jsWarningEdge": "Attiva la modalità sviluppatore per utilizzare le scorciatoie javascript",
+    "jsWarningRulesEdge": "Attiva la modalità sviluppatore per utilizzare le regole URL javascript"
   },
   "menuLabels": {
     "invertPage": "Inverti pagina",
@@ -207,7 +209,9 @@
         "option": "Mostra il widget circolare"
       },
       "qrCodeTop": "Scansiona per utilizzare su...",
-      "qrCodeBottom": "Edge per dispositivi mobili"
+      "qrCodeBottom": "Edge per dispositivi mobili",
+      "holdToSpeedUpTooltip": "Tieni premuto sui video per accelerare temporaneamente.",
+      "holdToSpeedUp": "Tieni premuto per accelerare"
     },
     "editor": {
       "header": "Modifica Scorciatoie",

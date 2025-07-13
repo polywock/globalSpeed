@@ -2,7 +2,7 @@
 import { Fx, AudioFx, URLRule, IndicatorInit, URLCondition, URLConditionPart, Context, CONTEXT_KEYS, AnyDict, State } from "../types"
 import { FilterName, filterInfos } from "./filters"
 import { getDefaultKeybinds } from "./commands"
-import { chunkByPredicate, randomId } from "../utils/helper"
+import { chunkByPredicate, isMobile, randomId } from "../utils/helper"
 
 const DEFAULT_WEBSITES_SHORTCUTS_DISABLED = ['https://docs.google.com', 'https://play.geforcenow.com', "https://www.xbox.com", "https://docs.qq.com", "https://www.playstation.com", "https://excalidraw.com", "https://www.photopea.com", "https://www.canva.com", "http://luna.amazon.com"]
 
@@ -23,7 +23,8 @@ export function getDefaultState(): State {
     keybinds: getDefaultKeybinds(),
     freshKeybinds: true,
     ...getDefaultContext(),
-    keybindsUrlCondition: getDefaultKeybindsUrlConditions()
+    keybindsUrlCondition: getDefaultKeybindsUrlConditions(),
+    hideMediaView: isMobile()
   } as State;
 
   return state 

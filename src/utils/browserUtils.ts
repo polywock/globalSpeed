@@ -73,19 +73,14 @@ export async function checkContentScript(tabId: number, frameId: number) {
   } catch (err) {}
 }
 
-
-export function canPotentiallyUserScript() {
-  return Object.hasOwn(chrome, 'userScripts')
-}
-
 let cachedCanUserScriptExecute: {result: boolean}
 export function canPotentiallyUserScriptExecute() {
   if (cachedCanUserScriptExecute) return cachedCanUserScriptExecute.result
 
   try {
-    cachedCanUserScriptExecute = {result: !!(
-      canPotentiallyUserScript() && 
-      (navigator as any).userAgentData.brands.some((v: any) => v.brand === "Chromium" && parseInt(v.version) >= 136))}
+    cachedCanUserScriptExecute = {
+      result: (navigator as any).userAgentData.brands.some((v: any) => v.brand === "Chromium" && parseInt(v.version) >= 136)
+    }
   } catch {
     cachedCanUserScriptExecute = {result: false}
   } 
@@ -94,7 +89,7 @@ export function canPotentiallyUserScriptExecute() {
 
 export function canUserScript() {
   try {
-    if (chrome.userScripts) return true 
+    if (chrome.userScripts.getScripts()) return true 
   } catch { return false }
   return null
 }

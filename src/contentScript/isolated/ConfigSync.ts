@@ -6,7 +6,7 @@ import { AdjustMode, Trigger } from "src/types"
 import { Circle } from "./utils/Circle"
 import { getLeaf } from "src/utils/nativeUtils"
 
-const FORCED_GHOST_LIST = [".qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com", "onedrive.live.com", "open.spotify.com", ".instagram.com", ".descript.com", "www.ccmtv.cn", ".douyin.com", ".tiktok.com"]
+const FORCED_GHOST_LIST = [".qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com", "onedrive.live.com", "open.spotify.com", ".instagram.com", ".descript.com", "www.ccmtv.cn", ".douyin.com", ".tiktok.com", ".linkedin.com"]
   .some(site => (location.hostname || "").includes(site))
 
 export class ConfigSync {
@@ -14,7 +14,7 @@ export class ConfigSync {
   blockKeyUp = false 
   lastTrigger = 0
   fxSync: FxSync
-  client = new SubscribeView({ghostMode: true, ghostModeUrlCondition: true, enabled: true, superDisable: true, latestViaShortcut: true, keybinds: true, keybindsUrlCondition: true, indicatorInit: true, circleWidget: true, circleInit: true}, gvar.tabInfo.tabId, true, (v, onLaunch) => {
+  client = new SubscribeView({ghostMode: true, ghostModeUrlCondition: true, enabled: true, superDisable: true, latestViaShortcut: true, keybinds: true, keybindsUrlCondition: true, indicatorInit: true, circleWidget: true, circleInit: true, holdToSpeed: true}, gvar.tabInfo.tabId, true, (v, onLaunch) => {
     if (onLaunch) this.init() 
     this.handleChange()
   }, 300)
@@ -44,6 +44,7 @@ export class ConfigSync {
       gvar.os.indicator.setInit(view?.indicatorInit || {})
     }
 
+    gvar.os.speedSync.holdToSpeed = view.holdToSpeed
 
     if (enabled) {
       this.fxSync = this.fxSync ?? new FxSync()

@@ -71,7 +71,7 @@ gvar.sess.safeStartupCbs.add(async () => {
 async function ensureContentScripts() {
     const tabs = (await chrome.tabs.query({url: ["https://*/*", "http://*/*"]})) || [] 
     for (let tab of tabs) {
-        if (!tab.url) continue
+        if (tab.frozen || !tab.url) continue
         try {
             await chrome.scripting.executeScript({target: {tabId: tab.id, allFrames: true}, files: ["isolated.js"]})
         } catch (err) { }

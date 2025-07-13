@@ -22,7 +22,10 @@ export function generateMediaState(elem: HTMLMediaElement): MediaInfo {
   if (elem.paused) info.paused = true
   if (elem.muted) info.muted = true
   if (rootNode) {
-    if (rootNode instanceof ShadowRoot) info.shadowMode = rootNode.mode 
+    if (rootNode instanceof ShadowRoot) {
+      elem.gsShadowRoot = rootNode
+      info.shadowMode = rootNode.mode 
+    }
     if (rootNode.pictureInPictureElement === elem) info.pipMode = true
     // let fs = rootNode.fullscreenElement
     // if (fs && (fs === elem || fs.contains(elem))) info.fsMode = true

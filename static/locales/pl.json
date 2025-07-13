@@ -12,9 +12,11 @@
     "selectTooltip": "Wybierz preferowane wideo dla skrótów multimedialnych. Przydatne, jeśli chcesz sterować muzyką w tle z innej karty (lub innego programu z globalnymi skrótami).",
     "sliderTooltip": "Przytrzymaj klawisz shift dla precyzyjnej kontroli.",
     "captureRequired": "Użyj skrótu $1, aby aktywować.",
-    "jsWarning": "Włącz tryb deweloperski, aby używać skrótów JavaScript",
-    "jsWarningRules": "Włącz tryb deweloperski, aby używać reguł URL JavaScript",
-    "jsUpdate": "Skróty Javascript wymagają przeglądarki Chrome lub Edge w wersji 136 lub nowszej"
+    "jsUpdate": "Skróty Javascript wymagają przeglądarki Chrome lub Edge w wersji 136 lub nowszej",
+    "jsWarning": "Włącz „Zezwól na skrypty użytkownika”, aby używać skrótów JavaScript",
+    "jsWarningRules": "Włącz „Zezwól na skrypty użytkownika”, aby używać reguł adresów URL JavaScript",
+    "jsWarningEdge": "Włącz tryb deweloperski, aby używać skrótów JavaScript",
+    "jsWarningRulesEdge": "Włącz tryb deweloperski, aby używać reguł URL JavaScript"
   },
   "menuLabels": {
     "invertPage": "Odwróć stronę",
@@ -207,7 +209,9 @@
         "option": "Pokaż okrągły widżet"
       },
       "qrCodeTop": "Zeskanuj, aby użyć na...",
-      "qrCodeBottom": "Edge na urządzenia mobilne"
+      "qrCodeBottom": "Edge na urządzenia mobilne",
+      "holdToSpeedUpTooltip": "Przytrzymaj wideo, aby tymczasowo przyspieszyć",
+      "holdToSpeedUp": "Przytrzymaj, aby przyspieszyć"
     },
     "editor": {
       "header": "Edytor skrótów",

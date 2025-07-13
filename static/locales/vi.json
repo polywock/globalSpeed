@@ -12,9 +12,11 @@
     "selectTooltip": "Chọn video ưa thích cho các phím tắt phương tiện. Hữu ích nếu bạn muốn điều khiển âm nhạc nền từ một tab khác (hoặc từ một chương trình khác với các phím tắt toàn cầu).",
     "sliderTooltip": "Giữ phím Shift để điều chỉnh chính xác.",
     "captureRequired": "Sử dụng phím tắt $1 để kích hoạt.",
-    "jsWarning": "Bật chế độ nhà phát triển để sử dụng các phím tắt javascript",
-    "jsWarningRules": "Bật chế độ nhà phát triển để sử dụng các quy tắc URL javascript",
-    "jsUpdate": "Phím tắt Javascript yêu cầu Chrome hoặc Edge phiên bản 136 trở lên"
+    "jsUpdate": "Phím tắt Javascript yêu cầu Chrome hoặc Edge phiên bản 136 trở lên",
+    "jsWarning": "Bật 'Cho phép tập lệnh người dùng' để sử dụng phím tắt javascript",
+    "jsWarningRules": "Bật 'Cho phép tập lệnh người dùng' để sử dụng quy tắc URL javascript",
+    "jsWarningEdge": "Bật chế độ nhà phát triển để sử dụng các phím tắt javascript",
+    "jsWarningRulesEdge": "Bật chế độ nhà phát triển để sử dụng các quy tắc URL javascript"
   },
   "menuLabels": {
     "invertPage": "Đảo ngược trang",
@@ -207,7 +209,9 @@
         "option": "Hiển thị tiện ích vòng tròn"
       },
       "qrCodeTop": "Quét để sử dụng trên...",
-      "qrCodeBottom": "Edge cho di động"
+      "qrCodeBottom": "Edge cho di động",
+      "holdToSpeedUpTooltip": "Nhấn và giữ video để tạm thời tăng tốc.",
+      "holdToSpeedUp": "Nhấn và giữ để tăng tốc"
     },
     "editor": {
       "header": "Chỉnh sửa phím tắt",

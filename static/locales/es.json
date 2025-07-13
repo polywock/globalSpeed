@@ -12,9 +12,11 @@
     "selectTooltip": "Selecciona el video preferido para las teclas de acceso rápido de medios. Útil si quieres controlar la música de fondo desde una pestaña diferente (o desde otro programa con teclas de acceso rápido globales).",
     "sliderTooltip": "Mantén presionada la tecla Shift para un control preciso.",
     "captureRequired": "Usa el atajo $1 para activar.",
-    "jsWarning": "Habilita el modo desarrollador para usar accesos directos de JavaScript",
-    "jsWarningRules": "Habilita el modo desarrollador para usar reglas de URL de JavaScript",
-    "jsUpdate": "Los atajos de Javascript requieren Chrome o Edge versión 136 o más reciente"
+    "jsUpdate": "Los atajos de Javascript requieren Chrome o Edge versión 136 o más reciente",
+    "jsWarning": "Habilita 'Permitir scripts de usuario' para usar accesos directos de javascript",
+    "jsWarningRules": "Habilita 'Permitir scripts de usuario' para usar reglas de URL de javascript",
+    "jsWarningEdge": "Habilita el modo desarrollador para usar accesos directos de JavaScript",
+    "jsWarningRulesEdge": "Habilita el modo desarrollador para usar reglas de URL de JavaScript"
   },
   "menuLabels": {
     "invertPage": "Invertir página",
@@ -206,7 +208,9 @@
         "option": "Mostrar widget circular"
       },
       "qrCodeTop": "Escanea para usar en...",
-      "qrCodeBottom": "Edge para móviles"
+      "qrCodeBottom": "Edge para móviles",
+      "holdToSpeedUpTooltip": "Mantén presionado el video para acelerar temporalmente.",
+      "holdToSpeedUp": "Mantén presionado para acelerar"
     },
     "editor": {
       "header": "Editor de accesos directos",

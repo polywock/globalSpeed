@@ -12,9 +12,11 @@
     "selectTooltip": "メディアのホットキーに好みのビデオを選択してください。別のタブ（またはグローバルホットキーを持つ別のプログラム）からバックグラウンドミュージックをコントロールしたい場合に便利です。",
     "sliderTooltip": "シフトキーを押し続けて精密な調整を行ってください。",
     "captureRequired": "$1 ショートカットを使用してアクティブにしてください。",
-    "jsWarning": "JavaScriptのショートカットを使用するには、開発者モードを有効にしてください",
-    "jsWarningRules": "JavaScriptのURLルールを使用するには、開発者モードを有効にしてください",
-    "jsUpdate": "Javascriptのショートカットを使用するには、ChromeまたはEdgeのバージョン136以上が必要です"
+    "jsUpdate": "Javascriptのショートカットを使用するには、ChromeまたはEdgeのバージョン136以上が必要です",
+    "jsWarning": "JavaScriptショートカットを使用するには「ユーザースクリプトを許可」を有効にしてください",
+    "jsWarningRules": "JavaScript URLルールを使用するには「ユーザースクリプトを許可」を有効にしてください",
+    "jsWarningEdge": "JavaScriptのショートカットを使用するには、開発者モードを有効にしてください",
+    "jsWarningRulesEdge": "JavaScriptのURLルールを使用するには、開発者モードを有効にしてください"
   },
   "menuLabels": {
     "invertPage": "ページを反転",
@@ -206,7 +208,9 @@
         "option": "円形ウィジェットを表示する"
       },
       "qrCodeTop": "スキャンして使用開始...",
-      "qrCodeBottom": "モバイル版 Edge"
+      "qrCodeBottom": "モバイル版 Edge",
+      "holdToSpeedUpTooltip": "動画を長押しすると一時的に再生速度が上がります。",
+      "holdToSpeedUp": "長押しで加速"
     },
     "editor": {
       "header": "ショートカットエディター",

@@ -12,9 +12,11 @@
     "selectTooltip": "Pilih video pilihan untuk kekunci pintasan media. Berguna jika anda mahu mengawal muzik latar dari tab lain (atau dari program lain dengan kekunci pintasan global).",
     "sliderTooltip": "Tekan kekunci shift untuk kawalan yang lebih tepat.",
     "captureRequired": "Gunakan pintasan $1 untuk mengaktifkan.",
-    "jsWarning": "Aktifkan mod pembangun untuk menggunakan pintasan javascript",
-    "jsWarningRules": "Aktifkan mod pembangun untuk menggunakan peraturan URL javascript",
-    "jsUpdate": "Pintasan Javascript memerlukan Chrome atau Edge versi 136 atau lebih baru"
+    "jsUpdate": "Pintasan Javascript memerlukan Chrome atau Edge versi 136 atau lebih baru",
+    "jsWarning": "Benarkan 'Allow User Scripts' untuk menggunakan pintasan javascript",
+    "jsWarningRules": "Benarkan 'Allow User Scripts' untuk menggunakan peraturan URL javascript",
+    "jsWarningEdge": "Aktifkan mod pembangun untuk menggunakan pintasan javascript",
+    "jsWarningRulesEdge": "Aktifkan mod pembangun untuk menggunakan peraturan URL javascript"
   },
   "menuLabels": {
     "invertPage": "Terbalikkan halaman",
@@ -207,7 +209,9 @@
         "option": "Tunjukkan widget bulatan"
       },
       "qrCodeTop": "Imbas untuk digunakan di...",
-      "qrCodeBottom": "Edge untuk peranti mudah alih"
+      "qrCodeBottom": "Edge untuk peranti mudah alih",
+      "holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara.",
+      "holdToSpeedUp": "Tekan dan tahan untuk mempercepat"
     },
     "editor": {
       "header": "Penyunting Pintasan",

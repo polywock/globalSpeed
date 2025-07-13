@@ -37,22 +37,25 @@
     }
 
     &.speedSlider {
-      padding-bottom: 10px;
+      margin-bottom: 10px;
 
       & > .control {
         display: grid;
         grid-template-columns: 8rem max-content;
-        align-items: center;
         column-gap: 5px;
-        height: 1em;
-        overflow: visible;;
-
-        input {
-          text-align: center;
-        }
       }
 
     } 
+
+    &.holdToSpeed {
+      margin-bottom: 30px;
+
+      & > .control {
+        display: grid;
+        grid-template-columns: 4rem max-content;
+        column-gap: 5px;
+      }
+    }
     
 
     & > .fieldValue {

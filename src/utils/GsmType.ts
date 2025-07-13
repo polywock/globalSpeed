@@ -15,7 +15,9 @@ export type Gsm = {
     captureRequired: string,
     jsUpdate: string,
     jsWarning: string,
-    jsWarningRules: string
+    jsWarningRules: string,
+    jsWarningEdge: string,
+    jsWarningRulesEdge: string
   },
   menuLabels: {
     invertPage: string,
@@ -208,7 +210,9 @@ export type Gsm = {
         togglePause: string
       },
       qrCodeTop: string,
-      qrCodeBottom: string
+      qrCodeBottom: string,
+      holdToSpeedUp: string,
+      holdToSpeedUpTooltip: string
     },
     editor: {
       header: string,

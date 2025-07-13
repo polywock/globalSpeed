@@ -13,9 +13,11 @@
     "selectTooltip": "選擇要使用媒體快速鍵的影片。當您想要從不同分頁（或使用全域快速鍵的其他程式）控制背景音樂時很有用。",
     "sliderTooltip": "按住 Shift 鍵以精確控制。",
     "captureRequired": "使用 $1 快速鍵來啟用。",
-    "jsWarning": "啟用開發人員模式以使用 JavaScript 快捷方式",
-    "jsWarningRules": "啟用開發人員模式以使用 JavaScript 網址規則",
-    "jsUpdate": "Javascript 快捷方式需要 Chrome 或 Edge 版本 136 或更新版本"
+    "jsUpdate": "Javascript 快捷方式需要 Chrome 或 Edge 版本 136 或更新版本",
+    "jsWarning": "啟用「允許使用者指令碼」以使用 JavaScript 快捷方式",
+    "jsWarningRules": "啟用「允許使用者指令碼」以使用 JavaScript URL 規則",
+    "jsWarningEdge": "啟用開發人員模式以使用 JavaScript 快捷方式",
+    "jsWarningRulesEdge": "啟用開發人員模式以使用 JavaScript 網址規則"
   },
   "menuLabels": {
     "invertPage": "頁面反相",
@@ -208,7 +210,9 @@
         "togglePause": "切換暫停"
       },
       "qrCodeTop": "掃碼使用",
-      "qrCodeBottom": "Edge 手機版"
+      "qrCodeBottom": "Edge 手機版",
+      "holdToSpeedUpTooltip": "按住影片可暫時加速播放。",
+      "holdToSpeedUp": "按住加速"
     },
     "editor": {
       "header": "快速鍵編輯器",

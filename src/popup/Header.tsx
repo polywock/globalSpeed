@@ -115,7 +115,7 @@ export function Header(props: HeaderProps) {
       {/* Options page */}
       <div  onClick={async e => {
         await chrome.runtime.openOptionsPage()
-        if (isFirefox()) window.close()
+        window.close()
       }}>
         <Gear size="1.42rem"/>
       </div>

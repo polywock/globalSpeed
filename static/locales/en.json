@@ -15,8 +15,10 @@
     "sliderTooltip": "Hold shift key for precise control.",
     "captureRequired": "Use the $1 shortcut to activate.",
     "jsUpdate": "Javascript shortcuts require Chrome or Edge version 136 or newer",
-    "jsWarning": "Enable developer mode to use javascript shortcuts",
-    "jsWarningRules": "Enable developer mode to use javascript URL rules"
+    "jsWarning": "Enable 'Allow User Scripts' to use javascript shortcuts",
+    "jsWarningRules": "Enable 'Allow User Scripts' to use javascript URL rules",
+    "jsWarningEdge": "Enable developer mode to use javascript shortcuts",
+    "jsWarningRulesEdge": "Enable developer mode to use javascript URL rules"
   },
   "menuLabels": {
     "invertPage": "Invert page",
@@ -219,7 +221,9 @@
         "togglePause": "Toggle pause"
       },
       "qrCodeTop": "Scan to use on...",
-      "qrCodeBottom": "Edge for Mobile"
+      "qrCodeBottom": "Edge for Mobile",
+      "holdToSpeedUp": "Press and hold to accelerate",
+      "holdToSpeedUpTooltip": "Press and hold videos to temporarily speed up."
     },
     "editor": {
       "header": "Shortcut Editor",

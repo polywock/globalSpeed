@@ -12,9 +12,11 @@
     "selectTooltip": "Sélectionnez la vidéo préférée pour les raccourcis multimédias. Utile si vous voulez contrôler la musique de fond depuis un autre onglet (ou depuis un autre programme avec des raccourcis globaux).",
     "sliderTooltip": "Maintenez la touche Shift pour un contrôle précis.",
     "captureRequired": "Utilisez le raccourci $1 pour activer.",
-    "jsWarning": "Activez le mode développeur pour utiliser les raccourcis JavaScript",
-    "jsWarningRules": "Activez le mode développeur pour utiliser les règles d'URL JavaScript",
-    "jsUpdate": "Les raccourcis JavaScript nécessitent Chrome ou Edge version 136 ou plus récente"
+    "jsUpdate": "Les raccourcis JavaScript nécessitent Chrome ou Edge version 136 ou plus récente",
+    "jsWarning": "Activez « Autoriser les scripts utilisateur » pour utiliser les raccourcis JavaScript",
+    "jsWarningRules": "Activez « Autoriser les scripts utilisateur » pour utiliser les règles d'URL JavaScript",
+    "jsWarningEdge": "Activez le mode développeur pour utiliser les raccourcis JavaScript",
+    "jsWarningRulesEdge": "Activez le mode développeur pour utiliser les règles d'URL JavaScript"
   },
   "menuLabels": {
     "invertPage": "Inverser la page",
@@ -207,7 +209,9 @@
         "option": "Afficher le widget cercle"
       },
       "qrCodeTop": "Scannez pour utiliser sur...",
-      "qrCodeBottom": "Edge pour mobile"
+      "qrCodeBottom": "Edge pour mobile",
+      "holdToSpeedUpTooltip": "Maintenez la vidéo pour accélérer temporairement.",
+      "holdToSpeedUp": "Appuyez et maintenez pour accélérer"
     },
     "editor": {
       "header": "Éditeur de raccourcis",

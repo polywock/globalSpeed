@@ -12,9 +12,11 @@
     "selectTooltip": "Pilih video yang diinginkan untuk hotkey media. Berguna jika Anda ingin mengontrol musik latar dari tab berbeda (atau dari program lain dengan hotkey global).",
     "sliderTooltip": "Tahan tombol shift untuk kontrol presisi.",
     "captureRequired": "Gunakan pintasan $1 untuk mengaktifkan.",
-    "jsWarning": "Aktifkan mode pengembang untuk menggunakan pintasan javascript",
-    "jsWarningRules": "Aktifkan mode pengembang untuk menggunakan aturan URL javascript",
-    "jsUpdate": "Pintasan Javascript memerlukan Chrome atau Edge versi 136 atau lebih baru"
+    "jsUpdate": "Pintasan Javascript memerlukan Chrome atau Edge versi 136 atau lebih baru",
+    "jsWarning": "Aktifkan 'Izinkan Skrip Pengguna' untuk menggunakan pintasan javascript",
+    "jsWarningRules": "Aktifkan 'Izinkan Skrip Pengguna' untuk menggunakan aturan URL javascript",
+    "jsWarningEdge": "Aktifkan mode pengembang untuk menggunakan pintasan javascript",
+    "jsWarningRulesEdge": "Aktifkan mode pengembang untuk menggunakan aturan URL javascript"
   },
   "menuLabels": {
     "invertPage": "Balik halaman",
@@ -206,7 +208,9 @@
         "option": "Tampilkan widget lingkaran"
       },
       "qrCodeTop": "Pindai untuk digunakan di...",
-      "qrCodeBottom": "Edge untuk seluler"
+      "qrCodeBottom": "Edge untuk seluler",
+      "holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara.",
+      "holdToSpeedUp": "Tekan dan tahan untuk mempercepat"
     },
     "editor": {
       "header": "Editor Pintasan",

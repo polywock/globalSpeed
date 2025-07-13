@@ -20,6 +20,7 @@ import { RegularTooltip } from "src/comps/RegularTooltip"
 import { Tooltip } from "src/comps/Tooltip"
 import { GearIcon } from "src/comps/GearIcon"
 import "./SectionFlags.css"
+import { NumericInput } from "src/comps/NumericInput"
 
 export function SectionFlags(props: {}) {
   const [showIndicatorModal, setShowIndicatorModal] = useState(false)
@@ -35,7 +36,7 @@ export function SectionFlags(props: {}) {
       })
   }, [])
 
-  const [view, setView] = useStateView({language: true, darkTheme: true, fontSize: true, hideBadge: true, pinByDefault: true, initialContext: true, ghostMode: true, ghostModeUrlCondition: true, hideMediaView: true, freePitch: true, speedSlider: true, virtualInput: true, circleWidget: true})
+  const [view, setView] = useStateView({language: true, darkTheme: true, fontSize: true, hideBadge: true, pinByDefault: true, initialContext: true, ghostMode: true, ghostModeUrlCondition: true, hideMediaView: true, freePitch: true, speedSlider: true, virtualInput: true, circleWidget: true, holdToSpeed: true})
   const [ viewAlt ] = useStateView({indicatorInit: true, hideIndicator: true})
   if (!view || !viewAlt) return <div></div>
 
@@ -234,6 +235,27 @@ export function SectionFlags(props: {}) {
               <Toggle value={!!view.speedSlider} onChange={v => setView({speedSlider: view.speedSlider ? null : getDefaultSpeedSlider()})}/>
             )}
         </div>
+
+        {/* Hold to speed  */}
+        <div className="field holdToSpeed">
+          <div className="labelWithTooltip">
+            <span>{gvar.gsm.options.flags.holdToSpeedUp}</span>
+            <RegularTooltip title={gvar.gsm.options.flags.holdToSpeedUpTooltip} align="right"/>
+          </div>
+
+            {view.holdToSpeed !== 0 ? (
+              <div className="control">
+                <NumericInput min={0.1} max={20} value={view.holdToSpeed ?? 2} onChange={v => setView({holdToSpeed: v})}/>
+                <button className="icon" onClick={() => {
+                    setView({holdToSpeed: 0})
+                  }}>
+                  <GoX size="1.6rem"/>
+                </button>
+              </div>
+            ) : (
+              <Toggle value={false} onChange={() => setView({holdToSpeed: 2})}/>
+            )}
+        </div>        
 
         {!showMore ? <Tooltip withClass="showMoreTooltip" align="top" title={gvar.gsm.token.more}><button onClick={() => setShowMore(true)}>...</button></Tooltip> : <>
           {/* Font size */}

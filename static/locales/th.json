@@ -12,9 +12,11 @@
     "selectTooltip": "เลือกวิดีโอที่ต้องการสำหรับคีย์ลัดสื่อ เหมาะสำหรับควบคุมเพลงพื้นหลังจากแท็บอื่น (หรือจากโปรแกรมอื่นด้วยคีย์ลัดทั่วโลก)",
     "sliderTooltip": "กดปุ่ม Shift เพื่อควบคุมอย่างแม่นยำ",
     "captureRequired": "ใช้คีย์ลัด $1 เพื่อเปิดใช้งาน",
-    "jsWarning": "เปิดโหมดนักพัฒนาเพื่อใช้ทางลัด JavaScript",
-    "jsWarningRules": "เปิดโหมดนักพัฒนาเพื่อใช้กฎ URL ของ JavaScript",
-    "jsUpdate": "ทางลัด Javascript ต้องใช้ Chrome หรือ Edge เวอร์ชัน 136 ขึ้นไป"
+    "jsUpdate": "ทางลัด Javascript ต้องใช้ Chrome หรือ Edge เวอร์ชัน 136 ขึ้นไป",
+    "jsWarning": "เปิดใช้งาน 'อนุญาตสคริปต์ผู้ใช้' เพื่อใช้ทางลัด javascript",
+    "jsWarningRules": "เปิดใช้งาน 'อนุญาตสคริปต์ผู้ใช้' เพื่อใช้กฎ URL ของ javascript",
+    "jsWarningEdge": "เปิดโหมดนักพัฒนาเพื่อใช้ทางลัด JavaScript",
+    "jsWarningRulesEdge": "เปิดโหมดนักพัฒนาเพื่อใช้กฎ URL ของ JavaScript"
   },
   "menuLabels": {
     "invertPage": "กลับหน้าจอ",
@@ -207,7 +209,9 @@
         "option": "แสดงวิดเจ็ตวงกลม"
       },
       "qrCodeTop": "สแกนเพื่อใช้งานบน...",
-      "qrCodeBottom": "Edge สำหรับมือถือ"
+      "qrCodeBottom": "Edge สำหรับมือถือ",
+      "holdToSpeedUpTooltip": "กดค้างที่วิดีโอเพื่อเพิ่มความเร็วชั่วคราว",
+      "holdToSpeedUp": "กดค้างเพื่อเร่งความเร็ว"
     },
     "editor": {
       "header": "ตัวแก้ไขคีย์ลัด",

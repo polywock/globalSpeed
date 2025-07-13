@@ -36,6 +36,7 @@ declare global {
     gsLoopSeekingHandler?: () => void,
     gsSkipTimeUpdateHandler?: () => void,
     gsSkipSeekingHandler?: () => void,
+    gsShadowRoot?: ShadowRoot,
     gsRateCounter?: {time: number, count: number},
     gsRateViolations?: number,
     gsRateBanned?: boolean,
@@ -89,7 +90,8 @@ export type State = {
   hideGrant?: boolean,
   circleWidget?: boolean,
   circleInit?: CircleInit,
-  freshKeybinds?: boolean
+  freshKeybinds?: boolean,
+  holdToSpeed?: number
 } & Context
 
 export type StoredKey = `${"t" | "r"}:${number}:${keyof Context | "isPinned"}` | `${"g" | "x"}:${keyof State}`; 

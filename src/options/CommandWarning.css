@@ -7,6 +7,7 @@
     border: 1px solid var(--error-border-color);
     padding: 0.6rem;
     margin-bottom: 10px;
+    border-radius: 20px;
 
     & > svg {
         margin-right: 5px;

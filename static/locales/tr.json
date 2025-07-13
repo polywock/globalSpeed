@@ -12,9 +12,11 @@
     "selectTooltip": "Medya sıcak tuşları için tercih ettiğiniz videoyu seçin. Arka plandaki müziği farklı bir sekmeden (veya global kısayol tuşları olan başka bir programdan) kontrol etmek istiyorsanız kullanışlıdır.",
     "sliderTooltip": "Kesin kontrol için Shift tuşunu basılı tutun.",
     "captureRequired": "$1 kısayolunu kullanarak etkinleştir.",
-    "jsWarning": "Javascript kısayollarını kullanmak için geliştirici modunu etkinleştirin",
-    "jsWarningRules": "Javascript URL kurallarını kullanmak için geliştirici modunu etkinleştirin",
-    "jsUpdate": "Javascript kısayolları için Chrome veya Edge 136 veya daha yeni bir sürüm gereklidir"
+    "jsUpdate": "Javascript kısayolları için Chrome veya Edge 136 veya daha yeni bir sürüm gereklidir",
+    "jsWarning": "Javascript kısayollarını kullanmak için 'Kullanıcı Komut Dosyalarına İzin Ver'i etkinleştirin",
+    "jsWarningRules": "Javascript URL kurallarını kullanmak için 'Kullanıcı Komut Dosyalarına İzin Ver'i etkinleştirin",
+    "jsWarningEdge": "Javascript kısayollarını kullanmak için geliştirici modunu etkinleştirin",
+    "jsWarningRulesEdge": "Javascript URL kurallarını kullanmak için geliştirici modunu etkinleştirin"
   },
   "menuLabels": {
     "invertPage": "Sayfayı ters çevir",
@@ -207,7 +209,9 @@
         "option": "Daire widget'ını göster"
       },
       "qrCodeTop": "Kullanmak için tarayın...",
-      "qrCodeBottom": "Mobil için Edge"
+      "qrCodeBottom": "Mobil için Edge",
+      "holdToSpeedUpTooltip": "Videoları geçici olarak hızlandırmak için basılı tutun.",
+      "holdToSpeedUp": "Hızlandırmak için basılı tutun"
     },
     "editor": {
       "header": "Kısayol Düzenleyici",

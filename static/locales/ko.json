@@ -13,9 +13,11 @@
     "selectTooltip": "미디어 핫키를 위해 선호하는 비디오를 선택하세요. 다른 탭(또는 글로벌 핫키가 있는 다른 프로그램)에서 배경 음악을 제어하려면 유용합니다.",
     "sliderTooltip": "정밀한 조정을 위해 Shift 키를 누르고 있으세요.",
     "captureRequired": "$1 단축키를 사용하여 활성화하세요.",
-    "jsWarning": "JavaScript 바로가기를 사용하려면 개발자 모드를 활성화하세요",
-    "jsWarningRules": "JavaScript URL 규칙을 사용하려면 개발자 모드를 활성화하세요",
-    "jsUpdate": "자바스크립트 단축키를 사용하려면 Chrome 또는 Edge 버전 136 이상이 필요합니다"
+    "jsUpdate": "자바스크립트 단축키를 사용하려면 Chrome 또는 Edge 버전 136 이상이 필요합니다",
+    "jsWarning": "자바스크립트 단축키를 사용하려면 '사용자 스크립트 허용'을 활성화하세요",
+    "jsWarningRules": "자바스크립트 URL 규칙을 사용하려면 '사용자 스크립트 허용'을 활성화하세요",
+    "jsWarningEdge": "JavaScript 바로가기를 사용하려면 개발자 모드를 활성화하세요",
+    "jsWarningRulesEdge": "JavaScript URL 규칙을 사용하려면 개발자 모드를 활성화하세요"
   },
   "menuLabels": {
     "invertPage": "페이지 반전",
@@ -207,7 +209,9 @@
         "option": "원형 위젯 표시"
       },
       "qrCodeTop": "스캔하여 사용해 보세요...",
-      "qrCodeBottom": "모바일용 Edge"
+      "qrCodeBottom": "모바일용 Edge",
+      "holdToSpeedUpTooltip": "영상을 길게 누르면 일시적으로 속도가 빨라집니다.",
+      "holdToSpeedUp": "누르고 있으면 빨라집니다"
     },
     "editor": {
       "header": "바로 가기 편집기",

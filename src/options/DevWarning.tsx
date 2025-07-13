@@ -3,6 +3,7 @@ import { Keybind } from "../types"
 import { canPotentiallyUserScriptExecute, canUserScript, requestCreateTab } from "../utils/browserUtils"
 import { FaLink } from "react-icons/fa"
 import { MdWarning } from "react-icons/md"
+import { isEdge } from "src/utils/helper"
 
 enum WarningType {
     NONE = 0,
@@ -31,9 +32,10 @@ export function DevWarning(props: {
         }
 
         target !== env.show && setShow(target)
+        env.show = target
     }
 
-    const intervalId = setInterval(handleInterval, 1000)
+    const intervalId = setInterval(handleInterval, 300)
 
     return () => {
       clearInterval(intervalId)
@@ -45,13 +47,13 @@ export function DevWarning(props: {
   return <div className="CommandWarning">
     <MdWarning size={"1.15rem"}/>
     {show === WarningType.ENABLE_DEV && (
-        <span>{gvar.gsm.warnings[props.forUrlRules ? "jsWarningRules" : "jsWarning"]}</span>
+        <span>{gvar.gsm.warnings[`${props.forUrlRules ? "jsWarningRules" : "jsWarning"}${isEdge() ? 'Edge' : ''}`]}</span>
     )}
     {show === WarningType.NO_SUPPORT && (
         <span>{gvar.gsm.warnings.jsUpdate}</span>
     )}
     {show === WarningType.ENABLE_DEV && (
-        <button onClick={() => requestCreateTab(`chrome://extensions`)}>
+        <button onClick={() => isEdge() ? requestCreateTab(`chrome://extensions`) : requestCreateTab(`chrome://extensions/?id=${chrome.runtime.id}#:~:text=${encodeURIComponent("Allow User Scripts")}`)}>
             <FaLink size={"1.21rem"}/>
             <span>{gvar.gsm.token.openPage}</span>
         </button>

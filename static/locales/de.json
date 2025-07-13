@@ -12,9 +12,11 @@
     "selectTooltip": "Wähle ein bevorzugtes Video für Medientastenkombinationen aus. Nützlich, wenn du Hintergrundmusik von einem anderen Tab (oder einem anderen Programm mit globalen Hotkeys) steuern möchtest.",
     "sliderTooltip": "Halte die Umschalttaste gedrückt für präzise Steuerung.",
     "captureRequired": "Verwende die $1-Tastenkombination, um zu aktivieren.",
-    "jsWarning": "Aktivieren Sie den Entwicklermodus, um JavaScript-Verknüpfungen zu verwenden",
-    "jsWarningRules": "Aktivieren Sie den Entwicklermodus, um JavaScript-URL-Regeln zu verwenden",
-    "jsUpdate": "Javascript-Verknüpfungen erfordern Chrome oder Edge Version 136 oder neuer"
+    "jsUpdate": "Javascript-Verknüpfungen erfordern Chrome oder Edge Version 136 oder neuer",
+    "jsWarning": "Aktiviere 'Benutzer-Skripte zulassen', um JavaScript-Verknüpfungen zu verwenden",
+    "jsWarningRules": "Aktiviere 'Benutzer-Skripte zulassen', um JavaScript-URL-Regeln zu verwenden",
+    "jsWarningEdge": "Aktivieren Sie den Entwicklermodus, um JavaScript-Verknüpfungen zu verwenden",
+    "jsWarningRulesEdge": "Aktivieren Sie den Entwicklermodus, um JavaScript-URL-Regeln zu verwenden"
   },
   "menuLabels": {
     "invertPage": "Seite umkehren",
@@ -207,7 +209,9 @@
         "option": "Kreis-Widget anzeigen"
       },
       "qrCodeTop": "Zum Verwenden auf ... scanne",
-      "qrCodeBottom": "Edge für Mobilgeräte"
+      "qrCodeBottom": "Edge für Mobilgeräte",
+      "holdToSpeedUpTooltip": "Gedrückt halten, um Videos vorübergehend zu beschleunigen.",
+      "holdToSpeedUp": "Gedrückt halten zum Beschleunigen"
     },
     "editor": {
       "header": "Tastenkombinationen-Editor",
