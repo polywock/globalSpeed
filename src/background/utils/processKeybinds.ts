@@ -411,25 +411,25 @@ const commandHandlers: {
     const { kb, applyToMedia, media, tabInfo, fetch } = args 
 
     // TODO: Seek clarification
-    // let captureMode = false 
+    let captureMode = false 
 
-    // if (chrome.offscreen && chrome.tabCapture && !media.fsMode) {
-    //   const captured = await isTabCaptured(tabInfo.tabId)
-    //   if (captured) {
-    //     let view = await fetch({audioFx: true, audioFxAlt: true})
-    //     if (view.audioFx && (view.audioFx.pitch !== 0 || view.audioFx.volume !== 1 || view.audioFx.delay !== 0 || view.audioFx.eq.enabled)) {
-    //       captureMode = true 
-    //       await releaseTabCapture(tabInfo.tabId)
-    //       await timeout(100)
-    //     }
-    //   }
-    // }
+    if (chrome.offscreen && chrome.tabCapture && !media.fsMode) {
+      const captured = await isTabCaptured(tabInfo.tabId)
+      if (captured) {
+        let view = await fetch({audioFx: true, audioFxAlt: true})
+        if (view.audioFx && (view.audioFx.pitch !== 0 || view.audioFx.volume !== 1 || view.audioFx.delay !== 0 || view.audioFx.eq.enabled)) {
+          captureMode = true 
+          await releaseTabCapture(tabInfo.tabId)
+          await timeout(100)
+        }
+      }
+    }
     applyToMedia({type: "FULLSCREEN", direct: kb.direct}) 
 
-    // if (captureMode) {
-    //   await timeout(250)
-    //   await initTabCapture(tabInfo.tabId)
-    // }
+    if (captureMode) {
+      await timeout(250)
+      await initTabCapture(tabInfo.tabId)
+    }
   },
   PiP: async args => {
     const { kb, applyToMedia } = args 

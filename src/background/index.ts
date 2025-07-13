@@ -69,8 +69,7 @@ gvar.sess.safeStartupCbs.add(async () => {
 })
 
 async function ensureContentScripts() {
-    const tabs = await chrome.tabs.query({url: ["https://*/*", "http://*/*"]})
-    if (!tabs) return 
+    const tabs = (await chrome.tabs.query({url: ["https://*/*", "http://*/*"]})) || [] 
     for (let tab of tabs) {
         if (!tab.url) continue
         try {

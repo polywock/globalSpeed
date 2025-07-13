@@ -1,6 +1,5 @@
-import { capitalize, parseDomain, removeDomainFromTitle } from "src/utils/helper"
+import { capitalize, isDipWindow, parseDomain, removeDomainFromTitle } from "src/utils/helper"
 import { TabInfo } from "../../../utils/browserUtils"
-
 
 export function generateMediaState(elem: HTMLMediaElement): MediaInfo {
   const rootNode = elem.getRootNode() as ShadowRoot | Document 
@@ -72,7 +71,7 @@ export function generateMediaState(elem: HTMLMediaElement): MediaInfo {
 
 export function generateScopeState(tabInfo: TabInfo, media: HTMLMediaElement[]): MediaScope {
   const parsedDomain = parseDomain(location.hostname)
-  return {
+  const scope = {
     tabInfo: {...tabInfo},
     title:  document.title,
     displayTitle: removeDomainFromTitle((navigator as any).mediaSession?.metadata?.title || document.title, parsedDomain), 
@@ -81,8 +80,10 @@ export function generateScopeState(tabInfo: TabInfo, media: HTMLMediaElement[]):
     url: document.URL,
     media: media.map(m => generateMediaState(m)),
     creationTime: Date.now()
-  }
-}
+  } as MediaScope
+  if (isDipWindow()) scope.isDip = true 
+  return scope 
+} 
 
 
 export function flattenMediaInfos(scopes: MediaScope[]): FlatMediaInfo[] {
@@ -104,7 +105,8 @@ export type MediaScope = {
   displayTitle?: string,
   media?: MediaInfo[],
   creationTime?: number,
-  latest?: string
+  latest?: string,
+  isDip?: boolean
 }
 
 export type MediaInfo = {
@@ -131,7 +133,8 @@ export type MediaInfo = {
   intersectionRatio?: number,
   fps?: number,
   playbackRate: number,
-  lastPlayed?: number
+  lastPlayed?: number,
+  lastPointerEvent?: number
 }
 
 export type FlatMediaInfo = MediaScope & MediaInfo

@@ -341,6 +341,12 @@ export function replaceArgs(raw: string, args: string[]) {
   return raw;
 }
 
+let cachedIsDip: {result: boolean}
+export function isDipWindow() {
+  if (cachedIsDip) return cachedIsDip.result
+  cachedIsDip = {result: window.opener?.documentPictureInPicture?.window === window}
+  return cachedIsDip.result
+}
 
 let cachedDomainResult: {result: ReturnType<typeof parseDomain>}
 export function parseDomain(hostname: string): { baseName: string; registeredDomain: string } {

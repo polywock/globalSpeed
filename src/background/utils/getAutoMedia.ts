@@ -51,7 +51,7 @@ export async function getAutoMedia (tabInfo: TabInfo, videoOnly?: boolean) {
   if (pinnedInfo && await checkContentScript(pinnedInfo.tabInfo.tabId, pinnedInfo.tabInfo.frameId)) return pinnedInfo
 
   infos.sort((a, b) => b.creationTime - a.creationTime)
-  let pippedInfo = infos.find(info => info.pipMode)
+  let pippedInfo = infos.find(info => info.pipMode) || infos.find(info => info.isDip)
 
   if (pippedInfo && !(await checkContentScript(pippedInfo.tabInfo.tabId, pippedInfo.tabInfo.frameId))) {
     pippedInfo = null 
