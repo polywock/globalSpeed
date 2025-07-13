@@ -32,29 +32,33 @@ export class SpeedSync {
 
       // If directly on video. 
       if ((e.target as HTMLVideoElement).tagName === 'VIDEO') {
-        this.pointerDownAt = Date.now() 
+        this.setPointerDownToNow()
         return 
       }
 
       // If over a video. 
       if (checkIfPointerOverVideo(document, e) ) {
-        this.pointerDownAt = Date.now() 
+        this.setPointerDownToNow()
         return 
       }
 
       // More thoroughly check if over a video.
       const shadowRoots = new Set([...gvar.os.mediaTower.media].filter(v => !v.paused && v.tagName === 'VIDEO' && v.gsShadowRoot).map(v => v.gsShadowRoot))
       if (shadowRoots.size && [...shadowRoots].some(root => checkIfPointerOverVideo(root, e))) {
-        this.pointerDownAt = Date.now() 
+        this.setPointerDownToNow()
       }
     }
+  }
+  setPointerDownToNow = () => {
+    this.pointerDownAt = Date.now() 
+    setTimeout(this.realize, 110)
   }
   handlePointerUp = (e: PointerEvent) => {
     if (e.button === 0) delete this.pointerDownAt
   }
   handlePointerLeave = () => delete this.pointerDownAt
   realize = () => {
-    const hasPointerDown = this.holdToSpeed !== 0 && this.pointerDownAt && between(600, 30_000, Date.now() - this.pointerDownAt)
+    const hasPointerDown = this.holdToSpeed !== 0 && this.pointerDownAt && between(100, 30_000, Date.now() - this.pointerDownAt)
     this.latest && gvar.os.mediaTower.applySpeedToAll(this.latest.speed * (hasPointerDown ? (this.holdToSpeed ?? 2) : 1), this.latest.freePitch)
   }
 }
