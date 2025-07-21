@@ -344,7 +344,11 @@ export function replaceArgs(raw: string, args: string[]) {
 let cachedIsDip: {result: boolean}
 export function isDipWindow() {
   if (cachedIsDip) return cachedIsDip.result
-  cachedIsDip = {result: window.opener?.documentPictureInPicture?.window === window}
+  try {
+    cachedIsDip = {result: window.opener.documentPictureInPicture.window === window}
+  } catch {
+    cachedIsDip = {result: false} 
+  }
   return cachedIsDip.result
 }
 

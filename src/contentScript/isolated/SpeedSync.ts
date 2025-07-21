@@ -10,13 +10,13 @@ export class SpeedSync {
   constructor() {
     window.addEventListener('pointerdown', this.handlePointerDown, {capture: true, passive: true})
     window.addEventListener('pointerup', this.handlePointerUp, {capture: true, passive: true})
-    document.addEventListener('mouseleave', this.handlePointerLeave, {capture: true, passive: true})
+    document.addEventListener('mouseleave', this.clearPointerDown, {capture: true, passive: true})
   }
   release = () => {
     clearInterval(this.intervalId); delete this.intervalId
     window.removeEventListener('pointerdown', this.handlePointerDown, true)
     window.removeEventListener('pointerup', this.handlePointerUp, true)
-    document.removeEventListener('mouseleave', this.handlePointerLeave, true)
+    document.removeEventListener('mouseleave', this.clearPointerDown, true)
   }
   update = () => {
     if (this.latest) {
@@ -28,10 +28,10 @@ export class SpeedSync {
     }
   }
   handlePointerDown = (e: PointerEvent) => {
-    if (this.holdToSpeed !== 0 && e.button === 0) {
+    if (this.holdToSpeed && e.button === 0) {
 
       // If directly on video. 
-      if ((e.target as HTMLVideoElement).tagName === 'VIDEO') {
+      if ((e.target as HTMLVideoElement)?.tagName === 'VIDEO') {
         this.setPointerDownToNow()
         return 
       }
@@ -51,15 +51,20 @@ export class SpeedSync {
   }
   setPointerDownToNow = () => {
     this.pointerDownAt = Date.now() 
-    setTimeout(this.realize, 110)
+    setTimeout(this.realize, 620)
   }
   handlePointerUp = (e: PointerEvent) => {
-    if (e.button === 0) delete this.pointerDownAt
+    if (e.button === 0) this.clearPointerDown()
   }
-  handlePointerLeave = () => delete this.pointerDownAt
+  clearPointerDown = () => {
+    if (this.pointerDownAt) {
+      delete this.pointerDownAt
+      this.realize()
+    }
+  }
   realize = () => {
-    const hasPointerDown = this.holdToSpeed !== 0 && this.pointerDownAt && between(100, 30_000, Date.now() - this.pointerDownAt)
-    this.latest && gvar.os.mediaTower.applySpeedToAll(this.latest.speed * (hasPointerDown ? (this.holdToSpeed ?? 2) : 1), this.latest.freePitch)
+    const hasPointerDown = this.holdToSpeed && this.pointerDownAt && between(600, 30_000, Date.now() - this.pointerDownAt)
+    this.latest && gvar.os.mediaTower.applySpeedToAll(this.latest.speed * (hasPointerDown ? this.holdToSpeed : 1), this.latest.freePitch)
   }
 }
 

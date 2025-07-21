@@ -243,11 +243,11 @@ export function SectionFlags(props: {}) {
             <RegularTooltip title={gvar.gsm.options.flags.holdToSpeedUpTooltip} align="right"/>
           </div>
 
-            {view.holdToSpeed !== 0 ? (
+            {view.holdToSpeed ? (
               <div className="control">
-                <NumericInput min={0.1} max={20} value={view.holdToSpeed ?? 2} onChange={v => setView({holdToSpeed: v})}/>
+                <NumericInput min={0.1} max={20} value={view.holdToSpeed} onChange={v => setView({holdToSpeed: v})}/>
                 <button className="icon" onClick={() => {
-                    setView({holdToSpeed: 0})
+                    setView({holdToSpeed: null})
                   }}>
                   <GoX size="1.6rem"/>
                 </button>
