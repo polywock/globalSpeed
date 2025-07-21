@@ -206,7 +206,11 @@
         "fullscreenOnlyTooltip": "Widget nur anzeigen, wenn das Video im Vollbild ist.",
         "pressAction": "Aktion beim Drücken",
         "togglePause": "Pause umschalten",
-        "option": "Kreis-Widget anzeigen"
+        "option": "Kreis-Widget anzeigen",
+        "fixedSpeedStep": "Fester Geschwindigkeits-Schritt",
+        "fixedSpeedStepTooltip": "Immer um einen festen Betrag die Geschwindigkeit anpassen, wenn das Kreis-Widget bewegt wird.",
+        "fixedSeekStep": "Fester Such-Schritt",
+        "fixedSeekStepTooltip": "Beim Bewegen des Kreis-Widgets immer um eine feste Anzahl von Sekunden springen."
       },
       "qrCodeTop": "Zum Verwenden auf ... scanne",
       "qrCodeBottom": "Edge für Mobilgeräte",

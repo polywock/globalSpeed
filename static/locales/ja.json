@@ -205,7 +205,11 @@
         "fullscreenOnlyTooltip": "ビデオがフルスクリーンの場合にのみウィジェットを表示します。",
         "pressAction": "押下アクション",
         "togglePause": "一時停止を切り替える",
-        "option": "円形ウィジェットを表示する"
+        "option": "円形ウィジェットを表示する",
+        "fixedSpeedStep": "固定速度ステップ",
+        "fixedSpeedStepTooltip": "サークルウィジェットを動かすときに常に一定の速度で調整します。",
+        "fixedSeekStep": "固定シークステップ",
+        "fixedSeekStepTooltip": "円形ウィジェットを動かすとき、常に一定の秒数だけシークします。"
       },
       "qrCodeTop": "スキャンして使用開始...",
       "qrCodeBottom": "モバイル版 Edge",

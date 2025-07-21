@@ -312,20 +312,21 @@ export class Circle extends Popover {
         let isVertical = this.direction === Direction.TOP || this.direction === Direction.BOTTOM
         let isNegative = this.direction === Direction.LEFT || this.direction === Direction.TOP
         this.circle.style.transform = `translate${(isVertical) ? 'Y' : 'X'}(${(isNegative) ? '-' : ''}${this.strong ? '40' : '20'}px)`
+        let isFixed = !!(isVertical ? this.init.fixedSpeedStep : this.init.fixedSeekStep)
         this.circle.style.border = this.strong ? '5px solid red' : '5px solid white'
         this.ref.style.opacity = "1"
 
         let direction = this.direction
 
         if (isVertical) {
-            let delta = this.strong ? 0.25 : 0.1
+            let delta = this.strong ? 0.25 : (this.init.fixedSpeedStep || 0.1)
             const view = await fetchView({speed: true}, gvar.tabInfo.tabId)
             let speed = conformSpeed(roundTo(view.speed + (direction === Direction.TOP ? delta : -delta), delta))
             pushView({override: {speed, lastSpeed: view.speed}, tabId: gvar.tabInfo.tabId})
             this.indicator.show({text: formatSpeed(speed)})
         } else {
-            let delta = this.strong ? 30 : 10
-            if (this.combo.combo > 3) {
+            let delta = this.strong ? 30 : (this.init.fixedSeekStep || 10)
+            if (!isFixed && this.combo.combo > 3) {
                 delta *= 1.2 ** this.combo.combo
             }
             seekTo(this.video, this.video.currentTime + (this.direction === Direction.LEFT ? -delta : delta))
@@ -346,9 +347,13 @@ export class Circle extends Popover {
         const distance = Math.sqrt(deltaX ** 2 + deltaY ** 2)
 
         if (distance < MIN_TO_ACTIVATE) return 
-        this.strong = distance > MIN_STRONG
+        const direction = (Math.abs(deltaX) > Math.abs(deltaY)) ? (deltaX >= 0 ? Direction.RIGHT : Direction.LEFT) : (deltaY >= 0 ? Direction.BOTTOM : Direction.TOP)
+        const isVertical = this.direction === Direction.TOP || this.direction === Direction.BOTTOM
+        const isFixed = !!(isVertical ? this.init.fixedSpeedStep : this.init.fixedSeekStep)
+
+        this.strong = distance > MIN_STRONG && !isFixed
         
-        return (Math.abs(deltaX) > Math.abs(deltaY)) ? (deltaX >= 0 ? Direction.RIGHT : Direction.LEFT) : (deltaY >= 0 ? Direction.BOTTOM : Direction.TOP)
+        return direction
     }
     clearDirectional = () => {
         if (this.direction) {

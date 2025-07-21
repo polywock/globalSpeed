@@ -207,7 +207,11 @@
         "fullscreenOnlyTooltip": "仅在视频全屏时显示小部件。",
         "pressAction": "按下动作",
         "togglePause": "切换暂停",
-        "option": "显示圆形小部件"
+        "option": "显示圆形小部件",
+        "fixedSpeedStep": "固定速度步长",
+        "fixedSpeedStepTooltip": "拖动圆形组件时始终以固定值调整速度。",
+        "fixedSeekStep": "固定跳转步长",
+        "fixedSeekStepTooltip": "移动圆形小部件时始终按固定秒数快进或后退"
       },
       "qrCodeTop": "扫码使用",
       "qrCodeBottom": "Edge 手机版",

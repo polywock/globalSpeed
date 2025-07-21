@@ -206,7 +206,11 @@
         "fullscreenOnlyTooltip": "Mostra il widget solo quando il video è a schermo intero.",
         "pressAction": "Azione di pressione",
         "togglePause": "Attiva/disattiva pausa",
-        "option": "Mostra il widget circolare"
+        "option": "Mostra il widget circolare",
+        "fixedSpeedStep": "Passo di velocità fisso",
+        "fixedSpeedStepTooltip": "Regola sempre la velocità di un importo fisso quando si sposta il widget circolare.",
+        "fixedSeekStep": "Passo di ricerca fisso",
+        "fixedSeekStepTooltip": "Cerca sempre di un numero fisso di secondi quando si sposta il widget circolare."
       },
       "qrCodeTop": "Scansiona per utilizzare su...",
       "qrCodeBottom": "Edge per dispositivi mobili",

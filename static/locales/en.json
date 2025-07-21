@@ -218,7 +218,11 @@
         "fullscreenOnly": "Fullscreen only",
         "fullscreenOnlyTooltip": "Only show widget when the video is fullscreen.",
         "pressAction": "Press action",
-        "togglePause": "Toggle pause"
+        "togglePause": "Toggle pause",
+        "fixedSpeedStep": "Fixed speed step",
+        "fixedSpeedStepTooltip": "Always adjust speed by a fixed amount when moving the circle widget.",
+        "fixedSeekStep": "Fixed seek step",
+        "fixedSeekStepTooltip": "Always seek by a fixed amount of seconds when moving the circle widget."
       },
       "qrCodeTop": "Scan to use on...",
       "qrCodeBottom": "Edge for Mobile",

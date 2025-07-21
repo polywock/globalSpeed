@@ -205,7 +205,11 @@
         "fullscreenOnlyTooltip": "Mostrar widget apenas quando o vídeo estiver em tela cheia.",
         "pressAction": "Ação de pressão",
         "togglePause": "Alternar pausa",
-        "option": "Mostrar widget circular"
+        "option": "Mostrar widget circular",
+        "fixedSpeedStep": "Passo de velocidade fixo",
+        "fixedSpeedStepTooltip": "Sempre ajustar a velocidade por um valor fixo ao mover o widget circular.",
+        "fixedSeekStep": "Passo de busca fixo",
+        "fixedSeekStepTooltip": "Sempre buscar por uma quantidade fixa de segundos ao mover o widget circular."
       },
       "qrCodeTop": "Escaneie para usar no...",
       "qrCodeBottom": "Edge para celular",

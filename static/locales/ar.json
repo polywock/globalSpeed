@@ -206,7 +206,11 @@
         "fullscreenOnlyTooltip": "إظهار الأداة فقط عند ملء الشاشة بالفيديو.",
         "pressAction": "إجراء الضغط",
         "togglePause": "تبديل الإيقاف المؤقت",
-        "option": "عرض واجهة دائرية"
+        "option": "عرض واجهة دائرية",
+        "fixedSpeedStep": "خطوة سرعة ثابتة",
+        "fixedSpeedStepTooltip": "اضبط السرعة دائمًا بمقدار ثابت عند تحريك أداة الدائرة.",
+        "fixedSeekStep": "خطوة بحث ثابتة",
+        "fixedSeekStepTooltip": "الانتقال دائمًا بمقدار ثابت من الثواني عند تحريك عنصر الدائرة."
       },
       "qrCodeTop": "امسح للاستخدام على...",
       "qrCodeBottom": "إيدج للجوال",

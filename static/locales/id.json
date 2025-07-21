@@ -205,7 +205,11 @@
         "fullscreenOnlyTooltip": "Hanya tampilkan widget saat video dalam layar penuh.",
         "pressAction": "Tindakan tekan",
         "togglePause": "Alih jeda",
-        "option": "Tampilkan widget lingkaran"
+        "option": "Tampilkan widget lingkaran",
+        "fixedSpeedStep": "Langkah kecepatan tetap",
+        "fixedSpeedStepTooltip": "Selalu sesuaikan kecepatan dengan jumlah tetap saat memindahkan widget lingkaran.",
+        "fixedSeekStep": "Langkah penelusuran tetap",
+        "fixedSeekStepTooltip": "Selalu melompat sejumlah detik tetap saat memindahkan widget lingkaran."
       },
       "qrCodeTop": "Pindai untuk digunakan di...",
       "qrCodeBottom": "Edge untuk seluler",

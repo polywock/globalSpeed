@@ -8,6 +8,7 @@ import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "src/defaults/constants"
 import { randomId } from "src/utils/helper"
 import { RegularTooltip } from "src/comps/RegularTooltip"
 import "./WidgetModal.css"
+import { GoX } from "react-icons/go"
 
 type Props = {
   onClose: () => void 
@@ -109,6 +110,49 @@ export function WidgetModal(props: Props) {
           }}/>
         </div>
       )}
+
+
+      {/* Fixed Seek Step */}
+      <div className="field">
+        <div className="labelWithTooltip">
+          <span>{gvar.gsm.options.flags.widget.fixedSeekStep}</span>
+          <RegularTooltip title={gvar.gsm.options.flags.widget.fixedSeekStepTooltip} align="right"/>
+        </div>
+        {init.fixedSeekStep ? (
+          <div className="control">
+            <NumericInput rounding={2} noNull={true} min={1} value={init.fixedSeekStep} onChange={v => {
+              setView({circleInit: produce(view.circleInit, d => { d.fixedSeekStep = v; d.key = randomId() })})
+            }}/>
+            <button className="icon" onClick={() => {
+                setView({circleInit: produce(view.circleInit, d => { delete d.fixedSeekStep; d.key = randomId() })})
+              }}>
+              <GoX size="1.6rem"/>
+            </button>
+          </div>
+        ) : <Toggle value={false} onChange={() => setView({circleInit: produce(view.circleInit, d => { d.fixedSeekStep = 5; d.key = randomId() })})}/>}
+        
+      </div>
+
+      {/* Fixed Speed Step */}
+      <div className="field">
+        <div className="labelWithTooltip">
+          <span>{gvar.gsm.options.flags.widget.fixedSpeedStep}</span>
+          <RegularTooltip title={gvar.gsm.options.flags.widget.fixedSpeedStepTooltip} align="right"/>
+        </div>
+        {init.fixedSpeedStep ? (
+          <div className="control">
+            <NumericInput rounding={2} noNull={true} min={0.01} max={1} value={init.fixedSpeedStep} onChange={v => {
+              setView({circleInit: produce(view.circleInit, d => { d.fixedSpeedStep = v; d.key = randomId() })})
+            }}/>
+            <button className="icon" onClick={() => {
+                setView({circleInit: produce(view.circleInit, d => { delete d.fixedSpeedStep; d.key = randomId() })})
+              }}>
+              <GoX size="1.6rem"/>
+            </button>
+          </div>
+        ) : <Toggle value={false} onChange={() => setView({circleInit: produce(view.circleInit, d => { d.fixedSpeedStep = 0.1; d.key = randomId() })})}/>}
+        
+      </div>
 
       {/* Reset */}
       <button onClick={e => {

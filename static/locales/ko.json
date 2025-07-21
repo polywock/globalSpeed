@@ -206,7 +206,11 @@
         "fullscreenOnlyTooltip": "비디오가 전체 화면일 때만 위젯을 표시합니다.",
         "pressAction": "눌러서 실행",
         "togglePause": "일시 정지 전환",
-        "option": "원형 위젯 표시"
+        "option": "원형 위젯 표시",
+        "fixedSpeedStep": "고정 속도 단계",
+        "fixedSpeedStepTooltip": "원형 위젯을 이동할 때 항상 고정된 속도로 조절합니다.",
+        "fixedSeekStep": "고정 탐색 단계",
+        "fixedSeekStepTooltip": "원형 위젯을 이동할 때 항상 고정된 초만큼 탐색합니다."
       },
       "qrCodeTop": "스캔하여 사용해 보세요...",
       "qrCodeBottom": "모바일용 Edge",

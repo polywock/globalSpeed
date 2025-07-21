@@ -206,7 +206,11 @@
         "fullscreenOnlyTooltip": "Chỉ hiển thị widget khi video ở chế độ toàn màn hình.",
         "pressAction": "Hành động nhấn",
         "togglePause": "Chuyển đổi tạm dừng",
-        "option": "Hiển thị tiện ích vòng tròn"
+        "option": "Hiển thị tiện ích vòng tròn",
+        "fixedSpeedStep": "Bước tốc độ cố định",
+        "fixedSpeedStepTooltip": "Luôn điều chỉnh tốc độ theo một lượng cố định khi di chuyển tiện ích vòng tròn.",
+        "fixedSeekStep": "Bước tua cố định",
+        "fixedSeekStepTooltip": "Luôn tua một khoảng thời gian cố định khi di chuyển tiện ích hình tròn."
       },
       "qrCodeTop": "Quét để sử dụng trên...",
       "qrCodeBottom": "Edge cho di động",

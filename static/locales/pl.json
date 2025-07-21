@@ -206,7 +206,11 @@
         "fullscreenOnlyTooltip": "Widżet będzie widoczny tylko w trybie pełnoekranowym.",
         "pressAction": "Akcja po naciśnięciu",
         "togglePause": "Przełącz pauzę",
-        "option": "Pokaż okrągły widżet"
+        "option": "Pokaż okrągły widżet",
+        "fixedSpeedStep": "Stały krok prędkości",
+        "fixedSpeedStepTooltip": "Zawsze dostosowuj prędkość o stałą wartość podczas przesuwania widżetu koła.",
+        "fixedSeekStep": "Stały krok przewijania",
+        "fixedSeekStepTooltip": "Zawsze przewijaj o stałą liczbę sekund podczas przesuwania okrągłego widżetu."
       },
       "qrCodeTop": "Zeskanuj, aby użyć na...",
       "qrCodeBottom": "Edge na urządzenia mobilne",

@@ -125,6 +125,8 @@ export type CircleInit = {
   fullscreenOnly?: boolean,
   mainAction?: "PAUSE" | "SPEED",
   mainActionSpeed?: number,
+  fixedSpeedStep?: number,
+  fixedSeekStep?: number,
   key?: string
 }
 

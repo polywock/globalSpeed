@@ -207,7 +207,11 @@ export type Gsm = {
         fullscreenOnly: string,
         fullscreenOnlyTooltip: string,
         pressAction: string,
-        togglePause: string
+        togglePause: string,
+        fixedSpeedStep: string,
+        fixedSpeedStepTooltip: string,
+        fixedSeekStep: string,
+        fixedSeekStepTooltip: string
       },
       qrCodeTop: string,
       qrCodeBottom: string,

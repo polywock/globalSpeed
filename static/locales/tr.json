@@ -206,7 +206,11 @@
         "fullscreenOnlyTooltip": "Widget'ı yalnızca video tam ekranda olduğunda göster.",
         "pressAction": "Basma eylemi",
         "togglePause": "Durdurmayı geçiş yap",
-        "option": "Daire widget'ını göster"
+        "option": "Daire widget'ını göster",
+        "fixedSpeedStep": "Sabit hız adımı",
+        "fixedSpeedStepTooltip": "Daire aracını hareket ettirirken hızı her zaman sabit bir miktarda ayarla.",
+        "fixedSeekStep": "Sabit arama adımı",
+        "fixedSeekStepTooltip": "Daire aracını hareket ettirirken her zaman sabit bir saniye miktarı kadar ilerlet."
       },
       "qrCodeTop": "Kullanmak için tarayın...",
       "qrCodeBottom": "Mobil için Edge",

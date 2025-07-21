@@ -206,7 +206,11 @@
         "fullscreenOnlyTooltip": "Hanya tunjukkan widget apabila video dalam skrin penuh.",
         "pressAction": "Tindakan tekan",
         "togglePause": "Tukar jeda",
-        "option": "Tunjukkan widget bulatan"
+        "option": "Tunjukkan widget bulatan",
+        "fixedSpeedStep": "Langkah kelajuan tetap",
+        "fixedSpeedStepTooltip": "Sentiasa laras kelajuan dengan jumlah tetap apabila menggerakkan widget bulatan.",
+        "fixedSeekStep": "Langkah carian tetap",
+        "fixedSeekStepTooltip": "Sentiasa langkau dengan jumlah saat yang tetap apabila menggerakkan widget bulatan."
       },
       "qrCodeTop": "Imbas untuk digunakan di...",
       "qrCodeBottom": "Edge untuk peranti mudah alih",

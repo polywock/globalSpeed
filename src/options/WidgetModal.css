@@ -6,4 +6,9 @@
     .NumericInput {
         width: 50px;
     }
+
+    .control {
+        display: flex;
+        column-gap: 10px;
+    }
 }
