@@ -4,9 +4,33 @@ import { FilterName, filterInfos } from "./filters"
 import { getDefaultKeybinds } from "./commands"
 import { chunkByPredicate, isMobile, randomId } from "../utils/helper"
 
-const DEFAULT_WEBSITES_SHORTCUTS_DISABLED = ['https://docs.google.com', 'https://play.geforcenow.com', "https://www.xbox.com", "https://docs.qq.com", "https://www.playstation.com", "https://excalidraw.com", "https://www.photopea.com", "https://www.canva.com", "http://luna.amazon.com"]
+export type WebsiteInfo = {
+  v: string,
+  contains?: boolean
+}
 
-function generateUrlPart(origin: string): URLConditionPart {
+export const SHORTCUT_DISABLED_WEBSITES: WebsiteInfo[] = [
+  {v: "https://docs.google.com"},
+  {v: "https://play.geforcenow.com"},
+  {v: "https://www.xbox.com"},
+  {v: "https://docs.qq.com"},
+  {v: "https://www.playstation.com"},
+  {v: "https://excalidraw.com"},
+  {v: "https://www.photopea.com"},
+  {v: "https://www.canva.com"},
+  {v: "http://luna.amazon.com"},
+  {v: "https://ys.mihoyo.com"},
+  {v: "https://www.youtube.com/playables"},
+  {v: "game", contains: true}
+]
+
+
+export function turnWebsiteInfoIntoString(info: WebsiteInfo) {
+  if (info.contains) return `contains_${info.v}`
+  return `starts_${info.v}`
+}
+
+export function generateUrlPart(origin: string): URLConditionPart {
     return {
       id: randomId(),
       type: 'STARTS_WITH',
@@ -24,7 +48,9 @@ export function getDefaultState(): State {
     freshKeybinds: true,
     ...getDefaultContext(),
     keybindsUrlCondition: getDefaultKeybindsUrlConditions(),
-    hideMediaView: isMobile()
+    websitesAddedToUrlConditionsExclusion: SHORTCUT_DISABLED_WEBSITES.map(w => turnWebsiteInfoIntoString(w)),
+    hideMediaView: isMobile(),
+    holdToSpeed: isMobile() ? 2 : undefined
   } as State;
 
   return state 
@@ -33,8 +59,19 @@ export function getDefaultState(): State {
 export function getDefaultKeybindsUrlConditions() {
   return {
     block: true,
-    parts: DEFAULT_WEBSITES_SHORTCUTS_DISABLED.map(origin => generateUrlPart(origin))
+    parts: SHORTCUT_DISABLED_WEBSITES.map(origin => {
+      const part = generateUrlPart(origin.v)
+      if (origin.contains) part.type = "CONTAINS"
+      return part 
+    })
   }
+}
+
+export function getEmptyUrlConditions(block: boolean) {
+  return {
+    block,
+    parts: []
+  } as URLCondition
 }
 
 export function getDefaultContext(withNulls?: boolean): Context {

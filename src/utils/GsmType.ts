@@ -158,7 +158,6 @@ export type Gsm = {
     cinemaTooltip: string,
     presets: string,
     temporarySpeed: string,
-    temporarySpeedTooltip: string,
     toggleSpeed: string,
     toggleSpeedTooltip: string,
     alwaysOn: string,

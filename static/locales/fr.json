@@ -156,14 +156,13 @@
     "cinema": "Obscurcir l'arrière-plan",
     "cinemaTooltip": "Obscurcit l'arrière-plan de la vidéo. Pour quitter, appuyez sur l'arrière-plan ou utilisez à nouveau le raccourci.",
     "presets": "Préréglages...",
-    "temporarySpeed": "Vitesse temporaire",
-    "temporarySpeedTooltip": "Appuyez et maintenez la vitesse temporaire.",
     "toggleSpeed": "Basculer la vitesse",
     "toggleSpeedTooltip": "Bascule entre la vitesse du raccourci et la dernière vitesse.",
     "alwaysOn": "Toujours activé",
     "alwaysOnTooltip": "Par défaut, le raccourci ne peut réactiver l'extension que si elle a été désactivée en utilisant le même raccourci. Activez ce paramètre pour vous assurer que le raccourci fonctionne toujours pour activer l'extension, même si elle a été désactivée via le menu de l'interface utilisateur.",
     "muteTab": "Couper l'onglet",
-    "loopEntire": "Boucle complète"
+    "loopEntire": "Boucle complète",
+    "temporarySpeed": "Appuyez et maintenez pour accélérer"
   },
   "options": {
     "flags": {

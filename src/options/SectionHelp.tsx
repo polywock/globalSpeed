@@ -3,7 +3,7 @@ import { MdContentCopy, MdContentPaste } from "react-icons/md"
 import { dumpConfig, fetchView, pushView, restoreConfig } from "../utils/state"
 import { State } from "../types"
 import { requestCreateTab } from "../utils/browserUtils"
-import { isFirefox, areYouSure } from "../utils/helper"
+import { isFirefox, areYouSure, isMobile } from "../utils/helper"
 import { getDefaultState } from "src/defaults"
 import { migrateSchema } from "src/background/utils/migrateSchema"
 import { Tooltip } from "src/comps/Tooltip"
@@ -35,12 +35,14 @@ export function SectionHelp(props: {}) {
         }}>{gvar.gsm.token.reset}</button>
 
         {/* Export/Import  */}
-        <button className="large" onClick={e => {
-          requestCreateTab(chrome.runtime.getURL("./faqs.html"))
-        }}>{"FAQ"}</button>
-        <div className="right">
-          <ExportImport/>
-        </div>
+        {!isMobile() && <>
+          <button className="large" onClick={e => {
+            requestCreateTab(chrome.runtime.getURL("./faqs.html"))
+          }}>{"FAQ"}</button>
+          <div className="right">
+            <ExportImport/>
+          </div>
+        </>}
       </div>
     </div>
   )

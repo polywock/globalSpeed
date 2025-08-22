@@ -68,6 +68,8 @@ export class SpeedSync {
   }
 }
 
+const PROHIBITED_TYPES = new Set(['INPUT', 'BUTTON', 'TEXTAREA'])
 function checkIfPointerOverVideo(doc: DocumentOrShadowRoot, e: PointerEvent) {
-  return doc.elementsFromPoint(e.clientX, e.clientY).some(elem => elem.tagName === 'VIDEO')
+  const elems = doc.elementsFromPoint(e.clientX, e.clientY)
+  return elems.some(elem => elem.tagName === 'VIDEO') && elems.every(elem => !PROHIBITED_TYPES.has(elem.tagName))
 }

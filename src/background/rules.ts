@@ -1,7 +1,7 @@
 import { getDefaultFx } from "src/defaults"
 import { AnyDict, CONTEXT_KEYS, State, URLRule, URLStrictness } from "src/types"
 import { testURL } from "src/utils/configUtils"
-import { isFirefox, listToDict, timeout } from "src/utils/helper"
+import { isFirefox, isMac, isMobile, listToDict, timeout } from "src/utils/helper"
 
 type UrlRuleBehavior = [URLRule["type"][], (isfake: boolean, tabId: number, rule: URLRule, override: AnyDict, deets: Deets) => void]
 
@@ -34,6 +34,7 @@ async function handleChange(changes: chrome.storage.StorageChanges) {
 }
 
 export async function syncUserScripts(rules: URLRule[], superDisable: boolean) {
+    if (isMobile()) return 
     try {
         await chrome.userScripts.unregister()
     } catch { return }
@@ -112,14 +113,17 @@ function shouldReApply(strictness: URLStrictness, oldHost: string, currentHost: 
     return false 
 }
 
-chrome.webNavigation.onCommitted.addListener(deets => handleNavigation(deets as Deets, true))
-chrome.webNavigation.onHistoryStateUpdated.addListener(deets => handleNavigation(deets as Deets))
-gvar.es.addWatcher([], handleChange)
+if (!(isMac() && isMobile())) {
+    chrome.webNavigation.onCommitted.addListener(deets => handleNavigation(deets as Deets, true))
+    chrome.webNavigation.onHistoryStateUpdated.addListener(deets => handleNavigation(deets as Deets))
+    gvar.es.addWatcher([], handleChange)
+    
+    
+    gvar.sess.safeCbs.add(async () => {
+        const raw = await gvar.es.getAllUnsafe()
+        ;syncUserScripts(raw["g:rules"] || [], raw["g:superDisable"])
+    })
+}
 
-
-gvar.sess.safeCbs.add(async () => {
-    const raw = await gvar.es.getAllUnsafe()
-    ;syncUserScripts(raw["g:rules"] || [], raw["g:superDisable"])
-})
 
 

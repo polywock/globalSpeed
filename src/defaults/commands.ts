@@ -584,13 +584,6 @@ export function getDefaultKeybinds(): Keybind[] {
       direct: true
     },
     {
-      ...commandInfos.seek.generate(),
-      key: {code: "Backquote"},
-      adjustMode: AdjustMode.ITC,
-      duration: Duration.PERCENT,
-      spacing: 1
-    },
-    {
       ...commandInfos.setMark.generate(),
       key: {shiftKey: true, code: "KeyW"},
       valueString: "mark1"
@@ -609,20 +602,20 @@ export function getDefaultKeybinds(): Keybind[] {
     {
       ...commandInfos.drawPage.generate(),
       trigger: Trigger.CONTEXT,
-      contextLabel: "- draw on page",
+      contextLabel: "- Draw on Page",
       replaceWithGsm: 4
     },
     {
       ...commandInfos.cinema.generate(),
       trigger: Trigger.CONTEXT,
-      contextLabel: "- darken background",
+      contextLabel: "- Darken Background",
       replaceWithGsm: 10
     },
     {
       ...commandInfos.fxFilter.generate(),
       trigger: Trigger.CONTEXT,
       replaceWithGsm: 6,
-      contextLabel: "- fx :: invert page",
+      contextLabel: "- Fx :: Invert Page",
       filterOption: "invert",
       filterTarget: "both",
       adjustMode: AdjustMode.CYCLE,
@@ -632,7 +625,7 @@ export function getDefaultKeybinds(): Keybind[] {
       ...commandInfos.fxFilter.generate(),
       trigger: Trigger.CONTEXT,
       replaceWithGsm: 7,
-      contextLabel: "- fx :: grayscale page",
+      contextLabel: "- Fx :: Grayscale Page",
       filterOption: "grayscale",
       filterTarget: "backdrop",
       adjustMode: AdjustMode.ITC,
@@ -643,7 +636,7 @@ export function getDefaultKeybinds(): Keybind[] {
       ...commandInfos.fxFilter.generate(),
       trigger: Trigger.CONTEXT,
       replaceWithGsm: 8,
-      contextLabel: "- fx :: video brightness",
+      contextLabel: "- Fx :: Video Brightness",
       filterOption: "brightness",
       adjustMode: AdjustMode.ITC,
       valueItcMin: 0.5,
@@ -653,7 +646,7 @@ export function getDefaultKeybinds(): Keybind[] {
       ...commandInfos.fxFilter.generate(),
       trigger: Trigger.CONTEXT,
       replaceWithGsm: 9,
-      contextLabel: "- fx :: video contrast",
+      contextLabel: "- Fx :: Video Contrast",
       filterOption: "contrast",
       adjustMode: AdjustMode.ITC,
       valueItcMin: 0.75,
@@ -663,7 +656,7 @@ export function getDefaultKeybinds(): Keybind[] {
       ...commandInfos.fxReset.generate(),
       trigger: Trigger.CONTEXT,
       filterTarget: "both",
-      contextLabel: "- fx :: reset",
+      contextLabel: "- Fx :: Reset",
       replaceWithGsm: 5
     }
   ]

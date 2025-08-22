@@ -9,7 +9,8 @@ declare global {
     os: Overseer,
     fallbackId: number,
     ghostMode?: boolean,
-    isTopFrame?: boolean
+    isTopFrame?: boolean,
+    topFrameOrigin?: string 
   }
 }
 

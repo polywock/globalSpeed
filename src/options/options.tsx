@@ -8,7 +8,7 @@ import { useThemeSync } from "src/hooks/useThemeSync"
 import { loadGsm } from "src/utils/gsm"
 import { requestTabInfo } from "src/utils/browserUtils"
 import type { Indicator } from "src/contentScript/isolated/utils/Indicator"
-import { isMobile } from "src/utils/helper"
+import { isMac, isMobile } from "src/utils/helper"
 import "./options.css"
 
 declare global {
@@ -27,8 +27,10 @@ const Options = (props: {}) => {
   useThemeSync()
   return <div id="App">
     <SectionFlags/>
-    <SectionEditor/>
-    <SectionRules/>
+    {!isMobile() && <>
+      <SectionEditor/>
+    </>}
+    {!(isMac() && isMobile()) && <SectionRules/>}
     <SectionHelp/>
   </div>
 }

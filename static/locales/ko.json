@@ -157,14 +157,13 @@
     "cinema": "배경 어둡게",
     "cinemaTooltip": "비디오의 배경을 어둡게 합니다. 종료하려면 배경을 누르거나 다시 단축키를 사용하세요.",
     "presets": "프리셋...",
-    "temporarySpeed": "임시 속도",
-    "temporarySpeedTooltip": "임시 속도를 누르고 유지합니다.",
     "toggleSpeed": "속도 전환",
     "toggleSpeedTooltip": "단축키 속도와 마지막 속도를 전환합니다.",
     "alwaysOn": "항상 켜짐",
     "alwaysOnTooltip": "기본적으로 바로 가기는 동일한 바로 가기를 사용하여 마지막으로 비활성화된 경우에만 확장 기능을 다시 활성화할 수 있습니다. 이 설정을 활성화하면 UI 메뉴를 통해 비활성화된 경우에도 바로 가기가 항상 확장 기능을 활성화하는 데 작동하도록 합니다.",
     "muteTab": "탭 음소거",
-    "loopEntire": "전체 반복"
+    "loopEntire": "전체 반복",
+    "temporarySpeed": "길게 눌러 일시적으로 속도 증가"
   },
   "options": {
     "flags": {

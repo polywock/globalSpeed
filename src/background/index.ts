@@ -159,6 +159,7 @@ chrome.contextMenus?.onClicked.addListener(async (item, tab) => {
 declare global {
     interface Message {
         requestTabInfo: { type: "REQUEST_TAB_INFO" }
+        getTopOrigin: {type: "GET_TOP_ORIGIN"}
         requestGsm: { type: "REQUEST_GSM" }
         requestCreateTab: { type: "REQUEST_CREATE_TAB", url: string}
         triggerKeybinds: { type: "TRIGGER_KEYBINDS", ids: KeybindMatchId[]}
@@ -181,6 +182,17 @@ chrome.runtime.onMessage.addListener((msg: Messages, sender, reply) => {
             tabId: sender.tab.id,
             frameId: sender.frameId
         })
+    } else if (msg.type === "GET_TOP_ORIGIN") {
+        chrome.tabs.get(sender.tab.id).then(tabInfo => {
+            let origin = ""
+            if (tabInfo.url) {
+                origin = `${new URL(tabInfo.url).origin || ''}/`
+            }
+            reply(origin.length > 1 ? origin : null)
+        }, errr => {
+            reply(null)
+        })
+        return true 
     } else if (msg.type === "REQUEST_GSM") {
         loadGsm().then(gsm => reply(gsm), err => reply(null))
         return true 

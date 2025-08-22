@@ -163,8 +163,8 @@ export function fsAffinity(lhs: FsProfile, rhs: FsProfile) {
   score += lhs.videoId === rhs.videoId ? (lhs.videoId ? 25 : 10) : 0
   score += lhs.parentId === rhs.parentId ? (lhs.parentId ? 25 : 10) : 0
 
-  if (lhs.slashes[0] && rhs.slashes[1])  {
-    score += lhs.slashes[0] === rhs.slashes[1] ? 25 : 0
+  if (lhs.slashes[0] && rhs.slashes[0])  {
+    score += lhs.slashes[0] === rhs.slashes[0] ? 25 : 0
   }
 
   if (lhs.slashes[1] && rhs.slashes[1])  {

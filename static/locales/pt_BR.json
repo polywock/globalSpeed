@@ -156,14 +156,13 @@
     "cinema": "Escurecer fundo",
     "cinemaTooltip": "Escurece o fundo do vídeo. Para sair, pressione no fundo ou use o atalho novamente.",
     "presets": "Predefinições...",
-    "temporarySpeed": "Velocidade temporária",
-    "temporarySpeedTooltip": "Pressione e segure a velocidade temporária.",
     "toggleSpeed": "Alternar velocidade",
     "toggleSpeedTooltip": "Alterna entre a velocidade do atalho e a última velocidade.",
     "alwaysOn": "Sempre ligado",
     "alwaysOnTooltip": "Por padrão, o atalho só pode reativar a extensão se ela foi desativada pela última vez usando o mesmo atalho. Ative esta configuração para garantir que o atalho sempre funcione para habilitar a extensão, mesmo que ela tenha sido desligada pelo menu da UI.",
     "muteTab": "Silenciar guia",
-    "loopEntire": "Repetir totalmente"
+    "loopEntire": "Repetir totalmente",
+    "temporarySpeed": "Pressione e segure para acelerar"
   },
   "options": {
     "flags": {

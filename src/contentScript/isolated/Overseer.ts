@@ -58,6 +58,7 @@ export class Overseer {
     }
     initAsync = async () => {
         gvar.tabInfo = await requestTabInfo()
+        if (gvar.tabInfo.frameId) gvar.topFrameOrigin = await chrome.runtime.sendMessage({type: 'GET_TOP_ORIGIN'})
 
         // if failed to get, try again after a few seconds. (firefox sometimes)
         if (!gvar.tabInfo) {

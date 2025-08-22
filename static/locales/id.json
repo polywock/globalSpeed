@@ -156,14 +156,13 @@
     "cinema": "Gelapkan latar belakang",
     "cinemaTooltip": "Gelapkan latar belakang video. Untuk keluar, tekan latar belakang atau gunakan pintasan lagi.",
     "presets": "Preset...",
-    "temporarySpeed": "Kecepatan sementara",
-    "temporarySpeedTooltip": "Tekan dan tahan kecepatan sementara.",
     "toggleSpeed": "Alih kecepatan",
     "toggleSpeedTooltip": "Beralih antara kecepatan pintasan dan kecepatan terakhir.",
     "alwaysOn": "Selalu aktif",
     "alwaysOnTooltip": "Secara default, pintasan hanya dapat mengaktifkan kembali ekstensi jika terakhir kali dinonaktifkan menggunakan pintasan yang sama. Aktifkan pengaturan ini untuk memastikan pintasan selalu berfungsi untuk mengaktifkan ekstensi, bahkan jika dimatikan melalui menu UI.",
     "muteTab": "Bisukan tab",
-    "loopEntire": "Putar Sepenuhnya"
+    "loopEntire": "Putar Sepenuhnya",
+    "temporarySpeed": "Tekan & tahan untuk mempercepat"
   },
   "options": {
     "flags": {

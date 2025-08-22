@@ -83,6 +83,7 @@ export function isMac() {
   return isMacResult
 }
 
+
 let isMobileResult: boolean
 export function isMobile() {
   if (isMobileResult != null) return isMobileResult
@@ -351,6 +352,7 @@ export function isDipWindow() {
   }
   return cachedIsDip.result
 }
+
 
 let cachedDomainResult: {result: ReturnType<typeof parseDomain>}
 export function parseDomain(hostname: string): { baseName: string; registeredDomain: string } {

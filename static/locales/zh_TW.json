@@ -157,14 +157,13 @@
     "cinema": "加深背景",
     "cinemaTooltip": "加深影片背景。若要結束，按背景或再次使用快速鍵。",
     "presets": "預設設定...",
-    "temporarySpeed": "臨時速度",
-    "temporarySpeedTooltip": "按住時套用臨時速度。",
     "toggleSpeed": "切換速度",
     "toggleSpeedTooltip": "在快速鍵速度與上次速度之間切換。",
     "alwaysOn": "永遠開啟",
     "alwaysOnTooltip": "預設情況下，快速鍵只能在上次是透過相同快速鍵停用擴充功能時重新啟用擴充功能。啟用此設定可確保快速鍵永遠能啟用擴充功能，即使是透過介面選單關閉的。",
     "muteTab": "分頁靜音",
-    "loopEntire": "完整循環"
+    "loopEntire": "完整循環",
+    "temporarySpeed": "按住以加速播放"
   },
   "options": {
     "flags": {

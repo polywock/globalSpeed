@@ -19,8 +19,8 @@ import { WidgetModal } from "./WidgetModal"
 import { RegularTooltip } from "src/comps/RegularTooltip"
 import { Tooltip } from "src/comps/Tooltip"
 import { GearIcon } from "src/comps/GearIcon"
-import "./SectionFlags.css"
 import { NumericInput } from "src/comps/NumericInput"
+import "./SectionFlags.css"
 
 export function SectionFlags(props: {}) {
   const [showIndicatorModal, setShowIndicatorModal] = useState(false)
@@ -109,49 +109,51 @@ export function SectionFlags(props: {}) {
         )}
 
 
+        {!isMobile() && <>
         {/* Show badge */}
-        <div className="field marginTop">
-          <div className="labelWithTooltip">
-            <span>{gvar.gsm.options.flags.showBadge}</span>
-            <RegularTooltip title={gvar.gsm.options.flags.showBadgeTooltip} align="right"/>
+          <div className="field marginTop">
+            <div className="labelWithTooltip">
+              <span>{gvar.gsm.options.flags.showBadge}</span>
+              <RegularTooltip title={gvar.gsm.options.flags.showBadgeTooltip} align="right"/>
+            </div>
+            <Toggle value={!view.hideBadge} onChange={e => {
+              setView({hideBadge: !view.hideBadge})
+            }}/>
           </div>
-          <Toggle value={!view.hideBadge} onChange={e => {
-            setView({hideBadge: !view.hideBadge})
-          }}/>
-        </div>
 
-        {/* Show indicator */}
-        <div className="field indentFloat">
-          <div className="labelWithTooltip">
-            <span>{gvar.gsm.options.flags.showIndicator}</span>
-            <RegularTooltip title={gvar.gsm.options.flags.showIndicatorTooltip} align="right"/>
-          </div>
-          <div className="fieldValue">
-            <Toggle value={!viewAlt.hideIndicator} onChange={async e => {
-              setView({
-                hideIndicator: !viewAlt.hideIndicator,
-                keybinds: produce((await fetchView({keybinds: true})).keybinds || [], d => {
-                  d.forEach(d => {
-                    delete d.invertIndicator
+          {/* Show indicator */}
+          <div className="field indentFloat">
+            <div className="labelWithTooltip">
+              <span>{gvar.gsm.options.flags.showIndicator}</span>
+              <RegularTooltip title={gvar.gsm.options.flags.showIndicatorTooltip} align="right"/>
+            </div>
+            <div className="fieldValue">
+              <Toggle value={!viewAlt.hideIndicator} onChange={async e => {
+                setView({
+                  hideIndicator: !viewAlt.hideIndicator,
+                  keybinds: produce((await fetchView({keybinds: true})).keybinds || [], d => {
+                    d.forEach(d => {
+                      delete d.invertIndicator
+                    })
                   })
                 })
-              })
-            }}/>
-            <div className="float">
-              {viewAlt.hideIndicator ? null : <>
-                <GearIcon onClick={() => setShowIndicatorModal(true)}/>
-              </>}
-            </div> 
+              }}/>
+              <div className="float">
+                {viewAlt.hideIndicator ? null : <>
+                  <GearIcon onClick={() => setShowIndicatorModal(true)}/>
+                </>}
+              </div> 
+            </div>
           </div>
-        </div>
 
-        {/* Show media view */}
-        <div className="field">
-          <span>{gvar.gsm.options.flags.showMediaView}</span>
-          <Toggle value={!view.hideMediaView} onChange={e => {
-            setView({hideMediaView: !view.hideMediaView})
-          }}/>
-        </div>
+          {/* Show media view */}
+          <div className="field">
+            <span>{gvar.gsm.options.flags.showMediaView}</span>
+            <Toggle value={!view.hideMediaView} onChange={e => {
+              setView({hideMediaView: !view.hideMediaView})
+            }}/>
+          </div>
+        </>}
         
         {/* Circle widget */}
         <CircleWidget setView={setView} active={view.circleWidget} setShowWidgetModal={setShowWidgetModal}/>
@@ -245,7 +247,7 @@ export function SectionFlags(props: {}) {
 
             {view.holdToSpeed ? (
               <div className="control">
-                <NumericInput min={0.1} max={20} value={view.holdToSpeed} onChange={v => setView({holdToSpeed: v})}/>
+                <NumericInput noNull={true} min={0.1} max={20} value={view.holdToSpeed} onChange={v => setView({holdToSpeed: v})}/>
                 <button className="icon" onClick={() => {
                     setView({holdToSpeed: null})
                   }}>
@@ -258,35 +260,37 @@ export function SectionFlags(props: {}) {
         </div>        
 
         {!showMore ? <Tooltip withClass="showMoreTooltip" align="top" title={gvar.gsm.token.more}><button onClick={() => setShowMore(true)}>...</button></Tooltip> : <>
-          {/* Font size */}
-          <div className="field marginDoubleTop">
-            <span>{gvar.gsm.options.flags.textSize}</span>
-            <SliderMicro 
-              value={view.fontSize ?? 1.0} 
-              onChange={v => {
-                setView({fontSize: clamp(0.9, 1.1, v)})
-                // setView({fontSize: clamp(0.5, 3, v)})
-              }}
-              default={1.0}
-              sliderMin={0.9}
-              sliderMax={1.1}
-              sliderStep={0.01}
-            />
-          </div>  
+          {!isMobile() && <>
+            {/* Font size */}
+            <div className="field marginDoubleTop">
+              <span>{gvar.gsm.options.flags.textSize}</span>
+              <SliderMicro 
+                value={view.fontSize ?? 1.0} 
+                onChange={v => {
+                  setView({fontSize: clamp(0.9, 1.1, v)})
+                  // setView({fontSize: clamp(0.5, 3, v)})
+                }}
+                default={1.0}
+                sliderMin={0.9}
+                sliderMax={1.1}
+                sliderStep={0.01}
+              />
+            </div>  
 
-           {/* Keyboard input */}
-          <div className="field">
-            <div className="labelWithTooltip">
-              <span>{gvar.gsm.options.flags.keyboardInput}</span>
-              <RegularTooltip title={gvar.gsm.options.flags.keyboardInputTooltip} align="right"/>
+            {/* Keyboard input */}
+            <div className="field">
+              <div className="labelWithTooltip">
+                <span>{gvar.gsm.options.flags.keyboardInput}</span>
+                <RegularTooltip title={gvar.gsm.options.flags.keyboardInputTooltip} align="right"/>
+              </div>
+              <select className="padded" value={view.virtualInput ? "v" : "q"} onChange={async e => {
+                setView({virtualInput: e.target.value === "v"})
+              }}>
+                <option value="q">{gvar.gsm.options.flags.qwerty}</option>
+                <option value="v">{gvar.gsm.options.flags.virtual}</option>
+              </select>
             </div>
-            <select className="padded" value={view.virtualInput ? "v" : "q"} onChange={async e => {
-              setView({virtualInput: e.target.value === "v"})
-            }}>
-              <option value="q">{gvar.gsm.options.flags.qwerty}</option>
-              <option value="v">{gvar.gsm.options.flags.virtual}</option>
-            </select>
-          </div>
+          </>}
 
           {/* Speed presets */}
           <div className="field">

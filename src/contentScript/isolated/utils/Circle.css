@@ -1,3 +1,10 @@
+
+:root[gspointerdown] {
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none;
+    user-select: none;
+}
+ 
 :is(div:popover-open, div.popoverOpenYah) {
     background-color: transparent;
     position: fixed;
@@ -8,6 +15,7 @@
     pointer-events: none;
     user-select: none;
     touch-action: none;
+    -webkit-user-select: none;
     margin: 0px;
     padding: 0px;
     border: none;

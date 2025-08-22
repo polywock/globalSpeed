@@ -156,14 +156,13 @@
     "cinema": "背景を暗くする",
     "cinemaTooltip": "ビデオの背景を暗くする。出るには、背景を押すか、再度ショートカットを使用します。",
     "presets": "プリセット...",
-    "temporarySpeed": "一時速度",
-    "temporarySpeedTooltip": "一時速度を押し続けてください。",
     "toggleSpeed": "速度切替",
     "toggleSpeedTooltip": "ショートカット速度と最後の速度を切り替えます。",
     "alwaysOn": "常にオン",
     "alwaysOnTooltip": "デフォルトでは、ショートカットは同じショートカットを使用して最後に無効にした場合にのみ拡張機能を再有効化できます。この設定を有効にすると、ショートカットがUIメニューを介してオフにされた場合でも、拡張機能を有効にするために常に機能するようにします。",
     "muteTab": "タブをミュート",
-    "loopEntire": "完全にループ"
+    "loopEntire": "完全にループ",
+    "temporarySpeed": "押し続けて一時的に速度アップ"
   },
   "options": {
     "flags": {

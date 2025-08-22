@@ -156,14 +156,13 @@
     "cinema": "Przyciemnij tło",
     "cinemaTooltip": "Przyciemnij tło wideo. Aby wyjść, kliknij tło lub użyj skrótu ponownie.",
     "presets": "Ustawienia wstępne...",
-    "temporarySpeed": "Tymczasowa prędkość",
-    "temporarySpeedTooltip": "Przytrzymaj, aby ustawić tymczasową prędkość.",
     "toggleSpeed": "Przełącz prędkość",
     "toggleSpeedTooltip": "Przełącz między skrótową prędkością a ostatnią prędkością.",
     "alwaysOn": "Zawsze włączone",
     "alwaysOnTooltip": "Domyślnie skrót może ponownie aktywować rozszerzenie, jeśli zostało wyłączone tym samym skrótem. Włącz tę opcję, aby upewnić się, że skrót zawsze działa na włączenie rozszerzenia, nawet jeśli zostało wyłączone w menu UI.",
     "muteTab": "Wycisz kartę",
-    "loopEntire": "Pętla całego"
+    "loopEntire": "Pętla całego",
+    "temporarySpeed": "Przytrzymaj, aby przyspieszyć"
   },
   "options": {
     "flags": {

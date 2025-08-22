@@ -141,8 +141,6 @@ let cachedOptions: {
 
 function getOptions() {
   if (cachedOptions) return cachedOptions 
-  let available = [...availableCommandNames]
-  available.splice(3, 0, 'presets')
 
   cachedOptions = []
   let previousGroup: {group: CommandGroup}
@@ -153,6 +151,11 @@ function getOptions() {
     }
     cachedOptions.push({label: (gvar.gsm.command as any)[command], value: command})
     previousGroup = {group: info.group}
+  })
+
+  cachedOptions.splice(4, 0, {
+    label: gvar.gsm.command.presets,
+    value: 'presets'
   })
 
   return cachedOptions 
@@ -252,19 +255,19 @@ function handleFreshKeybinds(view: StateView, setView: SetView) {
             kb.contextLabel = gvar.gsm.command.drawPage
             break 
           case 5:
-            kb.contextLabel = `fx :: ${gvar.gsm.token.reset}`
+            kb.contextLabel = `Fx :: ${gvar.gsm.token.reset}`
             break 
           case 6:
-            kb.contextLabel = `fx :: ${gvar.gsm.menuLabels.invertPage}`
+            kb.contextLabel = `Fx :: ${gvar.gsm.menuLabels.invertPage}`
             break 
           case 7:
-            kb.contextLabel = `fx :: ${gvar.gsm.menuLabels.grayscalePage}`
+            kb.contextLabel = `Fx :: ${gvar.gsm.menuLabels.grayscalePage}`
             break 
           case 8:
-            kb.contextLabel = `fx :: ${gvar.gsm.menuLabels.videoBrightness}`
+            kb.contextLabel = `Fx :: ${gvar.gsm.menuLabels.videoBrightness}`
             break 
           case 9:
-            kb.contextLabel = `fx :: ${gvar.gsm.menuLabels.videoContrast}`
+            kb.contextLabel = `Fx :: ${gvar.gsm.menuLabels.videoContrast}`
             break 
           case 10:
             kb.contextLabel = gvar.gsm.command.cinema
@@ -280,7 +283,7 @@ function handleFreshKeybinds(view: StateView, setView: SetView) {
 
 let presets: {name: string, getKbs: (hideIndicator: boolean) => Keybind[]}[] = [
   {name: "temporarySpeed", getKbs: hideIndicator => ([
-    {...commandInfos.speed.generate(), skipToggleSpeed: true, valueNumber: 3, key: "KeyG", adjustMode: AdjustMode.SET, label: gvar.gsm.command.temporarySpeedTooltip},
+    {...commandInfos.speed.generate(), skipToggleSpeed: true, valueNumber: 3, key: "KeyG", adjustMode: AdjustMode.SET, label: gvar.gsm.command.temporarySpeed},
     {...commandInfos.nothing.generate(), valueNumber: 0.15, key: "KeyG"},
     {...commandInfos.speed.generate(), valueNumber: 3, key: "KeyG", adjustMode: AdjustMode.SET, invertIndicator: hideIndicator ? undefined : true}
   ])}

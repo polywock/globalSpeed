@@ -156,14 +156,13 @@
     "cinema": "Gelapkan latar belakang",
     "cinemaTooltip": "Gelapkan latar belakang video. Untuk keluar, tekan pada latar belakang atau gunakan pintasan lagi.",
     "presets": "Pratetap...",
-    "temporarySpeed": "Kelajuan sementara",
-    "temporarySpeedTooltip": "Tekan dan tahan untuk kelajuan sementara.",
     "toggleSpeed": "Tukar kelajuan",
     "toggleSpeedTooltip": "Tukar antara kelajuan pintasan dan kelajuan terakhir.",
     "alwaysOn": "Sentiasa hidup",
     "alwaysOnTooltip": "Secara lalai, pintasan hanya boleh mengaktifkan semula sambungan jika ia terakhir dilumpuhkan menggunakan pintasan yang sama. Dayakan tetapan ini untuk memastikan pintasan sentiasa berfungsi untuk menghidupkan sambungan, walaupun ia dimatikan melalui menu UI.",
     "muteTab": "Senyapkan tab",
-    "loopEntire": "Ulang sepenuhnya"
+    "loopEntire": "Ulang sepenuhnya",
+    "temporarySpeed": "Tekan & tahan untuk lajukan kelajuan"
   },
   "options": {
     "flags": {

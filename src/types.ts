@@ -69,6 +69,7 @@ export type State = {
   darkTheme?: boolean,
   keybinds?: Keybind[],
   keybindsUrlCondition?: URLCondition,
+  websitesAddedToUrlConditionsExclusion?: string[] 
   ghostMode?: boolean,
   ghostModeUrlCondition?: URLCondition,
   rules?: URLRule[],

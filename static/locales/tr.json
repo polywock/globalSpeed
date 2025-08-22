@@ -156,14 +156,13 @@
     "cinema": "Arkaplanı karart",
     "cinemaTooltip": "Video arkaplanını karartır. Çıkmak için arkaplana basın veya tekrar kısayol kullanın.",
     "presets": "Ön ayarlar...",
-    "temporarySpeed": "Geçici hız",
-    "temporarySpeedTooltip": "Geçici hızı basılı tutun.",
     "toggleSpeed": "Hız değiştirme",
     "toggleSpeedTooltip": "Kısayol hızı ve son hız arasında geçiş yapın.",
     "alwaysOn": "Her zaman açık",
     "alwaysOnTooltip": "Varsayılan olarak, kısayol, aynı kısayol kullanılarak en son devre dışı bırakıldıysa yalnızca uzantıyı yeniden etkinleştirebilir. Kısayolun, UI menüsü aracılığıyla kapatılsa bile uzantıyı etkinleştirmek için her zaman çalışmasını sağlamak için bu ayarı etkinleştirin.",
     "muteTab": "Sekmeyi sessize al",
-    "loopEntire": "Tam döngü"
+    "loopEntire": "Tam döngü",
+    "temporarySpeed": "Hızlandırmak için basılı tut"
   },
   "options": {
     "flags": {

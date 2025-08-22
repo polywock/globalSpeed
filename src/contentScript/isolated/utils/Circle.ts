@@ -4,7 +4,7 @@ import { insertStyle } from "src/utils/nativeUtils";
 import { fetchView, pushView } from "src/utils/state";
 import { conformSpeed, formatSpeed } from "src/utils/configUtils";
 import { Indicator } from "./Indicator";
-import { between, clamp, extractClient, formatDuration, inverseLerp, isFirefoxMobile, isMobile, lerp, roundTo } from "src/utils/helper";
+import { between, clamp, extractClient, formatDuration, inverseLerp, isFirefoxMobile, isMac, isMobile, lerp, roundTo } from "src/utils/helper";
 import { seekTo, setPause } from "./applyMediaEvent";
 import debounce from "lodash.debounce";
 import styles from "./Circle.css?raw"
@@ -12,6 +12,7 @@ import styles from "./Circle.css?raw"
 const MIN_TO_ACTIVATE = 50
 const MIN_STRONG = 115
 const DELAY = isMobile() ? 450 : 350
+const LONG_PRESS_MS = 600
 
 export class Circle extends Popover {
     released = false 
@@ -46,6 +47,8 @@ export class Circle extends Popover {
     conflictWithDelete = false 
     clientWidth = this._div.clientWidth
     clientHeight = this._div.clientHeight
+    longPressTimeoutId: number 
+    addedOutStyle = false 
     constructor(private init: CircleInit) {
         super()
         this.init = init || {}
@@ -94,6 +97,10 @@ export class Circle extends Popover {
         this.indicator?.release(); delete this.indicator
     }
     start = (video: HTMLVideoElement) => {
+        if (!this.addedOutStyle) {
+            this.addedOutStyle = true 
+            insertStyle(`:root[gspointerdown] {-webkit-touch-callout: none !important; -webkit-user-select: none; user-select: none;}`, document.body)
+        }
         if (this.video) {
             if (this.video === video) return 
             this.stop()
@@ -104,7 +111,7 @@ export class Circle extends Popover {
         gvar.os.eListen.touchEndCbs.add(this.handlePointerUp)
         gvar.os.eListen.pointerMoveCbs.add(this.handlePointerMove)
         gvar.os.eListen.touchMoveCbs.add(this.handlePointerMove)
-        gvar.os.eListen.contextMenuCbs.add(this.handleContextMenu)
+        {!(isMobile() && isMac()) && gvar.os.eListen.contextMenuCbs.add(this.handleContextMenu)}
         gvar.os.eListen.fsCbs.add(this.syncVisibility)
 
         gvar.os.eListen.touchStartCbs.add(this.handleGuard)
@@ -188,9 +195,17 @@ export class Circle extends Popover {
             this.drawCircleOpacity()
             this._div.style.pointerEvents = "all !important"
             this.preventDefault(e)
+            isMobile() && isMac() && document.documentElement.setAttribute('gspointerdown', 'true')
+            clearSelection()
+
+            this.longPressTimeoutId = (isMobile() && isMac()) ? window.setTimeout(() => {
+                this.activateMovingMode()
+                clearSelection()
+            }, LONG_PRESS_MS) : null 
         } 
     }
     handlePointerUp = (e: PointerEvent | TouchEvent) => {
+        clearTimeout(this.longPressTimeoutId)
         if (!this.downAt) return 
         if (e instanceof PointerEvent && e.pointerType !== "mouse") {
             this.preventDefault(e)
@@ -210,7 +225,7 @@ export class Circle extends Popover {
             return
         }
         this.preventDefault(e)
-        
+        clearSelection()
         let { clientX, clientY } = extractClient(e)
 
         if (this.movingMode) {
@@ -238,6 +253,7 @@ export class Circle extends Popover {
         this.leftCircle = true 
         let direction = this.getDirection(clientX, clientY)
         direction ? this.startDirectional(direction) : this.clearDirectional()
+        clearTimeout(this.longPressTimeoutId)
     }
     handleContextMenu = (e: MouseEvent) => {
         this.autoHide && this.startShowTimeout()
@@ -248,11 +264,13 @@ export class Circle extends Popover {
         }
     }
     clearSession = () => {
+        isMobile() && isMac() && document.documentElement.removeAttribute('gspointerdown')
         this._div.style.pointerEvents = "none"
         this.clearDirectional()
         this.clearMovingMode()
         delete this.downAt       
         this.drawCircleOpacity()
+        clearSelection()
     }
     isAtCircle = (xy: ReturnType<typeof extractClient>) => {
         if (this.hidden) return 
@@ -348,7 +366,7 @@ export class Circle extends Popover {
 
         if (distance < MIN_TO_ACTIVATE) return 
         const direction = (Math.abs(deltaX) > Math.abs(deltaY)) ? (deltaX >= 0 ? Direction.RIGHT : Direction.LEFT) : (deltaY >= 0 ? Direction.BOTTOM : Direction.TOP)
-        const isVertical = this.direction === Direction.TOP || this.direction === Direction.BOTTOM
+        const isVertical = direction === Direction.TOP || direction === Direction.BOTTOM
         const isFixed = !!(isVertical ? this.init.fixedSpeedStep : this.init.fixedSeekStep)
 
         this.strong = distance > MIN_STRONG && !isFixed
@@ -426,3 +444,10 @@ const setNewPosition = debounce(async (x: number, y: number, size: number) => {
     circleInit.circleInitial = conformCircle(x, y, size)
     await pushView({override: {circleInit}, tabId: gvar.tabInfo.tabId})
 }, 2000, {trailing: true})
+
+function clearSelection() {
+    const sel = document.getSelection?.();
+    if (sel && sel.rangeCount) {
+        sel.removeAllRanges();
+    }
+}

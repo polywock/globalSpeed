@@ -156,14 +156,13 @@
     "cinema": "Oscura sfondo",
     "cinemaTooltip": "Oscura lo sfondo del video. Per uscire, premi sullo sfondo o usa di nuovo la scorciatoia.",
     "presets": "Preimpostazioni...",
-    "temporarySpeed": "Velocità temporanea",
-    "temporarySpeedTooltip": "Premi e tieni premuta la velocità temporanea.",
     "toggleSpeed": "Velocità toggle",
     "toggleSpeedTooltip": "Alterna tra la velocità della scorciatoia e l'ultima velocità.",
     "alwaysOn": "Sempre acceso",
     "alwaysOnTooltip": "Per impostazione predefinita, la scorciatoia può riattivare l'estensione solo se è stata disabilitata l'ultima volta utilizzando la stessa scorciatoia. Abilita questa impostazione per assicurarti che la scorciatoia funzioni sempre per abilitare l'estensione, anche se è stata disattivata tramite il menu UI.",
     "muteTab": "Silenzia scheda",
-    "loopEntire": "Loop completo"
+    "loopEntire": "Loop completo",
+    "temporarySpeed": "Tieni premuto per accelerare"
   },
   "options": {
     "flags": {

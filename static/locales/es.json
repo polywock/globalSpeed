@@ -156,14 +156,13 @@
     "cinema": "Oscurecer fondo",
     "cinemaTooltip": "Oscurece el fondo del video. Para salir, presiona sobre el fondo o usa el atajo nuevamente.",
     "presets": "Preajustes...",
-    "temporarySpeed": "Velocidad temporal",
-    "temporarySpeedTooltip": "Presiona y mantén la velocidad temporal.",
     "toggleSpeed": "Alternar velocidad",
     "toggleSpeedTooltip": "Alterna entre la velocidad del atajo y la última velocidad.",
     "alwaysOn": "Siempre encendido",
     "alwaysOnTooltip": "Por defecto, el atajo solo puede reactivar la extensión si fue deshabilitada usando el mismo atajo. Habilite esta configuración para asegurarse de que el atajo siempre funcione para habilitar la extensión, incluso si se desactivó a través del menú de la UI.",
     "muteTab": "Silenciar pestaña",
-    "loopEntire": "Repetir todo"
+    "loopEntire": "Repetir todo",
+    "temporarySpeed": "Mantén presionado para acelerar"
   },
   "options": {
     "flags": {

@@ -1,6 +1,7 @@
 import { formatSpeedForBadge } from "src/utils/configUtils"
 import { fetchView } from "src/utils/state"
 import debounce from "lodash.debounce"
+import { isMobile } from "src/utils/helper"
 
 type BadgeInit = Awaited<ReturnType<typeof getBadgeInit>>
 
@@ -63,9 +64,11 @@ const WATCHERS = [
     /^[r]:[\d\w]+:(elementFx|backdropFx|latestViaShortcut|)/
 ]
 
-gvar.es.addWatcher(WATCHERS, changes => {
-    updateVisibleDeb()
-})
-gvar.sess.safeCbs.add(() => updateVisible())
-chrome.webNavigation.onCommitted.addListener(() => updateVisible())
-chrome.tabs.onActivated.addListener(() => updateVisible())
+if (!isMobile()) {
+    gvar.es.addWatcher(WATCHERS, changes => {
+        updateVisibleDeb()
+    })
+    gvar.sess.safeCbs.add(() => updateVisible())
+    chrome.webNavigation.onCommitted.addListener(() => updateVisible())
+    chrome.tabs.onActivated.addListener(() => updateVisible())
+}

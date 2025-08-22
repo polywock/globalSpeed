@@ -1,12 +1,13 @@
 import { extractHotkey  } from "../../utils/keys"
 import { SubscribeView } from "../../utils/state"
 import { FxSync } from "./FxSync"
-import { findMatchingKeybindsLocal, testURL } from "../../utils/configUtils"
-import { AdjustMode, Trigger } from "src/types"
+import { findMatchingKeybindsLocal, testURL, testURLWithPart } from "../../utils/configUtils"
+import { AdjustMode, Trigger, URLCondition, URLConditionPart } from "src/types"
 import { Circle } from "./utils/Circle"
 import { getLeaf } from "src/utils/nativeUtils"
+import { getEmptyUrlConditions } from "src/defaults"
 
-const FORCED_GHOST_LIST = [".qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com", "onedrive.live.com", "open.spotify.com", ".instagram.com", ".descript.com", "www.ccmtv.cn", ".douyin.com", ".tiktok.com", ".linkedin.com"]
+const ghostModeStatic = [".qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com", "onedrive.live.com", "open.spotify.com", ".instagram.com", ".descript.com", "www.ccmtv.cn", ".douyin.com", ".tiktok.com", ".linkedin.com"]
   .some(site => (location.hostname || "").includes(site))
 
 export class ConfigSync {
@@ -14,6 +15,9 @@ export class ConfigSync {
   blockKeyUp = false 
   lastTrigger = 0
   fxSync: FxSync
+  urlConditionsClient = new SubscribeView({keybindsUrlCondition: true}, gvar.tabInfo.tabId, true, (v, onLaunch) => {
+    this.handleChangeUrlConditionsList()
+  }, 300)
   client = new SubscribeView({ghostMode: true, ghostModeUrlCondition: true, enabled: true, superDisable: true, latestViaShortcut: true, keybinds: true, keybindsUrlCondition: true, indicatorInit: true, circleWidget: true, circleInit: true, holdToSpeed: true}, gvar.tabInfo.tabId, true, (v, onLaunch) => {
     if (onLaunch) this.init() 
     this.handleChange()
@@ -35,6 +39,53 @@ export class ConfigSync {
     this.fxSync?.release(); delete this.fxSync
     gvar.os.eListen.keyDownCbs.delete(this.handleKeyDown)
     gvar.os.eListen.keyUpCbs.delete(this.handleKeyUp)
+  }
+  urlConditions: URLCondition
+  urlConditionsMode: 'Off' | 'On' | 'Runtime' = 'Off'
+  urlConditionsNonStatic: URLConditionPart[] = []
+  handleChangeUrlConditionsList = () => {
+    this.urlConditions = this.urlConditionsClient.view.keybindsUrlCondition || getEmptyUrlConditions(true)
+    const enabledParts = (this.urlConditions.parts || []).filter(v => !v.disabled)
+
+    if (enabledParts.length === 0) {
+      this.urlConditionsMode = 'On'
+      return 
+    }
+
+    let statics: URLConditionPart[] = []
+    let nonStatics: URLConditionPart[] = [] 
+    
+    enabledParts.forEach(part => {
+      (websiteCanBeStaticTested(part) ? statics : nonStatics).push(part)
+    })
+
+    
+    this.urlConditionsNonStatic = nonStatics
+
+    // All statics should be dealth with.
+
+    if (statics.length === 0) {
+      this.urlConditionsMode = 'Runtime'
+      return 
+    }
+    const url = gvar.topFrameOrigin || location.href || ""
+    const anyMatched = statics.map(st => testURLWithPart(url, st)).some(v => v)
+    if (!anyMatched) {
+      this.urlConditionsMode = 'Runtime'
+    } else {
+      this.urlConditionsMode = this.urlConditions.block ? 'Off' : 'On'
+    }
+
+    // Resolve 'Runtime' instantly if no dynamic parts or if we're using top frame origin. 
+    if (this.urlConditionsMode === 'Runtime' && (nonStatics.length === 0 || gvar.topFrameOrigin)) {
+      this.urlConditionsMode = this.urlConditions.block ? 'On' : 'Off'
+    }
+  }
+  checkUrlRuntime = () => {
+    if (this.urlConditionsMode !== "Runtime") return this.urlConditionsMode
+    const anyMatched = this.urlConditionsNonStatic.map(st => testURLWithPart(location.href || "", st)).some(v => v)
+    if (this.urlConditions.block) return anyMatched ? 'Off' : 'On'
+    return anyMatched ? 'On' : 'Off'
   }
   handleChange = () => {
     const view = this.client.view
@@ -71,7 +122,7 @@ export class ConfigSync {
       calcGhostMode = true 
     }
 
-    if (view?.enabled && (calcGhostMode || FORCED_GHOST_LIST)) {
+    if (view?.enabled && (calcGhostMode || ghostModeStatic)) {
       if (gvar.ghostMode) return 
       gvar.ghostMode = true 
       gvar.os.stratumServer.initialized ? this.sendGhostOn() : gvar.os.stratumServer.initCbs.add(this.sendGhostOn)
@@ -140,11 +191,7 @@ export class ConfigSync {
       }
     }
 
-    if (this.client.view.keybindsUrlCondition?.parts?.length) {
-      if (!testURL(location.href || "", this.client.view.keybindsUrlCondition, true)) {
-        return 
-      }
-    }
+    if (this.checkUrlRuntime() === 'Off') return 
   
     const eventHotkey = extractHotkey(e, true, true)
     let matches = findMatchingKeybindsLocal(keybinds, eventHotkey)
@@ -173,5 +220,17 @@ export class ConfigSync {
         chrome.runtime.sendMessage({type: "TRIGGER_KEYBINDS", ids: matches.map(match => ({id: match.kb.id, alt: match.alt}))})
       }
     }
+  }
+}
+
+
+function websiteCanBeStaticTested(entry: URLConditionPart) {
+  const origin = location.origin || ""
+  const value = (entry.valueStartsWith || "").trim()
+  if (entry.type === "STARTS_WITH" && value.startsWith('http')) {
+    const count = [...value].filter(ch => ch === '/').length
+    if (count === 2) return true 
+    if (count === 3 && value.endsWith('/')) return true 
+    if (!value.startsWith(origin)) return true 
   }
 }
