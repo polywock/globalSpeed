@@ -230,6 +230,7 @@
     },
     "editor": {
       "header": "Shortcut Editor",
+      "headerMobile": "Keyboard Shortcuts",
       "toggleMode": "You can use local or global shortcut keys.",
       "toggleModeTooltip": "Global shortcuts are useful when you want to control video or audio while using another program.",
       "menuLabel": "Menu label",

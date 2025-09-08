@@ -252,7 +252,8 @@
         "sameTab": "Aba atual"
       },
       "pressAndHold": "Pressionar e segurar",
-      "pressAndHoldTooltip": "Se ativado, a tecla deve ser mantida pressionada enquanto ajusta o valor interativamente."
+      "pressAndHoldTooltip": "Se ativado, a tecla deve ser mantida pressionada enquanto ajusta o valor interativamente.",
+      "headerMobile": "Atalhos de Teclado"
     },
     "rules": {
       "header": "Regras de URL",

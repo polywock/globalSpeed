@@ -253,7 +253,8 @@
         "sameTab": "Onglet actuel"
       },
       "pressAndHold": "Appuyer et maintenir",
-      "pressAndHoldTooltip": "Si activé, la touche doit être maintenue enfoncée pendant que la valeur est ajustée de manière interactive."
+      "pressAndHoldTooltip": "Si activé, la touche doit être maintenue enfoncée pendant que la valeur est ajustée de manière interactive.",
+      "headerMobile": "Raccourcis clavier"
     },
     "rules": {
       "header": "Règles d'URL",

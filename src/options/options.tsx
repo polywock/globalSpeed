@@ -27,9 +27,7 @@ const Options = (props: {}) => {
   useThemeSync()
   return <div id="App">
     <SectionFlags/>
-    {!isMobile() && <>
-      <SectionEditor/>
-    </>}
+    <SectionEditor/>
     {!(isMac() && isMobile()) && <SectionRules/>}
     <SectionHelp/>
   </div>

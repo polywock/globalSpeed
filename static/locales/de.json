@@ -253,7 +253,8 @@
         "sameTab": "Aktueller Tab"
       },
       "pressAndHold": "Drücken und halten",
-      "pressAndHoldTooltip": "Wenn aktiviert, muss die Taste gedrückt gehalten werden, während der Wert interaktiv angepasst wird."
+      "pressAndHoldTooltip": "Wenn aktiviert, muss die Taste gedrückt gehalten werden, während der Wert interaktiv angepasst wird.",
+      "headerMobile": "Tastenkombinationen"
     },
     "rules": {
       "header": "URL-Regeln",

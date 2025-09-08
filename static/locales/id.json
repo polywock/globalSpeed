@@ -252,7 +252,8 @@
         "sameTab": "Tab saat ini"
       },
       "pressAndHold": "Tekan dan tahan",
-      "pressAndHoldTooltip": "Jika diaktifkan, tombol harus ditekan dan ditahan saat menyesuaikan nilai secara interaktif."
+      "pressAndHoldTooltip": "Jika diaktifkan, tombol harus ditekan dan ditahan saat menyesuaikan nilai secara interaktif.",
+      "headerMobile": "Pintasan Keyboard"
     },
     "rules": {
       "header": "Aturan URL",

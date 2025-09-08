@@ -159,6 +159,7 @@ chrome.contextMenus?.onClicked.addListener(async (item, tab) => {
 declare global {
     interface Message {
         requestTabInfo: { type: "REQUEST_TAB_INFO" }
+        requestNotifyTopFrameUrlChange: { type: "REQUEST_NOTIFY_TOP_FRAME_URL_CHANGE", value: string }
         getTopOrigin: {type: "GET_TOP_ORIGIN"}
         requestGsm: { type: "REQUEST_GSM" }
         requestCreateTab: { type: "REQUEST_CREATE_TAB", url: string}
@@ -243,6 +244,16 @@ chrome.runtime.onMessage.addListener((msg: Messages, sender, reply) => {
     } else if (msg.type === "SET_STATEFUL") {
         reply(true)
         setValue(msg.init)
+    } else if (msg.type === "REQUEST_NOTIFY_TOP_FRAME_URL_CHANGE") {
+        reply(true)
+        chrome.webNavigation?.getAllFrames({tabId: sender.tab.id}, frames => {
+            frames.map(f => f.frameId).filter(id => id).forEach(frameId => {
+                chrome.tabs.sendMessage(sender.tab.id, {
+                    type: "TOP_FRAME_URL_UPDATE",
+                    value: msg.value 
+                } as Messages, {frameId})
+            })
+        })
     }
 })
 

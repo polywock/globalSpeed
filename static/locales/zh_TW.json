@@ -254,7 +254,8 @@
         "sameTab": "目前分頁"
       },
       "pressAndHold": "按住不放",
-      "pressAndHoldTooltip": "啟用時，互動調整數值時必須按住按鍵。"
+      "pressAndHoldTooltip": "啟用時，互動調整數值時必須按住按鍵。",
+      "headerMobile": "鍵盤快捷鍵"
     },
     "rules": {
       "header": "網址規則",

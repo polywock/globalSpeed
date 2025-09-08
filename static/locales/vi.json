@@ -253,7 +253,8 @@
         "sameTab": "Tab hiện tại"
       },
       "pressAndHold": "Nhấn và giữ",
-      "pressAndHoldTooltip": "Nếu được bật, phím phải được giữ trong khi điều chỉnh giá trị tương tác."
+      "pressAndHoldTooltip": "Nếu được bật, phím phải được giữ trong khi điều chỉnh giá trị tương tác.",
+      "headerMobile": "Phím tắt"
     },
     "rules": {
       "header": "Quy tắc URL",

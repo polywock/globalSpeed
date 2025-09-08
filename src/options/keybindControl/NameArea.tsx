@@ -10,7 +10,7 @@ import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { BsMusicNoteList } from "react-icons/bs"
 import { TiArrowLoop } from "react-icons/ti"
 import { MdDarkMode, MdFullscreen, MdPictureInPictureAlt, MdWarning } from "react-icons/md"
-import { assertType, getPopupSize } from "../../utils/helper"
+import { assertType, getPopupSize, isMobile } from "../../utils/helper"
 import { MenuProps } from "../../comps/Menu"
 import { replaceArgs } from "src/utils/helper"
 import { MdSpeed } from "react-icons/md";
@@ -156,7 +156,7 @@ export function NameArea(props: NameAreaProps) {
 
                 props.onChange(value.id, produce(value, d => {
                     saveToMem(value, adjustMode)
-                    d.adjustMode = adjustMode % 5 + 1
+                    d.adjustMode = adjustMode % (isMobile() ? 3 : 5) + 1
                     restoreFromMem(d, d.adjustMode, true)
                 }))
             }}>

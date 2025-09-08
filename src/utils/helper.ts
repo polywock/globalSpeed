@@ -451,3 +451,11 @@ export function capitalize(str: string): string {
   if (!str) return ''
   return str[0].toUpperCase() + str.slice(1).toLowerCase()
 }
+
+function getTopFrameOrigin() {
+  if (location.ancestorOrigins) return location.ancestorOrigins[location.ancestorOrigins.length - 1]
+}
+
+export function getPracticalRuntimeUrl() {
+  return gvar.isTopFrame ? location.href : (gvar.topFrameUrl || getTopFrameOrigin() || location.href || "")
+}

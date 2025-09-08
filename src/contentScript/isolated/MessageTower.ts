@@ -12,6 +12,7 @@ declare global {
     }
     interface Message {
         applyMediaEvent: {type: "APPLY_MEDIA_EVENT", key: string, event: MediaEvent},
+        topFrameUrlUpdate: {type: "TOP_FRAME_URL_UPDATE", value: string},
         mediaProbe: {type: "MEDIA_PROBE", key: string, formatted?: boolean},
         csAlive: {type: "CS_ALIVE"},
         runJs:  {type: "RUN_JS", value: string},
@@ -36,6 +37,8 @@ export class MessageTower {
         if (msg.type === "APPLY_MEDIA_EVENT") {
           realizeMediaEvent(msg.key, msg.event)
           reply(true); return 
+        } else if (msg.type === "TOP_FRAME_URL_UPDATE") {
+          gvar.topFrameUrl = msg.value 
         } else if (msg.type === "RUN_JS") {
           // used to run "javascript" URL rules for Firefox.
           injectScript(msg.value)

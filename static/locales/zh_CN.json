@@ -254,7 +254,8 @@
         "sameTab": "当前标签"
       },
       "pressAndHold": "按住",
-      "pressAndHoldTooltip": "如果启用，则在交互调整值时必须按住键。"
+      "pressAndHoldTooltip": "如果启用，则在交互调整值时必须按住键。",
+      "headerMobile": "键盘快捷键"
     },
     "rules": {
       "header": "URL规则",

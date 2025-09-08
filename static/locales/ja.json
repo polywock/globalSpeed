@@ -252,7 +252,8 @@
         "sameTab": "現在のタブ"
       },
       "pressAndHold": "押して保持",
-      "pressAndHoldTooltip": "有効にすると、キーを押し続けている間に値をインタラクティブに調整する必要があります。"
+      "pressAndHoldTooltip": "有効にすると、キーを押し続けている間に値をインタラクティブに調整する必要があります。",
+      "headerMobile": "キーボードショートカット"
     },
     "rules": {
       "header": "URLルール",

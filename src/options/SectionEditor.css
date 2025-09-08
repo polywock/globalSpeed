@@ -8,6 +8,7 @@
     justify-content: start;
     column-gap: 15px;
 
+
     & > div:first-child {
       display: grid;
       grid-auto-flow: column;

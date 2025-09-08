@@ -253,7 +253,8 @@
         "sameTab": "Mevcut sekme"
       },
       "pressAndHold": "Basılı tut",
-      "pressAndHoldTooltip": "Etkinleştirilirse, değeri etkileşimli olarak ayarlarken tuş basılı tutulmalıdır."
+      "pressAndHoldTooltip": "Etkinleştirilirse, değeri etkileşimli olarak ayarlarken tuş basılı tutulmalıdır.",
+      "headerMobile": "Klavye Kısayolları"
     },
     "rules": {
       "header": "URL Kuralları",

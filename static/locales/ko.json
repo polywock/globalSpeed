@@ -253,7 +253,8 @@
         "sameTab": "현재 탭"
       },
       "pressAndHold": "길게 누르기",
-      "pressAndHoldTooltip": "활성화된 경우 값을 인터랙티브하게 조정하는 동안 키를 누르고 있어야 합니다."
+      "pressAndHoldTooltip": "활성화된 경우 값을 인터랙티브하게 조정하는 동안 키를 누르고 있어야 합니다.",
+      "headerMobile": "키보드 단축키"
     },
     "rules": {
       "header": "URL 규칙",

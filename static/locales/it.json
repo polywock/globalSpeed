@@ -253,7 +253,8 @@
         "sameTab": "Scheda corrente"
       },
       "pressAndHold": "Premi e tieni premuto",
-      "pressAndHoldTooltip": "Se abilitato, il tasto deve essere tenuto premuto durante la regolazione interattiva del valore."
+      "pressAndHoldTooltip": "Se abilitato, il tasto deve essere tenuto premuto durante la regolazione interattiva del valore.",
+      "headerMobile": "Tasti di scelta rapida"
     },
     "rules": {
       "header": "Regole URL",

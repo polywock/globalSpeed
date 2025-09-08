@@ -253,7 +253,8 @@
         "sameTab": "Bieżąca karta"
       },
       "pressAndHold": "Naciśnij i przytrzymaj",
-      "pressAndHoldTooltip": "Jeśli włączone, klawisz musi być przytrzymany podczas interaktywnego dostosowywania wartości."
+      "pressAndHoldTooltip": "Jeśli włączone, klawisz musi być przytrzymany podczas interaktywnego dostosowywania wartości.",
+      "headerMobile": "Skróty klawiaturowe"
     },
     "rules": {
       "header": "Reguły URL",

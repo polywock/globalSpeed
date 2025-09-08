@@ -253,7 +253,8 @@
         "sameTab": "แท็บปัจจุบัน"
       },
       "pressAndHold": "กดค้าง",
-      "pressAndHoldTooltip": "หากเปิดใช้งาน ต้องกดแป้นค้างขณะปรับค่าแบบโต้ตอบ"
+      "pressAndHoldTooltip": "หากเปิดใช้งาน ต้องกดแป้นค้างขณะปรับค่าแบบโต้ตอบ",
+      "headerMobile": "ปุ่มลัดบนแป้นพิมพ์"
     },
     "rules": {
       "header": "กฎ URL",

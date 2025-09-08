@@ -214,6 +214,7 @@ export type Command = {
   withFilterOption?: boolean,
   ffName?: string,
   valueType?: "number" | "string" | "modalString" | "adjustMode" | "state",
+  disableOnMobile?: boolean,
   hasFeedback?: boolean,
   requiresMedia?: boolean,
   requiresVideo?: boolean,

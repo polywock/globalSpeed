@@ -219,6 +219,7 @@ export type Gsm = {
     },
     editor: {
       header: string,
+      headerMobile: string,
       toggleMode: string,
       toggleModeTooltip: string,
       menuLabel: string,

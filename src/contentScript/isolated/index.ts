@@ -10,7 +10,7 @@ declare global {
     fallbackId: number,
     ghostMode?: boolean,
     isTopFrame?: boolean,
-    topFrameOrigin?: string 
+    topFrameUrl?: string 
   }
 }
 

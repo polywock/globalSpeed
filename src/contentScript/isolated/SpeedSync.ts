@@ -56,15 +56,22 @@ export class SpeedSync {
   handlePointerUp = (e: PointerEvent) => {
     if (e.button === 0) this.clearPointerDown()
   }
-  clearPointerDown = () => {
-    if (this.pointerDownAt) {
+  clearPointerDown = (e?: PointerEvent) => {
+    if ((!e || e.relatedTarget === null) && this.pointerDownAt) {
       delete this.pointerDownAt
       this.realize()
     }
   }
+  previousUrl: string
   realize = () => {
     const hasPointerDown = this.holdToSpeed && this.pointerDownAt && between(600, 30_000, Date.now() - this.pointerDownAt)
     this.latest && gvar.os.mediaTower.applySpeedToAll(this.latest.speed * (hasPointerDown ? this.holdToSpeed : 1), this.latest.freePitch)
+
+    // Unrelated to speed: Update all other frames if top frame's URL changes. 
+    if (gvar.isTopFrame && this.previousUrl !== location.href) {
+      this.previousUrl = location.href 
+      chrome.runtime.sendMessage({type: "REQUEST_NOTIFY_TOP_FRAME_URL_CHANGE", value: this.previousUrl} as Messages)
+    }
   }
 }
 

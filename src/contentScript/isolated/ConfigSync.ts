@@ -6,6 +6,7 @@ import { AdjustMode, Trigger, URLCondition, URLConditionPart } from "src/types"
 import { Circle } from "./utils/Circle"
 import { getLeaf } from "src/utils/nativeUtils"
 import { getEmptyUrlConditions } from "src/defaults"
+import { getPracticalRuntimeUrl } from "src/utils/helper"
 
 const ghostModeStatic = [".qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com", "onedrive.live.com", "open.spotify.com", ".instagram.com", ".descript.com", "www.ccmtv.cn", ".douyin.com", ".tiktok.com", ".linkedin.com"]
   .some(site => (location.hostname || "").includes(site))
@@ -68,7 +69,7 @@ export class ConfigSync {
       this.urlConditionsMode = 'Runtime'
       return 
     }
-    const url = gvar.topFrameOrigin || location.href || ""
+    const url = getPracticalRuntimeUrl()
     const anyMatched = statics.map(st => testURLWithPart(url, st)).some(v => v)
     if (!anyMatched) {
       this.urlConditionsMode = 'Runtime'
@@ -77,13 +78,14 @@ export class ConfigSync {
     }
 
     // Resolve 'Runtime' instantly if no dynamic parts or if we're using top frame origin. 
-    if (this.urlConditionsMode === 'Runtime' && (nonStatics.length === 0 || gvar.topFrameOrigin)) {
+    if (this.urlConditionsMode === 'Runtime' && nonStatics.length === 0) {
       this.urlConditionsMode = this.urlConditions.block ? 'On' : 'Off'
     }
   }
   checkUrlRuntime = () => {
     if (this.urlConditionsMode !== "Runtime") return this.urlConditionsMode
-    const anyMatched = this.urlConditionsNonStatic.map(st => testURLWithPart(location.href || "", st)).some(v => v)
+    const url = getPracticalRuntimeUrl()
+    const anyMatched = this.urlConditionsNonStatic.map(st => testURLWithPart(url, st)).some(v => v)
     if (this.urlConditions.block) return anyMatched ? 'Off' : 'On'
     return anyMatched ? 'On' : 'Off'
   }
@@ -118,7 +120,7 @@ export class ConfigSync {
     }
 
     let calcGhostMode = false 
-    if (view?.ghostMode && testURL(location.href || "", view.ghostModeUrlCondition, true)) {
+    if (view?.ghostMode && testURL(getPracticalRuntimeUrl(), view.ghostModeUrlCondition, true)) {
       calcGhostMode = true 
     }
 
@@ -198,7 +200,7 @@ export class ConfigSync {
 
     matches = matches.filter(match => {
       if (match.kb.condition?.parts.length > 0) {
-        return testURL(window.location.href || "" , match.kb.condition, true)
+        return testURL(getPracticalRuntimeUrl(), match.kb.condition, true)
       } 
       return true 
     })
@@ -234,3 +236,4 @@ function websiteCanBeStaticTested(entry: URLConditionPart) {
     if (!value.startsWith(origin)) return true 
   }
 }
+

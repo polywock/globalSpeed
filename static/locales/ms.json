@@ -253,7 +253,8 @@
         "sameTab": "Tab semasa"
       },
       "pressAndHold": "Tekan dan tahan",
-      "pressAndHoldTooltip": "Jika diaktifkan, kekunci mesti ditekan dan ditahan semasa melaraskan nilai secara interaktif."
+      "pressAndHoldTooltip": "Jika diaktifkan, kekunci mesti ditekan dan ditahan semasa melaraskan nilai secara interaktif.",
+      "headerMobile": "Jalan Pintas Papan Kekunci"
     },
     "rules": {
       "header": "Peraturan URL",

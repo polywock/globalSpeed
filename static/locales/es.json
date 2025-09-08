@@ -252,7 +252,8 @@
         "sameTab": "Pestaña actual"
       },
       "pressAndHold": "Presionar y mantener",
-      "pressAndHoldTooltip": "Si está habilitado, la tecla debe mantenerse presionada mientras se ajusta el valor de manera interactiva."
+      "pressAndHoldTooltip": "Si está habilitado, la tecla debe mantenerse presionada mientras se ajusta el valor de manera interactiva.",
+      "headerMobile": "Atajos de teclado"
     },
     "rules": {
       "header": "Reglas de URL",
