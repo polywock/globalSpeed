@@ -55,7 +55,7 @@
   & > .controls {
     margin-top: 30px;
     display: grid;
-    grid-template-columns: repeat(var(--controls-column-count, 3), max-content) 1fr;
+    grid-template-columns: repeat(3, max-content) 1fr;
     justify-items: right;
     align-items: stretch;
     grid-column-gap: 10px;

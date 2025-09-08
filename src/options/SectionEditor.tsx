@@ -154,11 +154,6 @@ function getOptions() {
     previousGroup = {group: info.group}
   })
 
-  isMobile() || cachedOptions.splice(4, 0, {
-    label: gvar.gsm.command.presets,
-    value: 'presets'
-  })
-
   return cachedOptions 
 }
 
@@ -166,12 +161,10 @@ function EditorControls(props: {view: StateView, setView: SetView}) {
   const { view, setView } = props
   const urlRuleCount = view.keybindsUrlCondition?.parts?.length || 0
   const [commandOption, setCommandOption] = useState("speed")
-  const [presetOption, setPresetOption] = useState(null)
   const [show, setShow] = useState(false)
-  let showPresets = commandOption === "presets"
 
   return (
-    <div className="controls" style={{"--controls-column-count": showPresets ? 4 : 3} as React.CSSProperties}>
+    <div className="controls">
 
       {/* Primary select */}
       <select value={commandOption} onChange={e => {
@@ -182,30 +175,8 @@ function EditorControls(props: {view: StateView, setView: SetView}) {
         })}
       </select>
 
-      {/* Secondary select */}
-      {showPresets && (
-        <select style={{marginRight: "10px"}} value={presetOption ?? presets[0].name} onChange={e => {
-            setPresetOption(e.target.value)
-          }}>
-            {presets.map(preset => (
-              <option key={preset.name} value={preset.name}>{(gvar.gsm.command as any)[preset.name]}</option>
-            ))}
-          </select>
-      )}
-
       {/* Create */}
       <button onClick={e => {
-        if (commandOption === "presets") {
-          let preset = presets.find(v => v.name === presetOption) ?? presets[0]
-          if (preset) {
-              setView({
-                keybinds: [...produce(view.keybinds, d => {
-                  d.at(-1).spacing = 2 
-                }), ...preset.getKbs(view.hideIndicator)]
-              })
-          }
-          return 
-        }
         setView({
           keybinds: [...view.keybinds, commandInfos[commandOption as CommandName].generate()]
         })
