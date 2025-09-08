@@ -69,6 +69,8 @@ export const KeybindControl = (props: KeybindControlProps) => {
     } else if (adjustMode !== AdjustMode.CYCLE) {
       showNumericControl = true
     }
+
+    if (command.valueType === "number") showNumericControl = true
   }
 
 

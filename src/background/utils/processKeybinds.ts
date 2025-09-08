@@ -267,6 +267,11 @@ const commandHandlers: {
   speed: async args => {
     return processAdjustMode(args)
   },
+  temporarySpeed: async ({media, show, kb, commandInfo }) => {
+    const factor = round(kb.valueNumber || commandInfo.ref.default, 2)
+    show({text: `${factor}x`})
+    activateTemporarySpeed(media, factor)
+  },
   speedChangesPitch: async args => {
     const { kb, show, override, fetch } = args 
     const view = await fetch({freePitch: true})
@@ -907,4 +912,20 @@ export async function setValue(init: SetValueInit) {
 
 function showIndicator(opts: IndicatorShowOpts, tabId: number, showAlt?: boolean) {
   sendMessageToConfigSync({type: "SHOW_INDICATOR", opts, showAlt}, tabId, 0)
+}
+
+
+let tempSpeedTimeoutId: number 
+function activateTemporarySpeed(media: FlatMediaInfo, factor: number) {
+  chrome.tabs.sendMessage(media.tabInfo.tabId, {
+      type: 'SET_TEMPORARY_SPEED',
+      factor 
+  } as Messages, {frameId: media.tabInfo.frameId})
+  clearTimeout(tempSpeedTimeoutId)
+
+  tempSpeedTimeoutId = setTimeout(() => {
+    chrome.tabs.sendMessage(media.tabInfo.tabId, {
+        type: 'SET_TEMPORARY_SPEED'
+    } as Messages, {frameId: media.tabInfo.frameId})
+  }, 150)
 }

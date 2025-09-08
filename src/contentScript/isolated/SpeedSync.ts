@@ -4,19 +4,23 @@ import { SubscribeView } from "src/utils/state"
 export class SpeedSync {
   intervalId: number
   latest: {freePitch: boolean, speed: number}
-  holdToSpeed: number  
+  holdToSpeed: number
+  holdToSpeedForKeyboard: number  
   speedClient?: SubscribeView
   pointerDownAt: number
+  keyDownAt: number
   constructor() {
     window.addEventListener('pointerdown', this.handlePointerDown, {capture: true, passive: true})
     window.addEventListener('pointerup', this.handlePointerUp, {capture: true, passive: true})
     document.addEventListener('mouseleave', this.clearPointerDown, {capture: true, passive: true})
+    window.addEventListener('keyup', this.handleKeyUp, {capture: true})
   }
   release = () => {
     clearInterval(this.intervalId); delete this.intervalId
     window.removeEventListener('pointerdown', this.handlePointerDown, true)
     window.removeEventListener('pointerup', this.handlePointerUp, true)
     document.removeEventListener('mouseleave', this.clearPointerDown, true)
+    window.removeEventListener('keyup', this.handleKeyUp, true)
   }
   update = () => {
     if (this.latest) {
@@ -28,7 +32,7 @@ export class SpeedSync {
     }
   }
   handlePointerDown = (e: PointerEvent) => {
-    if (this.holdToSpeed && e.button === 0) {
+    if (this.holdToSpeed && e.button === 0 && !this.keyDownActive()) {
 
       // If directly on video. 
       if ((e.target as HTMLVideoElement)?.tagName === 'VIDEO') {
@@ -62,10 +66,36 @@ export class SpeedSync {
       this.realize()
     }
   }
+  pointerDownActive = () => {
+    return this.pointerDownAt && between(600, 30_000, Date.now() - this.pointerDownAt)
+  }
+  keyDownActive = () => {
+    return this.keyDownAt && between(0, 30_000, Date.now() - this.keyDownAt)
+  }
+  processTemporarySpeed = (factor: number) => {
+    if (factor) {
+      this.holdToSpeedForKeyboard = factor
+      this.keyDownAt = Date.now() 
+    } else {
+      delete this.keyDownAt
+    }
+    this.realize()
+  }
+  handleKeyUp = () => {
+      delete this.keyDownAt
+  }
   previousUrl: string
   realize = () => {
-    const hasPointerDown = this.holdToSpeed && this.pointerDownAt && between(600, 30_000, Date.now() - this.pointerDownAt)
-    this.latest && gvar.os.mediaTower.applySpeedToAll(this.latest.speed * (hasPointerDown ? this.holdToSpeed : 1), this.latest.freePitch)
+    if (this.latest) {
+      let speed = this.latest.speed 
+      if (this.holdToSpeed && this.pointerDownActive()) {
+        speed *= this.holdToSpeed
+      } else if (this.holdToSpeedForKeyboard && this.keyDownActive()) {
+        speed *= this.holdToSpeedForKeyboard
+      }
+
+      gvar.os.mediaTower.applySpeedToAll(speed, this.latest.freePitch)
+    }
 
     // Unrelated to speed: Update all other frames if top frame's URL changes. 
     if (gvar.isTopFrame && this.previousUrl !== location.href) {

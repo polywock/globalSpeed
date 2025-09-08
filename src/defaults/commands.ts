@@ -5,7 +5,7 @@ import { randomId, isFirefox, getPopupSize, isMobile } from "../utils/helper"
 import { filterInfos } from "./filters"
 
 export type CommandName = "nothing" | "runCode" | "openUrl" | "intoPopup" |
-  "speed" | "speedChangesPitch" | "pin" | "state" | 
+  "speed" | "temporarySpeed" | "speedChangesPitch" | "pin" | "state" | 
   "seek" | "pause" | "mute" | "muteTab" | "volume" | "setMark" | "seekMark" | "loop" | "skip" | 
   "fullscreen" | "PiP" | "mediaInfo" | "cinema" | "loopEntire" |
   "fxState" | "fxReset" | "fxSwap" | "fxFilter" | "drawPage" |
@@ -81,6 +81,22 @@ export let commandInfos: {[key in CommandName]: Command} = {
       command: "speed",
       enabled: true,
       greedy: true
+    })
+  },
+  temporarySpeed: {
+    valueType: "number",
+    hasFeedback: true,
+    requiresMedia: true,
+    ref: {
+      default: 3,
+      min: 0
+    },
+    generate: () => ({
+      id: randomId(),
+      command: "temporarySpeed",
+      enabled: true,
+      greedy: true,
+      valueNumber: 3
     })
   },
   speedChangesPitch: {
