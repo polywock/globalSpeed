@@ -113,7 +113,7 @@ function shouldReApply(strictness: URLStrictness, oldHost: string, currentHost: 
     return false 
 }
 
-if (!(isMac() && isMobile())) {
+if (!(isMac() && isMobile()) && chrome.webNavigation?.onCommitted && chrome.webNavigation.onHistoryStateUpdated) {
     chrome.webNavigation.onCommitted.addListener(deets => handleNavigation(deets as Deets, true))
     chrome.webNavigation.onHistoryStateUpdated.addListener(deets => handleNavigation(deets as Deets))
     gvar.es.addWatcher([], handleChange)

@@ -11,6 +11,7 @@ import { produce } from "immer"
 import { RegularTooltip } from "src/comps/RegularTooltip"
 import "./FxControl.css"
 import equal from "fast-deep-equal"
+import { isMobile } from "src/utils/helper"
 
 type FxControlProps = {
   live?: boolean,
@@ -115,7 +116,7 @@ export function FxControl(props: FxControlProps) {
       )}
 
       {/* Into pane */}
-      {(props.live && !transformTab && gvar.tabInfo.url?.startsWith("http")) && (
+      {(!isMobile() && props.live && !transformTab && gvar.tabInfo.url?.startsWith("http")) && (
         <div className="buttons">
           <button className="intoPane" disabled={!fx.enabled || !(backdropTab ? active.backdropFilter : active.elemFilter)} onClick={e => {
             const filter = formatFilters(fx.filters)
