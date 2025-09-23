@@ -1,3 +1,4 @@
+import { type CinemaInit } from "src/types"
 
 export const MIN_SPEED_CHROMIUM = 0.07
 export const MAX_SPEED_CHROMIUM = 16
@@ -10,3 +11,11 @@ export function getDefaultSpeedSlider() {
   return { min: 0.5, max: 1.5 }
 }
 
+export function getDefaultCinemaInit() {
+  return {
+    mode: 1,
+    color: '#000000',
+    colorAlpha: 90,
+    rounding: 10
+  } as CinemaInit
+}

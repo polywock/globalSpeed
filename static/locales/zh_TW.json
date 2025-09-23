@@ -78,7 +78,12 @@
     "edit": "編輯",
     "customize": "自訂",
     "allowShortcuts": "允許在 $1 使用快速鍵",
-    "allowOn": "允許於 $1 使用"
+    "allowOn": "允許於 $1 使用",
+    "mode": "模式",
+    "darkness": "黑暗",
+    "modeStandard": "標準",
+    "modeCustomFilter": "自訂濾鏡",
+    "modeCustomColor": "自訂顏色"
   },
   "placer": {
     "windowBounds": {

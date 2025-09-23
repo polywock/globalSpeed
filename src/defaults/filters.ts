@@ -1,3 +1,4 @@
+import { getDefaultFx } from "."
 import { FilterInfo, TargetFx } from "../types"
 
 export const filterTargets: TargetFx[] = ["element", "backdrop", "both"] 
@@ -206,3 +207,9 @@ export const filterInfos: {[key in FilterName]: FilterInfo} = {
 }
 
 
+export function getDefaultCinemaFilter() {
+  const filters = getDefaultFx().filters
+  filters.find(v => v.name === "brightness").value = 0.1
+  filters.find(v => v.name === "grayscale").value = 1 
+  return filters 
+}

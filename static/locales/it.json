@@ -77,7 +77,12 @@
     "edit": "Modifica",
     "customize": "Personalizza",
     "allowShortcuts": "Consenti scorciatoie su $1",
-    "allowOn": "Consenti su $1"
+    "allowOn": "Consenti su $1",
+    "mode": "Modalità",
+    "darkness": "Oscurità",
+    "modeStandard": "Standard",
+    "modeCustomFilter": "Filtro personalizzato",
+    "modeCustomColor": "Colore personalizzato"
   },
   "placer": {
     "windowBounds": {

@@ -78,7 +78,12 @@
     "edit": "편집",
     "customize": "사용자 정의",
     "allowShortcuts": "단축키를 $1에서 허용",
-    "allowOn": "$1에서 허용"
+    "allowOn": "$1에서 허용",
+    "mode": "모드",
+    "darkness": "어두움",
+    "modeStandard": "표준",
+    "modeCustomFilter": "사용자 필터",
+    "modeCustomColor": "사용자 지정 색상"
   },
   "placer": {
     "windowBounds": {

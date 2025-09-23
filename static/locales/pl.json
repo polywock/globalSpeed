@@ -77,7 +77,12 @@
     "edit": "Edytuj",
     "customize": "Dostosuj",
     "allowShortcuts": "Zezwól na skróty na $1",
-    "allowOn": "Zezwól na $1"
+    "allowOn": "Zezwól na $1",
+    "mode": "Tryb",
+    "darkness": "Ciemność",
+    "modeStandard": "Standardowy",
+    "modeCustomFilter": "Niestandardowy filtr",
+    "modeCustomColor": "Niestandardowy kolor"
   },
   "placer": {
     "windowBounds": {

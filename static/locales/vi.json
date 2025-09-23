@@ -77,7 +77,12 @@
     "edit": "Chỉnh sửa",
     "customize": "Tùy chỉnh",
     "allowShortcuts": "Cho phép phím tắt trên $1",
-    "allowOn": "Cho phép trên $1"
+    "allowOn": "Cho phép trên $1",
+    "mode": "Chế độ",
+    "darkness": "Độ tối",
+    "modeStandard": "Tiêu chuẩn",
+    "modeCustomFilter": "Bộ lọc tùy chỉnh",
+    "modeCustomColor": "Màu tùy chỉnh"
   },
   "placer": {
     "windowBounds": {

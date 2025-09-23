@@ -53,7 +53,7 @@ export class ProcessKeybinds {
     if (!this.tabInfo) return 
     if (this.shortcutHideIndicator) return 
 
-    sendMessageToConfigSync({type: "SHOW_INDICATOR", opts, requiresFocus: this.tabInfo.frameId == null ? true : false}, this.tabInfo.tabId, this.tabInfo.frameId)
+    sendMessageToConfigSync({type: "SHOW_INDICATOR", opts, requiresFocus: this.tabInfo.frameId == null ? true : false}, this.tabInfo.tabId, 0)
   }
   processItc = (init: ItcInit) => {
     if (this.immediateItc) {
@@ -442,7 +442,7 @@ const commandHandlers: {
   },
   cinema: async args => {
     const { kb, applyToMedia, media } = args 
-    const event = {type: "CINEMA", state: kb.valueState, color: kb.valueString, opacity: kb.valueNumber, roundness: kb.valueNumberAlt} as MediaEventCinema
+    const event = {type: "CINEMA", state: kb.valueState, init: kb.cinemaInit} as MediaEventCinema
     if (media.tabInfo.frameId > 0) {
       await chrome.tabs.sendMessage(media.tabInfo.tabId, {type: "CINEMA", event} as Messages, {frameId: 0})
     }

@@ -77,7 +77,12 @@
     "edit": "Редактировать",
     "customize": "Настроить",
     "allowShortcuts": "Разрешить ярлыки на $1",
-    "allowOn": "Разрешить на $1"
+    "allowOn": "Разрешить на $1",
+    "mode": "Режим",
+    "darkness": "Темнота",
+    "modeStandard": "Стандартный",
+    "modeCustomFilter": "Пользовательский фильтр",
+    "modeCustomColor": "Пользовательский цвет"
   },
   "placer": {
     "windowBounds": {

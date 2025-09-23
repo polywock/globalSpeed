@@ -77,7 +77,12 @@
     "edit": "編集",
     "customize": "カスタマイズ",
     "allowShortcuts": "ショートカットを $1 で許可する",
-    "allowOn": "$1 で許可する"
+    "allowOn": "$1 で許可する",
+    "mode": "モード",
+    "darkness": "暗さ",
+    "modeStandard": "標準",
+    "modeCustomFilter": "カスタムフィルター",
+    "modeCustomColor": "カスタムカラー"
   },
   "placer": {
     "windowBounds": {

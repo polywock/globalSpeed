@@ -77,7 +77,12 @@
     "edit": "Bearbeiten",
     "customize": "Anpassen",
     "allowShortcuts": "Abkürzungen auf $1 zulassen",
-    "allowOn": "Zulassen auf $1"
+    "allowOn": "Zulassen auf $1",
+    "mode": "Modus",
+    "darkness": "Dunkelheit",
+    "modeStandard": "Standard",
+    "modeCustomFilter": "Benutzerdefinierter Filter",
+    "modeCustomColor": "Benutzerdefinierte Farbe"
   },
   "placer": {
     "windowBounds": {

@@ -77,7 +77,12 @@
     "edit": "แก้ไข",
     "customize": "ปรับแต่ง",
     "allowShortcuts": "อนุญาตการใช้คีย์ลัดบน $1",
-    "allowOn": "อนุญาตบน $1"
+    "allowOn": "อนุญาตบน $1",
+    "mode": "โหมด",
+    "darkness": "ความมืด",
+    "modeStandard": "มาตรฐาน",
+    "modeCustomFilter": "ฟิลเตอร์ที่กำหนดเอง",
+    "modeCustomColor": "สีที่กำหนดเอง"
   },
   "placer": {
     "windowBounds": {

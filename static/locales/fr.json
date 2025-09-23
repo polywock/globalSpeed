@@ -77,7 +77,12 @@
     "edit": "Modifier",
     "customize": "Personnaliser",
     "allowShortcuts": "Autoriser les raccourcis sur $1",
-    "allowOn": "Autoriser sur $1"
+    "allowOn": "Autoriser sur $1",
+    "mode": "Mode",
+    "darkness": "Obscurité",
+    "modeStandard": "Standard",
+    "modeCustomFilter": "Filtre personnalisé",
+    "modeCustomColor": "Couleur personnalisée"
   },
   "placer": {
     "windowBounds": {

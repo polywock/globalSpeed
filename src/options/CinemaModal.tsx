@@ -3,9 +3,12 @@ import { ModalBase } from "../comps/ModalBase"
 import { SliderMicro } from "src/comps/SliderMicro"
 import { useStateView } from "../hooks/useStateView"
 import { Reset } from "src/comps/Reset"
-import { Keybind } from "src/types"
+import { CinemaMode, Keybind } from "src/types"
 import { NumericInput } from "src/comps/NumericInput"
 import "./CinemaModal.css"
+import { getDefaultCinemaInit } from "src/defaults/constants"
+import { Filters } from "src/popup/Filters"
+import { getDefaultCinemaFilter } from "src/defaults/filters"
 
 type Props = {
   value: Keybind,
@@ -13,76 +16,113 @@ type Props = {
   onClose: () => void 
 }
 
+const defaultInit = getDefaultCinemaInit()
+const defaultCinemaFilter = getDefaultCinemaFilter()
+
 export function CinemaModal(props: Props) {
   const [view, setView] = useStateView({circleInit: true})
   if (!view) return null 
-  let value = props.value || {} as Keybind
-
+  let kb = props.value as Keybind
+  let init = kb.cinemaInit || defaultInit
+  const mode = init.mode || defaultInit.mode
 
   return <ModalBase keepOnWheel={true} onClose={props.onClose}>
     <div className="CinemaModal ModalMain">
 
+    {/* Mode */}
+    <div className="field">
+      <span>{gvar.gsm.token.mode}</span>
+      <div className="fieldValue">
+        <select value={mode} onChange={e => {
+          props.onChange(kb.id, produce(kb, kb => {
+            if (!kb.cinemaInit) kb.cinemaInit = structuredClone(defaultInit)
+            kb.cinemaInit.mode = parseInt(e.target.value)
+          }))
+        }}>
+          <option value={CinemaMode.STANDARD.toString()}>{gvar.gsm.token.modeStandard}</option>
+          <option value={CinemaMode.CUSTOM_COLOR.toString()}>{gvar.gsm.token.modeCustomColor}</option>
+          <option value={CinemaMode.CUSTOM_FILTER.toString()}>{gvar.gsm.token.modeCustomFilter}</option>
+        </select>
+      </div>
+    </div>
      
       {/* Color */}
-      <div className="field">
-        <span>{gvar.gsm.token.color}</span>
-        <div className="fieldValue mxmx">
-          <input type="color" value={value.valueString || "#000000"} onChange={e => {
-            props.onChange(value.id, produce(value, d => {
-              d.valueString = e.target.value || null 
-            }))
-          }}/>
-          <Reset onClick={() => {
-            props.onChange(value.id, produce(value, d => {
-              delete d.valueString
-            }))
-          }} active={!!value.valueString}/>
+      {mode === CinemaMode.CUSTOM_COLOR && (
+        <div className="field">
+          <span>{gvar.gsm.token.color}</span>
+          <div className="fieldValue mxmx">
+            <input type="color" value={init.color ?? defaultInit.color} onChange={e => {
+              props.onChange(kb.id, produce(kb, kb => {
+                if (!kb.cinemaInit) kb.cinemaInit = structuredClone(defaultInit)
+                kb.cinemaInit.color = e.target.value || null 
+              }))
+            }}/>
+            <Reset onClick={() => {
+              props.onChange(kb.id, produce(kb, kb => {
+                if (!kb.cinemaInit) kb.cinemaInit = structuredClone(defaultInit)
+                delete kb.cinemaInit.color
+              }))
+            }} active={(kb.cinemaInit?.color || defaultInit.color) !== defaultInit.color}/>
+          </div>
         </div>
-      </div>
-
+      )}
 
       {/* Opacity */}
-      <div className="field">
-        <span>{gvar.gsm.filter.opacity}</span>
-        <div className="fieldValue">
-          <SliderMicro
-            value={value.valueNumber ?? 90} 
-            onChange={v => {
-              props.onChange(value.id, produce(value, d => {
-                d.valueNumber = v
-              }))
-            }}
-            default={90}
-            sliderMin={5}
-            sliderMax={100}
-            sliderStep={1}
-          />
+      {mode !== CinemaMode.CUSTOM_FILTER && (
+        <div className="field">
+          <span>{mode === CinemaMode.STANDARD ? gvar.gsm.token.darkness : gvar.gsm.filter.opacity}</span>
+          <div className="fieldValue">
+            <SliderMicro
+              value={init.colorAlpha ?? defaultInit.colorAlpha} 
+              onChange={v => {
+                props.onChange(kb.id, produce(kb, kb => {
+                  if (!kb.cinemaInit) kb.cinemaInit = structuredClone(defaultInit)
+                  kb.cinemaInit.colorAlpha = v
+                }))
+              }}
+              default={90}
+              sliderMin={0}
+              sliderMax={100}
+              sliderStep={1}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Rounding */}
       <div className="field">
         <span>{gvar.gsm.token.rounding}</span>
         <div className="fieldValue">
           <NumericInput
-            value={value.valueNumberAlt} 
+            value={init.rounding} 
             onChange={v => {
-              props.onChange(value.id, produce(value, d => {
-                d.valueNumberAlt = v
+              props.onChange(kb.id, produce(kb, kb => {
+                if (!kb.cinemaInit) kb.cinemaInit = structuredClone(defaultInit)
+                kb.cinemaInit.rounding = v
               }))
             }}
             min={0}
-            placeholder={`${value.valueNumberAlt ?? 10}`}
+            placeholder={`${init.rounding ?? defaultInit.rounding}`}
           />
         </div>
       </div>
 
+      {/* Filters */}
+      {mode === CinemaMode.CUSTOM_FILTER && (
+        <div className="filters">
+          <Filters filters={init.filter || defaultCinemaFilter} onChange={filter => {
+            props.onChange(kb.id, produce(kb, kb => {
+              if (!kb.cinemaInit) kb.cinemaInit = structuredClone(defaultInit)
+              kb.cinemaInit.filter = filter 
+            }))
+          }}/>
+        </div>
+      )}
+
       {/* Reset */}
       <button onClick={e => {
-        props.onChange(value.id, produce(value, d => {
-          delete d.valueString
-          delete d.valueNumber 
-          delete d.valueNumberAlt
+        props.onChange(kb.id, produce(kb, kb => {
+          delete kb.cinemaInit
         }))
       }} className="reset">{gvar.gsm.token.reset}</button>
     </div>

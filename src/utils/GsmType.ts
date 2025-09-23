@@ -78,7 +78,12 @@ export type Gsm = {
     edit: string,
     customize: string,
     allowShortcuts: string,
-    allowOn: string
+    allowOn: string,
+    mode: string,
+    darkness: string,
+    modeStandard: string,
+    modeCustomColor: string,
+    modeCustomFilter: string
   },
   placer: {
     windowBounds: {

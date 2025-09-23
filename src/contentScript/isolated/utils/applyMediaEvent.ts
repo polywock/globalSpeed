@@ -1,5 +1,5 @@
 import { HAS_PIP_API } from "src/utils/supports"
-import { MediaProbe, StateOption } from "../../../types"
+import { CinemaInit, MediaProbe, StateOption } from "../../../types"
 import { clamp, formatDuration, round } from "../../../utils/helper"
 import { IS_SPECIAL_SEEK, IS_AMAZON, IS_NETFLIX, IS_NATIVE, IS_SMART, IS_BILIBILI, IS_YOUTUBE } from "./isWebsite"
 import { hashWithStoredSalt } from "src/utils/hash"
@@ -332,7 +332,7 @@ export function applyCinema(elem: HTMLElement, e: MediaEventCinema) {
     Cinema.currentCinema?.release()
     delete Cinema.currentCinema
   } else {
-    new Cinema(elem, e.color, e.opacity, e.roundness)
+    new Cinema(elem, e.init)
   }
 }
 
@@ -471,7 +471,7 @@ export type MediaEventLoopEntire = {type: "LOOP_ENTIRE", key: string, state: Sta
 export type MediaEventTogglePip = {type: "PIP", state?: StateOption}
 export type MediaEventToggleFs = {type: "FULLSCREEN", direct?: boolean}
 export type MediaEventShowInfo = {type: "MEDIA_INFO"}
-export type MediaEventCinema = {type: "CINEMA", color?: string, opacity?: number, roundness?: number, state?: StateOption}
+export type MediaEventCinema = {type: "CINEMA", init: CinemaInit, state?: StateOption}
 
 export type MediaEvent = 
   MediaEventPlaybackRate | MediaEventSeek | MediaEventPause | MediaEventMute | MediaEventSetVolume |

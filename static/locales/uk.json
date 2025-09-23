@@ -77,7 +77,12 @@
     "edit": "Редагувати",
     "customize": "Налаштувати",
     "allowShortcuts": "Дозволити ярлики на $1",
-    "allowOn": "Дозволити на $1"
+    "allowOn": "Дозволити на $1",
+    "mode": "Режим",
+    "darkness": "Темрява",
+    "modeStandard": "Стандарт",
+    "modeCustomFilter": "Користувацький фільтр",
+    "modeCustomColor": "Користувацький колір"
   },
   "placer": {
     "windowBounds": {

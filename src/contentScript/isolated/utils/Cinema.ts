@@ -2,6 +2,10 @@ import { clamp } from "src/utils/helper";
 import { Popover } from "./Popover";
 import { insertStyle } from "src/utils/nativeUtils";
 import styles from "./Cinema.css?raw"
+import { CinemaInit, CinemaMode } from "src/types"
+import { getDefaultCinemaInit } from "src/defaults/constants"
+import { formatFilters } from "src/utils/configUtils"
+import { getDefaultCinemaFilter } from "src/defaults/filters"
 
 const BLEED = 1 
 const PADDING = 5 
@@ -9,17 +13,20 @@ const PADDING = 5
 export class Cinema extends Popover {
     released = false 
     obs: IntersectionObserver
-    roundness = 10
+    roundness: number 
     currentBounds: DOMRect & {innerWidth: number, innerHeight: number}
     index = 0
     style: HTMLStyleElement
     static currentCinema: Cinema
     
     
-    constructor(private video: HTMLElement, color: string, opacity: number, roundness: number) {
+    constructor(private video: HTMLElement, init: CinemaInit) {
         super()
         Cinema.currentCinema?.release()
         Cinema.currentCinema = this 
+        const defaultInit = getDefaultCinemaInit()
+        init = init || defaultInit
+        const mode = init.mode || defaultInit.mode
         this._div.style.position = "fixed"
         this._div.style.margin = "0"
         this._div.style.left = "0px"
@@ -27,9 +34,28 @@ export class Cinema extends Popover {
         this._div.style.width = "100vw"
         this._div.style.height = "100vh"
         this._div.style.border = "none"
-        this._div.style.backgroundColor = color ?? "black"
-        this._div.style.opacity = `${(opacity ?? 90) / 100}`
-        this.roundness = roundness ?? this.roundness
+        if (mode === CinemaMode.CUSTOM_COLOR) {
+            this._div.style.backgroundColor = init.color ?? defaultInit.color
+            this._div.style.opacity = `${(init.colorAlpha ?? defaultInit.colorAlpha) / 100}`
+        } else {
+            this._div.style.backgroundColor = 'transparent'
+            if (mode === CinemaMode.STANDARD) {
+                this._div.style.backdropFilter = `grayscale(1) brightness(${100 - (init.colorAlpha ?? defaultInit.colorAlpha)}%)`
+            }
+
+
+            if (mode === CinemaMode.CUSTOM_FILTER) {
+                const filter = formatFilters(init.filter ?? getDefaultCinemaFilter())
+                if (!filter) {
+                    this.release()
+                    return 
+                }
+                this._div.style.backdropFilter = filter
+            } 
+        }
+
+        
+        this.roundness = init.rounding ?? defaultInit.rounding
         this.style = insertStyle(styles, document.documentElement)
         
 
@@ -77,7 +103,7 @@ export class Cinema extends Popover {
     release = () => {
         if (this.released) return 
         this.released = true 
-        this.style.remove()
+        this.style?.remove()
         delete this.style
         this._release() 
         this.obs?.disconnect()

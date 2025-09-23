@@ -299,7 +299,22 @@ export type Keybind = {
   spacing?: number,
   condition?: URLCondition,
   oncePerUp?: boolean,
-  alwaysOn?: boolean
+  alwaysOn?: boolean,
+  cinemaInit?: CinemaInit
+}
+
+export type CinemaInit = {
+  mode?: CinemaMode
+  color?: string,
+  colorAlpha?: number,
+  filter?: FilterEntry[],
+  rounding?: number
+}
+
+export enum CinemaMode {
+  STANDARD = 1,
+  CUSTOM_COLOR = 2,
+  CUSTOM_FILTER = 3
 }
 
 export type KeybindMatch = {

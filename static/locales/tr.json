@@ -77,7 +77,12 @@
     "edit": "Düzenle",
     "customize": "Özelleştir",
     "allowShortcuts": "Kısayollara izin ver $1",
-    "allowOn": "$1 üzerinde izin ver"
+    "allowOn": "$1 üzerinde izin ver",
+    "mode": "Mod",
+    "darkness": "Karanlık",
+    "modeStandard": "Standart",
+    "modeCustomFilter": "Özel Filtre",
+    "modeCustomColor": "Özel renk"
   },
   "placer": {
     "windowBounds": {

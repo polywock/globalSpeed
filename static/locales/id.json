@@ -77,7 +77,12 @@
     "edit": "Edit",
     "customize": "Sesuaikan",
     "allowShortcuts": "Izinkan pintasan di $1",
-    "allowOn": "Izinkan di $1"
+    "allowOn": "Izinkan di $1",
+    "mode": "Mode",
+    "darkness": "Kegelapan",
+    "modeStandard": "Standar",
+    "modeCustomFilter": "Filter Kustom",
+    "modeCustomColor": "Warna kustom"
   },
   "placer": {
     "windowBounds": {

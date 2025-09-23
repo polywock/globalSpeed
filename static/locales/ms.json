@@ -77,7 +77,12 @@
     "edit": "Edit",
     "customize": "Sesuaikan",
     "allowShortcuts": "Benarkan pintasan pada $1",
-    "allowOn": "Benarkan pada $1"
+    "allowOn": "Benarkan pada $1",
+    "mode": "Mod",
+    "darkness": "Kegelapan",
+    "modeStandard": "Standard",
+    "modeCustomFilter": "Penapis Tersuai",
+    "modeCustomColor": "Warna tersuai"
   },
   "placer": {
     "windowBounds": {

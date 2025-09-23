@@ -86,7 +86,12 @@
     "edit": "Edit",
     "customize": "Customize",
     "allowShortcuts": "Allow shortcuts on $1",
-    "allowOn": "Allow on $1"
+    "allowOn": "Allow on $1",
+    "mode": "Mode",
+    "darkness": "Darkness",
+    "modeStandard": "Standard",
+    "modeCustomColor": "Custom color",
+    "modeCustomFilter": "Custom filter"
   },
   "placer": {
     "windowBounds": {

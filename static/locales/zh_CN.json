@@ -78,7 +78,12 @@
     "edit": "编辑",
     "customize": "自定义",
     "allowShortcuts": "允许在 $1 上使用快捷键",
-    "allowOn": "允许在 $1 上使用"
+    "allowOn": "允许在 $1 上使用",
+    "mode": "模式",
+    "darkness": "黑暗",
+    "modeStandard": "标准",
+    "modeCustomFilter": "自定义滤镜",
+    "modeCustomColor": "自定义颜色"
   },
   "placer": {
     "windowBounds": {
