@@ -57,6 +57,7 @@ export function App(props: {}) {
 }
 
 if (isMobile())  document.documentElement.classList.add("mobile") 
+  
 Promise.all([
   loadGsm().then(gsm => {
     gvar.gsm = gsm 

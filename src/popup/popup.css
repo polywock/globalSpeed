@@ -9,10 +9,10 @@
 
 body {
   width: 300px;
+  min-width: 300px;
   margin: 0;
   padding: 0;
   background-color: var(--fg-color);
-  /* overflow-x: hidden; */
 }
 
 #SuperDisable {
