@@ -95,7 +95,7 @@ export function isMobile() {
   isMobileResult = /Mobi|Android|iPhone|iTabletPad|/i.test(navigator.userAgent)
 
     // iPad not reporting user agent correctly, so assume all that support this is iPad/iPhone (mobile)
-  if (globalThis.CSS && globalThis.CSS.supports?.("(-webkit-touch-callout: none)")) {
+  if (!isMobileResult && globalThis.CSS && globalThis.CSS.supports?.("(-webkit-touch-callout: none)")) {
     isMobileResult = true 
   }
 
