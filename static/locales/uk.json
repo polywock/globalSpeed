@@ -82,7 +82,8 @@
     "darkness": "Темрява",
     "modeStandard": "Стандарт",
     "modeCustomFilter": "Користувацький фільтр",
-    "modeCustomColor": "Користувацький колір"
+    "modeCustomColor": "Користувацький колір",
+    "aspectLock": "Блокування пропорцій"
   },
   "placer": {
     "windowBounds": {
@@ -112,7 +113,26 @@
     "translateY": "Перемістити Y",
     "rotateX": "Повернути X",
     "rotateY": "Повернути Y",
-    "rotateZ": "Повернути Z"
+    "rotateZ": "Повернути Z",
+    "otherFilters": {
+      "mosaic": "Мозаїка",
+      "text": "Текст",
+      "header": "Інші фільтри",
+      "colorMatrix": "Кольорова карта",
+      "posterize": "Постеризація",
+      "blur": "Розмиття",
+      "blockX": "Блок X",
+      "blockY": "Блок Y",
+      "detailX": "Деталь X",
+      "detailY": "Деталь Y",
+      "stretchX": "Масштаб X",
+      "stretchY": "Масштаб Y",
+      "levels": "Рівні",
+      "amount": "Кількість",
+      "vertical": "Вертикально",
+      "horizontal": "Горизонтально",
+      "presets": "Пресети"
+    }
   },
   "command": {
     "nothing": "Бездіяльність",

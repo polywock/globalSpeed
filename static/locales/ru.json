@@ -82,7 +82,8 @@
     "darkness": "Темнота",
     "modeStandard": "Стандартный",
     "modeCustomFilter": "Пользовательский фильтр",
-    "modeCustomColor": "Пользовательский цвет"
+    "modeCustomColor": "Пользовательский цвет",
+    "aspectLock": "Блокировка пропорций"
   },
   "placer": {
     "windowBounds": {
@@ -112,7 +113,26 @@
     "translateY": "Двигаться Y",
     "rotateX": "Повернуть X",
     "rotateY": "Повернуть Y",
-    "rotateZ": "Повернуть Z"
+    "rotateZ": "Повернуть Z",
+    "otherFilters": {
+      "mosaic": "Мозаика",
+      "text": "Текст",
+      "header": "Другие фильтры",
+      "colorMatrix": "Карта цветов",
+      "posterize": "Постеризация",
+      "blur": "Размытие",
+      "blockX": "Блок X",
+      "blockY": "Блок Y",
+      "detailX": "Деталь X",
+      "detailY": "Деталь Y",
+      "stretchX": "Масштаб X",
+      "stretchY": "Масштаб Y",
+      "levels": "Уровни",
+      "amount": "Сила",
+      "vertical": "Вертикально",
+      "horizontal": "Горизонтально",
+      "presets": "Пресеты"
+    }
   },
   "command": {
     "nothing": "Бездействие",

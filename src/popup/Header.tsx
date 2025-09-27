@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { checkFilterDeviation, requestSyncContextMenu, testURLWithPart } from "../utils/configUtils"
+import { checkFilterDeviation, checkFilterDeviationOrActiveSvg, requestSyncContextMenu, testURLWithPart } from "../utils/configUtils"
 import { GoArrowLeft} from "react-icons/go"
 import { FaGithub } from "react-icons/fa";
 import { FaPowerOff, FaVolumeUp } from "react-icons/fa"
@@ -11,7 +11,7 @@ import { releaseTabCapture } from "src/background/utils/tabCapture"
 import { Gear, Pin, Zap } from "src/comps/svgs";
 import { pushView } from "src/utils/state";
 import { FaCircleDot } from "react-icons/fa6";
-import { feedbackText, isFirefox, isMobile } from "src/utils/helper";
+import { feedbackText, isMobile } from "src/utils/helper";
 import { KebabList, KebabListProps } from "src/options/KebabList";
 import { replaceArgs } from "src/utils/helper";
 import { produce } from "immer";
@@ -143,8 +143,8 @@ export function FxIcon(props: FxIconProps) {
 
   const fxActive = useMemo(() => {
     if (view && props.enabled) {
-      if (view.backdropFx?.enabled && (checkFilterDeviation(view.backdropFx.filters) ||checkFilterDeviation(view.backdropFx.transforms))) return true 
-      if (view.elementFx?.enabled && (checkFilterDeviation(view.elementFx.filters) ||checkFilterDeviation(view.elementFx.transforms))) return true 
+      if (view.backdropFx?.enabled && (checkFilterDeviationOrActiveSvg(view.backdropFx.filters, view.backdropFx.svgFilters) || checkFilterDeviation(view.backdropFx.transforms))) return true 
+      if (view.elementFx?.enabled && (checkFilterDeviationOrActiveSvg(view.elementFx.filters, view.elementFx.svgFilters) || checkFilterDeviation(view.elementFx.transforms))) return true 
     }
     return false 
   }, [props.enabled, view])

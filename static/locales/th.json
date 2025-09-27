@@ -82,7 +82,8 @@
     "darkness": "ความมืด",
     "modeStandard": "มาตรฐาน",
     "modeCustomFilter": "ฟิลเตอร์ที่กำหนดเอง",
-    "modeCustomColor": "สีที่กำหนดเอง"
+    "modeCustomColor": "สีที่กำหนดเอง",
+    "aspectLock": "ล็อคอัตราส่วน"
   },
   "placer": {
     "windowBounds": {
@@ -112,7 +113,26 @@
     "translateY": "เลื่อนแกน Y",
     "rotateX": "หมุนแกน X",
     "rotateY": "หมุนแกน Y",
-    "rotateZ": "หมุนแกน Z"
+    "rotateZ": "หมุนแกน Z",
+    "otherFilters": {
+      "mosaic": "โมเสก",
+      "text": "ข้อความ",
+      "header": "ตัวกรองอื่นๆ",
+      "colorMatrix": "แผนที่สี",
+      "posterize": "โปสเตอร์ไรซ์",
+      "blur": "เบลอ",
+      "blockX": "บล็อก X",
+      "blockY": "บล็อก Y",
+      "detailX": "รายละเอียด X",
+      "detailY": "รายละเอียด Y",
+      "stretchX": "ยืด X",
+      "stretchY": "ยืด Y",
+      "levels": "ระดับ",
+      "amount": "ปริมาณ",
+      "vertical": "แนวตั้ง",
+      "horizontal": "แนวนอน",
+      "presets": "ค่าที่ตั้งไว้ล่วงหน้า"
+    }
   },
   "command": {
     "nothing": "ไม่มีการกระทำ",

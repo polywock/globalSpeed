@@ -83,7 +83,8 @@
     "darkness": "黑暗",
     "modeStandard": "標準",
     "modeCustomFilter": "自訂濾鏡",
-    "modeCustomColor": "自訂顏色"
+    "modeCustomColor": "自訂顏色",
+    "aspectLock": "鎖定比例"
   },
   "placer": {
     "windowBounds": {
@@ -113,7 +114,26 @@
     "translateY": "Y 軸位移",
     "rotateX": "X 軸旋轉",
     "rotateY": "Y 軸旋轉",
-    "rotateZ": "Z 軸旋轉"
+    "rotateZ": "Z 軸旋轉",
+    "otherFilters": {
+      "mosaic": "馬賽克",
+      "text": "文字",
+      "header": "其他篩選條件",
+      "colorMatrix": "色彩映射",
+      "posterize": "色調分離",
+      "blur": "模糊",
+      "blockX": "區塊 X",
+      "blockY": "區塊 Y",
+      "detailX": "細節 X",
+      "detailY": "細節 Y",
+      "stretchX": "拉伸 X",
+      "stretchY": "拉伸 Y",
+      "levels": "色階",
+      "amount": "強度",
+      "vertical": "垂直",
+      "horizontal": "水平",
+      "presets": "預設"
+    }
   },
   "command": {
     "nothing": "無動作",

@@ -1,0 +1,46 @@
+
+.SvgFilterList {
+   border-top: 1px solid var(--border);
+   margin-top: 15px;
+
+   & > .header {
+      font-size: 0.9em;
+      text-align: center;
+      opacity: 0.5;
+      margin-top: 6px;
+   }
+
+   & > .list {
+
+   }
+
+   & > .controls {
+      display: flex;
+      column-gap: 10px;
+      margin-top: 10px;
+   }
+
+
+
+   div {
+      &.active {
+         color: var(--header-icon-active-color);
+
+         &.beat {
+            animation: 1s ease-in beat infinite;
+         }
+
+         &:hover {
+            opacity: 0.9;
+         }
+      }
+
+      &.muted {
+         color: var(--header-icon-muted-color);
+
+         &:hover {
+            opacity: 0.9;
+         }
+      }
+   }
+}

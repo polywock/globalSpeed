@@ -83,7 +83,8 @@
     "darkness": "黑暗",
     "modeStandard": "标准",
     "modeCustomFilter": "自定义滤镜",
-    "modeCustomColor": "自定义颜色"
+    "modeCustomColor": "自定义颜色",
+    "aspectLock": "锁定比例"
   },
   "placer": {
     "windowBounds": {
@@ -113,7 +114,26 @@
     "translateY": "Y轴移动",
     "rotateX": "X轴旋转",
     "rotateY": "Y轴旋转",
-    "rotateZ": "Z轴旋转"
+    "rotateZ": "Z轴旋转",
+    "otherFilters": {
+      "mosaic": "马赛克",
+      "text": "文本",
+      "header": "其他筛选条件",
+      "colorMatrix": "色彩映射",
+      "posterize": "色调分离",
+      "blur": "模糊",
+      "blockX": "块 X",
+      "blockY": "块 Y",
+      "detailX": "细节 X",
+      "detailY": "细节 Y",
+      "stretchX": "拉伸 X",
+      "stretchY": "拉伸 Y",
+      "levels": "等级",
+      "amount": "强度",
+      "vertical": "垂直",
+      "horizontal": "水平",
+      "presets": "预设"
+    }
   },
   "command": {
     "nothing": "无动作",

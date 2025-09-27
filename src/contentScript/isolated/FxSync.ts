@@ -1,40 +1,41 @@
-import { formatFilters} from "../../utils/configUtils";
-import { SubscribeView } from "../../utils/state";
-import { StateView } from "../../types";
-import { getDefaultFx } from "src/defaults";
-import { Backdrop } from "./utils/Backdrop";
-import { insertStyle } from "src/utils/nativeUtils";
+import { formatFilters, hasActiveSvgFilters } from "../../utils/configUtils"
+import { SubscribeView } from "../../utils/state"
+import { StateView, SvgFilter } from "../../types"
+import { getDefaultFx } from "src/defaults"
+import { Backdrop } from "./utils/Backdrop"
+import { createSVGElement, randomId } from "src/utils/helper"
+import { SVG_FILTER_ADDITIONAL } from "src/defaults/svgFilterAdditional"
 
 export class FxSync {
   released: boolean
   elementQuery: string
-  elementIntervalId: number 
-  backdropIntervalId: number 
+  elementIntervalId: number
+  backdropIntervalId: number
 
   backdrop: Backdrop
   tempStyle: TemporaryStyle
   documentTransform: LazyDocumentTransform
 
   elemFilter: string
-  elemTransform: string 
-  elemTransformOrigin: string 
+  elemTransform: string
+  elemTransformOrigin: string
 
   backdropFilter: string
-  backdropTransform: string 
-  backdropTransformOrigin: string 
+  backdropTransform: string
+  backdropTransformOrigin: string
 
-  client = new SubscribeView({elementFx: true, backdropFx: gvar.isTopFrame}, gvar.tabInfo.tabId, true, view => {
+  client = new SubscribeView({ elementFx: true, backdropFx: gvar.isTopFrame }, gvar.tabInfo.tabId, true, view => {
     view.elementFx = view.elementFx ?? getDefaultFx()
     view.backdropFx = view.backdropFx ?? getDefaultFx()
     this.handleChange(view)
   })
   // clear resources and clear all filters.
   release = () => {
-    if (this.released) return 
-    this.released = true 
+    if (this.released) return
+    this.released = true
 
     this.client?.release(); delete this.client
-    
+
     this.tempStyle?.release()
     delete this.tempStyle
 
@@ -47,37 +48,39 @@ export class FxSync {
   handleChange = (view: StateView) => {
 
 
-    let style = calculateStyle(view.elementFx.enabled, view.elementFx.query || "video", formatFilters(view.elementFx.filters), formatFilters(view.elementFx.transforms.slice().reverse()), `${view.elementFx.originX || "center"} ${view.elementFx.originY || "center"}`)
+    let styleInfo = calculateStyle(view.elementFx.enabled, view.elementFx.query || "video", formatFilters(view.elementFx.filters), formatFilters(view.elementFx.transforms.slice().reverse()), `${view.elementFx.originX || "center"} ${view.elementFx.originY || "center"}`, view.elementFx.svgFilters)
 
-    if (style) {
-      if (this.tempStyle && this.tempStyle.style !== style) {
+    if (styleInfo) {
+      if (this.tempStyle && this.tempStyle.styleInfo.styleString !== styleInfo.styleString) {
         this.tempStyle.release()
         delete this.tempStyle
       }
-      this.tempStyle = this.tempStyle || new TemporaryStyle(style)
+      this.tempStyle = this.tempStyle || new TemporaryStyle(styleInfo)
     } else {
       this.tempStyle?.release()
       delete this.tempStyle
     }
+
+    if (!gvar.isTopFrame) return
+
     
-    if (!gvar.isTopFrame) return 
-    
-    this.backdropFilter = formatFilters(view.backdropFx.filters)
-    this.backdropTransform = formatFilters(view.backdropFx.transforms.slice().reverse())
-    this.backdropTransformOrigin = `${view.backdropFx.originX || "center"} ${view.backdropFx.originY || "top"}`
+    const backdropSimpleFilter = formatFilters(view.backdropFx.filters)
+    const backdropTransform = formatFilters(view.backdropFx.transforms.slice().reverse())
+    const backdropTransformOrigin = `${view.backdropFx.originX || "center"} ${view.backdropFx.originY || "top"}`
+    const backdropStyleInfo = calculateStyle(view.backdropFx.enabled, "placeholder", backdropSimpleFilter, backdropTransform, backdropTransformOrigin, view.backdropFx.svgFilters)
     const backdropEnabled = view.backdropFx.enabled
-    
-    if (backdropEnabled && this.backdropFilter) {
+
+    if (backdropEnabled && backdropStyleInfo?.filterValue) {
       this.backdrop = this.backdrop || new Backdrop()
-      this.backdrop.show(this.backdropFilter)
+      this.backdrop.show(backdropStyleInfo.filterValue, backdropStyleInfo.svg)
     } else {
       this.backdrop?.release()
       delete this.backdrop
     }
 
-    if (backdropEnabled && this.backdropTransform) {
+    if (backdropEnabled && backdropTransform) {
       this.documentTransform = this.documentTransform || new LazyDocumentTransform()
-      this.documentTransform.set(this.backdropTransform, this.backdropTransformOrigin)
+      this.documentTransform.set(backdropTransform, backdropTransformOrigin)
     } else {
       this.documentTransform?.clear()
       delete this.documentTransform
@@ -85,25 +88,64 @@ export class FxSync {
   }
 }
 
-
-function calculateStyle(enabled: boolean, selector: string, filters: string, transforms: string, origin: string) {
-  if (!enabled || !selector || !(filters || transforms)) return null 
+function calculateStyle(enabled: boolean, selector: string, filters: string, transforms: string, origin: string, svgFilters: SvgFilter[]) {
+  if (!enabled || !selector || !(filters || transforms || hasActiveSvgFilters(svgFilters))) return null
   let statements = []
-  if (filters) statements.push(`filter: ${filters} !important`)
   if (transforms) {
     statements.push(`transform: ${transforms} !important`)
     origin && statements.push(`transform-origin: ${origin} !important`)
   }
 
-  return `:is(${selector}, #proooof > #essi > #onal) {${statements.join(";")}}`
+  let filterElements: SVGElement[]
+  let filterSvgUrls
+  if (svgFilters?.length) {
+    
+    try {
+      let colocatedInfos = svgFilters.map(f => {
+        const typeInfo = SVG_FILTER_ADDITIONAL[f.type]
+        if (!(f.enabled && typeInfo.isValid(f))) return 
+        let id = `svg_${randomId()}`
+        const text = typeInfo.format(f)
+        if (!text) return 
+        let filterElement = createSVGElement(text)
+        filterElement.id = id
+        return { filterElement, id }
+      }).filter(info => info)
+      
+      filterSvgUrls = colocatedInfos.map(s => `url(#${s.id})`).join(' ')
+      filterElements = colocatedInfos.map(s => s.filterElement)
+    } catch {
+      filterSvgUrls = filterElements = null
+    }
+  }
+
+  let filterValue: string 
+  if (filters || filterSvgUrls) {
+    filterValue = `${filters || ''} ${filterSvgUrls || ''}`
+    statements.push(`filter: ${filterValue} !important`)
+  }
+
+  const styleString = `:is(${selector}, #proooof > #essi > #onal) {${statements.join(";")}}`
+  const styleTemplate = document.createElement("style")
+  styleTemplate.innerHTML = styleString
+
+  let svg: SVGElement
+  if (filterElements?.length) {
+    svg = createSVGElement(`<svg width="0" height="0" style="position:fixed;left:-9999px;top:-9999px" aria-hidden="true"></svg>`)
+    filterElements.forEach(filterElem => {
+      svg.appendChild(filterElem)
+    })
+  }
+
+  return { styleString, styleTemplate, svg, filterValue }
 }
 
 
 
 class LazyDocumentTransform {
-  memoized: {transform: string, origin: string}
+  memoized: { transform: string, origin: string }
   set = (transform: string, transformOrigin: string) => {
-    this.memoized = this.memoized || {transform: document.body.style.transform, origin: document.body.style.transformOrigin}
+    this.memoized = this.memoized || { transform: document.body.style.transform, origin: document.body.style.transformOrigin }
 
     if (document.body.style.transform !== transform) {
       document.body.style.transform = transform
@@ -113,7 +155,7 @@ class LazyDocumentTransform {
     }
   }
   clear = () => {
-    if (!this.memoized) return 
+    if (!this.memoized) return
     document.body.style.transform = this.memoized.transform
     document.body.style.transformOrigin = this.memoized.origin
     delete this.memoized
@@ -122,18 +164,18 @@ class LazyDocumentTransform {
 
 
 class TemporaryStyle {
-  processed: Set<ShadowRoot | HTMLElement> = new Set() 
-  styles: HTMLStyleElement[] = []
-  released = false 
-  constructor(public style: string) {
+  processed: Set<ShadowRoot | HTMLElement> = new Set()
+  appended: Element[] = []
+  released = false
+  constructor(public styleInfo: ReturnType<typeof calculateStyle>) {
     this.processAll()
   }
   release = () => {
-    if (this.released) return 
-    this.released = true 
+    if (this.released) return
+    this.released = true
     gvar.os.mediaTower.newDocCallbacks.delete(this.processAll)
-    this.styles.forEach(s => s.remove())
-    delete this.styles
+    this.appended.forEach(s => s.remove())
+    delete this.appended
     this.processed.clear()
     delete this.processed
   }
@@ -143,8 +185,16 @@ class TemporaryStyle {
     shadowRoots.forEach(this.process)
   }
   process = (doc: ShadowRoot | HTMLElement) => {
-    if (this.processed.has(doc)) return 
+    if (this.processed.has(doc)) return
     this.processed.add(doc)
-    this.styles.push(insertStyle(this.style, doc))
+    const style = this.styleInfo.styleTemplate.cloneNode(true) as Element
+    doc.appendChild(style)
+    this.appended.push(style)
+
+    if (this.styleInfo.svg) {
+      const svg = this.styleInfo.svg.cloneNode(true) as Element
+      doc.appendChild(svg)
+      this.appended.push(svg)
+    }
   }
 }

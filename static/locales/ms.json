@@ -82,7 +82,8 @@
     "darkness": "Kegelapan",
     "modeStandard": "Standard",
     "modeCustomFilter": "Penapis Tersuai",
-    "modeCustomColor": "Warna tersuai"
+    "modeCustomColor": "Warna tersuai",
+    "aspectLock": "Kunci nisbah aspek"
   },
   "placer": {
     "windowBounds": {
@@ -112,7 +113,26 @@
     "translateY": "TerjemahY",
     "rotateX": "PutarX",
     "rotateY": "PutarY",
-    "rotateZ": "PutarZ"
+    "rotateZ": "PutarZ",
+    "otherFilters": {
+      "mosaic": "Mosaik",
+      "text": "Teks",
+      "header": "Penapis lain",
+      "colorMatrix": "Peta warna",
+      "posterize": "Posterkan",
+      "blur": "Kabur",
+      "blockX": "Blok X",
+      "blockY": "Blok Y",
+      "detailX": "Perincian X",
+      "detailY": "Perincian Y",
+      "stretchX": "Regangan X",
+      "stretchY": "Regangan Y",
+      "levels": "Aras",
+      "amount": "Kuantiti",
+      "vertical": "Menegak",
+      "horizontal": "Mendatar",
+      "presets": "Praset"
+    }
   },
   "command": {
     "nothing": "Tiada tindakan",

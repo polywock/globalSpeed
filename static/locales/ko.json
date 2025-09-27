@@ -83,7 +83,8 @@
     "darkness": "어두움",
     "modeStandard": "표준",
     "modeCustomFilter": "사용자 필터",
-    "modeCustomColor": "사용자 지정 색상"
+    "modeCustomColor": "사용자 지정 색상",
+    "aspectLock": "종횡비 잠금"
   },
   "placer": {
     "windowBounds": {
@@ -113,7 +114,26 @@
     "translateY": "Y 이동",
     "rotateX": "X 회전",
     "rotateY": "Y 회전",
-    "rotateZ": "Z 회전"
+    "rotateZ": "Z 회전",
+    "otherFilters": {
+      "mosaic": "모자이크",
+      "text": "텍스트",
+      "header": "기타 필터",
+      "colorMatrix": "컬러 맵",
+      "posterize": "포스터화",
+      "blur": "블러",
+      "blockX": "블록 X",
+      "blockY": "블록 Y",
+      "detailX": "디테일 X",
+      "detailY": "디테일 Y",
+      "stretchX": "확대 X",
+      "stretchY": "확대 Y",
+      "levels": "레벨",
+      "amount": "강도",
+      "vertical": "수직",
+      "horizontal": "수평",
+      "presets": "프리셋"
+    }
   },
   "command": {
     "nothing": "조치 없음",

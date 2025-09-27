@@ -82,7 +82,8 @@
     "darkness": "الظلام",
     "modeStandard": "قياسي",
     "modeCustomFilter": "مرشح مخصص",
-    "modeCustomColor": "لون مخصص"
+    "modeCustomColor": "لون مخصص",
+    "aspectLock": "قفل النسبة"
   },
   "placer": {
     "windowBounds": {
@@ -112,7 +113,26 @@
     "translateY": "إزاحة عمودية",
     "rotateX": "دوران حول X",
     "rotateY": "دوران حول Y",
-    "rotateZ": "دوران حول Z"
+    "rotateZ": "دوران حول Z",
+    "otherFilters": {
+      "mosaic": "فسيفساء",
+      "text": "نص",
+      "header": "مرشحات أخرى",
+      "colorMatrix": "خريطة الألوان",
+      "posterize": "تأثير البوسترايز",
+      "blur": "تمويه",
+      "blockX": "الكتلة X",
+      "blockY": "الكتلة Y",
+      "detailX": "التفصيل X",
+      "detailY": "التفصيل Y",
+      "stretchX": "تمديد X",
+      "stretchY": "تمديد Y",
+      "levels": "المستويات",
+      "amount": "الكمية",
+      "vertical": "عمودي",
+      "horizontal": "أفقي",
+      "presets": "الإعدادات المسبقة"
+    }
   },
   "command": {
     "nothing": "لا إجراء",

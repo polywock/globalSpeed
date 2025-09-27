@@ -1,8 +1,9 @@
-import { AdjustMode, Duration, KeybindMatch, ReferenceValues, Trigger, type FilterEntry, type Keybind, type TargetFx, type TargetFxFlags, type URLCondition, type URLConditionPart } from "../types";
+import { AdjustMode, Duration, KeybindMatch, ReferenceValues, SvgFilter, Trigger, type FilterEntry, type Keybind, type TargetFx, type TargetFxFlags, type URLCondition, type URLConditionPart } from "../types";
 import { clamp, isFirefox, round } from "./helper";
 import { filterInfos } from "../defaults/filters";
 import type { MediaEvent } from "../contentScript/isolated/utils/applyMediaEvent";
 import { Hotkey, compareHotkeys } from "./keys";
+import { SVG_FILTER_ADDITIONAL } from "src/defaults/svgFilterAdditional"
 
 
 
@@ -37,6 +38,14 @@ export function formatFilters(filterValues: FilterEntry[]) {
   return parts.join(" ")
 }
 
+export function hasActiveSvgFilters(filters: SvgFilter[]) {
+  if (filters?.filter(f => {
+    if (!f.enabled) return 
+    const typeInfo = SVG_FILTER_ADDITIONAL[f.type]
+    if (typeInfo.isValid(f)) return true 
+  }).length) return true 
+}
+
 export function checkFilterDeviation(values: FilterEntry[]) {
   for (let v of (values || [])) {
     const filterInfo = filterInfos[v.name]
@@ -44,6 +53,10 @@ export function checkFilterDeviation(values: FilterEntry[]) {
       return true  
     }
   }
+}
+
+export function checkFilterDeviationOrActiveSvg(filters: FilterEntry[], svgFilters: SvgFilter[]) {
+  return checkFilterDeviation(filters) || hasActiveSvgFilters(svgFilters)
 }
 
 export function intoFxFlags(target: TargetFx) {

@@ -82,7 +82,8 @@
     "darkness": "Dunkelheit",
     "modeStandard": "Standard",
     "modeCustomFilter": "Benutzerdefinierter Filter",
-    "modeCustomColor": "Benutzerdefinierte Farbe"
+    "modeCustomColor": "Benutzerdefinierte Farbe",
+    "aspectLock": "Seitenverhältnis sperren"
   },
   "placer": {
     "windowBounds": {
@@ -112,7 +113,26 @@
     "translateY": "Y-Verschiebung",
     "rotateX": "Drehen X",
     "rotateY": "Drehen Y",
-    "rotateZ": "Drehen Z"
+    "rotateZ": "Drehen Z",
+    "otherFilters": {
+      "mosaic": "Mosaik",
+      "text": "Text",
+      "header": "Weitere Filter",
+      "colorMatrix": "Farbkarte",
+      "posterize": "Posterisieren",
+      "blur": "Weichzeichnen",
+      "blockX": "Block X",
+      "blockY": "Block Y",
+      "detailX": "Detail X",
+      "detailY": "Detail Y",
+      "stretchX": "Detail X",
+      "stretchY": "Detail Y",
+      "levels": "Stufen",
+      "amount": "Menge",
+      "vertical": "Vertikal",
+      "horizontal": "Horizontal",
+      "presets": "Voreinstellungen"
+    }
   },
   "command": {
     "nothing": "Keine Aktion",

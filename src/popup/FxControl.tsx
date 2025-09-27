@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react"
-import { checkFilterDeviation, sendMessageToConfigSync, formatFilters } from "../utils/configUtils"
+import { checkFilterDeviation, sendMessageToConfigSync, formatFilters, hasActiveSvgFilters, checkFilterDeviationOrActiveSvg } from "../utils/configUtils"
 import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { Filters } from "./Filters"
 import { Origin } from "./Origin"
@@ -9,9 +9,10 @@ import { getDefaultFx } from "../defaults"
 import { Fx } from "../types"
 import { produce } from "immer"
 import { RegularTooltip } from "src/comps/RegularTooltip"
-import "./FxControl.css"
 import equal from "fast-deep-equal"
 import { isMobile } from "src/utils/helper"
+import { SvgFilterList } from "./SvgFilterList"
+import "./FxControl.css"
 
 type FxControlProps = {
   live?: boolean,
@@ -38,16 +39,15 @@ export function FxControl(props: FxControlProps) {
   }
 
   const active = useMemo(() => ({
-    elemFilter:  checkFilterDeviation(elementFx.filters),
+    elemFilter:  checkFilterDeviationOrActiveSvg(elementFx.filters, elementFx.svgFilters),
     elemTransform: checkFilterDeviation(elementFx.transforms),
-    backdropFilter: checkFilterDeviation(backdropFx.filters),
+    backdropFilter: checkFilterDeviationOrActiveSvg(backdropFx.filters, backdropFx.svgFilters),
     backdropTransform: checkFilterDeviation(backdropFx.transforms)
   }), [elementFx, backdropFx]) 
 
   const isEmpty = useMemo(() => (
     rawFx == null ? true : equal(rawFx, getDefaultFx())
   ), [rawFx])
-
 
   return (
     <div className={`FxControl ${props.className || ""}`}>
@@ -82,9 +82,9 @@ export function FxControl(props: FxControlProps) {
         }}><GiAnticlockwiseRotation size={"1.07rem"}/></button>
       </div>
 
-      {/* Query */}
+      {/* Selector */}
       {!backdropTab && (
-        <div className="query">
+        <div className="selector">
           <span>{gvar.gsm.token.query} <RegularTooltip align={"right"} title={gvar.gsm.token.queryTooltip}/></span>
           <ThrottledTextInput passInput={{placeholder: `video`}} value={fx.query || ""} onChange={v => {
             setCurrent(produce(fx, d => {
@@ -142,6 +142,12 @@ export function FxControl(props: FxControlProps) {
           if (checkFilterDeviation(transformTab ? d.transforms : d.filters)) {
             d.enabled = true 
           }
+        }))
+      }}/>
+      <SvgFilterList svgFilters={fx.svgFilters || []} onChange={(newVal, forceEnable) => {
+        setCurrent(produce(fx, d => {
+          d.svgFilters = newVal
+          if (forceEnable) d.enabled = true 
         }))
       }}/>
     </div>

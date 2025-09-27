@@ -213,11 +213,13 @@ button {
   &.toggle {
     border-style: dashed;
     color: var(--text-color);
+    opacity: 0.4;
+    border-radius: 5px;
 
     &:enabled.active {
       border-style: solid;
-      border-color: var(--text-color);
-      font-weight: bold;
+      border-color: var(--border);
+      opacity: 1;
     }
   }
 }

@@ -37,7 +37,7 @@ declare global {
     gsSkipTimeUpdateHandler?: () => void,
     gsSkipSeekingHandler?: () => void,
     gsShadowRoot?: ShadowRoot,
-    gsRateCounter?: {time: number, count: number},
+    gsRateCounter?: { time: number, count: number },
     gsRateViolations?: number,
     gsRateBanned?: boolean,
     gsFpsSum?: number,
@@ -51,12 +51,12 @@ declare global {
   }
 }
 
-export type AnyDict = {[key: string]: any}
+export type AnyDict = { [key: string]: any }
 
 export type State = {
   version: number,
   qrCodeHide?: boolean,
-  qrCodeSeenCounter?: number, 
+  qrCodeSeenCounter?: number,
   speedChangeCounter?: number,
   language?: string,
   fontSize?: number,
@@ -69,7 +69,7 @@ export type State = {
   darkTheme?: boolean,
   keybinds?: Keybind[],
   keybindsUrlCondition?: URLCondition,
-  websitesAddedToUrlConditionsExclusion?: string[] 
+  websitesAddedToUrlConditionsExclusion?: string[]
   ghostMode?: boolean,
   ghostModeUrlCondition?: URLCondition,
   rules?: URLRule[],
@@ -83,7 +83,7 @@ export type State = {
   speedPresetPadding?: number,
   speedSmallStep?: number,
   speedBigStep?: number,
-  speedSlider?: {min: number, max: number},
+  speedSlider?: { min: number, max: number },
   ignorePiP?: boolean, // PiP videos are deprioritized for hotkeys.
   minimizeOrlBanner?: boolean,
   hideOrlBanner?: boolean,
@@ -95,9 +95,9 @@ export type State = {
   holdToSpeed?: number
 } & Context
 
-export type StoredKey = `${"t" | "r"}:${number}:${keyof Context | "isPinned"}` | `${"g" | "x"}:${keyof State}`; 
+export type StoredKey = `${"t" | "r"}:${number}:${keyof Context | "isPinned"}` | `${"g" | "x"}:${keyof State}`
 
-export type StateView = Partial<State & {isPinned: boolean, hasOrl: boolean}>
+export type StateView = Partial<State & { isPinned: boolean, hasOrl: boolean }>
 
 
 export type StateViewSelector = {
@@ -115,7 +115,7 @@ export type IndicatorInit = {
   position?: "TL" | "TR" | "BL" | "BR" | "C",
   animation?: 1 | 2 | 3 | 4 | 5,
   showShadow?: boolean,
-  key?: string 
+  key?: string
 }
 
 export type CircleInit = {
@@ -139,10 +139,10 @@ export enum InitialContext {
 }
 
 
-export type Pin = {tabId: number, ctx: Context}
+export type Pin = { tabId: number, ctx: Context }
 
 export type Context = {
-  speed: number, 
+  speed: number,
   lastSpeed?: number,
   enabled: boolean,
   latestViaShortcut?: boolean,
@@ -154,8 +154,8 @@ export type Context = {
   audioPan?: number
 }
 
-export const CONTEXT_KEYS: (keyof Context)[] = [ 
-  "speed", "lastSpeed", "enabled", "latestViaShortcut", "elementFx", "backdropFx", 
+export const CONTEXT_KEYS: (keyof Context)[] = [
+  "speed", "lastSpeed", "enabled", "latestViaShortcut", "elementFx", "backdropFx",
   "monoOutput", "audioFx", "audioFxAlt", "audioPan"
 ]
 
@@ -168,14 +168,14 @@ export const ORL_CONTEXT_KEYS: (keyof Context)[] = ORL_GROUPS.flat(1)
 
 export const ORL_CONTEXT_KEYS_SET = new Set(ORL_CONTEXT_KEYS)
 
-export const REVERSE_ORL_GROUP = Object.fromEntries(ORL_CONTEXT_KEYS.map(k => [k, ORL_GROUPS.find(o => o.includes(k))])) as {[key in keyof Context]: (keyof Context)[]}
+export const REVERSE_ORL_GROUP = Object.fromEntries(ORL_CONTEXT_KEYS.map(k => [k, ORL_GROUPS.find(o => o.includes(k))])) as { [key in keyof Context]: (keyof Context)[] }
 
 export const AUDIO_CONTEXT_KEYS = ["enabled", "monoOutput", "audioFx", "audioFxAlt", "audioPan"] as (keyof Context)[]
 export const AUDIO_CONTEXT_KEYS_SET = new Set(AUDIO_CONTEXT_KEYS)
 
 export type AudioFx = {
   pitch: number,
-  jungleMode?: boolean, 
+  jungleMode?: boolean,
   volume: number,
   delay: number,
   delayMerge?: boolean,
@@ -223,7 +223,7 @@ export type Command = {
   noReset?: boolean,
   ref?: ReferenceValues,
   getRef?: (command: Command, kb: Keybind) => ReferenceValues
-  generate: () => Keybind 
+  generate: () => Keybind
 }
 
 export type ReferenceValues = {
@@ -252,7 +252,7 @@ export type Keybind = {
   label?: string,
   command: CommandName,
   enabled: boolean,
-  
+
   trigger?: Trigger,
   allowAlt?: boolean,
   cycleNoWrap?: boolean,
@@ -277,15 +277,15 @@ export type Keybind = {
   valueUrlMode?: "fgTab" | "bgTab" | "newWindow" | "newPopup" | "sameTab",
   valuePopupRect?: Rect,
   invertIndicator?: boolean,
-  
+
   relativeToSpeed?: boolean,
   fastSeek?: boolean,
   showNetDuration?: number
   wraparound?: boolean,
   itcWraparound?: boolean,
-  autoPause?: boolean, 
+  autoPause?: boolean,
   skipPauseSmall?: boolean,
-  pauseWhileScrubbing?: boolean, 
+  pauseWhileScrubbing?: boolean,
   seekOnce?: boolean,
   noHold?: boolean,
   skipToggleSpeed?: boolean,
@@ -318,13 +318,13 @@ export enum CinemaMode {
 }
 
 export type KeybindMatch = {
-  kb: Keybind;
-  alt?: boolean;
+  kb: Keybind
+  alt?: boolean
 }
 
 export type KeybindMatchId = {
-  id: string, 
-  alt?: boolean;
+  id: string,
+  alt?: boolean
 }
 
 
@@ -333,12 +333,12 @@ export type Rect = {
   left: number,
   top: number,
   width: number,
-  height: number 
+  height: number
 }
 
 export type Point = {
   x: number,
-  y: number 
+  y: number
 }
 
 
@@ -349,14 +349,14 @@ export type Fx = {
   transforms: FilterEntry[],
   query?: string,
   originX?: string,
-  originY?: string
+  originY?: string,
+  svgFilters?: SvgFilter[]
 }
-
 
 export type FilterInfo = {
   isTransform?: boolean,
   ref?: ReferenceValues,
-  format: (value: number) => string 
+  format: (value: number) => string
 }
 
 export type TargetFx = "element" | "backdrop" | "both"
@@ -366,7 +366,7 @@ export type TargetFxFlags = {
   element?: boolean
 }
 
-export type FilterEntry = {name: FilterName, value: number}
+export type FilterEntry = { name: FilterName, value: number }
 export type StateOption = "on" | "off" | "toggle"
 
 
@@ -385,7 +385,7 @@ export type URLRule = {
   },
   overrideJs?: string,
   strictness?: URLStrictness,
-  titleRestrict?: string 
+  titleRestrict?: string
 }
 
 export enum URLStrictness {
@@ -446,3 +446,43 @@ export type ItcInit = {
   wasPaused?: boolean
 }
 
+
+export type SvgFilterInfo = {
+  generate: () => SvgFilter
+}
+
+export type SvgFilter = {
+  type: "mosaic" | "text" | "colorMatrix" | "blur" | "posterize",
+  enabled?: boolean,
+  id?: string,
+  text?: string,
+  mosaic?: MosaicSvgInit,
+  blur?: BlurSvgInit,
+  posterize?: number,
+  colorMatrix?: number[]
+}
+
+export type MosaicSvgInit = {
+  blockX: number,
+  blockY: number,
+  blockAspect: boolean,
+
+  sampleNormalX: number,
+  sampleNormalY: number,
+  sampleAspect: boolean,
+
+  scalingNormalX: number,
+  scalingNormalY: number,
+  scalingAspect: boolean,
+}
+
+export type BlurSvgInit = {
+  x: number,
+  y: number,
+  aspectLock?: boolean
+}
+
+export type MatrixTemplate = {
+  id: string,
+  values: number[] // [R1, R2, R3, RB, G1, G2, G3, GB, B1, B2, B3, BB]
+}

@@ -82,7 +82,8 @@
     "darkness": "暗さ",
     "modeStandard": "標準",
     "modeCustomFilter": "カスタムフィルター",
-    "modeCustomColor": "カスタムカラー"
+    "modeCustomColor": "カスタムカラー",
+    "aspectLock": "アスペクト固定"
   },
   "placer": {
     "windowBounds": {
@@ -112,7 +113,26 @@
     "translateY": "移動Y",
     "rotateX": "回転X",
     "rotateY": "回転Y",
-    "rotateZ": "回転Z"
+    "rotateZ": "回転Z",
+    "otherFilters": {
+      "mosaic": "モザイク",
+      "text": "テキスト",
+      "header": "その他のフィルター",
+      "colorMatrix": "カラーマップ",
+      "posterize": "ポスタライズ",
+      "blur": "ぼかし",
+      "blockX": "ブロックX",
+      "blockY": "ブロックY",
+      "detailX": "ディテールX",
+      "detailY": "ディテールY",
+      "stretchX": "スケールX",
+      "stretchY": "スケールY",
+      "levels": "レベル数",
+      "amount": "量",
+      "vertical": "垂直",
+      "horizontal": "水平",
+      "presets": "プリセット"
+    }
   },
   "command": {
     "nothing": "何もしない",

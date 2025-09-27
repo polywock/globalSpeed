@@ -82,7 +82,8 @@
     "darkness": "Ciemność",
     "modeStandard": "Standardowy",
     "modeCustomFilter": "Niestandardowy filtr",
-    "modeCustomColor": "Niestandardowy kolor"
+    "modeCustomColor": "Niestandardowy kolor",
+    "aspectLock": "Blokada proporcji"
   },
   "placer": {
     "windowBounds": {
@@ -112,7 +113,26 @@
     "translateY": "PrzesunięcieY",
     "rotateX": "ObrótX",
     "rotateY": "ObrótY",
-    "rotateZ": "ObrótZ"
+    "rotateZ": "ObrótZ",
+    "otherFilters": {
+      "mosaic": "Mozaika",
+      "text": "Tekst",
+      "header": "Inne filtry",
+      "colorMatrix": "Mapa kolorów",
+      "posterize": "Posteryzacja",
+      "blur": "Rozmycie",
+      "blockX": "Blok X",
+      "blockY": "Blok Y",
+      "detailX": "Szczegół X",
+      "detailY": "Szczegół Y",
+      "stretchX": "Rozciągnięcie X",
+      "stretchY": "Rozciągnięcie Y",
+      "levels": "Poziomy",
+      "amount": "Ilość",
+      "vertical": "Pionowy",
+      "horizontal": "Poziomy",
+      "presets": "Ustawienia"
+    }
   },
   "command": {
     "nothing": "Brak akcji",

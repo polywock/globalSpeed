@@ -82,7 +82,8 @@
     "darkness": "Karanlık",
     "modeStandard": "Standart",
     "modeCustomFilter": "Özel Filtre",
-    "modeCustomColor": "Özel renk"
+    "modeCustomColor": "Özel renk",
+    "aspectLock": "En-boy oranını kilitle"
   },
   "placer": {
     "windowBounds": {
@@ -112,7 +113,26 @@
     "translateY": "Çevir Y",
     "rotateX": "Döndür X",
     "rotateY": "Döndür Y",
-    "rotateZ": "Döndür Z"
+    "rotateZ": "Döndür Z",
+    "otherFilters": {
+      "mosaic": "Mozaik",
+      "text": "Metin",
+      "header": "Diğer filtreler",
+      "colorMatrix": "Renk haritası",
+      "posterize": "Posterleştir",
+      "blur": "Bulanıklaştır",
+      "blockX": "Blok X",
+      "blockY": "Blok Y",
+      "detailX": "Detay X",
+      "detailY": "Detay Y",
+      "stretchX": "Germe X",
+      "stretchY": "Germe Y",
+      "levels": "Seviyeler",
+      "amount": "Miktar",
+      "vertical": "Dikey",
+      "horizontal": "Yatay",
+      "presets": "Ön ayarlar"
+    }
   },
   "command": {
     "nothing": "Hiçbiri",

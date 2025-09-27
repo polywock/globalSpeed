@@ -82,7 +82,8 @@
     "darkness": "Độ tối",
     "modeStandard": "Tiêu chuẩn",
     "modeCustomFilter": "Bộ lọc tùy chỉnh",
-    "modeCustomColor": "Màu tùy chỉnh"
+    "modeCustomColor": "Màu tùy chỉnh",
+    "aspectLock": "Khoá tỉ lệ"
   },
   "placer": {
     "windowBounds": {
@@ -112,7 +113,26 @@
     "translateY": "TranslateY",
     "rotateX": "RotateX",
     "rotateY": "RotateY",
-    "rotateZ": "RotateZ"
+    "rotateZ": "RotateZ",
+    "otherFilters": {
+      "mosaic": "Khảm",
+      "text": "Văn bản",
+      "header": "Bộ lọc khác",
+      "colorMatrix": "Bản đồ màu",
+      "posterize": "Tạo ảnh poster",
+      "blur": "Làm mờ",
+      "blockX": "Khối X",
+      "blockY": "Khối Y",
+      "detailX": "Chi tiết X",
+      "detailY": "Chi tiết Y",
+      "stretchX": "Chi tiết X",
+      "stretchY": "Chi tiết Y",
+      "levels": "Mức",
+      "amount": "Lượng",
+      "vertical": "Dọc",
+      "horizontal": "Ngang",
+      "presets": "Cài sẵn"
+    }
   },
   "command": {
     "nothing": "Không hành động",

@@ -30,6 +30,7 @@ export type Gsm = {
     reset: string,
     duplicate: string,
     delete: string,
+    aspectLock: string,
     pinTooltip: string,
     mergeBoth: string,
     min: string,
@@ -113,7 +114,26 @@ export type Gsm = {
     translateY: string,
     rotateX: string,
     rotateY: string,
-    rotateZ: string
+    rotateZ: string,
+    otherFilters: {
+      header: string,
+      mosaic: string,
+      colorMatrix: string,
+      text: string,
+      posterize: string,
+      blur: string,
+      blockX: string,
+      blockY: string,
+      detailX: string,
+      detailY: string,
+      stretchX: string,
+      stretchY: string,
+      levels: string,
+      amount: string,
+      vertical: string,
+      horizontal: string,
+      presets: string
+    }
   },
   command: {
     nothing: string,

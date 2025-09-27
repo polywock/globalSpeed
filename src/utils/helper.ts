@@ -309,6 +309,13 @@ export function createElement(v: string) {
   return div.children[0]
 }
 
+export function createSVGElement(v: string) {
+  const SVG_NS = "http://www.w3.org/2000/svg"
+  const container = document.createElementNS(SVG_NS, "svg")
+  container.innerHTML = v.trim()
+  return container.firstElementChild as SVGElement
+}
+
 export function getPopupSize() {
   if (!screen) return {width: 1000, height: 800, left: 200, top: 200}
 
@@ -464,4 +471,17 @@ function getTopFrameOrigin() {
 
 export function getPracticalRuntimeUrl() {
   return gvar.isTopFrame ? location.href : (gvar.topFrameUrl || getTopFrameOrigin() || location.href || "")
+}
+
+export function interpolateMatrices(lhs: number[], rhs: number[], normal: number) {
+  lhs = lhs || []
+  rhs = rhs || []
+  if (lhs.length !== rhs.length) throw 'Incompatible matrices'
+  let out: number[] = []
+  for (let i = 0; i < lhs.length; i++) {
+    let l = lhs[i]
+    let r = rhs[i]
+    out.push(lerp(l, r, normal))
+  }
+  return out 
 }

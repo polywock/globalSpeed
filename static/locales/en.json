@@ -31,6 +31,7 @@
     "reset": "Reset",
     "duplicate": "Duplicate",
     "delete": "Delete",
+    "aspectLock": "Aspect lock",
 
     "pinTooltip": "Pin if you want the current tab to have it's own context (speed, filters, etc).",
     "mergeBoth": "Merge both",
@@ -121,7 +122,26 @@
     "translateY": "TranslateY",
     "rotateX": "RotateX",
     "rotateY": "RotateY",
-    "rotateZ": "RotateZ"
+    "rotateZ": "RotateZ",
+    "otherFilters": {
+      "header": "Other filters",
+      "mosaic": "Mosaic",
+      "colorMatrix": "Color map",
+      "text": "Text",
+      "posterize": "Posterize",
+      "blur": "Blur",
+      "blockX": "Block X",
+      "blockY": "Block Y",
+      "detailX": "Detail X",
+      "detailY": "Detail Y",
+      "stretchX": "Detail X",
+      "stretchY": "Detail Y",
+      "levels": "Levels",
+      "amount": "Amount",
+      "vertical": "Vertical",
+      "horizontal": "Horizontal",
+      "presets": "Presets"
+    }
   },
   "command": {
     "nothing": "No action",
