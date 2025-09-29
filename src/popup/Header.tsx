@@ -122,7 +122,8 @@ export function Header(props: HeaderProps) {
 
       {/* Github */}
       <div onClick={e => {
-        window.open("https://github.com/polywock/globalSpeed", "_blank")
+        chrome.tabs.create({url: "https://github.com/polywock/globalSpeed"})
+        window.close()
       }}>
         <FaGithub size="1.28rem"/>
       </div>

@@ -1,6 +1,9 @@
 import { createElement as m } from "src/utils/helper"
 import styles from "./styles.css?raw"
 import { ScalableDiv } from "./ScalableDiv"
+import { FilterEntry, SvgFilter } from "src/types"
+import { calculateStyle } from "../isolated/FxSync"
+import { formatFilters } from "src/utils/configUtils"
 
 declare global {
   interface GlobalVar {
@@ -15,8 +18,14 @@ export class Pane {
   sDiv = new ScalableDiv(this.div)
   hasBorder = true 
   color: string
+  styleInfo: ReturnType<typeof calculateStyle>
   public releaseCb: () => void
-  constructor(private filter: string, isClone = false) {
+  constructor(private filters: FilterEntry[], private svgFilters: SvgFilter[], isClone = false) {
+    this.styleInfo = calculateStyle(true, "v", formatFilters(filters || []), "", "center", svgFilters || [])
+    if (this.styleInfo.svg) {
+      this.div.appendChild(this.styleInfo.svg)
+    }
+
     this.innerDiv.classList.add("inner")
     this.div.appendChild(this.innerDiv)
     this.div.classList.add("pane")
@@ -74,6 +83,7 @@ export class Pane {
   release = () => {
     delete this.div
     this.sDiv?.release(); delete this.sDiv
+    this.styleInfo?.svg?.remove()
     Pane.deletePane(this)
   }
   sync = () => {
@@ -89,7 +99,7 @@ export class Pane {
       this.innerDiv.style.backgroundColor = this.color;
       (this.innerDiv.style as any).backdropFilter = "none"
     } else {
-      (this.innerDiv.style as any).backdropFilter = this.filter
+      (this.innerDiv.style as any).backdropFilter = this.styleInfo.filterValue || ""
       this.innerDiv.style.backgroundColor = "transparent"
     }
   }
@@ -113,7 +123,7 @@ export class Pane {
     }
   }
   static clone = (src: Pane) => {
-    const pane = new Pane(src.filter, true)
+    const pane = new Pane(src.filters, src.svgFilters, true)
     pane.color = src.color 
     pane.sDiv.x = src.sDiv.x + 20
     pane.sDiv.y = src.sDiv.y + 20

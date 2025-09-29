@@ -88,7 +88,7 @@ export class FxSync {
   }
 }
 
-function calculateStyle(enabled: boolean, selector: string, filters: string, transforms: string, origin: string, svgFilters: SvgFilter[]) {
+export function calculateStyle(enabled: boolean, selector: string, filters: string, transforms: string, origin: string, svgFilters: SvgFilter[]) {
   if (!enabled || !selector || !(filters || transforms || hasActiveSvgFilters(svgFilters))) return null
   let statements = []
   if (transforms) {

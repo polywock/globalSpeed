@@ -3,7 +3,7 @@ import { MediaEvent, MediaEventCinema, applyCinema, getMediaProbe, realizeMediaE
 import { documentHasFocus, injectScript } from "./utils"
 import { Indicator, IndicatorShowOpts } from "./utils/Indicator"
 import { Interactive } from "./utils/Interactive"
-import type { ItcInit } from "src/types"
+import type { FilterEntry, ItcInit, SvgFilter } from "src/types"
 import { getLeaf } from "src/utils/nativeUtils"
 
 declare global {
@@ -23,7 +23,7 @@ declare global {
         ytRateChange: {type: "YT_RATE_CHANGE", value: number},
   
         showIndicator: { type: "SHOW_INDICATOR", opts: IndicatorShowOpts, requiresFocus?: boolean, showAlt?: boolean  }
-        addPane: { type: "ADD_PANE", filter: any }
+        addPane: { type: "ADD_PANE", filters: FilterEntry[], svgFilters: SvgFilter[] }
         itc: {type: "ITC", inits: ItcInit[]}
         cinema: {type: "CINEMA", event: MediaEventCinema}
     }
@@ -68,10 +68,10 @@ export class MessageTower {
         } else if (msg.type === "ADD_PANE") {
           if (!gvar.Pane) {
             chrome.runtime.sendMessage({type: "REQUEST_PANE"} as Messages).then(() => {
-              gvar.Pane && new gvar.Pane(msg.filter)
+              gvar.Pane && new gvar.Pane(msg.filters, msg.svgFilters)
             })
           } else {
-            gvar.Pane && new gvar.Pane(msg.filter)
+            gvar.Pane && new gvar.Pane(msg.filters, msg.svgFilters)
           }
         } else if (msg.type === "ITC") {
           if (gvar.isTopFrame) {

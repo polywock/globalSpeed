@@ -35,11 +35,7 @@
     "on": "Ein",
     "off": "Aus",
     "toggle": "Umschalten",
-    "element": "Element",
-    "backdrop": "Hintergrund",
     "both": "Beide",
-    "query": "Abfrage",
-    "queryTooltip": "CSS-Selektor, um Elemente zum Filtern zu finden. Zum Beispiel wählt 'video, img' sowohl Videos als auch Bilder aus. Für fortgeschrittene Nutzung, Dokumentation zu CSS-Selektoren online ansehen.",
     "intoPane": "In den Bereich",
     "warning": "Warnung",
     "filters": "Filter",
@@ -83,7 +79,11 @@
     "modeStandard": "Standard",
     "modeCustomFilter": "Benutzerdefinierter Filter",
     "modeCustomColor": "Benutzerdefinierte Farbe",
-    "aspectLock": "Seitenverhältnis sperren"
+    "aspectLock": "Seitenverhältnis sperren",
+    "video": "Video",
+    "page": "Seite",
+    "selector": "Selektor",
+    "selectorTooltip": "CSS-Selektor, der verwendet wird, um zu filternde Elemente zu finden. Standardmäßig werden nur Videos erfasst, aber Sie können 'video, img, canvas' verwenden, um Videos, Bilder und Spiele zu erfassen."
   },
   "placer": {
     "windowBounds": {

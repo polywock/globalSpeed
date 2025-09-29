@@ -304,7 +304,7 @@ function FilterSelect(props: FilterSelectProps) {
                             }))
                         }}
                     >{filterTargets.map(v => {
-                        return <option key={v} value={v}>{(gvar.gsm.token as any)[v]}</option>
+                        return <option key={v} value={v}>{(gvar.gsm.token as any)[v === 'backdrop' ? 'page' : (v === 'element' ? 'video' : 'both')]}</option>
                     })}</select>
                 )}
                 {command.withFilterOption && (

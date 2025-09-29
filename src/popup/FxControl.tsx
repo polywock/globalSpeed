@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react"
-import { checkFilterDeviation, sendMessageToConfigSync, formatFilters, hasActiveSvgFilters, checkFilterDeviationOrActiveSvg } from "../utils/configUtils"
+import { checkFilterDeviation, sendMessageToConfigSync, checkFilterDeviationOrActiveSvg } from "../utils/configUtils"
 import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { Filters } from "./Filters"
 import { Origin } from "./Origin"
@@ -56,10 +56,10 @@ export function FxControl(props: FxControlProps) {
       <div className="tabs">
         <button className={`${!backdropTab ? "open" : ""} ${(active.elemFilter || active.elemTransform) ? "active" : ""}`} onClick={e => {
           setBackdropTab(false)
-        }}>{gvar.gsm.token.element}</button>
+        }}>{gvar.gsm.token.video}</button>
         <button className={`${backdropTab ? "open" : ""} ${(active.backdropFilter || active.backdropTransform)  ? "active" : ""}`} onClick={e => {
           setBackdropTab(true)
-        }}>{gvar.gsm.token.backdrop}</button>
+        }}>{gvar.gsm.token.page}</button>
       </div>
 
       <div className="controls">
@@ -85,7 +85,7 @@ export function FxControl(props: FxControlProps) {
       {/* Selector */}
       {!backdropTab && (
         <div className="selector">
-          <span>{gvar.gsm.token.query} <RegularTooltip align={"right"} title={gvar.gsm.token.queryTooltip}/></span>
+          <span>{gvar.gsm.token.selector} <RegularTooltip align={"right"} title={gvar.gsm.token.selectorTooltip}/></span>
           <ThrottledTextInput passInput={{placeholder: `video`}} value={fx.query || ""} onChange={v => {
             setCurrent(produce(fx, d => {
               d.query = v 
@@ -119,12 +119,13 @@ export function FxControl(props: FxControlProps) {
       {(!isMobile() && props.live && !transformTab && gvar.tabInfo.url?.startsWith("http")) && (
         <div className="buttons">
           <button className="intoPane" disabled={!fx.enabled || !(backdropTab ? active.backdropFilter : active.elemFilter)} onClick={e => {
-            const filter = formatFilters(fx.filters)
-            if (!filter) return 
+            if (!checkFilterDeviationOrActiveSvg(fx.filters, fx.svgFilters)) return 
             setCurrent(produce(fx, d => {
               d.filters = getDefaultFx().filters
+              d.enabled = false 
+              delete d.svgFilters
             }))
-            sendMessageToConfigSync({type: "ADD_PANE", filter}, gvar.tabInfo.tabId, 0)
+            sendMessageToConfigSync({type: "ADD_PANE", filters: fx.filters, svgFilters: fx.svgFilters}, gvar.tabInfo.tabId, 0)
             setTimeout(() => {
               window.close()
             }, 50)
@@ -144,12 +145,14 @@ export function FxControl(props: FxControlProps) {
           }
         }))
       }}/>
-      <SvgFilterList svgFilters={fx.svgFilters || []} onChange={(newVal, forceEnable) => {
-        setCurrent(produce(fx, d => {
-          d.svgFilters = newVal
-          if (forceEnable) d.enabled = true 
-        }))
-      }}/>
+      {isMobile() || (
+        <SvgFilterList svgFilters={fx.svgFilters || []} onChange={(newVal, forceEnable) => {
+          setCurrent(produce(fx, d => {
+            d.svgFilters = newVal
+            if (forceEnable) d.enabled = true 
+          }))
+        }}/>
+      )}
     </div>
   )
 }

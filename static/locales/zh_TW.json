@@ -37,11 +37,7 @@
     "on": "開啟",
     "off": "關閉",
     "toggle": "切換",
-    "element": "元素",
-    "backdrop": "背景",
     "both": "兩者",
-    "query": "查詢",
-    "queryTooltip": "用來尋找要套用濾鏡元素的 CSS 選擇器。例如，'video, img' 會同時選取影片和圖片。如需進階用法，請參閱線上 CSS 選擇器文件。",
     "intoPane": "轉為視窗",
     "warning": "警告",
     "filters": "濾鏡",
@@ -84,7 +80,11 @@
     "modeStandard": "標準",
     "modeCustomFilter": "自訂濾鏡",
     "modeCustomColor": "自訂顏色",
-    "aspectLock": "鎖定比例"
+    "aspectLock": "鎖定比例",
+    "video": "影片",
+    "page": "頁面",
+    "selector": "選擇器",
+    "selectorTooltip": "用來尋找要過濾元素的 CSS 選擇器。預設僅針對影片，但你也可以使用 'video, img, canvas' 來同時針對影片、圖片和遊戲。"
   },
   "placer": {
     "windowBounds": {

@@ -35,11 +35,7 @@
     "on": "Açık",
     "off": "Kapalı",
     "toggle": "Geçiş",
-    "element": "Öğe",
-    "backdrop": "Arka fon",
     "both": "Her ikisi",
-    "query": "Seçici",
-    "queryTooltip": "Filtrelenecek öğeleri bulmak için kullanılan CSS seçicisi. Örneğin, 'video, img' hem videoları hem de resimleri seçer. Gelişmiş kullanım için çevrimiçi belgelerden CSS seçicileri hakkında bilgi edinin.",
     "intoPane": "Pencere oluştur",
     "warning": "Uyarı",
     "filters": "Filtreler",
@@ -83,7 +79,11 @@
     "modeStandard": "Standart",
     "modeCustomFilter": "Özel Filtre",
     "modeCustomColor": "Özel renk",
-    "aspectLock": "En-boy oranını kilitle"
+    "aspectLock": "En-boy oranını kilitle",
+    "video": "Video",
+    "page": "Sayfa",
+    "selector": "Seçici",
+    "selectorTooltip": "Filtrelenecek öğeleri bulmak için kullanılan CSS seçici. Varsayılan olarak yalnızca videoları hedefler, ancak videoları, resimleri ve oyunları hedeflemek için 'video, img, canvas' kullanabilirsiniz."
   },
   "placer": {
     "windowBounds": {

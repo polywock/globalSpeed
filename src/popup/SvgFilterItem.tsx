@@ -317,7 +317,7 @@ const SVG_TYPE_TO_PRESET: { [key in keyof Partial<typeof SVG_FILTER_ADDITIONAL>]
    mosaic: {
       options: SVG_MOSAIC_PRESETS,
       handler: (filter, onChange, preset) => {
-         onChange({ ...filter, mosaic: preset.values })
+         onChange({ ...filter, mosaic: {...filter.mosaic, ...preset.values} })
       }
    },
    colorMatrix: {

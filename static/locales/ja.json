@@ -35,11 +35,7 @@
     "on": "オン",
     "off": "オフ",
     "toggle": "トグル",
-    "element": "要素",
-    "backdrop": "背景",
     "both": "両方",
-    "query": "セレクター",
-    "queryTooltip": "要素をフィルタリングするために使用されるCSSセレクタ。例えば、'video, img' はビデオと画像の両方を選択します。高度な使用法については、CSSセレクタに関するオンラインドキュメントをご覧ください。",
     "intoPane": "窓として",
     "warning": "警告",
     "filters": "フィルター",
@@ -83,7 +79,11 @@
     "modeStandard": "標準",
     "modeCustomFilter": "カスタムフィルター",
     "modeCustomColor": "カスタムカラー",
-    "aspectLock": "アスペクト固定"
+    "aspectLock": "アスペクト固定",
+    "video": "ビデオ",
+    "page": "ページ",
+    "selector": "セレクター",
+    "selectorTooltip": "フィルタリングする要素を見つけるために使用されるCSSセレクタ。デフォルトでは動画のみが対象ですが、「video, img, canvas」と指定することで、動画、画像、ゲームを対象にできます。"
   },
   "placer": {
     "windowBounds": {

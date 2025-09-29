@@ -653,9 +653,8 @@ export function getDefaultKeybinds(): Keybind[] {
       contextLabel: "- Fx :: Grayscale Page",
       filterOption: "grayscale",
       filterTarget: "backdrop",
-      adjustMode: AdjustMode.ITC,
-      valueItcMin: 0,
-      valueItcMax: 1,
+      adjustMode: AdjustMode.CYCLE,
+      valueCycle: [0, 1]
     },
     {
       ...commandInfos.fxFilter.generate(),

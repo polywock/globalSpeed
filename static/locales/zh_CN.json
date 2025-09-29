@@ -36,11 +36,7 @@
     "on": "打开",
     "off": "关闭",
     "toggle": "切换",
-    "element": "元素",
-    "backdrop": "背景",
     "both": "两者",
-    "query": "选择器",
-    "queryTooltip": "用于查找要过滤的元素的CSS选择器。例如，'video, img' 将选择视频和图片。有关CSS选择器的高级用法，请查看在线文档。",
     "intoPane": "制成窗格",
     "warning": "警告",
     "filters": "滤镜",
@@ -84,7 +80,11 @@
     "modeStandard": "标准",
     "modeCustomFilter": "自定义滤镜",
     "modeCustomColor": "自定义颜色",
-    "aspectLock": "锁定比例"
+    "aspectLock": "锁定比例",
+    "video": "视频",
+    "page": "页面",
+    "selector": "选择器",
+    "selectorTooltip": "用于查找要过滤元素的 CSS 选择器。默认情况下只针对视频，但你可以使用 'video, img, canvas' 来同时选择视频、图像和游戏。"
   },
   "placer": {
     "windowBounds": {

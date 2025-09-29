@@ -35,11 +35,7 @@
     "on": "Hidup",
     "off": "Mati",
     "toggle": "Tukar",
-    "element": "Elemen",
-    "backdrop": "Latar belakang",
     "both": "Kedua-duanya",
-    "query": "Pertanyaan",
-    "queryTooltip": "Pemilih CSS digunakan untuk mencari elemen untuk ditapis. Contohnya, 'video, img' akan memilih kedua-dua video dan imej. Untuk kegunaan lanjut, lihat dokumentasi dalam talian tentang pemilih CSS.",
     "intoPane": "Ke dalam panel",
     "warning": "Amaran",
     "filters": "Penapis",
@@ -83,7 +79,11 @@
     "modeStandard": "Standard",
     "modeCustomFilter": "Penapis Tersuai",
     "modeCustomColor": "Warna tersuai",
-    "aspectLock": "Kunci nisbah aspek"
+    "aspectLock": "Kunci nisbah aspek",
+    "video": "Video",
+    "page": "Halaman",
+    "selector": "Pemilih",
+    "selectorTooltip": "Pemilih CSS digunakan untuk mencari elemen untuk ditapis. Secara lalai ia hanya menyasarkan video, tetapi anda boleh menggunakan 'video, img, canvas' untuk menyasarkan video, imej dan permainan."
   },
   "placer": {
     "windowBounds": {

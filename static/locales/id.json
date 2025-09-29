@@ -35,11 +35,7 @@
     "on": "Nyala",
     "off": "Mati",
     "toggle": "Alih",
-    "element": "Elemen",
-    "backdrop": "Latar belakang",
     "both": "Keduanya",
-    "query": "Kueri",
-    "queryTooltip": "Pemilih CSS digunakan untuk menemukan elemen yang akan difilter. Misalnya, 'video, img' akan memilih video dan gambar. Untuk penggunaan lanjutan, lihat dokumentasi online tentang pemilih CSS.",
     "intoPane": "Ke panel",
     "warning": "Peringatan",
     "filters": "Filter",
@@ -83,7 +79,11 @@
     "modeStandard": "Standar",
     "modeCustomFilter": "Filter Kustom",
     "modeCustomColor": "Warna kustom",
-    "aspectLock": "Kunci aspek"
+    "aspectLock": "Kunci aspek",
+    "video": "Video",
+    "page": "Halaman",
+    "selector": "Pemilih",
+    "selectorTooltip": "Selector CSS yang digunakan untuk menemukan elemen yang akan difilter. Secara default hanya menargetkan video, tetapi Anda dapat menggunakan 'video, img, canvas' untuk menargetkan video, gambar, dan permainan."
   },
   "placer": {
     "windowBounds": {

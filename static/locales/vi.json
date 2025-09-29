@@ -35,11 +35,7 @@
     "on": "Bật",
     "off": "Tắt",
     "toggle": "Chuyển đổi",
-    "element": "Thành phần",
-    "backdrop": "Phông nền",
     "both": "Cả hai",
-    "query": "Câu hỏi",
-    "queryTooltip": "Bộ chọn CSS được sử dụng để tìm các phần tử để lọc. Ví dụ, 'video, img' sẽ chọn cả video và hình ảnh. Để sử dụng nâng cao, xem tài liệu trực tuyến về bộ chọn CSS.",
     "intoPane": "Into pane",
     "warning": "Cảnh báo",
     "filters": "Bộ lọc",
@@ -83,7 +79,11 @@
     "modeStandard": "Tiêu chuẩn",
     "modeCustomFilter": "Bộ lọc tùy chỉnh",
     "modeCustomColor": "Màu tùy chỉnh",
-    "aspectLock": "Khoá tỉ lệ"
+    "aspectLock": "Khoá tỉ lệ",
+    "video": "Video",
+    "page": "Trang",
+    "selector": "Bộ chọn",
+    "selectorTooltip": "Bộ chọn CSS được sử dụng để tìm các phần tử cần lọc. Mặc định chỉ nhắm vào video, nhưng bạn có thể sử dụng 'video, img, canvas' để nhắm vào video, hình ảnh và trò chơi."
   },
   "placer": {
     "windowBounds": {

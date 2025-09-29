@@ -35,11 +35,7 @@
     "on": "Ligado",
     "off": "Desligado",
     "toggle": "Alternancia",
-    "element": "Elemento",
-    "backdrop": "Fundo",
     "both": "Ambos",
-    "query": "Seletor",
-    "queryTooltip": "Seletor CSS usado para encontrar elementos para filtrar. Por exemplo, 'video, img' selecionará tanto vídeos quanto imagens. Para uso avançado, consulte a documentação online sobre seletores CSS.",
     "intoPane": "Criar janela",
     "warning": "Aviso",
     "filters": "Filtros",
@@ -83,7 +79,11 @@
     "modeStandard": "Padrão",
     "modeCustomFilter": "Filtro personalizado",
     "modeCustomColor": "Cor personalizada",
-    "aspectLock": "Bloqueio de proporção"
+    "aspectLock": "Bloqueio de proporção",
+    "video": "Vídeo",
+    "page": "Página",
+    "selector": "Seletor",
+    "selectorTooltip": "Seletor CSS usado para encontrar elementos a serem filtrados. Por padrão, ele só aponta para vídeos, mas você pode usar 'video, img, canvas' para atingir vídeos, imagens e jogos."
   },
   "placer": {
     "windowBounds": {

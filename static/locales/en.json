@@ -42,12 +42,12 @@
     "off": "Off",
     "toggle": "Toggle",
 
-    "element": "Element",
-    "backdrop": "Backdrop",
+    "video": "Video",
+    "page": "Page",
     "both": "Both",
     
-    "query": "Query",
-    "queryTooltip": "CSS selector used to find elements to filter. For example, 'video, img' will select both videos and images. For advanced usage, view documentation online about CSS selectors.",
+    "selector": "Selector",
+    "selectorTooltip": "CSS selector used to find elements to filter. By default it only targets videos, but you can use 'video, img, canvas' to target videos, images and games.",
     
     "intoPane": "Into pane",
     "warning": "Warning",

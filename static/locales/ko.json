@@ -36,11 +36,7 @@
     "on": "켜짐",
     "off": "꺼짐",
     "toggle": "토글",
-    "element": "요소",
-    "backdrop": "배경",
     "both": "모두",
-    "query": "선택기",
-    "queryTooltip": "필터링할 요소를 찾기 위해 사용되는 CSS 선택자입니다. 예를 들어, 'video, img'는 비디오와 이미지 모두를 선택합니다. 고급 사용법에 대해서는 온라인 문서에서 CSS 선택자에 대해 확인하세요.",
     "intoPane": "창 생성",
     "warning": "경고",
     "filters": "필터",
@@ -84,7 +80,11 @@
     "modeStandard": "표준",
     "modeCustomFilter": "사용자 필터",
     "modeCustomColor": "사용자 지정 색상",
-    "aspectLock": "종횡비 잠금"
+    "aspectLock": "종횡비 잠금",
+    "video": "비디오",
+    "page": "페이지",
+    "selector": "선택자",
+    "selectorTooltip": "필터링할 요소를 찾는 데 사용되는 CSS 선택자입니다. 기본적으로는 비디오만 대상으로 하지만, 'video, img, canvas'를 사용하면 비디오, 이미지, 게임을 모두 대상으로 할 수 있습니다."
   },
   "placer": {
     "windowBounds": {
