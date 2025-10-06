@@ -13,6 +13,9 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--fg-color);
+  /* 修复火狐浏览器中进度条遮挡元素的问题 */
+  scrollbar-width: thin;
+  overflow-x: hidden;
 }
 
 #SuperDisable {
