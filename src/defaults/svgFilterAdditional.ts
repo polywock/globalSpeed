@@ -4,11 +4,10 @@ import { lerp } from "src/utils/helper"
 
 export const SVG_FILTER_ADDITIONAL: { [key in SvgFilterName]: {
    format: (filter: SvgFilter) => string,
-   isValid: (filter: SvgFilter) => boolean
+   isValid?: (filter: SvgFilter) => boolean
 } } = {
    mosaic: {
       format: filter => {
-         // const def = svgFilterInfos[filter.type].generate()
          const init = filter.mosaic
 
          // All should be odd.
@@ -32,14 +31,12 @@ export const SVG_FILTER_ADDITIONAL: { [key in SvgFilterName]: {
          let morph = `<feMorphology operator="dilate" radius="${morphX} ${morphY}"></feMorphology>`
 
          return `<filter x="-20%" y="-20%" width="140%" height="140%">${flood}${compA}${morph}</filter>`
-      },
-      isValid: filter => true 
+      }
    },
-   text: {
+   custom: {
       format: filter => {
          return filter.text
-      },
-      isValid: filter => true 
+      }
    },
    colorMatrix: {
       format: filter => {
@@ -55,8 +52,23 @@ export const SVG_FILTER_ADDITIONAL: { [key in SvgFilterName]: {
          return `<filter x="-20%" y="-20%" width="140%" height="140%">
             <feColorMatrix type="matrix" values="${matrix.map(m => m.toFixed(3)).join(" ")}"/>
          </filter>`
+      }
+   },
+   rgb: {
+      format: filter => {
+         const matrix = Array(20).fill(0) as number[]
+         for (let i = 0; i < 3; i++) {
+            matrix[i * 5 + i] = filter.rgb[i]
+         }
+         matrix[18] = 1 
+
+         return `<filter x="-20%" y="-20%" width="140%" height="140%">
+            <feColorMatrix type="matrix" values="${matrix.map(m => m.toFixed(3)).join(" ")}"/>
+         </filter>`
       },
-      isValid: filter => true 
+      isValid: filter => {
+         return filter.rgb && (filter.rgb[0] !== 1 || filter.rgb[1] !== 1 || filter.rgb[2] !== 1)
+      }
    },
    posterize: {
       format: filter => {
@@ -74,8 +86,7 @@ export const SVG_FILTER_ADDITIONAL: { [key in SvgFilterName]: {
                <feFuncB type="discrete" tableValues="${tableValues}"/>
             </feComponentTransfer>
          </filter>`
-      },
-      isValid: filter => true 
+      }
    },
    blur: {
       format: filter => {
@@ -87,4 +98,21 @@ export const SVG_FILTER_ADDITIONAL: { [key in SvgFilterName]: {
          return filter.blur.x > 0 || filter.blur.y > 0
       }
    },
+   sharpen: {
+      format: filter => {
+         if (!filter.sharpen) return 
+         const neg = `-${filter.sharpen.toFixed(2)}`
+         const center = (1 + 4 * filter.sharpen).toFixed(6)
+         const values = `0 ${neg} 0 ${neg} ${center} ${neg} 0 ${neg} 0`
+         return `<filter x="-10%" y="-10%" width="120%" height="120%"><feConvolveMatrix order="3" kernelMatrix="${values}" edgeMode="duplicate" preserveAlpha="true"/></filter>`
+      },
+      isValid: filter => filter.sharpen > 0 
+   },
+   special: {
+      format: filter => {
+         return `<filter x="-20%" y="-20%" width="140%" height="140%">${filter.text}</filter>`
+      },
+      isValid: filter => !!filter.text 
+   }
 }
+

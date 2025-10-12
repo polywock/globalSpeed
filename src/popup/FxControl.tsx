@@ -95,7 +95,7 @@ export function FxControl(props: FxControlProps) {
       )}
 
       {/* Type tabs */}
-      <div className="tabs">
+      <div className="tabs sm">
         <button className={`${!transformTab ? "open" : ""} ${(backdropTab ? active.backdropFilter : active.elemFilter) ? "active" : ""}`} onClick={e => {
           setTransformTab(false)
         }}>{gvar.gsm.token.filters}</button>

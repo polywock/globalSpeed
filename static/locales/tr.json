@@ -116,7 +116,6 @@
     "rotateZ": "Döndür Z",
     "otherFilters": {
       "mosaic": "Mozaik",
-      "text": "Metin",
       "header": "Diğer filtreler",
       "colorMatrix": "Renk haritası",
       "posterize": "Posterleştir",
@@ -125,13 +124,20 @@
       "blockY": "Blok Y",
       "detailX": "Detay X",
       "detailY": "Detay Y",
-      "stretchX": "Germe X",
-      "stretchY": "Germe Y",
       "levels": "Seviyeler",
       "amount": "Miktar",
       "vertical": "Dikey",
       "horizontal": "Yatay",
-      "presets": "Ön ayarlar"
+      "presets": "Ön ayarlar",
+      "custom": "Özel",
+      "sharpen": "Netleştir",
+      "special": "Özel",
+      "stretchX": "X Ekseni Uzat",
+      "stretchY": "Y Ekseni Uzat",
+      "rgb": "RGB",
+      "red": "Kırmızı",
+      "green": "Yeşil",
+      "blue": "Mavi"
     }
   },
   "command": {

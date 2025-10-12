@@ -4,6 +4,7 @@ import { filterInfos } from "../defaults/filters";
 import type { MediaEvent } from "../contentScript/isolated/utils/applyMediaEvent";
 import { Hotkey, compareHotkeys } from "./keys";
 import { SVG_FILTER_ADDITIONAL } from "src/defaults/svgFilterAdditional"
+import { svgFilterIsValid } from "src/defaults/filters"
 
 
 
@@ -42,7 +43,7 @@ export function hasActiveSvgFilters(filters: SvgFilter[]) {
   if (filters?.filter(f => {
     if (!f.enabled) return 
     const typeInfo = SVG_FILTER_ADDITIONAL[f.type]
-    if (typeInfo.isValid(f)) return true 
+    if (svgFilterIsValid(f, typeInfo.isValid)) return true 
   }).length) return true 
 }
 

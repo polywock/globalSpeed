@@ -116,7 +116,6 @@
     "rotateZ": "回転Z",
     "otherFilters": {
       "mosaic": "モザイク",
-      "text": "テキスト",
       "header": "その他のフィルター",
       "colorMatrix": "カラーマップ",
       "posterize": "ポスタライズ",
@@ -125,13 +124,20 @@
       "blockY": "ブロックY",
       "detailX": "ディテールX",
       "detailY": "ディテールY",
-      "stretchX": "スケールX",
-      "stretchY": "スケールY",
       "levels": "レベル数",
       "amount": "量",
       "vertical": "垂直",
       "horizontal": "水平",
-      "presets": "プリセット"
+      "presets": "プリセット",
+      "custom": "カスタム",
+      "sharpen": "シャープ",
+      "special": "特殊",
+      "stretchX": "X 伸縮",
+      "stretchY": "Y 伸縮",
+      "rgb": "RGB",
+      "red": "赤",
+      "green": "緑",
+      "blue": "青"
     }
   },
   "command": {

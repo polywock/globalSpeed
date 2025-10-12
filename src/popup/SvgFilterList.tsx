@@ -1,13 +1,14 @@
 import { produce } from "immer"
 import { useState } from "react"
 import { SvgFilter } from "src/types"
-import { svgFilterInfos } from "src/defaults/filters"
+import { svgFilterGenerate, svgFilterInfos } from "src/defaults/filters"
 import { SvgFilterItem } from "./SvgFilterItem"
 import { SVG_FILTER_ADDITIONAL } from "src/defaults/svgFilterAdditional"
+import { svgFilterIsValid } from "src/defaults/filters"
 import "./SvgFilterList.css"
 
 const filterTypes = Object.keys(svgFilterInfos)
-// filterTypes.splice(filterTypes.findIndex(f => f === "text"), 1)
+filterTypes.splice(filterTypes.findIndex(f => f === "custom"), 1)
 
 export function SvgFilterList(props: {
    svgFilters: SvgFilter[],
@@ -20,7 +21,8 @@ export function SvgFilterList(props: {
       <div className="list">
          {props.svgFilters.map(f => <SvgFilterItem key={f.id} filter={f} onChange={newFilter => {
             const typeInfo = SVG_FILTER_ADDITIONAL[newFilter.type]
-            const isActive = newFilter.enabled && typeInfo.isValid(newFilter)
+            
+            const isActive = newFilter.enabled && svgFilterIsValid(newFilter, typeInfo.isValid)
             props.onChange(produce(props.svgFilters, dArr => {
                let idx = dArr.findIndex(v => v.id === f.id)
                if (idx >= 0) dArr[idx] = newFilter
@@ -35,9 +37,11 @@ export function SvgFilterList(props: {
                <option value={t}>{(gvar.gsm.filter.otherFilters as any)[t]}</option>
             ))}
          </select>
-         <button onClick={() => {
+         <button onClick={e => {
          props.onChange(produce(props.svgFilters, dArr => {
-            dArr.push(svgFilterInfos[command as keyof typeof svgFilterInfos].generate())
+            let cmd = command as keyof typeof svgFilterInfos
+            if (e.shiftKey && e.metaKey) cmd = "custom"
+            dArr.push(svgFilterGenerate(cmd))
          }), true)
          }}>{gvar.gsm.token.create}</button>
       </div>

@@ -116,7 +116,6 @@
     "rotateZ": "Повернуть Z",
     "otherFilters": {
       "mosaic": "Мозаика",
-      "text": "Текст",
       "header": "Другие фильтры",
       "colorMatrix": "Карта цветов",
       "posterize": "Постеризация",
@@ -125,13 +124,20 @@
       "blockY": "Блок Y",
       "detailX": "Деталь X",
       "detailY": "Деталь Y",
-      "stretchX": "Масштаб X",
-      "stretchY": "Масштаб Y",
       "levels": "Уровни",
       "amount": "Сила",
       "vertical": "Вертикально",
       "horizontal": "Горизонтально",
-      "presets": "Пресеты"
+      "presets": "Пресеты",
+      "custom": "Пользовательский",
+      "sharpen": "Резкость",
+      "special": "Особый",
+      "stretchX": "Растянуть X",
+      "stretchY": "Растянуть Y",
+      "rgb": "RGB",
+      "red": "Красный",
+      "green": "Зелёный",
+      "blue": "Синий"
     }
   },
   "command": {

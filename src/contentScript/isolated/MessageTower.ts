@@ -43,6 +43,9 @@ export class MessageTower {
           gvar.os.speedSync?.processTemporarySpeed(msg.factor)
         } else if (msg.type === "TOP_FRAME_URL_UPDATE") {
           gvar.topFrameUrl = msg.value 
+        } else if (msg.type === "REQUEST_TOP_FRAME_URL") {
+          reply({value: location.href})
+          return 
         } else if (msg.type === "RUN_JS") {
           // used to run "javascript" URL rules for Firefox.
           injectScript(msg.value)

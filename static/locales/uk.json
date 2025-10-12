@@ -116,7 +116,6 @@
     "rotateZ": "Повернути Z",
     "otherFilters": {
       "mosaic": "Мозаїка",
-      "text": "Текст",
       "header": "Інші фільтри",
       "colorMatrix": "Кольорова карта",
       "posterize": "Постеризація",
@@ -125,13 +124,20 @@
       "blockY": "Блок Y",
       "detailX": "Деталь X",
       "detailY": "Деталь Y",
-      "stretchX": "Масштаб X",
-      "stretchY": "Масштаб Y",
       "levels": "Рівні",
       "amount": "Кількість",
       "vertical": "Вертикально",
       "horizontal": "Горизонтально",
-      "presets": "Пресети"
+      "presets": "Пресети",
+      "custom": "Користувацький",
+      "sharpen": "Різкість",
+      "special": "Спеціальний",
+      "stretchX": "Розтягнути X",
+      "stretchY": "Розтягнути Y",
+      "rgb": "RGB",
+      "red": "Червоний",
+      "green": "Зелений",
+      "blue": "Синій"
     }
   },
   "command": {

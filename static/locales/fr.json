@@ -116,7 +116,6 @@
     "rotateZ": "Rotation Z",
     "otherFilters": {
       "mosaic": "Mosaïque",
-      "text": "Texte",
       "header": "Autres filtres",
       "colorMatrix": "Carte des couleurs",
       "posterize": "Postériser",
@@ -125,13 +124,20 @@
       "blockY": "Bloc Y",
       "detailX": "Détail X",
       "detailY": "Détail Y",
-      "stretchX": "Détail X",
-      "stretchY": "Détail Y",
       "levels": "Niveaux",
       "amount": "Quantité",
       "vertical": "Vertical",
       "horizontal": "Horizontal",
-      "presets": "Préréglages"
+      "presets": "Préréglages",
+      "custom": "Personnalisé",
+      "sharpen": "Accentuer",
+      "special": "Spécial",
+      "stretchX": "Étirer X",
+      "stretchY": "Étirer Y",
+      "rgb": "RVB",
+      "red": "Rouge",
+      "green": "Vert",
+      "blue": "Bleu"
     }
   },
   "command": {

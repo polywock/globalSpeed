@@ -116,7 +116,6 @@
     "rotateZ": "دوران حول Z",
     "otherFilters": {
       "mosaic": "فسيفساء",
-      "text": "نص",
       "header": "مرشحات أخرى",
       "colorMatrix": "خريطة الألوان",
       "posterize": "تأثير البوسترايز",
@@ -125,13 +124,20 @@
       "blockY": "الكتلة Y",
       "detailX": "التفصيل X",
       "detailY": "التفصيل Y",
-      "stretchX": "تمديد X",
-      "stretchY": "تمديد Y",
       "levels": "المستويات",
       "amount": "الكمية",
       "vertical": "عمودي",
       "horizontal": "أفقي",
-      "presets": "الإعدادات المسبقة"
+      "presets": "الإعدادات المسبقة",
+      "custom": "مخصص",
+      "sharpen": "تحسين الحدة",
+      "special": "خاص",
+      "stretchX": "تمديد X",
+      "stretchY": "تمديد Y",
+      "rgb": "أحمر أخضر أزرق",
+      "red": "أحمر",
+      "green": "أخضر",
+      "blue": "أزرق"
     }
   },
   "command": {

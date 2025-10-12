@@ -116,7 +116,6 @@
     "rotateZ": "PutarZ",
     "otherFilters": {
       "mosaic": "Mosaik",
-      "text": "Teks",
       "header": "Filter lainnya",
       "colorMatrix": "Peta warna",
       "posterize": "Posterisasi",
@@ -125,13 +124,20 @@
       "blockY": "Blok Y",
       "detailX": "Detil X",
       "detailY": "Detil Y",
-      "stretchX": "Detil X",
-      "stretchY": "Detil Y",
       "levels": "Tingkat",
       "amount": "Jumlah",
       "vertical": "Vertikal",
       "horizontal": "Horizontal",
-      "presets": "Preset"
+      "presets": "Preset",
+      "custom": "Kustom",
+      "sharpen": "Pertajam",
+      "special": "Spesial",
+      "stretchX": "Rentangkan X",
+      "stretchY": "Rentangkan Y",
+      "rgb": "RGB",
+      "red": "Merah",
+      "green": "Hijau",
+      "blue": "Biru"
     }
   },
   "command": {

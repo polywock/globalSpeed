@@ -5,6 +5,7 @@ import { getDefaultFx } from "src/defaults"
 import { Backdrop } from "./utils/Backdrop"
 import { createSVGElement, randomId } from "src/utils/helper"
 import { SVG_FILTER_ADDITIONAL } from "src/defaults/svgFilterAdditional"
+import { svgFilterIsValid } from "src/defaults/filters"
 
 export class FxSync {
   released: boolean
@@ -103,7 +104,8 @@ export function calculateStyle(enabled: boolean, selector: string, filters: stri
     try {
       let colocatedInfos = svgFilters.map(f => {
         const typeInfo = SVG_FILTER_ADDITIONAL[f.type]
-        if (!(f.enabled && typeInfo.isValid(f))) return 
+        
+        if (!(f.enabled && svgFilterIsValid(f, typeInfo.isValid))) return 
         let id = `svg_${randomId()}`
         const text = typeInfo.format(f)
         if (!text) return 

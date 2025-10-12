@@ -114,7 +114,7 @@ export function Header(props: HeaderProps) {
 
       {/* Options page */}
       <div  onClick={async e => {
-        await chrome.runtime.openOptionsPage()
+        chrome.tabs.create({url: chrome.runtime.getURL("options.html")})
         window.close()
       }}>
         <Gear size="1.42rem"/>

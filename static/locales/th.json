@@ -116,7 +116,6 @@
     "rotateZ": "หมุนแกน Z",
     "otherFilters": {
       "mosaic": "โมเสก",
-      "text": "ข้อความ",
       "header": "ตัวกรองอื่นๆ",
       "colorMatrix": "แผนที่สี",
       "posterize": "โปสเตอร์ไรซ์",
@@ -125,13 +124,20 @@
       "blockY": "บล็อก Y",
       "detailX": "รายละเอียด X",
       "detailY": "รายละเอียด Y",
-      "stretchX": "ยืด X",
-      "stretchY": "ยืด Y",
       "levels": "ระดับ",
       "amount": "ปริมาณ",
       "vertical": "แนวตั้ง",
       "horizontal": "แนวนอน",
-      "presets": "ค่าที่ตั้งไว้ล่วงหน้า"
+      "presets": "ค่าที่ตั้งไว้ล่วงหน้า",
+      "custom": "กำหนดเอง",
+      "sharpen": "เพิ่มความคมชัด",
+      "special": "พิเศษ",
+      "stretchX": "ขยาย X",
+      "stretchY": "ขยาย Y",
+      "rgb": "อาร์จีบี",
+      "red": "แดง",
+      "green": "เขียว",
+      "blue": "น้ำเงิน"
     }
   },
   "command": {

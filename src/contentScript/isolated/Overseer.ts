@@ -72,7 +72,10 @@ export class Overseer {
         if (gvar.isTopFrame) {
             this.indicator = new Indicator()
             this.indicator.setInit(view.indicatorInit || {})
-        }
+        } 
+        
+        // Top frame notifies subframes on changes to its url, but ensure we have the current one. 
+        if (!gvar.isTopFrame) chrome.runtime.sendMessage({type: 'REQUEST_TOP_FRAME_URL'} as Messages)
     }
     handleDOMLoaded = () => {
         this.visibleSync = new VisibleSync(this.handleVisibleChange)

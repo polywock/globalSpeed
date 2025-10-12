@@ -116,7 +116,6 @@
     "rotateZ": "RotateZ",
     "otherFilters": {
       "mosaic": "Khảm",
-      "text": "Văn bản",
       "header": "Bộ lọc khác",
       "colorMatrix": "Bản đồ màu",
       "posterize": "Tạo ảnh poster",
@@ -125,13 +124,20 @@
       "blockY": "Khối Y",
       "detailX": "Chi tiết X",
       "detailY": "Chi tiết Y",
-      "stretchX": "Chi tiết X",
-      "stretchY": "Chi tiết Y",
       "levels": "Mức",
       "amount": "Lượng",
       "vertical": "Dọc",
       "horizontal": "Ngang",
-      "presets": "Cài sẵn"
+      "presets": "Cài sẵn",
+      "custom": "Tùy chỉnh",
+      "sharpen": "Làm nét",
+      "special": "Đặc biệt",
+      "stretchX": "Kéo giãn X",
+      "stretchY": "Kéo giãn Y",
+      "rgb": "RGB",
+      "red": "Đỏ",
+      "green": "Xanh lá",
+      "blue": "Xanh dương"
     }
   },
   "command": {

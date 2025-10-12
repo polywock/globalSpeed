@@ -446,20 +446,17 @@ export type ItcInit = {
   wasPaused?: boolean
 }
 
-
-export type SvgFilterInfo = {
-  generate: () => SvgFilter
-}
-
 export type SvgFilter = {
-  type: "mosaic" | "text" | "colorMatrix" | "blur" | "posterize",
+  type: "mosaic" | "custom" | "colorMatrix" | "blur" | "posterize" | "sharpen" | "special" | "rgb",
   enabled?: boolean,
   id?: string,
   text?: string,
   mosaic?: MosaicSvgInit,
   blur?: BlurSvgInit,
   posterize?: number,
-  colorMatrix?: number[]
+  sharpen?: number,
+  colorMatrix?: number[],
+  rgb?: number[]
 }
 
 export type MosaicSvgInit = {

@@ -294,6 +294,12 @@ input[type="checkbox"] {
   display: grid;
   grid-template-columns: 1fr 1fr;
 
+  &.sm {
+    font-size: 0.95em;
+    line-height: 0.95;
+    opacity: 0.7;
+  }
+
   & > button {
     border-radius: 5px 5px 0px 0px;
     border: 1px solid var(--ctx-border);

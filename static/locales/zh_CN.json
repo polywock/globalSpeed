@@ -117,7 +117,6 @@
     "rotateZ": "Z轴旋转",
     "otherFilters": {
       "mosaic": "马赛克",
-      "text": "文本",
       "header": "其他筛选条件",
       "colorMatrix": "色彩映射",
       "posterize": "色调分离",
@@ -126,13 +125,20 @@
       "blockY": "块 Y",
       "detailX": "细节 X",
       "detailY": "细节 Y",
-      "stretchX": "拉伸 X",
-      "stretchY": "拉伸 Y",
       "levels": "等级",
       "amount": "强度",
       "vertical": "垂直",
       "horizontal": "水平",
-      "presets": "预设"
+      "presets": "预设",
+      "custom": "自定义",
+      "sharpen": "锐化",
+      "special": "特殊",
+      "stretchX": "拉伸X",
+      "stretchY": "拉伸Y",
+      "rgb": "RGB",
+      "red": "红色",
+      "green": "绿色",
+      "blue": "蓝色"
     }
   },
   "command": {
