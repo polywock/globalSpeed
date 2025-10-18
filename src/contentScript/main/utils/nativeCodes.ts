@@ -5,6 +5,7 @@ export const native = {
   dispatchEvent: EventTarget.prototype.dispatchEvent,
   stopImmediatePropagation: Event.prototype.stopImmediatePropagation,
   appendChild: Node.prototype.appendChild,
+  elementRemove: Element.prototype.remove,
   map: {
     clear: Map.prototype.clear,
     set: Map.prototype.set,
