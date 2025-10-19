@@ -20,7 +20,6 @@ export const SHORTCUT_DISABLED_WEBSITES: WebsiteInfo[] = [
   {v: "https://www.canva.com"},
   {v: "http://luna.amazon.com"},
   {v: "https://ys.mihoyo.com"},
-  {v: "https://www.youtube.com/playables"},
   {v: "https://chatgpt.com"},
   {v: "https://claude.ai"},
   {v: "https://gemini.google.com"},
