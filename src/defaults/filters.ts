@@ -649,7 +649,7 @@ export const svgFilterInfos: {[key in SvgFilterName]: {
       noise: {
         size: 0.5,
         speed: 1,
-        mode: 'overlay'
+        mode: 'hard-light'
       }
     })
   },

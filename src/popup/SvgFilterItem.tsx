@@ -343,9 +343,9 @@ export function SvgFilterItem(props: {
                      v.noise.mode = e.target.value
                   }))
                }}>
+                  <option value="hard-light">{gvar.gsm.filter.otherFilters.hardLight}</option>
                   <option value="multiply">{gvar.gsm.filter.otherFilters.multiply}</option>
                   <option value="color-burn">{gvar.gsm.filter.otherFilters.colorBurn}</option>
-                  <option value="hard-light">{gvar.gsm.filter.otherFilters.hardLight}</option>
                </select>
             </div>
          </>}

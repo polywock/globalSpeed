@@ -109,7 +109,7 @@ export const SVG_FILTER_ADDITIONAL: { [key in SvgFilterName]: {
 	         <animate attributeName="seed" values="${Array(25).fill(0).map((v, i) => i).join(';')}" dur="${1 / filter.noise.speed}s" repeatCount="indefinite"/>
          </feTurbulence>
 	      <feColorMatrix type="saturate" values="0" in="n" result="gn"/>
-	      <feBlend in="SourceGraphic" in2="gn" mode="${filter.noise.mode || 'multiply'}"/>`)
+	      <feBlend in="SourceGraphic" in2="gn" mode="${filter.noise.mode || 'hard-light'}"/>`)
       },
       isValid: filter => filter.noise && filter.noise.speed !== 0 && filter.noise.size % 1 !== 0
    },
