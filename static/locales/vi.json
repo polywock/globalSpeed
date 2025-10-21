@@ -137,7 +137,12 @@
       "rgb": "RGB",
       "red": "Đỏ",
       "green": "Xanh lá",
-      "blue": "Xanh dương"
+      "blue": "Xanh dương",
+      "motion": "Chuyển động",
+      "noise": "Nhiễu",
+      "multiply": "Nhân",
+      "colorBurn": "Cháy màu",
+      "hardLight": "Ánh sáng mạnh"
     }
   },
   "command": {

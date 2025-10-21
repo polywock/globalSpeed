@@ -138,7 +138,12 @@
       "rgb": "RGB",
       "red": "빨강",
       "green": "초록",
-      "blue": "파랑"
+      "blue": "파랑",
+      "motion": "움직임",
+      "noise": "노이즈",
+      "multiply": "곱하기",
+      "colorBurn": "컬러 번",
+      "hardLight": "하드 라이트"
     }
   },
   "command": {

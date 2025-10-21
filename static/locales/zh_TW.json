@@ -138,7 +138,12 @@
       "rgb": "RGB",
       "red": "紅色",
       "green": "綠色",
-      "blue": "藍色"
+      "blue": "藍色",
+      "motion": "移動",
+      "noise": "雜訊",
+      "multiply": "相乘",
+      "colorBurn": "加深顏色",
+      "hardLight": "強光"
     }
   },
   "command": {

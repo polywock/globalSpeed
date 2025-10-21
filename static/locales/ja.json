@@ -137,7 +137,12 @@
       "rgb": "RGB",
       "red": "赤",
       "green": "緑",
-      "blue": "青"
+      "blue": "青",
+      "motion": "動き",
+      "noise": "ノイズ",
+      "multiply": "乗算",
+      "colorBurn": "焼き込みカラー",
+      "hardLight": "ハードライト"
     }
   },
   "command": {

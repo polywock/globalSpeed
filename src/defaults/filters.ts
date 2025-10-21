@@ -215,7 +215,7 @@ export function getDefaultCinemaFilter() {
   return filters 
 }
 
-export type SvgFilterName = "mosaic" | "colorMatrix" | "posterize" | "blur" | "sharpen" | "special" | "custom" | "rgb"
+export type SvgFilterName = "mosaic" | "colorMatrix" | "posterize" | "blur" | "sharpen" | "special" | "custom" | "rgb" | "noise" | "motion"
 
 
 export const SVG_COLOR_MATRIX_PRESETS: MatrixTemplate[] = [
@@ -607,26 +607,16 @@ export const SVG_SPECIAL_PRESETS = [
 export const svgFilterInfos: {[key in SvgFilterName]: {
   generate: () => Partial<SvgFilter>
 }} = {
-  mosaic: {
-    generate: () => ({
-      type: 'mosaic',
-      mosaic: {
-        blockX: 4,
-        blockY: 4,
-        blockAspect: true,
-        sampleNormalX: 0,
-        sampleNormalY: 0,
-        sampleAspect: true,
-        scalingNormalX: 1,
-        scalingNormalY: 1,
-        scalingAspect: true,
-      }
-    })
-  },
   rgb: {
     generate: () => ({
       type: 'rgb',
       rgb: [1, 1, 1]
+    })
+  },
+  mosaic: {
+    generate: () => ({
+      type: 'mosaic',
+      mosaic: SVG_MOSAIC_PRESETS[0].values as any
     })
   },
   colorMatrix: {
@@ -651,6 +641,26 @@ export const svgFilterInfos: {[key in SvgFilterName]: {
     generate: () => ({
       type: 'sharpen',
       sharpen: 0
+    })
+  },
+  noise: {
+    generate: () => ({
+      type: 'noise',
+      noise: {
+        size: 0.5,
+        speed: 1,
+        mode: 'overlay'
+      }
+    })
+  },
+  motion: {
+    generate: () => ({
+      type: 'motion',
+      motion: {
+        x: 40,
+        y: 0,
+        speed: 1
+      }
     })
   },
   special: {

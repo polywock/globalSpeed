@@ -137,7 +137,12 @@
       "rgb": "RVB",
       "red": "Rouge",
       "green": "Vert",
-      "blue": "Bleu"
+      "blue": "Bleu",
+      "motion": "Mouvement",
+      "noise": "Bruit",
+      "multiply": "Produit",
+      "colorBurn": "Densité couleur",
+      "hardLight": "Lumière crue"
     }
   },
   "command": {

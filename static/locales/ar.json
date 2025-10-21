@@ -137,7 +137,12 @@
       "rgb": "أحمر أخضر أزرق",
       "red": "أحمر",
       "green": "أخضر",
-      "blue": "أزرق"
+      "blue": "أزرق",
+      "motion": "حركة",
+      "noise": "ضوضاء",
+      "multiply": "ضرب",
+      "colorBurn": "حرق اللون",
+      "hardLight": "ضوء قوي"
     }
   },
   "command": {

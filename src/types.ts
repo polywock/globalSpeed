@@ -447,16 +447,31 @@ export type ItcInit = {
 }
 
 export type SvgFilter = {
-  type: "mosaic" | "custom" | "colorMatrix" | "blur" | "posterize" | "sharpen" | "special" | "rgb",
+  type: "mosaic" | "custom" | "colorMatrix" | "blur" | "posterize" | "sharpen" | "special" | "rgb" | "noise" | "motion",
   enabled?: boolean,
   id?: string,
   text?: string,
   mosaic?: MosaicSvgInit,
   blur?: BlurSvgInit,
   posterize?: number,
+  motion?: MotionSvgInit,
+  noise?: NoiseSvgInit,
   sharpen?: number,
   colorMatrix?: number[],
   rgb?: number[]
+}
+
+export type MotionSvgInit = {
+  x: number,
+  y: number,
+  aspectLock?: boolean,
+  speed: number,
+}
+
+export type NoiseSvgInit = {
+  size: number,
+  speed: number,
+  mode: string
 }
 
 export type MosaicSvgInit = {

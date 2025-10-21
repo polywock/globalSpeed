@@ -11,6 +11,8 @@ import { useState } from "react"
 import "./SvgFilterItem.css"
 
 const MOSAIC_DEFAULT = svgFilterInfos["mosaic"].generate()
+const NOISE_DEFAULT = svgFilterInfos["noise"].generate()
+const MOTION_DEFAULT = svgFilterInfos["motion"].generate()
 
 export function SvgFilterItem(props: {
    filter: SvgFilter,
@@ -230,6 +232,122 @@ export function SvgFilterItem(props: {
                   }}
                />
             ))}
+         </>}
+
+         {/* Motion */}
+         {filter.type === "motion" && <>
+            <SliderPlus
+               label={<>
+                  {gvar.gsm.filter.otherFilters.horizontal}
+                  <Tooltip align="top" title={gvar.gsm.token.aspectLock}>
+                     <button onClick={() => {
+                        onChange(produce(filter, v => {
+                           v.motion.aspectLock = !v.motion.aspectLock
+                        }))
+                     }} style={{ padding: "0px 5px", marginLeft: "10px" }} className={`toggle ${filter.motion.aspectLock ? "active" : ""}`}>:</button>
+                  </Tooltip>
+               </>}
+               value={filter.motion.x}
+               sliderMin={0}
+               sliderMax={100}
+               sliderStep={1}
+               min={0}
+               max={5000}
+               default={MOTION_DEFAULT.motion.x}
+               onChange={newValue => {
+                  onChange(produce(filter, v => {
+                     v.motion.x = newValue
+                     if (v.motion.aspectLock) v.motion.y = newValue
+                  }))
+               }}
+            />
+            <SliderPlus
+               label={<>
+                  {gvar.gsm.filter.otherFilters.vertical}
+                  <Tooltip align="top" title={gvar.gsm.token.aspectLock}>
+                     <button onClick={() => {
+                        onChange(produce(filter, v => {
+                           v.motion.aspectLock = !v.motion.aspectLock
+                        }))
+                     }} style={{ padding: "0px 5px", marginLeft: "10px" }} className={`toggle ${filter.motion.aspectLock ? "active" : ""}`}>:</button>
+                  </Tooltip>
+               </>}
+               value={filter.motion.y}
+               sliderMin={0}
+               sliderMax={100}
+               sliderStep={1}
+               min={0}
+               max={5000}
+               default={MOTION_DEFAULT.motion.y}
+               onChange={newValue => {
+                  onChange(produce(filter, v => {
+                     v.motion.y = newValue
+                     if (v.motion.aspectLock) v.motion.x = newValue
+                  }))
+               }}
+            />
+            <SliderPlus
+               label={gvar.gsm.command.speed}
+               value={filter.motion.speed}
+               sliderMin={0}
+               sliderMax={5}
+               sliderStep={0.1}
+               min={0}
+               max={100}
+               default={MOTION_DEFAULT.motion.speed}
+               onChange={newValue => {
+                  onChange(produce(filter, v => {
+                     v.motion.speed = newValue
+                  }))
+               }}
+            />
+         </>}
+
+         {/* Noise */}
+         {filter.type === "noise" && <>
+            <SliderPlus
+               label={gvar.gsm.token.size}
+               value={filter.noise.size}
+               sliderMin={0}
+               sliderMax={0.8}
+               sliderStep={0.01}
+               min={0}
+               max={0.99}
+               default={NOISE_DEFAULT.noise.size}
+               onChange={newValue => {
+                  onChange(produce(filter, v => {
+                     v.noise.size = newValue
+                  }))
+               }}
+            />
+            <SliderPlus
+               label={gvar.gsm.command.speed}
+               value={filter.noise.speed}
+               sliderMin={0}
+               sliderMax={5}
+               sliderStep={0.1}
+               min={0}
+               max={100}
+               default={NOISE_DEFAULT.noise.speed}
+               onChange={newValue => {
+                  onChange(produce(filter, v => {
+                     v.noise.speed = newValue
+                  }))
+               }}
+            />
+            
+            <div style={{marginTop: '10px'}}>
+               <span style={{ marginRight: "10px" }}>{gvar.gsm.token.mode}</span>
+               <select value={filter.noise.mode} onChange={e => {
+                  onChange(produce(filter, v => {
+                     v.noise.mode = e.target.value
+                  }))
+               }}>
+                  <option value="multiply">{gvar.gsm.filter.otherFilters.multiply}</option>
+                  <option value="color-burn">{gvar.gsm.filter.otherFilters.colorBurn}</option>
+                  <option value="hard-light">{gvar.gsm.filter.otherFilters.hardLight}</option>
+               </select>
+            </div>
          </>}
       </div>
    </div>

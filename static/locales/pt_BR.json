@@ -137,7 +137,12 @@
       "rgb": "RGB",
       "red": "Vermelho",
       "green": "Verde",
-      "blue": "Azul"
+      "blue": "Azul",
+      "motion": "Movimento",
+      "noise": "Ruído",
+      "multiply": "Multiplicação",
+      "colorBurn": "Superexposição de cores",
+      "hardLight": "Luz dura"
     }
   },
   "command": {

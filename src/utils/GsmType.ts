@@ -138,7 +138,12 @@ export type Gsm = {
       amount: string,
       vertical: string,
       horizontal: string,
-      presets: string
+      presets: string,
+      motion: string,
+      noise: string,
+      multiply: string,
+      colorBurn: string,
+      hardLight: string
     }
   },
   command: {

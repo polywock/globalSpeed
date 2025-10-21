@@ -146,7 +146,12 @@
       "amount": "Amount",
       "vertical": "Vertical",
       "horizontal": "Horizontal",
-      "presets": "Presets"
+      "presets": "Presets",
+      "motion": "Motion",
+      "noise": "Noise",
+      "multiply": "Multiply",
+      "colorBurn": "Color burn",
+      "hardLight": "Hard light"
     }
   },
   "command": {

@@ -137,7 +137,12 @@
       "rgb": "RGB",
       "red": "Kırmızı",
       "green": "Yeşil",
-      "blue": "Mavi"
+      "blue": "Mavi",
+      "motion": "Hareket",
+      "noise": "Gürültü",
+      "multiply": "Çoğalt",
+      "colorBurn": "Renk yakma",
+      "hardLight": "Sert ışık"
     }
   },
   "command": {

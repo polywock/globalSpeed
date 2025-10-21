@@ -14,7 +14,7 @@ export function SvgFilterList(props: {
    svgFilters: SvgFilter[],
    onChange: (newSvgFilters: SvgFilter[], forceEnable?: boolean) => void
 }) {
-   const [command, setCommand] = useState("mosaic")
+   const [command, setCommand] = useState("rgb")
 
    return <div className="SvgFilterList">
       <div className="header">{gvar.gsm.filter.otherFilters.header}</div>

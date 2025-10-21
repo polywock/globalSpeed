@@ -137,7 +137,12 @@
       "rgb": "RGB",
       "red": "Merah",
       "green": "Hijau",
-      "blue": "Biru"
+      "blue": "Biru",
+      "motion": "Gerakan",
+      "noise": "Kebisingan",
+      "multiply": "Perkalian",
+      "colorBurn": "Bakar warna",
+      "hardLight": "Cahaya keras"
     }
   },
   "command": {

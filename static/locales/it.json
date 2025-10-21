@@ -137,7 +137,12 @@
       "rgb": "RGB",
       "red": "Rosso",
       "green": "Verde",
-      "blue": "Blu"
+      "blue": "Blu",
+      "motion": "Movimento",
+      "noise": "Rumore",
+      "multiply": "Moltiplica",
+      "colorBurn": "Brucia colore",
+      "hardLight": "Luce intensa"
     }
   },
   "command": {
