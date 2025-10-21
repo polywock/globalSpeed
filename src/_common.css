@@ -58,10 +58,6 @@
   
   --select-red: red;
   --select-green: green;
-  --ctx-border-ke: #00000022;
-  --ctx-border: #00000044;
-  --ctx-border-ko: #00000066;
-
   --border-ke: #00000022;
   --border: #00000044;
   --border-ko: #00000066;
@@ -116,9 +112,9 @@
   --select-red: #f66;
   --select-green: #35df35;
 
-  --ctx-border-ke: #ffffff11;
-  --ctx-border: #ffffff33;
-  --ctx-border-ko: #ffffff44;
+  --border-ke: #ffffff11;
+  --border: #ffffff33;
+  --border-ko: #ffffff44;
   
   input[type="checkbox"], input[type="range"] {
     filter: hue-rotate(26deg);
@@ -153,17 +149,14 @@ button, input, select, textarea {
 select {
   background-color: var(--fg-color); 
   color: var(--text-color); 
-  border: 1px solid var(--ctx-border); 
+  border: 1px solid var(--border); 
   padding: 3px 5px;
-
-  &.padded {
-  }
 }
 
 button, input[type="text"], textarea {
   background-color: var(--fg-color);
   color: var(--text-color);
-  border: 1px solid var(--ctx-border); 
+  border: 1px solid var(--border); 
   padding:  5px;
 
   &:focus {
@@ -249,7 +242,7 @@ code {
 .card {
   padding: 10px;
   background-color: var(--fg-color);
-  border: 1px solid var(--ctx-border);
+  border: 1px solid var(--border);
   color: var(--text-color);
   display: inline-block;
   font-size: 1.1em;
@@ -302,7 +295,7 @@ input[type="checkbox"] {
 
   & > button {
     border-radius: 5px 5px 0px 0px;
-    border: 1px solid var(--ctx-border);
+    border: 1px solid var(--border);
     border-top-width: 2px;
     background-color: var(--mg-color);
     opacity: 0.8;

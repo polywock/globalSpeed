@@ -623,6 +623,12 @@ export const svgFilterInfos: {[key in SvgFilterName]: {
       }
     })
   },
+  rgb: {
+    generate: () => ({
+      type: 'rgb',
+      rgb: [1, 1, 1]
+    })
+  },
   colorMatrix: {
     generate: () => ({
       type: 'colorMatrix',
@@ -645,12 +651,6 @@ export const svgFilterInfos: {[key in SvgFilterName]: {
     generate: () => ({
       type: 'sharpen',
       sharpen: 0
-    })
-  },
-  rgb: {
-    generate: () => ({
-      type: 'rgb',
-      rgb: [1, 1, 1]
     })
   },
   special: {

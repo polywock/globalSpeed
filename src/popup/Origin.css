@@ -6,13 +6,13 @@
   justify-content: space-around;
 
   & > div {
-    border: 1px solid var(--ctx-border);
+    border: 1px solid var(--border);
     background-color: var(--fg-color);
     width: 30px;
     height: 15px;
 
     &.active {
-      background-color: var(--ctx-border);
+      background-color: var(--border);
     }
 
     &:focus {

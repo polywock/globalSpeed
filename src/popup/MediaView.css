@@ -13,7 +13,7 @@
 
 .MediaView {
   padding: 10px 5px;
-  border-top: 1px solid var(--ctx-border);
+  border-top: 1px solid var(--border);
   
   &:first-child {
     margin-top: 16px;
@@ -21,7 +21,7 @@
 
   &:last-child {
     /* margin-top: 16px; */
-    border-bottom: 1px solid var(--ctx-border);
+    border-bottom: 1px solid var(--border);
   }
 
   & > .header {

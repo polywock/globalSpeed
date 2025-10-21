@@ -5,7 +5,7 @@
   justify-items: right;
   align-items: center;
   padding: 3px 5px 0px 5px;
-  border-bottom: 1px solid var(--ctx-border);
+  border-bottom: 1px solid var(--border);
   background-color: var(--fg-color);
 
   & > .Tooltip {

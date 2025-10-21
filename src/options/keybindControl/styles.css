@@ -92,7 +92,7 @@
         padding: 3px;
         background-color: var(--adjust-color);
         color: var(--text-color);
-        border: 1px solid var(--ctx-border);
+        border: 1px solid var(--border);
         font-size: 0.8em;
         border-radius: 5px;
       }

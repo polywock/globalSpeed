@@ -3,8 +3,8 @@
   display: inline-block;
   width: 40px;
   border-radius: 5px;
-  background-color: var(--ctx-border);
-  border: 1.5px solid var(--ctx-border);
+  background-color: var(--border);
+  border: 1.5px solid var(--border);
   cursor: pointer;
   line-height: 0;
   user-select: none;
@@ -26,7 +26,7 @@
 
   &.active {
     background-color: var(--toggle-color);
-    border-color: var(--ctx-border);
+    border-color: var(--border);
 
     &::after {
       transform: translateX(20px);
