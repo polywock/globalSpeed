@@ -30,7 +30,7 @@ export const SVG_FILTER_ADDITIONAL: { [key in SvgFilterName]: {
          let compA = `<feComposite width="${blockX}" height="${blockY}"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/>`
          let morph = `<feMorphology operator="dilate" radius="${morphX} ${morphY}"></feMorphology>`
 
-         return formatSvgFilter(true, `${flood}${compA}${morph}`)
+         return formatSvgFilter(`${flood}${compA}${morph}`)
       }
    },
    custom: {
@@ -49,7 +49,7 @@ export const SVG_FILTER_ADDITIONAL: { [key in SvgFilterName]: {
          }
          matrix[18] = 1 
 
-         return formatSvgFilter(false, `<feColorMatrix type="matrix" values="${matrix.map(m => m.toFixed(3)).join(" ")}"/>`)
+         return formatSvgFilter(`<feColorMatrix type="matrix" values="${matrix.map(m => m.toFixed(3)).join(" ")}"/>`)
       }
    },
    rgb: {
@@ -60,7 +60,7 @@ export const SVG_FILTER_ADDITIONAL: { [key in SvgFilterName]: {
          }
          matrix[18] = 1 
 
-         return formatSvgFilter(false, `<feColorMatrix type="matrix" values="${matrix.map(m => m.toFixed(3)).join(" ")}"/>`)
+         return formatSvgFilter(`<feColorMatrix type="matrix" values="${matrix.map(m => m.toFixed(3)).join(" ")}"/>`)
       },
       isValid: filter => {
          return filter.rgb && (filter.rgb[0] !== 1 || filter.rgb[1] !== 1 || filter.rgb[2] !== 1)
@@ -75,7 +75,7 @@ export const SVG_FILTER_ADDITIONAL: { [key in SvgFilterName]: {
          const tableValues = values.join(" ")
    
 
-         return formatSvgFilter(false, `<feComponentTransfer>
+         return formatSvgFilter(`<feComponentTransfer>
                <feFuncR type="discrete" tableValues="${tableValues}"/>
                <feFuncG type="discrete" tableValues="${tableValues}"/>
                <feFuncB type="discrete" tableValues="${tableValues}"/>
@@ -84,7 +84,7 @@ export const SVG_FILTER_ADDITIONAL: { [key in SvgFilterName]: {
    },
    blur: {
       format: filter => {
-         return formatSvgFilter(true, `<feGaussianBlur stdDeviation="${filter.blur.x} ${filter.blur.y}"/ >`)
+         return formatSvgFilter(`<feGaussianBlur stdDeviation="${filter.blur.x} ${filter.blur.y}"/ >`)
       },
       isValid: filter => {
          return filter.blur.x > 0 || filter.blur.y > 0
@@ -96,7 +96,7 @@ export const SVG_FILTER_ADDITIONAL: { [key in SvgFilterName]: {
          const neg = `-${filter.sharpen.toFixed(2)}`
          const center = (1 + 4 * filter.sharpen).toFixed(6)
          const values = `0 ${neg} 0 ${neg} ${center} ${neg} 0 ${neg} 0`
-         return formatSvgFilter(false, `<feConvolveMatrix order="3" kernelMatrix="${values}" edgeMode="duplicate" preserveAlpha="true"/>`)
+         return formatSvgFilter(`<feConvolveMatrix order="3" kernelMatrix="${values}" edgeMode="duplicate" preserveAlpha="true"/>`)
       },
       isValid: filter => filter.sharpen > 0 
    },
@@ -105,7 +105,7 @@ export const SVG_FILTER_ADDITIONAL: { [key in SvgFilterName]: {
          if (!filter.noise) return 
          const size = 1 - filter.noise.size
 
-         return formatSvgFilter(false, `<feTurbulence id="turb" type="fractalNoise" baseFrequency="${size}" numOctaves="1" seed="0" result="n">
+         return formatSvgFilter(`<feTurbulence id="turb" type="fractalNoise" baseFrequency="${size}" numOctaves="1" seed="0" result="n">
 	         <animate attributeName="seed" values="${Array(25).fill(0).map((v, i) => i).join(';')}" dur="${1 / filter.noise.speed}s" repeatCount="indefinite"/>
          </feTurbulence>
 	      <feColorMatrix type="saturate" values="0" in="n" result="gn"/>
@@ -122,20 +122,19 @@ export const SVG_FILTER_ADDITIONAL: { [key in SvgFilterName]: {
          if (m.x !== 0) output.push(`<animate attributeName="dx" values="-${m.x};${m.x};-${m.x}" dur="${duration}s" repeatCount="indefinite"/>`)
          if (m.y !== 0) output.push(`<animate attributeName="dy" values="-${m.y};${m.y};-${m.y}" dur="${duration}s" repeatCount="indefinite"/>`)
 
-         return formatSvgFilter(false, `<feOffset dx="0" dy="0">${output.join('')}</feOffset>`)
+         return formatSvgFilter(`<feOffset dx="0" dy="0">${output.join('')}</feOffset>`)
       },
       isValid: filter => filter.motion && filter.motion.speed > 0 && (filter.motion.x > 0 || filter.motion.y > 0)
    },
    special: {
       format: filter => {
-         return formatSvgFilter(true, filter.text)
+         return formatSvgFilter(filter.text)
       },
       isValid: filter => !!filter.text 
    }
 }
 
 
-function formatSvgFilter(highPadding: boolean, core: string) {
-   const amount = highPadding ? 20 : 10
-   return `<filter x="-${amount}%" y="-${amount}%" width="1${amount * 2}%" height="1${amount * 2}%">${core}</filter>`
+function formatSvgFilter(core: string) {
+   return `<filter x="0%" y="0%" width="100%" height="100%">${core}</filter>`
 }
