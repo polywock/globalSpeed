@@ -568,28 +568,6 @@ export const SVG_MOSAIC_PRESETS = [
         scalingNormalX: 1,
         scalingNormalY: 15
       } satisfies Partial<MosaicSvgInit>
-   },
-   {
-      id: 'parasyteX',
-      values: {
-        blockX: 10,
-        blockY: 1,
-        sampleNormalX: 0,
-        sampleNormalY: 0,
-        scalingNormalX: 1,
-        scalingNormalY: 1
-      } satisfies Partial<MosaicSvgInit>
-   },
-   {
-      id: 'parasyteY',
-      values: {
-        blockX: 1,
-        blockY: 10,
-        sampleNormalX: 0,
-        sampleNormalY: 0,
-        scalingNormalX: 1,
-        scalingNormalY: 1
-      } satisfies Partial<MosaicSvgInit>
    }
 ]
 
@@ -614,10 +592,14 @@ export const svgFilterInfos: {[key in SvgFilterName]: {
     })
   },
   mosaic: {
-    generate: () => ({
-      type: 'mosaic',
-      mosaic: SVG_MOSAIC_PRESETS[0].values as any
-    })
+    generate: () => {
+      const m = structuredClone(SVG_MOSAIC_PRESETS[0].values)
+      m.blockAspect = m.scalingAspect = m.sampleAspect = true
+      return {
+        type: 'mosaic',
+        mosaic: m as any
+      }
+    }
   },
   colorMatrix: {
     generate: () => ({
@@ -647,7 +629,7 @@ export const svgFilterInfos: {[key in SvgFilterName]: {
     generate: () => ({
       type: 'noise',
       noise: {
-        size: 0.5,
+        size: 0.8,
         speed: 1,
         mode: 'hard-light'
       }

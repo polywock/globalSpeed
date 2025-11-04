@@ -309,7 +309,7 @@ export function SvgFilterItem(props: {
                label={gvar.gsm.token.size}
                value={filter.noise.size}
                sliderMin={0}
-               sliderMax={0.8}
+               sliderMax={0.85}
                sliderStep={0.01}
                min={0}
                max={0.99}

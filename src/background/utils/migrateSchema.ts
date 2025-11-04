@@ -53,6 +53,12 @@ function migrateShortcutsDisabledList(state: State) {
   cond.parts = cond.parts || []
   if (!cond.block) return
 
+  // Remove problematic 'game' from old versions. 
+  // Remove this later.
+  const gameIdx = cond.parts.findIndex(c => c.type === "CONTAINS" && c.valueContains === "game") 
+  gameIdx >= 0 && cond.parts.splice(gameIdx, 1)
+
+
   SHORTCUT_DISABLED_WEBSITES.forEach(website => {
     const key = turnWebsiteInfoIntoString(website)
     if (excludedSet.has(key)) return 

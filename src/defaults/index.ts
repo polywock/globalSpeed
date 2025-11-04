@@ -18,14 +18,17 @@ export const SHORTCUT_DISABLED_WEBSITES: WebsiteInfo[] = [
   {v: "https://excalidraw.com"},
   {v: "https://www.photopea.com"},
   {v: "https://www.canva.com"},
-  {v: "http://luna.amazon.com"},
+  {v: "https://luna.amazon.com"},
   {v: "https://ys.mihoyo.com"},
   {v: "https://chatgpt.com"},
   {v: "https://claude.ai"},
   {v: "https://gemini.google.com"},
   {v: "https://www.deepseek.com"},
   {v: "https://www.youtube.com/playables"},
-  {v: "game", contains: true}
+  {v: "https://www.4399.com"},
+  {v: "https://www.7k7k.com"},
+  {v: "https://poki.com"},
+  {v: "https://now.gg"}
 ]
 
 

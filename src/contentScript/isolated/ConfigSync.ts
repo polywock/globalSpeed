@@ -19,7 +19,7 @@ export class ConfigSync {
   urlConditionsClient = new SubscribeView({keybindsUrlCondition: true}, gvar.tabInfo.tabId, true, (v, onLaunch) => {
     this.handleChangeUrlConditionsList()
   }, 300)
-  client = new SubscribeView({ghostMode: true, ghostModeUrlCondition: true, enabled: true, superDisable: true, latestViaShortcut: true, keybinds: true, keybindsUrlCondition: true, indicatorInit: true, circleWidget: true, circleInit: true, holdToSpeed: true}, gvar.tabInfo.tabId, true, (v, onLaunch) => {
+  client = new SubscribeView({ghostMode: true, ghostModeUrlCondition: true, enabled: true, superDisable: true, latestViaShortcut: true, keybinds: true, indicatorInit: true, circleWidget: true, circleInit: true, holdToSpeed: true}, gvar.tabInfo.tabId, true, (v, onLaunch) => {
     if (onLaunch) this.init() 
     this.handleChange()
   }, 300)
