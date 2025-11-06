@@ -8,7 +8,8 @@ export type KebabListProps = {
     onSelect: (name: string) => boolean | void,
     divIfEmpty?: boolean,
     title?: string,
-    centered?: boolean
+    centered?: boolean,
+    onOpen?: () => void 
 }
 
 export function KebabList(props: KebabListProps) {
@@ -18,6 +19,7 @@ export function KebabList(props: KebabListProps) {
     
     const onContext = (e: React.MouseEvent) => {
         e.preventDefault()
+        props.onOpen?.()
         if (props.centered) {
             setMenu({centered: true})
             return 

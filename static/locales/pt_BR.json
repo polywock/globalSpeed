@@ -319,6 +319,9 @@
       "exportTooltip": "Exportar configurações",
       "importTooltip": "Importar configurações",
       "copied": "Copiado!"
+    },
+    "popup": {
+      "enableShortcutsMessage": "Opcional: Ativar atalhos de teclado neste site."
     }
   },
   "pageDraw": {

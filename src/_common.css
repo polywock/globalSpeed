@@ -45,6 +45,8 @@
   --header-icon-color: #555;
   --header-icon-muted-color: #888;
   --header-icon-active-color: #24c;
+  --header-warning-color: #24c;
+  --header-warning-color-alt: #00a9ff;
 
   --speed-focus-bg-color: #24a;
   --speed-focus-text-color: white;
@@ -102,6 +104,8 @@
   --header-icon-color: #eee;
   --header-icon-muted-color: #aaa;
   --header-icon-active-color: #8fc;
+  --header-warning-color: #f1a6f1;
+  --header-warning-color-alt: #ff70fc;
 
   --speed-focus-bg-color: #8fc;
   --speed-focus-text-color: black;

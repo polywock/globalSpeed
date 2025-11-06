@@ -320,6 +320,9 @@
       "exportTooltip": "설정 내보내기",
       "importTooltip": "설정 가져오기",
       "copied": "복사됨!"
+    },
+    "popup": {
+      "enableShortcutsMessage": "선택 사항: 이 웹사이트에서 키보드 단축키를 활성화하세요."
     }
   },
   "pageDraw": {

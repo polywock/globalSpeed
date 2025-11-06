@@ -321,6 +321,9 @@ export type Gsm = {
       paste: string,
       exportTooltip: string,
       importTooltip: string
+    },
+    popup: {
+      enableShortcutsMessage: string
     }
   },
   pageDraw: {

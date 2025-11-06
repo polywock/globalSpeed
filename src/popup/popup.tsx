@@ -13,11 +13,15 @@ import { OrlHeader } from "./OrlHeader"
 import { loadGsm } from "src/utils/gsm"
 import { isFirefox, isMobile } from "src/utils/helper"
 import "./popup.css"
+import { fetchView } from "src/utils/state"
+import { StateView, Trigger } from "src/types"
 
 declare global {
   
   interface GlobalVar {
-    speedCounterAtLaunch: number   
+    speedCounterAtLaunch: number,
+    initialView: StateView, 
+    showShortcutControl: boolean 
   }
 }
 
@@ -66,10 +70,28 @@ Promise.all([
   getLatestActiveTabInfo().then(tabInfo => {
     gvar.tabInfo = tabInfo
     gvar.tabInfo || window.close()
-  })
+  }),
+  loadInitialView()
 ]).then(() => {
+  processInitialView()
   const root = createRoot(document.querySelector("#root"))
   root.render(<ErrorFallback><App/></ErrorFallback>)
   chrome.storage.session?.setAccessLevel?.({accessLevel: chrome.storage.AccessLevel.TRUSTED_AND_UNTRUSTED_CONTEXTS})
 })
 
+async function loadInitialView() {
+  gvar.initialView = await fetchView({keybinds: true})
+}
+
+function processInitialView() {
+  const view = gvar.initialView
+  if (
+    gvar.tabInfo.url && 
+    gvar.tabInfo.url.startsWith('http') && 
+    view.keybinds?.some(kb => kb.enabled && (kb.trigger || Trigger.LOCAL) === Trigger.LOCAL && kb.key)
+  ) {
+    gvar.showShortcutControl = true 
+  }
+
+  delete gvar.initialView
+}

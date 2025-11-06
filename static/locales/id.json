@@ -319,6 +319,9 @@
       "exportTooltip": "Ekspor pengaturan",
       "importTooltip": "Impor pengaturan",
       "copied": "Disalin!"
+    },
+    "popup": {
+      "enableShortcutsMessage": "Opsional: Aktifkan pintasan keyboard di situs web ini."
     }
   },
   "pageDraw": {

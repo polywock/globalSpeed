@@ -320,6 +320,9 @@
       "exportTooltip": "تصدير الإعدادات",
       "importTooltip": "استيراد الإعدادات",
       "copied": "تم النسخ!"
+    },
+    "popup": {
+      "enableShortcutsMessage": "اختياري: تمكين اختصارات لوحة المفاتيح على هذا الموقع."
     }
   },
   "pageDraw": {

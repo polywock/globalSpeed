@@ -92,7 +92,8 @@ export type State = {
   circleWidget?: boolean,
   circleInit?: CircleInit,
   freshKeybinds?: boolean,
-  holdToSpeed?: number
+  holdToSpeed?: number,
+  sawEnableShortcutOverlayCount?: number
 } & Context
 
 export type StoredKey = `${"t" | "r"}:${number}:${keyof Context | "isPinned"}` | `${"g" | "x"}:${keyof State}`

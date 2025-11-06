@@ -8,7 +8,24 @@
   border-bottom: 1px solid var(--border);
   background-color: var(--fg-color);
 
-  & > .Tooltip {
+  & > .kebab {
+    margin-top: -3px;
+    padding-left: 2px;
+    margin-left: -5px;
+    line-height: 0;
+    position: relative;
+
+    .alert {
+        pointer-events: none;
+        position: absolute;
+        right: -5px;
+        top: -6px;
+        color: var(--header-warning-color);
+    }
+  }
+
+
+  & .Tooltip {
     margin-top: -3px;
     padding-left: 2px;
 
@@ -70,5 +87,26 @@
     & > svg {
       vertical-align: baseline;
     }
+  }
+}
+
+
+.kebabOverlayOutline, .kebabOverlayMessage {
+  z-index: 999999999999;
+  pointer-events: none;
+  position: fixed;
+
+  &.kebabOverlayOutline {
+    border: 4px solid var(--header-warning-color-alt);
+  }
+
+  &.kebabOverlayMessage {
+    background-color: black;
+    color: var(--header-warning-color-alt);
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9em;
   }
 }

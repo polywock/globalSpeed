@@ -332,6 +332,9 @@
       "paste": "Paste settings",
       "exportTooltip": "Export settings",
       "importTooltip": "Import settings"
+    },
+    "popup": {
+      "enableShortcutsMessage": "Optional: Enable keyboard shortcuts on this website."
     }
   },
   "pageDraw": {

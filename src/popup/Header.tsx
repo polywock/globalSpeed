@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { checkFilterDeviation, checkFilterDeviationOrActiveSvg, requestSyncContextMenu, testURLWithPart } from "../utils/configUtils"
 import { GoArrowLeft} from "react-icons/go"
 import { FaGithub } from "react-icons/fa";
@@ -16,6 +16,7 @@ import { KebabList, KebabListProps } from "src/options/KebabList";
 import { replaceArgs } from "src/utils/helper";
 import { produce } from "immer";
 import "./Header.css"
+import { IoIosInformationCircle } from "react-icons/io"
 
 
 const SUPPORTS_TAB_CAPTURE = !!(chrome.tabCapture?.capture && chrome.offscreen?.createDocument)
@@ -26,11 +27,12 @@ type HeaderProps = {
 }
 
 export function Header(props: HeaderProps) {
-  const [view, setView] = useStateView({enabled: true, isPinned: true, superDisable: true, circleWidget: true, keybindsUrlCondition: true})
+  const [view, setView] = useStateView({enabled: true, isPinned: true, superDisable: true, circleWidget: true, keybindsUrlCondition: true, sawEnableShortcutOverlayCount: true})
 
   let kebabInfo: {
     list: KebabListProps['list'],
-    onSelect: (name: string) => void 
+    onSelect: (name: string) => void,
+    showAlert: boolean
   } = useMemo(() => {
     return getKebabList(view, setView)
   }, [!!view, view?.keybindsUrlCondition, view?.circleWidget])
@@ -83,8 +85,13 @@ export function Header(props: HeaderProps) {
       </div>
 
       {/* Kebab list */}
-      {(props.panel === 0 && kebabInfo?.list.length > 0 && !isMobile()) ? (
-        <KebabList centered={true} title="" list={kebabInfo.list} onSelect={kebabInfo.onSelect}/>
+      {kebabInfo?.list.length > 0 ? (
+        <div className="kebab">
+          <KebabList centered={true} title="" list={kebabInfo.list} onSelect={kebabInfo.onSelect} onOpen={() => {
+            kebabInfo.showAlert && (view.sawEnableShortcutOverlayCount || 0) < 5 && setTimeout(showOverlayForKebab.bind(null, view.sawEnableShortcutOverlayCount), 0)
+          }}/>
+          {kebabInfo.showAlert && <div className="alert"><IoIosInformationCircle size={"1.2em"}/></div>}
+        </div>
       ) : <div className="noPadding"/>}
       
       {/* Circle gesture */}
@@ -223,33 +230,36 @@ export function CircleIcon(props: CircleIconProps) {
 
 function getKebabList(view: StateView, setView: SetView): {
   list: KebabListProps['list'],
-  onSelect: (name: string) => void 
+  onSelect: (name: string) => void,
+  showAlert: boolean
 } {
-  if (!view) return { list: [], onSelect: () => {}}
+  if (!view) return { list: [], onSelect: () => {}, showAlert: false}
   let list: KebabListProps['list'] = []
   let fns: {[key: string]: () => void } = {}
+  let showAlert = false 
 
   const onSelect = (name: string) => fns[name]?.()
 
 
   // widget 
-  list.push({label: gvar.gsm.options.flags.widget.option, name: 'widget', checked: !!view.circleWidget})
-  fns['widget'] = () => {
-    setView({circleWidget: !view.circleWidget})
+  if (!isMobile()) {
+    list.push({label: gvar.gsm.options.flags.widget.option, name: 'widget', checked: !!view.circleWidget})
+    fns['widget'] = () => {
+      setView({circleWidget: !view.circleWidget})
+    }
   }
 
-  // guard if not http(s) protocol 
-  if (!gvar.tabInfo.url || !gvar.tabInfo.url.startsWith('http')) return { list, onSelect } 
-
-  let url = new URL(gvar.tabInfo.url)
-  let shortcutsInfo = getEnableShortcutsKebabInfo(view, setView, url)
-  if (shortcutsInfo) {
-    fns['shortcuts'] = shortcutsInfo.fn 
-    list.push({checked: shortcutsInfo.checked, label: replaceArgs(gvar.gsm.token.allowShortcuts, [url.hostname.replace('www.', '')]), name: 'shortcuts'})
+  // Only shown if on http(s) protocol and have local shortcuts. 
+  if (gvar.showShortcutControl) {
+    let url = new URL(gvar.tabInfo.url)
+    let shortcutsInfo = getEnableShortcutsKebabInfo(view, setView, url)
+    if (shortcutsInfo) {
+      if (!shortcutsInfo.checked) showAlert = true 
+      fns['shortcuts'] = shortcutsInfo.fn 
+      list.push({className: 'shortcutsKebabOption', checked: shortcutsInfo.checked, label: replaceArgs(gvar.gsm.token.allowShortcuts, [url.hostname.replace('www.', '')]), name: 'shortcuts'})
+    }
   }
-
-
-  return { list, onSelect }
+  return { list, onSelect, showAlert }
 }
 
 function getEnableShortcutsKebabInfo(view: StateView, setView: SetView, url: URL): {checked: boolean, fn: () => void} {
@@ -276,4 +286,43 @@ function getEnableShortcutsKebabInfo(view: StateView, setView: SetView, url: URL
     })
     
   }}
+}
+
+let alreadyUpdatedCount = false 
+async function showOverlayForKebab(sawCount: number) {
+  const option = document.querySelector('.shortcutsKebabOption')
+  if (!option) return 
+
+  // Update count (Once per session at most)
+  if (alreadyUpdatedCount) {
+    alreadyUpdatedCount = true 
+  } else {
+    pushView({override: {sawEnableShortcutOverlayCount: (sawCount || 0) + 1}})
+  }
+
+  const b = option.getBoundingClientRect()
+  const outline = document.createElement('div')
+  outline.classList.add('kebabOverlayOutline')
+  outline.style.left = `${b.x - 5}px`
+  outline.style.top = `${b.y - 5}px`
+  outline.style.width = `${b.width + 10}px`
+  outline.style.height = `${b.height + 10}px`
+
+  const pb = option.parentElement.getBoundingClientRect()
+  const message = document.createElement('div')
+  message.classList.add('kebabOverlayMessage')
+  message.textContent = gvar.gsm.options.popup.enableShortcutsMessage
+  message.style.top = `${pb.y + pb.height + 15}px`
+
+  document.body.appendChild(outline)
+  document.body.appendChild(message)
+  let abort = new AbortController()
+
+  abort.signal.addEventListener('abort', () => {
+    outline.remove()
+    message.remove()
+  })
+
+  window.addEventListener('pointerdown', e => abort.abort(), {capture: true, signal: abort.signal})
+  window.addEventListener('keydown', e => abort.abort(), {capture: true, signal: abort.signal})
 }

@@ -13,7 +13,7 @@
     padding: 5px 10px;
     border-bottom: 1px solid var(--border);
     padding-right: 20px;
-    opacity: 0.75;
+    opacity: 0.85;
     line-height: 1.5;
 
     &:hover {

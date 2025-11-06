@@ -320,6 +320,9 @@
       "exportTooltip": "Ayarları dışa aktar",
       "importTooltip": "Ayarları içe aktar",
       "copied": "Kopyalandı!"
+    },
+    "popup": {
+      "enableShortcutsMessage": "İsteğe bağlı: Bu web sitesinde klavye kısayollarını etkinleştirin."
     }
   },
   "pageDraw": {

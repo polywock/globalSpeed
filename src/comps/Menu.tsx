@@ -7,7 +7,7 @@ export type MenuProps = {
   position: {x?: number, y?: number, aligned?: boolean, centered?: boolean},
   onClose: () => void, 
   onSelect: (name: string) => void, 
-  items: {name: string, checked?: boolean, close?: boolean, preLabel?: string, label?: string | React.ReactElement}[],
+  items: {name: string, checked?: boolean, close?: boolean, preLabel?: string, label?: string | React.ReactElement, className?: string}[],
   menuRef: React.Ref<HTMLDivElement>
 }
 
@@ -21,7 +21,7 @@ export const Menu = (props: MenuProps) => {
           if (v.close) props.onClose()
         }
 
-        return <div key={v.name} onClick={handleClick}>
+        return <div key={v.name} onClick={handleClick} className={v.className}>
           <span>{v.checked === true ? <FaCheck/> : <div>{v.preLabel ?? ""}</div>}</span>
           <span>{v.label ?? v.name}</span>
         </div>

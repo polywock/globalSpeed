@@ -321,6 +321,9 @@
       "exportTooltip": "导出设置",
       "importTooltip": "导入设置",
       "copied": "已复制！"
+    },
+    "popup": {
+      "enableShortcutsMessage": "可选：在此网站启用键盘快捷键。"
     }
   },
   "pageDraw": {

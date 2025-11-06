@@ -319,6 +319,9 @@
       "exportTooltip": "Экспорт настроек",
       "importTooltip": "Импорт настроек",
       "copied": "Скопировано!"
+    },
+    "popup": {
+      "enableShortcutsMessage": "Необязательно: Включить горячие клавиши на этом сайте."
     }
   },
   "pageDraw": {

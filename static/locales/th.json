@@ -320,6 +320,9 @@
       "exportTooltip": "ส่งออกการตั้งค่า",
       "importTooltip": "นำเข้าการตั้งค่า",
       "copied": "คัดลอกแล้ว!"
+    },
+    "popup": {
+      "enableShortcutsMessage": "ไม่บังคับ: เปิดใช้คีย์ลัดบนเว็บไซต์นี้"
     }
   },
   "pageDraw": {

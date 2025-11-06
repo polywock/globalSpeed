@@ -319,6 +319,9 @@
       "exportTooltip": "設定をエクスポート",
       "importTooltip": "設定をインポート",
       "copied": "コピーしました！"
+    },
+    "popup": {
+      "enableShortcutsMessage": "オプション：このウェブサイトでキーボードショートカットを有効にします。"
     }
   },
   "pageDraw": {

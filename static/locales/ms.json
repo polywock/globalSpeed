@@ -320,6 +320,9 @@
       "exportTooltip": "Eksport tetapan",
       "importTooltip": "Import tetapan",
       "copied": "Disalin!"
+    },
+    "popup": {
+      "enableShortcutsMessage": "Pilihan: Aktifkan pintasan papan kekunci di laman web ini."
     }
   },
   "pageDraw": {

@@ -320,6 +320,9 @@
       "exportTooltip": "Xuất cài đặt",
       "importTooltip": "Nhập cài đặt",
       "copied": "Đã sao chép!"
+    },
+    "popup": {
+      "enableShortcutsMessage": "Tùy chọn: Bật phím tắt trên trang web này."
     }
   },
   "pageDraw": {

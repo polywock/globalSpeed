@@ -320,6 +320,9 @@
       "exportTooltip": "Eksportuj ustawienia",
       "importTooltip": "Importuj ustawienia",
       "copied": "Skopiowano!"
+    },
+    "popup": {
+      "enableShortcutsMessage": "Opcjonalnie: Włącz skróty klawiaturowe na tej stronie."
     }
   },
   "pageDraw": {

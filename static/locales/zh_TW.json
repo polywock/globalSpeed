@@ -321,6 +321,9 @@
       "paste": "貼上設定",
       "exportTooltip": "匯出設定",
       "importTooltip": "匯入設定"
+    },
+    "popup": {
+      "enableShortcutsMessage": "選用：啟用此網站的鍵盤快捷鍵。"
     }
   },
   "pageDraw": {
