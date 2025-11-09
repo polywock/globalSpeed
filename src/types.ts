@@ -351,7 +351,8 @@ export type Fx = {
   query?: string,
   originX?: string,
   originY?: string,
-  svgFilters?: SvgFilter[]
+  svgFilters?: SvgFilter[],
+  objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
 }
 
 export type FilterInfo = {
