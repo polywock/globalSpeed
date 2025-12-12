@@ -1,4 +1,4 @@
-import { extractHotkey  } from "../../utils/keys"
+import { extractHotkey } from "../../utils/keys"
 import { SubscribeView } from "../../utils/state"
 import { FxSync } from "./FxSync"
 import { findMatchingKeybindsLocal, testURL, testURLWithPart } from "../../utils/configUtils"
@@ -13,28 +13,28 @@ const ghostModeStatic = [".qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.c
 
 export class ConfigSync {
   released = false
-  blockKeyUp = false 
+  blockKeyUp = false
   lastTrigger = 0
   fxSync: FxSync
-  urlConditionsClient = new SubscribeView({keybindsUrlCondition: true}, gvar.tabInfo.tabId, true, (v, onLaunch) => {
+  urlConditionsClient = new SubscribeView({ keybindsUrlCondition: true }, gvar.tabInfo.tabId, true, (v, onLaunch) => {
     this.handleChangeUrlConditionsList()
   }, 300)
-  client = new SubscribeView({ghostMode: true, ghostModeUrlCondition: true, enabled: true, superDisable: true, latestViaShortcut: true, keybinds: true, indicatorInit: true, circleWidget: true, circleInit: true, holdToSpeed: true}, gvar.tabInfo.tabId, true, (v, onLaunch) => {
-    if (onLaunch) this.init() 
+  client = new SubscribeView({ ghostMode: true, ghostModeUrlCondition: true, enabled: true, superDisable: true, latestViaShortcut: true, keybinds: true, indicatorInit: true, circleWidget: true, circleInit: true, holdToSpeed: true }, gvar.tabInfo.tabId, true, (v, onLaunch) => {
+    if (onLaunch) this.init()
     this.handleChange()
   }, 300)
-  speedClient = new SubscribeView({speed: true, freePitch: true, enabled: true, superDisable: true}, gvar.tabInfo.tabId, true, v => {
+  speedClient = new SubscribeView({ speed: true, freePitch: true, enabled: true, superDisable: true }, gvar.tabInfo.tabId, true, v => {
     this.handleSpeedChange()
   }, 100, 150)
-  ignoreList = new Set<string>() 
+  ignoreList = new Set<string>()
   init = () => {
     gvar.os.eListen.keyDownCbs.add(this.handleKeyDown)
     gvar.os.eListen.keyUpCbs.add(this.handleKeyUp)
     this.handleSpeedChange()
   }
   release = () => {
-    if (this.released) return 
-    this.released = true 
+    if (this.released) return
+    this.released = true
     this.client?.release(); delete this.client
     this.speedClient?.release(); delete this.speedClient
     this.fxSync?.release(); delete this.fxSync
@@ -50,24 +50,24 @@ export class ConfigSync {
 
     if (enabledParts.length === 0) {
       this.urlConditionsMode = 'On'
-      return 
+      return
     }
 
     let statics: URLConditionPart[] = []
-    let nonStatics: URLConditionPart[] = [] 
-    
+    let nonStatics: URLConditionPart[] = []
+
     enabledParts.forEach(part => {
       (websiteCanBeStaticTested(part) ? statics : nonStatics).push(part)
     })
 
-    
+
     this.urlConditionsNonStatic = nonStatics
 
     // All statics should be dealth with.
 
     if (statics.length === 0) {
       this.urlConditionsMode = 'Runtime'
-      return 
+      return
     }
     const url = getPracticalRuntimeUrl()
     const anyMatched = statics.map(st => testURLWithPart(url, st)).some(v => v)
@@ -105,7 +105,7 @@ export class ConfigSync {
       this.fxSync?.release(); delete this.fxSync
     }
 
-    if (enabled && view.circleWidget)  {
+    if (enabled && view.circleWidget) {
 
       // Update when settings change. 
       if (gvar.os.circle && gvar.os.circle.key !== view.circleInit?.key) {
@@ -119,98 +119,100 @@ export class ConfigSync {
       delete gvar.os.circle
     }
 
-    let calcGhostMode = false 
+    let calcGhostMode = false
     if (view?.ghostMode && testURL(getPracticalRuntimeUrl(), view.ghostModeUrlCondition, true)) {
-      calcGhostMode = true 
+      calcGhostMode = true
     }
 
     if (view?.enabled && (calcGhostMode || ghostModeStatic)) {
-      if (gvar.ghostMode) return 
-      gvar.ghostMode = true 
+      if (gvar.ghostMode) return
+      gvar.ghostMode = true
       gvar.os.stratumServer.initialized ? this.sendGhostOn() : gvar.os.stratumServer.initCbs.add(this.sendGhostOn)
 
     } else {
-      if (!gvar.ghostMode) return 
-      gvar.ghostMode = false  
+      if (!gvar.ghostMode) return
+      gvar.ghostMode = false
       gvar.os.stratumServer.initialized ? this.sendGhostOff() : gvar.os.stratumServer.initCbs.add(this.sendGhostOff)
     }
-  } 
+  }
   handleSpeedChange = () => {
     const speedView = this.speedClient.view
 
     if (speedView && speedView.enabled && !speedView.superDisable) {
-      gvar.os.speedSync.latest = {speed: speedView.speed, freePitch: speedView.freePitch}
+      gvar.os.speedSync.latest = { speed: speedView.speed, freePitch: speedView.freePitch }
       gvar.os.speedSync.update()
     } else {
       delete gvar.os.speedSync.latest
       gvar.os.speedSync.update()
     }
-  } 
-  sendGhostOn = () => gvar.os.stratumServer.send({type: "GHOST"}) 
-  sendGhostOff = () => gvar.os.stratumServer.send({type: "GHOST", off: true}) 
+  }
+  sendGhostOn = () => gvar.os.stratumServer.send({ type: "GHOST" })
+  sendGhostOff = () => gvar.os.stratumServer.send({ type: "GHOST", off: true })
+  sendBgPlayOn = () => gvar.os.stratumServer.send({ type: "BG_PLAY", enable: true })
+  sendBgPlayOff = () => gvar.os.stratumServer.send({ type: "BG_PLAY", enable: false })
   handleKeyUp = (e: KeyboardEvent) => {
     this.lastTrigger = 0
     this.ignoreList.clear()
     if (this.blockKeyUp) {
-      this.blockKeyUp = false 
+      this.blockKeyUp = false
       e.stopImmediatePropagation()
       e.preventDefault()
     }
   }
   handleKeyDown = (e: KeyboardEvent) => {
-    if (document.activeElement?.tagName === "IFRAME") return 
+    if (document.activeElement?.tagName === "IFRAME") return
     if (!chrome.runtime?.id) return gvar.os.handleOrphan()
-    if (!this.client?.view) return 
-    if (this.client.view.superDisable) return 
+    if (!this.client?.view) return
+    if (this.client.view.superDisable) return
 
     const enabled = this.client.view.enabled
 
     let keybinds = this.client.view.keybinds
     if (!enabled) {
-      keybinds = (keybinds || []).filter(kb => 
-        kb.command === "state" && 
-        kb.enabled && 
-        (kb.trigger || Trigger.LOCAL) === Trigger.LOCAL && 
+      keybinds = (keybinds || []).filter(kb =>
+        kb.command === "state" &&
+        kb.enabled &&
+        (kb.trigger || Trigger.LOCAL) === Trigger.LOCAL &&
         (this.client.view.latestViaShortcut || kb.alwaysOn)
       )
-      
-      if (!keybinds.length) return 
+
+      if (!keybinds.length) return
     }
 
-    this.blockKeyUp = false 
+    this.blockKeyUp = false
 
 
     // stop if input fields 
     const target = e.target as HTMLElement
     if (["INPUT", "TEXTAREA"].includes(target.tagName) || target.isContentEditable) {
-      return 
+      return
     }
 
     const active = getLeaf(document, 'activeElement')
     if (target !== active) {
       if (["INPUT", "TEXTAREA"].includes(active.tagName) || (active as HTMLElement).isContentEditable) {
-        return 
+        return
       }
     }
 
-    if (this.checkUrlRuntime() === 'Off') return 
-  
+    if (this.checkUrlRuntime() === 'Off') return
+
     const eventHotkey = extractHotkey(e, true, true)
     let matches = findMatchingKeybindsLocal(keybinds, eventHotkey)
 
     matches = matches.filter(match => {
       if (match.kb.condition?.parts.length > 0) {
         return testURL(getPracticalRuntimeUrl(), match.kb.condition, true)
-      } 
-      return true 
+      }
+      return true
     })
 
     if (matches.some(v => v.kb.greedy)) {
-      this.blockKeyUp = true 
+      this.blockKeyUp = true
       e.preventDefault()
       e.stopImmediatePropagation()
     }
-    
+
 
     matches = matches.filter(match => !(match.kb.adjustMode === AdjustMode.ITC || match.kb.adjustMode === AdjustMode.ITC_REL) || !this.ignoreList.has(match.kb.id))
 
@@ -219,7 +221,7 @@ export class ConfigSync {
       if (now - this.lastTrigger > 50) {
         this.lastTrigger = now
         matches.filter(match => match.kb.adjustMode === AdjustMode.ITC || match.kb.adjustMode === AdjustMode.ITC_REL).forEach(v => this.ignoreList.add(v.kb.id))
-        chrome.runtime.sendMessage({type: "TRIGGER_KEYBINDS", ids: matches.map(match => ({id: match.kb.id, alt: match.alt}))})
+        chrome.runtime.sendMessage({ type: "TRIGGER_KEYBINDS", ids: matches.map(match => ({ id: match.kb.id, alt: match.alt })) })
       }
     }
   }
@@ -231,9 +233,9 @@ function websiteCanBeStaticTested(entry: URLConditionPart) {
   const value = (entry.valueStartsWith || "").trim()
   if (entry.type === "STARTS_WITH" && value.startsWith('http')) {
     const count = [...value].filter(ch => ch === '/').length
-    if (count === 2) return true 
-    if (count === 3 && value.endsWith('/')) return true 
-    if (!value.startsWith(origin)) return true 
+    if (count === 2) return true
+    if (count === 3 && value.endsWith('/')) return true
+    if (!value.startsWith(origin)) return true
   }
 }
 

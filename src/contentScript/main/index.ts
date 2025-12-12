@@ -14,23 +14,26 @@ let shadowRoots: ShadowRoot[] = []
 let client: StratumClient
 let ghostMode: GhostMode
 
-let ensureYtLastSpeed: number 
-let handleYtRateChange: (newSpeed: number) => void 
+let ensureYtLastSpeed: number
+let handleYtRateChange: (newSpeed: number) => void
 
 function main() {
   if (isFirefox()) {
-    if (window.loadedGsCtx) return 
-    window.loadedGsCtx = true 
-    
+    if (window.loadedGsCtx) return
+    window.loadedGsCtx = true
+
     ensureSoundcloud()
   }
   ensureBaidu()
-  
+
   ghostMode = new GhostMode()
   client = new StratumClient()
   ensureYt()
-  
-  
+
+
+  ensureYt()
+
+
   overridePrototypeMethod(HTMLMediaElement, "play", handleOverrideMedia)
   overridePrototypeMethod(HTMLMediaElement, "pause", handleOverrideMedia)
   overridePrototypeMethod(HTMLMediaElement, "load", handleOverrideMedia)
@@ -39,9 +42,9 @@ function main() {
 
 function overridePrototypeMethod(type: any, methodName: string, eventCb: (args: any, _this: any, _return: any) => void) {
   const ogFunc = type?.prototype[methodName]
-  if (!ogFunc) return 
+  if (!ogFunc) return
   const ogString = ogFunc.toString()
-  type.prototype[methodName] = function(...args: any[]) {
+  type.prototype[methodName] = function (...args: any[]) {
     const _return = ogFunc.apply(this, args)
     eventCb(args, this, _return)
     return _return
@@ -53,33 +56,33 @@ function overridePrototypeMethod(type: any, methodName: string, eventCb: (args: 
 
 function handleOverrideMedia(args: any, _this: HTMLMediaElement, _return: any) {
   if (!(_this instanceof native.HTMLMediaElement)) return
-  if (native.array.includes.call(mediaReferences, _this)) return 
+  if (native.array.includes.call(mediaReferences, _this)) return
   native.array.push.call(mediaReferences, _this)
   client.wiggleOn(_this)
 }
 
 function handleOverrideShadow(args: [ShadowRootInit], _this: Element, _return: ShadowRoot) {
-  if (!(_return instanceof native.ShadowRoot)) return 
-  if (native.array.includes.call(shadowRoots, _return)) return 
+  if (!(_return instanceof native.ShadowRoot)) return
+  if (native.array.includes.call(shadowRoots, _return)) return
   native.array.push.call(shadowRoots, _return)
   client.wiggleOn(_return)
 }
 
 // soundcloud support for Firefox (may remove later)
 function ensureSoundcloud() {
-  if (!location.hostname.includes("soundcloud.com")) return 
+  if (!location.hostname.includes("soundcloud.com")) return
 
   const og = AudioContext.prototype.createMediaElementSource
-  AudioContext.prototype.createMediaElementSource = function(...args) {
+  AudioContext.prototype.createMediaElementSource = function (...args) {
     const out = og.apply(this, [document.createElement("audio")])
-    return out  
+    return out
   }
 }
 
 function ensureBaidu() {
-  if (!location.hostname.includes("pan.baidu.com")) return 
+  if (!location.hostname.includes("pan.baidu.com")) return
   let ua = navigator.userAgent
-  
+
   ua = ua.replace("Windows NT", "Windоws NT")
   ua = ua.replace("Macintosh", "Macintоsh")
   ua = ua.replace("Chrome", "Chrоme")
@@ -88,41 +91,41 @@ function ensureBaidu() {
   ua = ua.replace("Safari", "Sаfari")
 
   const desc = Object.getOwnPropertyDescriptor(Navigator.prototype, "userAgent")
-  Object.defineProperty(Navigator.prototype, "userAgent", {...desc, get: function() {return ua}})
+  Object.defineProperty(Navigator.prototype, "userAgent", { ...desc, get: function () { return ua } })
 }
 
 function ensureYt() {
-  if (location.hostname !== "www.youtube.com") return 
+  if (location.hostname !== "www.youtube.com") return
 
-  window.addEventListener("timeupdate", handleYoutube, {capture: true})
+  window.addEventListener("timeupdate", handleYoutube, { capture: true })
 }
 
 function handleYoutube(e: Event) {
-  let player = document.getElementById("movie_player") as any; 
-  if (!player) return 
+  let player = document.getElementById("movie_player") as any;
+  if (!player) return
 
   try {
     player.getAvailablePlaybackRates().push(16)
   } catch (err) {
-    return 
+    return
   }
 
   handleYtRateChange = (speed: number) => {
-    if (ensureYtLastSpeed === speed) return 
+    if (ensureYtLastSpeed === speed) return
     ensureYtLastSpeed = speed
     try {
       ghostMode.activateFor(1000)
-      player.setPlaybackRate(speed) 
-    } catch (err) {}
+      player.setPlaybackRate(speed)
+    } catch (err) { }
   }
 
-  client?.send({type: "YT_REQUEST_RATE"})
+  client?.send({ type: "YT_REQUEST_RATE" })
 
-  window.removeEventListener("timeupdate", handleYoutube, {capture: true})
+  window.removeEventListener("timeupdate", handleYoutube, { capture: true })
 }
 
 class GhostMode {
-  active = false 
+  active = false
   tempTimeout?: number
   dummyAudio = new Audio()
   ogDesc = {
@@ -138,17 +141,17 @@ class GhostMode {
       const ogDesc = this.ogDesc[key]
       let coherence = this.coherence[key]
 
-      let we = this 
-  
+      let we = this
+
       try {
         Object.defineProperty(HTMLMediaElement.prototype, key, {
-          configurable: true, 
+          configurable: true,
           enumerable: true,
-          get: function() {
+          get: function () {
             we.ogDesc[key].get.call(this)
             return we.active ? (native.map.has.call(coherence, this) ? native.map.get.call(coherence, this) : 1) : ogDesc.get.call(this)
-          }, 
-          set: function(newValue) {
+          },
+          set: function (newValue) {
             if (we.active && !(this instanceof native.HTMLMediaElement)) {
               we.ogDesc[key].set.call(this, newValue)
             }
@@ -156,9 +159,9 @@ class GhostMode {
               let output = ogDesc.set.call(we.active ? we.dummyAudio : this, newValue)
               let rate = ogDesc.get.call(we.active ? we.dummyAudio : this)
               native.map.set.call(coherence, this, rate)
-              return output 
+              return output
             } catch (err) {
-              throw err 
+              throw err
             }
           }
         })
@@ -171,8 +174,8 @@ class GhostMode {
       clearTimeout(this.tempTimeout)
       delete this.tempTimeout
     }
-    if (this.active) return 
-    this.active = true 
+    if (this.active) return
+    this.active = true
 
 
     native.map.clear.call(this.coherence.playbackRate)
@@ -188,38 +191,115 @@ class GhostMode {
       clearTimeout(this.tempTimeout)
       delete this.tempTimeout
     }
-    if (!this.active) return 
-    this.active = false  
-  }  
+    if (!this.active) return
+    this.active = false
+  }
   activateFor = (ms: number) => {
-    if (this.active) return 
+    if (this.active) return
     this.activate()
-    this.tempTimeout = setTimeout(this.deactivate, ms) 
+    this.tempTimeout = setTimeout(this.deactivate, ms)
   }
 }
 
+class BackgroundMode {
+  active = false
+  boundHandler: any
+
+  constructor() {
+    this.boundHandler = this.handleEvent.bind(this)
+    this.hijack()
+  }
+
+  hijack() {
+    try {
+      const self = this
+
+      // Override document.hidden
+      const hiddenDescriptor = Object.getOwnPropertyDescriptor(Document.prototype, 'hidden')
+      Object.defineProperty(Document.prototype, 'hidden', {
+        ...hiddenDescriptor,
+        get: function () {
+          if (self.active) return false
+          return hiddenDescriptor.get.call(this)
+        }
+      })
+
+      // Override document.visibilityState
+      const visibilityStateDescriptor = Object.getOwnPropertyDescriptor(Document.prototype, 'visibilityState')
+      Object.defineProperty(Document.prototype, 'visibilityState', {
+        ...visibilityStateDescriptor,
+        get: function () {
+          if (self.active) return 'visible'
+          return visibilityStateDescriptor.get.call(this)
+        }
+      })
+
+      // Intercept event listeners
+      const ogAddEventListener = Document.prototype.addEventListener
+      Document.prototype.addEventListener = function (type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions) {
+        if (type === 'visibilitychange') {
+          const wrapper = function (e: Event) {
+            if (self.active) {
+              e.stopImmediatePropagation()
+              return
+            }
+            if (typeof listener === 'function') {
+              listener.call(this, e)
+            } else if (listener && typeof listener.handleEvent === 'function') {
+              listener.handleEvent(e)
+            }
+          }
+          return ogAddEventListener.call(this, type, wrapper, options)
+        }
+        return ogAddEventListener.call(this, type, listener, options)
+      }
+
+    } catch (err) {
+      console.error("GlobalSpeed: Failed to hijack visibility API", err)
+    }
+  }
+
+  handleEvent(e: Event) {
+    if (this.active) {
+      e.stopImmediatePropagation()
+    }
+  }
+
+  enable() {
+    this.active = true
+    document.dispatchEvent(new Event('visibilitychange')) // Fake a wake up call
+  }
+
+  disable() {
+    this.active = false
+  }
+}
+
+const backgroundMode = new BackgroundMode()
+
+
 class StratumClient {
   #parasite = document.createElement("div")
-  #parasiteRoot = this.#parasite.attachShadow({mode: "open"})
+  #parasiteRoot = this.#parasite.attachShadow({ mode: "open" })
   #key = randomId()
   #serverName = `GS_SERVER_${this.#key}`
   #clientName = `GS_CLIENT_${this.#key}`
 
   constructor() {
     this.#parasite.id = "GS_PARASITE"
-    this.#parasiteRoot.addEventListener(this.#clientName, this.handle, {capture: true})
+    this.#parasiteRoot.addEventListener(this.#clientName, this.handle, { capture: true })
     document.documentElement.appendChild(this.#parasite)
-    this.#parasite.dispatchEvent(new CustomEvent("GS_INIT", {detail: this.#key}))
+    this.#parasite.dispatchEvent(new CustomEvent("GS_INIT", { detail: this.#key }))
     this.#parasite.remove()
   }
   handle = (e: CustomEvent) => {
     native.stopImmediatePropagation.call(e)
-    let data: any; 
+    let data: any;
     try {
       e.detail && (data = native.JSON.parse(e.detail))
-    } catch (err) {}
+    } catch (err) { }
 
-    if (!data) return 
+    if (!data) return
 
     if (data.type === "SEEK_NETFLIX") {
       seekNetflix(data.value)
@@ -227,14 +307,16 @@ class StratumClient {
       data.off ? ghostMode.deactivate() : ghostMode.activate()
     } else if (data.type === "YT_RATE_CHANGE") {
       data.value && handleYtRateChange?.(data.value)
+    } else if (data.type === "BG_PLAY") {
+      data.enable ? backgroundMode.enable() : backgroundMode.disable()
     }
   }
   send = (data: any) => {
-    native.dispatchEvent.call(this.#parasiteRoot, new native.CustomEvent(this.#serverName, {detail: native.JSON.stringify({type: "MSG", data})}))
+    native.dispatchEvent.call(this.#parasiteRoot, new native.CustomEvent(this.#serverName, { detail: native.JSON.stringify({ type: "MSG", data }) }))
   }
   wiggleOn = (parent: HTMLElement | ShadowRoot) => {
     native.appendChild.call(parent, this.#parasite)
-    native.dispatchEvent.call(this.#parasiteRoot, new native.CustomEvent(this.#serverName, {detail: native.JSON.stringify({type: "WIGGLE"})}))
+    native.dispatchEvent.call(this.#parasiteRoot, new native.CustomEvent(this.#serverName, { detail: native.JSON.stringify({ type: "WIGGLE" }) }))
     native.elementRemove.call(this.#parasite)
   }
 }
