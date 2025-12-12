@@ -198,7 +198,7 @@
     "alwaysOnTooltip": "Secara lalai, pintasan hanya boleh mengaktifkan semula sambungan jika ia terakhir dilumpuhkan menggunakan pintasan yang sama. Dayakan tetapan ini untuk memastikan pintasan sentiasa berfungsi untuk menghidupkan sambungan, walaupun ia dimatikan melalui menu UI.",
     "muteTab": "Senyapkan tab",
     "loopEntire": "Ulang sepenuhnya",
-    "temporarySpeed": "Tekan & tahan untuk lajukan kelajuan"
+    "temporarySpeed": "Laju pantas"
   },
   "options": {
     "flags": {
@@ -250,7 +250,7 @@
       "qrCodeTop": "Imbas untuk digunakan di...",
       "qrCodeBottom": "Edge untuk peranti mudah alih",
       "holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara.",
-      "holdToSpeedUp": "Tekan dan tahan untuk mempercepat"
+      "holdToSpeedUp": "Tekan dan tahan untuk percepat"
     },
     "editor": {
       "header": "Penyunting Pintasan",

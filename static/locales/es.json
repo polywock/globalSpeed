@@ -198,7 +198,7 @@
     "alwaysOnTooltip": "Por defecto, el atajo solo puede reactivar la extensión si fue deshabilitada usando el mismo atajo. Habilite esta configuración para asegurarse de que el atajo siempre funcione para habilitar la extensión, incluso si se desactivó a través del menú de la UI.",
     "muteTab": "Silenciar pestaña",
     "loopEntire": "Repetir todo",
-    "temporarySpeed": "Mantén presionado para acelerar"
+    "temporarySpeed": "Avance rápido"
   },
   "options": {
     "flags": {
@@ -249,7 +249,7 @@
       "qrCodeTop": "Escanea para usar en...",
       "qrCodeBottom": "Edge para móviles",
       "holdToSpeedUpTooltip": "Mantén presionado el video para acelerar temporalmente.",
-      "holdToSpeedUp": "Mantén presionado para acelerar"
+      "holdToSpeedUp": "Mantén presionado para adelantar"
     },
     "editor": {
       "header": "Editor de accesos directos",

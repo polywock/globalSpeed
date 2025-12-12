@@ -199,7 +199,7 @@
     "alwaysOnTooltip": "默认情况下，快捷键只能在上次使用相同快捷键禁用扩展后重新激活该扩展。启用此设置可确保快捷键始终可用于启用扩展，即使它是通过UI菜单关闭的。",
     "muteTab": "静音标签页",
     "loopEntire": "完整循环",
-    "temporarySpeed": "按住以加速播放速度"
+    "temporarySpeed": "快进"
   },
   "options": {
     "flags": {
@@ -251,7 +251,7 @@
       "qrCodeTop": "扫码使用",
       "qrCodeBottom": "Edge 手机版",
       "holdToSpeedUpTooltip": "按住视频可临时加速播放。",
-      "holdToSpeedUp": "按住加速"
+      "holdToSpeedUp": "按住快进"
     },
     "editor": {
       "header": "热键编辑器",

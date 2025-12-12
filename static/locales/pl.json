@@ -198,7 +198,7 @@
     "alwaysOnTooltip": "Domyślnie skrót może ponownie aktywować rozszerzenie, jeśli zostało wyłączone tym samym skrótem. Włącz tę opcję, aby upewnić się, że skrót zawsze działa na włączenie rozszerzenia, nawet jeśli zostało wyłączone w menu UI.",
     "muteTab": "Wycisz kartę",
     "loopEntire": "Pętla całego",
-    "temporarySpeed": "Przytrzymaj, aby przyspieszyć"
+    "temporarySpeed": "Przewiń szybciej"
   },
   "options": {
     "flags": {

@@ -194,7 +194,7 @@
     "cinema": "Darken background",
     "cinemaTooltip": "Darken the background of the video. To exit out, press on the background or use shortcut again.",
     "presets": "Presets...",
-    "temporarySpeed": "Press & hold to accelerate speed",
+    "temporarySpeed": "Fast forward",
     "toggleSpeed": "Toggle speed",
     "toggleSpeedTooltip": "Toggle between shortcut speed and the last speed.",
     "alwaysOn": "Always on",
@@ -253,7 +253,7 @@
       },
       "qrCodeTop": "Scan to use on...",
       "qrCodeBottom": "Edge for Mobile",
-      "holdToSpeedUp": "Press and hold to accelerate",
+      "holdToSpeedUp": "Press and hold to fast forward",
       "holdToSpeedUpTooltip": "Press and hold videos to temporarily speed up."
     },
     "editor": {

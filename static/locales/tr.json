@@ -198,7 +198,7 @@
     "alwaysOnTooltip": "Varsayılan olarak, kısayol, aynı kısayol kullanılarak en son devre dışı bırakıldıysa yalnızca uzantıyı yeniden etkinleştirebilir. Kısayolun, UI menüsü aracılığıyla kapatılsa bile uzantıyı etkinleştirmek için her zaman çalışmasını sağlamak için bu ayarı etkinleştirin.",
     "muteTab": "Sekmeyi sessize al",
     "loopEntire": "Tam döngü",
-    "temporarySpeed": "Hızlandırmak için basılı tut"
+    "temporarySpeed": "İleri sar"
   },
   "options": {
     "flags": {

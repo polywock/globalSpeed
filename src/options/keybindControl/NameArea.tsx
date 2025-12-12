@@ -101,7 +101,7 @@ export function NameArea(props: NameAreaProps) {
         <div className="command">
 
             {/* Icons */}
-            {value.command === "speed" && <MdSpeed className="tr120" />}
+            {(value.command === "speed" || value.command === "temporarySpeed") && <MdSpeed className="tr120" />}
             {value.command === "speedChangesPitch" && <BsMusicNoteList className="tr103" />}
             {value.command === "runCode" && <GoCode strokeWidth="1px" className="tr105" />}
             {value.command === "openUrl" && <FaLink />}

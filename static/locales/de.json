@@ -198,7 +198,7 @@
     "alwaysOnTooltip": "Standardmäßig kann die Tastenkombination die Erweiterung nur erneut aktivieren, wenn sie zuletzt mit derselben Tastenkombination deaktiviert wurde. Aktiviere diese Einstellung, um sicherzustellen, dass die Tastenkombination immer funktioniert, um die Erweiterung zu aktivieren, auch wenn sie über das UI-Menü deaktiviert wurde.",
     "muteTab": "Tab stummschalten",
     "loopEntire": "Komplett wiederholen",
-    "temporarySpeed": "Gedrückt halten, um Geschwindigkeit zu erhöhen"
+    "temporarySpeed": "Vorspulen"
   },
   "options": {
     "flags": {
@@ -250,7 +250,7 @@
       "qrCodeTop": "Zum Verwenden auf ... scanne",
       "qrCodeBottom": "Edge für Mobilgeräte",
       "holdToSpeedUpTooltip": "Gedrückt halten, um Videos vorübergehend zu beschleunigen.",
-      "holdToSpeedUp": "Gedrückt halten zum Beschleunigen"
+      "holdToSpeedUp": "Zum Vorspulen gedrückt halten"
     },
     "editor": {
       "header": "Tastenkombinationen-Editor",

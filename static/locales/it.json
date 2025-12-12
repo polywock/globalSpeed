@@ -198,7 +198,7 @@
     "alwaysOnTooltip": "Per impostazione predefinita, la scorciatoia può riattivare l'estensione solo se è stata disabilitata l'ultima volta utilizzando la stessa scorciatoia. Abilita questa impostazione per assicurarti che la scorciatoia funzioni sempre per abilitare l'estensione, anche se è stata disattivata tramite il menu UI.",
     "muteTab": "Silenzia scheda",
     "loopEntire": "Loop completo",
-    "temporarySpeed": "Tieni premuto per accelerare"
+    "temporarySpeed": "Avanti veloce"
   },
   "options": {
     "flags": {
@@ -250,7 +250,7 @@
       "qrCodeTop": "Scansiona per utilizzare su...",
       "qrCodeBottom": "Edge per dispositivi mobili",
       "holdToSpeedUpTooltip": "Tieni premuto sui video per accelerare temporaneamente.",
-      "holdToSpeedUp": "Tieni premuto per accelerare"
+      "holdToSpeedUp": "Tieni premuto per avanzare velocemente"
     },
     "editor": {
       "header": "Modifica Scorciatoie",

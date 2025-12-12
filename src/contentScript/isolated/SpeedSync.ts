@@ -32,7 +32,7 @@ export class SpeedSync {
     }
   }
   handlePointerDown = (e: PointerEvent) => {
-    if (this.holdToSpeed && e.button === 0 && !this.keyDownActive()) {
+    if (this.holdToSpeed && isLeftPointerOrMiddleMouse(e) && !this.keyDownActive()) {
 
       // If directly on video. 
       if ((e.target as HTMLVideoElement)?.tagName === 'VIDEO') {
@@ -58,7 +58,7 @@ export class SpeedSync {
     setTimeout(this.realize, 620)
   }
   handlePointerUp = (e: PointerEvent) => {
-    if (e.button === 0) this.clearPointerDown()
+    if (isLeftPointerOrMiddleMouse(e)) this.clearPointerDown()
   }
   clearPointerDown = (e?: PointerEvent) => {
     if ((!e || e.relatedTarget === null) && this.pointerDownAt) {
@@ -110,3 +110,8 @@ function checkIfPointerOverVideo(doc: DocumentOrShadowRoot, e: PointerEvent) {
   const elems = doc.elementsFromPoint(e.clientX, e.clientY)
   return elems.some(elem => elem.tagName === 'VIDEO') && elems.every(elem => !PROHIBITED_TYPES.has(elem.tagName))
 }
+
+function isLeftPointerOrMiddleMouse(e: PointerEvent) {
+  if (e.button === 0) return true 
+  if (e.button === 1 && e.pointerType === "mouse") return true 
+} 

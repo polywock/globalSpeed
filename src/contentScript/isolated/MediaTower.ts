@@ -187,6 +187,7 @@ export class MediaTower {
     e.processed = true  
     
     let elem = e.target as HTMLMediaElement
+    if (!elem || !(elem instanceof HTMLMediaElement)) return 
 
     this.processMedia(elem)
     this.sendUpdate()
