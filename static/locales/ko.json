@@ -199,7 +199,7 @@
     "alwaysOnTooltip": "기본적으로 바로 가기는 동일한 바로 가기를 사용하여 마지막으로 비활성화된 경우에만 확장 기능을 다시 활성화할 수 있습니다. 이 설정을 활성화하면 UI 메뉴를 통해 비활성화된 경우에도 바로 가기가 항상 확장 기능을 활성화하는 데 작동하도록 합니다.",
     "muteTab": "탭 음소거",
     "loopEntire": "전체 반복",
-    "temporarySpeed": "길게 눌러 일시적으로 속도 증가"
+    "temporarySpeed": "빨리 감기"
   },
   "options": {
     "flags": {
@@ -250,7 +250,7 @@
       "qrCodeTop": "스캔하여 사용해 보세요...",
       "qrCodeBottom": "모바일용 Edge",
       "holdToSpeedUpTooltip": "영상을 길게 누르면 일시적으로 속도가 빨라집니다.",
-      "holdToSpeedUp": "누르고 있으면 빨라집니다"
+      "holdToSpeedUp": "길게 눌러 빨리 감기"
     },
     "editor": {
       "header": "바로 가기 편집기",

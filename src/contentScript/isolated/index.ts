@@ -2,7 +2,6 @@
 import type { TabInfo } from '../../utils/browserUtils'
 import { Overseer } from './Overseer'
 
-
 declare global {
   interface GlobalVar {
     tabInfo: TabInfo,

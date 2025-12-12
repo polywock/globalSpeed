@@ -11,7 +11,7 @@
     grid-gap: 3px;
   
     & > button {
-      width: 100%;
+      width: 75%;
       text-align: center;
       border: none;
       padding: var(--padding) 0px;
@@ -23,6 +23,8 @@
       &.selected {
         background-color: var(--speed-focus-bg-color);
         color: var(--speed-focus-text-color);
+        border-radius: 3px;
+        /* font-weight: bold; */
       }
     }
   

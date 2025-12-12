@@ -198,7 +198,7 @@
     "alwaysOnTooltip": "Theo mặc định, phím tắt chỉ có thể kích hoạt lại tiện ích mở rộng nếu nó được tắt lần cuối bằng cách sử dụng cùng một phím tắt. Bật cài đặt này để đảm bảo phím tắt luôn hoạt động để bật tiện ích mở rộng, ngay cả khi nó đã bị tắt qua menu giao diện người dùng.",
     "muteTab": "Tắt tiếng tab",
     "loopEntire": "Lặp toàn bộ",
-    "temporarySpeed": "Nhấn và giữ để tăng tốc độ"
+    "temporarySpeed": "Tua nhanh"
   },
   "options": {
     "flags": {
@@ -250,7 +250,7 @@
       "qrCodeTop": "Quét để sử dụng trên...",
       "qrCodeBottom": "Edge cho di động",
       "holdToSpeedUpTooltip": "Nhấn và giữ video để tạm thời tăng tốc.",
-      "holdToSpeedUp": "Nhấn và giữ để tăng tốc"
+      "holdToSpeedUp": "Nhấn và giữ để tua nhanh"
     },
     "editor": {
       "header": "Chỉnh sửa phím tắt",

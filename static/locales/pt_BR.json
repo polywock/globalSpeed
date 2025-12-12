@@ -198,7 +198,7 @@
     "alwaysOnTooltip": "Por padrão, o atalho só pode reativar a extensão se ela foi desativada pela última vez usando o mesmo atalho. Ative esta configuração para garantir que o atalho sempre funcione para habilitar a extensão, mesmo que ela tenha sido desligada pelo menu da UI.",
     "muteTab": "Silenciar guia",
     "loopEntire": "Repetir totalmente",
-    "temporarySpeed": "Pressione e segure para acelerar"
+    "temporarySpeed": "Avançar rápido"
   },
   "options": {
     "flags": {
@@ -249,7 +249,7 @@
       "qrCodeTop": "Escaneie para usar no...",
       "qrCodeBottom": "Edge para celular",
       "holdToSpeedUpTooltip": "Pressione e segure vídeos para acelerar temporariamente.",
-      "holdToSpeedUp": "Pressione e segure para acelerar"
+      "holdToSpeedUp": "Pressione e segure para avançar rapidamente"
     },
     "editor": {
       "header": "Editor de Atalhos",

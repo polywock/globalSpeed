@@ -573,7 +573,11 @@ export function getDefaultKeybinds(): Keybind[] {
       ...commandInfos.speed.generate(),
       key: "KeyD",
       adjustMode: AdjustMode.ADD,
-      valueNumber: 0.1,
+      valueNumber: 0.1
+    },
+    {
+      ...commandInfos.temporarySpeed.generate(),
+      key: "KeyF",
       spacing: 1
     },
     {

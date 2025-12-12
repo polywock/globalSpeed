@@ -182,7 +182,7 @@ export class ConfigSync {
 
     // stop if input fields 
     const target = e.target as HTMLElement
-    if (["INPUT", "TEXTAREA"].includes(target.tagName) || target.isContentEditable) {
+    if (["INPUT", "TEXTAREA"].includes(target.tagName) || target.isContentEditable || document.pointerLockElement) {
       return 
     }
 
