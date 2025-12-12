@@ -2,7 +2,7 @@
   ":appName": "Global Speed",
   ":appDesc": "Universal speed control for video and audio.",
   "_scale": 1.0,
-  "_lang": "en", 
+  "_lang": "en",
   "audio": {
     "captureTab": "Capture",
     "releaseTab": "Release",
@@ -32,28 +32,22 @@
     "duplicate": "Duplicate",
     "delete": "Delete",
     "aspectLock": "Aspect lock",
-
     "pinTooltip": "Pin if you want the current tab to have it's own context (speed, filters, etc).",
     "mergeBoth": "Merge both",
     "min": "Min",
     "max": "Max",
-    
     "on": "On",
     "off": "Off",
     "toggle": "Toggle",
-
     "video": "Video",
     "page": "Page",
     "both": "Both",
-    
     "selector": "Selector",
     "selectorTooltip": "CSS selector used to find elements to filter. By default it only targets videos, but you can use 'video, img, canvas' to target videos, images and games.",
-    
     "intoPane": "Into pane",
     "warning": "Warning",
     "filters": "Filters",
     "transforms": "Transforms",
-
     "blockEvents": "Block events",
     "blockEventsTooltip": "Will try to block event propagation and default behaviors.",
     "color": "Color",
@@ -73,7 +67,6 @@
     "shrink": "Shrink",
     "implode": "Implode",
     "rotate": "Rotate",
-
     "rows": "Rows",
     "replaceWith": "Replace $1 with?",
     "invalidNumber": "Invalid number",
@@ -221,10 +214,11 @@
       "showIndicator": "Show indicator",
       "showIndicatorTooltip": "The indicator is visual feedback when using shortcuts.",
       "ghostMode": "Ghost mode",
-      "ghostModeTooltip": "Try to block website from changing speed. Disabled by default because it might break some websites.",
+      "ghostModeTooltip": "Prevents websites from knowing that you changed the playback speed. This will break some websites.",
+      "backgroundPlay": "Force Background Play",
+      "backgroundPlayTooltip": "Prevents websites from checking if the tab is hidden or minimized. Useful for sites that pause video when you switch tabs.",
       "pinByDefault": "Pin by default",
       "pinByDefaultTooltip": "New tabs will automatically be pinned.",
-
       "initialState": "Initial state",
       "previousTab": "Previous tab's context.",
       "globalContext": "Global context",
@@ -236,10 +230,8 @@
       "keyboardInputTooltip": "Consider switching to Virtual input mode if using a virtual keyboard or a non-QWERTY layout keyboard. This only applies to future shortcut changes and existing shortcuts won't be affected.",
       "qwerty": "QWERTY layout",
       "virtual": "Virtual",
-
       "grantPermission": "Grant permission",
       "grantPermissionTooltip": "To enable full functionality, including embed video support, this permission must be enabled. For limited functionality, you can enable on a site-by-site basis by right clicking the toolbar icon.",
-
       "speedSlider": "Speed slider",
       "textSize": "Text size",
       "speedPresets": "Speed presets",

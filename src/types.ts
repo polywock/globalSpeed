@@ -89,6 +89,7 @@ export type State = {
   hideOrlBanner?: boolean,
   virtualInput?: boolean,
   hideGrant?: boolean,
+  backgroundPlay?: boolean,
   circleWidget?: boolean,
   circleInit?: CircleInit,
   freshKeybinds?: boolean,
