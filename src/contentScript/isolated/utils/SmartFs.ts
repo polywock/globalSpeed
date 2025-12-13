@@ -220,7 +220,7 @@ export async function generateFsProfile({distance, child, ancestor}: ReturnType<
 export async function getProfiles(): Promise<{profiles: FsProfile[], key: string}> {
   await getStoredSalt()
   const key = `f:fs:${await hashWithStoredSalt(location.hostname)}`
-  const profiles = (await chrome.storage.local.get(key))[key] || []
+  const profiles = (await chrome.storage.local.get<RecordAny>(key))[key] || []
   return { key, profiles }
 }
 

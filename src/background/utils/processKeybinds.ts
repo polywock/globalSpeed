@@ -214,7 +214,7 @@ const commandHandlers: {
     const storageKey = `s:popup:${tab.id}`
 
     if (window.type === "popup") {
-      let recoverInfo = (await chrome.storage.session.get(storageKey))[storageKey]
+      let recoverInfo = (await chrome.storage.session.get<RecordAny>(storageKey))[storageKey]
       await chrome.windows.create({tabId: tab.id, type: "normal", state: "normal", ...(recoverInfo ? {width: 50, height: 50} : {})})
       if (!recoverInfo) return 
       try {

@@ -25,7 +25,7 @@ let resetButton = document.querySelector("#reset")
 
 applyButton.addEventListener("click", async e => {
     if (bounds) {
-        const keybinds = (await chrome.storage.local.get('g:keybinds'))['g:keybinds']
+        const keybinds = (await chrome.storage.local.get<RecordAny>('g:keybinds'))['g:keybinds']
         const kb = keybinds.find((kb: any) => kb.id === id)
         if (kb) {
             kb.valuePopupRect = bounds 

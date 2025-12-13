@@ -30,7 +30,6 @@
     "@babel/runtime": "^7.28.4",
     "@types/audioworklet": "^0.0.92",
     "@types/chrome": "^0.1.32",
-    "@types/node": "^25.0.1",
     "autoprefixer": "^10.4.22",
     "babel-loader": "^10.0.0",
     "babel-polyfill": "^6.26.0",
@@ -47,6 +46,7 @@
   "dependencies": {
     "@types/lodash": "^4.17.21",
     "@types/lodash.debounce": "^4.0.9",
+    "@types/node": "^25.0.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "clsx": "^2.1.1",

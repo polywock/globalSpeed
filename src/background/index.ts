@@ -32,7 +32,7 @@ async function onInstallAsync() {
     try {        
         let config = await dumpConfig()
         if (!config.version) {
-            config = (await chrome.storage.local.get("config")).config
+            config = (await chrome.storage.local.get<RecordAny>("config")).config
         } 
         stateView = migrateSchema(config)
     } catch (err) {

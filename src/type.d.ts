@@ -2,7 +2,7 @@
 declare module "soundtouchjs"
 
 declare namespace chrome.storage {
-  export type StorageChanges = {[key: string]: chrome.storage.StorageChange}
+  export type StorageChanges = {[key: string]: {newValue?: any; oldValue?: any}}
   
   export type StorageKeysArgument = string | string[] | {[key: string]: any} | null | undefined
 }
@@ -21,3 +21,5 @@ declare module "*.css?raw" {
   const content: string;
   export default content;
 }
+
+type RecordAny = Record<string, any>

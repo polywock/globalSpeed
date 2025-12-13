@@ -19,7 +19,7 @@ function generateSalt() {
 
 // Remember to call and await this before hashing to avoid changing salt. 
 export async function getStoredSalt() {
-    let salt = (await chrome.storage.local.get('f:salt'))['f:salt']
+    let salt = (await chrome.storage.local.get<RecordAny>('f:salt'))['f:salt']
     if (!salt) {
         salt = generateSalt()
         await chrome.storage.local.set({'f:salt': salt})

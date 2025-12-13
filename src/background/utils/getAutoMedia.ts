@@ -3,7 +3,7 @@ import { TabInfo, checkContentScript, compareFrame } from "src/utils/browserUtil
 import { fetchView } from "src/utils/state"
 
 export async function getMediaDataWithScopes() {
-  const raw = await chrome.storage.session.get()
+  const raw = await chrome.storage.session.get<RecordAny>()
   let pinned: MediaPath
   let scopes: MediaScope[] = []
 
@@ -21,7 +21,7 @@ export async function getMediaDataWithScopes() {
 export async function clearClosed() {
   const [tabs, data] = await Promise.all([
     chrome.tabs.query({}),
-    chrome.storage.session.get()
+    chrome.storage.session.get<RecordAny>()
   ])
   const tabIds = new Set(tabs.map(t => t.id))
   const clearKeys: string[] = []
