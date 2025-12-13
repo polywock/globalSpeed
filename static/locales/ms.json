@@ -212,7 +212,6 @@
       "showIndicator": "Tunjukkan penunjuk",
       "showIndicatorTooltip": "Penunjuk adalah maklum balas visual semasa menggunakan pintasan.",
       "ghostMode": "Mod hantu",
-      "ghostModeTooltip": "Cuba menyekat laman web daripada menukar kelajuan. Dilumpuhkan secara lalai kerana ia mungkin merosakkan beberapa laman web.",
       "pinByDefault": "Pin secara lalai",
       "pinByDefaultTooltip": "Tab baru secara automatik akan dipin.",
       "initialState": "Keadaan awal",
@@ -250,7 +249,10 @@
       "qrCodeTop": "Imbas untuk digunakan di...",
       "qrCodeBottom": "Edge untuk peranti mudah alih",
       "holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara.",
-      "holdToSpeedUp": "Tekan dan tahan untuk percepat"
+      "holdToSpeedUp": "Tekan dan tahan untuk percepat",
+      "backgroundHide": "Halang pengesanan latar belakang",
+      "ghostModeTooltip": "Menghalang laman web daripada mengesan perubahan kelajuan main balik. Apabila diaktifkan, ia digunakan untuk semua laman web secara lalai. Ini mungkin menyebabkan masalah pada sesetengah laman web. Gunakan ikon gear untuk mengehadkannya kepada laman web tertentu.",
+      "backgroundHideTooltip": "Menghalang laman web daripada mengesan apabila tab disembunyikan atau diminimakan. Berguna untuk laman web yang menjeda video apabila anda menukar tab. Ini mungkin menyebabkan masalah pada sesetengah laman web. Apabila diaktifkan, ia digunakan untuk semua laman web secara lalai. Gunakan ikon gear untuk mengehadkannya kepada laman web tertentu."
     },
     "editor": {
       "header": "Penyunting Pintasan",

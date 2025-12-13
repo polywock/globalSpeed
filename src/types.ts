@@ -72,6 +72,8 @@ export type State = {
   websitesAddedToUrlConditionsExclusion?: string[]
   ghostMode?: boolean,
   ghostModeUrlCondition?: URLCondition,
+  backgroundHide?: boolean,
+  backgroundHideUrlCondition?: URLCondition,
   rules?: URLRule[],
   indicatorInit?: IndicatorInit,
   freePitch?: boolean,
@@ -89,7 +91,6 @@ export type State = {
   hideOrlBanner?: boolean,
   virtualInput?: boolean,
   hideGrant?: boolean,
-  backgroundPlay?: boolean,
   circleWidget?: boolean,
   circleInit?: CircleInit,
   freshKeybinds?: boolean,

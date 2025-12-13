@@ -212,7 +212,6 @@
       "showIndicator": "Indikator anzeigen",
       "showIndicatorTooltip": "Der Indikator ist visuelles Feedback beim Verwenden von Tastenkombinationen.",
       "ghostMode": "Geistermodus",
-      "ghostModeTooltip": "Versucht zu verhindern, dass Websites die Geschwindigkeit ändern. Standardmäßig deaktiviert, da es einige Websites beeinträchtigen kann.",
       "pinByDefault": "Standardmäßig anheften",
       "pinByDefaultTooltip": "Neue Tabs werden automatisch angeheftet.",
       "initialState": "Anfangszustand",
@@ -250,7 +249,10 @@
       "qrCodeTop": "Zum Verwenden auf ... scanne",
       "qrCodeBottom": "Edge für Mobilgeräte",
       "holdToSpeedUpTooltip": "Gedrückt halten, um Videos vorübergehend zu beschleunigen.",
-      "holdToSpeedUp": "Zum Vorspulen gedrückt halten"
+      "holdToSpeedUp": "Zum Vorspulen gedrückt halten",
+      "backgroundHide": "Hintergrunderkennung verhindern",
+      "ghostModeTooltip": "Verhindert, dass Websites Änderungen der Wiedergabegeschwindigkeit erkennen. Wenn aktiviert, gilt dies standardmäßig für alle Websites. Dies kann auf einigen Websites zu Problemen führen. Verwenden Sie das Zahnradsymbol, um es auf bestimmte Websites zu beschränken.",
+      "backgroundHideTooltip": "Verhindert, dass Websites erkennen, wenn ein Tab ausgeblendet oder minimiert ist. Nützlich für Websites, die Videos pausieren, wenn Sie den Tab wechseln. Dies kann auf einigen Websites zu Problemen führen. Wenn aktiviert, gilt dies standardmäßig für alle Websites. Verwenden Sie das Zahnradsymbol, um es auf bestimmte Websites zu beschränken."
     },
     "editor": {
       "header": "Tastenkombinationen-Editor",

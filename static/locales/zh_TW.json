@@ -213,7 +213,6 @@
       "showIndicator": "顯示指示器",
       "showIndicatorTooltip": "指示器是使用快速鍵時的視覺回饋。",
       "ghostMode": "幽靈模式",
-      "ghostModeTooltip": "嘗試阻止網站變更速度。預設停用因為可能會造成某些網站無法正常運作。",
       "pinByDefault": "預設固定",
       "pinByDefaultTooltip": "新分頁將自動固定。",
       "initialState": "初始狀態",
@@ -251,7 +250,10 @@
       "qrCodeTop": "掃碼使用",
       "qrCodeBottom": "Edge 手機版",
       "holdToSpeedUpTooltip": "按住影片可暫時加速播放。",
-      "holdToSpeedUp": "長按以快轉"
+      "holdToSpeedUp": "長按以快轉",
+      "backgroundHide": "防止背景偵測",
+      "ghostModeTooltip": "防止網站偵測播放速度變更。啟用後，預設套用至所有網站。此功能可能會在某些網站上產生問題。可使用齒輪圖示限制僅套用至特定網站。",
+      "backgroundHideTooltip": "防止網站偵測分頁被隱藏或最小化。對於在切換分頁時會暫停影片的網站特別有用。此功能可能會在某些網站上產生問題。啟用後，預設套用至所有網站。可使用齒輪圖示限制僅套用至特定網站。"
     },
     "editor": {
       "header": "快速鍵編輯器",

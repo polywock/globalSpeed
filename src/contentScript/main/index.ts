@@ -13,6 +13,7 @@ let mediaReferences: HTMLMediaElement[] = []
 let shadowRoots: ShadowRoot[] = []
 let client: StratumClient
 let ghostMode: GhostMode
+let backgroundHide: BackgroundHide
 
 let ensureYtLastSpeed: number
 let handleYtRateChange: (newSpeed: number) => void
@@ -27,12 +28,9 @@ function main() {
   ensureBaidu()
 
   ghostMode = new GhostMode()
+  backgroundHide = new BackgroundHide()
   client = new StratumClient()
   ensureYt()
-
-
-  ensureYt()
-
 
   overridePrototypeMethod(HTMLMediaElement, "play", handleOverrideMedia)
   overridePrototypeMethod(HTMLMediaElement, "pause", handleOverrideMedia)
@@ -140,24 +138,23 @@ class GhostMode {
     for (let key of ["playbackRate", "defaultPlaybackRate"] as ("playbackRate" | "defaultPlaybackRate")[]) {
       const ogDesc = this.ogDesc[key]
       let coherence = this.coherence[key]
-
-      let we = this
+      const self = this
 
       try {
         Object.defineProperty(HTMLMediaElement.prototype, key, {
           configurable: true,
           enumerable: true,
           get: function () {
-            we.ogDesc[key].get.call(this)
-            return we.active ? (native.map.has.call(coherence, this) ? native.map.get.call(coherence, this) : 1) : ogDesc.get.call(this)
+            self.ogDesc[key].get.call(this)
+            return self.active ? (native.map.has.call(coherence, this) ? native.map.get.call(coherence, this) : 1) : ogDesc.get.call(this)
           },
           set: function (newValue) {
-            if (we.active && !(this instanceof native.HTMLMediaElement)) {
-              we.ogDesc[key].set.call(this, newValue)
+            if (self.active && !(this instanceof native.HTMLMediaElement)) {
+              self.ogDesc[key].set.call(this, newValue)
             }
             try {
-              let output = ogDesc.set.call(we.active ? we.dummyAudio : this, newValue)
-              let rate = ogDesc.get.call(we.active ? we.dummyAudio : this)
+              let output = ogDesc.set.call(self.active ? self.dummyAudio : this, newValue)
+              let rate = ogDesc.get.call(self.active ? self.dummyAudio : this)
               native.map.set.call(coherence, this, rate)
               return output
             } catch (err) {
@@ -176,7 +173,6 @@ class GhostMode {
     }
     if (this.active) return
     this.active = true
-
 
     native.map.clear.call(this.coherence.playbackRate)
     native.map.clear.call(this.coherence.defaultPlaybackRate)
@@ -197,85 +193,50 @@ class GhostMode {
   activateFor = (ms: number) => {
     if (this.active) return
     this.activate()
-    this.tempTimeout = setTimeout(this.deactivate, ms)
+    this.tempTimeout = window.setTimeout(this.deactivate, ms)
   }
 }
 
-class BackgroundMode {
+class BackgroundHide {
   active = false
-  boundHandler: any
-
   constructor() {
-    this.boundHandler = this.handleEvent.bind(this)
-    this.hijack()
-  }
+    const self = this;
 
-  hijack() {
     try {
-      const self = this
-
       // Override document.hidden
-      const hiddenDescriptor = Object.getOwnPropertyDescriptor(Document.prototype, 'hidden')
-      Object.defineProperty(Document.prototype, 'hidden', {
-        ...hiddenDescriptor,
-        get: function () {
-          if (self.active) return false
-          return hiddenDescriptor.get.call(this)
-        }
-      })
-
-      // Override document.visibilityState
-      const visibilityStateDescriptor = Object.getOwnPropertyDescriptor(Document.prototype, 'visibilityState')
-      Object.defineProperty(Document.prototype, 'visibilityState', {
-        ...visibilityStateDescriptor,
-        get: function () {
-          if (self.active) return 'visible'
-          return visibilityStateDescriptor.get.call(this)
-        }
-      })
-
-      // Intercept event listeners
-      const ogAddEventListener = Document.prototype.addEventListener
-      Document.prototype.addEventListener = function (type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions) {
-        if (type === 'visibilitychange') {
-          const wrapper = function (e: Event) {
-            if (self.active) {
-              e.stopImmediatePropagation()
-              return
-            }
-            if (typeof listener === 'function') {
-              listener.call(this, e)
-            } else if (listener && typeof listener.handleEvent === 'function') {
-              listener.handleEvent(e)
-            }
+      ["hidden", "mozHidden", "webkitHidden"].forEach(key => {
+        const og = Object.getOwnPropertyDescriptor(Document.prototype, key)
+        if (!og) return 
+        Object.defineProperty(Document.prototype, key, {
+          ...og,
+          get: function () {
+            if (self.active) return false
+            return og.get.call(this)
           }
-          return ogAddEventListener.call(this, type, wrapper, options)
-        }
-        return ogAddEventListener.call(this, type, listener, options)
-      }
-
-    } catch (err) {
-      console.error("GlobalSpeed: Failed to hijack visibility API", err)
-    }
+        })
+      });
+  
+      // Override document.visibilityState
+      ["visibilityState", "mozVisibilityState", "webkitVisibilityState"].forEach(key => {
+        const og = Object.getOwnPropertyDescriptor(Document.prototype, key)
+        if (!og) return 
+        Object.defineProperty(Document.prototype, key, {
+          ...og,
+          get: function () {
+            if (self.active) return 'visible'
+            return og.get.call(this)
+          }
+        })
+      })
+    } catch {}
   }
-
-  handleEvent(e: Event) {
-    if (this.active) {
-      e.stopImmediatePropagation()
-    }
-  }
-
-  enable() {
+  activate() {
     this.active = true
-    document.dispatchEvent(new Event('visibilitychange')) // Fake a wake up call
   }
-
-  disable() {
+  deactivate() {
     this.active = false
   }
 }
-
-const backgroundMode = new BackgroundMode()
 
 
 class StratumClient {
@@ -305,11 +266,11 @@ class StratumClient {
       seekNetflix(data.value)
     } else if (data.type === "GHOST") {
       data.off ? ghostMode.deactivate() : ghostMode.activate()
+    } else if (data.type === "BG_HIDE") {
+      data.off ? backgroundHide.deactivate() : backgroundHide.activate()
     } else if (data.type === "YT_RATE_CHANGE") {
       data.value && handleYtRateChange?.(data.value)
-    } else if (data.type === "BG_PLAY") {
-      data.enable ? backgroundMode.enable() : backgroundMode.disable()
-    }
+    } 
   }
   send = (data: any) => {
     native.dispatchEvent.call(this.#parasiteRoot, new native.CustomEvent(this.#serverName, { detail: native.JSON.stringify({ type: "MSG", data }) }))

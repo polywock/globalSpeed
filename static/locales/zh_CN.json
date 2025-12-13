@@ -213,7 +213,6 @@
       "showIndicator": "显示指示器",
       "showIndicatorTooltip": "指示器是使用快捷键时的视觉反馈。",
       "ghostMode": "幽灵模式",
-      "ghostModeTooltip": "尝试阻止网站更改速度。默认情况下禁用，因为它可能会破坏某些网站。",
       "pinByDefault": "默认固定",
       "pinByDefaultTooltip": "默认固定每个标签页。",
       "initialState": "初始状态",
@@ -251,7 +250,10 @@
       "qrCodeTop": "扫码使用",
       "qrCodeBottom": "Edge 手机版",
       "holdToSpeedUpTooltip": "按住视频可临时加速播放。",
-      "holdToSpeedUp": "按住快进"
+      "holdToSpeedUp": "按住快进",
+      "backgroundHide": "防止后台检测",
+      "ghostModeTooltip": "防止网站检测播放速度的变化。启用后，默认对所有网站生效。某些网站可能会因此出现问题。可使用齿轮图标限制仅对特定网站生效。",
+      "backgroundHideTooltip": "防止网站检测标签页是否被隐藏或最小化。对于在切换标签页时暂停视频的网站很有用。某些网站可能会因此出现问题。启用后，默认对所有网站生效。可使用齿轮图标限制仅对特定网站生效。"
     },
     "editor": {
       "header": "热键编辑器",

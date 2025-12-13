@@ -25,6 +25,7 @@ import "./SectionFlags.css"
 export function SectionFlags(props: {}) {
   const [showIndicatorModal, setShowIndicatorModal] = useState(false)
   const [showGhostModal, setShowGhostModal] = useState(false)
+  const [showBackgroundHideModal, setShowBackgroundHideModal] = useState(false)
   const [showPresetModal, setShowPresetModal] = useState(false)
   const [showWidgetModal, setShowWidgetModal] = useState(false)
   const [showMore, setShowMore] = useState(false)
@@ -36,7 +37,7 @@ export function SectionFlags(props: {}) {
       })
   }, [])
 
-  const [view, setView] = useStateView({language: true, darkTheme: true, fontSize: true, hideBadge: true, pinByDefault: true, initialContext: true, ghostMode: true, ghostModeUrlCondition: true, hideMediaView: true, freePitch: true, speedSlider: true, virtualInput: true, circleWidget: true, holdToSpeed: true})
+  const [view, setView] = useStateView({language: true, darkTheme: true, fontSize: true, hideBadge: true, pinByDefault: true, initialContext: true, ghostMode: true, ghostModeUrlCondition: true, backgroundHide: true, backgroundHideUrlCondition: true, hideMediaView: true, freePitch: true, speedSlider: true, virtualInput: true, circleWidget: true, holdToSpeed: true})
   const [ viewAlt ] = useStateView({indicatorInit: true, hideIndicator: true})
   if (!view || !viewAlt) return <div></div>
 
@@ -49,11 +50,21 @@ export function SectionFlags(props: {}) {
       )}
       {showGhostModal && (
         <URLModal
-          value={view.ghostModeUrlCondition || getDefaultURLCondition(true)} 
+          value={view.ghostModeUrlCondition || getDefaultURLCondition(false)} 
           onClose={() => setShowGhostModal(false)} 
           onReset={() => setView({ghostModeUrlCondition: null})}
           onChange={v => {
             setView({ghostModeUrlCondition: v.parts.length ? v : null})
+          }}
+        />
+      )}
+      {showBackgroundHideModal && (
+        <URLModal
+          value={view.backgroundHideUrlCondition || getDefaultURLCondition(false)} 
+          onClose={() => setShowBackgroundHideModal(false)} 
+          onReset={() => setView({backgroundHideUrlCondition: null})}
+          onChange={v => {
+            setView({backgroundHideUrlCondition: v.parts.length ? v : null})
           }}
         />
       )}
@@ -291,6 +302,24 @@ export function SectionFlags(props: {}) {
               </select>
             </div>
           </>}
+
+          {/* Background hide */}
+          <div className="field indentFloat">
+            <div className="labelWithTooltip">
+              <span>{gvar.gsm.options.flags.backgroundHide}</span>
+              <RegularTooltip title={gvar.gsm.options.flags.backgroundHideTooltip} align="right"/>
+            </div>
+            <div className="fieldValue">
+              <Toggle value={!!view.backgroundHide} onChange={e => {
+                setView({backgroundHide: !view.backgroundHide})
+              }}/>
+              <div className="float">
+                {!view.backgroundHide ? null : <>
+                  <GearIcon onClick={e => setShowBackgroundHideModal(true)}/>
+                </>}
+              </div> 
+            </div>
+          </div>
 
           {/* Speed presets */}
           <div className="field">

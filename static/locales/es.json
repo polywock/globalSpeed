@@ -211,7 +211,6 @@
       "showIndicator": "Mostra indicatore",
       "showIndicatorTooltip": "El indicador es una retroalimentación visual al usar atajos.",
       "ghostMode": "Modo fantasma",
-      "ghostModeTooltip": "Intenta bloquear el sitio web para que no cambie de velocidad. Deshabilitado de forma predeterminada porque podría romper algunos sitios web.",
       "pinByDefault": "Pin automático",
       "pinByDefaultTooltip": "Las nuevas pestañas se fijarán automáticamente.",
       "initialState": "Estado inicial",
@@ -249,7 +248,10 @@
       "qrCodeTop": "Escanea para usar en...",
       "qrCodeBottom": "Edge para móviles",
       "holdToSpeedUpTooltip": "Mantén presionado el video para acelerar temporalmente.",
-      "holdToSpeedUp": "Mantén presionado para adelantar"
+      "holdToSpeedUp": "Mantén presionado para adelantar",
+      "backgroundHide": "Evitar detección en segundo plano",
+      "ghostModeTooltip": "Impide que los sitios web detecten cambios en la velocidad de reproducción. Cuando está activado, se aplica a todos los sitios web por defecto. Esto puede causar problemas en algunos sitios. Usa el ícono de engranaje para limitarlo a sitios web específicos.",
+      "backgroundHideTooltip": "Impide que los sitios web detecten cuando una pestaña está oculta o minimizada. Útil para sitios que pausan el video cuando cambias de pestaña. Esto puede causar problemas en algunos sitios. Cuando está activado, se aplica a todos los sitios web por defecto. Usa el ícono de engranaje para limitarlo a sitios web específicos."
     },
     "editor": {
       "header": "Editor de accesos directos",

@@ -11,6 +11,9 @@ import { getPracticalRuntimeUrl } from "src/utils/helper"
 const ghostModeStatic = [".qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com", "onedrive.live.com", "open.spotify.com", ".instagram.com", ".descript.com", "www.ccmtv.cn", ".douyin.com", ".tiktok.com", ".linkedin.com"]
   .some(site => (location.hostname || "").includes(site))
 
+// Empty for now
+const backgroundHideStatic = [].some(site => (location.hostname || "").includes(site))
+
 export class ConfigSync {
   released = false
   blockKeyUp = false
@@ -19,7 +22,7 @@ export class ConfigSync {
   urlConditionsClient = new SubscribeView({ keybindsUrlCondition: true }, gvar.tabInfo.tabId, true, (v, onLaunch) => {
     this.handleChangeUrlConditionsList()
   }, 300)
-  client = new SubscribeView({ ghostMode: true, ghostModeUrlCondition: true, enabled: true, superDisable: true, latestViaShortcut: true, keybinds: true, indicatorInit: true, circleWidget: true, circleInit: true, holdToSpeed: true }, gvar.tabInfo.tabId, true, (v, onLaunch) => {
+  client = new SubscribeView({ ghostMode: true, ghostModeUrlCondition: true, backgroundHide: true, backgroundHideUrlCondition: true, enabled: true, superDisable: true, latestViaShortcut: true, keybinds: true, indicatorInit: true, circleWidget: true, circleInit: true, holdToSpeed: true }, gvar.tabInfo.tabId, true, (v, onLaunch) => {
     if (onLaunch) this.init()
     this.handleChange()
   }, 300)
@@ -119,20 +122,42 @@ export class ConfigSync {
       delete gvar.os.circle
     }
 
+    // Ghost mode
     let calcGhostMode = false
     if (view?.ghostMode && testURL(getPracticalRuntimeUrl(), view.ghostModeUrlCondition, true)) {
       calcGhostMode = true
     }
-
+    
     if (view?.enabled && (calcGhostMode || ghostModeStatic)) {
-      if (gvar.ghostMode) return
-      gvar.ghostMode = true
-      gvar.os.stratumServer.initialized ? this.sendGhostOn() : gvar.os.stratumServer.initCbs.add(this.sendGhostOn)
+      if (!gvar.ghostMode) {
+        gvar.ghostMode = true
+        gvar.os.stratumServer.initialized ? this.sendGhostOn() : gvar.os.stratumServer.initCbs.add(this.sendGhostOn)
+      }
+    } else {
+      if (gvar.ghostMode) {
+        gvar.ghostMode = false
+        gvar.os.stratumServer.initialized ? this.sendGhostOff() : gvar.os.stratumServer.initCbs.add(this.sendGhostOff)
+      }
+    }
+
+
+    // Prevent background detect.
+    let calcBackgroundHide = false
+    if (view?.backgroundHide && testURL(getPracticalRuntimeUrl(), view.backgroundHideUrlCondition, true)) {
+      calcBackgroundHide = true
+    }
+
+    if (view?.enabled && (calcBackgroundHide || backgroundHideStatic)) {
+      if (!gvar.backgroundHide) {
+        gvar.backgroundHide = true
+        gvar.os.stratumServer.initialized ? this.sendBgHideOn() : gvar.os.stratumServer.initCbs.add(this.sendBgHideOn)
+      }
 
     } else {
-      if (!gvar.ghostMode) return
-      gvar.ghostMode = false
-      gvar.os.stratumServer.initialized ? this.sendGhostOff() : gvar.os.stratumServer.initCbs.add(this.sendGhostOff)
+      if (gvar.backgroundHide) {
+        gvar.backgroundHide = false
+        gvar.os.stratumServer.initialized ? this.sendBgHideOff() : gvar.os.stratumServer.initCbs.add(this.sendBgHideOff)
+      }
     }
   }
   handleSpeedChange = () => {
@@ -148,8 +173,8 @@ export class ConfigSync {
   }
   sendGhostOn = () => gvar.os.stratumServer.send({ type: "GHOST" })
   sendGhostOff = () => gvar.os.stratumServer.send({ type: "GHOST", off: true })
-  sendBgPlayOn = () => gvar.os.stratumServer.send({ type: "BG_PLAY", enable: true })
-  sendBgPlayOff = () => gvar.os.stratumServer.send({ type: "BG_PLAY", enable: false })
+  sendBgHideOn = () => gvar.os.stratumServer.send({ type: "BG_HIDE" })
+  sendBgHideOff = () => gvar.os.stratumServer.send({ type: "BG_HIDE", off: true })
   handleKeyUp = (e: KeyboardEvent) => {
     this.lastTrigger = 0
     this.ignoreList.clear()

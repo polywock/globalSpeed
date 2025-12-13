@@ -212,7 +212,6 @@
       "showIndicator": "Pokaż wskaźnik",
       "showIndicatorTooltip": "Wskaźnik to wizualna informacja zwrotna podczas używania skrótów.",
       "ghostMode": "Tryb duchowy",
-      "ghostModeTooltip": "Spróbuj zablokować witrynę przed zmianą prędkości. Domyślnie wyłączone, ponieważ może zepsuć niektóre witryny.",
       "pinByDefault": "Domyślnie przypinaj",
       "pinByDefaultTooltip": "Nowe karty będą automatycznie przypinane.",
       "initialState": "Stan początkowy",
@@ -250,7 +249,10 @@
       "qrCodeTop": "Zeskanuj, aby użyć na...",
       "qrCodeBottom": "Edge na urządzenia mobilne",
       "holdToSpeedUpTooltip": "Przytrzymaj wideo, aby tymczasowo przyspieszyć",
-      "holdToSpeedUp": "Przytrzymaj, aby przyspieszyć"
+      "holdToSpeedUp": "Przytrzymaj, aby przyspieszyć",
+      "backgroundHide": "Zablokuj wykrywanie w tle",
+      "ghostModeTooltip": "Zapobiega wykrywaniu przez strony internetowe zmian prędkości odtwarzania. Po włączeniu działa domyślnie na wszystkich stronach. Może powodować problemy na niektórych witrynach. Użyj ikony koła zębatego, aby ograniczyć działanie do konkretnych stron.",
+      "backgroundHideTooltip": "Zapobiega wykrywaniu przez strony internetowe, że karta została ukryta lub zminimalizowana. Przydatne na stronach, które wstrzymują wideo po przełączeniu karty. Może powodować problemy na niektórych witrynach. Po włączeniu działa domyślnie na wszystkich stronach. Użyj ikony koła zębatego, aby ograniczyć działanie do konkretnych stron."
     },
     "editor": {
       "header": "Edytor skrótów",

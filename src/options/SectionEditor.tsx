@@ -56,7 +56,7 @@ function EditorDescription(props: {hasKeybinds: boolean}) {
 
 function EditorKeybinds(props: {view: StateView, setView: SetView}) {
   const { view, setView } = props
-  const listRef = useRef<HTMLDivElement>()
+  const listRef = useRef<HTMLDivElement>(null)
   
   return (
     <List listRef={listRef} spacingChange={idx => onSpacingChange(setView, view, idx)}>

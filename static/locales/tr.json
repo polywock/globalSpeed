@@ -212,7 +212,6 @@
       "showIndicator": "Göstergeyi göster",
       "showIndicatorTooltip": "Gösterge, kısayollar kullanılırken görsel geri bildirimdir.",
       "ghostMode": "Hayalet modu",
-      "ghostModeTooltip": "Web sitesinin hız değiştirmesini engellemeye çalışın. Bazı web sitelerini bozabileceği için varsayılan olarak devre dışıdır.",
       "pinByDefault": "Varsayılan olarak sabitle",
       "pinByDefaultTooltip": "Yeni sekmeler otomatik olarak sabitlenir.",
       "initialState": "Başlangıç durumu",
@@ -250,7 +249,10 @@
       "qrCodeTop": "Kullanmak için tarayın...",
       "qrCodeBottom": "Mobil için Edge",
       "holdToSpeedUpTooltip": "Videoları geçici olarak hızlandırmak için basılı tutun.",
-      "holdToSpeedUp": "Hızlandırmak için basılı tutun"
+      "holdToSpeedUp": "Hızlandırmak için basılı tutun",
+      "backgroundHide": "Arka plan algılamasını engelle",
+      "ghostModeTooltip": "Web sitelerinin oynatma hızı değişikliklerini algılamasını engeller. Etkinleştirildiğinde, varsayılan olarak tüm web siteleri için geçerlidir. Bazı sitelerde sorunlara neden olabilir. Belirli sitelerle sınırlandırmak için dişli simgesini kullanın.",
+      "backgroundHideTooltip": "Bir sekme gizlendiğinde veya simge durumuna küçültüldüğünde web sitelerinin bunu algılamasını engeller. Sekme değiştirdiğinizde videoyu duraklatan siteler için faydalıdır. Bazı sitelerde sorunlara neden olabilir. Etkinleştirildiğinde, varsayılan olarak tüm web siteleri için geçerlidir. Belirli sitelerle sınırlandırmak için dişli simgesini kullanın."
     },
     "editor": {
       "header": "Kısayol Düzenleyici",

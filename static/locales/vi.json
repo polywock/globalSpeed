@@ -212,7 +212,6 @@
       "showIndicator": "Hiển thị chỉ báo",
       "showIndicatorTooltip": "Chỉ báo là phản hồi trực quan khi sử dụng phím tắt.",
       "ghostMode": "Chế độ ghost",
-      "ghostModeTooltip": "Cố gắng chặn trang web thay đổi tốc độ. Bị tắt theo mặc định vì nó có thể làm hỏng một số trang web.",
       "pinByDefault": "Ghim theo mặc định",
       "pinByDefaultTooltip": "Các tab mới sẽ tự động được ghim.",
       "initialState": "Trạng thái ban đầu",
@@ -250,7 +249,10 @@
       "qrCodeTop": "Quét để sử dụng trên...",
       "qrCodeBottom": "Edge cho di động",
       "holdToSpeedUpTooltip": "Nhấn và giữ video để tạm thời tăng tốc.",
-      "holdToSpeedUp": "Nhấn và giữ để tua nhanh"
+      "holdToSpeedUp": "Nhấn và giữ để tua nhanh",
+      "backgroundHide": "Ngăn phát hiện nền",
+      "ghostModeTooltip": "Ngăn các trang web phát hiện thay đổi tốc độ phát lại. Khi được bật, tính năng này sẽ áp dụng cho tất cả các trang web theo mặc định. Điều này có thể gây ra sự cố trên một số trang. Sử dụng biểu tượng bánh răng để giới hạn cho các trang web cụ thể.",
+      "backgroundHideTooltip": "Ngăn các trang web phát hiện khi một tab bị ẩn hoặc thu nhỏ. Hữu ích cho các trang tạm dừng video khi bạn chuyển tab. Điều này có thể gây ra sự cố trên một số trang. Khi được bật, tính năng này sẽ áp dụng cho tất cả các trang web theo mặc định. Sử dụng biểu tượng bánh răng để giới hạn cho các trang web cụ thể."
     },
     "editor": {
       "header": "Chỉnh sửa phím tắt",

@@ -211,7 +211,6 @@
       "showIndicator": "Mostrar indicador",
       "showIndicatorTooltip": "O indicador é um feedback visual ao usar atalhos.",
       "ghostMode": "Modo fantasma",
-      "ghostModeTooltip": "Tente impedir que o site mude de velocidade. Desabilitado por padrão, pois pode quebrar alguns sites.",
       "pinByDefault": "Fixar por padrão",
       "pinByDefaultTooltip": "Novas guias serão automaticamente fixadas.",
       "initialState": "Estado inicial",
@@ -249,7 +248,10 @@
       "qrCodeTop": "Escaneie para usar no...",
       "qrCodeBottom": "Edge para celular",
       "holdToSpeedUpTooltip": "Pressione e segure vídeos para acelerar temporariamente.",
-      "holdToSpeedUp": "Pressione e segure para avançar rapidamente"
+      "holdToSpeedUp": "Pressione e segure para avançar rapidamente",
+      "backgroundHide": "Impedir detecção em segundo plano",
+      "ghostModeTooltip": "Impede que os sites detectem alterações na velocidade de reprodução. Quando ativado, é aplicado a todos os sites por padrão. Isso pode causar problemas em alguns sites. Use o ícone de engrenagem para limitá-lo a sites específicos.",
+      "backgroundHideTooltip": "Impede que os sites detectem quando uma aba está oculta ou minimizada. Útil para sites que pausam o vídeo ao trocar de aba. Isso pode causar problemas em alguns sites. Quando ativado, é aplicado a todos os sites por padrão. Use o ícone de engrenagem para limitá-lo a sites específicos."
     },
     "editor": {
       "header": "Editor de Atalhos",
