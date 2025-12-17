@@ -1,5 +1,5 @@
 import { insertStyle } from "src/utils/nativeUtils"
-import { IS_NATIVE } from "./isWebsite"
+import { IS_NATIVE, IS_YOUTUBE } from "./isWebsite"
 
 export class NativeFs {
   lock?: {
@@ -12,9 +12,25 @@ export class NativeFs {
   operationLock: boolean
   constructor() {
     gvar.os.eListen.fsCbs.add(this.handleFsChange)
+    if (IS_YOUTUBE) {
+      window.addEventListener("seeking", this.handleSeeking, {capture: true})
+      window.addEventListener("playing", this.handleSeeking, {capture: true})
+      window.addEventListener("timeupdate", this.handleSeeking, {capture: true})
+      window.addEventListener("waiting", this.handleSeeking, {capture: true})
+      window.addEventListener("stalled", this.handleSeeking, {capture: true})
+    }
   }
   release = () => {
     gvar.os.eListen.fsCbs.delete(this.handleFsChange)
+    window.removeEventListener("seeking", this.handleSeeking, {capture: true})
+    window.removeEventListener("playing", this.handleSeeking, {capture: true})
+    window.removeEventListener("timeupdate", this.handleSeeking, {capture: true})
+    window.removeEventListener("waiting", this.handleSeeking, {capture: true})
+    window.removeEventListener("stalled", this.handleSeeking, {capture: true})
+  }
+  // Mostly for Youtube.
+  handleSeeking = (e: Event) => {
+    if (this.lock) e.stopImmediatePropagation()
   }
   toggleSafe = async (video: HTMLVideoElement) => {
     if (this.operationLock) return 
@@ -39,7 +55,9 @@ export class NativeFs {
       await this.activate(video)
     }
   }
+  lastRequested: number 
   async activate(video: HTMLVideoElement) {
+    this.lastRequested = Date.now() 
     await video.requestFullscreen()
     if (!document.fullscreenElement) return
     this.ensureClickListeners()
@@ -54,12 +72,29 @@ export class NativeFs {
         scrollY: window.scrollY
       },
       mo: new MutationObserver(this.ensureProper),
-      style: insertStyle(`:is(*, #proooo > #fesss > #sion > #al) { all: revert !important; pointer-events: all; }`, rootNode instanceof ShadowRoot ? rootNode : document.documentElement),
+      style: insertStyle(`
+        :is(:has(video:fullscreen), #proooo > #fesss > #sion > #al) { 
+          pointer-events: initial !important; 
+          cursor: initial !important;
+          user-select: initial !important;
+        }
+        :is(video:fullscreen, #proooo > #fesss > #sion > #al > #bling) {
+          all: revert !important; 
+          object-fit: contain !important;
+          object-position: center !important;
+
+          &:focus-visible { outline: none !important; }
+        }
+        :is(video:fullscreen, #proooo > #fesss > #sion > #al) {
+          &:active, &:focus, &:focus-visible, &:focus-within, &:hover {
+            all: revert !important;
+          }
+        }
+        `, rootNode instanceof ShadowRoot ? rootNode : document.documentElement),
       resetCount: 0
     }
 
     this.lock.mo.observe(video, {attributeFilter: ["controls"]});
-
     this.ensureProper()
   }
   ensureProper = () => {
@@ -68,7 +103,7 @@ export class NativeFs {
     
     if (!video.controls) {
       video.controls = true   
-      resetCount++ > 1000 && this.releaseLock()
+      resetCount++ > 100 && this.releaseLock()
     }
   }
   ensureClickListeners = () => {

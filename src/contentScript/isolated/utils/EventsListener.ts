@@ -117,11 +117,13 @@ export class EventsListener {
       })
     }
     handleFullscreen = (e: Event) => {
+      // if (gvar.os.nativeFs?.lastRequested && Date.now() < gvar.os.nativeFs.lastRequested + 200) e.stopImmediatePropagation()
       this.fsCbs.forEach(cb => {
         cb(e)
       })
     }
     handleVisibilityChange = (e: Event) => {
+      if (gvar.backgroundHide) e.stopImmediatePropagation()
       this.visibilityCbs.forEach(cb => {
         cb(e)
       })
