@@ -250,9 +250,7 @@
       "qrCodeBottom": "Edge pour mobile",
       "holdToSpeedUpTooltip": "Maintenez la vidéo pour accélérer temporairement.",
       "holdToSpeedUp": "Appuyez et maintenez pour accélérer",
-      "backgroundHide": "Empêcher la détection de l'arrière-plan",
-      "ghostModeTooltip": "Empêche les sites web de détecter les modifications de vitesse de lecture. Lorsqu'elle est activée, cette option s'applique à tous les sites par défaut. Cela peut provoquer des problèmes sur certains sites. Utilisez l'icône en forme d'engrenage pour la limiter à des sites spécifiques.",
-      "backgroundHideTooltip": "Empêche les sites web de détecter lorsqu'un onglet est masqué ou minimisé. Utile pour les sites qui mettent la vidéo en pause lorsque vous changez d'onglet. Cela peut provoquer des problèmes sur certains sites. Lorsqu'elle est activée, cette option s'applique à tous les sites par défaut. Utilisez l'icône en forme d'engrenage pour la limiter à des sites spécifiques."
+      "ghostModeTooltip": "Empêche les sites web de détecter les modifications de vitesse de lecture. Lorsqu'elle est activée, cette option s'applique à tous les sites par défaut. Cela peut provoquer des problèmes sur certains sites. Utilisez l'icône en forme d'engrenage pour la limiter à des sites spécifiques."
     },
     "editor": {
       "header": "Éditeur de raccourcis",

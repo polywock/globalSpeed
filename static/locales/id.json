@@ -249,9 +249,7 @@
       "qrCodeBottom": "Edge untuk seluler",
       "holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara.",
       "holdToSpeedUp": "Tekan dan tahan untuk mempercepat",
-      "backgroundHide": "Cegah deteksi latar belakang",
-      "ghostModeTooltip": "Mencegah situs web mendeteksi perubahan kecepatan pemutaran. Saat diaktifkan, ini berlaku untuk semua situs web secara default. Ini mungkin menyebabkan masalah pada beberapa situs. Gunakan ikon roda gigi untuk membatasinya ke situs-situs tertentu.",
-      "backgroundHideTooltip": "Mencegah situs web mendeteksi saat tab disembunyikan atau diminimalkan. Berguna untuk situs yang menjeda video saat Anda berpindah tab. Ini mungkin menyebabkan masalah pada beberapa situs. Saat diaktifkan, ini berlaku untuk semua situs web secara default. Gunakan ikon roda gigi untuk membatasinya ke situs-situs tertentu."
+      "ghostModeTooltip": "Mencegah situs web mendeteksi perubahan kecepatan pemutaran. Saat diaktifkan, ini berlaku untuk semua situs web secara default. Ini mungkin menyebabkan masalah pada beberapa situs. Gunakan ikon roda gigi untuk membatasinya ke situs-situs tertentu."
     },
     "editor": {
       "header": "Editor Pintasan",

@@ -250,9 +250,7 @@
       "qrCodeBottom": "Edge untuk peranti mudah alih",
       "holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara.",
       "holdToSpeedUp": "Tekan dan tahan untuk percepat",
-      "backgroundHide": "Halang pengesanan latar belakang",
-      "ghostModeTooltip": "Menghalang laman web daripada mengesan perubahan kelajuan main balik. Apabila diaktifkan, ia digunakan untuk semua laman web secara lalai. Ini mungkin menyebabkan masalah pada sesetengah laman web. Gunakan ikon gear untuk mengehadkannya kepada laman web tertentu.",
-      "backgroundHideTooltip": "Menghalang laman web daripada mengesan apabila tab disembunyikan atau diminimakan. Berguna untuk laman web yang menjeda video apabila anda menukar tab. Ini mungkin menyebabkan masalah pada sesetengah laman web. Apabila diaktifkan, ia digunakan untuk semua laman web secara lalai. Gunakan ikon gear untuk mengehadkannya kepada laman web tertentu."
+      "ghostModeTooltip": "Menghalang laman web daripada mengesan perubahan kelajuan main balik. Apabila diaktifkan, ia digunakan untuk semua laman web secara lalai. Ini mungkin menyebabkan masalah pada sesetengah laman web. Gunakan ikon gear untuk mengehadkannya kepada laman web tertentu."
     },
     "editor": {
       "header": "Penyunting Pintasan",

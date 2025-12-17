@@ -65,6 +65,7 @@ export class Circle extends Popover {
         let blur = spread * 2
         
         this.indicator.setInit({position: 'C', rounding: 3, scaling: 1.3, showShadow: true})
+        // this.indicator.setInit({})
         this.circle.className = "circle"
         this.ref.className = "ref"
         this.delete.className = "delete"

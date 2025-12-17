@@ -250,9 +250,7 @@
       "qrCodeBottom": "Edge per dispositivi mobili",
       "holdToSpeedUpTooltip": "Tieni premuto sui video per accelerare temporaneamente.",
       "holdToSpeedUp": "Tieni premuto per avanzare velocemente",
-      "backgroundHide": "Impedisci il rilevamento in background",
-      "ghostModeTooltip": "Impedisce ai siti web di rilevare le modifiche alla velocità di riproduzione. Quando è abilitato, si applica a tutti i siti web per impostazione predefinita. Questo potrebbe causare problemi su alcuni siti. Usa l'icona dell'ingranaggio per limitarlo a siti specifici.",
-      "backgroundHideTooltip": "Impedisce ai siti web di rilevare quando una scheda è nascosta o minimizzata. Utile per i siti che mettono in pausa i video quando cambi scheda. Questo potrebbe causare problemi su alcuni siti. Quando è abilitato, si applica a tutti i siti web per impostazione predefinita. Usa l'icona dell'ingranaggio per limitarlo a siti specifici."
+      "ghostModeTooltip": "Impedisce ai siti web di rilevare le modifiche alla velocità di riproduzione. Quando è abilitato, si applica a tutti i siti web per impostazione predefinita. Questo potrebbe causare problemi su alcuni siti. Usa l'icona dell'ingranaggio per limitarlo a siti specifici."
     },
     "editor": {
       "header": "Modifica Scorciatoie",

@@ -214,8 +214,6 @@ export type Gsm = {
       showIndicatorTooltip: string,
       ghostMode: string,
       ghostModeTooltip: string,
-      backgroundHide: string,
-      backgroundHideTooltip: string,
       pinByDefault: string,
       pinByDefaultTooltip: string,
       initialState: string,

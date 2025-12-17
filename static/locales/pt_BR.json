@@ -249,9 +249,7 @@
       "qrCodeBottom": "Edge para celular",
       "holdToSpeedUpTooltip": "Pressione e segure vídeos para acelerar temporariamente.",
       "holdToSpeedUp": "Pressione e segure para avançar rapidamente",
-      "backgroundHide": "Impedir detecção em segundo plano",
-      "ghostModeTooltip": "Impede que os sites detectem alterações na velocidade de reprodução. Quando ativado, é aplicado a todos os sites por padrão. Isso pode causar problemas em alguns sites. Use o ícone de engrenagem para limitá-lo a sites específicos.",
-      "backgroundHideTooltip": "Impede que os sites detectem quando uma aba está oculta ou minimizada. Útil para sites que pausam o vídeo ao trocar de aba. Isso pode causar problemas em alguns sites. Quando ativado, é aplicado a todos os sites por padrão. Use o ícone de engrenagem para limitá-lo a sites específicos."
+      "ghostModeTooltip": "Impede que os sites detectem alterações na velocidade de reprodução. Quando ativado, é aplicado a todos os sites por padrão. Isso pode causar problemas em alguns sites. Use o ícone de engrenagem para limitá-lo a sites específicos."
     },
     "editor": {
       "header": "Editor de Atalhos",

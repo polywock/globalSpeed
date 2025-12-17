@@ -72,8 +72,6 @@ export type State = {
   websitesAddedToUrlConditionsExclusion?: string[]
   ghostMode?: boolean,
   ghostModeUrlCondition?: URLCondition,
-  backgroundHide?: boolean,
-  backgroundHideUrlCondition?: URLCondition,
   rules?: URLRule[],
   indicatorInit?: IndicatorInit,
   freePitch?: boolean,

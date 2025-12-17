@@ -13,7 +13,6 @@ let mediaReferences: HTMLMediaElement[] = []
 let shadowRoots: ShadowRoot[] = []
 let client: StratumClient
 let ghostMode: GhostMode
-let backgroundHide: BackgroundHide
 
 let ensureYtLastSpeed: number
 let handleYtRateChange: (newSpeed: number) => void
@@ -28,7 +27,6 @@ function main() {
   ensureBaidu()
 
   ghostMode = new GhostMode()
-  backgroundHide = new BackgroundHide()
   client = new StratumClient()
   ensureYt()
 
@@ -197,48 +195,6 @@ class GhostMode {
   }
 }
 
-class BackgroundHide {
-  active = false
-  constructor() {
-    const self = this;
-
-    try {
-      // Override document.hidden
-      ["hidden", "mozHidden", "webkitHidden"].forEach(key => {
-        const og = Object.getOwnPropertyDescriptor(Document.prototype, key)
-        if (!og) return 
-        Object.defineProperty(Document.prototype, key, {
-          ...og,
-          get: function () {
-            if (self.active) return false
-            return og.get.call(this)
-          }
-        })
-      });
-  
-      // Override document.visibilityState
-      ["visibilityState", "mozVisibilityState", "webkitVisibilityState"].forEach(key => {
-        const og = Object.getOwnPropertyDescriptor(Document.prototype, key)
-        if (!og) return 
-        Object.defineProperty(Document.prototype, key, {
-          ...og,
-          get: function () {
-            if (self.active) return 'visible'
-            return og.get.call(this)
-          }
-        })
-      })
-    } catch {}
-  }
-  activate() {
-    this.active = true
-  }
-  deactivate() {
-    this.active = false
-  }
-}
-
-
 class StratumClient {
   #parasite = document.createElement("div")
   #parasiteRoot = this.#parasite.attachShadow({ mode: "open" })
@@ -266,8 +222,6 @@ class StratumClient {
       seekNetflix(data.value)
     } else if (data.type === "GHOST") {
       data.off ? ghostMode.deactivate() : ghostMode.activate()
-    } else if (data.type === "BG_HIDE") {
-      data.off ? backgroundHide.deactivate() : backgroundHide.activate()
     } else if (data.type === "YT_RATE_CHANGE") {
       data.value && handleYtRateChange?.(data.value)
     } 

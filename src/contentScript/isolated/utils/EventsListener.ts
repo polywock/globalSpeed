@@ -123,7 +123,6 @@ export class EventsListener {
       })
     }
     handleVisibilityChange = (e: Event) => {
-      if (gvar.backgroundHide) e.stopImmediatePropagation()
       this.visibilityCbs.forEach(cb => {
         cb(e)
       })

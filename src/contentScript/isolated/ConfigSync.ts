@@ -11,9 +11,6 @@ import { getPracticalRuntimeUrl } from "src/utils/helper"
 const ghostModeStatic = [".qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com", "onedrive.live.com", "open.spotify.com", ".instagram.com", ".descript.com", "www.ccmtv.cn", ".douyin.com", ".tiktok.com", ".linkedin.com"]
   .some(site => (location.hostname || "").includes(site))
 
-// Empty for now
-const backgroundHideStatic = [].some(site => (location.hostname || "").includes(site))
-
 export class ConfigSync {
   released = false
   blockKeyUp = false
@@ -22,7 +19,7 @@ export class ConfigSync {
   urlConditionsClient = new SubscribeView({ keybindsUrlCondition: true }, gvar.tabInfo.tabId, true, (v, onLaunch) => {
     this.handleChangeUrlConditionsList()
   }, 300)
-  client = new SubscribeView({ ghostMode: true, ghostModeUrlCondition: true, backgroundHide: true, backgroundHideUrlCondition: true, enabled: true, superDisable: true, latestViaShortcut: true, keybinds: true, indicatorInit: true, circleWidget: true, circleInit: true, holdToSpeed: true }, gvar.tabInfo.tabId, true, (v, onLaunch) => {
+  client = new SubscribeView({ ghostMode: true, ghostModeUrlCondition: true, enabled: true, superDisable: true, latestViaShortcut: true, keybinds: true, indicatorInit: true, circleWidget: true, circleInit: true, holdToSpeed: true }, gvar.tabInfo.tabId, true, (v, onLaunch) => {
     if (onLaunch) this.init()
     this.handleChange()
   }, 300)
@@ -137,26 +134,6 @@ export class ConfigSync {
       if (gvar.ghostMode) {
         gvar.ghostMode = false
         gvar.os.stratumServer.initialized ? this.sendGhostOff() : gvar.os.stratumServer.initCbs.add(this.sendGhostOff)
-      }
-    }
-
-
-    // Prevent background detect.
-    let calcBackgroundHide = false
-    if (view?.backgroundHide && testURL(getPracticalRuntimeUrl(), view.backgroundHideUrlCondition, true)) {
-      calcBackgroundHide = true
-    }
-
-    if (view?.enabled && (calcBackgroundHide || backgroundHideStatic)) {
-      if (!gvar.backgroundHide) {
-        gvar.backgroundHide = true
-        gvar.os.stratumServer.initialized ? this.sendBgHideOn() : gvar.os.stratumServer.initCbs.add(this.sendBgHideOn)
-      }
-
-    } else {
-      if (gvar.backgroundHide) {
-        gvar.backgroundHide = false
-        gvar.os.stratumServer.initialized ? this.sendBgHideOff() : gvar.os.stratumServer.initCbs.add(this.sendBgHideOff)
       }
     }
   }
