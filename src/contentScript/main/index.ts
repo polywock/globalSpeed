@@ -199,6 +199,8 @@ class GhostMode {
 
 class BackgroundHide {
   active = false
+  wrappers = new Map<any, any>()
+
   constructor() {
     const self = this;
 
@@ -206,7 +208,7 @@ class BackgroundHide {
       // Override document.hidden
       ["hidden", "mozHidden", "webkitHidden"].forEach(key => {
         const og = Object.getOwnPropertyDescriptor(Document.prototype, key)
-        if (!og) return 
+        if (!og) return
         Object.defineProperty(Document.prototype, key, {
           ...og,
           get: function () {
@@ -215,11 +217,11 @@ class BackgroundHide {
           }
         })
       });
-  
+
       // Override document.visibilityState
       ["visibilityState", "mozVisibilityState", "webkitVisibilityState"].forEach(key => {
         const og = Object.getOwnPropertyDescriptor(Document.prototype, key)
-        if (!og) return 
+        if (!og) return
         Object.defineProperty(Document.prototype, key, {
           ...og,
           get: function () {
@@ -228,13 +230,57 @@ class BackgroundHide {
           }
         })
       })
-    } catch {}
+
+      // Hijack addEventListener/removeEventListener to block visibilitychange
+      const hijackTarget = Document.prototype
+      const ogAdd = hijackTarget.addEventListener
+      const ogRemove = hijackTarget.removeEventListener
+
+      hijackTarget.addEventListener = function (type: string, listener: any, options?: any) {
+        if (type === 'visibilitychange' && listener) {
+          const wrapper = function (e: Event) {
+            if (self.active) {
+              e.stopImmediatePropagation()
+              e.stopPropagation()
+              return
+            }
+            if (typeof listener === 'function') {
+              listener.call(this, e)
+            } else if (listener && typeof listener.handleEvent === 'function') {
+              listener.handleEvent(e)
+            }
+          }
+          self.wrappers.set(listener, wrapper)
+          return ogAdd.call(this, type, wrapper, options)
+        }
+        return ogAdd.call(this, type, listener, options)
+      }
+
+      hijackTarget.removeEventListener = function (type: string, listener: any, options?: any) {
+        if (type === 'visibilitychange' && listener) {
+          const wrapper = self.wrappers.get(listener)
+          if (wrapper) {
+            self.wrappers.delete(listener)
+            return ogRemove.call(this, type, wrapper, options)
+          }
+        }
+        return ogRemove.call(this, type, listener, options)
+      }
+
+    } catch (err) { }
   }
   activate() {
     this.active = true
+    // Dispatch a fake visibility event to force sites to re-check the now-spoofed state
+    try {
+      document.dispatchEvent(new Event("visibilitychange"))
+    } catch (e) { }
   }
   deactivate() {
     this.active = false
+    try {
+      document.dispatchEvent(new Event("visibilitychange"))
+    } catch (e) { }
   }
 }
 
@@ -270,7 +316,7 @@ class StratumClient {
       data.off ? backgroundHide.deactivate() : backgroundHide.activate()
     } else if (data.type === "YT_RATE_CHANGE") {
       data.value && handleYtRateChange?.(data.value)
-    } 
+    }
   }
   send = (data: any) => {
     native.dispatchEvent.call(this.#parasiteRoot, new native.CustomEvent(this.#serverName, { detail: native.JSON.stringify({ type: "MSG", data }) }))
