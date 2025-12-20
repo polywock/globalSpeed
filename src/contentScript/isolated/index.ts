@@ -8,7 +8,6 @@ declare global {
     os: Overseer,
     fallbackId: number,
     ghostMode?: boolean,
-    backgroundHide?: boolean,
     isTopFrame?: boolean,
     topFrameUrl?: string 
   }
