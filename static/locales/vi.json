@@ -28,6 +28,8 @@
     "create": "Tạo mới",
     "reset": "Cài lại",
     "duplicate": "Nhân bản",
+    "delete": "Xóa",
+    "aspectLock": "Khoá tỉ lệ",
     "pinTooltip": "Ghim nếu bạn muốn tab hiện tại có bối cảnh riêng của nó (tốc độ, bộ lọc, v.v.).",
     "mergeBoth": "Hợp nhất cả hai",
     "min": "Tối thiểu",
@@ -35,7 +37,11 @@
     "on": "Bật",
     "off": "Tắt",
     "toggle": "Chuyển đổi",
+    "video": "Video",
+    "page": "Trang",
     "both": "Cả hai",
+    "selector": "Bộ chọn",
+    "selectorTooltip": "Bộ chọn CSS được sử dụng để tìm các phần tử cần lọc. Mặc định chỉ nhắm vào video, nhưng bạn có thể sử dụng 'video, img, canvas' để nhắm vào video, hình ảnh và trò chơi.",
     "intoPane": "Into pane",
     "warning": "Cảnh báo",
     "filters": "Bộ lọc",
@@ -66,7 +72,6 @@
     "seconds": "Giây",
     "percent": "Phần trăm",
     "frames": "Khung hình",
-    "delete": "Xóa",
     "more": "Thêm",
     "assign": "Gán",
     "none": "Không có",
@@ -77,13 +82,8 @@
     "mode": "Chế độ",
     "darkness": "Độ tối",
     "modeStandard": "Tiêu chuẩn",
-    "modeCustomFilter": "Bộ lọc tùy chỉnh",
     "modeCustomColor": "Màu tùy chỉnh",
-    "aspectLock": "Khoá tỉ lệ",
-    "video": "Video",
-    "page": "Trang",
-    "selector": "Bộ chọn",
-    "selectorTooltip": "Bộ chọn CSS được sử dụng để tìm các phần tử cần lọc. Mặc định chỉ nhắm vào video, nhưng bạn có thể sử dụng 'video, img, canvas' để nhắm vào video, hình ảnh và trò chơi."
+    "modeCustomFilter": "Bộ lọc tùy chỉnh"
   },
   "placer": {
     "windowBounds": {
@@ -115,29 +115,29 @@
     "rotateY": "RotateY",
     "rotateZ": "RotateZ",
     "otherFilters": {
-      "mosaic": "Khảm",
       "header": "Bộ lọc khác",
+      "mosaic": "Khảm",
       "colorMatrix": "Bản đồ màu",
+      "rgb": "RGB",
+      "red": "Đỏ",
+      "green": "Xanh lá",
+      "blue": "Xanh dương",
+      "custom": "Tùy chỉnh",
+      "sharpen": "Làm nét",
+      "special": "Đặc biệt",
       "posterize": "Tạo ảnh poster",
       "blur": "Làm mờ",
       "blockX": "Khối X",
       "blockY": "Khối Y",
       "detailX": "Chi tiết X",
       "detailY": "Chi tiết Y",
+      "stretchX": "Kéo giãn X",
+      "stretchY": "Kéo giãn Y",
       "levels": "Mức",
       "amount": "Lượng",
       "vertical": "Dọc",
       "horizontal": "Ngang",
       "presets": "Cài sẵn",
-      "custom": "Tùy chỉnh",
-      "sharpen": "Làm nét",
-      "special": "Đặc biệt",
-      "stretchX": "Kéo giãn X",
-      "stretchY": "Kéo giãn Y",
-      "rgb": "RGB",
-      "red": "Đỏ",
-      "green": "Xanh lá",
-      "blue": "Xanh dương",
       "motion": "Chuyển động",
       "noise": "Nhiễu",
       "multiply": "Nhân",
@@ -173,7 +173,7 @@
     "fxSwap": "FX swap",
     "fxFilter": "Bộ lọc",
     "afxPitch": "Cao độ",
-    "afxGain": "Đạt được",
+    "afxGain": "Tăng âm lượng",
     "afxDelay": "Trì hoãn",
     "afxPan": "Pan",
     "afxMono": "Mono",
@@ -192,13 +192,13 @@
     "cinema": "Tối màu nền",
     "cinemaTooltip": "Làm tối nền video. Để thoát, nhấn vào nền hoặc sử dụng phím tắt một lần nữa.",
     "presets": "Cài đặt sẵn...",
+    "temporarySpeed": "Tua nhanh",
     "toggleSpeed": "Chuyển đổi tốc độ",
     "toggleSpeedTooltip": "Chuyển đổi giữa tốc độ phím tắt và tốc độ cuối cùng.",
     "alwaysOn": "Luôn bật",
     "alwaysOnTooltip": "Theo mặc định, phím tắt chỉ có thể kích hoạt lại tiện ích mở rộng nếu nó được tắt lần cuối bằng cách sử dụng cùng một phím tắt. Bật cài đặt này để đảm bảo phím tắt luôn hoạt động để bật tiện ích mở rộng, ngay cả khi nó đã bị tắt qua menu giao diện người dùng.",
     "muteTab": "Tắt tiếng tab",
-    "loopEntire": "Lặp toàn bộ",
-    "temporarySpeed": "Tua nhanh"
+    "loopEntire": "Lặp toàn bộ"
   },
   "options": {
     "flags": {
@@ -212,6 +212,7 @@
       "showIndicator": "Hiển thị chỉ báo",
       "showIndicatorTooltip": "Chỉ báo là phản hồi trực quan khi sử dụng phím tắt.",
       "ghostMode": "Chế độ ghost",
+      "ghostModeTooltip": "Ngăn các trang web phát hiện thay đổi tốc độ phát lại. Khi được bật, tính năng này sẽ áp dụng cho tất cả các trang web theo mặc định. Điều này có thể gây ra sự cố trên một số trang. Sử dụng biểu tượng bánh răng để giới hạn cho các trang web cụ thể.",
       "pinByDefault": "Ghim theo mặc định",
       "pinByDefaultTooltip": "Các tab mới sẽ tự động được ghim.",
       "initialState": "Trạng thái ban đầu",
@@ -231,6 +232,7 @@
       "textSize": "Kích thước văn bản",
       "speedPresets": "Cài đặt trước tốc độ",
       "widget": {
+        "option": "Hiển thị tiện ích vòng tròn",
         "optionTooltip": "(Thử nghiệm) Một widget hình tròn sẽ được hiển thị khi video hiển thị:\n - Một widget hình tròn sẽ được hiển thị khi video hiển thị.\n - Kéo trái/phải để tua video.\n - Kéo lên/xuống để điều chỉnh tốc độ phát.",
         "movementMobile": "\n - Nhấn vào hình tròn trong vài giây để di chuyển hoặc xóa nó.",
         "movementDesktop": "\n - Nhấn chuột phải và kéo hình tròn để di chuyển hoặc xóa nó.",
@@ -240,7 +242,6 @@
         "fullscreenOnlyTooltip": "Chỉ hiển thị widget khi video ở chế độ toàn màn hình.",
         "pressAction": "Hành động nhấn",
         "togglePause": "Chuyển đổi tạm dừng",
-        "option": "Hiển thị tiện ích vòng tròn",
         "fixedSpeedStep": "Bước tốc độ cố định",
         "fixedSpeedStepTooltip": "Luôn điều chỉnh tốc độ theo một lượng cố định khi di chuyển tiện ích vòng tròn.",
         "fixedSeekStep": "Bước tua cố định",
@@ -248,12 +249,12 @@
       },
       "qrCodeTop": "Quét để sử dụng trên...",
       "qrCodeBottom": "Edge cho di động",
-      "holdToSpeedUpTooltip": "Nhấn và giữ video để tạm thời tăng tốc.",
       "holdToSpeedUp": "Nhấn và giữ để tua nhanh",
-      "ghostModeTooltip": "Ngăn các trang web phát hiện thay đổi tốc độ phát lại. Khi được bật, tính năng này sẽ áp dụng cho tất cả các trang web theo mặc định. Điều này có thể gây ra sự cố trên một số trang. Sử dụng biểu tượng bánh răng để giới hạn cho các trang web cụ thể."
+      "holdToSpeedUpTooltip": "Nhấn và giữ video để tạm thời tăng tốc."
     },
     "editor": {
       "header": "Chỉnh sửa phím tắt",
+      "headerMobile": "Phím tắt",
       "toggleMode": "Bạn có thể sử dụng các phím tắt cục bộ hoặc chung.",
       "toggleModeTooltip": "Các phím tắt chung rất hữu ích khi bạn muốn điều khiển video hoặc âm thanh trong khi sử dụng một chương trình khác.",
       "menuLabel": "Nhãn menu",
@@ -289,8 +290,7 @@
         "sameTab": "Tab hiện tại"
       },
       "pressAndHold": "Nhấn và giữ",
-      "pressAndHoldTooltip": "Nếu được bật, phím phải được giữ trong khi điều chỉnh giá trị tương tác.",
-      "headerMobile": "Phím tắt"
+      "pressAndHoldTooltip": "Nếu được bật, phím phải được giữ trong khi điều chỉnh giá trị tương tác."
     },
     "rules": {
       "header": "Quy tắc URL",
@@ -316,10 +316,10 @@
       "import": "Nhập",
       "areYouSure": "Bạn có chắc?",
       "copy": "Sao chép cài đặt",
+      "copied": "Đã sao chép!",
       "paste": "Dán cài đặt",
       "exportTooltip": "Xuất cài đặt",
-      "importTooltip": "Nhập cài đặt",
-      "copied": "Đã sao chép!"
+      "importTooltip": "Nhập cài đặt"
     },
     "popup": {
       "enableShortcutsMessage": "Tùy chọn: Bật phím tắt trên trang web này."

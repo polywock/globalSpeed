@@ -28,6 +28,8 @@
     "create": "Crio",
     "reset": "Redefinir",
     "duplicate": "Duplicar",
+    "delete": "Excluir",
+    "aspectLock": "Bloqueio de proporção",
     "pinTooltip": "Fixe se você deseja que a aba atual tenha seu próprio contexto (velocidade, filtros, etc).",
     "mergeBoth": "Fundir ambos",
     "min": "Mín",
@@ -35,7 +37,11 @@
     "on": "Ligado",
     "off": "Desligado",
     "toggle": "Alternancia",
+    "video": "Vídeo",
+    "page": "Página",
     "both": "Ambos",
+    "selector": "Seletor",
+    "selectorTooltip": "Seletor CSS usado para encontrar elementos a serem filtrados. Por padrão, ele só aponta para vídeos, mas você pode usar 'video, img, canvas' para atingir vídeos, imagens e jogos.",
     "intoPane": "Criar janela",
     "warning": "Aviso",
     "filters": "Filtros",
@@ -66,7 +72,6 @@
     "seconds": "Segundos",
     "percent": "Porcento",
     "frames": "Quadros",
-    "delete": "Excluir",
     "more": "Mais",
     "assign": "Atribuir",
     "none": "Nenhum",
@@ -77,13 +82,8 @@
     "mode": "Modo",
     "darkness": "Escuridão",
     "modeStandard": "Padrão",
-    "modeCustomFilter": "Filtro personalizado",
     "modeCustomColor": "Cor personalizada",
-    "aspectLock": "Bloqueio de proporção",
-    "video": "Vídeo",
-    "page": "Página",
-    "selector": "Seletor",
-    "selectorTooltip": "Seletor CSS usado para encontrar elementos a serem filtrados. Por padrão, ele só aponta para vídeos, mas você pode usar 'video, img, canvas' para atingir vídeos, imagens e jogos."
+    "modeCustomFilter": "Filtro personalizado"
   },
   "placer": {
     "windowBounds": {
@@ -115,29 +115,29 @@
     "rotateY": "Girar Y",
     "rotateZ": "Girar Z",
     "otherFilters": {
-      "mosaic": "Mosaico",
       "header": "Outros filtros",
+      "mosaic": "Mosaico",
       "colorMatrix": "Mapa de cores",
+      "rgb": "RGB",
+      "red": "Vermelho",
+      "green": "Verde",
+      "blue": "Azul",
+      "custom": "Personalizado",
+      "sharpen": "Nitidez",
+      "special": "Especial",
       "posterize": "Posterizar",
       "blur": "Desfocar",
       "blockX": "Bloco X",
       "blockY": "Bloco Y",
       "detailX": "Detalhe X",
       "detailY": "Detalhe Y",
+      "stretchX": "Esticar X",
+      "stretchY": "Esticar Y",
       "levels": "Níveis",
       "amount": "Quantidade",
       "vertical": "Vertical",
       "horizontal": "Horizontal",
       "presets": "Predefinições",
-      "custom": "Personalizado",
-      "sharpen": "Nitidez",
-      "special": "Especial",
-      "stretchX": "Esticar X",
-      "stretchY": "Esticar Y",
-      "rgb": "RGB",
-      "red": "Vermelho",
-      "green": "Verde",
-      "blue": "Azul",
       "motion": "Movimento",
       "noise": "Ruído",
       "multiply": "Multiplicação",
@@ -173,7 +173,7 @@
     "fxSwap": "Trocar FX",
     "fxFilter": "Filtro FX",
     "afxPitch": "Tom de som",
-    "afxGain": "Volume+",
+    "afxGain": "Aumento de volume",
     "afxDelay": "Atraso",
     "afxPan": "Panorâmica",
     "afxMono": "Mono",
@@ -192,13 +192,13 @@
     "cinema": "Escurecer fundo",
     "cinemaTooltip": "Escurece o fundo do vídeo. Para sair, pressione no fundo ou use o atalho novamente.",
     "presets": "Predefinições...",
+    "temporarySpeed": "Avançar rápido",
     "toggleSpeed": "Alternar velocidade",
     "toggleSpeedTooltip": "Alterna entre a velocidade do atalho e a última velocidade.",
     "alwaysOn": "Sempre ligado",
     "alwaysOnTooltip": "Por padrão, o atalho só pode reativar a extensão se ela foi desativada pela última vez usando o mesmo atalho. Ative esta configuração para garantir que o atalho sempre funcione para habilitar a extensão, mesmo que ela tenha sido desligada pelo menu da UI.",
     "muteTab": "Silenciar guia",
-    "loopEntire": "Repetir totalmente",
-    "temporarySpeed": "Avançar rápido"
+    "loopEntire": "Repetir totalmente"
   },
   "options": {
     "flags": {
@@ -211,6 +211,7 @@
       "showIndicator": "Mostrar indicador",
       "showIndicatorTooltip": "O indicador é um feedback visual ao usar atalhos.",
       "ghostMode": "Modo fantasma",
+      "ghostModeTooltip": "Impede que os sites detectem alterações na velocidade de reprodução. Quando ativado, é aplicado a todos os sites por padrão. Isso pode causar problemas em alguns sites. Use o ícone de engrenagem para limitá-lo a sites específicos.",
       "pinByDefault": "Fixar por padrão",
       "pinByDefaultTooltip": "Novas guias serão automaticamente fixadas.",
       "initialState": "Estado inicial",
@@ -230,6 +231,7 @@
       "textSize": "Tamanho do texto",
       "speedPresets": "Predefinições de velocidade",
       "widget": {
+        "option": "Mostrar widget circular",
         "optionTooltip": "(Experimental) Um widget circular será mostrado enquanto os vídeos estiverem visíveis:\n - Um widget circular será mostrado enquanto os vídeos estiverem visíveis.\n - Arraste para a esquerda/direita para avançar ou retroceder no vídeo.\n - Arraste para cima/baixo para ajustar a taxa de reprodução.",
         "movementMobile": "\n - Pressione o círculo por alguns segundos para movê-lo ou excluí-lo.",
         "movementDesktop": "\n - Com o botão direito do mouse, arraste o círculo para movê-lo ou excluí-lo.",
@@ -239,7 +241,6 @@
         "fullscreenOnlyTooltip": "Mostrar widget apenas quando o vídeo estiver em tela cheia.",
         "pressAction": "Ação de pressão",
         "togglePause": "Alternar pausa",
-        "option": "Mostrar widget circular",
         "fixedSpeedStep": "Passo de velocidade fixo",
         "fixedSpeedStepTooltip": "Sempre ajustar a velocidade por um valor fixo ao mover o widget circular.",
         "fixedSeekStep": "Passo de busca fixo",
@@ -247,12 +248,12 @@
       },
       "qrCodeTop": "Escaneie para usar no...",
       "qrCodeBottom": "Edge para celular",
-      "holdToSpeedUpTooltip": "Pressione e segure vídeos para acelerar temporariamente.",
       "holdToSpeedUp": "Pressione e segure para avançar rapidamente",
-      "ghostModeTooltip": "Impede que os sites detectem alterações na velocidade de reprodução. Quando ativado, é aplicado a todos os sites por padrão. Isso pode causar problemas em alguns sites. Use o ícone de engrenagem para limitá-lo a sites específicos."
+      "holdToSpeedUpTooltip": "Pressione e segure vídeos para acelerar temporariamente."
     },
     "editor": {
       "header": "Editor de Atalhos",
+      "headerMobile": "Atalhos de Teclado",
       "toggleMode": "Você pode usar teclas de atalho locais ou globais.",
       "toggleModeTooltip": "Atalhos globais são úteis quando você deseja controlar vídeo ou áudio enquanto usa outro programa.",
       "menuLabel": "Etiqueta do menu",
@@ -288,8 +289,7 @@
         "sameTab": "Aba atual"
       },
       "pressAndHold": "Pressionar e segurar",
-      "pressAndHoldTooltip": "Se ativado, a tecla deve ser mantida pressionada enquanto ajusta o valor interativamente.",
-      "headerMobile": "Atalhos de Teclado"
+      "pressAndHoldTooltip": "Se ativado, a tecla deve ser mantida pressionada enquanto ajusta o valor interativamente."
     },
     "rules": {
       "header": "Regras de URL",
@@ -315,10 +315,10 @@
       "import": "Importar",
       "areYouSure": "Você tem certeza?",
       "copy": "Copiar configurações",
+      "copied": "Copiado!",
       "paste": "Colar configurações",
       "exportTooltip": "Exportar configurações",
-      "importTooltip": "Importar configurações",
-      "copied": "Copiado!"
+      "importTooltip": "Importar configurações"
     },
     "popup": {
       "enableShortcutsMessage": "Opcional: Ativar atalhos de teclado neste site."

@@ -28,6 +28,8 @@
     "create": "Ekle",
     "reset": "Sıfırla",
     "duplicate": "Çiftleştir",
+    "delete": "Sil",
+    "aspectLock": "En-boy oranını kilitle",
     "pinTooltip": "Mevcut sekmeyi kendi bağlamına (hız, filtreler vb.) sahip olması için sabitleyin.",
     "mergeBoth": "Her ikisini birleştir",
     "min": "Min",
@@ -35,7 +37,11 @@
     "on": "Açık",
     "off": "Kapalı",
     "toggle": "Geçiş",
+    "video": "Video",
+    "page": "Sayfa",
     "both": "Her ikisi",
+    "selector": "Seçici",
+    "selectorTooltip": "Filtrelenecek öğeleri bulmak için kullanılan CSS seçici. Varsayılan olarak yalnızca videoları hedefler, ancak videoları, resimleri ve oyunları hedeflemek için 'video, img, canvas' kullanabilirsiniz.",
     "intoPane": "Pencere oluştur",
     "warning": "Uyarı",
     "filters": "Filtreler",
@@ -66,7 +72,6 @@
     "seconds": "Sn",
     "percent": "%",
     "frames": "Kare",
-    "delete": "Sil",
     "more": "Daha fazla",
     "assign": "Ata",
     "none": "Hiçbiri",
@@ -77,13 +82,8 @@
     "mode": "Mod",
     "darkness": "Karanlık",
     "modeStandard": "Standart",
-    "modeCustomFilter": "Özel Filtre",
     "modeCustomColor": "Özel renk",
-    "aspectLock": "En-boy oranını kilitle",
-    "video": "Video",
-    "page": "Sayfa",
-    "selector": "Seçici",
-    "selectorTooltip": "Filtrelenecek öğeleri bulmak için kullanılan CSS seçici. Varsayılan olarak yalnızca videoları hedefler, ancak videoları, resimleri ve oyunları hedeflemek için 'video, img, canvas' kullanabilirsiniz."
+    "modeCustomFilter": "Özel Filtre"
   },
   "placer": {
     "windowBounds": {
@@ -115,29 +115,29 @@
     "rotateY": "Döndür Y",
     "rotateZ": "Döndür Z",
     "otherFilters": {
-      "mosaic": "Mozaik",
       "header": "Diğer filtreler",
+      "mosaic": "Mozaik",
       "colorMatrix": "Renk haritası",
+      "rgb": "RGB",
+      "red": "Kırmızı",
+      "green": "Yeşil",
+      "blue": "Mavi",
+      "custom": "Özel",
+      "sharpen": "Netleştir",
+      "special": "Özel",
       "posterize": "Posterleştir",
       "blur": "Bulanıklaştır",
       "blockX": "Blok X",
       "blockY": "Blok Y",
       "detailX": "Detay X",
       "detailY": "Detay Y",
+      "stretchX": "X Ekseni Uzat",
+      "stretchY": "Y Ekseni Uzat",
       "levels": "Seviyeler",
       "amount": "Miktar",
       "vertical": "Dikey",
       "horizontal": "Yatay",
       "presets": "Ön ayarlar",
-      "custom": "Özel",
-      "sharpen": "Netleştir",
-      "special": "Özel",
-      "stretchX": "X Ekseni Uzat",
-      "stretchY": "Y Ekseni Uzat",
-      "rgb": "RGB",
-      "red": "Kırmızı",
-      "green": "Yeşil",
-      "blue": "Mavi",
       "motion": "Hareket",
       "noise": "Gürültü",
       "multiply": "Çoğalt",
@@ -173,7 +173,7 @@
     "fxSwap": "FX takas",
     "fxFilter": "Filtre",
     "afxPitch": "Ses aralığı",
-    "afxGain": "Ses+",
+    "afxGain": "Ses artırma",
     "afxDelay": "Geciktir",
     "afxPan": "Kaydır",
     "afxMono": "Mono",
@@ -192,13 +192,13 @@
     "cinema": "Arkaplanı karart",
     "cinemaTooltip": "Video arkaplanını karartır. Çıkmak için arkaplana basın veya tekrar kısayol kullanın.",
     "presets": "Ön ayarlar...",
+    "temporarySpeed": "İleri sar",
     "toggleSpeed": "Hız değiştirme",
     "toggleSpeedTooltip": "Kısayol hızı ve son hız arasında geçiş yapın.",
     "alwaysOn": "Her zaman açık",
     "alwaysOnTooltip": "Varsayılan olarak, kısayol, aynı kısayol kullanılarak en son devre dışı bırakıldıysa yalnızca uzantıyı yeniden etkinleştirebilir. Kısayolun, UI menüsü aracılığıyla kapatılsa bile uzantıyı etkinleştirmek için her zaman çalışmasını sağlamak için bu ayarı etkinleştirin.",
     "muteTab": "Sekmeyi sessize al",
-    "loopEntire": "Tam döngü",
-    "temporarySpeed": "İleri sar"
+    "loopEntire": "Tam döngü"
   },
   "options": {
     "flags": {
@@ -212,6 +212,7 @@
       "showIndicator": "Göstergeyi göster",
       "showIndicatorTooltip": "Gösterge, kısayollar kullanılırken görsel geri bildirimdir.",
       "ghostMode": "Hayalet modu",
+      "ghostModeTooltip": "Web sitelerinin oynatma hızı değişikliklerini algılamasını engeller. Etkinleştirildiğinde, varsayılan olarak tüm web siteleri için geçerlidir. Bazı sitelerde sorunlara neden olabilir. Belirli sitelerle sınırlandırmak için dişli simgesini kullanın.",
       "pinByDefault": "Varsayılan olarak sabitle",
       "pinByDefaultTooltip": "Yeni sekmeler otomatik olarak sabitlenir.",
       "initialState": "Başlangıç durumu",
@@ -231,6 +232,7 @@
       "textSize": "Metin boyutu",
       "speedPresets": "Hız ön ayarları",
       "widget": {
+        "option": "Daire widget'ını göster",
         "optionTooltip": "(Deneysel) Videolar görünürken bir daire widget'ı gösterilecektir:\n - Videolar görünürken bir daire widget'ı gösterilecektir.\n - Videoyu ileri/geri almak için sola/sağa sürükleyin.\n - Oynatma hızını ayarlamak için yukarı/aşağı sürükleyin.",
         "movementMobile": "\n - Hareket ettirmek veya silmek için daireye birkaç saniye basılı tutun.",
         "movementDesktop": "\n - Sağ fare düğmesi ile daireyi sürükleyerek hareket ettirin veya silin.",
@@ -240,7 +242,6 @@
         "fullscreenOnlyTooltip": "Widget'ı yalnızca video tam ekranda olduğunda göster.",
         "pressAction": "Basma eylemi",
         "togglePause": "Durdurmayı geçiş yap",
-        "option": "Daire widget'ını göster",
         "fixedSpeedStep": "Sabit hız adımı",
         "fixedSpeedStepTooltip": "Daire aracını hareket ettirirken hızı her zaman sabit bir miktarda ayarla.",
         "fixedSeekStep": "Sabit arama adımı",
@@ -248,12 +249,12 @@
       },
       "qrCodeTop": "Kullanmak için tarayın...",
       "qrCodeBottom": "Mobil için Edge",
-      "holdToSpeedUpTooltip": "Videoları geçici olarak hızlandırmak için basılı tutun.",
       "holdToSpeedUp": "Hızlandırmak için basılı tutun",
-      "ghostModeTooltip": "Web sitelerinin oynatma hızı değişikliklerini algılamasını engeller. Etkinleştirildiğinde, varsayılan olarak tüm web siteleri için geçerlidir. Bazı sitelerde sorunlara neden olabilir. Belirli sitelerle sınırlandırmak için dişli simgesini kullanın."
+      "holdToSpeedUpTooltip": "Videoları geçici olarak hızlandırmak için basılı tutun."
     },
     "editor": {
       "header": "Kısayol Düzenleyici",
+      "headerMobile": "Klavye Kısayolları",
       "toggleMode": "Yerel veya genel kısayol tuşlarını kullanabilirsiniz.",
       "toggleModeTooltip": "Genel kısayollar, başka bir program kullanırken video veya sesi kontrol etmek istediğinizde yararlıdır.",
       "menuLabel": "Menü etiketi",
@@ -289,8 +290,7 @@
         "sameTab": "Mevcut sekme"
       },
       "pressAndHold": "Basılı tut",
-      "pressAndHoldTooltip": "Etkinleştirilirse, değeri etkileşimli olarak ayarlarken tuş basılı tutulmalıdır.",
-      "headerMobile": "Klavye Kısayolları"
+      "pressAndHoldTooltip": "Etkinleştirilirse, değeri etkileşimli olarak ayarlarken tuş basılı tutulmalıdır."
     },
     "rules": {
       "header": "URL Kuralları",
@@ -316,10 +316,10 @@
       "import": "İ̇çeri",
       "areYouSure": "Emin misiniz?",
       "copy": "Ayarları kopyala",
+      "copied": "Kopyalandı!",
       "paste": "Ayarları yapıştır",
       "exportTooltip": "Ayarları dışa aktar",
-      "importTooltip": "Ayarları içe aktar",
-      "copied": "Kopyalandı!"
+      "importTooltip": "Ayarları içe aktar"
     },
     "popup": {
       "enableShortcutsMessage": "İsteğe bağlı: Bu web sitesinde klavye kısayollarını etkinleştirin."

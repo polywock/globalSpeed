@@ -28,6 +28,8 @@
     "create": "Utwórz",
     "reset": "Zresetuj",
     "duplicate": "Duplikuj",
+    "delete": "Usuń",
+    "aspectLock": "Blokada proporcji",
     "pinTooltip": "Przypnij, jeśli chcesz, aby bieżąca karta miała własny kontekst (prędkość, filtry itp.).",
     "mergeBoth": "Połącz oba",
     "min": "Min",
@@ -35,7 +37,11 @@
     "on": "Włącz",
     "off": "Wyłącz",
     "toggle": "Przełącz",
+    "video": "Wideo",
+    "page": "Strona",
     "both": "Oba",
+    "selector": "Selektor",
+    "selectorTooltip": "Selektor CSS używany do znajdowania elementów do filtrowania. Domyślnie obejmuje tylko filmy, ale możesz użyć 'video, img, canvas', aby dopasować filmy, obrazy i gry.",
     "intoPane": "Do panelu",
     "warning": "Ostrzeżenie",
     "filters": "Filtry",
@@ -66,7 +72,6 @@
     "seconds": "Sekundy",
     "percent": "Procent",
     "frames": "Klatki",
-    "delete": "Usuń",
     "more": "Więcej",
     "assign": "Przypisz",
     "none": "Brak",
@@ -77,13 +82,8 @@
     "mode": "Tryb",
     "darkness": "Ciemność",
     "modeStandard": "Standardowy",
-    "modeCustomFilter": "Niestandardowy filtr",
     "modeCustomColor": "Niestandardowy kolor",
-    "aspectLock": "Blokada proporcji",
-    "video": "Wideo",
-    "page": "Strona",
-    "selector": "Selektor",
-    "selectorTooltip": "Selektor CSS używany do znajdowania elementów do filtrowania. Domyślnie obejmuje tylko filmy, ale możesz użyć 'video, img, canvas', aby dopasować filmy, obrazy i gry."
+    "modeCustomFilter": "Niestandardowy filtr"
   },
   "placer": {
     "windowBounds": {
@@ -115,29 +115,29 @@
     "rotateY": "ObrótY",
     "rotateZ": "ObrótZ",
     "otherFilters": {
-      "mosaic": "Mozaika",
       "header": "Inne filtry",
+      "mosaic": "Mozaika",
       "colorMatrix": "Mapa kolorów",
+      "rgb": "RGB",
+      "red": "Czerwony",
+      "green": "Zielony",
+      "blue": "Niebieski",
+      "custom": "Niestandardowy",
+      "sharpen": "Wyostrz",
+      "special": "Specjalny",
       "posterize": "Posteryzacja",
       "blur": "Rozmycie",
       "blockX": "Blok X",
       "blockY": "Blok Y",
       "detailX": "Szczegół X",
       "detailY": "Szczegół Y",
+      "stretchX": "Rozciągnij X",
+      "stretchY": "Rozciągnij Y",
       "levels": "Poziomy",
       "amount": "Ilość",
       "vertical": "Pionowy",
       "horizontal": "Poziomy",
       "presets": "Ustawienia",
-      "custom": "Niestandardowy",
-      "sharpen": "Wyostrz",
-      "special": "Specjalny",
-      "stretchX": "Rozciągnij X",
-      "stretchY": "Rozciągnij Y",
-      "rgb": "RGB",
-      "red": "Czerwony",
-      "green": "Zielony",
-      "blue": "Niebieski",
       "motion": "Ruch",
       "noise": "Szum",
       "multiply": "Mnożenie",
@@ -173,7 +173,7 @@
     "fxSwap": "Zamień efekty",
     "fxFilter": "Filtr",
     "afxPitch": "Ton",
-    "afxGain": "Wzmocnienie",
+    "afxGain": "Wzmocnienie głośności",
     "afxDelay": "Opóźnienie",
     "afxPan": "Panoramowanie",
     "afxMono": "Mono",
@@ -192,13 +192,13 @@
     "cinema": "Przyciemnij tło",
     "cinemaTooltip": "Przyciemnij tło wideo. Aby wyjść, kliknij tło lub użyj skrótu ponownie.",
     "presets": "Ustawienia wstępne...",
+    "temporarySpeed": "Przewiń szybciej",
     "toggleSpeed": "Przełącz prędkość",
     "toggleSpeedTooltip": "Przełącz między skrótową prędkością a ostatnią prędkością.",
     "alwaysOn": "Zawsze włączone",
     "alwaysOnTooltip": "Domyślnie skrót może ponownie aktywować rozszerzenie, jeśli zostało wyłączone tym samym skrótem. Włącz tę opcję, aby upewnić się, że skrót zawsze działa na włączenie rozszerzenia, nawet jeśli zostało wyłączone w menu UI.",
     "muteTab": "Wycisz kartę",
-    "loopEntire": "Pętla całego",
-    "temporarySpeed": "Przewiń szybciej"
+    "loopEntire": "Pętla całego"
   },
   "options": {
     "flags": {
@@ -212,6 +212,7 @@
       "showIndicator": "Pokaż wskaźnik",
       "showIndicatorTooltip": "Wskaźnik to wizualna informacja zwrotna podczas używania skrótów.",
       "ghostMode": "Tryb duchowy",
+      "ghostModeTooltip": "Zapobiega wykrywaniu przez strony internetowe zmian prędkości odtwarzania. Po włączeniu działa domyślnie na wszystkich stronach. Może powodować problemy na niektórych witrynach. Użyj ikony koła zębatego, aby ograniczyć działanie do konkretnych stron.",
       "pinByDefault": "Domyślnie przypinaj",
       "pinByDefaultTooltip": "Nowe karty będą automatycznie przypinane.",
       "initialState": "Stan początkowy",
@@ -231,6 +232,7 @@
       "textSize": "Rozmiar tekstu",
       "speedPresets": "Ustawienia prędkości",
       "widget": {
+        "option": "Pokaż okrągły widżet",
         "optionTooltip": "(Eksperymentalny) Widżet w formie koła będzie widoczny, gdy filmy są widoczne.\n - Przeciągnij w lewo/prawo, aby przewinąć wideo.\n - Przeciągnij w górę/dół, aby dostosować szybkość odtwarzania.",
         "movementMobile": "\n - Przytrzymaj kółko przez kilka sekund, aby je przenieść lub usunąć.",
         "movementDesktop": "\n - Kliknij prawym przyciskiem myszy i przeciągnij kółko, aby je przenieść lub usunąć.",
@@ -240,7 +242,6 @@
         "fullscreenOnlyTooltip": "Widżet będzie widoczny tylko w trybie pełnoekranowym.",
         "pressAction": "Akcja po naciśnięciu",
         "togglePause": "Przełącz pauzę",
-        "option": "Pokaż okrągły widżet",
         "fixedSpeedStep": "Stały krok prędkości",
         "fixedSpeedStepTooltip": "Zawsze dostosowuj prędkość o stałą wartość podczas przesuwania widżetu koła.",
         "fixedSeekStep": "Stały krok przewijania",
@@ -248,12 +249,12 @@
       },
       "qrCodeTop": "Zeskanuj, aby użyć na...",
       "qrCodeBottom": "Edge na urządzenia mobilne",
-      "holdToSpeedUpTooltip": "Przytrzymaj wideo, aby tymczasowo przyspieszyć",
       "holdToSpeedUp": "Przytrzymaj, aby przyspieszyć",
-      "ghostModeTooltip": "Zapobiega wykrywaniu przez strony internetowe zmian prędkości odtwarzania. Po włączeniu działa domyślnie na wszystkich stronach. Może powodować problemy na niektórych witrynach. Użyj ikony koła zębatego, aby ograniczyć działanie do konkretnych stron."
+      "holdToSpeedUpTooltip": "Przytrzymaj wideo, aby tymczasowo przyspieszyć"
     },
     "editor": {
       "header": "Edytor skrótów",
+      "headerMobile": "Skróty klawiaturowe",
       "toggleMode": "Możesz używać lokalnych lub globalnych skrótów klawiszowych.",
       "toggleModeTooltip": "Globalne skróty są przydatne, gdy chcesz sterować wideo lub dźwiękiem podczas korzystania z innego programu.",
       "menuLabel": "Etykieta menu",
@@ -289,8 +290,7 @@
         "sameTab": "Bieżąca karta"
       },
       "pressAndHold": "Naciśnij i przytrzymaj",
-      "pressAndHoldTooltip": "Jeśli włączone, klawisz musi być przytrzymany podczas interaktywnego dostosowywania wartości.",
-      "headerMobile": "Skróty klawiaturowe"
+      "pressAndHoldTooltip": "Jeśli włączone, klawisz musi być przytrzymany podczas interaktywnego dostosowywania wartości."
     },
     "rules": {
       "header": "Reguły URL",
@@ -316,10 +316,10 @@
       "import": "Importuj",
       "areYouSure": "Czy jesteś pewien?",
       "copy": "Skopiuj ustawienia",
+      "copied": "Skopiowano!",
       "paste": "Wklej ustawienia",
       "exportTooltip": "Eksportuj ustawienia",
-      "importTooltip": "Importuj ustawienia",
-      "copied": "Skopiowano!"
+      "importTooltip": "Importuj ustawienia"
     },
     "popup": {
       "enableShortcutsMessage": "Opcjonalnie: Włącz skróty klawiaturowe na tej stronie."

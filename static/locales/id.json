@@ -28,6 +28,8 @@
     "create": "Buat",
     "reset": "Atur ulang",
     "duplicate": "Duplikat",
+    "delete": "Hapus",
+    "aspectLock": "Kunci aspek",
     "pinTooltip": "Sematkan jika Anda ingin tab saat ini memiliki konteks sendiri (kecepatan, filter, dll.).",
     "mergeBoth": "Gabungkan keduanya",
     "min": "Min",
@@ -35,7 +37,11 @@
     "on": "Nyala",
     "off": "Mati",
     "toggle": "Alih",
+    "video": "Video",
+    "page": "Halaman",
     "both": "Keduanya",
+    "selector": "Pemilih",
+    "selectorTooltip": "Selector CSS yang digunakan untuk menemukan elemen yang akan difilter. Secara default hanya menargetkan video, tetapi Anda dapat menggunakan 'video, img, canvas' untuk menargetkan video, gambar, dan permainan.",
     "intoPane": "Ke panel",
     "warning": "Peringatan",
     "filters": "Filter",
@@ -66,7 +72,6 @@
     "seconds": "Detik",
     "percent": "Persen",
     "frames": "Bingkai",
-    "delete": "Hapus",
     "more": "Lebih",
     "assign": "Tetapkan",
     "none": "Tidak ada",
@@ -77,13 +82,8 @@
     "mode": "Mode",
     "darkness": "Kegelapan",
     "modeStandard": "Standar",
-    "modeCustomFilter": "Filter Kustom",
     "modeCustomColor": "Warna kustom",
-    "aspectLock": "Kunci aspek",
-    "video": "Video",
-    "page": "Halaman",
-    "selector": "Pemilih",
-    "selectorTooltip": "Selector CSS yang digunakan untuk menemukan elemen yang akan difilter. Secara default hanya menargetkan video, tetapi Anda dapat menggunakan 'video, img, canvas' untuk menargetkan video, gambar, dan permainan."
+    "modeCustomFilter": "Filter Kustom"
   },
   "placer": {
     "windowBounds": {
@@ -115,29 +115,29 @@
     "rotateY": "PutarY",
     "rotateZ": "PutarZ",
     "otherFilters": {
-      "mosaic": "Mosaik",
       "header": "Filter lainnya",
+      "mosaic": "Mosaik",
       "colorMatrix": "Peta warna",
+      "rgb": "RGB",
+      "red": "Merah",
+      "green": "Hijau",
+      "blue": "Biru",
+      "custom": "Kustom",
+      "sharpen": "Pertajam",
+      "special": "Spesial",
       "posterize": "Posterisasi",
       "blur": "Kabur",
       "blockX": "Blok X",
       "blockY": "Blok Y",
       "detailX": "Detil X",
       "detailY": "Detil Y",
+      "stretchX": "Rentangkan X",
+      "stretchY": "Rentangkan Y",
       "levels": "Tingkat",
       "amount": "Jumlah",
       "vertical": "Vertikal",
       "horizontal": "Horizontal",
       "presets": "Preset",
-      "custom": "Kustom",
-      "sharpen": "Pertajam",
-      "special": "Spesial",
-      "stretchX": "Rentangkan X",
-      "stretchY": "Rentangkan Y",
-      "rgb": "RGB",
-      "red": "Merah",
-      "green": "Hijau",
-      "blue": "Biru",
       "motion": "Gerakan",
       "noise": "Kebisingan",
       "multiply": "Perkalian",
@@ -173,7 +173,7 @@
     "fxSwap": "Tukar FX",
     "fxFilter": "Filter",
     "afxPitch": "Nada",
-    "afxGain": "Gain",
+    "afxGain": "Penguat volume",
     "afxDelay": "Delay",
     "afxPan": "Pan",
     "afxMono": "Mono",
@@ -192,13 +192,13 @@
     "cinema": "Gelapkan latar belakang",
     "cinemaTooltip": "Gelapkan latar belakang video. Untuk keluar, tekan latar belakang atau gunakan pintasan lagi.",
     "presets": "Preset...",
+    "temporarySpeed": "Percepat",
     "toggleSpeed": "Alih kecepatan",
     "toggleSpeedTooltip": "Beralih antara kecepatan pintasan dan kecepatan terakhir.",
     "alwaysOn": "Selalu aktif",
     "alwaysOnTooltip": "Secara default, pintasan hanya dapat mengaktifkan kembali ekstensi jika terakhir kali dinonaktifkan menggunakan pintasan yang sama. Aktifkan pengaturan ini untuk memastikan pintasan selalu berfungsi untuk mengaktifkan ekstensi, bahkan jika dimatikan melalui menu UI.",
     "muteTab": "Bisukan tab",
-    "loopEntire": "Putar Sepenuhnya",
-    "temporarySpeed": "Percepat"
+    "loopEntire": "Putar Sepenuhnya"
   },
   "options": {
     "flags": {
@@ -211,6 +211,7 @@
       "showIndicator": "Tampilkan indikator",
       "showIndicatorTooltip": "Indikator adalah umpan balik visual saat menggunakan pintasan.",
       "ghostMode": "Mode hantu",
+      "ghostModeTooltip": "Mencegah situs web mendeteksi perubahan kecepatan pemutaran. Saat diaktifkan, ini berlaku untuk semua situs web secara default. Ini mungkin menyebabkan masalah pada beberapa situs. Gunakan ikon roda gigi untuk membatasinya ke situs-situs tertentu.",
       "pinByDefault": "Pin secara default",
       "pinByDefaultTooltip": "Tab baru akan otomatis dipin.",
       "initialState": "Status awal",
@@ -230,6 +231,7 @@
       "textSize": "Ukuran teks",
       "speedPresets": "Preset kecepatan",
       "widget": {
+        "option": "Tampilkan widget lingkaran",
         "optionTooltip": "(Eksperimental) Widget lingkaran akan ditampilkan saat video terlihat.\n - Seret kiri/kanan untuk mencari melalui video.\n - Seret atas/bawah untuk menyesuaikan kecepatan pemutaran.",
         "movementMobile": "\n - Tekan lingkaran selama beberapa detik untuk memindahkan atau menghapusnya.",
         "movementDesktop": "\n - Dengan tombol mouse kanan, seret lingkaran untuk memindahkan atau menghapusnya.",
@@ -239,7 +241,6 @@
         "fullscreenOnlyTooltip": "Hanya tampilkan widget saat video dalam layar penuh.",
         "pressAction": "Tindakan tekan",
         "togglePause": "Alih jeda",
-        "option": "Tampilkan widget lingkaran",
         "fixedSpeedStep": "Langkah kecepatan tetap",
         "fixedSpeedStepTooltip": "Selalu sesuaikan kecepatan dengan jumlah tetap saat memindahkan widget lingkaran.",
         "fixedSeekStep": "Langkah penelusuran tetap",
@@ -247,12 +248,12 @@
       },
       "qrCodeTop": "Pindai untuk digunakan di...",
       "qrCodeBottom": "Edge untuk seluler",
-      "holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara.",
       "holdToSpeedUp": "Tekan dan tahan untuk mempercepat",
-      "ghostModeTooltip": "Mencegah situs web mendeteksi perubahan kecepatan pemutaran. Saat diaktifkan, ini berlaku untuk semua situs web secara default. Ini mungkin menyebabkan masalah pada beberapa situs. Gunakan ikon roda gigi untuk membatasinya ke situs-situs tertentu."
+      "holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara."
     },
     "editor": {
       "header": "Editor Pintasan",
+      "headerMobile": "Pintasan Keyboard",
       "toggleMode": "Anda dapat menggunakan kunci pintas lokal atau global.",
       "toggleModeTooltip": "Pintasan global berguna saat Anda ingin mengontrol video atau audio saat menggunakan program lain.",
       "menuLabel": "Label menu",
@@ -288,8 +289,7 @@
         "sameTab": "Tab saat ini"
       },
       "pressAndHold": "Tekan dan tahan",
-      "pressAndHoldTooltip": "Jika diaktifkan, tombol harus ditekan dan ditahan saat menyesuaikan nilai secara interaktif.",
-      "headerMobile": "Pintasan Keyboard"
+      "pressAndHoldTooltip": "Jika diaktifkan, tombol harus ditekan dan ditahan saat menyesuaikan nilai secara interaktif."
     },
     "rules": {
       "header": "Aturan URL",
@@ -315,10 +315,10 @@
       "import": "Impor",
       "areYouSure": "Apakah Anda yakin?",
       "copy": "Salin pengaturan",
+      "copied": "Disalin!",
       "paste": "Tempel pengaturan",
       "exportTooltip": "Ekspor pengaturan",
-      "importTooltip": "Impor pengaturan",
-      "copied": "Disalin!"
+      "importTooltip": "Impor pengaturan"
     },
     "popup": {
       "enableShortcutsMessage": "Opsional: Aktifkan pintasan keyboard di situs web ini."

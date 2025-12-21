@@ -28,6 +28,8 @@
     "create": "作成",
     "reset": "リセット",
     "duplicate": "複製",
+    "delete": "削除",
+    "aspectLock": "アスペクト固定",
     "pinTooltip": "現在のタブに独自のコンテキスト（速度、フィルターなど）が必要な場合に固定します。",
     "mergeBoth": "両方を統合",
     "min": "最小",
@@ -35,7 +37,11 @@
     "on": "オン",
     "off": "オフ",
     "toggle": "トグル",
+    "video": "ビデオ",
+    "page": "ページ",
     "both": "両方",
+    "selector": "セレクター",
+    "selectorTooltip": "フィルタリングする要素を見つけるために使用されるCSSセレクタ。デフォルトでは動画のみが対象ですが、「video, img, canvas」と指定することで、動画、画像、ゲームを対象にできます。",
     "intoPane": "窓として",
     "warning": "警告",
     "filters": "フィルター",
@@ -66,7 +72,6 @@
     "seconds": "秒",
     "percent": "%",
     "frames": "フレーム",
-    "delete": "削除",
     "more": "もっと",
     "assign": "割り当て",
     "none": "なし",
@@ -77,13 +82,8 @@
     "mode": "モード",
     "darkness": "暗さ",
     "modeStandard": "標準",
-    "modeCustomFilter": "カスタムフィルター",
     "modeCustomColor": "カスタムカラー",
-    "aspectLock": "アスペクト固定",
-    "video": "ビデオ",
-    "page": "ページ",
-    "selector": "セレクター",
-    "selectorTooltip": "フィルタリングする要素を見つけるために使用されるCSSセレクタ。デフォルトでは動画のみが対象ですが、「video, img, canvas」と指定することで、動画、画像、ゲームを対象にできます。"
+    "modeCustomFilter": "カスタムフィルター"
   },
   "placer": {
     "windowBounds": {
@@ -115,29 +115,29 @@
     "rotateY": "回転Y",
     "rotateZ": "回転Z",
     "otherFilters": {
-      "mosaic": "モザイク",
       "header": "その他のフィルター",
+      "mosaic": "モザイク",
       "colorMatrix": "カラーマップ",
+      "rgb": "RGB",
+      "red": "赤",
+      "green": "緑",
+      "blue": "青",
+      "custom": "カスタム",
+      "sharpen": "シャープ",
+      "special": "特殊",
       "posterize": "ポスタライズ",
       "blur": "ぼかし",
       "blockX": "ブロックX",
       "blockY": "ブロックY",
       "detailX": "ディテールX",
       "detailY": "ディテールY",
+      "stretchX": "X 伸縮",
+      "stretchY": "Y 伸縮",
       "levels": "レベル数",
       "amount": "量",
       "vertical": "垂直",
       "horizontal": "水平",
       "presets": "プリセット",
-      "custom": "カスタム",
-      "sharpen": "シャープ",
-      "special": "特殊",
-      "stretchX": "X 伸縮",
-      "stretchY": "Y 伸縮",
-      "rgb": "RGB",
-      "red": "赤",
-      "green": "緑",
-      "blue": "青",
       "motion": "動き",
       "noise": "ノイズ",
       "multiply": "乗算",
@@ -173,7 +173,7 @@
     "fxSwap": "FXスワップ",
     "fxFilter": "FXフィルター",
     "afxPitch": "音高",
-    "afxGain": "音量+",
+    "afxGain": "音量ブースト",
     "afxDelay": "遅延",
     "afxPan": "パン",
     "afxMono": "モノラル",
@@ -192,13 +192,13 @@
     "cinema": "背景を暗くする",
     "cinemaTooltip": "ビデオの背景を暗くする。出るには、背景を押すか、再度ショートカットを使用します。",
     "presets": "プリセット...",
+    "temporarySpeed": "早送り",
     "toggleSpeed": "速度切替",
     "toggleSpeedTooltip": "ショートカット速度と最後の速度を切り替えます。",
     "alwaysOn": "常にオン",
     "alwaysOnTooltip": "デフォルトでは、ショートカットは同じショートカットを使用して最後に無効にした場合にのみ拡張機能を再有効化できます。この設定を有効にすると、ショートカットがUIメニューを介してオフにされた場合でも、拡張機能を有効にするために常に機能するようにします。",
     "muteTab": "タブをミュート",
-    "loopEntire": "完全にループ",
-    "temporarySpeed": "早送り"
+    "loopEntire": "完全にループ"
   },
   "options": {
     "flags": {
@@ -211,6 +211,7 @@
       "showIndicator": "インジケーターを表示",
       "showIndicatorTooltip": "インジケーターはショートカットを使用した時の視覚的フィードバックです。",
       "ghostMode": "ゴーストモード",
+      "ghostModeTooltip": "ウェブサイトが再生速度の変更を検出できないようにします。有効にすると、すべてのウェブサイトにデフォルトで適用されます。一部のサイトで問題が発生する可能性があります。特定のウェブサイトに限定するには、歯車アイコンを使用してください。",
       "pinByDefault": "デフォルトでピン留め",
       "pinByDefaultTooltip": "各タブはデフォルトで固定されます。",
       "initialState": "初期状態",
@@ -230,6 +231,7 @@
       "textSize": "テキストサイズ",
       "speedPresets": "速度プリセット",
       "widget": {
+        "option": "円形ウィジェットを表示する",
         "optionTooltip": "（実験的）動画が表示されている間、円形ウィジェットが表示されます:\n - ビデオが表示されている間、円形ウィジェットが表示されます。\n - ビデオをシークするには、左/右にドラッグします。\n - 再生速度を調整するには、上/下にドラッグします。",
         "movementMobile": "\n - 数秒間円を押して、移動または削除します。",
         "movementDesktop": "\n - 右クリックして円をドラッグして移動または削除します。",
@@ -239,7 +241,6 @@
         "fullscreenOnlyTooltip": "ビデオがフルスクリーンの場合にのみウィジェットを表示します。",
         "pressAction": "押下アクション",
         "togglePause": "一時停止を切り替える",
-        "option": "円形ウィジェットを表示する",
         "fixedSpeedStep": "固定速度ステップ",
         "fixedSpeedStepTooltip": "サークルウィジェットを動かすときに常に一定の速度で調整します。",
         "fixedSeekStep": "固定シークステップ",
@@ -247,12 +248,12 @@
       },
       "qrCodeTop": "スキャンして使用開始...",
       "qrCodeBottom": "モバイル版 Edge",
-      "holdToSpeedUpTooltip": "動画を長押しすると一時的に再生速度が上がります。",
       "holdToSpeedUp": "押し続けて早送り",
-      "ghostModeTooltip": "ウェブサイトが再生速度の変更を検出できないようにします。有効にすると、すべてのウェブサイトにデフォルトで適用されます。一部のサイトで問題が発生する可能性があります。特定のウェブサイトに限定するには、歯車アイコンを使用してください。"
+      "holdToSpeedUpTooltip": "動画を長押しすると一時的に再生速度が上がります。"
     },
     "editor": {
       "header": "ショートカットエディター",
+      "headerMobile": "キーボードショートカット",
       "toggleMode": "ローカルまたはグローバルのショートカットキーを使用できます。",
       "toggleModeTooltip": "グローバルショートカットは、別のプログラムを使用しているときにビデオまたはオーディオを制御する場合に役立ちます。",
       "menuLabel": "メニューラベル",
@@ -288,8 +289,7 @@
         "sameTab": "現在のタブ"
       },
       "pressAndHold": "押して保持",
-      "pressAndHoldTooltip": "有効にすると、キーを押し続けている間に値をインタラクティブに調整する必要があります。",
-      "headerMobile": "キーボードショートカット"
+      "pressAndHoldTooltip": "有効にすると、キーを押し続けている間に値をインタラクティブに調整する必要があります。"
     },
     "rules": {
       "header": "URLルール",
@@ -315,10 +315,10 @@
       "import": "インポート",
       "areYouSure": "本気ですか？",
       "copy": "設定をコピー",
+      "copied": "コピーしました！",
       "paste": "設定を貼り付け",
       "exportTooltip": "設定をエクスポート",
-      "importTooltip": "設定をインポート",
-      "copied": "コピーしました！"
+      "importTooltip": "設定をインポート"
     },
     "popup": {
       "enableShortcutsMessage": "オプション：このウェブサイトでキーボードショートカットを有効にします。"

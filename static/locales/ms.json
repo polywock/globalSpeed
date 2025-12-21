@@ -28,6 +28,8 @@
     "create": "Buat",
     "reset": "Tetapkan semula",
     "duplicate": "Gandakan",
+    "delete": "Padam",
+    "aspectLock": "Kunci nisbah aspek",
     "pinTooltip": "Pin jika anda mahu tab semasa mempunyai konteks tersendiri (kelajuan, penapis, dsb).",
     "mergeBoth": "Gabungkan kedua-duanya",
     "min": "Min",
@@ -35,7 +37,11 @@
     "on": "Hidup",
     "off": "Mati",
     "toggle": "Tukar",
+    "video": "Video",
+    "page": "Halaman",
     "both": "Kedua-duanya",
+    "selector": "Pemilih",
+    "selectorTooltip": "Pemilih CSS digunakan untuk mencari elemen untuk ditapis. Secara lalai ia hanya menyasarkan video, tetapi anda boleh menggunakan 'video, img, canvas' untuk menyasarkan video, imej dan permainan.",
     "intoPane": "Ke dalam panel",
     "warning": "Amaran",
     "filters": "Penapis",
@@ -66,7 +72,6 @@
     "seconds": "Saat",
     "percent": "Peratus",
     "frames": "Bingkai",
-    "delete": "Padam",
     "more": "Lebih",
     "assign": "Tetapkan",
     "none": "Tiada",
@@ -77,13 +82,8 @@
     "mode": "Mod",
     "darkness": "Kegelapan",
     "modeStandard": "Standard",
-    "modeCustomFilter": "Penapis Tersuai",
     "modeCustomColor": "Warna tersuai",
-    "aspectLock": "Kunci nisbah aspek",
-    "video": "Video",
-    "page": "Halaman",
-    "selector": "Pemilih",
-    "selectorTooltip": "Pemilih CSS digunakan untuk mencari elemen untuk ditapis. Secara lalai ia hanya menyasarkan video, tetapi anda boleh menggunakan 'video, img, canvas' untuk menyasarkan video, imej dan permainan."
+    "modeCustomFilter": "Penapis Tersuai"
   },
   "placer": {
     "windowBounds": {
@@ -115,29 +115,29 @@
     "rotateY": "PutarY",
     "rotateZ": "PutarZ",
     "otherFilters": {
-      "mosaic": "Mosaik",
       "header": "Penapis lain",
+      "mosaic": "Mosaik",
       "colorMatrix": "Peta warna",
+      "rgb": "RGB",
+      "red": "Merah",
+      "green": "Hijau",
+      "blue": "Biru",
+      "custom": "Tersendiri",
+      "sharpen": "Tajamkan",
+      "special": "Istimewa",
       "posterize": "Posterkan",
       "blur": "Kabur",
       "blockX": "Blok X",
       "blockY": "Blok Y",
       "detailX": "Perincian X",
       "detailY": "Perincian Y",
+      "stretchX": "Regang X",
+      "stretchY": "Regang Y",
       "levels": "Aras",
       "amount": "Kuantiti",
       "vertical": "Menegak",
       "horizontal": "Mendatar",
       "presets": "Praset",
-      "custom": "Tersendiri",
-      "sharpen": "Tajamkan",
-      "special": "Istimewa",
-      "stretchX": "Regang X",
-      "stretchY": "Regang Y",
-      "rgb": "RGB",
-      "red": "Merah",
-      "green": "Hijau",
-      "blue": "Biru",
       "motion": "Gerakan",
       "noise": "Bunyi",
       "multiply": "Darab",
@@ -173,7 +173,7 @@
     "fxSwap": "Tukar FX",
     "fxFilter": "Penapis",
     "afxPitch": "Nada",
-    "afxGain": "Kenaikan",
+    "afxGain": "Penguat kelantangan",
     "afxDelay": "Kelewatan",
     "afxPan": "Pan",
     "afxMono": "Mono",
@@ -192,13 +192,13 @@
     "cinema": "Gelapkan latar belakang",
     "cinemaTooltip": "Gelapkan latar belakang video. Untuk keluar, tekan pada latar belakang atau gunakan pintasan lagi.",
     "presets": "Pratetap...",
+    "temporarySpeed": "Laju pantas",
     "toggleSpeed": "Tukar kelajuan",
     "toggleSpeedTooltip": "Tukar antara kelajuan pintasan dan kelajuan terakhir.",
     "alwaysOn": "Sentiasa hidup",
     "alwaysOnTooltip": "Secara lalai, pintasan hanya boleh mengaktifkan semula sambungan jika ia terakhir dilumpuhkan menggunakan pintasan yang sama. Dayakan tetapan ini untuk memastikan pintasan sentiasa berfungsi untuk menghidupkan sambungan, walaupun ia dimatikan melalui menu UI.",
     "muteTab": "Senyapkan tab",
-    "loopEntire": "Ulang sepenuhnya",
-    "temporarySpeed": "Laju pantas"
+    "loopEntire": "Ulang sepenuhnya"
   },
   "options": {
     "flags": {
@@ -212,6 +212,7 @@
       "showIndicator": "Tunjukkan penunjuk",
       "showIndicatorTooltip": "Penunjuk adalah maklum balas visual semasa menggunakan pintasan.",
       "ghostMode": "Mod hantu",
+      "ghostModeTooltip": "Menghalang laman web daripada mengesan perubahan kelajuan main balik. Apabila diaktifkan, ia digunakan untuk semua laman web secara lalai. Ini mungkin menyebabkan masalah pada sesetengah laman web. Gunakan ikon gear untuk mengehadkannya kepada laman web tertentu.",
       "pinByDefault": "Pin secara lalai",
       "pinByDefaultTooltip": "Tab baru secara automatik akan dipin.",
       "initialState": "Keadaan awal",
@@ -231,6 +232,7 @@
       "textSize": "Saiz teks",
       "speedPresets": "Pratetap kelajuan",
       "widget": {
+        "option": "Tunjukkan widget bulatan",
         "optionTooltip": "(Eksperimen) Widget bulat akan ditunjukkan semasa video kelihatan.\n - Seret kiri/kanan untuk cari melalui video.\n - Seret atas/bawah untuk melaraskan kadar main semula.",
         "movementMobile": "\n - Tekan bulatan selama beberapa saat untuk menggerakkan atau memadamkannya.",
         "movementDesktop": "\n - Dengan butang tetikus kanan, seret bulatan untuk menggerakkan atau memadamkannya.",
@@ -240,7 +242,6 @@
         "fullscreenOnlyTooltip": "Hanya tunjukkan widget apabila video dalam skrin penuh.",
         "pressAction": "Tindakan tekan",
         "togglePause": "Tukar jeda",
-        "option": "Tunjukkan widget bulatan",
         "fixedSpeedStep": "Langkah kelajuan tetap",
         "fixedSpeedStepTooltip": "Sentiasa laras kelajuan dengan jumlah tetap apabila menggerakkan widget bulatan.",
         "fixedSeekStep": "Langkah carian tetap",
@@ -248,12 +249,12 @@
       },
       "qrCodeTop": "Imbas untuk digunakan di...",
       "qrCodeBottom": "Edge untuk peranti mudah alih",
-      "holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara.",
       "holdToSpeedUp": "Tekan dan tahan untuk percepat",
-      "ghostModeTooltip": "Menghalang laman web daripada mengesan perubahan kelajuan main balik. Apabila diaktifkan, ia digunakan untuk semua laman web secara lalai. Ini mungkin menyebabkan masalah pada sesetengah laman web. Gunakan ikon gear untuk mengehadkannya kepada laman web tertentu."
+      "holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara."
     },
     "editor": {
       "header": "Penyunting Pintasan",
+      "headerMobile": "Jalan Pintas Papan Kekunci",
       "toggleMode": "Anda boleh menggunakan kekunci pintasan tempatan atau global.",
       "toggleModeTooltip": "Pintasan global berguna apabila anda mahu mengawal video atau audio semasa menggunakan program lain.",
       "menuLabel": "Label menu",
@@ -289,8 +290,7 @@
         "sameTab": "Tab semasa"
       },
       "pressAndHold": "Tekan dan tahan",
-      "pressAndHoldTooltip": "Jika diaktifkan, kekunci mesti ditekan dan ditahan semasa melaraskan nilai secara interaktif.",
-      "headerMobile": "Jalan Pintas Papan Kekunci"
+      "pressAndHoldTooltip": "Jika diaktifkan, kekunci mesti ditekan dan ditahan semasa melaraskan nilai secara interaktif."
     },
     "rules": {
       "header": "Peraturan URL",
@@ -316,10 +316,10 @@
       "import": "Import",
       "areYouSure": "Adakah anda pasti?",
       "copy": "Salin tetapan",
+      "copied": "Disalin!",
       "paste": "Tampal tetapan",
       "exportTooltip": "Eksport tetapan",
-      "importTooltip": "Import tetapan",
-      "copied": "Disalin!"
+      "importTooltip": "Import tetapan"
     },
     "popup": {
       "enableShortcutsMessage": "Pilihan: Aktifkan pintasan papan kekunci di laman web ini."

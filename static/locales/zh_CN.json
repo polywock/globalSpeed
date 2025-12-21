@@ -29,6 +29,8 @@
     "create": "创建",
     "reset": "重置",
     "duplicate": "复制",
+    "delete": "删除",
+    "aspectLock": "锁定比例",
     "pinTooltip": "固定如果你想要当前标签页拥有它自己的上下文（速度，过滤器等）。",
     "mergeBoth": "合并两者",
     "min": "最小",
@@ -36,7 +38,11 @@
     "on": "打开",
     "off": "关闭",
     "toggle": "切换",
+    "video": "视频",
+    "page": "页面",
     "both": "两者",
+    "selector": "选择器",
+    "selectorTooltip": "用于查找要过滤元素的 CSS 选择器。默认情况下只针对视频，但你可以使用 'video, img, canvas' 来同时选择视频、图像和游戏。",
     "intoPane": "制成窗格",
     "warning": "警告",
     "filters": "滤镜",
@@ -67,7 +73,6 @@
     "seconds": "秒",
     "percent": "%",
     "frames": "帧",
-    "delete": "删除",
     "more": "更多",
     "assign": "分配",
     "none": "无",
@@ -78,13 +83,8 @@
     "mode": "模式",
     "darkness": "黑暗",
     "modeStandard": "标准",
-    "modeCustomFilter": "自定义滤镜",
     "modeCustomColor": "自定义颜色",
-    "aspectLock": "锁定比例",
-    "video": "视频",
-    "page": "页面",
-    "selector": "选择器",
-    "selectorTooltip": "用于查找要过滤元素的 CSS 选择器。默认情况下只针对视频，但你可以使用 'video, img, canvas' 来同时选择视频、图像和游戏。"
+    "modeCustomFilter": "自定义滤镜"
   },
   "placer": {
     "windowBounds": {
@@ -116,29 +116,29 @@
     "rotateY": "Y轴旋转",
     "rotateZ": "Z轴旋转",
     "otherFilters": {
-      "mosaic": "马赛克",
       "header": "其他筛选条件",
+      "mosaic": "马赛克",
       "colorMatrix": "色彩映射",
+      "rgb": "RGB",
+      "red": "红色",
+      "green": "绿色",
+      "blue": "蓝色",
+      "custom": "自定义",
+      "sharpen": "锐化",
+      "special": "特殊",
       "posterize": "色调分离",
       "blur": "模糊",
       "blockX": "块 X",
       "blockY": "块 Y",
       "detailX": "细节 X",
       "detailY": "细节 Y",
+      "stretchX": "拉伸X",
+      "stretchY": "拉伸Y",
       "levels": "等级",
       "amount": "强度",
       "vertical": "垂直",
       "horizontal": "水平",
       "presets": "预设",
-      "custom": "自定义",
-      "sharpen": "锐化",
-      "special": "特殊",
-      "stretchX": "拉伸X",
-      "stretchY": "拉伸Y",
-      "rgb": "RGB",
-      "red": "红色",
-      "green": "绿色",
-      "blue": "蓝色",
       "motion": "运动",
       "noise": "噪声",
       "multiply": "正片叠底",
@@ -174,7 +174,7 @@
     "fxSwap": "FX交换",
     "fxFilter": "FX过滤器",
     "afxPitch": "音高",
-    "afxGain": "增益",
+    "afxGain": "音量增强",
     "afxDelay": "延迟",
     "afxPan": "平移",
     "afxMono": "单声道",
@@ -193,13 +193,13 @@
     "cinema": "加深背景",
     "cinemaTooltip": "加深视频的背景。要退出，按背景或再次使用快捷键。",
     "presets": "预设...",
+    "temporarySpeed": "快进",
     "toggleSpeed": "切换速度",
     "toggleSpeedTooltip": "在快捷速度和最后的速度之间切换。",
     "alwaysOn": "始终开启",
     "alwaysOnTooltip": "默认情况下，快捷键只能在上次使用相同快捷键禁用扩展后重新激活该扩展。启用此设置可确保快捷键始终可用于启用扩展，即使它是通过UI菜单关闭的。",
     "muteTab": "静音标签页",
-    "loopEntire": "完整循环",
-    "temporarySpeed": "快进"
+    "loopEntire": "完整循环"
   },
   "options": {
     "flags": {
@@ -213,6 +213,7 @@
       "showIndicator": "显示指示器",
       "showIndicatorTooltip": "指示器是使用快捷键时的视觉反馈。",
       "ghostMode": "幽灵模式",
+      "ghostModeTooltip": "防止网站检测播放速度的变化。启用后，默认对所有网站生效。某些网站可能会因此出现问题。可使用齿轮图标限制仅对特定网站生效。",
       "pinByDefault": "默认固定",
       "pinByDefaultTooltip": "默认固定每个标签页。",
       "initialState": "初始状态",
@@ -232,6 +233,7 @@
       "textSize": "文字大小",
       "speedPresets": "速度预设",
       "widget": {
+        "option": "显示圆形小部件",
         "optionTooltip": "（实验性）视频可见时将显示圆形小部件：\n - 视频可见时将显示圆形小部件。\n - 向左/右拖动以在视频中寻找。\n - 向上/下拖动以调整播放速度。",
         "movementMobile": "\n - 按住圆圈几秒钟以移动或删除它。",
         "movementDesktop": "\n - 使用右键拖动圆圈以移动或删除它。",
@@ -241,7 +243,6 @@
         "fullscreenOnlyTooltip": "仅在视频全屏时显示小部件。",
         "pressAction": "按下动作",
         "togglePause": "切换暂停",
-        "option": "显示圆形小部件",
         "fixedSpeedStep": "固定速度步长",
         "fixedSpeedStepTooltip": "拖动圆形组件时始终以固定值调整速度。",
         "fixedSeekStep": "固定跳转步长",
@@ -249,12 +250,12 @@
       },
       "qrCodeTop": "扫码使用",
       "qrCodeBottom": "Edge 手机版",
-      "holdToSpeedUpTooltip": "按住视频可临时加速播放。",
       "holdToSpeedUp": "按住快进",
-      "ghostModeTooltip": "防止网站检测播放速度的变化。启用后，默认对所有网站生效。某些网站可能会因此出现问题。可使用齿轮图标限制仅对特定网站生效。"
+      "holdToSpeedUpTooltip": "按住视频可临时加速播放。"
     },
     "editor": {
       "header": "热键编辑器",
+      "headerMobile": "键盘快捷键",
       "toggleMode": "您可以使用本地热键或全局热键。",
       "toggleModeTooltip": "全局热键可以让您在使用其他应用程序时控制视频或音频。",
       "menuLabel": "菜单标签",
@@ -290,8 +291,7 @@
         "sameTab": "当前标签"
       },
       "pressAndHold": "按住",
-      "pressAndHoldTooltip": "如果启用，则在交互调整值时必须按住键。",
-      "headerMobile": "键盘快捷键"
+      "pressAndHoldTooltip": "如果启用，则在交互调整值时必须按住键。"
     },
     "rules": {
       "header": "URL规则",
@@ -317,10 +317,10 @@
       "import": "导入",
       "areYouSure": "确定吗？",
       "copy": "复制设置",
+      "copied": "已复制！",
       "paste": "粘贴设置",
       "exportTooltip": "导出设置",
-      "importTooltip": "导入设置",
-      "copied": "已复制！"
+      "importTooltip": "导入设置"
     },
     "popup": {
       "enableShortcutsMessage": "可选：在此网站启用键盘快捷键。"

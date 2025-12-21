@@ -29,6 +29,8 @@
     "create": "창조하다",
     "reset": "초기화",
     "duplicate": "복제",
+    "delete": "삭제",
+    "aspectLock": "종횡비 잠금",
     "pinTooltip": "현재 탭이 자체 컨텍스트(속도, 필터 등)를 갖기를 원하면 고정하세요.",
     "mergeBoth": "둘 다 병합",
     "min": "최소",
@@ -36,7 +38,11 @@
     "on": "켜짐",
     "off": "꺼짐",
     "toggle": "토글",
+    "video": "비디오",
+    "page": "페이지",
     "both": "모두",
+    "selector": "선택자",
+    "selectorTooltip": "필터링할 요소를 찾는 데 사용되는 CSS 선택자입니다. 기본적으로는 비디오만 대상으로 하지만, 'video, img, canvas'를 사용하면 비디오, 이미지, 게임을 모두 대상으로 할 수 있습니다.",
     "intoPane": "창 생성",
     "warning": "경고",
     "filters": "필터",
@@ -67,7 +73,6 @@
     "seconds": "초",
     "percent": "%",
     "frames": "프레임",
-    "delete": "삭제",
     "more": "더보기",
     "assign": "할당",
     "none": "없음",
@@ -78,13 +83,8 @@
     "mode": "모드",
     "darkness": "어두움",
     "modeStandard": "표준",
-    "modeCustomFilter": "사용자 필터",
     "modeCustomColor": "사용자 지정 색상",
-    "aspectLock": "종횡비 잠금",
-    "video": "비디오",
-    "page": "페이지",
-    "selector": "선택자",
-    "selectorTooltip": "필터링할 요소를 찾는 데 사용되는 CSS 선택자입니다. 기본적으로는 비디오만 대상으로 하지만, 'video, img, canvas'를 사용하면 비디오, 이미지, 게임을 모두 대상으로 할 수 있습니다."
+    "modeCustomFilter": "사용자 필터"
   },
   "placer": {
     "windowBounds": {
@@ -116,29 +116,29 @@
     "rotateY": "Y 회전",
     "rotateZ": "Z 회전",
     "otherFilters": {
-      "mosaic": "모자이크",
       "header": "기타 필터",
+      "mosaic": "모자이크",
       "colorMatrix": "컬러 맵",
+      "rgb": "RGB",
+      "red": "빨강",
+      "green": "초록",
+      "blue": "파랑",
+      "custom": "사용자 정의",
+      "sharpen": "선명하게",
+      "special": "특수",
       "posterize": "포스터화",
       "blur": "블러",
       "blockX": "블록 X",
       "blockY": "블록 Y",
       "detailX": "디테일 X",
       "detailY": "디테일 Y",
+      "stretchX": "X 늘이기",
+      "stretchY": "Y 늘이기",
       "levels": "레벨",
       "amount": "강도",
       "vertical": "수직",
       "horizontal": "수평",
       "presets": "프리셋",
-      "custom": "사용자 정의",
-      "sharpen": "선명하게",
-      "special": "특수",
-      "stretchX": "X 늘이기",
-      "stretchY": "Y 늘이기",
-      "rgb": "RGB",
-      "red": "빨강",
-      "green": "초록",
-      "blue": "파랑",
       "motion": "움직임",
       "noise": "노이즈",
       "multiply": "곱하기",
@@ -174,7 +174,7 @@
     "fxSwap": "FX 스왑",
     "fxFilter": "FX 필터",
     "afxPitch": "음높이",
-    "afxGain": "볼륨+",
+    "afxGain": "볼륨 증폭",
     "afxDelay": "지연",
     "afxPan": "이동",
     "afxMono": "모노",
@@ -193,13 +193,13 @@
     "cinema": "배경 어둡게",
     "cinemaTooltip": "비디오의 배경을 어둡게 합니다. 종료하려면 배경을 누르거나 다시 단축키를 사용하세요.",
     "presets": "프리셋...",
+    "temporarySpeed": "빨리 감기",
     "toggleSpeed": "속도 전환",
     "toggleSpeedTooltip": "단축키 속도와 마지막 속도를 전환합니다.",
     "alwaysOn": "항상 켜짐",
     "alwaysOnTooltip": "기본적으로 바로 가기는 동일한 바로 가기를 사용하여 마지막으로 비활성화된 경우에만 확장 기능을 다시 활성화할 수 있습니다. 이 설정을 활성화하면 UI 메뉴를 통해 비활성화된 경우에도 바로 가기가 항상 확장 기능을 활성화하는 데 작동하도록 합니다.",
     "muteTab": "탭 음소거",
-    "loopEntire": "전체 반복",
-    "temporarySpeed": "빨리 감기"
+    "loopEntire": "전체 반복"
   },
   "options": {
     "flags": {
@@ -212,6 +212,7 @@
       "showIndicator": "인디케이터 표시",
       "showIndicatorTooltip": "인디케이터는 단축키 사용 시 시각적 피드백입니다.",
       "ghostMode": "유령 모드",
+      "ghostModeTooltip": "웹사이트가 재생 속도 변경을 감지하지 못하도록 합니다. 활성화되면 기본적으로 모든 웹사이트에 적용됩니다. 일부 사이트에서 문제가 발생할 수 있습니다. 특정 웹사이트에만 적용하려면 톱니바퀴 아이콘을 사용하세요.",
       "pinByDefault": "기본적으로 핀 탭",
       "pinByDefaultTooltip": "각 탭은 기본적으로 고정되어 있습니다.",
       "initialState": "초기 상태",
@@ -231,6 +232,7 @@
       "textSize": "텍스트 크기",
       "speedPresets": "속도 사전 설정",
       "widget": {
+        "option": "원형 위젯 표시",
         "optionTooltip": "(실험적인 기능) 동영상이 표시되는 동안 원형 위젯이 표시됩니다:\n - 동영상이 표시되는 동안 원형 위젯이 표시됩니다.\n - 동영상을 탐색하려면 왼쪽/오른쪽으로 드래그하세요.\n - 재생 속도를 조절하려면 위/아래로 드래그하세요.",
         "movementMobile": "\n - 원을 몇 초 동안 눌러 이동하거나 삭제하세요.",
         "movementDesktop": "\n - 오른쪽 마우스 버튼을 사용하여 원을 드래그하여 이동하거나 삭제하세요.",
@@ -240,7 +242,6 @@
         "fullscreenOnlyTooltip": "비디오가 전체 화면일 때만 위젯을 표시합니다.",
         "pressAction": "눌러서 실행",
         "togglePause": "일시 정지 전환",
-        "option": "원형 위젯 표시",
         "fixedSpeedStep": "고정 속도 단계",
         "fixedSpeedStepTooltip": "원형 위젯을 이동할 때 항상 고정된 속도로 조절합니다.",
         "fixedSeekStep": "고정 탐색 단계",
@@ -248,12 +249,12 @@
       },
       "qrCodeTop": "스캔하여 사용해 보세요...",
       "qrCodeBottom": "모바일용 Edge",
-      "holdToSpeedUpTooltip": "영상을 길게 누르면 일시적으로 속도가 빨라집니다.",
       "holdToSpeedUp": "길게 눌러 빨리 감기",
-      "ghostModeTooltip": "웹사이트가 재생 속도 변경을 감지하지 못하도록 합니다. 활성화되면 기본적으로 모든 웹사이트에 적용됩니다. 일부 사이트에서 문제가 발생할 수 있습니다. 특정 웹사이트에만 적용하려면 톱니바퀴 아이콘을 사용하세요."
+      "holdToSpeedUpTooltip": "영상을 길게 누르면 일시적으로 속도가 빨라집니다."
     },
     "editor": {
       "header": "바로 가기 편집기",
+      "headerMobile": "키보드 단축키",
       "toggleMode": "로컬 또는 전역 바로 가기 키를 사용할 수 있습니다.",
       "toggleModeTooltip": "전역 바로 가기는 다른 프로그램을 사용하는 동안 비디오 또는 오디오를 제어하려는 경우에 유용합니다.",
       "menuLabel": "메뉴 레이블",
@@ -289,8 +290,7 @@
         "sameTab": "현재 탭"
       },
       "pressAndHold": "길게 누르기",
-      "pressAndHoldTooltip": "활성화된 경우 값을 인터랙티브하게 조정하는 동안 키를 누르고 있어야 합니다.",
-      "headerMobile": "키보드 단축키"
+      "pressAndHoldTooltip": "활성화된 경우 값을 인터랙티브하게 조정하는 동안 키를 누르고 있어야 합니다."
     },
     "rules": {
       "header": "URL 규칙",
@@ -316,10 +316,10 @@
       "import": "가져오기",
       "areYouSure": "확실합니까?",
       "copy": "설정 복사",
+      "copied": "복사됨!",
       "paste": "설정 붙여넣기",
       "exportTooltip": "설정 내보내기",
-      "importTooltip": "설정 가져오기",
-      "copied": "복사됨!"
+      "importTooltip": "설정 가져오기"
     },
     "popup": {
       "enableShortcutsMessage": "선택 사항: 이 웹사이트에서 키보드 단축키를 활성화하세요."

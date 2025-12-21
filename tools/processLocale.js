@@ -6,6 +6,8 @@ const { join, parse } = require("path")
 const { env, argv, exit } = require("process")
 const { createInterface } = require("readline")
 const OpenAI = require("openai")
+const { z } = require("zod")
+const { zodTextFormat } = require("openai/helpers/zod")
 
 const CASING_SENSITIVE_LANGUAGES = ["de", "es", "fr", "id", "it", "ms", "pl", "pt_BR", "ru", "tr", "uk", "vi"]
 const ALL_LANGUAGES = [...CASING_SENSITIVE_LANGUAGES, "ar", "ja", "ko", "th", "zh_CN", "zh_TW"]
@@ -41,47 +43,40 @@ async function adhereEnglish() {
         const path = join(rootLocales, `${lang}.json`)
         const json = JSON.parse(await readFile(path), {encoding: 'utf8'})
         const leaves = getLeaves(json)
-        let changed = false 
-        let { justLeftArr, justRightArr } = getDifference(new Set(englishLeaves.map(l => l.dots)), new Set(leaves.map(l => l.dots)))
-        
-        if (justRightArr.length) {
-            console.log(`${lang}.json pruning excess: ${[...justRightArr].join(', ')}`)
-            justRightArr.forEach(dot => {
-                setNestedValue(json, dot.split('.'), undefined)
-            })
-            changed = true 
-        } 
-        if (justLeftArr.length) {
-            console.log(`${lang}.json grabbing required: ${[...justLeftArr].join(', ')}`)
-            
-            for (let item of justLeftArr) {
-                cachedKeyContext[item] = (cachedKeyContext[item] ?? (await prompt(`${item} context > `))) || ""
+        const dots = new Set(leaves.map(l => l.dots))
+        let newJson = {}
+        /** @type {{id: string, original: string, translation: string, context: string}[]} */
+        let allTranslation = []
+
+        for (let leaf of englishLeaves) {
+            let base = leaf.path.at(-1)
+
+            if (dots.has(leaf.dots)) {
+                setNestedValue(newJson, leaf.path, getNestedValue(json, leaf.path))
+            } else {
+                if (base.startsWith('_')) continue  
+
+                let newValue = leaf.value
+                if (newValue) {
+                    cachedKeyContext[leaf.dots] = (cachedKeyContext[leaf.dots] ?? (await prompt(`${leaf.dots} context > `))) || ""
+                    newValue = await translate(base, leaf.value, cachedKeyContext[leaf.dots], allTranslation, lang)
+                    allTranslation.push({id: base, original: leaf.value, translation: newValue, context: cachedKeyContext[leaf.dots]})
+                    console.log(`(${lang}) Translated ${leaf.dots} to "${newValue}"`)
+                }
+                
+                setNestedValue(newJson, leaf.path, newValue)
             }
-
-            const translated = await translate(Object.fromEntries(justLeftArr.map(dot => {
-                const info = { english: englishLeaves.find(l => l.dots === dot).value }
-                if (cachedKeyContext[dot]) info.context = cachedKeyContext[dot] 
-                return [dot, info]
-            })), lang)
-
-            Object.entries(translated).forEach(([key, value]) => {
-                setNestedValue(json, key.split('.'), value)
-            })
-            changed = true 
         }
-        
-        if (changed) {
-            await writeFile(path, JSON.stringify(json, null, 2), {encoding: 'utf8'})
-        } 
+
+        await writeFile(path, JSON.stringify(newJson, null, 2), {encoding: 'utf8'})
     }
 }
-
 
 async function ensureCasing() {
     let rootLocales = join("static", "locales")
     let englishLocale = join(rootLocales, "en.json")
     const englishJson = JSON.parse(await readFile(englishLocale))   
-    let englishLeaves = getLeaves(englishJson)
+    let englishLeaves = getLeaves(englishJson, [], true)
     englishLeaves.forEach(leave => {
         if (leave.value && typeof leave.value === "string") {
             leave.isCapitalized = isCapitalized(leave.value, 'en')
@@ -189,12 +184,13 @@ function setNestedValue(obj, keys, value) {
  * 
  * @param {any} obj 
  * @param {string[]} ctx 
+ * @param {boolean} ignoreOptional 
  * @returns {{path: string[], dots: string, key: string, value: any}[]}
  */
-function getLeaves(obj, ctx = [], ignoreOptional = true) {
+function getLeaves(obj, ctx = [], ignoreOptional = false) {
     const leafs = []
     for (let key in obj) {
-        if (key.startsWith('_')) continue 
+        if (ignoreOptional && key.startsWith('_')) continue 
         if (typeof obj[key] === "object") {
             leafs.push(...getLeaves(obj[key], [...ctx, key], ignoreOptional))
         } else {
@@ -203,30 +199,6 @@ function getLeaves(obj, ctx = [], ignoreOptional = true) {
     }
 
     return leafs 
-}
-
-/**
- * 
- * @param {Set<string>} left 
- * @param {Set<string>} right 
- */
-function getDifference(left, right) {
-    /** @type { Set<string> } */ let justLeft = new Set()
-    /** @type { Set<string> } */ let justRight = new Set()
-
-    for (let item of left) {
-        if (!right.has(item)) {
-            justLeft.add(item)
-        }
-    }
-
-    for (let item of right) {
-        if (!left.has(item)) {
-            justRight.add(item)
-        }
-    }
-
-    return { justLeft, justRight, justLeftArr: [...justLeft], justRightArr: [...justRight] }
 }
 
 function isCapitalized(text, locale) {
@@ -259,55 +231,46 @@ function prompt(input) {
     })
 }
 
-async function complete(content) {
-    const response = await openai.chat.completions.create({
-      model: "chatgpt-4o-latest",
-      messages: [
-        { role: "system", content: "You are a helpful assistant."},
-        { role: "user", content}
-      ]
+async function complete(content, zodObject) {
+    const response = await openai.responses.parse({
+        model: "gpt-5.2",
+        input: [
+            { role: "system", content: "You are a helpful assistant." },
+            { role: "user", content }
+        ],
+        text: {
+            format: zodTextFormat(zodObject, "event"),
+        },
     })
-  
-    return response.choices[0].message.content
+
+    return response.output_parsed
 }
+
 
 /**
- * @param {{[key: string]: { english: string, context: string }}} items 
+ * @param {string} id 
+ * @param {string} text 
+ * @param {string | null} context
+ * @param {{id: string, text: string, context: string}[]} batchedTranslations
  * @param {string} lang
- * @returns {Promise<{[key: string]: string}>}
+ * @returns {Promise<string>}
  */
-async function translate(items, lang, attempts = 3) {
-    const input = `Translate the provided strings into '${lang}' (2 letter language code). Output should have a similar JSON structure as the input, but the value should just be a string instead of an object.\n${JSON.stringify(items, null, 2)}`
-    for (let i = 0; i < attempts; i++) {
-        try {
-            const out = parseMessyJson((await complete(input)).trim())
-            const inKeys = Object.keys(items)
-    
-            const outValues = Object.values(out)
-            const outKeys = Object.keys(out)
-            if (outKeys.length !== inKeys.length) throw 'Incorrect amount of outputs.'
-            if (!outValues.every(t => typeof t === "string")) throw 'Not all values a string.'
-            if (!inKeys.every(key => out[key])) throw 'Not all keys could be accounted for.'
-            return out
-        }  catch {
-                
-        }
-    }
-    throw `Failed to translate after ${attempts} attempts.`
-}
-  
-function parseMessyJson(messy) {
-    let start = messy.indexOf("{")
-    if (start >= 0) {
-        const end = messy.lastIndexOf("}")
-        if (end >= 0) {
-            return JSON.parse(messy.slice(start, end + 1))
-        }
-    }
-  
-    throw 'Could not parse.'
-}
-  
+async function translate(id, text, context, batchedTranslations, lang) {
+    const inputObj = {id, text}
+    if (context) inputObj['context'] = context 
+    if (batchedTranslations) inputObj['batchedTranslations'] = batchedTranslations
+    const input = `
+Translate the provided text into '${lang}' (2 letter language code). This request was made through a unsupervised pipeline for a UI translation software. In general try to keep the translation as concise as the original text.
 
+The input is a JSON object with the following fields:
+- "id": An internal identifier. NEVER translate this.
+- "text": The source text to translate. This is the ONLY field to translate.
+- "context": Additional information that may be attached to this request. If provided, use this only to improve translation accuracy.
+- "batchedTranslations": An array of previously translated strings from the same batch, provided for reference.
+
+\n${JSON.stringify(inputObj, null, 2)}
+`
+    return (await complete(input, z.object({translation: z.string()}))).translation 
+}
 
 main()

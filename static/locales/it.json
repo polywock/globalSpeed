@@ -28,6 +28,8 @@
     "create": "Crea",
     "reset": "Ripristina",
     "duplicate": "Duplica",
+    "delete": "Elimina",
+    "aspectLock": "Blocca proporzioni",
     "pinTooltip": "Blocca se vuoi che la scheda corrente abbia il suo contesto (velocità, filtri, ecc).",
     "mergeBoth": "Unisci entrambi",
     "min": "Min",
@@ -35,7 +37,11 @@
     "on": "On",
     "off": "Off",
     "toggle": "Cambia",
+    "video": "Video",
+    "page": "Pagina",
     "both": "Entrambi",
+    "selector": "Selettore",
+    "selectorTooltip": "Selettore CSS usato per trovare gli elementi da filtrare. Per impostazione predefinita, seleziona solo i video, ma puoi usare 'video, img, canvas' per selezionare video, immagini e giochi.",
     "intoPane": "In pannello",
     "warning": "Avviso",
     "filters": "Filtri",
@@ -66,7 +72,6 @@
     "seconds": "Secondi",
     "percent": "Percento",
     "frames": "Fotogrammi",
-    "delete": "Elimina",
     "more": "Più",
     "assign": "Assegna",
     "none": "Nessuno",
@@ -77,13 +82,8 @@
     "mode": "Modalità",
     "darkness": "Oscurità",
     "modeStandard": "Standard",
-    "modeCustomFilter": "Filtro personalizzato",
     "modeCustomColor": "Colore personalizzato",
-    "aspectLock": "Blocca proporzioni",
-    "video": "Video",
-    "page": "Pagina",
-    "selector": "Selettore",
-    "selectorTooltip": "Selettore CSS usato per trovare gli elementi da filtrare. Per impostazione predefinita, seleziona solo i video, ma puoi usare 'video, img, canvas' per selezionare video, immagini e giochi."
+    "modeCustomFilter": "Filtro personalizzato"
   },
   "placer": {
     "windowBounds": {
@@ -115,29 +115,29 @@
     "rotateY": "Ruota Y",
     "rotateZ": "Ruota Z",
     "otherFilters": {
-      "mosaic": "Mosaico",
       "header": "Altri filtri",
+      "mosaic": "Mosaico",
       "colorMatrix": "Mappa dei colori",
+      "rgb": "RGB",
+      "red": "Rosso",
+      "green": "Verde",
+      "blue": "Blu",
+      "custom": "Personalizzato",
+      "sharpen": "Nitidezza",
+      "special": "Speciale",
       "posterize": "Posterizza",
       "blur": "Sfocatura",
       "blockX": "Blocco X",
       "blockY": "Blocco Y",
       "detailX": "Dettaglio X",
       "detailY": "Dettaglio Y",
+      "stretchX": "Allunga X",
+      "stretchY": "Allunga Y",
       "levels": "Livelli",
       "amount": "Quantità",
       "vertical": "Verticale",
       "horizontal": "Orizzontale",
       "presets": "Predefiniti",
-      "custom": "Personalizzato",
-      "sharpen": "Nitidezza",
-      "special": "Speciale",
-      "stretchX": "Allunga X",
-      "stretchY": "Allunga Y",
-      "rgb": "RGB",
-      "red": "Rosso",
-      "green": "Verde",
-      "blue": "Blu",
       "motion": "Movimento",
       "noise": "Rumore",
       "multiply": "Moltiplica",
@@ -173,7 +173,7 @@
     "fxSwap": "Scambia effetti",
     "fxFilter": "Filtro",
     "afxPitch": "Tono",
-    "afxGain": "Guadagno",
+    "afxGain": "Amplificazione volume",
     "afxDelay": "Ritardo",
     "afxPan": "Sposta",
     "afxMono": "Mono",
@@ -192,13 +192,13 @@
     "cinema": "Oscura sfondo",
     "cinemaTooltip": "Oscura lo sfondo del video. Per uscire, premi sullo sfondo o usa di nuovo la scorciatoia.",
     "presets": "Preimpostazioni...",
+    "temporarySpeed": "Avanti veloce",
     "toggleSpeed": "Velocità toggle",
     "toggleSpeedTooltip": "Alterna tra la velocità della scorciatoia e l'ultima velocità.",
     "alwaysOn": "Sempre acceso",
     "alwaysOnTooltip": "Per impostazione predefinita, la scorciatoia può riattivare l'estensione solo se è stata disabilitata l'ultima volta utilizzando la stessa scorciatoia. Abilita questa impostazione per assicurarti che la scorciatoia funzioni sempre per abilitare l'estensione, anche se è stata disattivata tramite il menu UI.",
     "muteTab": "Silenzia scheda",
-    "loopEntire": "Loop completo",
-    "temporarySpeed": "Avanti veloce"
+    "loopEntire": "Loop completo"
   },
   "options": {
     "flags": {
@@ -212,6 +212,7 @@
       "showIndicator": "Mostra indicatore",
       "showIndicatorTooltip": "L'indicatore è un feedback visivo quando si usano le scorciatoie.",
       "ghostMode": "Ghost mode",
+      "ghostModeTooltip": "Impedisce ai siti web di rilevare le modifiche alla velocità di riproduzione. Quando è abilitato, si applica a tutti i siti web per impostazione predefinita. Questo potrebbe causare problemi su alcuni siti. Usa l'icona dell'ingranaggio per limitarlo a siti specifici.",
       "pinByDefault": "Fissa automaticamente",
       "pinByDefaultTooltip": "Le nuove schede saranno fissate automaticamente.",
       "initialState": "Stato iniziale",
@@ -231,6 +232,7 @@
       "textSize": "Tamaño del texto",
       "speedPresets": "Velocità predefinite",
       "widget": {
+        "option": "Mostra il widget circolare",
         "optionTooltip": "(Sperimentale) Verrà visualizzato un widget circolare mentre i video sono visibili:\n - Verrà visualizzato un widget circolare mentre i video sono visibili.\n - Trascina a sinistra/destra per cercare nel video.\n - Trascina su/giù per regolare la velocità di riproduzione.",
         "movementMobile": "\n - Premi il cerchio per alcuni secondi per spostarlo o eliminarlo.",
         "movementDesktop": "\n - Con il tasto destro del mouse, trascina il cerchio per spostarlo o eliminarlo.",
@@ -240,7 +242,6 @@
         "fullscreenOnlyTooltip": "Mostra il widget solo quando il video è a schermo intero.",
         "pressAction": "Azione di pressione",
         "togglePause": "Attiva/disattiva pausa",
-        "option": "Mostra il widget circolare",
         "fixedSpeedStep": "Passo di velocità fisso",
         "fixedSpeedStepTooltip": "Regola sempre la velocità di un importo fisso quando si sposta il widget circolare.",
         "fixedSeekStep": "Passo di ricerca fisso",
@@ -248,12 +249,12 @@
       },
       "qrCodeTop": "Scansiona per utilizzare su...",
       "qrCodeBottom": "Edge per dispositivi mobili",
-      "holdToSpeedUpTooltip": "Tieni premuto sui video per accelerare temporaneamente.",
       "holdToSpeedUp": "Tieni premuto per avanzare velocemente",
-      "ghostModeTooltip": "Impedisce ai siti web di rilevare le modifiche alla velocità di riproduzione. Quando è abilitato, si applica a tutti i siti web per impostazione predefinita. Questo potrebbe causare problemi su alcuni siti. Usa l'icona dell'ingranaggio per limitarlo a siti specifici."
+      "holdToSpeedUpTooltip": "Tieni premuto sui video per accelerare temporaneamente."
     },
     "editor": {
       "header": "Modifica Scorciatoie",
+      "headerMobile": "Tasti di scelta rapida",
       "toggleMode": "Puoi usare scorciatoie locali o globali.",
       "toggleModeTooltip": "Le scorciatoie globali sono utili quando vuoi controllare video o audio mentre stai usando un altro programma.",
       "menuLabel": "Etichetta del menu",
@@ -289,8 +290,7 @@
         "sameTab": "Scheda corrente"
       },
       "pressAndHold": "Premi e tieni premuto",
-      "pressAndHoldTooltip": "Se abilitato, il tasto deve essere tenuto premuto durante la regolazione interattiva del valore.",
-      "headerMobile": "Tasti di scelta rapida"
+      "pressAndHoldTooltip": "Se abilitato, il tasto deve essere tenuto premuto durante la regolazione interattiva del valore."
     },
     "rules": {
       "header": "Regole URL",
@@ -316,10 +316,10 @@
       "import": "Importa",
       "areYouSure": "Sei sicuro?",
       "copy": "Copia impostazioni",
+      "copied": "Copiato!",
       "paste": "Incolla impostazioni",
       "exportTooltip": "Esporta impostazioni",
-      "importTooltip": "Importa impostazioni",
-      "copied": "Copiato!"
+      "importTooltip": "Importa impostazioni"
     },
     "popup": {
       "enableShortcutsMessage": "Facoltativo: abilita le scorciatoie da tastiera su questo sito."
