@@ -6,8 +6,8 @@ import { filterInfos } from "./filters"
 
 export type CommandName = "nothing" | "runCode" | "openUrl" | "intoPopup" |
   "speed" | "temporarySpeed" | "speedChangesPitch" | "pin" | "state" | 
-  "seek" | "pause" | "mute" | "muteTab" | "volume" | "setMark" | "seekMark" | "loop" | "skip" | 
-  "fullscreen" | "PiP" | "mediaInfo" | "cinema" | "loopEntire" |
+  "seek" | "pause" | "mute" | "muteTab" | "volume" | "setMark" | "seekMark" | "loopEntire" | "loop" | "skip" | 
+  "fullscreen" | "PiP" | "mediaInfo" | "cinema" |
   "fxState" | "fxReset" | "fxSwap" | "fxFilter" | "drawPage" |
   "afxGain" | "afxPitch" | "afxDelay" | "afxPan" | "afxMono" | "afxCapture"  | "afxReset"
 
@@ -38,7 +38,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
       command: "runCode",
       enabled: true,
       greedy: true,
-      valueString: `// code here`
+      valueString: `// Javascript here\n`
     })
   },
   openUrl: {
@@ -272,6 +272,18 @@ export let commandInfos: {[key in CommandName]: Command} = {
       valueString: "mark1"
     })
   },
+  loopEntire: {
+    group: CommandGroup.MEDIA,
+    requiresMedia: true,
+    valueType: "state",
+    generate: () => ({
+      id: randomId(),
+      command: "loopEntire",
+      enabled: true,
+      greedy: true,
+      valueState: "toggle"
+    })
+  },
   loop: {
     group: CommandGroup.MEDIA,
     hasFeedback: true,
@@ -345,18 +357,6 @@ export let commandInfos: {[key in CommandName]: Command} = {
       command: "mediaInfo",
       enabled: true,
       greedy: true
-    })
-  },
-  loopEntire: {
-    group: CommandGroup.MEDIA,
-    requiresMedia: true,
-    valueType: "state",
-    generate: () => ({
-      id: randomId(),
-      command: "loopEntire",
-      enabled: true,
-      greedy: true,
-      valueState: "toggle"
     })
   },
   fxState: {

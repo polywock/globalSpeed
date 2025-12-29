@@ -148,7 +148,7 @@
   "command": {
     "nothing": "Aucune action",
     "nothingTooltip": "Ne fait rien. Peut être utilisé pour bloquer les raccourcis. Par exemple, si vous appuyez accidentellement sur la barre d'espace, vous pouvez la configurer pour qu'elle ne fasse rien. Avec ce raccourci, vous pouvez également configurer un délai. Cela est utile car vous pouvez configurer plusieurs raccourcis pour s'activer avec la même touche et s'exécuter séquentiellement. Par exemple, inversez la page avec un filtre, attendez 5 secondes, puis réinitialisez les filtres.",
-    "runCode": "Javascript",
+    "runCode": "Exécuter le code",
     "openUrl": "URL",
     "speed": "Vitesse",
     "speedChangesPitch": "La vitesse change le ton",
@@ -160,8 +160,11 @@
     "volume": "Volume",
     "setMark": "Créer un repère",
     "seekMark": "Aller au repère",
-    "loop": "Boucle AB",
-    "loopTooltip": "Définir une boucle entre la position marquée et la position actuelle.",
+    "loop": "Boucler le segment",
+    "loopTooltip": "Répétez la vidéo de la position marquée à la position actuelle.",
+    "skip": "Passer le segment",
+    "skipTooltip": "Passer un segment de la vidéo entre la position marquée et la position actuelle.",
+    "loopEntire": "Boucler entièrement",
     "autoBreak": "Auto-interruption",
     "autoBreakTooltip": "Rompre la boucle si vous naviguez hors des limites.",
     "autoBreakTooltipAlt": "Rompre le saut si vous naviguez dedans.",
@@ -187,8 +190,6 @@
     "mediaInfo": "Montrer les informations du média",
     "intoPopup": "Dans une fenêtre popup",
     "intoPopupTooltip": "Convertir l'onglet actuel en une fenêtre popup.",
-    "skip": "Saut AB",
-    "skipTooltip": "Sauter un segment de la vidéo entre la position marquée et la position actuelle.",
     "cinema": "Obscurcir l'arrière-plan",
     "cinemaTooltip": "Obscurcit l'arrière-plan de la vidéo. Pour quitter, appuyez sur l'arrière-plan ou utilisez à nouveau le raccourci.",
     "presets": "Préréglages...",
@@ -197,8 +198,7 @@
     "toggleSpeedTooltip": "Bascule entre la vitesse du raccourci et la dernière vitesse.",
     "alwaysOn": "Toujours activé",
     "alwaysOnTooltip": "Par défaut, le raccourci ne peut réactiver l'extension que si elle a été désactivée en utilisant le même raccourci. Activez ce paramètre pour vous assurer que le raccourci fonctionne toujours pour activer l'extension, même si elle a été désactivée via le menu de l'interface utilisateur.",
-    "muteTab": "Couper l'onglet",
-    "loopEntire": "Boucle complète"
+    "muteTab": "Couper l'onglet"
   },
   "options": {
     "flags": {

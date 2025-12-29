@@ -149,7 +149,7 @@
   "command": {
     "nothing": "無動作",
     "nothingTooltip": "不執行任何動作。可用來阻擋快速鍵。例如，如果您經常不小心按到空白鍵，可以將空白鍵設為無動作。使用此快速鍵時也可以設定延遲。這很有用，因為您可以設定多個快速鍵由同一個按鍵觸發，它們將依序執行。例如，使用濾鏡反轉頁面，等待 5 秒後重設濾鏡。",
-    "runCode": "JavaScript",
+    "runCode": "執行程式碼",
     "openUrl": "開啟網址",
     "speed": "速度",
     "speedChangesPitch": "速度影響音高",
@@ -161,8 +161,11 @@
     "volume": "音量",
     "setMark": "設定標記",
     "seekMark": "跳至標記",
-    "loop": "AB 循環",
-    "loopTooltip": "在標記位置與目前位置之間重複播放影片。",
+    "loop": "片段循環",
+    "loopTooltip": "從標記位置到目前位置重複播放影片。",
+    "skip": "跳過片段",
+    "skipTooltip": "跳過影片中標記位置到目前位置之間的片段。",
+    "loopEntire": "整段循環",
     "autoBreak": "自動中斷",
     "autoBreakTooltip": "當您跳出範圍時中斷循環。",
     "autoBreakTooltipAlt": "當您跳入範圍時中斷跳過。",
@@ -188,8 +191,6 @@
     "mediaInfo": "顯示媒體資訊",
     "intoPopup": "轉為彈出視窗",
     "intoPopupTooltip": "將目前分頁轉換為彈出視窗。",
-    "skip": "AB 跳過",
-    "skipTooltip": "跳過標記位置與目前位置之間的片段。",
     "cinema": "加深背景",
     "cinemaTooltip": "加深影片背景。若要結束，按背景或再次使用快速鍵。",
     "presets": "預設設定...",
@@ -198,8 +199,7 @@
     "toggleSpeedTooltip": "在快速鍵速度與上次速度之間切換。",
     "alwaysOn": "永遠開啟",
     "alwaysOnTooltip": "預設情況下，快速鍵只能在上次是透過相同快速鍵停用擴充功能時重新啟用擴充功能。啟用此設定可確保快速鍵永遠能啟用擴充功能，即使是透過介面選單關閉的。",
-    "muteTab": "分頁靜音",
-    "loopEntire": "完整循環"
+    "muteTab": "分頁靜音"
   },
   "options": {
     "flags": {

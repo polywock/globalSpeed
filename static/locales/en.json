@@ -1,5 +1,5 @@
 {
-  ":appName": "Global Speed",
+  ":appName": "Global Speed - Video Speed Control",
   ":appDesc": "Universal speed control for video and audio.",
   "_scale": 1.0,
   "_lang": "en",
@@ -150,7 +150,7 @@
   "command": {
     "nothing": "No action",
     "nothingTooltip": "It does nothing. It can be used to block shortcut keys. For example, if you keep accidently pressing spacebar, you can set spacebar to do nothing. With this shortcut, you can also configure a delay. This is useful because you can set multiple shortcuts to be triggered by same key and they will run sequentially. For example, invert page with filter, wait 5 seconds, and then reset filters.",
-    "runCode": "Javascript",
+    "runCode": "Run code",
     "openUrl": "Open URL",
     "speed": "Speed",
     "speedChangesPitch": "Speed changes pitch",
@@ -162,8 +162,11 @@
     "volume": "Volume",
     "setMark": "Set mark",
     "seekMark": "Seek mark",
-    "loop": "AB loop",
+    "loop": "Loop segment",
     "loopTooltip": "Repeat the video from the marked position to the current position.",
+    "skip": "Skip segment",
+    "skipTooltip": "Skip a segment of the video between the marked position and current position.",
+    "loopEntire": "Fully loop",
     "autoBreak": "Auto-break",
     "autoBreakTooltip": "Break loop if you navigate outside the bounds.",
     "autoBreakTooltipAlt": "Break skip if you navigate inside it.",
@@ -189,8 +192,6 @@
     "mediaInfo": "Show media info",
     "intoPopup": "Into popup",
     "intoPopupTooltip": "Turn current tab into a popup window.",
-    "skip": "AB skip",
-    "skipTooltip": "Skip a segment of the video between the marked position and current position.",
     "cinema": "Darken background",
     "cinemaTooltip": "Darken the background of the video. To exit out, press on the background or use shortcut again.",
     "presets": "Presets...",
@@ -199,8 +200,7 @@
     "toggleSpeedTooltip": "Toggle between shortcut speed and the last speed.",
     "alwaysOn": "Always on",
     "alwaysOnTooltip": "By default, the shortcut can only reactivate the extension if it was last disabled using the same shortcut. Enable this setting to ensure the shortcut always works for enabling the extension, even if it was turned off via the UI menu.",
-    "muteTab": "Mute tab",
-    "loopEntire": "Fully loop"
+    "muteTab": "Mute tab"
   },
   "options": {
     "flags": {

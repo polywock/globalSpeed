@@ -148,7 +148,7 @@
   "command": {
     "nothing": "Không hành động",
     "nothingTooltip": "Nó không làm gì cả. Có thể được sử dụng để chặn các phím tắt. Ví dụ, nếu bạn vô tình nhấn phím cách, bạn có thể đặt phím cách để không làm gì cả. Với phím tắt này, bạn cũng có thể cấu hình một khoảng thời gian trễ. Điều này hữu ích vì bạn có thể đặt nhiều phím tắt được kích hoạt bởi cùng một phím và chúng sẽ chạy tuần tự. Ví dụ: đảo ngược trang bằng bộ lọc, chờ 5 giây, sau đó đặt lại bộ lọc.",
-    "runCode": "Javascript",
+    "runCode": "Chạy mã",
     "openUrl": "Mở URL",
     "speed": "Tốc độ",
     "speedChangesPitch": "Tốc độ thay đổi cao độ",
@@ -160,8 +160,11 @@
     "volume": "Âm lượng",
     "setMark": "Đặt điểm đánh dấu",
     "seekMark": "Đến điểm đánh dấu",
-    "loop": "Vòng AB",
-    "loopTooltip": "Lặp lại video từ vị trí đã đánh dấu đến vị trí hiện tại.",
+    "loop": "Lặp đoạn",
+    "loopTooltip": "Phát lại video từ vị trí đã đánh dấu đến vị trí hiện tại.",
+    "skip": "Bỏ qua đoạn",
+    "skipTooltip": "Bỏ qua một đoạn video giữa vị trí đã đánh dấu và vị trí hiện tại.",
+    "loopEntire": "Lặp toàn bộ",
     "autoBreak": "Tự động phá vỡ",
     "autoBreakTooltip": "Phá vỡ vòng lặp nếu bạn điều hướng ra ngoài ranh giới.",
     "autoBreakTooltipAlt": "Phá vỡ bỏ qua nếu bạn điều hướng vào trong nó.",
@@ -187,8 +190,6 @@
     "mediaInfo": "Hiển thị thông tin phương tiện",
     "intoPopup": "Thành popup",
     "intoPopupTooltip": "Chuyển tab hiện tại thành cửa sổ popup.",
-    "skip": "Bỏ qua AB",
-    "skipTooltip": "Bỏ qua một phân đoạn của video giữa vị trí đánh dấu và vị trí hiện tại.",
     "cinema": "Tối màu nền",
     "cinemaTooltip": "Làm tối nền video. Để thoát, nhấn vào nền hoặc sử dụng phím tắt một lần nữa.",
     "presets": "Cài đặt sẵn...",
@@ -197,8 +198,7 @@
     "toggleSpeedTooltip": "Chuyển đổi giữa tốc độ phím tắt và tốc độ cuối cùng.",
     "alwaysOn": "Luôn bật",
     "alwaysOnTooltip": "Theo mặc định, phím tắt chỉ có thể kích hoạt lại tiện ích mở rộng nếu nó được tắt lần cuối bằng cách sử dụng cùng một phím tắt. Bật cài đặt này để đảm bảo phím tắt luôn hoạt động để bật tiện ích mở rộng, ngay cả khi nó đã bị tắt qua menu giao diện người dùng.",
-    "muteTab": "Tắt tiếng tab",
-    "loopEntire": "Lặp toàn bộ"
+    "muteTab": "Tắt tiếng tab"
   },
   "options": {
     "flags": {

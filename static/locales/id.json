@@ -148,7 +148,7 @@
   "command": {
     "nothing": "Tidak ada tindakan",
     "nothingTooltip": "Ini tidak melakukan apa-apa. Ini bisa digunakan untuk memblokir kunci pintas. Misalnya, jika Anda sering tidak sengaja menekan tombol spasi, Anda dapat mengatur tombol spasi untuk tidak melakukan apa-apa. Dengan pintasan ini, Anda juga dapat mengonfigurasi penundaan. Ini berguna karena Anda dapat mengatur beberapa pintasan untuk dipicu oleh tombol yang sama dan mereka akan berjalan secara berurutan. Misalnya, balikkan halaman dengan filter, tunggu 5 detik, lalu atur ulang filter.",
-    "runCode": "Javascript",
+    "runCode": "Jalankan kode",
     "openUrl": "Buka URL",
     "speed": "Kecepatan",
     "speedChangesPitch": "Kecepatan mengubah nada",
@@ -160,8 +160,11 @@
     "volume": "Volume",
     "setMark": "Atur tanda",
     "seekMark": "Cari tanda",
-    "loop": "Loop AB",
-    "loopTooltip": "Ulangi video dari posisi yang ditandai ke posisi saat ini.",
+    "loop": "Loop segmen",
+    "loopTooltip": "Ulangi video dari posisi yang ditandai hingga posisi saat ini.",
+    "skip": "Lewati segmen",
+    "skipTooltip": "Lewati segmen video antara posisi yang ditandai dan posisi saat ini.",
+    "loopEntire": "Loop penuh",
     "autoBreak": "Auto-break",
     "autoBreakTooltip": "Hentikan loop jika Anda menavigasi di luar batas.",
     "autoBreakTooltipAlt": "Hentikan skip jika Anda menavigasi di dalamnya.",
@@ -187,8 +190,6 @@
     "mediaInfo": "Tampilkan info media",
     "intoPopup": "Ke popup",
     "intoPopupTooltip": "Ubah tab saat ini menjadi jendela popup.",
-    "skip": "Skip AB",
-    "skipTooltip": "Lewati segmen video antara posisi yang ditandai dan posisi saat ini.",
     "cinema": "Gelapkan latar belakang",
     "cinemaTooltip": "Gelapkan latar belakang video. Untuk keluar, tekan latar belakang atau gunakan pintasan lagi.",
     "presets": "Preset...",
@@ -197,8 +198,7 @@
     "toggleSpeedTooltip": "Beralih antara kecepatan pintasan dan kecepatan terakhir.",
     "alwaysOn": "Selalu aktif",
     "alwaysOnTooltip": "Secara default, pintasan hanya dapat mengaktifkan kembali ekstensi jika terakhir kali dinonaktifkan menggunakan pintasan yang sama. Aktifkan pengaturan ini untuk memastikan pintasan selalu berfungsi untuk mengaktifkan ekstensi, bahkan jika dimatikan melalui menu UI.",
-    "muteTab": "Bisukan tab",
-    "loopEntire": "Putar Sepenuhnya"
+    "muteTab": "Bisukan tab"
   },
   "options": {
     "flags": {

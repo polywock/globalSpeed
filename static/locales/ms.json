@@ -148,7 +148,7 @@
   "command": {
     "nothing": "Tiada tindakan",
     "nothingTooltip": "Ia tidak melakukan apa-apa. Ia boleh digunakan untuk menyekat kekunci pintasan. Contohnya, jika anda sering menekan bar ruang secara tidak sengaja, anda boleh menetapkan bar ruang untuk tidak melakukan apa-apa. Dengan pintasan ini, anda juga boleh menetapkan kelewatan. Ini berguna kerana anda boleh menetapkan beberapa pintasan untuk dicetuskan oleh kekunci yang sama dan ia akan berjalan secara berturutan. Contohnya, terbalikkan halaman dengan penapis, tunggu 5 saat, dan kemudian tetapkan semula penapis.",
-    "runCode": "Javascript",
+    "runCode": "Jalankan kod",
     "openUrl": "Buka URL",
     "speed": "Kelajuan",
     "speedChangesPitch": "Kelajuan mengubah nada",
@@ -160,8 +160,11 @@
     "volume": "Kelantangan",
     "setMark": "Tetapkan tanda",
     "seekMark": "Cari tanda",
-    "loop": "Ulangan AB",
-    "loopTooltip": "Ulangi video dari kedudukan yang ditandai ke kedudukan semasa.",
+    "loop": "Gelung segmen",
+    "loopTooltip": "Ulang video dari kedudukan yang ditanda hingga kedudukan semasa.",
+    "skip": "Langkau segmen",
+    "skipTooltip": "Langkau segmen video antara kedudukan yang ditanda dan kedudukan semasa.",
+    "loopEntire": "Gelung sepenuhnya",
     "autoBreak": "Pecah automatik",
     "autoBreakTooltip": "Pecahkan ulangan jika anda navigasi di luar sempadan.",
     "autoBreakTooltipAlt": "Pecahkan lompat jika anda navigasi di dalamnya.",
@@ -187,8 +190,6 @@
     "mediaInfo": "Tunjukkan maklumat media",
     "intoPopup": "Ke dalam popup",
     "intoPopupTooltip": "Tukar tab semasa ke dalam tetingkap popup.",
-    "skip": "Langkau AB",
-    "skipTooltip": "Langkau segmen video antara kedudukan yang ditandai dan kedudukan semasa.",
     "cinema": "Gelapkan latar belakang",
     "cinemaTooltip": "Gelapkan latar belakang video. Untuk keluar, tekan pada latar belakang atau gunakan pintasan lagi.",
     "presets": "Pratetap...",
@@ -197,8 +198,7 @@
     "toggleSpeedTooltip": "Tukar antara kelajuan pintasan dan kelajuan terakhir.",
     "alwaysOn": "Sentiasa hidup",
     "alwaysOnTooltip": "Secara lalai, pintasan hanya boleh mengaktifkan semula sambungan jika ia terakhir dilumpuhkan menggunakan pintasan yang sama. Dayakan tetapan ini untuk memastikan pintasan sentiasa berfungsi untuk menghidupkan sambungan, walaupun ia dimatikan melalui menu UI.",
-    "muteTab": "Senyapkan tab",
-    "loopEntire": "Ulang sepenuhnya"
+    "muteTab": "Senyapkan tab"
   },
   "options": {
     "flags": {

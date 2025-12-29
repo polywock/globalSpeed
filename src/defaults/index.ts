@@ -206,7 +206,7 @@ export function getDefaultURLRule(): URLRule {
     enabled: true,
     type: "SPEED",
     overrideSpeed: 1,
-    overrideJs: `// code here\n`
+    overrideJs: `// Javascript here\n`
   }
 }
 

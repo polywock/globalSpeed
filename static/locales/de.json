@@ -148,7 +148,7 @@
   "command": {
     "nothing": "Keine Aktion",
     "nothingTooltip": "Macht nichts. Kann verwendet werden, um Tastenkombinationen zu blockieren. Beispiel: Wenn du versehentlich die Leertaste drückst, kannst du sie auf 'nichts tun' setzen. Mit dieser Tastenkombination kannst du auch eine Verzögerung konfigurieren. Dies ist nützlich, da du mehrere Tastenkombinationen mit derselben Taste auslösen kannst, die nacheinander ausgeführt werden. Beispiel: Seite mit Filter umkehren, 5 Sekunden warten und dann Filter zurücksetzen.",
-    "runCode": "JavaScript",
+    "runCode": "Code ausführen",
     "openUrl": "URL öffnen",
     "speed": "Geschwindigkeit",
     "speedChangesPitch": "Geschwindigkeit ändert Tonhöhe",
@@ -160,8 +160,11 @@
     "volume": "Lautstärke",
     "setMark": "Markierung setzen",
     "seekMark": "Markierung suchen",
-    "loop": "AB-Schleife",
-    "loopTooltip": "Wiederhole das Video von der markierten Position bis zur aktuellen Position.",
+    "loop": "Segment wiederholen",
+    "loopTooltip": "Wiederholt das Video von der markierten Position bis zur aktuellen Position.",
+    "skip": "Segment überspringen",
+    "skipTooltip": "Überspringt ein Segment des Videos zwischen der markierten Position und der aktuellen Position.",
+    "loopEntire": "Vollständig wiederholen",
     "autoBreak": "Automatische Unterbrechung",
     "autoBreakTooltip": "Unterbreche Schleife, wenn du außerhalb der Grenzen navigierst.",
     "autoBreakTooltipAlt": "Unterbreche Überspringen, wenn du innerhalb navigierst.",
@@ -187,8 +190,6 @@
     "mediaInfo": "Mediendetails anzeigen",
     "intoPopup": "In Popup",
     "intoPopupTooltip": "Aktuellen Tab in ein Popup-Fenster umwandeln.",
-    "skip": "AB-Überspringen",
-    "skipTooltip": "Überspringe einen Abschnitt des Videos zwischen der markierten Position und der aktuellen Position.",
     "cinema": "Hintergrund abdunkeln",
     "cinemaTooltip": "Dunkle den Hintergrund des Videos ab. Zum Beenden klicke auf den Hintergrund oder verwende die Tastenkombination erneut.",
     "presets": "Voreinstellungen...",
@@ -197,8 +198,7 @@
     "toggleSpeedTooltip": "Zwischen der Shortcut-Geschwindigkeit und der letzten Geschwindigkeit umschalten.",
     "alwaysOn": "Immer an",
     "alwaysOnTooltip": "Standardmäßig kann die Tastenkombination die Erweiterung nur erneut aktivieren, wenn sie zuletzt mit derselben Tastenkombination deaktiviert wurde. Aktiviere diese Einstellung, um sicherzustellen, dass die Tastenkombination immer funktioniert, um die Erweiterung zu aktivieren, auch wenn sie über das UI-Menü deaktiviert wurde.",
-    "muteTab": "Tab stummschalten",
-    "loopEntire": "Komplett wiederholen"
+    "muteTab": "Tab stummschalten"
   },
   "options": {
     "flags": {

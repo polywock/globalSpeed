@@ -232,6 +232,7 @@ function prompt(input) {
 }
 
 async function complete(content, zodObject) {
+    // console.log(content)
     const response = await openai.responses.parse({
         model: "gpt-5.2",
         input: [

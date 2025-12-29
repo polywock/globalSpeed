@@ -148,7 +148,7 @@
   "command": {
     "nothing": "Ninguna acción",
     "nothingTooltip": "No hace nada. Se puede usar para bloquear teclas de acceso rápido. Por ejemplo, si accidentalmente sigues presionando la barra espaciadora, puedes configurarla para que no haga nada. Con este atajo, también puedes configurar un retraso. Esto es útil porque puedes configurar varios atajos para que se activen con la misma tecla y se ejecuten secuencialmente. Por ejemplo, invierte la página con un filtro, espera 5 segundos y luego restablece los filtros.",
-    "runCode": "Javascript",
+    "runCode": "Ejecutar código",
     "openUrl": "URL",
     "speed": "Velocidad",
     "speedChangesPitch": "Velocidad cambia de tono",
@@ -160,8 +160,11 @@
     "volume": "Volumen",
     "setMark": "Crear marca",
     "seekMark": "Ir al marca",
-    "loop": "Repetir AB",
-    "loopTooltip": "Establecer bucle entre la posición marcada y la posición actual.",
+    "loop": "Bucle del segmento",
+    "loopTooltip": "Repite el vídeo desde la posición marcada hasta la posición actual.",
+    "skip": "Omitir segmento",
+    "skipTooltip": "Omite un segmento del vídeo entre la posición marcada y la posición actual.",
+    "loopEntire": "Bucle del vídeo completo",
     "autoBreak": "Auto-interrupción",
     "autoBreakTooltip": "Rompe el bucle si navegas fuera de los límites.",
     "autoBreakTooltipAlt": "Rompe el salto si navegas dentro de él.",
@@ -187,8 +190,6 @@
     "mediaInfo": "Mostrar información del medio",
     "intoPopup": "En ventana emergente",
     "intoPopupTooltip": "Convertir la pestaña actual en una ventana emergente.",
-    "skip": "Salto AB",
-    "skipTooltip": "Saltar un segmento del video entre la posición marcada y la posición actual.",
     "cinema": "Oscurecer fondo",
     "cinemaTooltip": "Oscurece el fondo del video. Para salir, presiona sobre el fondo o usa el atajo nuevamente.",
     "presets": "Preajustes...",
@@ -197,8 +198,7 @@
     "toggleSpeedTooltip": "Alterna entre la velocidad del atajo y la última velocidad.",
     "alwaysOn": "Siempre encendido",
     "alwaysOnTooltip": "Por defecto, el atajo solo puede reactivar la extensión si fue deshabilitada usando el mismo atajo. Habilite esta configuración para asegurarse de que el atajo siempre funcione para habilitar la extensión, incluso si se desactivó a través del menú de la UI.",
-    "muteTab": "Silenciar pestaña",
-    "loopEntire": "Repetir todo"
+    "muteTab": "Silenciar pestaña"
   },
   "options": {
     "flags": {

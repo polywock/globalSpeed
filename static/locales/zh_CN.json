@@ -149,7 +149,7 @@
   "command": {
     "nothing": "无动作",
     "nothingTooltip": "它什么也不做。它可以用于阻止快捷键。例如，如果您不小心按下空格键，您可以将空格键设置为不执行任何操作。使用这个快捷方式，您还可以配置延迟。这很有用，因为您可以设置多个快捷方式通过同一个键触发，它们将按顺序运行。例如，使用滤镜反转页面，等待5秒，然后重置滤镜。",
-    "runCode": "JavaScript",
+    "runCode": "运行代码",
     "openUrl": "打开网址",
     "speed": "速度",
     "speedChangesPitch": "速度改变音高",
@@ -161,8 +161,11 @@
     "volume": "音量",
     "setMark": "设置标记点",
     "seekMark": "转到标记点",
-    "loop": "AB循环",
+    "loop": "循环片段",
     "loopTooltip": "从标记位置到当前位置重复播放视频。",
+    "skip": "跳过片段",
+    "skipTooltip": "跳过视频中标记位置到当前位置之间的片段。",
+    "loopEntire": "全程循环",
     "autoBreak": "自动中断",
     "autoBreakTooltip": "如果您导航到界限之外，则中断循环。",
     "autoBreakTooltipAlt": "如果您导航到内部，则中断跳过。",
@@ -188,8 +191,6 @@
     "mediaInfo": "显示媒体信息",
     "intoPopup": "转为弹出窗口",
     "intoPopupTooltip": "将当前标签页转换为弹出窗口。",
-    "skip": "AB跳过",
-    "skipTooltip": "跳过标记位置和当前位置之间的视频段。",
     "cinema": "加深背景",
     "cinemaTooltip": "加深视频的背景。要退出，按背景或再次使用快捷键。",
     "presets": "预设...",
@@ -198,8 +199,7 @@
     "toggleSpeedTooltip": "在快捷速度和最后的速度之间切换。",
     "alwaysOn": "始终开启",
     "alwaysOnTooltip": "默认情况下，快捷键只能在上次使用相同快捷键禁用扩展后重新激活该扩展。启用此设置可确保快捷键始终可用于启用扩展，即使它是通过UI菜单关闭的。",
-    "muteTab": "静音标签页",
-    "loopEntire": "完整循环"
+    "muteTab": "静音标签页"
   },
   "options": {
     "flags": {

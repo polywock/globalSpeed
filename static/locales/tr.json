@@ -148,7 +148,7 @@
   "command": {
     "nothing": "Hiçbiri",
     "nothingTooltip": "Hiçbir şey yapmaz. Kısayol tuşlarını engellemek için kullanılabilir. Örneğin, yanlışlıkla boşluk çubuğuna basmaya devam ediyorsanız, boşluk çubuğunu hiçbir şey yapmaması için ayarlayabilirsiniz. Bu kısayolla, bir gecikme de yapılandırabilirsiniz. Bu kullanışlıdır çünkü aynı tuşla tetiklenecek birden fazla kısayol ayarlayabilir ve bunlar sıralı olarak çalışacaktır. Örneğin, filtreyle sayfayı ters çevirin, 5 saniye bekleyin ve ardından filtreleri sıfırlayın.",
-    "runCode": "Javascript",
+    "runCode": "Kodu çalıştır",
     "openUrl": "Link aç",
     "speed": "Hız",
     "speedChangesPitch": "Hız değişimi ses aralığı",
@@ -160,8 +160,11 @@
     "volume": "Ses",
     "setMark": "Ayar işareti",
     "seekMark": "İşarete git",
-    "loop": "AB tekrarı",
-    "loopTooltip": "Videoyu işaretli konumdan geçerli konuma tekrarlayın.",
+    "loop": "Segment döngüsü",
+    "loopTooltip": "Videoyu işaretli konumdan geçerli konuma kadar tekrarlar.",
+    "skip": "Segmenti atla",
+    "skipTooltip": "İşaretli konum ile geçerli konum arasındaki video segmentini atlar.",
+    "loopEntire": "Tüm video döngüsü",
     "autoBreak": "Otomatik kesme",
     "autoBreakTooltip": "Sınırların dışına çıkarsanız döngüyü kırın.",
     "autoBreakTooltipAlt": "İçerisine girerseniz atlamayı kırın.",
@@ -187,8 +190,6 @@
     "mediaInfo": "Medya bilgisini göster",
     "intoPopup": "Açılır pencereye",
     "intoPopupTooltip": "Mevcut sekmeyi bir açılır pencereye dönüştür.",
-    "skip": "AB atlama",
-    "skipTooltip": "İşaretlenmiş pozisyon ile mevcut pozisyon arasındaki video segmentini atlayın.",
     "cinema": "Arkaplanı karart",
     "cinemaTooltip": "Video arkaplanını karartır. Çıkmak için arkaplana basın veya tekrar kısayol kullanın.",
     "presets": "Ön ayarlar...",
@@ -197,8 +198,7 @@
     "toggleSpeedTooltip": "Kısayol hızı ve son hız arasında geçiş yapın.",
     "alwaysOn": "Her zaman açık",
     "alwaysOnTooltip": "Varsayılan olarak, kısayol, aynı kısayol kullanılarak en son devre dışı bırakıldıysa yalnızca uzantıyı yeniden etkinleştirebilir. Kısayolun, UI menüsü aracılığıyla kapatılsa bile uzantıyı etkinleştirmek için her zaman çalışmasını sağlamak için bu ayarı etkinleştirin.",
-    "muteTab": "Sekmeyi sessize al",
-    "loopEntire": "Tam döngü"
+    "muteTab": "Sekmeyi sessize al"
   },
   "options": {
     "flags": {

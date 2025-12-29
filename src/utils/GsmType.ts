@@ -163,6 +163,9 @@ export type Gsm = {
     seekMark: string,
     loop: string,
     loopTooltip: string,
+    skip: string,
+    skipTooltip: string,
+    loopEntire: string,
     autoBreak: string,
     autoBreakTooltip: string,
     autoBreakTooltipAlt: string,
@@ -188,8 +191,6 @@ export type Gsm = {
     mediaInfo: string,
     intoPopup: string,
     intoPopupTooltip: string,
-    skip: string,
-    skipTooltip: string,
     cinema: string,
     cinemaTooltip: string,
     presets: string,
@@ -198,8 +199,7 @@ export type Gsm = {
     toggleSpeedTooltip: string,
     alwaysOn: string,
     alwaysOnTooltip: string,
-    muteTab: string,
-    loopEntire: string
+    muteTab: string
   },
   options: {
     flags: {

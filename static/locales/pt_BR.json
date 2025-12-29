@@ -148,7 +148,7 @@
   "command": {
     "nothing": "Nenhuma ação",
     "nothingTooltip": "Não faz nada. Pode ser usado para bloquear teclas de atalho. Por exemplo, se você continuar pressionando acidentalmente a barra de espaço, pode configurá-la para não fazer nada. Com este atalho, você também pode configurar um atraso. Isso é útil porque você pode configurar vários atalhos para serem ativados pela mesma tecla e eles serão executados sequencialmente. Por exemplo, inverta a página com um filtro, espere 5 segundos e depois redefina os filtros.",
-    "runCode": "Javascript",
+    "runCode": "Executar código",
     "openUrl": "Abrir URL",
     "speed": "Velocidade",
     "speedChangesPitch": "Velocidade muda tom",
@@ -160,8 +160,11 @@
     "volume": "Volume",
     "setMark": "Definir marcador",
     "seekMark": "Vá para o marcador",
-    "loop": "Repita AB",
-    "loopTooltip": "Repita o vídeo da posição marcada para a posição atual.",
+    "loop": "Repetir segmento",
+    "loopTooltip": "Repetir o vídeo da posição marcada até a posição atual.",
+    "skip": "Pular segmento",
+    "skipTooltip": "Pular um segmento do vídeo entre a posição marcada e a posição atual.",
+    "loopEntire": "Repetir tudo",
     "autoBreak": "Auto-interrupção",
     "autoBreakTooltip": "Interrompa o loop se você navegar fora dos limites.",
     "autoBreakTooltipAlt": "Interrompa o salto se você navegar dentro dos limites.",
@@ -187,8 +190,6 @@
     "mediaInfo": "Mostrar informações da mídia",
     "intoPopup": "Para popup",
     "intoPopupTooltip": "Transformar a aba atual em uma janela popup.",
-    "skip": "Pular AB",
-    "skipTooltip": "Pular um segmento do vídeo entre a posição marcada e a posição atual.",
     "cinema": "Escurecer fundo",
     "cinemaTooltip": "Escurece o fundo do vídeo. Para sair, pressione no fundo ou use o atalho novamente.",
     "presets": "Predefinições...",
@@ -197,8 +198,7 @@
     "toggleSpeedTooltip": "Alterna entre a velocidade do atalho e a última velocidade.",
     "alwaysOn": "Sempre ligado",
     "alwaysOnTooltip": "Por padrão, o atalho só pode reativar a extensão se ela foi desativada pela última vez usando o mesmo atalho. Ative esta configuração para garantir que o atalho sempre funcione para habilitar a extensão, mesmo que ela tenha sido desligada pelo menu da UI.",
-    "muteTab": "Silenciar guia",
-    "loopEntire": "Repetir totalmente"
+    "muteTab": "Silenciar guia"
   },
   "options": {
     "flags": {
