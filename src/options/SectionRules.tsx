@@ -19,7 +19,7 @@ import { DevWarning } from "./DevWarning"
 
 export function SectionRules(props: {}) {
   const [view, setView] = useStateView({rules: true})
-  const listRef = useRef<HTMLDivElement>()
+  const listRef = useRef<HTMLDivElement>(null)
   if (!view) return <div></div>
 
   const rules = view.rules || []
@@ -112,8 +112,6 @@ export function Rule(props: RuleProps) {
     { name: "spacing", label: gvar.gsm.options.editor.spacing, preLabel: props.rule.spacing === 2 ? "2" : (props.rule.spacing === 1 ? "1" : null) }
   )
 
-  let anyRegex = rule.condition?.parts.some(p => p.type === "REGEX")
-  let allowJs = rule.type === "JS"  || (!anyRegex || isFirefox())
   return (
     <div className="Rule">
 
@@ -130,7 +128,7 @@ export function Rule(props: RuleProps) {
       }}>{`— ${rule.condition?.parts?.length || 0} —`}</button>
 
       {/* URL conditions modal */}
-      {show ? <URLModal noRegex={rule.type === "JS" && !isFirefox()} onReset={() => {
+      {show ? <URLModal onReset={() => {
         onChange(produce(rule, d => {
           delete d.condition
         }))
@@ -150,7 +148,7 @@ export function Rule(props: RuleProps) {
         <option value="OFF">{gvar.gsm.token.off}</option>
         <option value="SPEED">{gvar.gsm.command.speed}</option>
         <option value="FX">{gvar.gsm.command.fxFilter}</option>
-        {allowJs && <option value="JS">{"Javascript"}</option>} 
+        <option value="JS">{gvar.gsm.command.runCode}</option>
       </select>
 
       <div className="left">
@@ -213,7 +211,7 @@ type FxRuleControlProps = {
 
 function FxRuleControl(props: FxRuleControlProps) {
   const [open, setOpen] = useState(false)
-  const wrapperRef = useRef<HTMLDivElement>()
+  const wrapperRef = useRef<HTMLDivElement>(null)
 
   let overrideFx = (props.rule.overrideFx || {}) as typeof props.rule.overrideFx
   overrideFx.backdropFx = overrideFx.backdropFx || getDefaultFx()

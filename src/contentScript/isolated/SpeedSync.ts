@@ -106,9 +106,10 @@ export class SpeedSync {
 }
 
 const PROHIBITED_TYPES = new Set(['INPUT', 'BUTTON', 'TEXTAREA'])
+const PROHIBITED_ROLES = new Set(['slider', 'button', 'togglebutton', 'menuitem', 'tab'])
 function checkIfPointerOverVideo(doc: DocumentOrShadowRoot, e: PointerEvent) {
   const elems = doc.elementsFromPoint(e.clientX, e.clientY)
-  return elems.some(elem => elem.tagName === 'VIDEO') && elems.every(elem => !PROHIBITED_TYPES.has(elem.tagName))
+  return elems.some(elem => elem.tagName === 'VIDEO') && elems.every(elem => !PROHIBITED_TYPES.has(elem.tagName) && !PROHIBITED_ROLES.has(elem.role) && !(elem as HTMLElement).draggable)
 }
 
 function isLeftPointerOrMiddleMouse(e: PointerEvent) {

@@ -13,7 +13,6 @@ type Props = {
   onChange: (value: URLCondition) => void,
   onReset: () => void, 
   value: URLCondition,
-  noRegex?: boolean
 }
 
 export function URLModal(props: Props) {
@@ -62,7 +61,7 @@ export function URLModal(props: Props) {
       {/* Parts  */}
       <div className="parts">
         {value.parts.map(part => (
-          <ULRConditionPart noRegex={props.noRegex} key={part.id} onChange={onChange} onRemove={onRemove} part={part}/>
+          <ULRConditionPart key={part.id} onChange={onChange} onRemove={onRemove} part={part}/>
         ))}
       </div>
 
@@ -86,8 +85,7 @@ export function URLModal(props: Props) {
 function ULRConditionPart(props: {
   part: URLConditionPart,
   onChange: (part: URLConditionPart) => void,
-  onRemove: (part: URLConditionPart) => void,
-  noRegex?: boolean
+  onRemove: (part: URLConditionPart) => void
 }) {
   const { part, onChange, onRemove } = props
   const valueKey = extractURLPartValueKey(part)
@@ -110,7 +108,7 @@ function ULRConditionPart(props: {
       }}>
         <option value={"STARTS_WITH"}>{gvar.gsm.options.rules.startsWith}</option>
         <option value={"CONTAINS"}>{gvar.gsm.options.rules.contains}</option>
-        {(!props.noRegex || part.type === "REGEX") && <option value={"REGEX"}>{gvar.gsm.options.rules.regex}</option>}
+        <option value={"REGEX"}>{gvar.gsm.options.rules.regex}</option>
      </select>
 
      {/* Terms */}

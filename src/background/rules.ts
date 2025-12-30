@@ -1,11 +1,10 @@
 import { getDefaultFx } from "src/defaults"
 import { AnyDict, CONTEXT_KEYS, State, URLRule, URLStrictness } from "src/types"
+import { canUserScript } from "src/utils/browserUtils"
 import { testURL } from "src/utils/configUtils"
 import { isFirefox, isMac, isMobile, listToDict, timeout } from "src/utils/helper"
 
-type UrlRuleBehavior = [URLRule["type"][], (isfake: boolean, tabId: number, rule: URLRule, override: AnyDict, deets: Deets) => void]
-
-type Deets = chrome.webRequest.WebRequestHeadersDetails & chrome.webNavigation.WebNavigationTransitionCallbackDetails
+type UrlRuleBehavior = [URLRule["type"][], (isfake: boolean, tabId: number, rule: URLRule, override: AnyDict, deets: chrome.webNavigation.WebNavigationTransitionCallbackDetails) => void]
 
 const RULE_BEHAVIORS: UrlRuleBehavior[] = [
     [["ON", "OFF"], (isFake, t, r, o) => {
@@ -20,37 +19,27 @@ const RULE_BEHAVIORS: UrlRuleBehavior[] = [
         o[`r:${t}:backdropFx`] = r.overrideFx?.["backdropFx"] || getDefaultFx()
     }],
     [["JS"], async (isFake, t, r, o, d) => {
-        if (!isFirefox() || isFake) return 
-        setTimeout(() => {
-           chrome.tabs.sendMessage(d.tabId, {type: "RUN_JS", value: r.overrideJs}, {frameId: 0})
-        }, 500)
+        if (isFake) return 
+        if (isFirefox()) {
+            await timeout(500)
+            chrome.tabs.sendMessage(d.tabId, {type: "RUN_JS", value: r.overrideJs}, {frameId: 0})
+        } else if (canUserScript()) {
+            await timeout(500)
+            chrome.userScripts.execute({
+                injectImmediately: true,
+                js: [{code: r.overrideJs}],
+                world: 'MAIN',
+                target: {
+                    tabId: d.tabId,
+                    frameIds: [0]
+                }
+            })
+        }
     }]
 ]
 
-async function handleChange(changes: chrome.storage.StorageChanges) {
-    if (!(changes["g:rules"] || changes["g:superDisable"])) return 
-    const raw = await gvar.es.getAllUnsafe()
-    ;syncUserScripts(raw["g:rules"] || [], raw["g:superDisable"])
-}
-
-export async function syncUserScripts(rules: URLRule[], superDisable: boolean) {
-    if (isMobile()) return 
-    try {
-        await chrome.userScripts.unregister()
-    } catch { return }
-    if (superDisable) return 
-    rules.filter(r => r.condition).forEach(rule => {
-        const parts = (rule.condition.parts ?? []).filter(p => !p.disabled && p.type !== "REGEX")
-        if (!(rule.enabled && rule.type === "JS" && parts.length && rule.overrideJs?.trim())) return 
-        const globs = parts.map(p => p.type === "CONTAINS" ? `*${p.valueContains}*` : `*${p.valueStartsWith}`)
-        chrome.userScripts.register([
-            {id: rule.id, matches: ["https://test.invalid/"], [rule.condition.block ? "excludeGlobs" : "includeGlobs"]: globs, js: [{code: rule.overrideJs}], world: "MAIN"}
-        ])
-    })
-}
-
-async function handleNavigation(deets: chrome.webRequest.WebRequestHeadersDetails & chrome.webNavigation.WebNavigationTransitionCallbackDetails, isCommit?: boolean) {
-    if (!(!deets.frameId && deets.tabId && deets.url?.startsWith("http"))) return
+async function handleNavigation(deets: chrome.webNavigation.WebNavigationTransitionCallbackDetails, isCommit?: boolean) {
+    if (!deets.tabId || !deets.url?.startsWith("http")) return 
     const raw = await gvar.es.getAllUnsafe()
     const rules = getEnabledRules(raw)
     if (!rules.length) return 
@@ -114,15 +103,8 @@ function shouldReApply(strictness: URLStrictness, oldHost: string, currentHost: 
 }
 
 if (!(isMac() && isMobile()) && chrome.webNavigation?.onCommitted && chrome.webNavigation.onHistoryStateUpdated) {
-    chrome.webNavigation.onCommitted.addListener(deets => handleNavigation(deets as Deets, true))
-    chrome.webNavigation.onHistoryStateUpdated.addListener(deets => handleNavigation(deets as Deets))
-    gvar.es.addWatcher([], handleChange)
-    
-    
-    gvar.sess.safeCbs.add(async () => {
-        const raw = await gvar.es.getAllUnsafe()
-        ;syncUserScripts(raw["g:rules"] || [], raw["g:superDisable"])
-    })
+    chrome.webNavigation.onCommitted.addListener(deets => handleNavigation(deets, true))
+    chrome.webNavigation.onHistoryStateUpdated.addListener(deets => handleNavigation(deets))
 }
 
 

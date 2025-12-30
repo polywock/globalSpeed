@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react"
-import { Keybind } from "../types"
 import { canPotentiallyUserScriptExecute, canUserScript, requestCreateTab } from "../utils/browserUtils"
 import { FaLink } from "react-icons/fa"
 import { MdWarning } from "react-icons/md"
@@ -27,7 +26,7 @@ export function DevWarning(props: {
 
     const handleInterval = () => {
         let target = WarningType.NO_SUPPORT
-        if (props.forUrlRules || canPotentiallyUserScriptExecute()) {
+        if (canPotentiallyUserScriptExecute()) {
             target = canUserScript() ? WarningType.NONE : WarningType.ENABLE_DEV
         }
 
