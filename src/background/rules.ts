@@ -25,21 +25,23 @@ const RULE_BEHAVIORS: UrlRuleBehavior[] = [
             chrome.tabs.sendMessage(d.tabId, {type: "RUN_JS", value: r.overrideJs}, {frameId: 0})
         } else if (canUserScript()) {
             await timeout(500)
-            chrome.userScripts.execute({
-                injectImmediately: true,
-                js: [{code: r.overrideJs}],
-                world: 'MAIN',
-                target: {
-                    tabId: d.tabId,
-                    frameIds: [0]
-                }
-            })
+            try {
+                chrome.userScripts.execute({
+                    injectImmediately: true,
+                    js: [{code: r.overrideJs}],
+                    world: 'MAIN',
+                    target: {
+                        tabId: d.tabId,
+                        frameIds: [0]
+                    }
+                })
+            } catch { }
         }
     }]
 ]
 
 async function handleNavigation(deets: chrome.webNavigation.WebNavigationTransitionCallbackDetails, isCommit?: boolean) {
-    if (!deets.tabId || !deets.url?.startsWith("http")) return 
+    if (!(!deets.frameId && deets.tabId && deets.url?.startsWith("http"))) return
     const raw = await gvar.es.getAllUnsafe()
     const rules = getEnabledRules(raw)
     if (!rules.length) return 
