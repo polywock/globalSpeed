@@ -49,7 +49,7 @@ export class FxSync {
   handleChange = (view: StateView) => {
 
 
-    let styleInfo = calculateStyle(view.elementFx.enabled, view.elementFx.query || "video", formatFilters(view.elementFx.filters), formatFilters(view.elementFx.transforms.slice().reverse()), `${view.elementFx.originX || "center"} ${view.elementFx.originY || "center"}`, view.elementFx.svgFilters)
+    let styleInfo = calculateStyle(view.elementFx.enabled, view.elementFx.query || "video", formatFilters(view.elementFx.filters), formatFilters(view.elementFx.transforms.slice().reverse()), `${view.elementFx.originX || "center"} ${view.elementFx.originY || "center"}`, view.elementFx.svgFilters, view.elementFx.objectFit)
 
     if (styleInfo) {
       if (this.tempStyle && this.tempStyle.styleInfo.styleString !== styleInfo.styleString) {
@@ -89,12 +89,15 @@ export class FxSync {
   }
 }
 
-export function calculateStyle(enabled: boolean, selector: string, filters: string, transforms: string, origin: string, svgFilters: SvgFilter[]) {
-  if (!enabled || !selector || !(filters || transforms || hasActiveSvgFilters(svgFilters))) return null
+export function calculateStyle(enabled: boolean, selector: string, filters: string, transforms: string, origin: string, svgFilters: SvgFilter[], objectFit?: string) {
+  if (!enabled || !selector || !(filters || transforms || hasActiveSvgFilters(svgFilters) || objectFit)) return null
   let statements = []
   if (transforms) {
     statements.push(`transform: ${transforms} !important`)
     origin && statements.push(`transform-origin: ${origin} !important`)
+  }
+  if (objectFit) {
+    statements.push(`object-fit: ${objectFit} !important`)
   }
 
   let filterElements: SVGElement[]
