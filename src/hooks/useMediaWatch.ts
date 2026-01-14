@@ -153,9 +153,7 @@ export class SubscribeMedia {
         .filter(info => info)
         // Final sort in case new videos are added while open. 
         .sort((a, b) => {
-          const aIsCurrent = a.tabInfo.tabId === this.tabId ? 0 : 1
-          const bIsCurrent = b.tabInfo.tabId === this.tabId ? 0 : 1
-          return aIsCurrent - bIsCurrent
+          return Number(b.tabInfo.tabId === this.tabId || b.key === pinnedKey) - Number(a.tabInfo.tabId === this.tabId || b.key === pinnedKey)
         })
     }
   }
