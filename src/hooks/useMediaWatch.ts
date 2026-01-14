@@ -22,7 +22,7 @@ export function useMediaWatch(): MediaData {
   return watchInfo
 }
 
-const MINIMUM_DURATION = 10 
+const MINIMUM_DURATION = 10
 
 type SubscribeMediaCallback = (infos: MediaData) => void
 
@@ -33,6 +33,7 @@ export class SubscribeMedia {
   latestData: MediaData
   released = false
   seenMedia: Set<string> = new Set()
+  seenMediaArr: string[] = []
 
   constructor(private tabId: number, cb: SubscribeMediaCallback) {
     cb && this.cbs.add(cb)
@@ -103,9 +104,32 @@ export class SubscribeMedia {
       return a.tabInfo.tabId - b.tabInfo.tabId
     })
 
-    // Add pinned, current tab items, and previously shown. 
+    // Add pinned videos first.
+    const pinnedInfo = infos.find(info => info.key === pinnedKey)
+    if (pinnedInfo) {
+      toShow.add(pinnedInfo.key)
+      if (!this.seenMedia.has(pinnedInfo.key)) {
+        this.seenMedia.add(pinnedInfo.key)
+        this.seenMediaArr.push(pinnedInfo.key)
+      }
+    }
+
+    // Add current tab videos first.
+    infos
+      .filter(info => info.tabInfo.tabId === this.tabId)
+      .sort((a, b) => (b.intersectionRatio || -1) - (a.intersectionRatio || -1))
+      .forEach(info => {
+        toShow.add(info.key)
+        if (!this.seenMedia.has(info.key)) {
+          this.seenMedia.add(info.key)
+          this.seenMediaArr.push(info.key)
+        }
+      })
+
+
+    // Add previously seen videos (for UI consistency)
     infos.forEach(info => {
-      if ((info.key || "z") === pinnedKey || info.tabInfo.tabId === this.tabId || this.seenMedia.has(info.key)) {
+      if (this.seenMedia.has(info.key)) {
         toShow.add(info.key)
       }
     })
@@ -113,13 +137,26 @@ export class SubscribeMedia {
     // Add three most recently played.
     infos.filter(info => info.tabInfo.tabId !== this.tabId && info.lastPlayed).sort((a, b) => {
       return b.lastPlayed - a.lastPlayed
-    }).slice(0, 3).forEach(info => toShow.add(info.key))
-
-    this.seenMedia = this.seenMedia.union(toShow)
+    }).slice(0, 3).forEach(info => {
+      toShow.add(info.key)
+      if (!this.seenMedia.has(info.key)) {
+        this.seenMedia.add(info.key)
+        this.seenMediaArr.push(info.key)
+      }
+    })
 
     this.latestData = {
-      infos: infos.filter(info => toShow.has(info.key)),
-      pinned: this.pinned
+      pinned: this.pinned,
+      infos: this.seenMediaArr
+        .filter(key => toShow.has(key))
+        .map(key => infos.find(info => info.key === key))
+        .filter(info => info)
+        // Final sort in case new videos are added while open. 
+        .sort((a, b) => {
+          const aIsCurrent = a.tabInfo.tabId === this.tabId ? 0 : 1
+          const bIsCurrent = b.tabInfo.tabId === this.tabId ? 0 : 1
+          return aIsCurrent - bIsCurrent
+        })
     }
   }
 }

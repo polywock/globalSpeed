@@ -1,20 +1,20 @@
-
 :root.noBottomBorderMediaItem {
   .MediaView {
     &:last-child {
-      border-bottom: none !important; 
+      border-bottom: none !important;
     }
   }
 }
 
 .MediaViews {
   padding-left: 5px;
+  user-select: none;
 }
 
 .MediaView {
   padding: 10px 5px;
   border-top: 1px solid var(--border);
-  
+
   &:first-child {
     margin-top: 16px;
   }
@@ -24,11 +24,11 @@
     border-bottom: 1px solid var(--border);
   }
 
-  & > .header {
+  &>.header {
     margin-bottom: 2px;
     overflow-wrap: anywhere;
 
-    & > .meta {
+    &>.meta {
       font-size: 0.85em;
       opacity: 0.55;
 
@@ -38,7 +38,7 @@
       }
     }
 
-    & > .jump {
+    &>.jump {
       border: none;
       padding: 0px 5px;
       margin: 0px;
@@ -52,29 +52,29 @@
         opacity: 1;
       }
 
-      & > svg {
+      &>svg {
         opacity: 1;
       }
     }
 
-    & > .title {
+    &>.title {
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
     }
   }
 
-  & > .controls {
+  &>.controls {
     display: grid;
     grid-template-columns: repeat(4, max-content) 1fr repeat(3, max-content);
     align-items: center;
-    grid-column-gap: 5px; 
+    grid-column-gap: 5px;
 
-    & > input[type="range"] {
+    &>input[type="range"] {
       min-width: 0;
     }
 
-    & > button {
+    &>button {
       background-color: transparent;
       color: var(--header-icon-color);
       border-color: transparent;
@@ -82,23 +82,25 @@
       &:first-child {
         margin-left: -5px;
       }
-  
+
       &.active {
         color: var(--header-icon-active-color);
       }
+
       &.muted {
         color: var(--header-icon-muted-color);
       }
-  
-      &:hover  {
+
+      &:hover {
         background-color: var(--control-hover-bg-color);
       }
+
       &:focus {
         border-color: 1px solid var(--focus-color);
       }
     }
-  
-    & > .duration {
+
+    &>.duration {
       font-size: 0.9em;
       margin-right: 8px;
       justify-self: end;
