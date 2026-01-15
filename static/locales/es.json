@@ -331,6 +331,9 @@
     "erase": "Borrar",
     "select": "Interactuar",
     "selectTooltip": "Interactuar con la página web",
-    "tips": "Algunos atajos útiles\n1. Borrar con el botón derecho del ratón.\n2. Dibujar líneas manteniendo presionado Shift y haciendo clic.\n3. Cambiar entre el modo $1 y $2 usando Bloq Mayús\n4. Para ajustar el tamaño de la goma: mantén presionado el botón central del ratón y arrastra hacia la izquierda o la derecha.\n5. Para ajustar el tamaño del pincel: mantén presionado el botón central del ratón y arrastra hacia arriba o hacia abajo.\n6. Inunde la página con un color haciendo clic derecho en el color. \n7. Cambia el color de fondo haciendo triple clic en el color."
+    "floodPage": "Rellenar página",
+    "setBackground": "Establecer fondo",
+    "clearBackground": "Borrar fondo",
+    "tips": "Algunos atajos útiles\n1. Borra con el botón derecho del ratón.\n2. Dibuja líneas con Mayús + clic.\n3. Alterna entre el modo $1 y $2 con Bloq Mayús.\n4. Para ajustar el tamaño del borrador: mantén pulsado el botón central del ratón y arrastra a la izquierda o a la derecha.\n5. Para ajustar el tamaño del pincel: mantén pulsado el botón central del ratón y arrastra hacia arriba o hacia abajo.\n6. Haz clic derecho en un color para más opciones."
   }
 }

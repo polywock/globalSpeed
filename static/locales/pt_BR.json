@@ -331,6 +331,9 @@
     "erase": "Apagar",
     "select": "Interagir",
     "selectTooltip": "Interagir com a página da web",
-    "tips": "Alguns atalhos úteis\n1. Apagar com o botão direito do mouse.\n2. Desenhar linhas segurando Shift e clicando.\n3. Alternar entre os modos $1 e $2 usando Caps Lock\n4. Para ajustar o tamanho da borracha: segure o botão do meio do mouse e arraste para a esquerda ou para a direita.\n5. Para ajustar o tamanho do pincel: segure o botão do meio do mouse e arraste para cima ou para baixo.\n6. Preencha a página com uma cor clicando com o botão direito do mouse na cor.\n7. Altere a cor de fundo clicando três vezes na cor."
+    "floodPage": "Preencher página",
+    "setBackground": "Definir fundo",
+    "clearBackground": "Limpar fundo",
+    "tips": "Alguns atalhos úteis\n1. Apague com o botão direito do mouse.\n2. Desenhe linhas com Shift + clique.\n3. Alterne entre o modo $1 e $2 usando Caps Lock.\n4. Para ajustar o tamanho da borracha: segure o botão do meio do mouse e arraste para a esquerda ou direita.\n5. Para ajustar o tamanho do pincel: segure o botão do meio do mouse e arraste para cima ou para baixo.\n6. Clique com o botão direito em uma cor para mais opções."
   }
 }

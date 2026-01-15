@@ -334,6 +334,9 @@
     "erase": "Erase",
     "select": "Select",
     "selectTooltip": "Interact with the webpage",
-    "tips": "Some useful shortcuts\n1. Erase with right mouse button.\n2. Draw lines with shift click.\n3. Toggle between $1 and $2 mode using Caps Lock\n4. To adjust eraser size: hold down the middle mouse button and drag left or right.\n5. To adjust brush size: hold down the middle mouse button and drag up or down.\n6. Flood page with a color by right clicking on the color.\n7. Change background color by triple clicking on the color."
+    "floodPage": "Flood page",
+    "setBackground": "Set background",
+    "clearBackground": "Clear background",
+    "tips": "Some useful shortcuts\n1. Erase with right mouse button.\n2. Draw lines with shift click.\n3. Toggle between $1 and $2 mode using Caps Lock\n4. To adjust eraser size: hold down the middle mouse button and drag left or right.\n5. To adjust brush size: hold down the middle mouse button and drag up or down.\n6. Right click on a color for more options."
   }
 }

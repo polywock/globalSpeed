@@ -332,6 +332,9 @@
     "erase": "Sil",
     "select": "Etkileşim",
     "selectTooltip": "Web sayfasıyla etkileşim",
-    "tips": "Bazı faydalı kısayollar\n1. Sağ tıklayarak sil.\n2. Shift'i basılı tutarak tıklayarak çizgi çiz.\n3. Caps Lock kullanarak $1 ve $2 modları arasında geçiş yap\n4. Silgi boyutunu ayarlamak için: orta düğmeye basılı tutarak sola veya sağa sürükle.\n5. Fırça boyutunu ayarlamak için: orta düğmeye basılı tutarak yukarı veya aşağı sürükle.\n6. Renge sağ tıklayarak sayfayı bir renkle doldurun.\n7. Rengin üzerine üç kez tıklayarak arka plan rengini değiştirin."
+    "floodPage": "Sayfayı doldur",
+    "setBackground": "Arka planı ayarla",
+    "clearBackground": "Arka planı temizle",
+    "tips": "Bazı kullanışlı kısayollar\n1. Sağ fare düğmesiyle sil.\n2. Shift + tık ile çizgi çiz.\n3. Caps Lock ile $1 ve $2 modu arasında geçiş yap\n4. Silgi boyutunu ayarlamak için: orta fare düğmesini basılı tutup sola veya sağa sürükle.\n5. Fırça boyutunu ayarlamak için: orta fare düğmesini basılı tutup yukarı veya aşağı sürükle.\n6. Daha fazla seçenek için bir renge sağ tıkla."
   }
 }

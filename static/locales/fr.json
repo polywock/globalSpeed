@@ -332,6 +332,9 @@
     "erase": "Effacer",
     "select": "Interagir",
     "selectTooltip": "Interagir avec la page web",
-    "tips": "Quelques raccourcis utiles\n1. Effacer avec le bouton droit de la souris.\n2. Dessiner des lignes en maintenant Shift et en cliquant.\n3. Basculer entre le mode $1 et $2 en utilisant Verr Maj\n4. Pour ajuster la taille de la gomme : maintenez le bouton central de la souris enfoncé et faites glisser vers la gauche ou la droite.\n5. Pour ajuster la taille du pinceau : maintenez le bouton central de la souris enfoncé et faites glisser vers le haut ou vers le bas.\n6. Inondez la page avec une couleur en cliquant avec le bouton droit sur la couleur. \n7. Changez la couleur de fond en triple-cliquant sur la couleur."
+    "floodPage": "Remplir la page",
+    "setBackground": "Définir l’arrière-plan",
+    "clearBackground": "Effacer l’arrière-plan",
+    "tips": "Quelques raccourcis utiles\n1. Effacer avec le bouton droit de la souris.\n2. Tracer des lignes avec Maj + clic.\n3. Basculer entre les modes $1 et $2 avec Verr. Maj.\n4. Pour ajuster la taille de la gomme : maintenir le bouton du milieu et glisser à gauche ou à droite.\n5. Pour ajuster la taille du pinceau : maintenir le bouton du milieu et glisser vers le haut ou le bas.\n6. Clic droit sur une couleur pour plus d’options."
   }
 }

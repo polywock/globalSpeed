@@ -332,6 +332,9 @@
     "erase": "Radieren",
     "select": "Auswählen",
     "selectTooltip": "Mit der Webseite interagieren",
-    "tips": "Einige nützliche Shortcuts:\n1. Mit der rechten Maustaste radieren.\n2. Linien mit Shift-Klick zeichnen.\n3. Zwischen $1- und $2-Modus mit Caps Lock umschalten.\n4. Zum Anpassen der Radiergröße: Mittlere Maustaste gedrückt halten und nach links oder rechts ziehen.\n5. Zum Anpassen der Pinselgröße: Mittlere Maustaste gedrückt halten und nach oben oder unten ziehen.\n6. Seite mit einer Farbe fluten, indem du mit der rechten Maustaste auf die Farbe klickst.\n7. Hintergrundfarbe ändern, indem du dreimal auf die Farbe klickst."
+    "floodPage": "Seite füllen",
+    "setBackground": "Hintergrund festlegen",
+    "clearBackground": "Hintergrund löschen",
+    "tips": "Einige nützliche Tastenkürzel\n1. Mit der rechten Maustaste löschen.\n2. Linien zeichnen mit Shift+Klick.\n3. Zwischen $1- und $2-Modus umschalten mit der Feststelltaste.\n4. Radiergummi-Größe anpassen: mittlere Maustaste gedrückt halten und nach links oder rechts ziehen.\n5. Pinselgröße anpassen: mittlere Maustaste gedrückt halten und nach oben oder unten ziehen.\n6. Rechtsklick auf eine Farbe für mehr Optionen."
   }
 }

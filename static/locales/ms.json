@@ -332,6 +332,9 @@
     "erase": "Padam",
     "select": "Pilih",
     "selectTooltip": "Berinteraksi dengan halaman web",
-    "tips": "Beberapa pintasan berguna\n1. Padam dengan butang tetikus kanan.\n2. Lukis garis dengan klik shift.\n3. Tukar antara mod $1 dan $2 menggunakan Caps Lock\n4. Untuk melaraskan saiz pemadam: tekan butang tetikus tengah dan seret kiri atau kanan.\n5. Untuk melaraskan saiz berus: tekan butang tetikus tengah dan seret atas atau bawah.\n6. Banjir halaman dengan warna dengan klik kanan pada warna.\n7. Tukar warna latar belakang dengan klik tiga kali pada warna."
+    "floodPage": "Isikan warna pada halaman",
+    "setBackground": "Tetapkan latar belakang",
+    "clearBackground": "Kosongkan latar belakang",
+    "tips": "Beberapa pintasan berguna\n1. Padam dengan butang kanan tetikus.\n2. Lukis garisan dengan shift + klik.\n3. Togol antara mod $1 dan $2 menggunakan Caps Lock\n4. Untuk laraskan saiz pemadam: tahan butang tengah tetikus dan seret ke kiri atau kanan.\n5. Untuk laraskan saiz berus: tahan butang tengah tetikus dan seret ke atas atau bawah.\n6. Klik kanan pada warna untuk lebih banyak pilihan."
   }
 }

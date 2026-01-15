@@ -332,6 +332,9 @@
     "erase": "Cancella",
     "select": "Interagire",
     "selectTooltip": "Interagisci con la pagina web",
-    "tips": "Alcune scorciatoie utili\n1. Cancellare con il tasto destro del mouse.\n2. Disegnare linee tenendo premuto Shift e facendo clic.\n3. Alternare tra modalità $1 e $2 usando il tasto Caps Lock\n4. Per regolare la dimensione della gomma: tenere premuto il tasto centrale del mouse e trascinare verso sinistra o destra.\n5. Per regolare la dimensione del pennello: tenere premuto il tasto centrale del mouse e trascinare verso l'alto o il basso.\n6. Riempire la pagina con un colore facendo clic con il tasto destro sul colore.\n7. Cambia il colore di sfondo facendo triplo clic sul colore."
+    "floodPage": "Riempi pagina",
+    "setBackground": "Imposta sfondo",
+    "clearBackground": "Cancella sfondo",
+    "tips": "Alcune scorciatoie utili\n1. Cancella con il tasto destro del mouse.\n2. Disegna linee con clic tenendo premuto Maiusc.\n3. Alterna tra la modalità $1 e $2 usando Bloc Maiusc\n4. Per regolare la dimensione della gomma: tieni premuto il pulsante centrale del mouse e trascina a sinistra o a destra.\n5. Per regolare la dimensione del pennello: tieni premuto il pulsante centrale del mouse e trascina in alto o in basso.\n6. Fai clic destro su un colore per altre opzioni."
   }
 }

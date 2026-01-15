@@ -331,6 +331,9 @@
     "erase": "Hapus",
     "select": "Pilih",
     "selectTooltip": "Berinteraksi dengan halaman web",
-    "tips": "Beberapa pintasan berguna\n1. Hapus dengan tombol mouse kanan.\n2. Gambar garis dengan klik shift.\n3. Alihkan antara mode $1 dan $2 menggunakan Caps Lock\n4. Untuk menyesuaikan ukuran penghapus: tahan tombol mouse tengah dan seret kiri atau kanan.\n5. Untuk menyesuaikan ukuran kuas: tahan tombol mouse tengah dan seret atas atau bawah.\n6. Isi halaman dengan warna dengan mengklik kanan pada warna.\n7. Ubah warna latar belakang dengan mengklik tiga kali pada warna."
+    "floodPage": "Isi halaman",
+    "setBackground": "Atur latar belakang",
+    "clearBackground": "Hapus latar belakang",
+    "tips": "Beberapa pintasan berguna\n1. Hapus dengan tombol kanan mouse.\n2. Gambar garis dengan klik sambil menahan Shift.\n3. Alihkan antara mode $1 dan $2 dengan Caps Lock.\n4. Untuk menyesuaikan ukuran penghapus: tahan tombol tengah mouse dan seret ke kiri atau kanan.\n5. Untuk menyesuaikan ukuran kuas: tahan tombol tengah mouse dan seret ke atas atau bawah.\n6. Klik kanan pada warna untuk opsi lainnya."
   }
 }

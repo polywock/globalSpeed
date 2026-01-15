@@ -332,6 +332,9 @@
     "erase": "Wymaż",
     "select": "Wybierz",
     "selectTooltip": "Interakcja z witryną",
-    "tips": "Kilka przydatnych skrótów\n1. Wymaż za pomocą prawego przycisku myszy.\n2. Rysuj linie za pomocą Shift + kliknięcie.\n3. Przełącz między trybem $1 a $2 za pomocą Caps Lock\n4. Aby dostosować rozmiar gumki: przytrzymaj środkowy przycisk myszy i przeciągnij w lewo lub prawo.\n5. Aby dostosować rozmiar pędzla: przytrzymaj środkowy przycisk myszy i przeciągnij w górę lub w dół.\n6. Wypełnij stronę kolorem, klikając prawym przyciskiem myszy na kolorze.\n7. Zmień kolor tła, klikając trzykrotnie na kolorze."
+    "floodPage": "Wypełnij stronę",
+    "setBackground": "Ustaw tło",
+    "clearBackground": "Wyczyść tło",
+    "tips": "Kilka przydatnych skrótów\n1. Wymaż prawym przyciskiem myszy.\n2. Rysuj linie: Shift + klik.\n3. Przełącz między trybem $1 i $2 klawiszem Caps Lock.\n4. Aby zmienić rozmiar gumki: przytrzymaj środkowy przycisk myszy i przeciągnij w lewo lub w prawo.\n5. Aby zmienić rozmiar pędzla: przytrzymaj środkowy przycisk myszy i przeciągnij w górę lub w dół.\n6. Kliknij prawym przyciskiem na kolor, aby zobaczyć więcej opcji."
   }
 }

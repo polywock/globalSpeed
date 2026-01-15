@@ -332,6 +332,9 @@
     "erase": "Xóa",
     "select": "Tương tác",
     "selectTooltip": "Tương tác với trang web",
-    "tips": "Một số phím tắt hữu ích\n1. Xóa bằng nút chuột phải.\n2. Vẽ đường bằng cách giữ Shift và nhấp chuột.\n3. Chuyển đổi giữa chế độ $1 và $2 bằng cách sử dụng Caps Lock\n4. Để điều chỉnh kích thước của tẩy: giữ nút chuột giữa và kéo sang trái hoặc phải.\n5. Để điều chỉnh kích thước của cọ: giữ nút chuột giữa và kéo lên hoặc xuống.\n6. Làm ngập trang bằng một màu bằng cách nhấp chuột phải vào màu.\n7. Thay đổi màu nền bằng cách nhấp ba lần vào màu."
+    "floodPage": "Tô màu trang",
+    "setBackground": "Đặt nền",
+    "clearBackground": "Xóa nền",
+    "tips": "Một số phím tắt hữu ích\n1. Xóa bằng nút chuột phải.\n2. Vẽ đường thẳng bằng Shift + nhấp.\n3. Chuyển giữa chế độ $1 và $2 bằng Caps Lock\n4. Để chỉnh kích thước tẩy: giữ nút chuột giữa và kéo sang trái hoặc phải.\n5. Để chỉnh kích thước cọ: giữ nút chuột giữa và kéo lên hoặc xuống.\n6. Nhấp chuột phải vào một màu để có thêm tùy chọn."
   }
 }

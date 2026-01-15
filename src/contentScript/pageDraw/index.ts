@@ -508,12 +508,12 @@ class Controls {
             this.m.dropper.classList.remove("selected")
             e.target.classList.add("selected")
         } else if (e.target === this.m.remove) {
-            if (!this.pd.drewSomething || document.fullscreenElement || confirm(gvar.gsm.options.help.areYouSure)) {
+            if (!this.pd.drewSomething || document.fullscreenElement || areYouSure()) {
                 gvar.pageDraw?.release()
                 delete gvar.pageDraw
             }
         } else if (e.target === this.m.clear) {
-            if (!this.pd.drewSomething || document.fullscreenElement || confirm(gvar.gsm.options.help.areYouSure)) {
+            if (!this.pd.drewSomething || document.fullscreenElement || areYouSure()) {
                 this.pd.ctx.clearRect(0, 0, this.pd.canvas.width, this.pd.canvas.height)
                 delete this.pd.eraseColor
                 this.pd.drewSomething = false
@@ -566,7 +566,7 @@ class Controls {
 
         this.colorMenu = new ControlsMenu(this.wrapper.div, x, y, [
             {
-                label: "Flood page",
+                label: gvar.gsm.pageDraw.floodPage,
                 cb: () => {
                     const color = target.style.backgroundColor
                     this.pd.ctx.fillStyle = color
@@ -576,13 +576,17 @@ class Controls {
                 }
             },
             {
-                label: "Set background",
+                label: target.style.backgroundColor === this.pd.eraseColor ? gvar.gsm.pageDraw.clearBackground : gvar.gsm.pageDraw.setBackground,
                 cb: () => {
                     const color = target.style.backgroundColor
-                    this.pd.eraseColor = color
-                    this.pd.ctx.fillStyle = color
-                    this.pd.ctx.fillRect(0, 0, this.pd.canvas.width, this.pd.canvas.height)
-                    this.pd.ctx.fillStyle = ""
+                    if (color === this.pd.eraseColor) {
+                        delete this.pd.eraseColor
+                    } else {
+                        this.pd.eraseColor = color
+                        this.pd.ctx.fillStyle = color
+                        this.pd.ctx.fillRect(0, 0, this.pd.canvas.width, this.pd.canvas.height)
+                        this.pd.ctx.fillStyle = ""
+                    }
                     this.closeColorMenu()
                 }
             }

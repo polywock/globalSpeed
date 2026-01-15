@@ -333,6 +333,9 @@ export type Gsm = {
     erase: string,
     select: string,
     selectTooltip: string,
+    floodPage: string,
+    setBackground: string,
+    clearBackground: string,
     tips: string
   }
 }
