@@ -460,6 +460,7 @@ class Controls {
     wrapper = new MoveableWrapper()
     m = createScaffold(this.wrapper.div)
     colorMenu: ControlsMenu = null
+    isRandomColors = false
 
     constructor(private pd: PageDraw) {
         gvar.gsm.pageDraw._labelScale && this.wrapper.div.style.setProperty("--label-scale", gvar.gsm.pageDraw._labelScale.toString())
@@ -522,9 +523,15 @@ class Controls {
                 this.m.colorInput.click()
             }, 100)
         } else if (e.target === this.m.random) {
-            this.m.colors.forEach(c => {
-                c.style.backgroundColor = randomColor()
+            this.isRandomColors = !this.isRandomColors
+            const allColors = [...COLORS, ...COLORS2]
+            this.m.colors.forEach((c, i) => {
+                const color = this.isRandomColors ? randomColor() : allColors[i]
+                c.style.backgroundColor = color
                 c.classList.remove("selected")
+                if (!this.isRandomColors && this.pd.color === color) {
+                    c.classList.add("selected")
+                }
             })
         } else if (e.target === this.m.hide) {
             this.pd.hidden = !this.pd.hidden
