@@ -6,6 +6,8 @@ type Env = {
   client?: SubscribeView
 }
 
+
+// TODO: Might consider creating a Suspense version that throws a promise.
 export function useStateView(selector: StateViewSelector | (keyof StateView)[], wait?: number, maxWait?: number): [StateView, SetView] {
   const [view, _setView] = useState(null as StateView)
   const env = useMemo(() => ({} as Env), [])
@@ -25,6 +27,5 @@ export function useStateView(selector: StateViewSelector | (keyof StateView)[], 
 
   return [view, setView] 
 }
-
 
 export type SetView = (view: StateView) => void

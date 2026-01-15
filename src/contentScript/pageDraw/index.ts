@@ -35,14 +35,15 @@ class PageDraw extends Popover {
     pageStyle = document.createElement("style")
     ctx = this.canvas.getContext("2d")
     controls: Controls
-    
+
     on = false
-    isDrawing: { scaleMode: boolean, erase: boolean, button: number, id: PointerEvent["pointerId"], refX: number, refY: number, refD: number, refE: number } = null
+    isDrawing: { scaleMode: boolean, erase: boolean, button: number, id: PointerEvent["pointerId"], refX: number, refY: number, refD: number, refE: number, shiftOrigin?: Point, shiftAngle?: number, shiftLastPoint?: Point, shiftAtStart?: boolean, previousPoint?: Point } = null
     latestPoint: Point
+    latestPointTime: number = 0
     points: Point[] = []
     hidden = false
     scrolling = false
-    eraseColor?: string 
+    eraseColor?: string
     drewSomething = false
 
     mode: Mode = "DRAW"
@@ -151,7 +152,7 @@ class PageDraw extends Popover {
         this.resist.style.display = "block"
         if (e && this.latestDimension.width === rect.width && this.latestDimension.height === rect.height) return
         this.latestDimension = rect
-        this.resist.style.width = this._div.style.width = `${rect.width}px` 
+        this.resist.style.width = this._div.style.width = `${rect.width}px`
         this.resist.style.height = this._div.style.height = `${rect.height}px`
         if (this.canvas.width >= rect.width && this.canvas.height >= rect.height) return
 
@@ -245,29 +246,37 @@ class PageDraw extends Popover {
         let erase = this.mode === "ERASE"
         if (e.button === 2) erase = !erase
 
-        if (e.shiftKey && this.latestPoint) {
-            this.drawLine(this.latestPoint, { x: e.pageX, y: e.pageY }, e.pointerType === "pen" ? e.pressure : null, erase)
-        } else {
-            this.isDrawing = { scaleMode: e.altKey || e.button === 1, erase, button: e.button, id: e.pointerId, refX: e.clientX, refY: e.clientY, refE: this.eraserSize, refD: this.brushSize }
-            if (this.isDrawing.scaleMode) this.renewSizeCursor()
-            this.syncCursor()
-            this.handlePointerMove(e)
-        }
+        this.isDrawing = { scaleMode: e.altKey || e.button === 1, erase, button: e.button, id: e.pointerId, refX: e.clientX, refY: e.clientY, refE: this.eraserSize, refD: this.brushSize, shiftAtStart: e.shiftKey, previousPoint: this.latestPoint }
+        if (this.isDrawing.scaleMode) this.renewSizeCursor()
+        this.syncCursor()
+        this.handlePointerMove(e)
     }
     handlePointerUp = (e: PointerEvent) => {
         if (!this.on) return
-        this.latestPoint = { x: e.pageX, y: e.pageY }
+        const upPoint = { x: e.pageX, y: e.pageY }
+
         if (this.isDrawing && this.isDrawing.button === e.button && this.isDrawing.id === e.pointerId) {
+            // Check if this was a shift-click (released before angle locked)
+            // If so, and we have a previous point, draw a line from it
+            if (this.isDrawing.shiftAtStart &&
+                this.isDrawing.shiftAngle == null &&
+                this.isDrawing.previousPoint != null) {
+                // User clicked (didn't move enough to lock angle) - draw line from previous point
+                this.drawLine(this.isDrawing.previousPoint, upPoint, e.pointerType === "pen" ? e.pressure : null, this.isDrawing.erase)
+            }
             this.points = []
             this.clearIsDrawing()
         }
+
+        this.latestPoint = upPoint
+        this.latestPointTime = Date.now()
     }
     handlePointerMove = (e: PointerEvent) => {
         if (!this.on) return
         if (!this.isDrawing) return
 
         if (
-            (e.clientX >= window.innerWidth || e.clientX <= 0) || 
+            (e.clientX >= window.innerWidth || e.clientX <= 0) ||
             (e.clientY >= window.innerHeight || e.clientY <= 0)
         ) {
 
@@ -284,8 +293,8 @@ class PageDraw extends Popover {
             const deltaY = (this.isDrawing.refY - e.clientY)
             this.isDrawing.erase = Math.abs(deltaX) > Math.abs(deltaY)
             if (Math.max(Math.abs(deltaX), Math.abs(deltaY)) < 20) {
-                return 
-            } 
+                return
+            }
 
             if (this.isDrawing.erase) {
                 const ratioX = deltaX / window.innerWidth
@@ -304,8 +313,98 @@ class PageDraw extends Popover {
 
         if (this.points.length < 2) return
 
-        const origin = this.points.at(-2) // end 
-        this.drawLine(origin, this.latestPoint, e.pointerType === "pen" ? e.pressure : null)
+        const pressure = e.pointerType === "pen" ? e.pressure : null
+
+        // Shift held during drawing: constrain to nearest 45° angle
+        if (e.shiftKey || this.isDrawing.shiftAtStart) {
+            // Initialize shift state when shift is first pressed or was held at start
+            if (this.isDrawing.shiftOrigin == null) {
+                // Find a stable origin point - look back to find a point at least 30px away
+                let originPoint = this.latestPoint
+                const minDistanceForOrigin = 30
+                for (let i = this.points.length - 1; i >= 0; i--) {
+                    const pt = this.points[i]
+                    const d = Math.sqrt(
+                        (this.latestPoint.x - pt.x) ** 2 +
+                        (this.latestPoint.y - pt.y) ** 2
+                    )
+                    if (d >= minDistanceForOrigin) {
+                        originPoint = pt
+                        break
+                    }
+                }
+                // If we couldn't find a point far enough, use the first point
+                if (originPoint === this.latestPoint && this.points.length > 0) {
+                    originPoint = this.points[0]
+                }
+                this.isDrawing.shiftOrigin = originPoint
+                this.isDrawing.shiftLastPoint = this.latestPoint
+                // Angle will be determined after moving a minimum distance from origin
+                this.isDrawing.shiftAngle = null
+            }
+
+            const dx = this.latestPoint.x - this.isDrawing.shiftOrigin.x
+            const dy = this.latestPoint.y - this.isDrawing.shiftOrigin.y
+            const distanceFromOrigin = Math.sqrt(dx * dx + dy * dy)
+
+            // Wait until user moves at least 40 pixels from origin before locking the angle
+            if (this.isDrawing.shiftAngle == null) {
+                if (distanceFromOrigin < 40) {
+                    this.isDrawing.shiftLastPoint = this.latestPoint
+                    return
+                }
+                // Lock the angle based on direction from origin
+                const angle = Math.atan2(dy, dx)
+                this.isDrawing.shiftAngle = Math.round(angle / (Math.PI / 4)) * (Math.PI / 4)
+
+                // Draw the initial segment from origin to current position (making up for missed part)
+                const cosA = Math.cos(this.isDrawing.shiftAngle)
+                const sinA = Math.sin(this.isDrawing.shiftAngle)
+                const projectedDist = dx * cosA + dy * sinA
+                if (Math.abs(projectedDist) > 0.5) {
+                    const dest: Point = {
+                        x: this.isDrawing.shiftOrigin.x + cosA * projectedDist,
+                        y: this.isDrawing.shiftOrigin.y + sinA * projectedDist
+                    }
+                    this.drawLine(this.isDrawing.shiftOrigin, dest, pressure)
+                    this.isDrawing.shiftOrigin = dest
+                }
+                this.isDrawing.shiftLastPoint = this.latestPoint
+                this.points = [this.isDrawing.shiftOrigin]
+                return
+            }
+
+            // Calculate distance moved from last point
+            const prevPoint = this.isDrawing.shiftLastPoint
+            const moveDx = this.latestPoint.x - prevPoint.x
+            const moveDy = this.latestPoint.y - prevPoint.y
+            // Project movement onto the locked angle direction
+            const cosA = Math.cos(this.isDrawing.shiftAngle)
+            const sinA = Math.sin(this.isDrawing.shiftAngle)
+            const projectedDistance = moveDx * cosA + moveDy * sinA
+
+            if (Math.abs(projectedDistance) > 0.5) {
+                const dest: Point = {
+                    x: this.isDrawing.shiftOrigin.x + cosA * projectedDistance,
+                    y: this.isDrawing.shiftOrigin.y + sinA * projectedDistance
+                }
+                this.drawLine(this.isDrawing.shiftOrigin, dest, pressure)
+                this.isDrawing.shiftOrigin = dest
+            }
+            this.isDrawing.shiftLastPoint = this.latestPoint
+            this.points = [this.isDrawing.shiftOrigin]
+            return
+        }
+
+        // Shift released - clear the shift state
+        if (this.isDrawing.shiftOrigin != null) {
+            delete this.isDrawing.shiftOrigin
+            delete this.isDrawing.shiftAngle
+            delete this.isDrawing.shiftLastPoint
+        }
+
+        const origin = this.points.at(-2)
+        this.drawLine(origin, this.latestPoint, pressure)
         return
     }
     handlePointerMoveDeb = this.handlePointerMove
@@ -313,7 +412,7 @@ class PageDraw extends Popover {
         if (this.isDrawing?.scaleMode) this.clearIsDrawing()
     }
     drawLine = (og: Point, dest: Point, pressure?: number, oneTimeErase?: boolean) => {
-        this.ctx.lineCap = 'round';
+        this.ctx.lineCap = 'round'
         this.ctx.beginPath()
         this.ctx.moveTo(og.x, og.y)
         this.ctx.lineTo(dest.x, dest.y)
@@ -334,6 +433,18 @@ class PageDraw extends Popover {
 
         this.ctx.stroke()
         this.ctx.globalCompositeOperation = 'source-over'
+    }
+    constrainTo45 = (origin: Point, dest: Point): Point => {
+        const dx = dest.x - origin.x
+        const dy = dest.y - origin.y
+        const angle = Math.atan2(dy, dx)
+        // Snap to nearest 45° (π/4 radians)
+        const snappedAngle = Math.round(angle / (Math.PI / 4)) * (Math.PI / 4)
+        const distance = Math.sqrt(dx * dx + dy * dy)
+        return {
+            x: origin.x + Math.cos(snappedAngle) * distance,
+            y: origin.y + Math.sin(snappedAngle) * distance
+        }
     }
 }
 
@@ -361,13 +472,13 @@ class Controls {
         if (this.released) return
         this.released = true
 
-        this.pd._div.removeEventListener("click", this.handleClick, true);
+        this.pd._div.removeEventListener("click", this.handleClick, true)
         this.pd._div.removeEventListener("input", this.handleInput, true)
         this.m.colorInput.removeEventListener("input", this.handleColorInput, true)
         this.wrapper.release()
         this.m.wrapper.remove()
         delete this.wrapper
-        delete this.m 
+        delete this.m
     }
     syncSize = () => {
         this.m.brushSizeRange.value = this.pd.brushSize.toString()
@@ -384,7 +495,7 @@ class Controls {
         this.m.dropper.classList.add("selected")
         this.m.colors.forEach(c => c.classList.remove("selected"))
     }
-    lastClicked?: {color: string, times: number[]}
+    lastClicked?: { color: string, times: number[] }
     handleClick = (e: MouseEvent) => {
         assertType<HTMLButtonElement>(e.target)
         if (e.target.classList.contains("color")) {
@@ -392,10 +503,10 @@ class Controls {
             this.m.colors.forEach(c => c.classList.remove("selected"))
             this.m.dropper.classList.remove("selected")
             e.target.classList.add("selected")
-            
+
             if (!(this.lastClicked?.color === e.target.style.backgroundColor)) {
                 delete this.lastClicked
-                this.lastClicked = {color: e.target.style.backgroundColor, times: []}
+                this.lastClicked = { color: e.target.style.backgroundColor, times: [] }
             }
             let now = Date.now()
             this.lastClicked.times.push(now)
@@ -405,7 +516,7 @@ class Controls {
                 if (areYouSure()) {
                     if (this.pd.eraseColor === this.lastClicked.color) {
                         delete this.pd.eraseColor
-                        return 
+                        return
                     }
                     this.pd.eraseColor = this.lastClicked.color
                     this.pd.ctx.fillStyle = this.lastClicked.color
@@ -432,7 +543,7 @@ class Controls {
                 c.style.backgroundColor = randomColor()
                 c.classList.remove("selected")
             })
-        }else if (e.target === this.m.hide) {
+        } else if (e.target === this.m.hide) {
             this.pd.hidden = !this.pd.hidden
             this.pd.sync()
         } else if (e.target === this.m.help) {
@@ -489,7 +600,7 @@ function getCircleDataUrl(radius: number) {
 
 
 function getCircleCursor(radius: number) {
-    return `${getCircleDataUrl(radius)}, ${getCircleWebAccessible(radius)}, crosshair`;
+    return `${getCircleDataUrl(radius)}, ${getCircleWebAccessible(radius)}, crosshair`
 }
 
 
@@ -530,8 +641,8 @@ const createScaffold = (wrapper: HTMLDivElement) => {
     mode.appendChild(selectMode)
 
     const colors = generateColors(COLORS)
-    const colorsAlt = generateColors(COLORS2) 
-    const colorInput = createElement("input", {id: "colorInput"}) as HTMLInputElement
+    const colorsAlt = generateColors(COLORS2)
+    const colorInput = createElement("input", { id: "colorInput" }) as HTMLInputElement
     colorInput.type = 'color'
     const dropper = m(`<label for="colorInput" id="dropper"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M13.354.646a1.207 1.207 0 0 0-1.708 0L8.5 3.793l-.646-.647a.5.5 0 1 0-.708.708L8.293 5l-7.147 7.146A.5.5 0 0 0 1 12.5v1.793l-.854.853a.5.5 0 1 0 .708.707L1.707 15H3.5a.5.5 0 0 0 .354-.146L11 7.707l1.146 1.147a.5.5 0 0 0 .708-.708l-.647-.646 3.147-3.146a1.207 1.207 0 0 0 0-1.708l-2-2zM2 12.707l7-7L10.293 7l-7 7H2v-1.293z"></path></svg></label>`) as HTMLButtonElement
     dropper.appendChild(colorInput)
@@ -576,7 +687,7 @@ const createScaffold = (wrapper: HTMLDivElement) => {
     return {
         wrapper, header, main, mode, color, brushSize, eraserSize,
         headerLabel, grip, help, hide, clear, remove,
-        drawMode, eraseMode, selectMode, colors, colorInput, 
+        drawMode, eraseMode, selectMode, colors, colorInput,
         dropper, random, brushSizeLabel, brushSizeRange,
         eraserSizeLabel, eraserSizeRange
     }
@@ -675,13 +786,13 @@ function randomColor() {
         try {
             if (!gvar.gsm) {
                 const gsm = await requestGsm()
-                gvar.gsm = gsm 
+                gvar.gsm = gsm
             }
         } finally {
-            delete gvar.pageDraw 
+            delete gvar.pageDraw
         }
         gvar.pageDraw = new PageDraw()
-    } 
+    }
 })()
 
 
