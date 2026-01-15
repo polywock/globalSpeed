@@ -27,7 +27,8 @@ if (env.FIREFOX) {
 const common = {
   entry,
   output: {
-    path: resolve(__dirname, env.FIREFOX ? "buildFf": "build", "unpacked")
+    path: resolve(__dirname, env.FIREFOX ? "buildFf": "build", "unpacked"),
+    chunkFilename: "chunks/[name].js"
   },
   module: {
     rules: [

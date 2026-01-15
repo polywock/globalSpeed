@@ -1,6 +1,6 @@
 {
   "name": "__MSG_appName__",
-  "version": "3.2.56",
+  "version": "3.2.57",
   "browser_specific_settings": {
     "gecko": {
       "id": "{f4961478-ac79-4a18-87e9-d2fb8c0442c4}",
@@ -18,6 +18,7 @@
   "host_permissions": ["https://*/*", "http://*/*", "file://*/*"],
   "web_accessible_resources": [
     {"resources": ["circles/*.svg"], "matches": ["http://*/*", "https://*/*"]},
+    {"resources": ["svgs/*.svg"], "matches": ["http://*/*", "https://*/*"]},
     {"resources": ["main.js"], "matches": ["https://*/*", "http://*/*"]}
   ],
   "action": {

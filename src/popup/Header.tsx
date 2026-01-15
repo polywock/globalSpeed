@@ -15,8 +15,8 @@ import { feedbackText, isMobile } from "src/utils/helper";
 import { KebabList, KebabListProps } from "src/options/KebabList";
 import { replaceArgs } from "src/utils/helper";
 import { produce } from "immer";
-import "./Header.css"
 import { IoIosInformationCircle } from "react-icons/io"
+import "./Header.css"
 
 
 const SUPPORTS_TAB_CAPTURE = !!(chrome.tabCapture?.capture && chrome.offscreen?.createDocument)

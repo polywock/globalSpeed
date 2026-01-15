@@ -5,6 +5,7 @@ import { ItcInit } from "src/types";
 import { requestApplyMediaEvent } from "./applyMediaEvent";
 import { createElement as m } from "src/utils/helper"
 import styles from "./Interactive.css?raw"
+import { crossIcon, resetIcon } from "src/defaults/icons"
 
 const SLIDER_WIDTH = 100
 const SLIDER_HEIGHT = 100 
@@ -23,8 +24,8 @@ export class Interactive extends Popover {
     sole: ItcInit
     slider = document.createElement('div')
     ref = document.createElement('div')
-    cancelButton = m(`<button class="cancel"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5.72 5.72a.75.75 0 0 1 1.06 0L12 10.94l5.22-5.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L13.06 12l5.22 5.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L12 13.06l-5.22 5.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L10.94 12 5.72 6.78a.75.75 0 0 1 0-1.06Z"></path></svg></button>`) as HTMLButtonElement
-    resetButton = m(`<button class="reset"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M20,8 C18.5974037,5.04031171 15.536972,3 12,3 C7.02943725,3 3,7.02943725 3,12 C3,16.9705627 7.02943725,21 12,21 L12,21 C16.9705627,21 21,16.9705627 21,12 M21,3 L21,9 L15,9"></path></svg></button>`) as HTMLButtonElement
+    cancelButton = m(`<button class="cancel">${crossIcon}</button>`) as HTMLButtonElement
+    resetButton = m(`<button class="reset">${resetIcon}</button>`) as HTMLButtonElement
     paused = false 
     isShowingReset = false 
     constructor() {
