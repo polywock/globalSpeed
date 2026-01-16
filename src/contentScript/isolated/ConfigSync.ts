@@ -92,6 +92,8 @@ export class ConfigSync {
   handleChange = () => {
     const view = this.client.view
     const enabled = view?.enabled && !view.superDisable
+    const urlMode = this.checkUrlRuntime()
+    const isActiveOnSite = enabled && urlMode !== 'Off'
 
     if (gvar.os.indicator && gvar.os.indicator.key !== view?.indicatorInit?.key) {
       gvar.os.indicator.setInit(view?.indicatorInit || {})
@@ -99,14 +101,13 @@ export class ConfigSync {
 
     gvar.os.speedSync.holdToSpeed = view.holdToSpeed
 
-    if (enabled) {
+    if (isActiveOnSite) {
       this.fxSync = this.fxSync ?? new FxSync()
     } else {
       this.fxSync?.release(); delete this.fxSync
     }
 
-    if (enabled && view.circleWidget) {
-
+    if (isActiveOnSite && view.circleWidget) {
       // Update when settings change. 
       if (gvar.os.circle && gvar.os.circle.key !== view.circleInit?.key) {
         gvar.os.circle?.release()
@@ -139,8 +140,9 @@ export class ConfigSync {
   }
   handleSpeedChange = () => {
     const speedView = this.speedClient.view
+    const urlMode = this.checkUrlRuntime()
 
-    if (speedView && speedView.enabled && !speedView.superDisable) {
+    if (speedView && speedView.enabled && !speedView.superDisable && urlMode !== 'Off') {
       gvar.os.speedSync.latest = { speed: speedView.speed, freePitch: speedView.freePitch }
       gvar.os.speedSync.update()
     } else {
