@@ -56,6 +56,7 @@
     "lodash.debounce": "^4.0.8",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "react-error-boundary": "^6.1.0",
     "react-icons": "^5.5.0",
     "soundtouchjs": "^0.1.27",
     "zod": "^4.2.1"

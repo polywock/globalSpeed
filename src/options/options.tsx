@@ -25,6 +25,7 @@ declare global {
 
 const Options = (props: {}) => {
   useThemeSync()
+  throw new Error("WOOT")
   return <div id="App">
     <SectionFlags/>
     <SectionEditor/>
