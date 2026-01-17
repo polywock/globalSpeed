@@ -12,9 +12,9 @@ import { createRoot } from "react-dom/client"
 import { OrlHeader } from "./OrlHeader"
 import { loadGsm } from "src/utils/gsm"
 import { isFirefox, isMobile } from "src/utils/helper"
-import "./popup.css"
 import { fetchView } from "src/utils/state"
 import { StateView, Trigger } from "src/types"
+import "./popup.css"
 
 declare global {
   
