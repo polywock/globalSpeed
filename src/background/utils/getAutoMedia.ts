@@ -67,15 +67,14 @@ export async function getAutoMedia(tabInfo: TabInfo, videoOnly?: boolean) {
 
   infos.sort((a, b) => b.creationTime - a.creationTime)
   let pippedInfo = infos.find(info => info.pipMode) || infos.find(info => info.isDip)
-
   if (pippedInfo && !(await checkContentScript(pippedInfo.tabInfo.tabId, pippedInfo.tabInfo.frameId))) {
     pippedInfo = null
   }
 
   if (!ignorePiP && pippedInfo) return pippedInfo
-
-  if (!tabInfo) return (pippedInfo || undefined)
-  infos = infos.filter(info => info.tabInfo.tabId === tabInfo.tabId)
+  if (tabInfo) {
+    infos = infos.filter(info => info.tabInfo.tabId === tabInfo.tabId)
+  }
 
   if (!infos.length) return (pippedInfo || undefined)
 
