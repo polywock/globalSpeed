@@ -19,9 +19,6 @@ declare global {
         runJs:  {type: "RUN_JS", value: string},
         bgSpeedOverride: {type: "BG_SPEED_OVERRIDE", value: {speed: number, freePitch: boolean}},
   
-        ytRequestRate: {type: "YT_REQUEST_RATE"},
-        ytRateChange: {type: "YT_RATE_CHANGE", value: number},
-  
         showIndicator: { type: "SHOW_INDICATOR", opts: IndicatorShowOpts, requiresFocus?: boolean, showAlt?: boolean  }
         addPane: { type: "ADD_PANE", filters: FilterEntry[], svgFilters: SvgFilter[] }
         itc: {type: "ITC", inits: ItcInit[]}

@@ -2,7 +2,6 @@ import { assertType, between, randomId } from "../../utils/helper"
 import { conformSpeed } from "../../utils/configUtils"
 import { applyMediaEvent, MediaEvent } from "./utils/applyMediaEvent"
 import { generateScopeState } from "./utils/genMediaInfo"
-import { IS_YOUTUBE } from "./utils/isWebsite"
 import debounce from "lodash.debounce"
 import { getShadow } from "src/utils/nativeUtils"
 
@@ -21,7 +20,6 @@ export class MediaTower {
   constructor() {
     this.processDoc(window)
     gvar.os.stratumServer.wiggleCbs.add(this.handleWiggle)
-    IS_YOUTUBE && gvar.os.stratumServer.msgCbs.add(this.handleServerMessage)
     gvar.os.detectOpen.cbs.add(this.handleDetectOpen)
     window.addEventListener("beforeunload", this.handleUnload, { capture: true })
     window.addEventListener("blur", this.handleBlur, { capture: true, passive: true })
@@ -88,12 +86,6 @@ export class MediaTower {
       this.processMedia(parent)
     }
   }
-  private handleServerMessage = (data: Messages) => {
-    if (data?.type === "YT_REQUEST_RATE") {
-      const value = gvar.os.speedSync.latest?.speed
-      value && gvar.os.stratumServer.send({ type: "YT_RATE_CHANGE", value })
-    }
-  }
   public processDoc = (doc: Window | ShadowRoot) => {
     if (this.docs.has(doc)) return
     this.docs.add(doc)
@@ -126,7 +118,6 @@ export class MediaTower {
     doc.addEventListener("fullscreenchange", this.handleMediaEvent, { capture: true, passive: true })
     doc.addEventListener("webkitfullscreenchange", this.handleMediaEvent, { capture: true, passive: true })
     doc.addEventListener("ratechange", this.handleMediaEvent, { capture: true, passive: true })
-    IS_YOUTUBE && doc.addEventListener("ratechange", this.handleYoutubeRateChange, { capture: true, passive: true })
   }
   private ensureMediaEventListeners = (elem: HTMLMediaElement) => {
     elem.addEventListener("play", this.handleMediaEvent, { capture: true, passive: true })
@@ -140,10 +131,6 @@ export class MediaTower {
   public ensureEventListeners = () => {
     this.docs.forEach(doc => this.ensureDocEventListeners(doc))
     this.media.forEach(media => this.ensureMediaEventListeners(media))
-  }
-  private handleYoutubeRateChange = (e: Event) => {
-    const value = (e.target as HTMLMediaElement).playbackRate
-    value && gvar.os.stratumServer.send({ type: "YT_RATE_CHANGE", value })
   }
   private handleInterrupt = (e: Event) => {
     if (e.processed) return

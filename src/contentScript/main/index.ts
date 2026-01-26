@@ -14,9 +14,6 @@ let shadowRoots: ShadowRoot[] = []
 let client: StratumClient
 let ghostMode: GhostMode
 
-let ensureYtLastSpeed: number
-let handleYtRateChange: (newSpeed: number) => void
-
 function main() {
   if (isFirefox()) {
     if (window.loadedGsCtx) return
@@ -28,7 +25,6 @@ function main() {
 
   ghostMode = new GhostMode()
   client = new StratumClient()
-  ensureYt()
 
   overridePrototypeMethod(HTMLMediaElement, "play", handleOverrideMedia)
   overridePrototypeMethod(HTMLMediaElement, "pause", handleOverrideMedia)
@@ -88,36 +84,6 @@ function ensureBaidu() {
 
   const desc = Object.getOwnPropertyDescriptor(Navigator.prototype, "userAgent")
   Object.defineProperty(Navigator.prototype, "userAgent", { ...desc, get: function () { return ua } })
-}
-
-function ensureYt() {
-  if (location.hostname !== "www.youtube.com") return
-
-  window.addEventListener("timeupdate", handleYoutube, { capture: true })
-}
-
-function handleYoutube(e: Event) {
-  let player = document.getElementById("movie_player") as any;
-  if (!player) return
-
-  try {
-    player.getAvailablePlaybackRates().push(16)
-  } catch (err) {
-    return
-  }
-
-  handleYtRateChange = (speed: number) => {
-    if (ensureYtLastSpeed === speed) return
-    ensureYtLastSpeed = speed
-    try {
-      ghostMode.activateFor(1000)
-      player.setPlaybackRate(speed)
-    } catch (err) { }
-  }
-
-  client?.send({ type: "YT_REQUEST_RATE" })
-
-  window.removeEventListener("timeupdate", handleYoutube, { capture: true })
 }
 
 class GhostMode {
@@ -222,8 +188,6 @@ class StratumClient {
       seekNetflix(data.value)
     } else if (data.type === "GHOST") {
       data.off ? ghostMode.deactivate() : ghostMode.activate()
-    } else if (data.type === "YT_RATE_CHANGE") {
-      data.value && handleYtRateChange?.(data.value)
     } 
   }
   send = (data: any) => {

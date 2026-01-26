@@ -290,11 +290,7 @@ class SetPlaybackRate {
     elem.mozPreservesPitch = !freePitch
     elem.webkitPreservesPitch = !freePitch
   }
-  static _setYt(elem: HTMLMediaElement, value: number, freePitch?: boolean) {
-    if (elem.hasAttribute("yss-skip")) return 
-    this._set(elem, value, freePitch)
-  }
-  static set = IS_YOUTUBE ? SetPlaybackRate._setYt : SetPlaybackRate._set
+  static set = SetPlaybackRate._set
 }
 
 

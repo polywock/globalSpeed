@@ -421,7 +421,7 @@ class PageDraw extends Popover {
         this.ctx.moveTo(og.x, og.y)
         this.ctx.lineTo(dest.x, dest.y)
 
-        this.ctx.lineWidth = this.brushSize * (pressure ?? 1)
+        this.ctx.lineWidth = this.brushSize * (pressure != null ? pressure * 2 : 1)
         this.ctx.strokeStyle = this.color
 
         if (this.isDrawing?.erase || oneTimeErase) {
