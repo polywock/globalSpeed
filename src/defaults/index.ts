@@ -28,7 +28,8 @@ export const SHORTCUT_DISABLED_WEBSITES: WebsiteInfo[] = [
   {v: "https://www.4399.com"},
   {v: "https://www.7k7k.com"},
   {v: "https://poki.com"},
-  {v: "https://now.gg"}
+  {v: "https://now.gg"},
+  {v: "https://coderpad.io"}
 ]
 
 

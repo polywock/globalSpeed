@@ -205,6 +205,7 @@
     "flags": {
       "header": "옵션",
       "language": "언어",
+      "_languageTooltip": "한국어 번역에 기여한 사용자: @dev-diver",
       "darkTheme": "어두운 테마",
       "showBadge": "배지 표시",
       "showBadgeTooltip": "배지는 확장 프로그램 아이콘의 텍스트입니다.",
@@ -299,7 +300,7 @@
       "titleConditionsLabel": "페이지 제목에 포함되어야 합니다:",
       "titleConditionsTooltip": "쉼표로 구분된 용어 목록을 지정하고 최소한 하나는 페이지 제목에 포함되어야 합니다. 예를 들어, 음악 비디오의 속도를 1x로 설정하기 위해 YouTube에서 사용할 수 있습니다.",
       "conditions": "URL 조건",
-      "startsWith": "시작with",
+      "startsWith": "로 시작",
       "contains": "포함",
       "regex": "regex",
       "allowlist": "허용 목록",

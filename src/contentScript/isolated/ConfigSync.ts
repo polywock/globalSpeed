@@ -8,7 +8,7 @@ import { getLeaf } from "src/utils/nativeUtils"
 import { getEmptyUrlConditions } from "src/defaults"
 import { getPracticalRuntimeUrl } from "src/utils/helper"
 
-const ghostModeStatic = [".qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com", "onedrive.live.com", "open.spotify.com", ".instagram.com", ".descript.com", "www.ccmtv.cn", ".douyin.com", ".tiktok.com", ".linkedin.com"]
+const ghostModeStatic = [".qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com", "onedrive.live.com", "open.spotify.com", ".instagram.com", ".descript.com", "www.ccmtv.cn", ".douyin.com", ".tiktok.com", ".linkedin.com", "mooc1.chaoxing.com"]
   .some(site => (location.hostname || "").includes(site))
 
 export class ConfigSync {
