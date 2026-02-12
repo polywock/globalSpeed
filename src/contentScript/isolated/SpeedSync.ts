@@ -3,23 +3,25 @@ import { SubscribeView } from "src/utils/state"
 
 export class SpeedSync {
   intervalId: number
-  latest: {freePitch: boolean, speed: number}
+  latest: { freePitch: boolean, speed: number }
   holdToSpeed: number
-  holdToSpeedForKeyboard: number  
+  holdToSpeedForKeyboard: number
   speedClient?: SubscribeView
   pointerDownAt: number
   keyDownAt: number
   constructor() {
-    window.addEventListener('pointerdown', this.handlePointerDown, {capture: true, passive: true})
-    window.addEventListener('pointerup', this.handlePointerUp, {capture: true, passive: true})
-    document.addEventListener('mouseleave', this.clearPointerDown, {capture: true, passive: true})
-    window.addEventListener('keyup', this.handleKeyUp, {capture: true})
+    window.addEventListener('pointerdown', this.handlePointerDown, { capture: true, passive: true })
+    window.addEventListener('pointerup', this.handlePointerUp, { capture: true, passive: true })
+    window.addEventListener('pointercancel', this.handlePointerCancel, { capture: true, passive: true })
+    document.addEventListener('pointerleave', this.clearPointerDown, { capture: true, passive: true })
+    window.addEventListener('keyup', this.handleKeyUp, { capture: true })
   }
   release = () => {
     clearInterval(this.intervalId); delete this.intervalId
     window.removeEventListener('pointerdown', this.handlePointerDown, true)
     window.removeEventListener('pointerup', this.handlePointerUp, true)
-    document.removeEventListener('mouseleave', this.clearPointerDown, true)
+    window.removeEventListener('pointercancel', this.handlePointerCancel, true)
+    document.removeEventListener('pointerleave', this.clearPointerDown, true)
     window.removeEventListener('keyup', this.handleKeyUp, true)
   }
   update = () => {
@@ -37,13 +39,13 @@ export class SpeedSync {
       // If directly on video. 
       if ((e.target as HTMLVideoElement)?.tagName === 'VIDEO') {
         this.setPointerDownToNow()
-        return 
+        return
       }
 
       // If over a video. 
-      if (checkIfPointerOverVideo(document, e) ) {
+      if (checkIfPointerOverVideo(document, e)) {
         this.setPointerDownToNow()
-        return 
+        return
       }
 
       // More thoroughly check if over a video.
@@ -54,11 +56,14 @@ export class SpeedSync {
     }
   }
   setPointerDownToNow = () => {
-    this.pointerDownAt = Date.now() 
+    this.pointerDownAt = Date.now()
     setTimeout(this.realize, 620)
   }
   handlePointerUp = (e: PointerEvent) => {
     if (isLeftPointerOrMiddleMouse(e)) this.clearPointerDown()
+  }
+  handlePointerCancel = () => {
+    this.clearPointerDown()
   }
   clearPointerDown = (e?: PointerEvent) => {
     if ((!e || e.relatedTarget === null) && this.pointerDownAt) {
@@ -75,19 +80,19 @@ export class SpeedSync {
   processTemporarySpeed = (factor: number) => {
     if (factor) {
       this.holdToSpeedForKeyboard = factor
-      this.keyDownAt = Date.now() 
+      this.keyDownAt = Date.now()
     } else {
       delete this.keyDownAt
     }
     this.realize()
   }
   handleKeyUp = () => {
-      delete this.keyDownAt
+    delete this.keyDownAt
   }
   previousUrl: string
   realize = () => {
     if (this.latest) {
-      let speed = this.latest.speed 
+      let speed = this.latest.speed
       if (this.holdToSpeed && this.pointerDownActive()) {
         speed *= this.holdToSpeed
       } else if (this.holdToSpeedForKeyboard && this.keyDownActive()) {
@@ -99,8 +104,8 @@ export class SpeedSync {
 
     // Unrelated to speed: Update all other frames if top frame's URL changes. 
     if (gvar.isTopFrame && this.previousUrl !== location.href) {
-      this.previousUrl = location.href 
-      chrome.runtime.sendMessage({type: "REQUEST_NOTIFY_TOP_FRAME_URL_CHANGE", value: this.previousUrl} as Messages)
+      this.previousUrl = location.href
+      chrome.runtime.sendMessage({ type: "REQUEST_NOTIFY_TOP_FRAME_URL_CHANGE", value: this.previousUrl } as Messages)
     }
   }
 }
@@ -113,6 +118,6 @@ function checkIfPointerOverVideo(doc: DocumentOrShadowRoot, e: PointerEvent) {
 }
 
 function isLeftPointerOrMiddleMouse(e: PointerEvent) {
-  if (e.button === 0) return true 
-  if (e.button === 1 && e.pointerType === "mouse") return true 
+  if (e.button === 0) return true
+  if (e.button === 1 && e.pointerType === "mouse") return true
 } 
