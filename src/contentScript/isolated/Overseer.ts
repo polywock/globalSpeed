@@ -1,19 +1,19 @@
-import { requestTabInfo } from "src/utils/browserUtils";
-import { ConfigSync } from "./ConfigSync";
-import { MediaTower } from "./MediaTower";
-import { DetectOpen } from "./utils/DetectOpen";
-import { NativeFs } from "./utils/NativeFs";
-import { SmartFs } from "./utils/SmartFs";
-import { StratumServer } from "./utils/StratumServer";
-import { VisibleSync } from "./utils/VisibleSync";
-import { timeout } from "src/utils/helper";
-import { fetchView } from "src/utils/state";
-import { MessageTower } from "./MessageTower";
-import { SpeedSync } from "./SpeedSync";
-import { EventsListener } from "./utils/EventsListener";
-import { Indicator } from "./utils/Indicator";
-import { Interactive } from "./utils/Interactive";
-import type { Circle } from "./utils/Circle";
+import { requestTabInfo } from "src/utils/browserUtils"
+import { ConfigSync } from "./ConfigSync"
+import { MediaTower } from "./MediaTower"
+import { DetectOpen } from "./utils/DetectOpen"
+import { NativeFs } from "./utils/NativeFs"
+import { SmartFs } from "./utils/SmartFs"
+import { StratumServer } from "./utils/StratumServer"
+import { VisibleSync } from "./utils/VisibleSync"
+import { timeout } from "src/utils/helper"
+import { fetchView } from "src/utils/state"
+import { MessageTower } from "./MessageTower"
+import { SpeedSync } from "./SpeedSync"
+import { EventsListener } from "./utils/EventsListener"
+import { Indicator } from "./utils/Indicator"
+import { Interactive } from "./utils/Interactive"
+import type { Circle } from "./utils/Circle"
 
 export class Overseer {
     eListen: EventsListener
@@ -32,10 +32,11 @@ export class Overseer {
     itc?: Interactive
     circle?: Circle
 
-    orphaned = false 
-    released = false 
+    orphaned = false
+    released = false
 
     init = async () => {
+        console.log("Overseer started")
         this.eListen = new EventsListener()
         this.detectOpen = new DetectOpen()
         this.stratumServer = new StratumServer()
@@ -48,10 +49,9 @@ export class Overseer {
         this.detectOpen.cbs.add(() => {
             this.eListen.update()
         })
-
         await this.initAsync()
-        if (document.readyState === "loading")  {
-            document.addEventListener("DOMContentLoaded", this.handleDOMLoaded, {capture: true, passive: true, once: true})
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", this.handleDOMLoaded, { capture: true, passive: true, once: true })
         } else {
             this.handleDOMLoaded()
         }
@@ -64,39 +64,39 @@ export class Overseer {
             await timeout(3000)
             gvar.tabInfo = await requestTabInfo()
 
-            if (!gvar.tabInfo) return 
+            if (!gvar.tabInfo) return
         }
 
-        const view = (await fetchView({indicatorInit: true})) || {}
+        const view = (await fetchView({ indicatorInit: true })) || {}
 
         if (gvar.isTopFrame) {
             this.indicator = new Indicator()
             this.indicator.setInit(view.indicatorInit || {})
-        } 
-        
+        }
+
         // Top frame notifies subframes on changes to its url, but ensure we have the current one. 
-        if (!gvar.isTopFrame) chrome.runtime.sendMessage({type: 'REQUEST_TOP_FRAME_URL'} as Messages)
+        if (!gvar.isTopFrame) chrome.runtime.sendMessage({ type: 'REQUEST_TOP_FRAME_URL' } as Messages)
     }
     handleDOMLoaded = () => {
         this.visibleSync = new VisibleSync(this.handleVisibleChange)
     }
     handleVisibleChange = () => {
         if (document.hidden) {
-            this.configSync?.release(); 
+            this.configSync?.release()
             delete this.configSync
         } else {
-            this.configSync = this.configSync ?? new ConfigSync() 
+            this.configSync = this.configSync ?? new ConfigSync()
         }
     }
     handleOrphan = () => {
-        if (this.orphaned) return 
-        this.orphaned = true 
+        if (this.orphaned) return
+        this.orphaned = true
         this.release()
     }
     release = () => {
-        if (this.released) return 
-        this.released = true 
-        
+        if (this.released) return
+        this.released = true
+
         this.indicator?.release(); delete this.indicator
         this.indicatorAlt?.release(); delete this.indicatorAlt
         this.smartFs?.release(); delete this.smartFs
