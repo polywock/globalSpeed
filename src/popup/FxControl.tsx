@@ -42,7 +42,8 @@ export function FxControl(props: FxControlProps) {
     elemFilter:  checkFilterDeviationOrActiveSvg(elementFx.filters, elementFx.svgFilters),
     elemTransform: checkFilterDeviation(elementFx.transforms),
     backdropFilter: checkFilterDeviationOrActiveSvg(backdropFx.filters, backdropFx.svgFilters),
-    backdropTransform: checkFilterDeviation(backdropFx.transforms)
+    backdropTransform: checkFilterDeviation(backdropFx.transforms),
+    elemObjectFit: !!elementFx.objectFit
   }), [elementFx, backdropFx]) 
 
   const isEmpty = useMemo(() => (
@@ -54,7 +55,7 @@ export function FxControl(props: FxControlProps) {
 
       {/* Target tabs */}
       <div className="tabs">
-        <button className={`${!backdropTab ? "open" : ""} ${(active.elemFilter || active.elemTransform) ? "active" : ""}`} onClick={e => {
+        <button className={`${!backdropTab ? "open" : ""} ${(active.elemFilter || active.elemTransform || active.elemObjectFit) ? "active" : ""}`} onClick={e => {
           setBackdropTab(false)
         }}>{gvar.gsm.token.video}</button>
         <button className={`${backdropTab ? "open" : ""} ${(active.backdropFilter || active.backdropTransform)  ? "active" : ""}`} onClick={e => {
@@ -91,6 +92,33 @@ export function FxControl(props: FxControlProps) {
               d.query = v 
             }))
           }}/>
+        </div>
+      )}
+      
+      {/* Object Fit */}
+      {!backdropTab && (
+        <div className="selector">
+          <span>object-fit</span>
+          <select value={fx.objectFit || ""} onChange={e => {
+            setCurrent(produce(fx, d => {
+              if (e.target.value) {
+                d.objectFit = e.target.value as any
+                // Enable only when changing from default to a value
+                if (!fx.objectFit) {
+                  d.enabled = true
+                }
+              } else {
+                delete d.objectFit
+              }
+            }))
+          }}>
+            <option key="default" value="">Default</option>
+            <option key="fill" value="fill">fill</option>
+            <option key="contain" value="contain">contain</option>
+            <option key="cover" value="cover">cover</option>
+            <option key="none" value="none">none</option>
+            <option key="scale-down" value="scale-down">scale-down</option>
+          </select>
         </div>
       )}
 
