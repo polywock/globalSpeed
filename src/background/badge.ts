@@ -1,4 +1,4 @@
-import { formatSpeedForBadge } from "src/utils/configUtils"
+import { formatSpeedForBadge, testURL } from "src/utils/configUtils"
 import { fetchView } from "src/utils/state"
 import debounce from "lodash.debounce"
 import { isMobile } from "src/utils/helper"
@@ -20,30 +20,38 @@ async function updateVisible(tabs?: chrome.tabs.Tab[]) {
 
 const updateVisibleDeb = debounce(updateVisible, 100, {leading: true, trailing: true, maxWait: 1000})
 
-
 async function updateTabs(tabs: chrome.tabs.Tab[]) {
     return Promise.all(tabs.map(tab => updateTab(tab)))
 }
 
 async function updateTab(tab: chrome.tabs.Tab) {
-    const init = await getBadgeInit(tab.id)
+    const init = await getBadgeInit(tab.id, tab.url)
     writeBadge(init, tab.id)
 }
 
-
-async function getBadgeInit(tabId: number) {
-    const { isPinned, speed, enabled, hasOrl, superDisable, hideBadge } = await fetchView({hideBadge: true, superDisable: true, isPinned: true, speed: true, enabled: true, hasOrl: true}, tabId)
+async function getBadgeInit(tabId: number, url?: string) {
+    const { isPinned, speed, enabled, hasOrl, superDisable, hideBadge, keybindsUrlCondition } = await fetchView({hideBadge: true, superDisable: true, isPinned: true, speed: true, enabled: true, hasOrl: true, keybindsUrlCondition: true}, tabId)
     
     const isEnabled = enabled && !superDisable
-    let showBadge = isEnabled && !hideBadge
     
-    let badgeIcons = isEnabled ? standardIcons : grayscaleIcons
+    let shortcutsAllowed = true 
+    if (url && keybindsUrlCondition) {
+        try {
+            shortcutsAllowed = testURL(url, keybindsUrlCondition, true)
+        } catch {}
+    }
+
+    const isActiveOnSite = isEnabled && shortcutsAllowed
+    let showBadge = isActiveOnSite && !hideBadge
+    
+    let badgeIcons = isActiveOnSite ? standardIcons : grayscaleIcons
     let badgeText = showBadge ? formatSpeedForBadge(speed ?? 1) : ""
     let badgeColor = "#000"
 
     if (hasOrl && !isEnabled && !hideBadge) {
         showBadge = true 
         badgeText = "OFF"
+        badgeIcons = grayscaleIcons
     }
 
     if (showBadge) {
@@ -59,7 +67,7 @@ async function writeBadge(init: BadgeInit, tabId?: number) {
 }
 
 const WATCHERS = [
-    /^g:(speed|enabled|superDisable|hideBadge)/,
+    /^g:(speed|enabled|superDisable|hideBadge|keybindsUrlCondition)/,
     /^[rt]:[\d\w]+:(speed|isPinned|enabled)/,
     /^[r]:[\d\w]+:(elementFx|backdropFx|latestViaShortcut|)/
 ]

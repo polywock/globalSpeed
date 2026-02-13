@@ -84,7 +84,18 @@ export function sendMessageToConfigSync(msg: any, tabId: number, frameId?: numbe
 
 export function testURLWithPart(url: string, p: URLConditionPart) {
   if (p.type === "STARTS_WITH") {
-    return url.startsWith(p.valueStartsWith)
+    const value = (p.valueStartsWith || "").trim()
+    if (url.startsWith(value)) return true
+    // If value doesn't start with http(s)://, also try matching against host+path part
+    // This allows matching "localhost:8080" against "http://localhost:8080/..."
+    if (!value.startsWith('http')) {
+      try {
+        const urlObj = new URL(url)
+        const hostPath = urlObj.host + urlObj.pathname + urlObj.search + urlObj.hash
+        if (hostPath.startsWith(value)) return true
+      } catch {}
+    }
+    return false
   } else if (p.type === "CONTAINS") {
     return url.includes(p.valueContains)
   } else if (p.type === "REGEX") {
