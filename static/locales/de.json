@@ -5,7 +5,8 @@
     "captureTab": "Aufzeichnen",
     "releaseTab": "Freigeben",
     "split": "Teilen",
-    "reverse": "Umkehren"
+    "reverse": "Umkehren",
+    "equalizer": "Equalizer"
   },
   "warnings": {
     "unusedGlobal": "Freigabe nicht genutzter globaler Tastenkombinationen",

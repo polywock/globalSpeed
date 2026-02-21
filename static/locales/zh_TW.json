@@ -6,7 +6,8 @@
     "captureTab": "擷取",
     "releaseTab": "釋出",
     "split": "聲道分離",
-    "reverse": "倒放"
+    "reverse": "倒放",
+    "equalizer": "等化器"
   },
   "warnings": {
     "unusedGlobal": "釋出未使用的全域快速鍵",

@@ -6,7 +6,8 @@ export type Gsm = {
     captureTab: string,
     releaseTab: string,
     split: string,
-    reverse: string
+    reverse: string,
+    equalizer: string
   },
   warnings: {
     unusedGlobal: string,

@@ -1,26 +1,51 @@
-
 .EqualizerControl {
-  margin-top: 20px;
-  padding-top: 15px;
-  border-top: 1px solid var(--text-color);
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid var(--border);
 
-  & > .controls > button.levelup {
-    outline: 1px solid var(--icon-vibrant-color);
-    & > svg {
-      transform: scale(1.15);
-    }
+  & > .header {
+    font-size: 1.2em;
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+    align-items: center;
+    column-gap: 5px;
+    margin-bottom: 10px;
   }
-  
+
+  & > .header > .active {
+    color: var(--icon-vibrant-color);
+  }
+
+  & > .header > .muted {
+    color: var(--icon-muted-color);
+  }
+
+  & > .header > .active > svg,
+  & > .header > .muted > svg {
+    cursor: pointer;
+  }
+
+  & > .header > .reset {
+    justify-self: end;
+  }
+
+  & > .header > .reset > .Reset {
+    cursor: pointer;
+  }
+
   & > .preset {
     display: grid;
     grid-template-columns: max-content 1fr;
     grid-column-gap: 5px;
-    margin-top: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     width: 100%;
 
     select {
       width: inherit;
     }
+  }
+
+  & > .values > .SliderMicro.highlight > .Reset {
+    opacity: 1;
   }
 }

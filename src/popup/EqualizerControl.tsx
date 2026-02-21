@@ -2,13 +2,13 @@
 import { AudioFx } from "../types"
 import { FaPowerOff } from "react-icons/fa"
 import { getDefaultEq, EQ_PRESETS } from "../defaults"
-import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { formatFreq } from "../utils/helper"
 import { SliderMicro } from "../comps/SliderMicro"
 import { produce } from "immer"
 import "./EqualizerControl.css"
 import { useMemo } from "react"
 import equal from "fast-deep-equal"
+import { Reset } from "../comps/Reset"
 
 type EqualizerControlProps = {
   value: AudioFx["eq"],
@@ -25,24 +25,20 @@ export function EqualizerControl(props: EqualizerControlProps) {
   ), [eq])
 
   return <div className="EqualizerControl audioTab">
-
-    {/* Controls */}
-    <div className="controls">
-
-      {/* Status */}
-      <button className={eq.enabled ? "active" : "muted"} onClick={e => {
-        props.onChange(produce(eq, d => {
-          d.enabled = !d.enabled
-        }))
-      }}><FaPowerOff size={"1.07rem"}/></button>
-
-      {/* Reset */}
-      <button className={isEmpty ? '' : 'active levelup'} onClick={e => {
-        props.onChange(produce(eq, d => {
-         return getDefaultEq()
-        }))
-      }}><GiAnticlockwiseRotation size={"1.07rem"}/></button>
-
+    <div className="header">
+      <div className={eq.enabled ? "active" : "muted"}>
+        <FaPowerOff size="1.21rem" onClick={() => {
+          props.onChange(produce(eq, d => {
+            d.enabled = !d.enabled
+          }))
+        }}/>
+      </div>
+      <div className="name">{gvar.gsm.audio.equalizer}</div>
+      <div className="reset" title={gvar.gsm.token.reset}>
+        <Reset active={!isEmpty} onClick={() => {
+          props.onChange(getDefaultEq())
+        }}/>
+      </div>
     </div>
 
     {/* Band count */}
@@ -132,4 +128,3 @@ export function EqualizerControl(props: EqualizerControlProps) {
     </div>
   </div>
 }
-

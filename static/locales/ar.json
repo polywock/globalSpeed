@@ -5,7 +5,8 @@
     "captureTab": "التقاط",
     "releaseTab": "تحرير",
     "split": "تقسيم",
-    "reverse": "عكس"
+    "reverse": "عكس",
+    "equalizer": "المعادل"
   },
   "warnings": {
     "unusedGlobal": "تحرير مفاتيح الاختصارات العامة غير المستخدمة",

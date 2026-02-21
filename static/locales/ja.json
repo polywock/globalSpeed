@@ -5,7 +5,8 @@
     "captureTab": "捕捉",
     "releaseTab": "手放す",
     "split": "分割",
-    "reverse": "リバース"
+    "reverse": "リバース",
+    "equalizer": "イコライザー"
   },
   "warnings": {
     "unusedGlobal": "使用されていないグローバルショートカットキーを解放してください。",

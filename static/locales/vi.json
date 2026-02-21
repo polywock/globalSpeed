@@ -5,7 +5,8 @@
     "captureTab": "Capture",
     "releaseTab": "Release",
     "split": "Split",
-    "reverse": "Reverse"
+    "reverse": "Reverse",
+    "equalizer": "Bộ cân bằng âm thanh"
   },
   "warnings": {
     "unusedGlobal": "Giải phóng các phím tắt toàn cầu không được sử dụng.",

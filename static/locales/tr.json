@@ -5,7 +5,8 @@
     "captureTab": "Yakala",
     "releaseTab": "Bırak",
     "split": "Ayır",
-    "reverse": "Ters ses"
+    "reverse": "Ters ses",
+    "equalizer": "Ekolayzır"
   },
   "warnings": {
     "unusedGlobal": "Kullanılmayan genel kısayol tuşlarını kaldırın.",

@@ -5,7 +5,8 @@
     "captureTab": "Tangkap",
     "releaseTab": "Lepaskan",
     "split": "Pisahkan",
-    "reverse": "Terbalik"
+    "reverse": "Terbalik",
+    "equalizer": "Penyama"
   },
   "warnings": {
     "unusedGlobal": "Lepaskan kekunci pintasan global yang tidak digunakan",

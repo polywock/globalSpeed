@@ -1,16 +1,14 @@
-
 :root {
-
   --font-lang-scalar: 1;
   --font-size-scalar: 1;
-  
-  --font-size: calc(14px * var(--font-lang-scalar) * var(--font-size-scalar)); 
+
+  --font-size: calc(14px * var(--font-lang-scalar) * var(--font-size-scalar));
   font-size: var(--font-size);
 
   --pure-color: #ffffff;
-  --bg-color: #eef2f7;
+  --bg-color: lightgray;
   --mg-color: #e4e9f1;
-  --fg-color: #f8fbff; 
+  --fg-color: #f8fbff;
 
   --text-color: #141b2b;
   --focus-color: #2f65f6;
@@ -41,7 +39,7 @@
   --pure-color: #0c1018;
   --bg-color: #0f141d;
   --mg-color: #171d28;
-  --fg-color: #1d2533; 
+  --fg-color: #1d2533;
 
   --text-color: #eef3ff;
   --focus-color: #a8c8ff;
@@ -57,7 +55,7 @@
   --card-shadow: 0 2px 8px 0 #000000a6;
   --shadow-color: #00000099;
   --overlay-color: #00000088;
-  
+
   --icon-color: #b6c2d8;
   --icon-muted-color: #8895ad;
   --icon-vibrant-color: #8db6ff;
@@ -66,11 +64,11 @@
   --track-color: #687792;
   --thumb-color: #d5deee;
   --thumb-border-color: #f0f5ff;
-  
-  input[type="checkbox"], input[type="range"] {
+
+  input[type="checkbox"],
+  input[type="range"] {
     filter: hue-rotate(26deg);
   }
-  
 }
 
 body {
@@ -82,12 +80,14 @@ body {
   color: var(--text-color);
 }
 
-
 * {
   box-sizing: border-box;
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   font: inherit;
   letter-spacing: inherit;
   word-spacing: inherit;
@@ -98,17 +98,19 @@ button, input, select, textarea {
 }
 
 select {
-  background-color: var(--fg-color); 
-  color: var(--text-color); 
-  border: 1px solid var(--border); 
+  background-color: var(--fg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border);
   padding: 3px 5px;
 }
 
-button, input[type="text"], textarea {
+button,
+input[type="text"],
+textarea {
   background-color: var(--fg-color);
   color: var(--text-color);
-  border: 1px solid var(--border); 
-  padding:  5px;
+  border: 1px solid var(--border);
+  padding: 5px;
 
   &:focus {
     border: 1px solid var(--focus-color);
@@ -143,7 +145,7 @@ input[type="text"] {
 }
 
 button {
-  cursor: pointer; 
+  cursor: pointer;
 
   &.large {
     font-size: 1.2em;
@@ -168,9 +170,9 @@ button {
   }
 }
 
-
-a, a:visited {
-  color: var(--link-color); 
+a,
+a:visited {
+  color: var(--link-color);
   text-decoration: none;
   &:hover {
     text-decoration: underline;
@@ -199,7 +201,6 @@ code {
   font-size: 1.1em;
   line-height: 2;
 }
-
 
 input[type="checkbox"] {
   width: 1.07rem;
@@ -257,8 +258,6 @@ input[type="checkbox"] {
       opacity: 1;
     }
 
-
-    
     &.active {
       border-top: 2px solid var(--icon-vibrant-color);
     }
@@ -269,19 +268,19 @@ input[type="checkbox"] {
   }
 }
 
-input[type=range] {
+input[type="range"] {
   width: 100%;
   background-color: transparent;
 }
 
-input[type=range]::-moz-range-track {
+input[type="range"]::-moz-range-track {
   background: var(--track-color);
   border: none;
   width: 100%;
   height: 6px;
   cursor: pointer;
 }
-input[type=range]::-moz-range-thumb {
+input[type="range"]::-moz-range-thumb {
   width: 10px;
   height: 20px;
   background: var(--thumb-color);
@@ -290,7 +289,6 @@ input[type=range]::-moz-range-thumb {
   /* border-radius: 8px; */
   cursor: pointer;
 }
-
 
 /* TODO: Remove */
 input[type="color"] {
@@ -316,7 +314,7 @@ select {
   border: 1px solid var(--icon-color);
   padding: 2px;
   box-sizing: content-box;
-  opacity: 0.5;
+  opacity: 0;
   user-select: none;
 
   &.active {

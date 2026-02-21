@@ -6,7 +6,8 @@
     "captureTab": "捕获",
     "releaseTab": "释放",
     "split": "分离声道",
-    "reverse": "音频倒放"
+    "reverse": "音频倒放",
+    "equalizer": "均衡器"
   },
   "warnings": {
     "unusedGlobal": "释放未使用的全局快捷键。",

@@ -5,7 +5,8 @@
     "captureTab": "จับภาพ",
     "releaseTab": "ปล่อย",
     "split": "แยก",
-    "reverse": "ย้อนกลับ"
+    "reverse": "ย้อนกลับ",
+    "equalizer": "อีควอไลเซอร์"
   },
   "warnings": {
     "unusedGlobal": "ปล่อยคีย์ลัดทั่วโลกที่ไม่ได้ใช้งาน",

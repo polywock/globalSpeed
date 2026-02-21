@@ -5,7 +5,8 @@
     "captureTab": "Cattura",
     "releaseTab": "Rilascia",
     "split": "Separa",
-    "reverse": "Inverti"
+    "reverse": "Inverti",
+    "equalizer": "Equalizzatore"
   },
   "warnings": {
     "unusedGlobal": "Rilascia i tasti di scelta rapida globali non utilizzati.",

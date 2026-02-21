@@ -5,7 +5,8 @@
     "captureTab": "Przechwyć",
     "releaseTab": "Zwolnij",
     "split": "Podziel",
-    "reverse": "Odwróć"
+    "reverse": "Odwróć",
+    "equalizer": "Korektor dźwięku"
   },
   "warnings": {
     "unusedGlobal": "Zwolnij nieużywane globalne skróty klawiszowe",

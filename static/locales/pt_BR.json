@@ -5,7 +5,8 @@
     "captureTab": "Capturar",
     "releaseTab": "Libertar",
     "split": "Dividir",
-    "reverse": "Áudio reverso"
+    "reverse": "Áudio reverso",
+    "equalizer": "Equalizador"
   },
   "warnings": {
     "unusedGlobal": "Libere as teclas de atalho globais não utilizadas.",
