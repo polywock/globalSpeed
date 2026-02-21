@@ -1,9 +1,9 @@
-import { MutableRefObject } from "react"
+import { RefObject } from "react"
 import "./List.css"
 
 type ListProps = {
     children: React.ReactNode,
-    listRef: MutableRefObject<HTMLDivElement>,
+    listRef: RefObject<HTMLDivElement>,
     spacingChange: (idx: number) => void 
 }
 
@@ -16,7 +16,7 @@ export function List(props: ListProps) {
   )
 }
 
-function handlePointerDown(listRef: React.MutableRefObject<HTMLDivElement>, onSpacingChange: ListProps['spacingChange'], e: React.MouseEvent<HTMLDivElement>) {
+function handlePointerDown(listRef: React.RefObject<HTMLDivElement>, onSpacingChange: ListProps['spacingChange'], e: React.MouseEvent<HTMLDivElement>) {
   if (!(e.target === listRef.current || (e.target as HTMLElement).classList.contains('ListItemLabel') || (e.target as HTMLElement).classList.contains('ListItemSub'))) return 
 
   

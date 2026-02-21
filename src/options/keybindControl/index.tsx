@@ -1,4 +1,4 @@
-import { MutableRefObject, useState } from "react"
+import { RefObject, useState } from "react"
 import { Keybind, StateOption, AdjustMode, Trigger } from "../../types"
 import { produce } from "immer"
 import { KeyPicker } from "../../comps/KeyPicker"
@@ -28,7 +28,7 @@ export type KeybindControlProps = {
   value: Keybind,
   hideIndicator: boolean,
   virtualInput?: boolean
-  listRef: MutableRefObject<HTMLElement>,
+  listRef: RefObject<HTMLElement>,
   isLast?: boolean
 }
 

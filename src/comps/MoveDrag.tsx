@@ -1,11 +1,11 @@
 import { VscGripper } from "react-icons/vsc"
-import { useRef, MutableRefObject, useEffect } from "react"
+import { useRef, RefObject, useEffect } from "react"
 import "./MoveDrag.css"
 
 type MoveDragProps = {
   onMove: (newIndex: number) => void
-  itemRef: MutableRefObject<HTMLElement>
-  listRef: MutableRefObject<HTMLElement>
+  itemRef: RefObject<HTMLElement>
+  listRef: RefObject<HTMLElement>
   setFocus: (focused: boolean) => void 
 }
 

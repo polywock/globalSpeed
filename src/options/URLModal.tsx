@@ -45,16 +45,14 @@ export function URLModal(props: Props) {
         <div>{gvar.gsm.options.rules.conditions}</div>
 
         {/* Match mode */}
-        {parts.length ? (
-          <select value={value.block ? "BLOCK" : "ALLOW"} onChange={e => {
-              props.onChange(produce(value, d => {
-                d.block = e.target.value === "BLOCK"
-              }))
-            }}>
-            <option value="ALLOW">{gvar.gsm.options.rules.allowlist}</option>
-            <option value="BLOCK">{gvar.gsm.options.rules.blocklist}</option>
-          </select>
-        ) : <div></div>}
+        <select value={value.block ? "BLOCK" : "ALLOW"} onChange={e => {
+            props.onChange(produce(value, d => {
+              d.block = e.target.value === "BLOCK"
+            }))
+          }}>
+          <option value="ALLOW">{gvar.gsm.options.rules.allowlist}</option>
+          <option value="BLOCK">{gvar.gsm.options.rules.blocklist}</option>
+        </select>
 
       </div>
 

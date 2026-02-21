@@ -202,7 +202,7 @@ function EditorControls(props: {view: StateView, setView: SetView}) {
         onClose={() => setShow(false)}
         onReset={() => setView({keybindsUrlCondition: null})}
         onChange={v => {
-          setView({keybindsUrlCondition: getSelectedParts(v).length ? v : null})
+          setView({keybindsUrlCondition: v})
         }}
       />}
     </div>

@@ -1,4 +1,4 @@
-import { useState, useRef, MutableRefObject } from "react"
+import { useState, useRef, RefObject } from "react"
 import { useStateView } from "../hooks/useStateView"
 import { URLRule, URLStrictness } from "../types"
 import { getDefaultURLRule, getDefaultFx, getDefaultURLCondition } from "../defaults"
@@ -14,8 +14,8 @@ import { ListItem } from "./ListItem"
 import { KebabList, KebabListProps } from "./KebabList"
 import { makeLabelWithTooltip } from "./keybindControl/NameArea"
 import { GearIcon } from "src/comps/GearIcon"
-import "./SectionRules.css"
 import { DevWarning } from "./DevWarning"
+import "./SectionRules.css"
 
 
 export function SectionRules(props: {}) {
@@ -90,7 +90,7 @@ export function SectionRules(props: {}) {
 
 type RuleProps = {
   rule: URLRule,
-  listRef: MutableRefObject<HTMLElement>
+  listRef: RefObject<HTMLElement>
   isLast?: boolean,
   onChange: (rule: URLRule, remove?: boolean, duplicate?: boolean) => void
 }

@@ -11,7 +11,6 @@ import { Toggle } from "src/comps/Toggle"
 import { CONTEXT_KEYS, Context, InitialContext, StateView } from "src/types"
 import { fetchView } from "src/utils/state"
 import { getDefaultURLCondition } from "src/defaults"
-import { getSelectedParts } from "src/utils/configUtils"
 import { URLModal } from "./URLModal"
 import { produce } from "immer"
 import { Minmax } from "src/comps/Minmax"
@@ -54,7 +53,7 @@ export function SectionFlags(props: {}) {
           onClose={() => setShowGhostModal(false)}
           onReset={() => setView({ghostModeUrlCondition: null})}
           onChange={v => {
-            setView({ghostModeUrlCondition: getSelectedParts(v).length ? v : null})
+            setView({ghostModeUrlCondition: v})
           }}
         />
       )}

@@ -7,7 +7,7 @@ import { Tooltip } from "src/comps/Tooltip"
 
 type ListItemProps = {
     children?: React.ReactNode,
-    listRef: React.MutableRefObject<HTMLElement>,
+    listRef: React.RefObject<HTMLElement>,
     spacing: number,
     label: string,
     onMove: (newIndex: number) => void,
