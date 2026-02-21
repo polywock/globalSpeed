@@ -407,7 +407,8 @@ export type URLConditionPart = {
 }
 
 export type URLCondition = {
-  parts: URLConditionPart[],
+  blockParts: URLConditionPart[],
+  allowParts: URLConditionPart[],
   block?: boolean
 }
 

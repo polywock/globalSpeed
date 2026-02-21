@@ -5,35 +5,35 @@ import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { GoX } from "react-icons/go"
 import { getDefaultURLConditionPart } from "../defaults"
 import { findRemoveFromArray } from "../utils/helper"
-import { extractURLPartValueKey } from "src/utils/configUtils"
+import { extractURLPartValueKey, getSelectedParts } from "src/utils/configUtils"
 import "./URLModal.css"
 
 type Props = {
   onClose: () => void,
   onChange: (value: URLCondition) => void,
-  onReset: () => void, 
+  onReset: () => void,
   value: URLCondition,
 }
 
 export function URLModal(props: Props) {
-  const { value } = props  
+  const { value } = props
+  const listKey = value.block ? "blockParts" : "allowParts"
+  const parts = getSelectedParts(value)
 
   const onChange = (part: URLConditionPart) => {
     props.onChange(produce(value, d => {
-      const idx = d.parts.findIndex(p => p.id === part.id)
+      const idx = d[listKey].findIndex(p => p.id === part.id)
       if (idx >= 0) {
-        d.parts[idx] = part 
+        d[listKey][idx] = part
       }
     }))
   }
 
   const onRemove = (part: URLConditionPart) => {
     props.onChange(produce(value, d => {
-      findRemoveFromArray(d.parts, p => p.id === part.id)
+      findRemoveFromArray(d[listKey], p => p.id === part.id)
     }))
   }
-
-  const hasLength = props.value?.parts?.length
 
   return <ModalBase keepOnWheel={true} onClose={props.onClose}>
     <div className="URLModal ModalMain">
@@ -45,7 +45,7 @@ export function URLModal(props: Props) {
         <div>{gvar.gsm.options.rules.conditions}</div>
 
         {/* Match mode */}
-        {hasLength ? (
+        {parts.length ? (
           <select value={value.block ? "BLOCK" : "ALLOW"} onChange={e => {
               props.onChange(produce(value, d => {
                 d.block = e.target.value === "BLOCK"
@@ -53,14 +53,14 @@ export function URLModal(props: Props) {
             }}>
             <option value="ALLOW">{gvar.gsm.options.rules.allowlist}</option>
             <option value="BLOCK">{gvar.gsm.options.rules.blocklist}</option>
-          </select> 
+          </select>
         ) : <div></div>}
 
       </div>
 
       {/* Parts  */}
       <div className="parts">
-        {value.parts.map(part => (
+        {parts.map(part => (
           <ULRConditionPart key={part.id} onChange={onChange} onRemove={onRemove} part={part}/>
         ))}
       </div>
@@ -71,12 +71,12 @@ export function URLModal(props: Props) {
         {/* Create */}
         <button onClick={e => {
           props.onChange(produce(value, d => {
-            d.parts.push(getDefaultURLConditionPart())
+            d[listKey].push(getDefaultURLConditionPart())
           }))
         }}>{gvar.gsm.token.create}</button>
 
         {/* Reset */}
-        {hasLength ? <button onClick={props.onReset}>{gvar.gsm.token.reset}</button> : <div></div>}
+        {parts.length ? <button onClick={props.onReset}>{gvar.gsm.token.reset}</button> : <div></div>}
       </div>
     </div>
   </ModalBase>

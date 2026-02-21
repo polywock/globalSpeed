@@ -7,6 +7,7 @@ import { FxControl } from "../popup/FxControl"
 import { isFirefox, moveItem, randomId } from "../utils/helper"
 import { ModalText } from "../comps/ModalText"
 import { URLModal } from "./URLModal"
+import { getSelectedParts } from "src/utils/configUtils"
 import { produce } from "immer"
 import { List } from "./List"
 import { ListItem } from "./ListItem"
@@ -125,7 +126,7 @@ export function Rule(props: RuleProps) {
       {/* URL conditions entry */}
       <button className="show" onClick={e => {
         setShow(!show)
-      }}>{`— ${rule.condition?.parts?.length || 0} —`}</button>
+      }}>{`— ${rule.condition ? getSelectedParts(rule.condition).length : 0} —`}</button>
 
       {/* URL conditions modal */}
       {show ? <URLModal onReset={() => {

@@ -1,7 +1,7 @@
 import { extractHotkey } from "../../utils/keys"
 import { SubscribeView } from "../../utils/state"
 import { FxSync } from "./FxSync"
-import { findMatchingKeybindsLocal, testURL, testURLWithPart } from "../../utils/configUtils"
+import { findMatchingKeybindsLocal, getActiveParts, hasActiveParts, testURL, testURLWithPart } from "../../utils/configUtils"
 import { AdjustMode, Trigger, URLCondition, URLConditionPart } from "src/types"
 import { Circle } from "./utils/Circle"
 import { getLeaf } from "src/utils/nativeUtils"
@@ -46,7 +46,7 @@ export class ConfigSync {
   urlConditionsNonStatic: URLConditionPart[] = []
   handleChangeUrlConditionsList = () => {
     this.urlConditions = this.urlConditionsClient.view.keybindsUrlCondition || getEmptyUrlConditions(true)
-    const enabledParts = (this.urlConditions.parts || []).filter(v => !v.disabled)
+    const enabledParts = getActiveParts(this.urlConditions)
 
     if (enabledParts.length === 0) {
       this.urlConditionsMode = 'On'
@@ -63,21 +63,21 @@ export class ConfigSync {
 
     this.urlConditionsNonStatic = nonStatics
 
-    // All statics should be dealth with.
+    // All statics should be dealt with.
 
     if (statics.length === 0) {
       this.urlConditionsMode = 'Runtime'
       return
     }
     const url = getPracticalRuntimeUrl()
-    const anyMatched = statics.map(st => testURLWithPart(url, st)).some(v => v)
+    const anyMatched = statics.some(st => testURLWithPart(url, st))
     if (!anyMatched) {
       this.urlConditionsMode = 'Runtime'
     } else {
       this.urlConditionsMode = this.urlConditions.block ? 'Off' : 'On'
     }
 
-    // Resolve 'Runtime' instantly if no dynamic parts or if we're using top frame origin. 
+    // Resolve 'Runtime' instantly if no dynamic parts.
     if (this.urlConditionsMode === 'Runtime' && nonStatics.length === 0) {
       this.urlConditionsMode = this.urlConditions.block ? 'On' : 'Off'
     }
@@ -85,7 +85,7 @@ export class ConfigSync {
   checkUrlRuntime = () => {
     if (this.urlConditionsMode !== "Runtime") return this.urlConditionsMode
     const url = getPracticalRuntimeUrl()
-    const anyMatched = this.urlConditionsNonStatic.map(st => testURLWithPart(url, st)).some(v => v)
+    const anyMatched = this.urlConditionsNonStatic.some(st => testURLWithPart(url, st))
     if (this.urlConditions.block) return anyMatched ? 'Off' : 'On'
     return anyMatched ? 'On' : 'Off'
   }
@@ -203,7 +203,7 @@ export class ConfigSync {
     let matches = findMatchingKeybindsLocal(keybinds, eventHotkey)
 
     matches = matches.filter(match => {
-      if (match.kb.condition?.parts.length > 0) {
+      if (match.kb.condition && hasActiveParts(match.kb.condition)) {
         return testURL(getPracticalRuntimeUrl(), match.kb.condition, true)
       }
       return true

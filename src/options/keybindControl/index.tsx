@@ -12,7 +12,7 @@ import { domRectGetOffset, feedbackText, isFirefox, isMobile } from "../../utils
 import { ThrottledTextInput } from "../../comps/ThrottledTextInput"
 import { URLModal } from "../URLModal"
 import { getDefaultURLCondition } from "../../defaults"
-import { requestSyncContextMenu } from "src/utils/configUtils"
+import { getSelectedParts, requestSyncContextMenu } from "src/utils/configUtils"
 import { DurationSelect, NameArea, makeLabelWithTooltip } from "./NameArea"
 import { Minmax } from "src/comps/Minmax"
 import { KebabList, KebabListProps } from "../KebabList"
@@ -106,9 +106,9 @@ export const KeybindControl = (props: KeybindControlProps) => {
   return <div className="KeybindControl">
 
     {/* Url condition bubble */}
-    {value.condition?.parts?.length ? (
-      <div 
-        className={`urlBubble`} 
+    {value.condition && getSelectedParts(value.condition).length ? (
+      <div
+        className={`urlBubble`}
         onClick={() => setShow(!show)}
         onContextMenu={e => {
           if (value.condition) {
@@ -118,7 +118,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
             e.preventDefault()
           }
         }}
-      >{value.condition.parts.length}</div>
+      >{getSelectedParts(value.condition).length}</div>
     ) : <div className="displaynone"/>}
 
       {/* URL modal */}
@@ -134,7 +134,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
         }} onClose={() => {
           setShow(false)
 
-          if (value.condition && value.condition.parts.length === 0) {
+          if (value.condition && !getSelectedParts(value.condition).length) {
             props.onChange(value.id, produce(value, d => {
               delete d.condition
             }))

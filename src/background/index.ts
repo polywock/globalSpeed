@@ -11,7 +11,7 @@ import { getDefaultContext, getDefaultState } from "src/defaults"
 import { isFirefox, isMobile } from "src/utils/helper"
 import { getLatestActiveTabInfo, tabToTabInfo } from "src/utils/browserUtils"
 import { ProcessKeybinds, setValue, type SetValueInit } from "./utils/processKeybinds"
-import { findMatchingKeybindsContext, findMatchingKeybindsGlobal, testURL } from "src/utils/configUtils"
+import { findMatchingKeybindsContext, findMatchingKeybindsGlobal, hasActiveParts, testURL } from "src/utils/configUtils"
 import { loadGsm } from "src/utils/gsm"
 import { clearClosed } from "./utils/getAutoMedia"
 import { syncContextMenu, syncContextMenuDeb } from "src/utils/contextMenus"
@@ -139,7 +139,7 @@ async function processNewTab(tab: chrome.tabs.Tab, view?: StateView, ignorePrevi
     
     
       matches = matches.filter(match => {
-        if (match.kb.condition?.parts.length > 0) {
+        if (match.kb.condition && hasActiveParts(match.kb.condition)) {
           return testURL(url, match.kb.condition, true)
         } 
         return true 

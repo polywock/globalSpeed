@@ -1,7 +1,7 @@
 import { getDefaultFx } from "src/defaults"
 import { AnyDict, CONTEXT_KEYS, State, URLRule, URLStrictness } from "src/types"
 import { canUserScript } from "src/utils/browserUtils"
-import { testURL } from "src/utils/configUtils"
+import { hasActiveParts, testURL } from "src/utils/configUtils"
 import { isFirefox, isMac, isMobile, listToDict, timeout } from "src/utils/helper"
 
 type UrlRuleBehavior = [URLRule["type"][], (isfake: boolean, tabId: number, rule: URLRule, override: AnyDict, deets: chrome.webNavigation.WebNavigationTransitionCallbackDetails) => void]
@@ -90,7 +90,7 @@ function matchesPageTitle(pageTitle: string, condition: string) {
 
 function getEnabledRules(raw: AnyDict) {
     if (raw["g:superDisable"]) return [] as State["rules"]
-    return ((raw["g:rules"] || []) as State["rules"]).filter(rule => rule.enabled && rule.condition?.parts.some(p => !p.disabled))
+    return ((raw["g:rules"] || []) as State["rules"]).filter(rule => rule.enabled && rule.condition && hasActiveParts(rule.condition))
 }
 
 function shouldReApply(strictness: URLStrictness, oldHost: string, currentHost: string, isCommit: boolean) {

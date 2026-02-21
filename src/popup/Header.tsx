@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { checkFilterDeviation, checkFilterDeviationOrActiveSvg, requestSyncContextMenu, testURLWithPart } from "../utils/configUtils"
+import { checkFilterDeviation, checkFilterDeviationOrActiveSvg, getActiveParts, requestSyncContextMenu, testURLWithPart } from "../utils/configUtils"
 import { GoArrowLeft} from "react-icons/go"
 import { FaGithub } from "react-icons/fa";
 import { FaPowerOff, FaVolumeUp } from "react-icons/fa"
@@ -264,27 +264,28 @@ function getKebabList(view: StateView, setView: SetView): {
 
 function getEnableShortcutsKebabInfo(view: StateView, setView: SetView, url: URL): {checked: boolean, fn: () => void} {
   let conditions = view.keybindsUrlCondition || getDefaultURLCondition(true)
-  let enabledParts = conditions.parts.filter(p => !p.disabled)
-  let matchingParts = enabledParts.filter(p => testURLWithPart(url.origin, p))
-  let isBlock = conditions.block
-  let checked = isBlock ? matchingParts.length === 0 : matchingParts.length > 0
+  let activeParts = getActiveParts(conditions)
+  let matchingParts = activeParts.filter(p => testURLWithPart(url.origin, p))
+  let matched = matchingParts.length > 0
+  let checked = conditions.block ? !matched : matched
+  let listKey: "blockParts" | "allowParts" = conditions.block ? "blockParts" : "allowParts"
 
   return {checked, fn: () => {
     setView({
       keybindsUrlCondition: produce(conditions, d => {
-        if ((!checked && isBlock) || (checked && !isBlock)) {
-          const ids = new Set(d.parts.map(p => p.id))
+        if ((!checked && conditions.block) || (checked && !conditions.block)) {
+          const ids = new Set(d[listKey].map(p => p.id))
           matchingParts.forEach(part => ids.delete(part.id))
-          d.parts = [...ids].map(id => d.parts.find(p => p.id === id))
+          d[listKey] = [...ids].map(id => d[listKey].find(p => p.id === id))
         } else {
           const part = getDefaultURLConditionPart()
           part.valueStartsWith = url.origin
           part.type = 'STARTS_WITH'
-          d.parts.push(part)
+          d[listKey].push(part)
         }
       })
     })
-    
+
   }}
 }
 

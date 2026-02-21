@@ -9,7 +9,7 @@ import { FaFile, FaGlobe } from "react-icons/fa"
 import { produce } from "immer"
 import { URLModal } from "./URLModal"
 import { getDefaultKeybindsUrlConditions, getDefaultURLCondition } from "../defaults"
-import { requestSyncContextMenu } from "src/utils/configUtils"
+import { getSelectedParts, requestSyncContextMenu } from "src/utils/configUtils"
 import { ListItem } from "./ListItem"
 import { List } from "./List"
 import { Tooltip } from "src/comps/Tooltip"
@@ -159,7 +159,7 @@ function getOptions() {
 
 function EditorControls(props: {view: StateView, setView: SetView}) {
   const { view, setView } = props
-  const urlRuleCount = view.keybindsUrlCondition?.parts?.length || 0
+  const urlRuleCount = view.keybindsUrlCondition ? getSelectedParts(view.keybindsUrlCondition).length : 0
   const [commandOption, setCommandOption] = useState("speed")
   const [show, setShow] = useState(false)
 
@@ -198,11 +198,11 @@ function EditorControls(props: {view: StateView, setView: SetView}) {
 
       {/* URL conditions modal */}
       {show && <URLModal 
-        value={view.keybindsUrlCondition || getDefaultURLCondition(true)} 
-        onClose={() => setShow(false)} 
+        value={view.keybindsUrlCondition || getDefaultURLCondition(true)}
+        onClose={() => setShow(false)}
         onReset={() => setView({keybindsUrlCondition: null})}
         onChange={v => {
-          setView({keybindsUrlCondition: v.parts.length ? v : null})
+          setView({keybindsUrlCondition: getSelectedParts(v).length ? v : null})
         }}
       />}
     </div>

@@ -94,11 +94,23 @@ export function testURLWithPart(url: string, p: URLConditionPart) {
   } 
 }
 
+export function getSelectedParts(c: URLCondition) {
+  return (c?.block ? c?.blockParts : c?.allowParts) || []
+}
+
+export function getActiveParts(c: URLCondition) {
+  return getSelectedParts(c).filter(p => !p.disabled)
+}
+
+export function hasActiveParts(c: URLCondition) {
+  return getActiveParts(c).length > 0
+}
+
 export function testURL(url: string, c: URLCondition, neutral?: boolean) {
-  const enabledParts = c?.parts.filter(p => !p.disabled) || []
-  if (!enabledParts.length) return neutral 
-  const matched = enabledParts.some(p => testURLWithPart(url, p))
-  return c.block ? !matched : matched 
+  const parts = getActiveParts(c)
+  if (!parts.length) return neutral
+  const matched = parts.some(p => testURLWithPart(url, p))
+  return c.block ? !matched : matched
 }
 
 

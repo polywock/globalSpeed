@@ -53,7 +53,7 @@ export function generateUrlPart(origin: string): URLConditionPart {
 
 export function getDefaultState(): State {
   let state = {
-    version: 12,
+    version: 13,
     firstUse: Date.now(),
     keybinds: getDefaultKeybinds(),
     freshKeybinds: true,
@@ -67,21 +67,23 @@ export function getDefaultState(): State {
   return state
 }
 
-export function getDefaultKeybindsUrlConditions() {
+export function getDefaultKeybindsUrlConditions(): URLCondition {
   return {
     block: true,
-    parts: SHORTCUT_DISABLED_WEBSITES.map(origin => {
+    blockParts: SHORTCUT_DISABLED_WEBSITES.map(origin => {
       const part = generateUrlPart(origin.v)
       if (origin.contains) part.type = "CONTAINS"
       return part
-    })
+    }),
+    allowParts: []
   }
 }
 
-export function getEmptyUrlConditions(block: boolean) {
+export function getEmptyUrlConditions(block?: boolean) {
   return {
     block,
-    parts: []
+    blockParts: [],
+    allowParts: []
   } as URLCondition
 }
 
@@ -199,8 +201,9 @@ export function getDefaultURLConditionPart(): URLConditionPart {
 
 export function getDefaultURLCondition(block?: boolean): URLCondition {
   return {
-    parts: [],
-    block
+    block,
+    blockParts: [],
+    allowParts: []
   }
 }
 
