@@ -76,7 +76,7 @@
 
     &>button {
       background-color: transparent;
-      color: var(--header-icon-color);
+      color: var(--icon-color);
       border-color: transparent;
 
       &:first-child {
@@ -84,11 +84,11 @@
       }
 
       &.active {
-        color: var(--header-icon-active-color);
+        color: var(--icon-vibrant-color);
       }
 
       &.muted {
-        color: var(--header-icon-muted-color);
+        color: var(--icon-muted-color);
       }
 
       &:hover {
@@ -96,7 +96,7 @@
       }
 
       &:focus {
-        border-color: 1px solid var(--focus-color);
+        border: 1px solid var(--focus-color);
       }
     }
 

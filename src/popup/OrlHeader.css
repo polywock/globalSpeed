@@ -1,8 +1,8 @@
 
 .OrmHeader {
-    background-color: aquamarine;
-    border-bottom: 1px solid seagreen;
-    color: black; 
+    background-color: var(--mg-color);
+    border-bottom: 1px solid var(--icon-vibrant-color);
+    color: var(--text-color); 
     padding: 5px 10px;
     font-size: 0.8rem;
     font-weight: bolder;

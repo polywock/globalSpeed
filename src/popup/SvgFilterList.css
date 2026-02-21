@@ -24,7 +24,7 @@
 
    div {
       &.active {
-         color: var(--header-icon-active-color);
+         color: var(--icon-vibrant-color);
 
          &.beat {
             animation: 1s ease-in beat infinite;
@@ -36,7 +36,7 @@
       }
 
       &.muted {
-         color: var(--header-icon-muted-color);
+         color: var(--icon-muted-color);
 
          &:hover {
             opacity: 0.9;

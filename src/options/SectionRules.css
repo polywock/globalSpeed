@@ -30,7 +30,7 @@
           width: 100vw;
           height: 100vh; 
           z-index: 9999999999;
-          background-color: #00000066;
+          background-color: var(--overlay-color);
           display: grid;
           justify-content: center;
           align-content: center;

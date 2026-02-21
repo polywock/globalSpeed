@@ -20,7 +20,7 @@
         position: absolute;
         right: -5px;
         top: -6px;
-        color: var(--header-warning-color);
+        color: var(--icon-vibrant-color);
     }
   }
 
@@ -37,7 +37,7 @@
 
   & > div {
     padding: 0 5px;
-    color: var(--header-icon-color);
+    color: var(--icon-color);
     border: none;
     cursor: pointer;
 
@@ -60,10 +60,10 @@
     }
 
     &.active {
-      color: var(--header-icon-active-color);
+      color: var(--icon-vibrant-color);
 
       &.red {
-        color: red; 
+        color: var(--error-border-color); 
       }
 
       &.beat {
@@ -76,7 +76,7 @@
     }
 
     &.muted {
-      color: var(--header-icon-muted-color);
+      color: var(--icon-muted-color);
 
       &:hover {
         opacity: 0.9;
@@ -97,12 +97,12 @@
   position: fixed;
 
   &.kebabOverlayOutline {
-    border: 4px solid var(--header-warning-color-alt);
+    border: 4px solid var(--icon-vibrant-color);
   }
 
   &.kebabOverlayMessage {
-    background-color: black;
-    color: var(--header-warning-color-alt);
+    background-color: var(--bg-color);
+    color: var(--icon-vibrant-color);
     padding: 10px;
     width: 100%;
     text-align: center;

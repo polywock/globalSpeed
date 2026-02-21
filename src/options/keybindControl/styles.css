@@ -22,8 +22,8 @@
     position: absolute;
     top: -5px;
     right: -5px;
-    background-color: #ff0000;
-    color: white;
+    background-color: var(--error-border-color);
+    color: var(--pure-color);
     padding: 0 5px;
     border-radius: 10px;
     display: block;
@@ -67,14 +67,14 @@
         50% {opacity: 0}
       }
 
-      border: 1px solid #4673e8; 
+      border: 1px solid var(--icon-vibrant-color); 
       
       &.active {
         animation: 1.5s ease-out blink 5;
       }
       
       & > div {
-        background-color: #4673e8; 
+        background-color: var(--icon-vibrant-color); 
         width: 1.14rem;
         height: 1rem;
         border: 2px solid var(--fg-color);
@@ -90,7 +90,7 @@
 
       & > div > button {
         padding: 3px;
-        background-color: var(--adjust-color);
+        background-color: var(--fg-color);
         color: var(--text-color);
         border: 1px solid var(--border);
         font-size: 0.8em;
@@ -118,7 +118,7 @@
       align-items: center;
   
       & button {
-        background-color: var(--adjust-color);
+        background-color: var(--fg-color);
         color: var(--text-color);
         translate: 0px -2px;
       }

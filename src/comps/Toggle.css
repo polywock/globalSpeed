@@ -13,8 +13,8 @@
   &::after {
     content: "";
     display: inline-block;
-    background-color: white;
-    border: 1px solid #aaa;
+    background-color: var(--fg-color);
+    border: 1px solid var(--border);
     border-radius: inherit;
     box-sizing: border-box;
     width: 18px;
@@ -25,7 +25,7 @@
   }
 
   &.active {
-    background-color: var(--toggle-color);
+    background-color: var(--icon-vibrant-color);
     border-color: var(--border);
 
     &::after {

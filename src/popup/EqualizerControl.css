@@ -5,7 +5,7 @@
   border-top: 1px solid var(--text-color);
 
   & > .controls > button.levelup {
-    outline: 1px solid var(--header-icon-active-color);
+    outline: 1px solid var(--icon-vibrant-color);
     & > svg {
       transform: scale(1.15);
     }

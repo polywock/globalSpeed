@@ -22,7 +22,7 @@
         & .bottom {
             font-size: 18px;
             font-weight: bold;
-            color: #006439;
+            color: var(--success-color);
         }
     }
 

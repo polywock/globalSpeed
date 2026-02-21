@@ -3,7 +3,7 @@ import { CommandName, commandInfos } from "../../defaults/commands"
 import { sendMessageToConfigSync, intoFxFlags, sendMediaEvent, isSeekSmall } from "../../utils/configUtils"
 import { checkContentScript, TabInfo } from "../../utils/browserUtils"
 import type { MediaEvent, MediaEventCinema } from "../../contentScript/isolated/utils/applyMediaEvent"
-import { round, clamp, formatDuration, isFirefox, wraparound, timeout } from "../../utils/helper"
+import { round, clamp, createWindowWithSafeBounds, formatDuration, isFirefox, wraparound, timeout } from "../../utils/helper"
 import { FlatMediaInfo } from "../../contentScript/isolated/utils/genMediaInfo"
 import { getDefaultAudioFx, getDefaultFx } from "../../defaults"
 import { filterInfos } from "../../defaults/filters"
@@ -199,7 +199,7 @@ const commandHandlers: {
 
     let popup = kb.valueUrlMode === "newPopup"
     if (popup || kb.valueUrlMode === "newWindow") {
-      chrome.windows.create({
+      await createWindowWithSafeBounds({
         url,
         type: popup ? 'popup' : 'normal',
         ...(kb.valuePopupRect || {})
@@ -226,7 +226,7 @@ const commandHandlers: {
       return 
     } 
     chrome.storage.session.set({[storageKey]: {windowId: window.id, index: tab.index, state: window.state}})
-    await chrome.windows.create({
+    await createWindowWithSafeBounds({
       type: 'popup',
       tabId: tab.id,
       ...(kb.valuePopupRect || {})

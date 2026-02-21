@@ -69,12 +69,12 @@
       grid-column-gap: 10px;
   
       & > button {
-        color: var(--header-icon-color);
+        color: var(--icon-color);
         &.active {
-          color: var(--header-icon-active-color);
+          color: var(--icon-vibrant-color);
         } 
         &.muted {
-          color: var(--header-icon-muted-color);
+          color: var(--icon-muted-color);
         } 
       }
     }

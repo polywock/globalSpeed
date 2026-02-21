@@ -10,16 +10,16 @@
   }
 
   &.recording {
-    border-color: #500;
+    border-color: var(--error-border-color);
     border-style: solid;
-    background-color: lightcoral; 
-    color: #500;
+    background-color: var(--error-color); 
+    color: var(--error-border-color);
   }
 
   &.playing {
-    border-color: #172717;
+    border-color: var(--success-color);
     border-style: solid;
-    background-color: lightgreen; 
-    color: #172717;
+    background-color: var(--success-bg-color); 
+    color: var(--success-color);
   }
 }

@@ -11,7 +11,7 @@
   & > div {
     display: inline-block; 
     padding: 5px;
-    background-color: red;
-    color: white;
+    background-color: var(--error-border-color);
+    color: var(--pure-color);
   }
 }

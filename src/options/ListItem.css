@@ -24,8 +24,8 @@
         & > span {
             display: inline-block;
             padding: 2px 10px;
-            background-color: blue;
-            color: white;
+            background-color: var(--icon-vibrant-color);
+            color: var(--pure-color);
             font-size: 0.95em;
             user-select: none;
 

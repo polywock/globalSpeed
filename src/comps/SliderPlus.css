@@ -1,17 +1,5 @@
 .SliderPlus {
   background-color: var(--fg-color);
-  --label-color: var(--text-color);
-  --reset-color: var(--icon-color);
-  --font-weight: 400;
-  --opacity: 0.5;
-
-
-  &.highlight {
-    --label-color: var(--header-icon-active-color);
-    --reset-color: var(--header-icon-active-color);
-    --font-weight: 600;
-    --opacity: 1;
-  }
   
   & > .header {
     display: grid;
@@ -22,9 +10,14 @@
 
     & > span {
       align-self: center;
-      font-weight: var(--font-weight);
-      color: var(--label-color);
+      font-weight: 400;
+      color: var(--text-color);
     }
+  }
+
+  &.highlight > .header > span {
+    color: var(--icon-vibrant-color);
+    font-weight: 600;
   }
 
   & > input[type="range"] {

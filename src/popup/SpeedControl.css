@@ -21,8 +21,8 @@
       }
   
       &.selected {
-        background-color: var(--speed-focus-bg-color);
-        color: var(--speed-focus-text-color);
+        background-color: var(--icon-vibrant-color);
+        color: var(--pure-color);
         border-radius: 3px;
         /* font-weight: bold; */
       }
@@ -46,12 +46,12 @@
     column-gap: 5px; 
 
     & > svg {
-      color: var(--header-icon-color);
+      color: var(--icon-color);
       opacity: 0.5;
 
       &.active {
         opacity: 1;
-        color: var(--header-icon-active-color);
+        color: var(--icon-vibrant-color);
       }
     }
   }

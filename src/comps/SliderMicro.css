@@ -2,18 +2,6 @@
 
 .SliderMicro {
   background-color: var(--fg-color);
-  --label-color: var(--text-color);
-  --reset-color: var(--icon-color);
-  --font-weight: 400;
-  --opacity: 0.5;
-
-  &.highlight {
-    --label-color: var(--header-icon-active-color);
-    --reset-color: var(--header-icon-active-color);
-    --font-weight: 600;
-    --opacity: 1;
-  }
-
 
   
   display: grid;
@@ -36,5 +24,15 @@
 
   & > input[type="range"] {
     width: 100%;
+  }
+
+  & > span {
+    color: var(--text-color);
+    font-weight: 400;
+  }
+
+  &.highlight > span {
+    color: var(--icon-vibrant-color);
+    font-weight: 600;
   }
 }

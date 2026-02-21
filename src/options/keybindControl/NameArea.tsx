@@ -10,7 +10,7 @@ import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { BsMusicNoteList } from "react-icons/bs"
 import { TiArrowLoop } from "react-icons/ti"
 import { MdDarkMode, MdFullscreen, MdPictureInPictureAlt, MdWarning } from "react-icons/md"
-import { assertType, getPopupSize, isMobile } from "../../utils/helper"
+import { assertType, createWindowWithSafeBounds, getPopupSize, isMobile } from "../../utils/helper"
 import { MenuProps } from "../../comps/Menu"
 import { replaceArgs } from "src/utils/helper"
 import { MdSpeed } from "react-icons/md";
@@ -206,7 +206,9 @@ export function NameArea(props: NameAreaProps) {
             {/* URL mode */}
             <UrlMode value={value} onChange={props.onChange} />
             {value.command === "intoPopup" && (
-                <GearIcon onClick={() => chrome.windows.create({url: chrome.runtime.getURL(`placer.html?id=${value.id}`), type: "popup", ...(value.valuePopupRect ?? getPopupSize())})}/>
+                <GearIcon onClick={() => {
+                    void openPlacerWindow(value.id, "popup", value.valuePopupRect)
+                }}/>
             )}
         </div>
     )
@@ -342,7 +344,7 @@ function UrlMode(props: UrlModeProps) {
                 if (d.valueUrlMode === "fgTab") delete d.valueUrlMode
                 let isPopup = d.valueUrlMode === "newPopup"
                 if (isPopup || d.valueUrlMode === "newWindow") {
-                    chrome.windows.create({url: chrome.runtime.getURL(`placer.html?id=${value.id}`), type: isPopup ? "popup" : "normal", ...getPopupSize()})
+                    void openPlacerWindow(value.id, isPopup ? "popup" : "normal")
                 }
             }))
         }}>
@@ -353,6 +355,17 @@ function UrlMode(props: UrlModeProps) {
             <option value="newPopup">{gvar.gsm.options.editor.openModes.newPopup}</option>
         </select>}
     </>
+}
+
+async function openPlacerWindow(
+    id: string,
+    type: "popup" | "normal",
+    rect?: Keybind["valuePopupRect"]
+) {
+    const url = chrome.runtime.getURL(`placer.html?id=${id}`)
+    await createWindowWithSafeBounds(
+        { url, type, ...(rect ?? getPopupSize()) }
+    )
 }
 
 

@@ -4,7 +4,7 @@
   padding: 10px;
   background-color: var(--fg-color);
   font-size: 1.1em;
-  border: 3px solid red;
+  border: 3px solid var(--error-border-color);
 
   button {
     display: block;

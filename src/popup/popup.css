@@ -17,8 +17,8 @@ body {
 
 #SuperDisable {
   padding: 10px;
-  background-color: #fafafa; 
-  color: #666; 
+  background-color: var(--fg-color); 
+  color: var(--icon-color); 
   cursor: pointer;
 }
 

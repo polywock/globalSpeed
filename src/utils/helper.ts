@@ -317,15 +317,101 @@ export function createSVGElement(v: string) {
 }
 
 export function getPopupSize() {
-  if (!screen) return {width: 1000, height: 800, left: 200, top: 200}
+  if (typeof screen === "undefined" || !screen) return {width: 1000, height: 800, left: 200, top: 200}
 
   const width = Math.min(screen.width - 100, 1000)
   const height = Math.min(screen.height - 100, 800)
+  const safeScreenLeft = typeof screenLeft === "number" && Number.isFinite(screenLeft) ? screenLeft : 0
+  const safeScreenTop = typeof screenTop === "number" && Number.isFinite(screenTop) ? screenTop : 0
   return {
       width,
       height,
-      left: screenLeft + (screen.width - width) / 2,
-      top: screenTop + (screen.height - height) / 2
+      left: safeScreenLeft + (screen.width - width) / 2,
+      top: safeScreenTop + (screen.height - height) / 2
+  }
+}
+
+type PopupRect = {
+  left?: number
+  top?: number
+  width?: number
+  height?: number
+}
+
+// Ensure popup bounds stay valid after display setup changes (detached monitor, resolution changes, etc.).
+export function sanitizePopupRect(rect?: PopupRect): PopupRect {
+  const fallback = getPopupSize()
+  let width = Number.isFinite(rect?.width) ? Math.round(rect.width) : Math.round(fallback.width)
+  let height = Number.isFinite(rect?.height) ? Math.round(rect.height) : Math.round(fallback.height)
+  width = Math.max(120, width)
+  height = Math.max(120, height)
+
+  const hasScreen =
+    typeof screen !== "undefined" && !!screen &&
+    Number.isFinite(screen.width) &&
+    Number.isFinite(screen.height) &&
+    typeof screenLeft === "number" && Number.isFinite(screenLeft) &&
+    typeof screenTop === "number" && Number.isFinite(screenTop)
+
+  if (!hasScreen) {
+    return {
+      width,
+      height,
+      ...(Number.isFinite(rect?.left) ? { left: Math.round(rect.left) } : {}),
+      ...(Number.isFinite(rect?.top) ? { top: Math.round(rect.top) } : {})
+    }
+  }
+
+  const screenWidth = Math.max(320, Math.round(screen.width))
+  const screenHeight = Math.max(240, Math.round(screen.height))
+  width = Math.min(width, Math.max(120, screenWidth - 40))
+  height = Math.min(height, Math.max(120, screenHeight - 40))
+
+  let left = Number.isFinite(rect?.left) ? Math.round(rect.left) : Math.round(fallback.left)
+  let top = Number.isFinite(rect?.top) ? Math.round(rect.top) : Math.round(fallback.top)
+
+  // Chrome requires the window to be at least 50% visible on screen.
+  const minLeft = Math.round(screenLeft - width / 2)
+  const maxLeft = Math.round(screenLeft + screenWidth - width / 2)
+  const minTop = Math.round(screenTop - height / 2)
+  const maxTop = Math.round(screenTop + screenHeight - height / 2)
+  left = clamp(minLeft, maxLeft, left)
+  top = clamp(minTop, maxTop, top)
+
+  return { left, top, width, height }
+}
+
+export async function createWindowWithSafeBounds(
+  createData: chrome.windows.CreateData
+) {
+  const hasBounds =
+    Number.isFinite(createData.left) ||
+    Number.isFinite(createData.top) ||
+    Number.isFinite(createData.width) ||
+    Number.isFinite(createData.height)
+
+  const withSafeBounds: chrome.windows.CreateData = hasBounds
+    ? {
+        ...createData,
+        ...sanitizePopupRect({
+          left: createData.left,
+          top: createData.top,
+          width: createData.width,
+          height: createData.height
+        })
+      }
+    : createData
+
+  try {
+    return await chrome.windows.create(withSafeBounds)
+  } catch (err) {
+    const { left, top, ...withoutPosition } = withSafeBounds
+    try {
+      return await chrome.windows.create(withoutPosition)
+    } catch (err2) {
+      const { width, height, ...withoutBounds } = withoutPosition
+      return chrome.windows.create(withoutBounds)
+    }
   }
 }
 
