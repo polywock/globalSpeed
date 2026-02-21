@@ -35,6 +35,7 @@ export class ConfigSync {
   release = () => {
     if (this.released) return
     this.released = true
+    this.urlConditionsClient?.release(); delete this.urlConditionsClient
     this.client?.release(); delete this.client
     this.speedClient?.release(); delete this.speedClient
     this.fxSync?.release(); delete this.fxSync
@@ -47,6 +48,7 @@ export class ConfigSync {
   handleChangeUrlConditionsList = () => {
     this.urlConditions = this.urlConditionsClient.view.keybindsUrlCondition || getEmptyUrlConditions(true)
     const enabledParts = getActiveParts(this.urlConditions)
+    const runtimeUrl = getPracticalRuntimeUrl()
 
     if (enabledParts.length === 0) {
       this.urlConditionsMode = 'On'
@@ -57,7 +59,7 @@ export class ConfigSync {
     let nonStatics: URLConditionPart[] = []
 
     enabledParts.forEach(part => {
-      (websiteCanBeStaticTested(part) ? statics : nonStatics).push(part)
+      (websiteCanBeStaticTested(part, runtimeUrl) ? statics : nonStatics).push(part)
     })
 
 
@@ -69,8 +71,7 @@ export class ConfigSync {
       this.urlConditionsMode = 'Runtime'
       return
     }
-    const url = getPracticalRuntimeUrl()
-    const anyMatched = statics.some(st => testURLWithPart(url, st))
+    const anyMatched = statics.some(st => testURLWithPart(runtimeUrl, st))
     if (!anyMatched) {
       this.urlConditionsMode = 'Runtime'
     } else {
@@ -230,14 +231,20 @@ export class ConfigSync {
 }
 
 
-function websiteCanBeStaticTested(entry: URLConditionPart) {
-  const origin = location.origin || ""
+function websiteCanBeStaticTested(entry: URLConditionPart, runtimeUrl: string) {
   const value = (entry.valueStartsWith || "").trim()
   if (entry.type === "STARTS_WITH" && value.startsWith('http')) {
+    if (!gvar.isTopFrame && !gvar.topFrameUrl) return false
     const count = [...value].filter(ch => ch === '/').length
     if (count === 2) return true
     if (count === 3 && value.endsWith('/')) return true
+    const origin = safeGetOrigin(runtimeUrl) || location.origin || ""
     if (!value.startsWith(origin)) return true
   }
 }
 
+function safeGetOrigin(url: string) {
+  try {
+    return new URL(url).origin
+  } catch (err) {}
+}
