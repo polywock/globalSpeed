@@ -3,6 +3,12 @@
   user-select: none;
   font-size: 1.1em;
   background-color: var(--fg-color);  
+  --padding: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  padding-bottom: 0px;
 
   & > .options {
     display: grid; 
@@ -28,6 +34,30 @@
       }
     }
   
+  }
+  
+  & .pause-site-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+  }
+
+  & .pause-site-button button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3a3a3a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+  }
+
+  & .pause-site-button button:hover {
+    background-color: #555;
   }
   
   & > .NumericControl {
