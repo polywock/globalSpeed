@@ -17,7 +17,7 @@ type ListItemProps = {
 }
 
 export function ListItem(props: ListItemProps) {
-    const itemRef = useRef()
+    const itemRef = useRef<HTMLDivElement>(null)
     const [focus, setFocus] = useState(false)
 
     return (

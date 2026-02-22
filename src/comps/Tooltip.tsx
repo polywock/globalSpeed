@@ -1,5 +1,4 @@
-
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { clamp } from "src/utils/helper"
 import clsx from "clsx"
 import "./Tooltip.css"
@@ -7,24 +6,25 @@ import "./Tooltip.css"
 type Env = {
     isActive?: boolean,
     signal?: AbortController,
-    timeoutId?: number 
+    timeoutId?: number
 }
 
 
-let latestClear: Function
+const EDGE_PADDING = 15
+
+let latestClear: (() => void) | undefined
 
 export type TooltipProps = {
     children: React.ReactNode,
     title?: string,
     align: 'top' | 'bottom' | 'left' | 'right',
-    offset?: number,
     maxWidth?: number,
     withClass?: string,
+    offset?: number,
     rawOffsetX?: number,
     rawOffsetY?: number,
     allowClick?: boolean,
-    dontAllowFocus?: boolean,
-    timeout?: number
+    dontAllowFocus?: boolean
 }
 
 export function Tooltip(props: TooltipProps) {
@@ -35,10 +35,11 @@ export function Tooltip(props: TooltipProps) {
     const handlePointerEnter = (e: React.PointerEvent | React.MouseEvent | React.FocusEvent) => {
         if (!props.title) return 
         if (env.isActive) return 
+        if (!mainRef.current || !tipRef.current) return 
 
         // Little failsafe, no reason two tooltips should be visible at once.
         latestClear?.()
-        latestClear = clear 
+        latestClear = clear
 
         clearTimeout(env.timeoutId)
         let align = props.align
@@ -77,36 +78,32 @@ export function Tooltip(props: TooltipProps) {
         
         let x = 0
         let y = 0
-        let fixX = false
-        let fixY = false
         if (align === 'top') {
             y = mainBounds.y - (tipBounds.height + offset)
             x = mainBounds.x + (mainBounds.width - tipBounds.width) * 0.5 
-            fixX = true 
         } else if (align === 'bottom') {
             y = (mainBounds.y + mainBounds.height) + offset
             x = mainBounds.x + (mainBounds.width - tipBounds.width) * 0.5 
-            fixX = true 
         } else if (align === 'left') {
             x = mainBounds.x - offset - tipBounds.width
             y = mainBounds.y + (mainBounds.height - tipBounds.height) * 0.5 
-            fixY = true 
         } else if (align === 'right') {
             x = mainBounds.x + mainBounds.width + offset
             y = mainBounds.y + (mainBounds.height - tipBounds.height) * 0.5 
-            fixY = true 
         }
 
-        if (fixX) x = clamp(15, window.innerWidth - tipBounds.width, x)
-        if (fixY) y = clamp(15, window.innerHeight - tipBounds.height, y)
+        const maxX = Math.max(EDGE_PADDING, window.innerWidth - tipBounds.width - EDGE_PADDING)
+        const maxY = Math.max(EDGE_PADDING, window.innerHeight - tipBounds.height - EDGE_PADDING)
+        x = clamp(EDGE_PADDING, maxX, x)
+        y = clamp(EDGE_PADDING, maxY, y)
 
         env.signal?.abort()    
         env.signal = new AbortController()
-        window.addEventListener('wheel', e => {
-            clear()
-        }, {signal: env.signal.signal, once: true})
+        window.addEventListener("wheel", clear, {signal: env.signal.signal, once: true})
+        document.addEventListener("scroll", clear, {signal: env.signal.signal, once: true, capture: true})
+        window.addEventListener("resize", clear, {signal: env.signal.signal, once: true})
 
-        env.timeoutId = setTimeout(clear, props.timeout || 15_000)
+        env.timeoutId = window.setTimeout(clear, 15_000)
 
         tipRef.current.style.top = `${y + (props.rawOffsetY || 0)}px` 
         tipRef.current.style.left = `${x + (props.rawOffsetX || 0)}px` 
@@ -117,20 +114,26 @@ export function Tooltip(props: TooltipProps) {
         clearTimeout(env.timeoutId)
         env.signal?.abort()    
         env.isActive = false 
+        if (latestClear === clear) latestClear = undefined
         if (!tipRef.current) return 
         tipRef.current.style.left = null 
         tipRef.current.style.top = null 
         tipRef.current.style.display = null 
     }
 
-    const handlePointerLeave = (e?: React.PointerEvent | React.FocusEvent) => {
+    const handlePointerLeave = (e: React.PointerEvent | React.FocusEvent) => {
+        const relatedTarget = e.relatedTarget as Node | null
+        if (relatedTarget && e.currentTarget.contains(relatedTarget)) return 
         if (!props.dontAllowFocus && document.activeElement === e.currentTarget) return 
         clear()
     }
 
+    useEffect(() => {
+        return clear
+    }, [])
+
     return <div ref={mainRef} className={clsx('Tooltip', props.withClass)}>
-        <div tabIndex={0} 
-            onPointerEnter={handlePointerEnter} 
+        <div onPointerEnter={handlePointerEnter} 
             onPointerLeave={handlePointerLeave} 
             onClick={props.allowClick ? handlePointerEnter : null}
             onFocus={props.dontAllowFocus ? null : handlePointerEnter}
