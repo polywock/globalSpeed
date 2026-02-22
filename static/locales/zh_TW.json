@@ -10,7 +10,8 @@
     "reverse": "反轉音訊",
     "reverseTooltip": "按住以錄製分頁音訊並倒放播放",
     "equalizer": "等化器",
-    "pitchHdTooltip": "更佳品質"
+    "pitchHdTooltip": "更佳品質",
+    "equalizerPower": "增強等化器功率"
   },
   "warnings": {
     "unusedGlobal": "釋出未使用的全域快速鍵",

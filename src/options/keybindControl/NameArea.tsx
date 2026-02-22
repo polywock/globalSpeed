@@ -412,9 +412,10 @@ function Cinema(props: {
     onChange: (id: string, v: Keybind) => void
 }) {
     let [show, setShow] = useState(false)
+    const moreTip = useTooltipAnchor<HTMLButtonElement>({label: gvar.gsm.token.more, align: "top"})
     
     return <>
-        <button className="icon kebab" onClick={() => setShow(true)}>
+        <button ref={moreTip} className="icon kebab" onClick={() => setShow(true)}>
             <IoEllipsisVertical style={{ pointerEvents: "none" }} title="..." size="1.3em" />
         </button>
         {show && (

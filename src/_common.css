@@ -330,13 +330,13 @@ select {
   border: 1px solid var(--icon-color);
   padding: 2px;
   box-sizing: content-box;
-  opacity: 0;
+  visibility: hidden;
   user-select: none;
 
   &.active {
     color: var(--icon-vibrant-color);
     border: 1px solid var(--icon-vibrant-color);
-    opacity: 1;
+    visibility: visible;
   }
 }
 

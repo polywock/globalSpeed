@@ -10,7 +10,8 @@ export type Gsm = {
     reverse: string,
     reverseTooltip: string,
     equalizer: string,
-    pitchHdTooltip: string
+    pitchHdTooltip: string,
+    equalizerPower: string
   },
   warnings: {
     unusedGlobal: string,

@@ -9,7 +9,8 @@
     "reverse": "Audio inverso",
     "reverseTooltip": "Tieni premuto per registrare l'audio della scheda e riprodurlo al contrario",
     "equalizer": "Equalizzatore",
-    "pitchHdTooltip": "Qualità migliore"
+    "pitchHdTooltip": "Qualità migliore",
+    "equalizerPower": "Amplifica la potenza dell'equalizzatore"
   },
   "warnings": {
     "unusedGlobal": "Rilascia i tasti di scelta rapida globali non utilizzati.",

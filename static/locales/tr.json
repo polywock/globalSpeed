@@ -9,7 +9,8 @@
     "reverse": "Sesi ters çevir",
     "reverseTooltip": "Sekmenin sesini kaydetmek ve ters çalmak için basılı tutun",
     "equalizer": "Ekolayzır",
-    "pitchHdTooltip": "Daha iyi kalite"
+    "pitchHdTooltip": "Daha iyi kalite",
+    "equalizerPower": "Ekolayzır gücünü artırır"
   },
   "warnings": {
     "unusedGlobal": "Kullanılmayan genel kısayol tuşlarını kaldırın.",

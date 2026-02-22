@@ -9,6 +9,7 @@ import "./EqualizerControl.css"
 import { useMemo } from "react"
 import equal from "fast-deep-equal"
 import { Reset } from "../comps/Reset"
+import { useTooltipAnchor } from "src/comps/Tooltip"
 
 type EqualizerControlProps = {
   value: AudioFx["eq"],
@@ -17,12 +18,13 @@ type EqualizerControlProps = {
 
 export function EqualizerControl(props: EqualizerControlProps) {
   const eq = props.value
-
   const presets = (EQ_PRESETS as any)[eq.values.length.toString()] as typeof EQ_PRESETS["10"]
-
+  
   const isEmpty = useMemo(() => (
     equal(eq || getDefaultEq(), getDefaultEq())
   ), [eq])
+
+  const powTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.audio.equalizerPower, align: "top" })
 
   return <div className="EqualizerControl audioTab">
     <div className="header">
@@ -34,7 +36,7 @@ export function EqualizerControl(props: EqualizerControlProps) {
         }}/>
       </div>
       <div className="name">{gvar.gsm.audio.equalizer}</div>
-      <div className="reset" title={gvar.gsm.token.reset}>
+      <div className="reset">
         <Reset active={!isEmpty} onClick={() => {
           props.onChange(getDefaultEq())
         }}/>
@@ -89,7 +91,7 @@ export function EqualizerControl(props: EqualizerControlProps) {
         sliderMin={0}
         sliderMax={3}
         default={1}
-        pass={{style: {marginBottom: "10px"}}}
+        pass={{style: {marginBottom: "10px"}, ref: powTip}}
         onChange={newValue => {
           props.onChange(produce(eq, d => {
             d.factor = newValue

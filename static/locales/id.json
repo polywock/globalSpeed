@@ -9,7 +9,8 @@
     "reverse": "Balikkan audio",
     "reverseTooltip": "Tekan dan tahan untuk merekam audio tab dan memutarnya terbalik",
     "equalizer": "Ekualiser",
-    "pitchHdTooltip": "Kualitas lebih baik"
+    "pitchHdTooltip": "Kualitas lebih baik",
+    "equalizerPower": "Memperkuat daya equalizer"
   },
   "warnings": {
     "unusedGlobal": "Lepaskan kunci pintas global yang tidak digunakan",

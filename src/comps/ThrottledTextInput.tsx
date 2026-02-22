@@ -5,8 +5,8 @@ import { assertType } from "src/utils/helper"
 type ThrottledTextInputProps = {
   value: string,
   onChange: (newValue: string) => void,
-  passInput?: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-  passTextArea?: DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>,
+  passInput?: React.ComponentProps<'input'>,
+  passTextArea?: React.ComponentProps<'textarea'>,
   textArea?: boolean,
   placeholder?: string
 }

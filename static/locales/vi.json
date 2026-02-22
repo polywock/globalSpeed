@@ -9,7 +9,8 @@
     "reverse": "Đảo ngược âm thanh",
     "reverseTooltip": "Nhấn và giữ để ghi âm thanh của thẻ và phát ngược",
     "equalizer": "Bộ cân bằng âm thanh",
-    "pitchHdTooltip": "Chất lượng tốt hơn"
+    "pitchHdTooltip": "Chất lượng tốt hơn",
+    "equalizerPower": "Tăng công suất bộ cân bằng"
   },
   "warnings": {
     "unusedGlobal": "Giải phóng các phím tắt toàn cầu không được sử dụng.",

@@ -1,4 +1,4 @@
-import { ReactNode, DetailedHTMLProps, HTMLAttributes } from "react"
+import { ReactNode, RefObject } from "react"
 import { clamp, round } from "../utils/helper"
 import { NumericInput } from "../comps/NumericInput"
 import { Slider } from "./Slider"
@@ -16,9 +16,8 @@ type SliderMicroProps = {
   default: number,
   onChange?: (newValue: number) => void,
   withInput?: boolean,
-  pass?: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+  pass?: React.ComponentProps<'div'>
 }
-
 
 export function SliderMicro(props: SliderMicroProps) {
   const handleValueChange = (value: number) => {
@@ -28,7 +27,7 @@ export function SliderMicro(props: SliderMicroProps) {
   const activated = props.default !== props.value
 
   return <div {...(props.pass ?? {})} className={`SliderMicro ${props.label ? "withLabel" : ""} ${props.withInput ? "withInput" : ""} ${activated ? "highlight" : ""}`}>
-    {props.label != null && <span title={round(props.value, 2).toString()}>{props.label}</span>}
+    {props.label != null && <span>{props.label}</span>}
     <Slider step={props.sliderStep ?? 0.01} min={props.sliderMin} max={props.sliderMax} value={props.value} default={props.default} onChange={handleValueChange}/>
     {props.withInput && (
       <NumericInput value={props.value} min={props.min} max={props.max} noNull={true} onChange={v => {

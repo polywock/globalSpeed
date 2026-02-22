@@ -9,7 +9,8 @@
     "reverse": "音声を逆再生",
     "reverseTooltip": "押し続けてタブの音声を録音し、逆再生します",
     "equalizer": "イコライザー",
-    "pitchHdTooltip": "高音質"
+    "pitchHdTooltip": "高音質",
+    "equalizerPower": "イコライザーの出力を増幅します"
   },
   "warnings": {
     "unusedGlobal": "使用されていないグローバルショートカットキーを解放してください。",

@@ -9,7 +9,8 @@
     "reverse": "ย้อนเสียง",
     "reverseTooltip": "กดค้างเพื่อบันทึกเสียงของแท็บและเล่นย้อนกลับ",
     "equalizer": "อีควอไลเซอร์",
-    "pitchHdTooltip": "คุณภาพดีกว่า"
+    "pitchHdTooltip": "คุณภาพดีกว่า",
+    "equalizerPower": "เพิ่มกำลังอีควอไลเซอร์"
   },
   "warnings": {
     "unusedGlobal": "ปล่อยคีย์ลัดทั่วโลกที่ไม่ได้ใช้งาน",

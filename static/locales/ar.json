@@ -9,7 +9,8 @@
     "reverse": "عكس الصوت",
     "reverseTooltip": "اضغط مطولًا لتسجيل صوت علامة التبويب وتشغيله بالعكس",
     "equalizer": "المعادل",
-    "pitchHdTooltip": "جودة أفضل"
+    "pitchHdTooltip": "جودة أفضل",
+    "equalizerPower": "يعزّز قوة المعادل"
   },
   "warnings": {
     "unusedGlobal": "تحرير مفاتيح الاختصارات العامة غير المستخدمة",

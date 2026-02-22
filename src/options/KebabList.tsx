@@ -16,7 +16,7 @@ export function KebabList(props: KebabListProps) {
     const [menu, setMenu] = useState(null as { x?: number, y?: number, adjusted?: boolean, centered?: boolean })
     const menuRef = useRef<HTMLDivElement>(null)
     const buttonRef = useRef<HTMLButtonElement>(null)
-    const tooltipRef = useTooltipAnchor<HTMLButtonElement>({
+    const kebabTip = useTooltipAnchor<HTMLButtonElement>({
         label: props.title ?? gvar.gsm.token.more,
         align: "top"
     })
@@ -54,12 +54,12 @@ export function KebabList(props: KebabListProps) {
         <button
             ref={elem => {
                 buttonRef.current = elem
-                tooltipRef.current = elem
+                kebabTip.current = elem
             }}
             className="icon kebabTooltip"
             onClick={onContext}
         >
-            <IoEllipsisVertical style={{ pointerEvents: "none" }} title="..." size="1.3em" />
+            <IoEllipsisVertical style={{ pointerEvents: "none" }} size="1.3em" />
         </button>
         {!menu ? (props.divIfEmpty ? <div/> : null) : (
             <Menu menuRef={menuRef} items={[...(props.list || [])]} position={menu} onClose={() => setMenu(null)} onSelect={props.onSelect} />

@@ -56,7 +56,7 @@ export function TooltipProvider(props: {
     </TooltipContext.Provider>
 }
 
-export function useTooltip() {
+function useTooltip() {
     const ctx = useContext(TooltipContext)
     if (!ctx) throw new Error("useTooltip must be used within TooltipProvider")
     return ctx

@@ -11,7 +11,8 @@
     "reverse": "Reverse audio",
     "reverseTooltip": "Press and hold to record tab's audio and play in reverse",
     "equalizer": "Equalizer",
-    "pitchHdTooltip": "Better quality"
+    "pitchHdTooltip": "Better quality",
+    "equalizerPower": "Amplifies equalizer power"
   },
   "warnings": {
     "unusedGlobal": "Release unused global shortcut keys",

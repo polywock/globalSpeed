@@ -4,7 +4,7 @@
   position: fixed;
   inset: auto;
   margin: 0;
-  width: max-content;
+  width: fit-content;
   height: auto;
   background-color: var(--text-color);
   border: 1px solid var(--pure-color);
@@ -15,7 +15,6 @@
   opacity: 0.85;
   z-index: 9999999999999;
   overflow-wrap: break-word;
-  text-wrap: balance;
   font-size: 1rem;
   user-select: none;
 }

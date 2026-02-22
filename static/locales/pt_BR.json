@@ -9,7 +9,8 @@
     "reverse": "Inverter áudio",
     "reverseTooltip": "Pressione e segure para gravar o áudio da guia e reproduzir ao contrário",
     "equalizer": "Equalizador",
-    "pitchHdTooltip": "Melhor qualidade"
+    "pitchHdTooltip": "Melhor qualidade",
+    "equalizerPower": "Aumenta a potência do equalizador"
   },
   "warnings": {
     "unusedGlobal": "Libere as teclas de atalho globais não utilizadas.",

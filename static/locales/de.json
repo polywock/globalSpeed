@@ -9,7 +9,8 @@
     "reverse": "Audio umkehren",
     "reverseTooltip": "Gedrückt halten, um den Tab-Audio aufzunehmen und rückwärts abzuspielen",
     "equalizer": "Equalizer",
-    "pitchHdTooltip": "Bessere Qualität"
+    "pitchHdTooltip": "Bessere Qualität",
+    "equalizerPower": "Erhöht die Equalizer-Leistung"
   },
   "warnings": {
     "unusedGlobal": "Freigabe nicht genutzter globaler Tastenkombinationen",

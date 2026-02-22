@@ -9,7 +9,8 @@
     "reverse": "Inverser l’audio",
     "reverseTooltip": "Maintenez enfoncé pour enregistrer l’audio de l’onglet et le lire à l’envers",
     "equalizer": "Égaliseur",
-    "pitchHdTooltip": "Meilleure qualité"
+    "pitchHdTooltip": "Meilleure qualité",
+    "equalizerPower": "Amplifie la puissance de l’égaliseur"
   },
   "warnings": {
     "unusedGlobal": "Libérez les raccourcis globaux inutilisés.",
