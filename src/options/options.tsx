@@ -4,6 +4,7 @@ import { SectionEditor } from "./SectionEditor"
 import { SectionHelp } from "./SectionHelp"
 import { SectionRules } from "./SectionRules"
 import { ErrorFallback } from "../comps/ErrorFallback"
+import { TooltipProvider } from "src/comps/Tooltip"
 import { useThemeSync } from "src/hooks/useThemeSync"
 import { loadGsm } from "src/utils/gsm"
 import { requestTabInfo } from "src/utils/browserUtils"
@@ -25,12 +26,12 @@ declare global {
 
 const Options = (props: {}) => {
   useThemeSync()
-  return <div id="App">
-    <SectionFlags/>
-    <SectionEditor/>
-    {!(isMac() && isMobile()) && <SectionRules/>}
-    <SectionHelp/>
-  </div>
+  return <TooltipProvider><div id="App">
+      <SectionFlags/>
+      <SectionEditor/>
+      {!(isMac() && isMobile()) && <SectionRules/>}
+      <SectionHelp/>
+    </div></TooltipProvider>
 }
 
 if (isMobile())  document.documentElement.classList.add("mobile") 

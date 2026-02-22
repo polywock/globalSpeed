@@ -21,7 +21,7 @@
     }
   }
 
-  .RegularTooltip > div > span {
+  .RegularTooltip {
     margin-left: 10px;
     filter: invert(1);
   }

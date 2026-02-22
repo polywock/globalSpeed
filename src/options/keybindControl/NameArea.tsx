@@ -23,7 +23,7 @@ import { PiArrowArcRightFill } from "react-icons/pi"
 import { CinemaModal } from "../CinemaModal"
 import { useState } from "react"
 import { IoEllipsisVertical } from "react-icons/io5"
-import { Tooltip, TooltipProps } from "src/comps/Tooltip"
+import { TooltipAlign, useTooltipAnchor } from "src/comps/Tooltip"
 import { RegularTooltip } from "src/comps/RegularTooltip"
 import { GearIcon } from "src/comps/GearIcon"
 
@@ -79,6 +79,16 @@ export function NameArea(props: NameAreaProps) {
     let tabCaptureWarning = command.requiresTabCapture && !(value.command === "afxCapture" || value.command === "afxReset") && (value.trigger || Trigger.LOCAL) === Trigger.LOCAL
     let adjustMode = command.valueType === "adjustMode" ? (value.adjustMode || AdjustMode.SET) : null 
     let showNumeric = adjustMode !== AdjustMode.ITC && adjustMode !== AdjustMode.CYCLE
+    const captureWarningTooltip = replaceArgs(gvar.gsm.warnings.captureRequired, [`[ ${gvar.gsm.command.afxCapture} ]`])
+    const warningRef = useTooltipAnchor<HTMLSpanElement>({
+        label: captureWarningTooltip,
+        align: "top",
+        allowClick: true
+    })
+    const adjustModeRef = useTooltipAnchor<HTMLButtonElement>({
+        label: gvar.gsm.options.editor.adjustModes[value.adjustMode || AdjustMode.SET],
+        align: "top"
+    })
 
     if (hasSpecial) label = "special"
 
@@ -145,14 +155,14 @@ export function NameArea(props: NameAreaProps) {
 
             {/* Capture shortcut warning */}
             {tabCaptureWarning && (
-                <Tooltip allowClick={true} withClass="warningTooltip" align="top" title={replaceArgs(gvar.gsm.warnings.captureRequired, [`[ ${gvar.gsm.command.afxCapture} ]`])}>
+                <span ref={warningRef} className="warningTooltip">
                     <MdWarning size="1.35rem" style={{ color: "#ff8888" }} />
-                </Tooltip>
+                </span>
             )}
             
 
             {/* cycle adjustMode */}
-            {command.valueType === "adjustMode" && <Tooltip  withClass="adjustMode" align="top" title={gvar.gsm.options.editor.adjustModes[value.adjustMode || AdjustMode.SET]}><button onClick={e => {
+            {command.valueType === "adjustMode" && <button ref={adjustModeRef} className="adjustMode" onClick={e => {
 
                 props.onChange(value.id, produce(value, d => {
                     saveToMem(value, adjustMode)
@@ -172,7 +182,7 @@ export function NameArea(props: NameAreaProps) {
                     <FaMousePointer size="1em"/>
                     <FaPlus size="1em" />
                 </>}
-            </button></Tooltip>}
+            </button>}
             
 
             {/* Tooltip */}
@@ -280,7 +290,7 @@ function ensureSpeedList(list: KebabListProps["list"], handlers: KebabListProps[
     })
 }
 
-export function makeLabelWithTooltip(name: string, tooltip: string, align: TooltipProps['align'] = 'right') {
+export function makeLabelWithTooltip(name: string, tooltip: string, align: TooltipAlign = 'right') {
     return <>{name}<RegularTooltip offset={30} align={align} title={tooltip}/></>
 }
 

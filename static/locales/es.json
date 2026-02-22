@@ -5,8 +5,11 @@
     "captureTab": "Capturar",
     "releaseTab": "Liberar",
     "split": "Dividir",
-    "reverse": "Inverso",
-    "equalizer": "Ecualizador"
+    "splitTooltip": "Controlar los canales de audio por separado",
+    "reverse": "Invertir audio",
+    "reverseTooltip": "Mantén pulsado para grabar el audio de la pestaña y reproducirlo al revés",
+    "equalizer": "Ecualizador",
+    "pitchHdTooltip": "Mejor calidad"
   },
   "warnings": {
     "unusedGlobal": "Libera las teclas de acceso rápido globales no utilizadas.",
@@ -31,7 +34,7 @@
     "duplicate": "Duplicar",
     "delete": "Eliminar",
     "aspectLock": "Bloqueo de aspecto",
-    "pinTooltip": "Anclar si quieres que la pestaña actual tenga su propio contexto (velocidad, filtros, etc).",
+    "pinTooltip": "Fija la pestaña para mantener la configuración separada.",
     "mergeBoth": "Fusionar ambos",
     "min": "Min",
     "max": "Max",
@@ -183,6 +186,7 @@
     "afxDelay": "Retrasar",
     "afxPan": "Panorámica",
     "afxMono": "Mono",
+    "afxMonoTooltip": "Mezclar canales de audio",
     "afxCapture": "Capturar",
     "afxReset": "Restablecer audio",
     "relativeToSpeed": "Relativa a la velocidad",

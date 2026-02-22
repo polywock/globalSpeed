@@ -5,8 +5,11 @@
     "captureTab": "Capture",
     "releaseTab": "Release",
     "split": "Split",
-    "reverse": "Reverse",
-    "equalizer": "Bộ cân bằng âm thanh"
+    "splitTooltip": "Điều khiển từng kênh âm thanh riêng",
+    "reverse": "Đảo ngược âm thanh",
+    "reverseTooltip": "Nhấn và giữ để ghi âm thanh của thẻ và phát ngược",
+    "equalizer": "Bộ cân bằng âm thanh",
+    "pitchHdTooltip": "Chất lượng tốt hơn"
   },
   "warnings": {
     "unusedGlobal": "Giải phóng các phím tắt toàn cầu không được sử dụng.",
@@ -31,7 +34,7 @@
     "duplicate": "Nhân bản",
     "delete": "Xóa",
     "aspectLock": "Khoá tỉ lệ",
-    "pinTooltip": "Ghim nếu bạn muốn tab hiện tại có bối cảnh riêng của nó (tốc độ, bộ lọc, v.v.).",
+    "pinTooltip": "Ghim thẻ để giữ cài đặt riêng.",
     "mergeBoth": "Hợp nhất cả hai",
     "min": "Tối thiểu",
     "max": "Tối đa",
@@ -183,6 +186,7 @@
     "afxDelay": "Trì hoãn",
     "afxPan": "Pan",
     "afxMono": "Mono",
+    "afxMonoTooltip": "Gộp kênh âm thanh",
     "afxCapture": "Chụp tab",
     "afxReset": "Đặt lại âm thanh",
     "relativeToSpeed": "Liên quan đến tốc độ",

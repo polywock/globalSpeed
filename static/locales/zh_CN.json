@@ -6,8 +6,11 @@
     "captureTab": "捕获",
     "releaseTab": "释放",
     "split": "分离声道",
-    "reverse": "音频倒放",
-    "equalizer": "均衡器"
+    "splitTooltip": "分别控制音频声道",
+    "reverse": "音频反转",
+    "reverseTooltip": "按住以录制标签页音频并倒放",
+    "equalizer": "均衡器",
+    "pitchHdTooltip": "更佳质量"
   },
   "warnings": {
     "unusedGlobal": "释放未使用的全局快捷键。",
@@ -32,7 +35,7 @@
     "duplicate": "复制",
     "delete": "删除",
     "aspectLock": "锁定比例",
-    "pinTooltip": "固定如果你想要当前标签页拥有它自己的上下文（速度，过滤器等）。",
+    "pinTooltip": "固定标签页以保持设置独立。",
     "mergeBoth": "合并两者",
     "min": "最小",
     "max": "最大",
@@ -184,6 +187,7 @@
     "afxDelay": "延迟",
     "afxPan": "平移",
     "afxMono": "单声道",
+    "afxMonoTooltip": "合并音频声道",
     "afxCapture": "捕获",
     "afxReset": "音频重置",
     "relativeToSpeed": "相对于速度",

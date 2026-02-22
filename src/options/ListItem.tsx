@@ -3,7 +3,7 @@ import { MoveDrag } from "src/comps/MoveDrag"
 import clsx from "clsx"
 import { GoX } from "react-icons/go"
 import "./ListItem.css"
-import { Tooltip } from "src/comps/Tooltip"
+import { useTooltipAnchor } from "src/comps/Tooltip"
 
 type ListItemProps = {
     children?: React.ReactNode,
@@ -19,6 +19,10 @@ type ListItemProps = {
 export function ListItem(props: ListItemProps) {
     const itemRef = useRef<HTMLDivElement>(null)
     const [focus, setFocus] = useState(false)
+    const deleteRef = useTooltipAnchor<HTMLButtonElement>({
+        label: gvar.gsm.token.delete,
+        align: "top",
+    })
 
     return (
         <div ref={itemRef} className={clsx('ListItem', {
@@ -40,14 +44,11 @@ export function ListItem(props: ListItemProps) {
                 </div>
 
                 {/* Delete */}
-                <Tooltip align="top" title={gvar.gsm.token.delete}>
-                    <button className="close icon" onClick={e => props.onRemove()}>
-                        <GoX size="1.6rem" />
-                    </button>
-                </Tooltip>
+                <button ref={deleteRef} className="close icon" onClick={e => props.onRemove()}>
+                    <GoX size="1.6rem" />
+                </button>
             </div>
             <div className="ListItemSub"></div>
         </div>
     )
 }
-

@@ -12,7 +12,7 @@ import { getDefaultKeybindsUrlConditions, getDefaultURLCondition } from "../defa
 import { getSelectedParts, requestSyncContextMenu } from "src/utils/configUtils"
 import { ListItem } from "./ListItem"
 import { List } from "./List"
-import { Tooltip } from "src/comps/Tooltip"
+import { useTooltipAnchor } from "src/comps/Tooltip"
 import { GrTooltip } from "react-icons/gr"
 import "./SectionEditor.css"
 import { DevWarning } from "./DevWarning"
@@ -40,6 +40,13 @@ export function SectionEditor(props: {}) {
 }
 
 function EditorDescription(props: {hasKeybinds: boolean}) {
+  const triggerModeRef = useTooltipAnchor<HTMLSpanElement>({
+    label: gvar.gsm.options.editor[isFirefox() ? 'triggerModeTooltipFf' : 'triggerModeTooltip'],
+    align: "top",
+    rawOffsetX: 60,
+    offset: 30
+  })
+
   return (!props.hasKeybinds || isFirefox()) ? null : (
     <div className="header">
       <div>
@@ -47,9 +54,7 @@ function EditorDescription(props: {hasKeybinds: boolean}) {
           <div></div>
           <FaGlobe className="icon active" size={"1.214rem"}/>
         </div>
-        <Tooltip rawOffsetX={60} offset={30} align="top" title={gvar.gsm.options.editor[isFirefox() ? 'triggerModeTooltipFf' : 'triggerModeTooltip']}>
-            <span className="modeSpan">{gvar.gsm.options.editor.triggerMode}<GrTooltip/></span>
-        </Tooltip>
+        <span ref={triggerModeRef} className="modeSpan">{gvar.gsm.options.editor.triggerMode}<GrTooltip/></span>
     </div>
   )
 }

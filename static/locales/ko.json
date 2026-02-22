@@ -6,8 +6,11 @@
     "captureTab": "캡처",
     "releaseTab": "릴리스",
     "split": "분할",
-    "reverse": "역재생",
-    "equalizer": "이퀄라이저"
+    "splitTooltip": "오디오 채널을 개별 제어",
+    "reverse": "오디오 역재생",
+    "reverseTooltip": "길게 눌러 탭 오디오를 녹음하고 역재생",
+    "equalizer": "이퀄라이저",
+    "pitchHdTooltip": "더 나은 품질"
   },
   "warnings": {
     "unusedGlobal": "사용되지 않는 글로벌 단축키를 해제하세요.",
@@ -32,7 +35,7 @@
     "duplicate": "복제",
     "delete": "삭제",
     "aspectLock": "종횡비 잠금",
-    "pinTooltip": "현재 탭이 자체 컨텍스트(속도, 필터 등)를 갖기를 원하면 고정하세요.",
+    "pinTooltip": "설정을 분리하려면 탭을 고정하세요.",
     "mergeBoth": "상호 병합",
     "min": "최소",
     "max": "최대",
@@ -184,6 +187,7 @@
     "afxDelay": "지연",
     "afxPan": "이동",
     "afxMono": "모노",
+    "afxMonoTooltip": "오디오 채널 병합",
     "afxCapture": "캡처",
     "afxReset": "오디오 리셋",
     "relativeToSpeed": "속도에 비례",

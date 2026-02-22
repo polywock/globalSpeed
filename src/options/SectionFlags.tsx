@@ -17,7 +17,7 @@ import { Minmax } from "src/comps/Minmax"
 import { GoX } from "react-icons/go"
 import { WidgetModal } from "./WidgetModal"
 import { RegularTooltip } from "src/comps/RegularTooltip"
-import { Tooltip } from "src/comps/Tooltip"
+import { useTooltipAnchor } from "src/comps/Tooltip"
 import { GearIcon } from "src/comps/GearIcon"
 import { NumericInput } from "src/comps/NumericInput"
 import "./SectionFlags.css"
@@ -29,6 +29,10 @@ export function SectionFlags(props: {}) {
   const [showWidgetModal, setShowWidgetModal] = useState(false)
   const [showMore, setShowMore] = useState(false)
   const [ has, setHas ] = useState(false)
+  const showMoreRef = useTooltipAnchor<HTMLButtonElement>({
+    label: gvar.gsm.token.more,
+    align: "top"
+  })
 
   useEffect(() => {
       chrome.permissions.contains({origins: ["https://*/*", "http://*/*"]}).then(v => {
@@ -259,7 +263,7 @@ export function SectionFlags(props: {}) {
             )}
         </div>        
 
-        {!showMore ? <Tooltip withClass="showMoreTooltip" align="top" title={gvar.gsm.token.more}><button onClick={() => setShowMore(true)}>...</button></Tooltip> : <>
+        {!showMore ? <button ref={showMoreRef} className="showMoreTooltip" onClick={() => setShowMore(true)}>...</button> : <>
           {!isMobile() && <>
             {/* Font size */}
             <div className="field marginDoubleTop">

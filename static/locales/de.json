@@ -5,8 +5,11 @@
     "captureTab": "Aufzeichnen",
     "releaseTab": "Freigeben",
     "split": "Teilen",
-    "reverse": "Umkehren",
-    "equalizer": "Equalizer"
+    "splitTooltip": "Audiokanäle separat steuern",
+    "reverse": "Audio umkehren",
+    "reverseTooltip": "Gedrückt halten, um den Tab-Audio aufzunehmen und rückwärts abzuspielen",
+    "equalizer": "Equalizer",
+    "pitchHdTooltip": "Bessere Qualität"
   },
   "warnings": {
     "unusedGlobal": "Freigabe nicht genutzter globaler Tastenkombinationen",
@@ -31,7 +34,7 @@
     "duplicate": "Duplizieren",
     "delete": "Löschen",
     "aspectLock": "Seitenverhältnis sperren",
-    "pinTooltip": "Anheften, wenn dieser Tab seinen eigenen Kontext haben soll (Geschwindigkeit, Filter usw.).",
+    "pinTooltip": "Tab anheften, um Einstellungen getrennt zu halten.",
     "mergeBoth": "Beide zusammenführen",
     "min": "Min",
     "max": "Max",
@@ -183,6 +186,7 @@
     "afxDelay": "Verzögerung",
     "afxPan": "Panorama",
     "afxMono": "Mono",
+    "afxMonoTooltip": "Audiokanäle zusammenführen",
     "afxCapture": "Tab-Aufnahme",
     "afxReset": "Audio zurücksetzen",
     "relativeToSpeed": "Relativ zur Geschwindigkeit",

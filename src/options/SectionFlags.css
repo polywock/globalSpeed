@@ -97,9 +97,6 @@
 
   & > .showMoreTooltip {
     margin-top: 20px;
-
-    & > div > button {
-      font-family: monospace;
-    }
+    font-family: monospace;
   }
 }

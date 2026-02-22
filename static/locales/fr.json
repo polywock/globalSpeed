@@ -5,8 +5,11 @@
     "captureTab": "Capturer",
     "releaseTab": "Libérer",
     "split": "Diviser",
-    "reverse": "Inverser",
-    "equalizer": "Égaliseur"
+    "splitTooltip": "Contrôler les canaux audio séparément",
+    "reverse": "Inverser l’audio",
+    "reverseTooltip": "Maintenez enfoncé pour enregistrer l’audio de l’onglet et le lire à l’envers",
+    "equalizer": "Égaliseur",
+    "pitchHdTooltip": "Meilleure qualité"
   },
   "warnings": {
     "unusedGlobal": "Libérez les raccourcis globaux inutilisés.",
@@ -31,7 +34,7 @@
     "duplicate": "Dupliquer",
     "delete": "Supprimer",
     "aspectLock": "Verrouillage des proportions",
-    "pinTooltip": "Épingler si vous voulez que l'onglet actuel ait son propre contexte (vitesse, filtres, etc.).",
+    "pinTooltip": "Épinglez l’onglet pour garder les paramètres séparés.",
     "mergeBoth": "Fusionner les deux",
     "min": "Min",
     "max": "Max",
@@ -183,6 +186,7 @@
     "afxDelay": "Délai",
     "afxPan": "Panoramique",
     "afxMono": "Mono",
+    "afxMonoTooltip": "Fusionner les canaux audio",
     "afxCapture": "Capturer",
     "afxReset": "Réinitialiser l'audio",
     "relativeToSpeed": "Relatif à la vitesse",

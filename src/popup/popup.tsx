@@ -10,6 +10,7 @@ import { FaPowerOff } from "react-icons/fa"
 import { useThemeSync } from "src/hooks/useThemeSync"
 import { createRoot } from "react-dom/client"
 import { OrlHeader } from "./OrlHeader"
+import { TooltipProvider } from "src/comps/Tooltip"
 import { loadGsm } from "src/utils/gsm"
 import { isFirefox, isMobile } from "src/utils/helper"
 import { fetchView } from "src/utils/state"
@@ -32,31 +33,31 @@ export function App(props: {}) {
 
   if (!view) return null 
 
-  if (view.superDisable) {
-    return (
-      <div 
-        id={"SuperDisable"}
-        onClick={() => {
-          setView({superDisable: false, enabled: true})
-        }}
-        onContextMenu={e => {
-          e.preventDefault()
-          setView({superDisable: false, enabled: true})
-        }}
-      >
-        <FaPowerOff size="1.78rem"/>
-      </div>
-    )
-  }
-
   return (
-    <div id="App" className={isFirefox() ? 'firefox' : ''}>
-      <OrlHeader/>
-      <Header panel={panel} setPanel={v => setPanel(v)}/>
-      {panel === 0 && <MainPanel/>}
-      {panel === 1 && <FxPanel/>}
-      {panel === 2 && AudioPanel && <AudioPanel/>}
-    </div>
+    <TooltipProvider>
+      {view.superDisable ? (
+        <div 
+          id={"SuperDisable"}
+          onClick={() => {
+            setView({superDisable: false, enabled: true})
+          }}
+          onContextMenu={e => {
+            e.preventDefault()
+            setView({superDisable: false, enabled: true})
+          }}
+        >
+          <FaPowerOff size="1.78rem"/>
+        </div>
+      ) : (
+        <div id="App" className={isFirefox() ? 'firefox' : ''}>
+          <OrlHeader/>
+          <Header panel={panel} setPanel={v => setPanel(v)}/>
+          {panel === 0 && <MainPanel/>}
+          {panel === 1 && <FxPanel/>}
+          {panel === 2 && AudioPanel && <AudioPanel/>}
+        </div>
+      )}
+    </TooltipProvider>
   )
 }
 

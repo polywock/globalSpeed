@@ -16,7 +16,7 @@ import { getSelectedParts, requestSyncContextMenu } from "src/utils/configUtils"
 import { DurationSelect, NameArea, makeLabelWithTooltip } from "./NameArea"
 import { Minmax } from "src/comps/Minmax"
 import { KebabList, KebabListProps } from "../KebabList"
-import { Tooltip } from "src/comps/Tooltip"
+import { useTooltipAnchor } from "src/comps/Tooltip"
 import "./styles.css"
 
 
@@ -35,6 +35,10 @@ export type KeybindControlProps = {
 export const KeybindControl = (props: KeybindControlProps) => {
   const { value } = props
   const [show, setShow] = useState(false)
+  const triggerModeRef = useTooltipAnchor<HTMLButtonElement>({
+    label: gvar.gsm.options.editor.triggerModes[value.trigger || Trigger.LOCAL],
+    align: "top"
+  })
 
   const command = commandInfos[value.command]
   const urlAllowed = value.trigger !== Trigger.CONTEXT
@@ -155,27 +159,25 @@ export const KeybindControl = (props: KeybindControlProps) => {
 
       {/* Shortcut mode */}
       {isMobile() ? <div/> : (
-        <Tooltip align="top" title={gvar.gsm.options.editor.triggerModes[value.trigger || Trigger.LOCAL]}>
-          <button className={`buttonTooltip icon`} onClick={e => {
-            let options = value.trigger === 2 ? [0, 1, 2] : (
-              value.trigger === 1 ? [2, 0, 1] : [1, 2, 0]
-            )
-            if (value.command === "afxCapture") options.splice(options.indexOf(0), 1)
-            if (isFirefox()) options.splice(options.indexOf(1), 1)
+        <button ref={triggerModeRef} className={`buttonTooltip icon`} onClick={e => {
+          let options = value.trigger === 2 ? [0, 1, 2] : (
+            value.trigger === 1 ? [2, 0, 1] : [1, 2, 0]
+          )
+          if (value.command === "afxCapture") options.splice(options.indexOf(0), 1)
+          if (isFirefox()) options.splice(options.indexOf(1), 1)
 
-              let newest = options.shift() as Trigger
+            let newest = options.shift() as Trigger
 
-              props.onChange(value.id, produce(value, d => {
-                d.trigger = newest
-              }))
+            props.onChange(value.id, produce(value, d => {
+              d.trigger = newest
+            }))
 
-            requestSyncContextMenu()
-          }}>
-            {value.trigger === Trigger.GLOBAL ? <FaGlobe className="tr115"/> : (
-              value.trigger === Trigger.CONTEXT ? <FaBars className="tr115"/> : <FaFile className="tr115" />
-            )}
-          </button>
-        </Tooltip>
+          requestSyncContextMenu()
+        }}>
+          {value.trigger === Trigger.GLOBAL ? <FaGlobe className="tr115"/> : (
+            value.trigger === Trigger.CONTEXT ? <FaBars className="tr115"/> : <FaFile className="tr115" />
+          )}
+        </button>
       )}
       <div className="talues">
         <TriggerValues value={value} onChange={props.onChange} virtualInput={props.virtualInput} />
@@ -305,6 +307,10 @@ export const TriggerValues = (props: Props) => {
   let keyForGlobal = (isAlt ? 'globalKeyAlt' : 'globalKey') as 'globalKey'
   let keyForLocal = (isAlt ? 'keyAlt' : 'key') as 'key'
   let keyForLabel = (isAlt ? 'contextLabelAlt' : 'contextLabel') as 'contextLabel'
+  const assignRef = useTooltipAnchor<HTMLButtonElement>({
+    label: gvar.gsm.token.assign,
+    align: "top"
+  })
 
   return <>
     {/* Global key picker */}
@@ -320,11 +326,9 @@ export const TriggerValues = (props: Props) => {
               <option key={v[0]} value={v[0]}>{v[1]}</option>
             ))}
           </select>
-          <Tooltip title={gvar.gsm.token.assign} align="top">
-            <button className="icon" onClick={() => {
-              requestCreateTab(isFirefox() ? `https://support.mozilla.org/kb/manage-extension-shortcuts-firefox` : `chrome://extensions/shortcuts/#:~:text=${encodeURIComponent(`Command ${(value[keyForGlobal] || "commandA").slice(7)}`)}`)
-            }}><FaRegEdit className="tr120" /></button>
-          </Tooltip>
+          <button ref={assignRef} className="icon" onClick={() => {
+            requestCreateTab(isFirefox() ? `https://support.mozilla.org/kb/manage-extension-shortcuts-firefox` : `chrome://extensions/shortcuts/#:~:text=${encodeURIComponent(`Command ${(value[keyForGlobal] || "commandA").slice(7)}`)}`)
+          }}><FaRegEdit className="tr120" /></button>
         </div>
       )
     )}

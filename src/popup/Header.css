@@ -25,13 +25,10 @@
   }
 
 
-  & .Tooltip {
+  & .kebabTooltip {
     margin-top: -3px;
     padding-left: 2px;
-
-    &, & > div, & button {
-      line-height: 0;
-    }
+    line-height: 0;
   }
 
 

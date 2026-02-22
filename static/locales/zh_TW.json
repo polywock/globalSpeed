@@ -6,8 +6,11 @@
     "captureTab": "擷取",
     "releaseTab": "釋出",
     "split": "聲道分離",
-    "reverse": "倒放",
-    "equalizer": "等化器"
+    "splitTooltip": "分別控制音訊聲道",
+    "reverse": "反轉音訊",
+    "reverseTooltip": "按住以錄製分頁音訊並倒放播放",
+    "equalizer": "等化器",
+    "pitchHdTooltip": "更佳品質"
   },
   "warnings": {
     "unusedGlobal": "釋出未使用的全域快速鍵",
@@ -32,7 +35,7 @@
     "duplicate": "複製",
     "delete": "刪除",
     "aspectLock": "鎖定比例",
-    "pinTooltip": "若要讓目前分頁擁有自己的內容（速度、濾鏡等），請固定此分頁。",
+    "pinTooltip": "釘選分頁以保持設定獨立。",
     "mergeBoth": "合併兩者",
     "min": "最小",
     "max": "最大",
@@ -184,6 +187,7 @@
     "afxDelay": "延遲",
     "afxPan": "聲道平衡",
     "afxMono": "單聲道",
+    "afxMonoTooltip": "合併音訊聲道",
     "afxCapture": "分頁擷取",
     "afxReset": "重設音訊",
     "relativeToSpeed": "相對於速度",

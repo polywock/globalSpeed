@@ -94,17 +94,14 @@
       margin-left: 5px;
     }
 
-    & > .adjustMode {
+    & > button.adjustMode {
       margin-left: 11px;
-
-      & > div > button {
-        padding: 3px;
-        background-color: var(--fg-color);
-        color: var(--text-color);
-        border: 1px solid var(--border);
-        font-size: 0.8em;
-        border-radius: 5px;
-      }
+      padding: 3px;
+      background-color: var(--fg-color);
+      color: var(--text-color);
+      border: 1px solid var(--border);
+      font-size: 0.8em;
+      border-radius: 5px;
     }
 
     & > .support {

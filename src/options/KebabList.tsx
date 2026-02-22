@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { IoEllipsisVertical } from "react-icons/io5"
 import { Menu, type MenuProps } from "src/comps/Menu"
-import { Tooltip } from "src/comps/Tooltip"
+import { useTooltipAnchor } from "src/comps/Tooltip"
 
 export type KebabListProps = {
     list:  MenuProps["items"],
@@ -14,8 +14,12 @@ export type KebabListProps = {
 
 export function KebabList(props: KebabListProps) {
     const [menu, setMenu] = useState(null as { x?: number, y?: number, adjusted?: boolean, centered?: boolean })
-    const menuRef = useRef<HTMLDivElement>()
-    const buttonRef = useRef<HTMLButtonElement>()
+    const menuRef = useRef<HTMLDivElement>(null)
+    const buttonRef = useRef<HTMLButtonElement>(null)
+    const tooltipRef = useTooltipAnchor<HTMLButtonElement>({
+        label: props.title ?? gvar.gsm.token.more,
+        align: "top"
+    })
     
     const onContext = (e: React.MouseEvent) => {
         e.preventDefault()
@@ -47,11 +51,16 @@ export function KebabList(props: KebabListProps) {
 
     return <>
         {props.title}
-        <Tooltip withClass="kebabTooltip" title={props.title ?? gvar.gsm.token.more} align="top">
-            <button ref={buttonRef} className="icon" onClick={onContext}>
-                <IoEllipsisVertical style={{ pointerEvents: "none" }} title="..." size="1.3em" />
-            </button>
-        </Tooltip>
+        <button
+            ref={elem => {
+                buttonRef.current = elem
+                tooltipRef.current = elem
+            }}
+            className="icon kebabTooltip"
+            onClick={onContext}
+        >
+            <IoEllipsisVertical style={{ pointerEvents: "none" }} title="..." size="1.3em" />
+        </button>
         {!menu ? (props.divIfEmpty ? <div/> : null) : (
             <Menu menuRef={menuRef} items={[...(props.list || [])]} position={menu} onClose={() => setMenu(null)} onSelect={props.onSelect} />
             

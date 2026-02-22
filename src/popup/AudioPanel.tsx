@@ -9,7 +9,7 @@ import { getDefaultAudioFx } from "../defaults";
 import { ReverseButton } from "./ReverseButton";
 import { produce } from "immer";
 import { initTabCapture, releaseTabCapture } from "src/background/utils/tabCapture";
-import { Tooltip } from "src/comps/Tooltip";
+import { useTooltipAnchor } from "src/comps/Tooltip";
 import "./AudioPanel.css"
 
 export function AudioPanel(props: {}) {
@@ -17,6 +17,10 @@ export function AudioPanel(props: {}) {
   const env = useRef({viaButton: true}).current
   let [rightTab, setRightTab] = useState(false)
   const status = useCaptureStatus()
+  const splitTip = useTooltipAnchor<HTMLButtonElement>({ label: gvar.gsm.audio.splitTooltip, align: "top" })
+  const monoTip = useTooltipAnchor<HTMLButtonElement>({ label: gvar.gsm.command.afxMonoTooltip, align: "top" })
+  const pitchTip = useTooltipAnchor<HTMLButtonElement>({ label: gvar.gsm.audio.pitchHdTooltip, align: "top" })
+  const mergeTip = useTooltipAnchor<HTMLButtonElement>({ label: gvar.gsm.token.mergeBoth, align: "top" })
   
   if (!view) return <div className="panel unloaded"></div>
 
@@ -26,7 +30,6 @@ export function AudioPanel(props: {}) {
  
   let starAudioFx = rightTab ? view.audioFxAlt : view.audioFx
   let starKey: "audioFxAlt" | "audioFx"  = rightTab ? "audioFxAlt" : "audioFx"
-
   const ensureCaptured = async () => {
     if (status) return status 
     env.viaButton = false
@@ -44,29 +47,27 @@ export function AudioPanel(props: {}) {
     <div className="mainControls">
 
         {/* Split */}
-      <Tooltip align="top" title={"Control audio channels separately"}>
-        <button 
-          className={`toggle ${view.audioFxAlt ? "active" : ""}`}
-          onClick={() => {
-            setView(produce(view, d => {
-              d.audioFxAlt = d.audioFxAlt ? null : structuredClone(view.audioFx || getDefaultAudioFx())
-            }))
-          }}
-        >{gvar.gsm.audio.split}</button>
-      </Tooltip>
+      <button 
+        ref={splitTip}
+        className={`toggle ${view.audioFxAlt ? "active" : ""}`}
+        onClick={() => {
+          setView(produce(view, d => {
+            d.audioFxAlt = d.audioFxAlt ? null : structuredClone(view.audioFx || getDefaultAudioFx())
+          }))
+        }}
+      >{gvar.gsm.audio.split}</button>
 
       {/* Mono */}
-      <Tooltip align="top" title={"Merge audio channels"}>
-        <button 
-          className={`toggle ${view.monoOutput ? "active" : ""}`}
-          onClick={() => {
-            setView(produce(view, d => {
-              d.monoOutput = !d.monoOutput
-              d.monoOutput && ensureCaptured()
-            }))
-          }}
-        >{gvar.gsm.command.afxMono}</button>
-      </Tooltip>
+      <button 
+        ref={monoTip}
+        className={`toggle ${view.monoOutput ? "active" : ""}`}
+        onClick={() => {
+          setView(produce(view, d => {
+            d.monoOutput = !d.monoOutput
+            d.monoOutput && ensureCaptured()
+          }))
+        }}
+      >{gvar.gsm.command.afxMono}</button>
 
     </div>
 
@@ -87,7 +88,7 @@ export function AudioPanel(props: {}) {
       label={<div>
         <FaMusic size="1.21rem"/>
         <span style={{marginLeft: "10px"}}>{gvar.gsm.command.afxPitch}</span>
-        <button title={"high quality"} style={{marginLeft: "10px"}} className={`micro toggle ${starAudioFx.jungleMode ? "" : "active"}`} onClick={e => {
+        <button ref={pitchTip} style={{marginLeft: "10px"}} className={`micro toggle ${starAudioFx.jungleMode ? "" : "active"}`} onClick={e => {
           setView(produce(view, d => {
             d[starKey].jungleMode = !starAudioFx.jungleMode
           }))
@@ -151,13 +152,11 @@ export function AudioPanel(props: {}) {
       label={<div>
         <MdAccessTime size="1.42rem"/>
         <span style={{marginLeft: "10px"}}>{gvar.gsm.command.afxDelay}</span>
-        <Tooltip align="top" title={gvar.gsm.token.mergeBoth}>
-          <button style={{marginLeft: "10px"}} className={`micro toggle ${starAudioFx.delayMerge ? "active" : ""}`} onClick={e => {
-            setView(produce(view, d => {
-              d[starKey].delayMerge = !starAudioFx.delayMerge
-            }))
-          }}>+</button>
-        </Tooltip>
+        <button ref={mergeTip} style={{marginLeft: "10px"}} className={`micro toggle ${starAudioFx.delayMerge ? "active" : ""}`} onClick={e => {
+          setView(produce(view, d => {
+            d[starKey].delayMerge = !starAudioFx.delayMerge
+          }))
+        }}>+</button>
       </div>}
       value={starAudioFx.delay ?? 0}
       sliderMin={0}

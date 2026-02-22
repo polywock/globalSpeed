@@ -5,8 +5,11 @@
     "captureTab": "Tangkap",
     "releaseTab": "Lepaskan",
     "split": "Pisahkan",
-    "reverse": "Terbalik",
-    "equalizer": "Penyama"
+    "splitTooltip": "Kawal saluran audio secara berasingan",
+    "reverse": "Songsangkan audio",
+    "reverseTooltip": "Tekan dan tahan untuk merakam audio tab dan mainkan secara terbalik",
+    "equalizer": "Penyama",
+    "pitchHdTooltip": "Kualiti lebih baik"
   },
   "warnings": {
     "unusedGlobal": "Lepaskan kekunci pintasan global yang tidak digunakan",
@@ -31,7 +34,7 @@
     "duplicate": "Gandakan",
     "delete": "Padam",
     "aspectLock": "Kunci nisbah aspek",
-    "pinTooltip": "Pin jika anda mahu tab semasa mempunyai konteks tersendiri (kelajuan, penapis, dsb).",
+    "pinTooltip": "Sematkan tab untuk kekalkan tetapan berasingan.",
     "mergeBoth": "Gabungkan kedua-duanya",
     "min": "Min",
     "max": "Maks",
@@ -183,6 +186,7 @@
     "afxDelay": "Kelewatan",
     "afxPan": "Pan",
     "afxMono": "Mono",
+    "afxMonoTooltip": "Gabungkan saluran audio",
     "afxCapture": "Tangkap tab",
     "afxReset": "Tetapkan semula audio",
     "relativeToSpeed": "Berkaitan dengan kelajuan",

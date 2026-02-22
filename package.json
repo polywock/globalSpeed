@@ -2,8 +2,8 @@
   "name": "globalspeed",
   "version": "1.0.0",
   "browserslist": [
-    "chrome >= 104",
-    "firefox >= 120"
+    "chrome >= 116",
+    "firefox >= 125"
   ],
   "sideEffects": [
     "./src/background/utils/*.ts",

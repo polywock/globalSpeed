@@ -5,8 +5,11 @@
     "captureTab": "Cattura",
     "releaseTab": "Rilascia",
     "split": "Separa",
-    "reverse": "Inverti",
-    "equalizer": "Equalizzatore"
+    "splitTooltip": "Controlla separatamente i canali audio",
+    "reverse": "Audio inverso",
+    "reverseTooltip": "Tieni premuto per registrare l'audio della scheda e riprodurlo al contrario",
+    "equalizer": "Equalizzatore",
+    "pitchHdTooltip": "Qualità migliore"
   },
   "warnings": {
     "unusedGlobal": "Rilascia i tasti di scelta rapida globali non utilizzati.",
@@ -31,7 +34,7 @@
     "duplicate": "Duplica",
     "delete": "Elimina",
     "aspectLock": "Blocca proporzioni",
-    "pinTooltip": "Blocca se vuoi che la scheda corrente abbia il suo contesto (velocità, filtri, ecc).",
+    "pinTooltip": "Fissa la scheda per mantenere separate le impostazioni.",
     "mergeBoth": "Unisci entrambi",
     "min": "Min",
     "max": "Max",
@@ -183,6 +186,7 @@
     "afxDelay": "Ritardo",
     "afxPan": "Sposta",
     "afxMono": "Mono",
+    "afxMonoTooltip": "Unisci i canali audio",
     "afxCapture": "Cattura scheda",
     "afxReset": "Ripristino audio",
     "relativeToSpeed": "Relativamente alla velocità",

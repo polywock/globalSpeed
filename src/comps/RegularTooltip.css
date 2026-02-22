@@ -1,5 +1,4 @@
-
-.RegularTooltip > div > span {
+.RegularTooltip {
     user-select: none;
     padding: 0px 2px;
     background-color: var(--fg-color);

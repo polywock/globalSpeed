@@ -5,8 +5,11 @@
     "captureTab": "Yakala",
     "releaseTab": "Bırak",
     "split": "Ayır",
-    "reverse": "Ters ses",
-    "equalizer": "Ekolayzır"
+    "splitTooltip": "Ses kanallarını ayrı ayrı kontrol et",
+    "reverse": "Sesi ters çevir",
+    "reverseTooltip": "Sekmenin sesini kaydetmek ve ters çalmak için basılı tutun",
+    "equalizer": "Ekolayzır",
+    "pitchHdTooltip": "Daha iyi kalite"
   },
   "warnings": {
     "unusedGlobal": "Kullanılmayan genel kısayol tuşlarını kaldırın.",
@@ -31,7 +34,7 @@
     "duplicate": "Çiftleştir",
     "delete": "Sil",
     "aspectLock": "En-boy oranını kilitle",
-    "pinTooltip": "Mevcut sekmeyi kendi bağlamına (hız, filtreler vb.) sahip olması için sabitleyin.",
+    "pinTooltip": "Ayarları ayrı tutmak için sekmeyi sabitle.",
     "mergeBoth": "Her ikisini birleştir",
     "min": "Min",
     "max": "Maks",
@@ -183,6 +186,7 @@
     "afxDelay": "Geciktir",
     "afxPan": "Kaydır",
     "afxMono": "Mono",
+    "afxMonoTooltip": "Ses kanallarını birleştir",
     "afxCapture": "Yakala",
     "afxReset": "Ses sıfırlama",
     "relativeToSpeed": "Hıza göre",

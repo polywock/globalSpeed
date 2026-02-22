@@ -5,7 +5,7 @@ import { GoArrowDown, GoArrowUp, GoX } from "react-icons/go"
 import { moveItem } from "src/utils/helper"
 import { SliderPlus } from "src/comps/SliderPlus"
 import { SVG_COLOR_MATRIX_PRESETS, SVG_MOSAIC_PRESETS, SVG_RGB_PRESETS, SVG_SPECIAL_PRESETS, svgFilterInfos } from "src/defaults/filters"
-import { Tooltip } from "src/comps/Tooltip"
+import { useTooltipAnchor } from "src/comps/Tooltip"
 import { SVG_FILTER_ADDITIONAL } from "src/defaults/svgFilterAdditional"
 import { useState } from "react"
 import "./SvgFilterItem.css"
@@ -93,13 +93,14 @@ export function SvgFilterItem(props: {
                   <SliderPlus
                      label={<>
                         {info.label}
-                        <Tooltip align="top" title={gvar.gsm.token.aspectLock}>
-                           <button onClick={() => {
+                        <AspectLockButton
+                           active={!!(filter.mosaic as any)[info.aspectKey]}
+                           onClick={() => {
                               onChange(produce(filter, v => {
                                  (v.mosaic as any)[info.aspectKey] = !(v.mosaic as any)[info.aspectKey]
                               }))
-                           }} style={{ padding: "0px 5px", marginLeft: "10px" }} className={`toggle ${(filter.mosaic as any)[info.aspectKey] ? "active" : ""}`}>:</button>
-                        </Tooltip>
+                           }}
+                        />
                      </>}
                      value={(filter.mosaic as any)[info.key]}
                      sliderMin={info.sMin}
@@ -125,13 +126,14 @@ export function SvgFilterItem(props: {
             <SliderPlus
                label={<>
                   {gvar.gsm.filter.otherFilters.horizontal}
-                  <Tooltip align="top" title={gvar.gsm.token.aspectLock}>
-                     <button onClick={() => {
+                  <AspectLockButton
+                     active={filter.blur.aspectLock}
+                     onClick={() => {
                         onChange(produce(filter, v => {
                            v.blur.aspectLock = !v.blur.aspectLock
                         }))
-                     }} style={{ padding: "0px 5px", marginLeft: "10px" }} className={`toggle ${filter.blur.aspectLock ? "active" : ""}`}>:</button>
-                  </Tooltip>
+                     }}
+                  />
                </>}
                value={filter.blur.x}
                sliderMin={0}
@@ -150,13 +152,14 @@ export function SvgFilterItem(props: {
             <SliderPlus
                label={<>
                   {gvar.gsm.filter.otherFilters.vertical}
-                  <Tooltip align="top" title={gvar.gsm.token.aspectLock}>
-                     <button onClick={() => {
+                  <AspectLockButton
+                     active={filter.blur.aspectLock}
+                     onClick={() => {
                         onChange(produce(filter, v => {
                            v.blur.aspectLock = !v.blur.aspectLock
                         }))
-                     }} style={{ padding: "0px 5px", marginLeft: "10px" }} className={`toggle ${filter.blur.aspectLock ? "active" : ""}`}>:</button>
-                  </Tooltip>
+                     }}
+                  />
                </>}
                value={filter.blur.y}
                sliderMin={0}
@@ -239,13 +242,14 @@ export function SvgFilterItem(props: {
             <SliderPlus
                label={<>
                   {gvar.gsm.filter.otherFilters.horizontal}
-                  <Tooltip align="top" title={gvar.gsm.token.aspectLock}>
-                     <button onClick={() => {
+                  <AspectLockButton
+                     active={filter.motion.aspectLock}
+                     onClick={() => {
                         onChange(produce(filter, v => {
                            v.motion.aspectLock = !v.motion.aspectLock
                         }))
-                     }} style={{ padding: "0px 5px", marginLeft: "10px" }} className={`toggle ${filter.motion.aspectLock ? "active" : ""}`}>:</button>
-                  </Tooltip>
+                     }}
+                  />
                </>}
                value={filter.motion.x}
                sliderMin={0}
@@ -264,13 +268,14 @@ export function SvgFilterItem(props: {
             <SliderPlus
                label={<>
                   {gvar.gsm.filter.otherFilters.vertical}
-                  <Tooltip align="top" title={gvar.gsm.token.aspectLock}>
-                     <button onClick={() => {
+                  <AspectLockButton
+                     active={filter.motion.aspectLock}
+                     onClick={() => {
                         onChange(produce(filter, v => {
                            v.motion.aspectLock = !v.motion.aspectLock
                         }))
-                     }} style={{ padding: "0px 5px", marginLeft: "10px" }} className={`toggle ${filter.motion.aspectLock ? "active" : ""}`}>:</button>
-                  </Tooltip>
+                     }}
+                  />
                </>}
                value={filter.motion.y}
                sliderMin={0}
@@ -353,6 +358,27 @@ export function SvgFilterItem(props: {
    </div>
 }
 
+function AspectLockButton(props: {
+   active: boolean,
+   onClick: () => void
+}) {
+   const ref = useTooltipAnchor<HTMLButtonElement>({
+      label: gvar.gsm.token.aspectLock,
+      align: "top"
+   })
+
+   return (
+      <button
+         ref={ref}
+         onClick={props.onClick}
+         style={{ padding: "0px 5px", marginLeft: "10px" }}
+         className={`toggle ${props.active ? "active" : ""}`}
+      >
+         :
+      </button>
+   )
+}
+
 const SVG_TYPE_TO_PRESET: { [key in keyof Partial<typeof SVG_FILTER_ADDITIONAL>]: {
    options: { id: string, values: any }[],
    handler: (filter: SvgFilter, onChange: (filter: SvgFilter) => void, preset: { id: string, values: any }) => void
@@ -382,5 +408,4 @@ const SVG_TYPE_TO_PRESET: { [key in keyof Partial<typeof SVG_FILTER_ADDITIONAL>]
       }
    }
 }
-
 

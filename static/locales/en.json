@@ -7,8 +7,11 @@
     "captureTab": "Capture",
     "releaseTab": "Release",
     "split": "Split",
-    "reverse": "Reverse",
-    "equalizer": "Equalizer"
+    "splitTooltip": "Control audio channels separately",
+    "reverse": "Reverse audio",
+    "reverseTooltip": "Press and hold to record tab's audio and play in reverse",
+    "equalizer": "Equalizer",
+    "pitchHdTooltip": "Better quality"
   },
   "warnings": {
     "unusedGlobal": "Release unused global shortcut keys",
@@ -33,7 +36,7 @@
     "duplicate": "Duplicate",
     "delete": "Delete",
     "aspectLock": "Aspect lock",
-    "pinTooltip": "Pin if you want the current tab to have it's own context (speed, filters, etc).",
+    "pinTooltip": "Pin tab to keep settings separate.",
     "mergeBoth": "Merge both",
     "min": "Min",
     "max": "Max",
@@ -185,6 +188,7 @@
     "afxDelay": "Delay",
     "afxPan": "Pan",
     "afxMono": "Mono",
+    "afxMonoTooltip": "Merge audio channels",
     "afxCapture": "Tab capture",
     "afxReset": "Audio reset",
     "relativeToSpeed": "Relative to speed",

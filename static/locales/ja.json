@@ -5,8 +5,11 @@
     "captureTab": "捕捉",
     "releaseTab": "手放す",
     "split": "分割",
-    "reverse": "リバース",
-    "equalizer": "イコライザー"
+    "splitTooltip": "音声チャンネルを個別に制御",
+    "reverse": "音声を逆再生",
+    "reverseTooltip": "押し続けてタブの音声を録音し、逆再生します",
+    "equalizer": "イコライザー",
+    "pitchHdTooltip": "高音質"
   },
   "warnings": {
     "unusedGlobal": "使用されていないグローバルショートカットキーを解放してください。",
@@ -31,7 +34,7 @@
     "duplicate": "複製",
     "delete": "削除",
     "aspectLock": "アスペクト固定",
-    "pinTooltip": "現在のタブに独自のコンテキスト（速度、フィルターなど）が必要な場合に固定します。",
+    "pinTooltip": "タブをピン留めして設定を個別に保持します。",
     "mergeBoth": "両方を統合",
     "min": "最小",
     "max": "最大",
@@ -183,6 +186,7 @@
     "afxDelay": "遅延",
     "afxPan": "パン",
     "afxMono": "モノラル",
+    "afxMonoTooltip": "音声チャンネルを統合",
     "afxCapture": "捕捉",
     "afxReset": "オーディオリセット",
     "relativeToSpeed": "速度に対して",

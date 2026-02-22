@@ -6,8 +6,11 @@ export type Gsm = {
     captureTab: string,
     releaseTab: string,
     split: string,
+    splitTooltip: string,
     reverse: string,
-    equalizer: string
+    reverseTooltip: string,
+    equalizer: string,
+    pitchHdTooltip: string
   },
   warnings: {
     unusedGlobal: string,
@@ -184,6 +187,7 @@ export type Gsm = {
     afxDelay: string,
     afxPan: string,
     afxMono: string,
+    afxMonoTooltip: string,
     afxCapture: string,
     afxReset: string,
     relativeToSpeed: string,
