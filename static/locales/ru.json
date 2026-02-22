@@ -84,7 +84,9 @@
     "darkness": "Темнота",
     "modeStandard": "Стандартный",
     "modeCustomColor": "Пользовательский цвет",
-    "modeCustomFilter": "Пользовательский фильтр"
+    "modeCustomFilter": "Пользовательский фильтр",
+    "left": "Левый",
+    "right": "Правый"
   },
   "placer": {
     "windowBounds": {

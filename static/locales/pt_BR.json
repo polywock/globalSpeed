@@ -84,7 +84,9 @@
     "darkness": "Escuridão",
     "modeStandard": "Padrão",
     "modeCustomColor": "Cor personalizada",
-    "modeCustomFilter": "Filtro personalizado"
+    "modeCustomFilter": "Filtro personalizado",
+    "left": "Esquerda",
+    "right": "Direita"
   },
   "placer": {
     "windowBounds": {

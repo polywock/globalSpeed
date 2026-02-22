@@ -1,16 +1,19 @@
-
- 
 /* .ListItem:hover .KeybindControl > .urlRules {
   display: block;
 } */
 
 .KeybindControl {
   display: grid;
-  grid-template-columns: repeat(1, max-content) minmax(200px, 1.5fr) max-content 175px 200px max-content;
-  grid-column-gap: 10px;
+  grid-template-columns: repeat(1, max-content) minmax(
+      200px,
+      1.5fr
+    ) max-content 175px 200px max-content;
+  column-gap: 10px;
   align-items: center;
 
-   & > input[type="text"], & > select, & > .talues > [type="text"] {
+  & > input[type="text"],
+  & > select,
+  & > .talues > [type="text"] {
     text-align: center;
   }
 
@@ -28,17 +31,16 @@
     border-radius: 10px;
     display: block;
   }
- 
-  & > .command {
 
+  & > .command {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
 
-    & > *:nth-child(1n+3) {
+    & > *:nth-child(1n + 3) {
       margin-left: 10px;
     }
-    
+
     .kebabTooltip {
       margin-left: 5px;
     }
@@ -46,7 +48,7 @@
     & > input[type="color"] {
       width: 30px;
     }
-    & > .NumericInput input  {
+    & > .NumericInput input {
       width: 60px;
     }
     & > .nothingInput input {
@@ -55,7 +57,9 @@
       padding: 0px;
     }
 
-    & > svg, & > .svg, .captureIcon {
+    & > svg,
+    & > .svg,
+    .captureIcon {
       color: var(--icon-vibrant-color);
       margin-right: 10px;
       font-size: 16px;
@@ -63,25 +67,30 @@
 
     & > div.captureIcon {
       @keyframes blink {
-        0% {opacity: 1}
-        50% {opacity: 0}
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
       }
 
-      border: 1px solid var(--icon-vibrant-color); 
-      
+      border: 1px solid var(--icon-vibrant-color);
+
       &.active {
         animation: 1.5s ease-out blink 5;
       }
-      
+
       & > div {
-        background-color: var(--icon-vibrant-color); 
+        background-color: var(--icon-vibrant-color);
         width: 1.14rem;
         height: 1rem;
         border: 2px solid var(--fg-color);
       }
     }
 
-    & > .RegularTooltip, & > .warningTooltip {
+    & > .RegularTooltip,
+    & > .warningTooltip {
       margin-left: 5px;
     }
 
@@ -98,9 +107,8 @@
       }
     }
 
-
     & > .support {
-      & > *:nth-child(1n+2) {
+      & > *:nth-child(1n + 2) {
         margin-left: 4px;
       }
     }
@@ -116,7 +124,7 @@
       grid-template-columns: 1fr max-content;
       column-gap: 7px;
       align-items: center;
-  
+
       & button {
         background-color: var(--fg-color);
         color: var(--text-color);
@@ -124,5 +132,4 @@
       }
     }
   }
-
 }

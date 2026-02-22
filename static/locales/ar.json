@@ -84,7 +84,9 @@
     "darkness": "الظلام",
     "modeStandard": "قياسي",
     "modeCustomColor": "لون مخصص",
-    "modeCustomFilter": "مرشح مخصص"
+    "modeCustomFilter": "مرشح مخصص",
+    "left": "يسار",
+    "right": "يمين"
   },
   "placer": {
     "windowBounds": {

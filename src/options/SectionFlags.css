@@ -8,21 +8,24 @@
   & button.icon.gear {
     color: var(--text-color);
   }
-
 }
 
-.SectionFlags > .fields, .IndicatorModal, .SpeedPresetModal, .WidgetModal, .CinemaModal {
+.SectionFlags > .fields,
+.IndicatorModal,
+.SpeedPresetModal,
+.WidgetModal,
+.CinemaModal {
   margin-top: 20px;
 
   & > .presetControl {
     margin-top: 20px;
     margin-left: 20px;
   }
-  
+
   & > .field {
     display: grid;
     grid-template-columns: var(--field-name-width, 300px) max-content;
-    grid-column-gap: 10px;
+    column-gap: 10px;
     margin-bottom: 14px;
     align-items: center;
 
@@ -44,8 +47,7 @@
         grid-template-columns: 8rem max-content;
         column-gap: 5px;
       }
-
-    } 
+    }
 
     &.holdToSpeed {
       margin-bottom: 30px;
@@ -56,7 +58,6 @@
         column-gap: 5px;
       }
     }
-    
 
     & > .fieldValue {
       position: relative;
@@ -69,7 +70,8 @@
     }
 
     &.indent {
-      & > span:first-child, & > div.labelWithTooltip:first-child {
+      & > span:first-child,
+      & > div.labelWithTooltip:first-child {
         margin-left: 20px;
       }
     }
@@ -81,15 +83,15 @@
     & > .colorControl {
       display: grid;
       grid-template-columns: repeat(3, max-content);
-      grid-gap: 10px; 
+      grid-gap: 10px;
       align-items: center;
     }
-    
+
     & > .col {
       display: grid;
       grid-auto-flow: column;
       grid-auto-columns: max-content;
-      grid-column-gap: 20px;
+      column-gap: 20px;
     }
   }
 

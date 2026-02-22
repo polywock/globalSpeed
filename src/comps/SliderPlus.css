@@ -1,10 +1,10 @@
 .SliderPlus {
   background-color: var(--fg-color);
-  
+
   & > .header {
     display: grid;
     grid-template-columns: 1fr 60px max-content;
-    grid-column-gap: 5px;
+    column-gap: 5px;
     margin-bottom: 2px;
     align-items: center;
 

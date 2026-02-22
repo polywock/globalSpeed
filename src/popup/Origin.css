@@ -1,8 +1,7 @@
-
 .Origin {
   display: grid;
   grid-template-columns: repeat(3, max-content);
-  grid-row-gap: 15px;
+  row-gap: 15px;
   justify-content: space-around;
 
   & > div {

@@ -1,6 +1,4 @@
-
 .SectionEditor {
-
   & > .header {
     display: grid;
     margin-bottom: 25px;
@@ -8,13 +6,12 @@
     justify-content: start;
     column-gap: 15px;
 
-
     & > div:first-child {
       display: grid;
       grid-auto-flow: column;
       grid-auto-columns: max-content;
-      grid-column-gap: 10px;
-      
+      column-gap: 10px;
+
       & > div {
         width: 2px;
         background-color: var(--icon-vibrant-color);
@@ -37,27 +34,28 @@
     }
   }
 
-
   & > .keybindControls {
     margin-top: 20px;
 
-    &, & > .KeybindControl > .label  {
+    &,
+    & > .KeybindControl > .label {
       user-select: none;
       cursor: ns-resize;
     }
 
-    & > .KeybindControl, & > .KeybindControl > .label > span {
+    & > .KeybindControl,
+    & > .KeybindControl > .label > span {
       user-select: text;
       cursor: auto;
     }
   }
-  
+
   & > .controls {
     margin-top: 30px;
     display: grid;
     grid-template-columns: repeat(3, max-content) 1fr;
     justify-items: right;
     align-items: stretch;
-    grid-column-gap: 10px;
+    column-gap: 10px;
   }
-} 
+}

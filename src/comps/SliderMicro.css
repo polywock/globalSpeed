@@ -1,12 +1,9 @@
-
-
 .SliderMicro {
   background-color: var(--fg-color);
 
-  
   display: grid;
   grid-template-columns: 1fr max-content;
-  grid-column-gap: 5px;
+  column-gap: 5px;
   margin-bottom: 2px;
   align-items: center;
 

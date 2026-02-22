@@ -84,7 +84,9 @@
     "darkness": "Karanlık",
     "modeStandard": "Standart",
     "modeCustomColor": "Özel renk",
-    "modeCustomFilter": "Özel Filtre"
+    "modeCustomFilter": "Özel Filtre",
+    "left": "Sol",
+    "right": "Sağ"
   },
   "placer": {
     "windowBounds": {

@@ -86,7 +86,9 @@
     "darkness": "Darkness",
     "modeStandard": "Standard",
     "modeCustomColor": "Custom color",
-    "modeCustomFilter": "Custom filter"
+    "modeCustomFilter": "Custom filter",
+    "left": "Left",
+    "right": "Right"
   },
   "placer": {
     "windowBounds": {

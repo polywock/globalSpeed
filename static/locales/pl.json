@@ -84,7 +84,9 @@
     "darkness": "Ciemność",
     "modeStandard": "Standardowy",
     "modeCustomColor": "Niestandardowy kolor",
-    "modeCustomFilter": "Niestandardowy filtr"
+    "modeCustomFilter": "Niestandardowy filtr",
+    "left": "Lewy",
+    "right": "Prawy"
   },
   "placer": {
     "windowBounds": {

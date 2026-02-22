@@ -1,4 +1,3 @@
-
 .AudioPanel {
   font-size: 0.928rem;
   background-color: var(--fg-color);
@@ -9,52 +8,34 @@
   }
 
   & > .capture {
-    margin-bottom: 15px;
-    width: 100%;
     font-size: 1.3em;
-    padding: 5px; 
+    width: 100%;
+    padding: 5px;
     margin-top: 10px;
+    margin-bottom: 10px;
     border-width: 3px;
-    background-color: var(--mg-color);
-    border-style: dashed;
-
-    &.active {
-      border-color: var(--focus-color);
-      border-style: solid;
-      color: var(--focus-color);
-    }
   }
 
   & > .SliderPlus {
     margin-bottom: 20px;
-
-    /* for pitch HD button. */
-    button.toggle {
-      padding: 0 5px;
-      font-size: 0.9em;
-
-      &.active {
-        color: inherit;
-        border-color: inherit; 
-      }
-    }
   }
 
   & > .mainControls {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 10px;
-    
+    column-gap: 4px;
+
     & button {
       border-width: 2px;
+      width: 100%;
     }
   }
 
   & > .control {
     display: grid;
     grid-template-columns: 1fr max-content;
-    grid-column-gap: 10px;
+    column-gap: 10px;
 
     &.split {
       margin-bottom: 30px;
@@ -62,20 +43,19 @@
   }
 
   & > .audioTab {
-
     & > .controls {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-column-gap: 10px;
-  
+      column-gap: 10px;
+
       & > button {
         color: var(--icon-color);
         &.active {
           color: var(--icon-vibrant-color);
-        } 
+        }
         &.muted {
           color: var(--icon-muted-color);
-        } 
+        }
       }
     }
 

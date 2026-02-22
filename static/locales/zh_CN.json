@@ -85,7 +85,9 @@
     "darkness": "黑暗",
     "modeStandard": "标准",
     "modeCustomColor": "自定义颜色",
-    "modeCustomFilter": "自定义滤镜"
+    "modeCustomFilter": "自定义滤镜",
+    "left": "左",
+    "right": "右"
   },
   "placer": {
     "windowBounds": {

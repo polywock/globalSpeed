@@ -10,10 +10,14 @@
   --mg-color: #e4e9f1;
   --fg-color: #f8fbff;
 
-  --text-color: #141b2b;
+  --text-color: oklch(22.359% 0.03316 265.722);
   --focus-color: #2f65f6;
   --link-color: #1546c8;
   --border: #23324d38;
+
+  /* Remove when OKLCH calc is more available */
+  --text-color-opaque: oklch(22.359% 0.03316 265.722 / 0.5);
+  --border-strong: #23324d66;
 
   --error-color: #fde8e8;
   --error-text-color: #7a1b21;
@@ -41,10 +45,11 @@
   --mg-color: #171d28;
   --fg-color: #1d2533;
 
-  --text-color: #eef3ff;
+  --text-color: oklch(96.386% 0.01706 267.821);
   --focus-color: #a8c8ff;
   --link-color: #c5d7ff;
   --border: #d5e0ff3d;
+  --border-strong: #d5e0ff88;
 
   --error-color: #5a2b2e;
   --error-text-color: #ffd9da;
@@ -157,16 +162,27 @@ button {
   }
 
   &.toggle {
-    border-style: dashed;
-    color: var(--text-color);
-    opacity: 0.4;
+    border-style: solid;
+    color: var(--text-color-opaque);
+    opacity: 0.7;
     border-radius: 5px;
 
     &:enabled.active {
       border-style: solid;
-      border-color: var(--border);
       opacity: 1;
+      color: var(--text-color);
+      border-color: var(--border-strong);
+
+      &.colored {
+        color: var(--focus-color);
+        border-color: var(--focus-color);
+      }
     }
+  }
+
+  &.micro {
+    padding: 0 5px;
+    font-size: 0.9em;
   }
 }
 

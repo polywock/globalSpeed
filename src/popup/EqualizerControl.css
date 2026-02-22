@@ -36,7 +36,7 @@
   & > .preset {
     display: grid;
     grid-template-columns: max-content 1fr;
-    grid-column-gap: 5px;
+    column-gap: 5px;
     margin-bottom: 10px;
     width: 100%;
 

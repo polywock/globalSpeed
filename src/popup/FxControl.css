@@ -1,7 +1,5 @@
-
-
 #App.firefox .FxControl {
-   margin-right: 20px;
+  margin-right: 20px;
 }
 
 .FxControl {
@@ -16,16 +14,16 @@
   & > .controls {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 10px;
+    column-gap: 10px;
 
     & > button {
       color: var(--icon-color);
       &.active {
         color: var(--icon-vibrant-color);
-      } 
+      }
       &.muted {
         color: var(--icon-muted-color);
-      } 
+      }
 
       &.active.levelup {
         outline: 1px solid var(--icon-vibrant-color);
@@ -45,7 +43,7 @@
   & > .selector {
     ma12px-top: 10px;
     display: grid;
-    grid-row-gap: 5px;
+    row-gap: 5px;
   }
 
   & > .origin {

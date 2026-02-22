@@ -84,7 +84,9 @@
     "darkness": "Kegelapan",
     "modeStandard": "Standard",
     "modeCustomColor": "Warna tersuai",
-    "modeCustomFilter": "Penapis Tersuai"
+    "modeCustomFilter": "Penapis Tersuai",
+    "left": "Kiri",
+    "right": "Kanan"
   },
   "placer": {
     "windowBounds": {

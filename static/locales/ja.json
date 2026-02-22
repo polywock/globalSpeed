@@ -84,7 +84,9 @@
     "darkness": "暗さ",
     "modeStandard": "標準",
     "modeCustomColor": "カスタムカラー",
-    "modeCustomFilter": "カスタムフィルター"
+    "modeCustomFilter": "カスタムフィルター",
+    "left": "左",
+    "right": "右"
   },
   "placer": {
     "windowBounds": {

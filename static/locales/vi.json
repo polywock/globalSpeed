@@ -84,7 +84,9 @@
     "darkness": "Độ tối",
     "modeStandard": "Tiêu chuẩn",
     "modeCustomColor": "Màu tùy chỉnh",
-    "modeCustomFilter": "Bộ lọc tùy chỉnh"
+    "modeCustomFilter": "Bộ lọc tùy chỉnh",
+    "left": "Trái",
+    "right": "Phải"
   },
   "placer": {
     "windowBounds": {

@@ -85,7 +85,9 @@
     "darkness": "黑暗",
     "modeStandard": "標準",
     "modeCustomColor": "自訂顏色",
-    "modeCustomFilter": "自訂濾鏡"
+    "modeCustomFilter": "自訂濾鏡",
+    "left": "左",
+    "right": "右"
   },
   "placer": {
     "windowBounds": {

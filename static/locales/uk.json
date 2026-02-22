@@ -84,7 +84,9 @@
     "darkness": "Темрява",
     "modeStandard": "Стандарт",
     "modeCustomColor": "Користувацький колір",
-    "modeCustomFilter": "Користувацький фільтр"
+    "modeCustomFilter": "Користувацький фільтр",
+    "left": "Лівий",
+    "right": "Правий"
   },
   "placer": {
     "windowBounds": {

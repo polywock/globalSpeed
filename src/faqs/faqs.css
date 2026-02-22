@@ -1,19 +1,17 @@
-
 body {
   background-color: #ddd;
   font-family: "Segoe UI", "Avenir", system-ui, Courier, monospace;
-  font-size: 1rem; 
+  font-size: 1rem;
   display: grid;
   justify-content: center;
   padding: 20px;
 }
 
 .Group {
-
   h2 {
     margin-top: 0;
   }
-  
+
   width: 800px;
   background-color: white;
   padding: 20px;
@@ -30,7 +28,7 @@ body {
   & > .header {
     display: grid;
     grid-template-columns: max-content 1fr;
-    grid-column-gap: 10px;
+    column-gap: 10px;
     font-size: 1.3em;
     align-items: center;
     padding: 5px;
@@ -40,7 +38,6 @@ body {
     }
   }
 }
-
 
 code {
   background-color: #eee;

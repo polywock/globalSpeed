@@ -84,7 +84,9 @@
     "darkness": "ความมืด",
     "modeStandard": "มาตรฐาน",
     "modeCustomColor": "สีที่กำหนดเอง",
-    "modeCustomFilter": "ฟิลเตอร์ที่กำหนดเอง"
+    "modeCustomFilter": "ฟิลเตอร์ที่กำหนดเอง",
+    "left": "ซ้าย",
+    "right": "ขวา"
   },
   "placer": {
     "windowBounds": {

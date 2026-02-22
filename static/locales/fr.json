@@ -84,7 +84,9 @@
     "darkness": "Obscurité",
     "modeStandard": "Standard",
     "modeCustomColor": "Couleur personnalisée",
-    "modeCustomFilter": "Filtre personnalisé"
+    "modeCustomFilter": "Filtre personnalisé",
+    "left": "Gauche",
+    "right": "Droite"
   },
   "placer": {
     "windowBounds": {

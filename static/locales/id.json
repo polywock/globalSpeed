@@ -84,7 +84,9 @@
     "darkness": "Kegelapan",
     "modeStandard": "Standar",
     "modeCustomColor": "Warna kustom",
-    "modeCustomFilter": "Filter Kustom"
+    "modeCustomFilter": "Filter Kustom",
+    "left": "Kiri",
+    "right": "Kanan"
   },
   "placer": {
     "windowBounds": {

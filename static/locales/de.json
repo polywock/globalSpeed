@@ -84,7 +84,9 @@
     "darkness": "Dunkelheit",
     "modeStandard": "Standard",
     "modeCustomColor": "Benutzerdefinierte Farbe",
-    "modeCustomFilter": "Benutzerdefinierter Filter"
+    "modeCustomFilter": "Benutzerdefinierter Filter",
+    "left": "Links",
+    "right": "Rechts"
   },
   "placer": {
     "windowBounds": {

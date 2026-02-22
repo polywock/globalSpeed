@@ -29,8 +29,8 @@ export type TooltipProps = {
 
 export function Tooltip(props: TooltipProps) {
     const env = useRef({} as Env).current
-    const mainRef = useRef<HTMLDivElement>()
-    const tipRef = useRef<HTMLDivElement>()
+    const mainRef = useRef<HTMLDivElement>(null)
+    const tipRef = useRef<HTMLDivElement>(null)
 
     const handlePointerEnter = (e: React.PointerEvent | React.MouseEvent | React.FocusEvent) => {
         if (!props.title) return 

@@ -24,11 +24,11 @@
     border-bottom: 1px solid var(--border);
   }
 
-  &>.header {
+  & > .header {
     margin-bottom: 2px;
     overflow-wrap: anywhere;
 
-    &>.meta {
+    & > .meta {
       font-size: 0.85em;
       opacity: 0.55;
 
@@ -38,7 +38,7 @@
       }
     }
 
-    &>.jump {
+    & > .jump {
       border: none;
       padding: 0px 5px;
       margin: 0px;
@@ -52,29 +52,29 @@
         opacity: 1;
       }
 
-      &>svg {
+      & > svg {
         opacity: 1;
       }
     }
 
-    &>.title {
+    & > .title {
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
     }
   }
 
-  &>.controls {
+  & > .controls {
     display: grid;
     grid-template-columns: repeat(4, max-content) 1fr repeat(3, max-content);
     align-items: center;
-    grid-column-gap: 5px;
+    column-gap: 5px;
 
-    &>input[type="range"] {
+    & > input[type="range"] {
       min-width: 0;
     }
 
-    &>button {
+    & > button {
       background-color: transparent;
       color: var(--icon-color);
       border-color: transparent;
@@ -100,11 +100,10 @@
       }
     }
 
-    &>.duration {
+    & > .duration {
       font-size: 0.9em;
       margin-right: 8px;
       justify-self: end;
     }
   }
-
 }
