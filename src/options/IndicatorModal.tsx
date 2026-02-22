@@ -27,7 +27,7 @@ export function IndicatorModal(props: Props) {
       <div className="field">
         <span>{gvar.gsm.token.position}</span>
         <div>
-          <select className="padded" style={{marginRight: '10px'}} value={init?.position ?? "TL"} onChange={e => {
+          <select style={{marginRight: '10px'}} value={init?.position ?? "TL"} onChange={e => {
             const indicatorInit = produce(init ?? {}, d => {
               d.position = e.target.value as any
               d.key = randomId()
@@ -154,7 +154,7 @@ export function IndicatorModal(props: Props) {
       <div className="field">
         <span>{gvar.gsm.token.animation}</span>
         <div>
-          <select className="padded" style={{marginRight: '10px'}} value={init?.animation || 1} onChange={e => {
+          <select style={{marginRight: '10px'}} value={init?.animation || 1} onChange={e => {
             const indicatorInit = produce(init ?? {}, d => {
               d.animation = parseInt(e.target.value) as any
               d.key = randomId()

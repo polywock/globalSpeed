@@ -159,7 +159,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
 
       {/* Shortcut mode */}
       {isMobile() ? <div/> : (
-        <button ref={triggerModeRef} className={`buttonTooltip icon`} onClick={e => {
+        <button ref={triggerModeRef} className={`icon`} onClick={e => {
           let options = value.trigger === 2 ? [0, 1, 2] : (
             value.trigger === 1 ? [2, 0, 1] : [1, 2, 0]
           )
@@ -245,7 +245,6 @@ export const KeybindControl = (props: KeybindControlProps) => {
       {/* State input  */}
       {command.valueType === "state" && (
         <select
-          className="padded"
           value={value.valueState}
           onChange={e => {
             props.onChange(value.id, produce(value, d => {
@@ -317,7 +316,7 @@ export const TriggerValues = (props: Props) => {
     {value.trigger === Trigger.GLOBAL && (
       (
         <div className="globalPicker">
-          <select className="padded" value={value[keyForGlobal] || "commandA"} onChange={e => {
+          <select value={value[keyForGlobal] || "commandA"} onChange={e => {
             props.onChange(value.id, produce(value, d => {
               d[keyForGlobal] = e.target.value
             }))

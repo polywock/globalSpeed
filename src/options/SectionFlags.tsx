@@ -77,7 +77,7 @@ export function SectionFlags(props: {}) {
             
             {gvar.gsm.options.flags._languageTooltip && <RegularTooltip title={gvar.gsm.options.flags._languageTooltip} align="right"/>}
           </div>
-          <select className="padded" value={view.language || "detect"} onChange={e => {
+          <select value={view.language || "detect"} onChange={e => {
             setView({language: e.target.value})
             setTimeout(() => {
               window.location.reload()
@@ -178,7 +178,7 @@ export function SectionFlags(props: {}) {
         {!!view.pinByDefault && (
           <div className="field indent">
             <span>{gvar.gsm.options.flags.initialState}</span>
-            <select className="padded" value={view.initialContext ?? InitialContext.PREVIOUS} onChange={async e => {
+            <select value={view.initialContext ?? InitialContext.PREVIOUS} onChange={async e => {
               
               const partial = {initialContext: parseInt(e.target.value)} as Partial<StateView>
               if (partial.initialContext === InitialContext.CUSTOM) {
@@ -287,7 +287,7 @@ export function SectionFlags(props: {}) {
                 <span>{gvar.gsm.options.flags.keyboardInput}</span>
                 <RegularTooltip title={gvar.gsm.options.flags.keyboardInputTooltip} align="right"/>
               </div>
-              <select className="padded" value={view.virtualInput ? "v" : "q"} onChange={async e => {
+              <select value={view.virtualInput ? "v" : "q"} onChange={async e => {
                 setView({virtualInput: e.target.value === "v"})
               }}>
                 <option value="q">{gvar.gsm.options.flags.qwerty}</option>

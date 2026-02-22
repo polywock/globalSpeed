@@ -50,6 +50,7 @@
   --link-color: #c5d7ff;
   --border: #d5e0ff3d;
   --border-strong: #d5e0ff88;
+  --text-color-opaque: oklch(96.386% 0.01706 267.821 / 0.5);
 
   --error-color: #5a2b2e;
   --error-text-color: #ffd9da;

@@ -118,9 +118,9 @@ export function NameArea(props: NameAreaProps) {
             {value.command === "intoPopup" && <FaRegWindowRestore/>}
             {value.command === "pin" && <Pin className="tr105" />}
             {value.command === "fxFilter" && <Zap className="tr130" />}
-            {value.command === "fxState" && <FaPowerOff className="hoverYes tr110" />}
-            {(value.command === "fxReset" || value.command === "afxReset") && <GiAnticlockwiseRotation className="hoverYes tr110" />}
-            {value.command === "fxSwap" && <FaExchangeAlt className="hoverYes tr110" />}
+            {value.command === "fxState" && <FaPowerOff className="tr110" />}
+            {(value.command === "fxReset" || value.command === "afxReset") && <GiAnticlockwiseRotation className="tr110" />}
+            {value.command === "fxSwap" && <FaExchangeAlt className="tr110" />}
             {value.command === "pause" && <FaPause className="tr95" />}
             {(value.command === "mute" || value.command === "muteTab") && <FaVolumeMute className="tr105" />}
             {value.command === "volume" && <FaVolumeUp className="tr105" />}
@@ -308,7 +308,6 @@ function FilterSelect(props: FilterSelectProps) {
             <div className="support">
                 {command.withFilterTarget && (
                     <select
-                        className="padded"
                         value={value.filterTarget}
                         onChange={e => {
                             onChange(value.id, produce(value, d => {
@@ -321,7 +320,6 @@ function FilterSelect(props: FilterSelectProps) {
                 )}
                 {command.withFilterOption && (
                     <select
-                        className="padded"
                         value={value.filterOption}
                         onChange={e => {
                             props.onChange(value.id, produce(value, d => {
@@ -389,7 +387,7 @@ export function DurationSelect(props: DurationSelectProps) {
     const { value, onChange } = props
 
     return <>
-        <select className="padded" value={value.duration || Duration.SECS} onChange={e => {
+        <select value={value.duration || Duration.SECS} onChange={e => {
             onChange(value.id, produce(value, d => {
                 saveToMem(value, props.adjustMode)
 
