@@ -30,8 +30,11 @@ type HeaderProps = {
 export function Header(props: HeaderProps) {
   const [view, setView] = useStateView({enabled: true, isPinned: true, superDisable: true, circleWidget: true, keybindsUrlCondition: true, sawEnableShortcutOverlayCount: true})
 
-  const statusTip = useTooltipAnchor<HTMLDivElement>({ label: view?.enabled ? gvar.gsm.token.turnOff: gvar.gsm.token.turnOn, align: "bottom" })
-  const pinTip = useTooltipAnchor<HTMLDivElement>({ label: view?.isPinned ? gvar.gsm.header.unpinTooltip : gvar.gsm.header.pinTooltip, align: "bottom" })
+  const statusTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.header.powerTooltip, align: "bottom" })
+  const pinTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.header.pinTooltip, align: "bottom" })
+  const settingsTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.header.settingsPage, align: "bottom" })
+  const githubTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.header.github, align: "bottom" })
+  const backTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.token.back, align: "bottom" })
 
   let kebabInfo: {
     list: KebabListProps['list'],
@@ -92,10 +95,11 @@ export function Header(props: HeaderProps) {
       {/* Kebab list */}
       {kebabInfo?.list.length > 0 ? (
         <div className="kebab">
-          <KebabList centered={true} title="" list={kebabInfo.list} onSelect={kebabInfo.onSelect} onOpen={() => {
+          <KebabList tooltipAlign="bottom"  list={kebabInfo.list} onSelect={kebabInfo.onSelect} onOpen={() => {
             kebabInfo.showAlert && (view.sawEnableShortcutOverlayCount || 0) < 5 && setTimeout(showOverlayForKebab.bind(null, view.sawEnableShortcutOverlayCount), 0)
           }}/>
           {kebabInfo.showAlert && <div className="alert"><IoIosInformationCircle size={"1.2em"}/></div>}
+
         </div>
       ) : <div className="noPadding"/>}
       
@@ -118,6 +122,7 @@ export function Header(props: HeaderProps) {
       {/* Back button */}
       {props.panel !== 0 ? (
         <div 
+          ref={backTip}
           onClick={e => props.setPanel(0)}
         >
           <GoArrowLeft size="1.42rem"/>
@@ -125,7 +130,7 @@ export function Header(props: HeaderProps) {
       ) : <div className="noPadding"/>}
 
       {/* Options page */}
-      <div  onClick={async e => {
+      <div ref={settingsTip} onClick={async e => {
         chrome.tabs.create({url: chrome.runtime.getURL("options.html")})
         window.close()
       }}>
@@ -133,7 +138,7 @@ export function Header(props: HeaderProps) {
       </div>
 
       {/* Github */}
-      <div onClick={e => {
+      <div ref={githubTip} onClick={e => {
         chrome.tabs.create({url: "https://github.com/polywock/globalSpeed"})
         window.close()
       }}>
@@ -153,6 +158,7 @@ type FxIconProps = {
 
 export function FxIcon(props: FxIconProps) {
   const [view, setView] = useStateView({elementFx: true, backdropFx: true})
+  const videoFxTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.header.videoEffects, align: "bottom" })
 
   const fxActive = useMemo(() => {
     if (view && props.enabled) {
@@ -164,6 +170,7 @@ export function FxIcon(props: FxIconProps) {
 
   return (
     <div 
+      ref={videoFxTip}
       className={`beat ${fxActive ? "active" : ""}`} 
       onClick={e => props.onClick()}
       onContextMenu={e => {
@@ -183,9 +190,10 @@ type AudioIconProps = {
 
 export function AudioIcon(props: AudioIconProps) {
   const status = useCaptureStatus()
-
+  const audioFxTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.header.audioEffects, align: "bottom" })
   return (
     <div 
+      ref={audioFxTip}
       className={`beat ${status ? "active" : ""}`} 
       onClick={props.onClick}
       onContextMenu={e => {

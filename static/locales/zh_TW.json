@@ -3,8 +3,7 @@
   ":appDesc": "影音通用速率控制器。",
   "_scale": 1.08,
   "audio": {
-    "captureTab": "擷取",
-    "releaseTab": "釋出",
+    "releaseTab": "釋出音訊",
     "split": "聲道分離",
     "splitTooltip": "分別控制音訊聲道",
     "reverse": "反轉音訊",
@@ -31,13 +30,18 @@
     "videoContrast": "影片對比"
   },
   "header": {
-    "pinTooltip": "將目前分頁釘選以使用獨立內容",
-    "unpinTooltip": "取消釘選目前分頁以使用全域內容"
+    "powerTooltip": "切換狀態",
+    "pinTooltip": "釘選的分頁會使用獨立的設定，而非全域設定",
+    "audioEffects": "音訊效果",
+    "videoEffects": "視訊效果",
+    "settingsPage": "設定",
+    "github": "檢視原始碼"
   },
   "token": {
     "create": "建立",
     "reset": "重設",
     "duplicate": "複製",
+    "back": "返回",
     "delete": "刪除",
     "aspectLock": "鎖定比例",
     "mergeBoth": "合併兩者",
@@ -45,8 +49,6 @@
     "max": "最大",
     "on": "開啟",
     "off": "關閉",
-    "turnOn": "啟用",
-    "turnOff": "停用",
     "toggle": "切換",
     "video": "影片",
     "page": "頁面",
@@ -188,13 +190,13 @@
     "fxReset": "重設特效",
     "fxSwap": "切換特效",
     "fxFilter": "濾鏡",
+    "afxCapture": "擷取音訊",
     "afxPitch": "音高",
     "afxGain": "音量增益",
     "afxDelay": "延遲",
     "afxPan": "聲道平衡",
     "afxMono": "單聲道",
     "afxMonoTooltip": "合併音訊聲道",
-    "afxCapture": "分頁擷取",
     "afxReset": "重設音訊",
     "relativeToSpeed": "相對於速度",
     "showNet": "顯示總時長",
@@ -211,7 +213,7 @@
     "toggleSpeed": "切換速度",
     "toggleSpeedTooltip": "在快速鍵速度與上次速度之間切換。",
     "alwaysOn": "永遠開啟",
-    "alwaysOnTooltip": "預設情況下，快速鍵只能在上次是透過相同快速鍵停用擴充功能時重新啟用擴充功能。啟用此設定可確保快速鍵永遠能啟用擴充功能，即使是透過介面選單關閉的。",
+    "alwaysOnTooltip": "允許快捷鍵啟用擴充功能，即使它已從選單中停用。",
     "muteTab": "分頁靜音"
   },
   "options": {

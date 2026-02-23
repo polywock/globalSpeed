@@ -3,7 +3,6 @@ export type Gsm = {
   _scale?: number,
   _lang?: string,
   audio: {
-    captureTab: string,
     releaseTab: string,
     split: string,
     splitTooltip: string,
@@ -31,13 +30,18 @@ export type Gsm = {
     videoContrast: string
   },
   header: {
+    powerTooltip: string,
     pinTooltip: string,
-    unpinTooltip: string
+    audioEffects: string,
+    videoEffects: string,
+    settingsPage: string,
+    github: string
   },
   token: {
     create: string,
     reset: string,
     duplicate: string,
+    back: string,
     delete: string,
     aspectLock: string,
     mergeBoth: string,
@@ -45,8 +49,6 @@ export type Gsm = {
     max: string,
     on: string,
     off: string,
-    turnOn: string,
-    turnOff: string,
     toggle: string,
     video: string,
     page: string,
@@ -188,13 +190,13 @@ export type Gsm = {
     fxReset: string,
     fxSwap: string,
     fxFilter: string,
+    afxCapture: string,
     afxPitch: string,
     afxGain: string,
     afxDelay: string,
     afxPan: string,
     afxMono: string,
     afxMonoTooltip: string,
-    afxCapture: string,
     afxReset: string,
     relativeToSpeed: string,
     showNet: string,

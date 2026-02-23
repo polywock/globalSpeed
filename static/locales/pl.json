@@ -2,8 +2,7 @@
   ":appName": "Global Speed: Kontrola Prędkości Wideo",
   ":appDesc": "Uniwersalne sterowanie prędkością odtwarzania wideo i audio.",
   "audio": {
-    "captureTab": "Przechwyć",
-    "releaseTab": "Zwolnij",
+    "releaseTab": "Zwolnij dźwięk",
     "split": "Podziel",
     "splitTooltip": "Steruj kanałami audio osobno",
     "reverse": "Odwróć dźwięk",
@@ -30,13 +29,18 @@
     "videoContrast": "Kontrast wideo"
   },
   "header": {
-    "pinTooltip": "Przypnij bieżącą kartę, aby używać własnego kontekstu",
-    "unpinTooltip": "Odepnij bieżącą kartę, aby używać kontekstu globalnego"
+    "powerTooltip": "Przełącz stan",
+    "pinTooltip": "Przypięte karty używają własnego kontekstu zamiast globalnego",
+    "audioEffects": "Efekty dźwiękowe",
+    "videoEffects": "Efekty wideo",
+    "settingsPage": "Ustawienia",
+    "github": "Zobacz kod źródłowy"
   },
   "token": {
     "create": "Utwórz",
     "reset": "Zresetuj",
     "duplicate": "Duplikuj",
+    "back": "Wstecz",
     "delete": "Usuń",
     "aspectLock": "Blokada proporcji",
     "mergeBoth": "Połącz oba",
@@ -44,8 +48,6 @@
     "max": "Max",
     "on": "Włącz",
     "off": "Wyłącz",
-    "turnOn": "Włącz",
-    "turnOff": "Wyłącz",
     "toggle": "Przełącz",
     "video": "Wideo",
     "page": "Strona",
@@ -187,13 +189,13 @@
     "fxReset": "Reset efektów",
     "fxSwap": "Zamień efekty",
     "fxFilter": "Filtr",
+    "afxCapture": "Przechwyć dźwięk",
     "afxPitch": "Ton",
     "afxGain": "Wzmocnienie głośności",
     "afxDelay": "Opóźnienie",
     "afxPan": "Panoramowanie",
     "afxMono": "Mono",
     "afxMonoTooltip": "Scal kanały audio",
-    "afxCapture": "Przechwytywanie karty",
     "afxReset": "Reset audio",
     "relativeToSpeed": "Względem prędkości",
     "showNet": "Pokaż całkowity czas trwania",
@@ -210,7 +212,7 @@
     "toggleSpeed": "Przełącz prędkość",
     "toggleSpeedTooltip": "Przełącz między skrótową prędkością a ostatnią prędkością.",
     "alwaysOn": "Zawsze włączone",
-    "alwaysOnTooltip": "Domyślnie skrót może ponownie aktywować rozszerzenie, jeśli zostało wyłączone tym samym skrótem. Włącz tę opcję, aby upewnić się, że skrót zawsze działa na włączenie rozszerzenia, nawet jeśli zostało wyłączone w menu UI.",
+    "alwaysOnTooltip": "Pozwól skrótowi włączać rozszerzenie, nawet jeśli zostało wyłączone z menu.",
     "muteTab": "Wycisz kartę"
   },
   "options": {

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { IoEllipsisVertical } from "react-icons/io5"
 import { Menu, type MenuProps } from "@/comps/Menu"
-import { useTooltipAnchor } from "@/comps/Tooltip"
+import { TooltipOpts, useTooltip, useTooltipAnchor } from "@/comps/Tooltip"
 
 export type KebabListProps = {
     list:  MenuProps["items"],
@@ -9,19 +9,22 @@ export type KebabListProps = {
     divIfEmpty?: boolean,
     title?: string,
     centered?: boolean,
-    onOpen?: () => void 
+    onOpen?: () => void,
+    tooltipAlign?: TooltipOpts["align"]
 }
 
 export function KebabList(props: KebabListProps) {
     const [menu, setMenu] = useState(null as { x?: number, y?: number, adjusted?: boolean, centered?: boolean })
+    const { clearTooltip } = useTooltip()
     const menuRef = useRef<HTMLDivElement>(null)
     const buttonRef = useRef<HTMLButtonElement>(null)
     const kebabTip = useTooltipAnchor<HTMLButtonElement>({
-        label: props.title ?? gvar.gsm.token.more,
-        align: "top"
+        label: props.title || gvar.gsm.token.more,
+        align: props.tooltipAlign || "top"
     })
     
     const onContext = (e: React.MouseEvent) => {
+        clearTooltip()
         e.preventDefault()
         props.onOpen?.()
         if (props.centered) {

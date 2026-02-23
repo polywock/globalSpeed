@@ -2,8 +2,7 @@
   ":appName": "Global Speed: Kiểm soát tốc độ video",
   ":appDesc": "Điều khiển tốc độ phát video và âm thanh toàn diện.",
   "audio": {
-    "captureTab": "Capture",
-    "releaseTab": "Release",
+    "releaseTab": "Giải phóng âm thanh",
     "split": "Split",
     "splitTooltip": "Điều khiển từng kênh âm thanh riêng",
     "reverse": "Đảo ngược âm thanh",
@@ -30,13 +29,18 @@
     "videoContrast": "Độ tương phản video"
   },
   "header": {
-    "pinTooltip": "Ghim thẻ hiện tại để dùng ngữ cảnh riêng",
-    "unpinTooltip": "Bỏ ghim thẻ hiện tại để dùng ngữ cảnh toàn cầu"
+    "powerTooltip": "Bật/tắt",
+    "pinTooltip": "Các thẻ đã ghim dùng ngữ cảnh riêng thay vì ngữ cảnh toàn cầu",
+    "audioEffects": "Hiệu ứng âm thanh",
+    "videoEffects": "Hiệu ứng video",
+    "settingsPage": "Cài đặt",
+    "github": "Xem mã nguồn"
   },
   "token": {
     "create": "Tạo mới",
     "reset": "Cài lại",
     "duplicate": "Nhân bản",
+    "back": "Quay lại",
     "delete": "Xóa",
     "aspectLock": "Khoá tỉ lệ",
     "mergeBoth": "Hợp nhất cả hai",
@@ -44,8 +48,6 @@
     "max": "Tối đa",
     "on": "Bật",
     "off": "Tắt",
-    "turnOn": "Bật",
-    "turnOff": "Tắt",
     "toggle": "Chuyển đổi",
     "video": "Video",
     "page": "Trang",
@@ -187,13 +189,13 @@
     "fxReset": "FX reset",
     "fxSwap": "FX swap",
     "fxFilter": "Bộ lọc",
+    "afxCapture": "Bắt âm thanh",
     "afxPitch": "Cao độ",
     "afxGain": "Tăng âm lượng",
     "afxDelay": "Trì hoãn",
     "afxPan": "Pan",
     "afxMono": "Mono",
     "afxMonoTooltip": "Gộp kênh âm thanh",
-    "afxCapture": "Chụp tab",
     "afxReset": "Đặt lại âm thanh",
     "relativeToSpeed": "Liên quan đến tốc độ",
     "showNet": "Hiển thị thời lượng tổng",
@@ -210,7 +212,7 @@
     "toggleSpeed": "Chuyển đổi tốc độ",
     "toggleSpeedTooltip": "Chuyển đổi giữa tốc độ phím tắt và tốc độ cuối cùng.",
     "alwaysOn": "Luôn bật",
-    "alwaysOnTooltip": "Theo mặc định, phím tắt chỉ có thể kích hoạt lại tiện ích mở rộng nếu nó được tắt lần cuối bằng cách sử dụng cùng một phím tắt. Bật cài đặt này để đảm bảo phím tắt luôn hoạt động để bật tiện ích mở rộng, ngay cả khi nó đã bị tắt qua menu giao diện người dùng.",
+    "alwaysOnTooltip": "Cho phép phím tắt bật tiện ích mở rộng ngay cả khi nó đã bị tắt từ menu.",
     "muteTab": "Tắt tiếng tab"
   },
   "options": {
