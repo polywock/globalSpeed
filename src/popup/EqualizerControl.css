@@ -3,6 +3,7 @@
   padding: 10px;
   border: 1px solid var(--border);
   user-select: none;
+  border-radius: var(--radius);
 
   & > .header {
     font-size: 1.2em;

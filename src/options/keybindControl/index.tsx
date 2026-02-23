@@ -6,7 +6,7 @@ import { NumericInput } from "../../comps/NumericInput"
 import { commandInfos } from "../../defaults/commands"
 import { CycleInput } from "../../comps/CycleInput"
 import { ModalText } from "../../comps/ModalText"
-import { FaGlobe, FaFile, FaBars, FaRegEdit } from "react-icons/fa"
+import { FaRegEdit } from "react-icons/fa"
 import { requestCreateTab } from "../../utils/browserUtils"
 import { domRectGetOffset, feedbackText, isFirefox, isMobile } from "../../utils/helper"
 import { ThrottledTextInput } from "../../comps/ThrottledTextInput"
@@ -35,13 +35,9 @@ export type KeybindControlProps = {
 export const KeybindControl = (props: KeybindControlProps) => {
   const { value } = props
   const [show, setShow] = useState(false)
-  const triggerModeRef = useTooltipAnchor<HTMLButtonElement>({
-    label: gvar.gsm.options.editor.triggerModes[value.trigger || Trigger.PAGE],
-    align: "top"
-  })
 
   const command = commandInfos[value.command]
-  const urlAllowed = value.trigger !== Trigger.MENU
+  const urlAllowed = value.trigger !== 2
   let adjustMode = command.valueType === "adjustMode" ? (value.adjustMode || AdjustMode.SET) : null
 
   let showNumericControl = false
@@ -157,28 +153,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
       {/* Name area */}
       <NameArea command={command} onChange={props.onChange} value={value} hasSpecial={hasSpecial} reference={ref} />
 
-      {/* Shortcut mode */}
-      {isMobile() ? <div/> : (
-        <button ref={triggerModeRef} className={`icon`} onClick={e => {
-          let options = value.trigger === 2 ? [0, 1, 2] : (
-            value.trigger === 1 ? [2, 0, 1] : [1, 2, 0]
-          )
-          if (value.command === "afxCapture") options.splice(options.indexOf(0), 1)
-          if (isFirefox()) options.splice(options.indexOf(1), 1)
 
-            let newest = options.shift() as Trigger
-
-            props.onChange(value.id, produce(value, d => {
-              d.trigger = newest
-            }))
-
-          requestSyncContextMenu()
-        }}>
-          {value.trigger === Trigger.BROWSER ? <FaGlobe className="tr115"/> : (
-            value.trigger === Trigger.MENU ? <FaBars className="tr115"/> : <FaFile className="tr115" />
-          )}
-        </button>
-      )}
       <div className="talues">
         <TriggerValues value={value} onChange={props.onChange} virtualInput={props.virtualInput} />
         {(value.allowAlt && adjustMode === AdjustMode.CYCLE) && <TriggerValues value={value} onChange={props.onChange} virtualInput={props.virtualInput} isAlt={true} />}

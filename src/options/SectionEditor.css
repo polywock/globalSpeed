@@ -1,39 +1,4 @@
 .SectionEditor {
-  & > .header {
-    display: grid;
-    margin-bottom: 25px;
-    grid-auto-flow: column;
-    justify-content: start;
-    column-gap: 15px;
-
-    & > div:first-child {
-      display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: max-content;
-      column-gap: 10px;
-
-      & > div {
-        width: 2px;
-        background-color: var(--icon-vibrant-color);
-        transform: rotateZ(20deg) scaleY(1.3);
-      }
-    }
-
-    .modeSpan {
-      opacity: 0.6;
-
-      &:hover {
-        opacity: 1;
-      }
-
-      & > svg {
-        margin-left: 8px;
-        transform: scale(1.2);
-        margin-right: 5px;
-      }
-    }
-  }
-
   & > .keybindControls {
     margin-top: 20px;
 
@@ -50,8 +15,8 @@
     }
   }
 
-  & > .controls {
-    margin-top: 30px;
+  & > .sectionControls {
+    margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(3, max-content) 1fr;
     justify-items: right;

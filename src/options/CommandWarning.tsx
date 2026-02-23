@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import { Keybind, Trigger } from "../types"
+import { Keybind } from "../types"
 import { requestCreateTab } from "../utils/browserUtils"
 import { FaLink } from "react-icons/fa"
 import { MdWarning } from "react-icons/md"
@@ -23,7 +23,7 @@ export function CommandWarning(props: Props) {
     const handleInterval = () => {
       chrome.commands.getAll(cc => {
         const target = cc.some(c => c.name.startsWith("command") && c.shortcut && (
-          !env.keybinds.some(kb => kb.enabled && kb.trigger === Trigger.BROWSER && (kb.globalKey || "commandA") === c.name)
+          !env.keybinds.some(kb => kb.enabled && (kb.globalKey || "commandA") === c.name)
         ))
         target !== env.show && setShow(target)
       }) 

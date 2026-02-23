@@ -10,7 +10,7 @@
 
 #App {
   margin: 0px;
-  width: 1000px;
+  width: 950px;
   margin-top: 40px;
 
   .labelWithTooltip {
@@ -25,6 +25,15 @@
     padding: 20px;
     margin-bottom: 40px;
     box-shadow: var(--card-shadow);
+    border-radius: var(--radius-2xl);
+
+    & > .subheader {
+      opacity: 0.5;
+      font-style: italic;
+      font-size: 1.2em;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
 
     &.promo {
       display: inline-block;

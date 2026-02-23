@@ -4,60 +4,74 @@ import { FaLink } from "react-icons/fa"
 import { MdWarning } from "react-icons/md"
 import { isEdge } from "@/utils/helper"
 
-enum WarningType {
+export enum DevWarningType {
     NONE = 0,
     ENABLE_DEV = 1,
     NO_SUPPORT = 2
 }
 
-export function DevWarning(props: {
-    hasJs?: boolean,
-    forUrlRules?: boolean
-  }) {
-  const [show, setShow] = useState(0 as WarningType)
-  const env = useRef({} as {show: typeof show}).current
-  env.show = show 
+export function useDevWarningType(hasJs: boolean): DevWarningType {
+  const [type, setType] = useState(DevWarningType.NONE)
+  const env = useRef({} as {type: DevWarningType}).current
+  env.type = type
 
   useEffect(() => {
-    if (!props.hasJs) {
-        setShow(null)
+    if (!hasJs) {
+        setType(DevWarningType.NONE)
         return
-    } 
-
-    const handleInterval = () => {
-        let target = WarningType.NO_SUPPORT
-        if (canPotentiallyUserScriptExecute()) {
-            target = canUserScript() ? WarningType.NONE : WarningType.ENABLE_DEV
-        }
-
-        target !== env.show && setShow(target)
-        env.show = target
     }
 
+    const handleInterval = () => {
+        let target = DevWarningType.NO_SUPPORT
+        if (canPotentiallyUserScriptExecute()) {
+            target = canUserScript() ? DevWarningType.NONE : DevWarningType.ENABLE_DEV
+        }
+
+        target !== env.type && setType(target)
+        env.type = target
+    }
+
+    handleInterval()
     const intervalId = setInterval(handleInterval, 300)
 
     return () => {
       clearInterval(intervalId)
     }
-  }, [props.hasJs])
+  }, [hasJs])
+
+  return type
+}
+
+
+type Props = {
+  forUrlRules?: boolean
+} & ({
+  warningType: DevWarningType
+  hasJs?: never
+} | {
+  hasJs?: boolean
+  warningType?: never
+})
+
+export function DevWarning(props: Props) {
+  const ownType = useDevWarningType(props.hasJs ?? false)
+  const show = props.warningType ?? ownType
 
   if (!show) return null
 
   return <div className="CommandWarning">
     <MdWarning size={"1.15rem"}/>
-    {show === WarningType.ENABLE_DEV && (
+    {show === DevWarningType.ENABLE_DEV && (
         <span>{gvar.gsm.warnings[`${props.forUrlRules ? "jsWarningRules" : "jsWarning"}${isEdge() ? 'Edge' : ''}`]}</span>
     )}
-    {show === WarningType.NO_SUPPORT && (
+    {show === DevWarningType.NO_SUPPORT && (
         <span>{gvar.gsm.warnings.jsUpdate}</span>
     )}
-    {show === WarningType.ENABLE_DEV && (
+    {show === DevWarningType.ENABLE_DEV && (
         <button onClick={() => isEdge() ? requestCreateTab(`chrome://extensions`) : requestCreateTab(`chrome://extensions/?id=${chrome.runtime.id}#:~:text=${encodeURIComponent("Allow User Scripts")}`)}>
             <FaLink size={"1.21rem"}/>
             <span>{gvar.gsm.token.openPage}</span>
         </button>
     )}
   </div>
-
- 
 }

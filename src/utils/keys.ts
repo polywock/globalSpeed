@@ -31,7 +31,10 @@ export function formatHotkey(hot: Hotkey) {
       parts.push(`⌘`)
     }
     let visualKey = hot.key
-    if (visualKey && visualKey.trim() === "") visualKey = "Space"
+    if (visualKey) {
+      if (visualKey.length === 1) visualKey = visualKey.toLocaleUpperCase()
+      if (visualKey.trim() === "") visualKey = "Space"
+    }
 
     parts.push(hot.key ? visualKey : hot.code)
     return parts.join(" ")

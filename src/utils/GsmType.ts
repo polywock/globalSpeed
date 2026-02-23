@@ -270,7 +270,12 @@ export type Gsm = {
     editor: {
       header: string,
       headerMobile: string,
-      toggleMode: string,
+      pageShortcuts: string,
+      pageShortcutsSub: string,
+      browserShortcuts: string,
+      browserShortcutsSub: string,
+      menuShortcuts: string,
+      menuShortcutsSub: string,
       toggleModeTooltip: string,
       menuLabel: string,
       triggerMode: string,

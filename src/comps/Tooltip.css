@@ -11,7 +11,7 @@
   color: var(--pure-color);
   padding: 8px;
   white-space: break-spaces;
-  border-radius: 5px;
+  border-radius: var(--radius);
   opacity: 0.85;
   z-index: 9999999999999;
   overflow-wrap: break-word;

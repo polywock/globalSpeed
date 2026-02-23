@@ -1,7 +1,7 @@
 .Toggle {
   display: inline-block;
   width: 40px;
-  border-radius: 5px;
+  border-radius: var(--radius);
   background-color: var(--border);
   border: 1.5px solid var(--border);
   cursor: pointer;

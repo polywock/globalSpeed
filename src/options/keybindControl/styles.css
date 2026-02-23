@@ -5,8 +5,8 @@
 .KeybindControl {
   display: grid;
   grid-template-columns:
-    repeat(1, max-content) minmax(200px, 1.5fr)
-    max-content 175px 200px max-content;
+    max-content minmax(200px, 1.5fr)
+    175px 200px max-content;
   column-gap: 10px;
   align-items: center;
 
@@ -99,6 +99,10 @@
       margin-left: 5px;
     }
 
+    & > .warningTooltip {
+      color: var(--icon-vibrant-color);
+    }
+
     & > button.adjustMode {
       margin-left: 11px;
       padding: 3px;
@@ -106,7 +110,6 @@
       color: var(--text-color);
       border: 1px solid var(--border);
       font-size: 0.8em;
-      border-radius: 5px;
     }
 
     & > .support {

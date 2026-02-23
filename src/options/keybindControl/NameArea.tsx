@@ -69,7 +69,7 @@ export function NameArea(props: NameAreaProps) {
     
     let tabCaptureHint = command.requiresTabCapture && !(value.command === "afxCapture" || value.command === "afxReset") && (value.trigger || Trigger.PAGE) === Trigger.PAGE
     const tabCaptureHintTooltip = useTooltipAnchor<HTMLSpanElement>({
-        label: replaceArgs(gvar.gsm.warnings.captureRequired, [`[ ${gvar.gsm.command.afxCapture} ]`]),
+        label: replaceArgs(gvar.gsm.warnings.captureRequired, [`(${gvar.gsm.command.afxCapture})`]),
         align: "top",
         allowClick: true
     })
@@ -107,7 +107,7 @@ export function NameArea(props: NameAreaProps) {
             {/* Capture shortcut warning */}
             {tabCaptureHint && (
                 <span ref={tabCaptureHintTooltip} className="warningTooltip">
-                    <MdWarning size="1.35rem" style={{ color: "#ff8888" }} />
+                    <MdWarning size="1.35rem" />
                 </span>
             )}
             
@@ -361,7 +361,7 @@ function Cinema(props: {
     onChange: (id: string, v: Keybind) => void
 }) {
     let [show, setShow] = useState(false)
-    const moreTip = useTooltipAnchor<HTMLButtonElement>({label: gvar.gsm.token.more, align: "top"})
+    const moreTip = useTooltipAnchor<HTMLButtonElement>({label: gvar.gsm.token.more, align: "top", closeOnPointerDown: true})
     
     return <>
         <button ref={moreTip} className="icon kebab" onClick={() => setShow(true)}>

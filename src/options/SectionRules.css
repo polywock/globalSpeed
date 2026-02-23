@@ -6,7 +6,7 @@
     align-items: center;
 
     & > .show {
-      border-radius: 5px;
+      border-radius: var(--radius);
     }
 
     & > .left {

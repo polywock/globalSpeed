@@ -1,6 +1,11 @@
 :root {
   --font-lang-scalar: 1;
   --font-size-scalar: 1;
+  --radius: 0.5rem;
+  --radius-2xl: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 2px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
 
   --font-size: calc(14px * var(--font-lang-scalar) * var(--font-size-scalar));
   font-size: var(--font-size);
@@ -97,6 +102,7 @@ textarea {
   font: inherit;
   letter-spacing: inherit;
   word-spacing: inherit;
+  border-radius: var(--radius);
 
   &:focus {
     outline: 1px solid var(--focus-color);
@@ -108,6 +114,7 @@ select {
   color: var(--text-color);
   border: 1px solid var(--border);
   padding: 3px 5px;
+  cursor: pointer;
 }
 
 button,
@@ -127,12 +134,6 @@ textarea {
     background-color: var(--error-color);
     color: var(--error-text-color);
     border-color: var(--error-border-color);
-  }
-
-  &.blue {
-    background-color: var(--icon-vibrant-color);
-    color: var(--pure-color);
-    border-color: var(--icon-vibrant-color);
   }
 }
 
@@ -211,6 +212,7 @@ code {
 
 .card {
   padding: 10px;
+  border-radius: var(--radius);
   background-color: var(--fg-color);
   border: 1px solid var(--border);
   color: var(--text-color);

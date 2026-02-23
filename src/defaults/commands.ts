@@ -625,8 +625,7 @@ export function getDefaultPageKeybinds(): Keybind[] {
     {
       ...commandInfos.loop.generate(),
       key: "KeyR",
-      valueString: "mark1",
-      spacing: 2
+      valueString: "mark1"
     }
   ]
   return kbs 
@@ -716,8 +715,7 @@ export function getDefaultMenuKeybinds(): Keybind[] {
         ...commandInfos.afxReset.generate(),
         trigger: Trigger.MENU,
         contextLabel: "- audio reset",
-        replaceWithGsm: 3,
-        spacing: 2
+        replaceWithGsm: 3
       }
     )
   }

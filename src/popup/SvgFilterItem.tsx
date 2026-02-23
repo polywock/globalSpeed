@@ -46,12 +46,12 @@ export function SvgFilterItem(props: {
          }}>
             <GoArrowDown size="1.42rem" />
          </button>
-         <div><GoX size="1.6rem" onClick={() => {
+         <button className="icon"><GoX size="1.6rem" onClick={() => {
             listOnChange(produce(list, list => {
                const idx = list.findIndex(v => v.id === filter.id)
                if (idx >= 0) list.splice(idx, 1)
             }))
-         }} /></div>
+         }} /></button>
       </div>
       {presetInfo && (
          <div className="presets">
