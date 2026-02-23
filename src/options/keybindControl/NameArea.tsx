@@ -2,24 +2,14 @@
 import { TargetFx, AdjustMode, Command, Keybind, Duration, ReferenceValues, Trigger } from "../../types"
 import { produce, Draft } from "immer"
 import { filterInfos, FilterName, filterTargets } from "../../defaults/filters"
-import { GoCode, GoRepoForked, GoHistory } from "react-icons/go"
-import { FaPowerOff, FaPause, FaEquals, FaBookmark, FaLink, FaVolumeUp, FaVolumeMute, FaBackward, FaForward, FaArrowRight, FaExchangeAlt, FaPlus, FaMusic, FaList, FaStar, FaInfoCircle, FaMousePointer } from "react-icons/fa"
-import { BsFillBrushFill } from "react-icons/bs"
-import { TbArrowsHorizontal } from "react-icons/tb"
-import { GiAnticlockwiseRotation } from "react-icons/gi"
-import { BsMusicNoteList } from "react-icons/bs"
-import { TiArrowLoop } from "react-icons/ti"
-import { MdDarkMode, MdFullscreen, MdPictureInPictureAlt, MdWarning } from "react-icons/md"
+import { FaEquals, FaPlus,  FaList, FaMousePointer } from "react-icons/fa"
+import { MdWarning } from "react-icons/md"
 import { assertType, createWindowWithSafeBounds, getPopupSize, isMobile } from "../../utils/helper"
 import { MenuProps } from "../../comps/Menu"
 import { replaceArgs } from "@/utils/helper"
-import { MdSpeed } from "react-icons/md";
-import { Pin, Zap } from "@/comps/svgs"
 import { KeybindControlProps } from "."
-import { FaRegWindowRestore } from "react-icons/fa6"
 import { KebabList, KebabListProps } from "../KebabList"
 import { isSeekSmall } from "@/utils/configUtils"
-import { PiArrowArcRightFill } from "react-icons/pi"
 import { CinemaModal } from "../CinemaModal"
 import { useState } from "react"
 import { IoEllipsisVertical } from "react-icons/io5"
@@ -76,15 +66,17 @@ export function NameArea(props: NameAreaProps) {
 
     let label = (gvar.gsm.command as any)[command.ffName || value.command]
     let tooltip = (gvar.gsm.command as any)[value.command.concat("Tooltip")]
-    let tabCaptureWarning = command.requiresTabCapture && !(value.command === "afxCapture" || value.command === "afxReset") && (value.trigger || Trigger.LOCAL) === Trigger.LOCAL
-    let adjustMode = command.valueType === "adjustMode" ? (value.adjustMode || AdjustMode.SET) : null 
-    let showNumeric = adjustMode !== AdjustMode.ITC && adjustMode !== AdjustMode.CYCLE
-    const captureWarningTooltip = replaceArgs(gvar.gsm.warnings.captureRequired, [`[ ${gvar.gsm.command.afxCapture} ]`])
-    const warningRef = useTooltipAnchor<HTMLSpanElement>({
-        label: captureWarningTooltip,
+    
+    let tabCaptureHint = command.requiresTabCapture && !(value.command === "afxCapture" || value.command === "afxReset") && (value.trigger || Trigger.LOCAL) === Trigger.LOCAL
+    const tabCaptureHintTooltip = useTooltipAnchor<HTMLSpanElement>({
+        label: replaceArgs(gvar.gsm.warnings.captureRequired, [`[ ${gvar.gsm.command.afxCapture} ]`]),
         align: "top",
         allowClick: true
     })
+
+    let adjustMode = command.valueType === "adjustMode" ? (value.adjustMode || AdjustMode.SET) : null 
+    let showNumeric = adjustMode !== AdjustMode.ITC && adjustMode !== AdjustMode.CYCLE
+    
     const adjustModeRef = useTooltipAnchor<HTMLButtonElement>({
         label: gvar.gsm.options.editor.adjustModes[value.adjustMode || AdjustMode.SET],
         align: "top"
@@ -113,8 +105,8 @@ export function NameArea(props: NameAreaProps) {
             <span className="label">{label}</span>
 
             {/* Capture shortcut warning */}
-            {tabCaptureWarning && (
-                <span ref={warningRef} className="warningTooltip">
+            {tabCaptureHint && (
+                <span ref={tabCaptureHintTooltip} className="warningTooltip">
                     <MdWarning size="1.35rem" style={{ color: "#ff8888" }} />
                 </span>
             )}
