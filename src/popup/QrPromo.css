@@ -1,36 +1,34 @@
-
 :root.darkTheme .QrPromo {
-    display: none;
+	display: none;
 }
 
 .QrPromo {
-    display: grid;
-    grid-template-columns: 1fr max-content max-content;
-    column-gap: 7px;
-    padding-left: 10px;
-    padding-top: 20px;
-    padding-bottom: 10px;
-    align-items: center;
-    user-select: none;
+	display: grid;
+	grid-template-columns: 1fr max-content max-content;
+	column-gap: 7px;
+	padding-left: 10px;
+	padding-top: 20px;
+	padding-bottom: 10px;
+	align-items: center;
+	user-select: none;
 
-    & > div {
+	& > div {
+		& .top {
+			font-size: 14px;
+		}
 
-        & .top {
-            font-size: 14px;
-        }
+		& .bottom {
+			font-size: 18px;
+			font-weight: bold;
+			color: var(--success-color);
+		}
+	}
 
-        & .bottom {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--success-color);
-        }
-    }
+	& > img {
+		cursor: pointer;
+	}
 
-    & > img {
-        cursor: pointer; 
-    }
-
-    & > button {
-        line-height: 0;
-    }
+	& > button {
+		line-height: 0;
+	}
 }

@@ -1,250 +1,244 @@
 :popover-open {
-    position: static;
-    width: auto;
-    height: auto;
-    color: inherit;
-    background-color: transparent;
-    inset: 0;
-    margin: 0;
-    padding: 0;
-    border: none;
-    overflow: hidden;
-    pointer-events: none;
-
+	position: static;
+	width: auto;
+	height: auto;
+	color: inherit;
+	background-color: transparent;
+	inset: 0;
+	margin: 0;
+	padding: 0;
+	border: none;
+	overflow: hidden;
+	pointer-events: none;
 }
-
 
 #resist,
 #mask {
-    pointer-events: none;
-    left: 0px;
-    top: 0px;
-    z-index: 9999999999;
+	pointer-events: none;
+	left: 0px;
+	top: 0px;
+	z-index: 9999999999;
 }
 
 #mask {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
 }
 
 #resist {
-    overflow: hidden;
-    position: absolute;
-    width: 100%;
-    height: 100%;
+	overflow: hidden;
+	position: absolute;
+	width: 100%;
+	height: 100%;
 }
 
 #wrapper {
-    --label-scale: 1;
-    z-index: 9999999999;
-    position: fixed;
-    top: 100px;
-    left: 100px;
-    background-color: black;
-    color: white;
-    border: 2px solid #aaa;
-    width: 300px;
-    font-size: 14px;
-    font-family: "Segoe UI", "Avenir", system-ui, Courier, monospace;
-    user-select: none;
-    opacity: 0.8;
-    pointer-events: all;
+	--label-scale: 1;
+	z-index: 9999999999;
+	position: fixed;
+	top: 100px;
+	left: 100px;
+	background-color: black;
+	color: white;
+	border: 2px solid #aaa;
+	width: 300px;
+	font-size: 14px;
+	font-family: "Segoe UI", "Avenir", system-ui, Courier, monospace;
+	user-select: none;
+	opacity: 0.8;
+	pointer-events: all;
 
-    &:hover {
-        opacity: 1;
-    }
+	&:hover {
+		opacity: 1;
+	}
 
-    &.hidden {
-        width: revert;
-        font-size: 16px;
-    }
+	&.hidden {
+		width: revert;
+		font-size: 16px;
+	}
 
+	button,
+	input,
+	label {
+		&:focus {
+			outline: 1px solid yellow;
+		}
 
-    button,
-    input,
-    label {
-        &:focus {
-            outline: 1px solid yellow;
-        }
+		&:hover {
+			cursor: pointer;
+			background-color: #555;
+		}
+	}
 
-        &:hover {
-            cursor: pointer;
-            background-color: #555;
-        }
-    }
+	input[type="color"] {
+		position: absolute;
+		pointer-events: none;
+		opacity: 0;
+		width: 0px;
+		height: 0px;
+	}
 
-    input[type="color"] {
-        position: absolute;
-        pointer-events: none;
-        opacity: 0;
-        width: 0px;
-        height: 0px;
-    }
+	.selected {
+		outline: 1px solid #9fe;
 
-    .selected {
-        outline: 1px solid #9fe;
+		&:focus {
+			outline: 1px solid #9fe;
+		}
+	}
 
-        &:focus {
-            outline: 1px solid #9fe;
-        }
-    }
+	button,
+	label {
+		padding: 1px 6px;
+		background-color: inherit;
+		border: 1px solid #555;
+		color: white;
 
-    button,
-    label {
-        padding: 1px 6px;
-        background-color: inherit;
-        border: 1px solid #555;
-        color: white;
+		& * {
+			pointer-events: none;
+		}
 
-        & * {
-            pointer-events: none;
-        }
+		& > *:nth-child(1n + 2) {
+			margin-left: 5px;
+		}
+	}
 
-        &>*:nth-child(1n+2) {
-            margin-left: 5px;
-        }
-    }
+	button {
+		font-size: inherit;
+	}
 
-    button {
-        font-size: inherit;
-    }
+	.iconButton {
+		border: none;
+		padding: 0px 3px;
+		font-size: 1.3em;
+		line-height: 0;
+		border-radius: 3px;
+	}
 
-    .iconButton {
-        border: none;
-        padding: 0px 3px;
-        font-size: 1.3em;
-        line-height: 0;
-        border-radius: 3px;
-    }
+	&.hidden {
+		#header {
+			grid-template-columns: max-content repeat(3, max-content);
 
-    &.hidden {
-        #header {
-            grid-template-columns: max-content repeat(3, max-content);
+			#headerLabel,
+			#help,
+			#clear {
+				display: none;
+			}
 
-            #headerLabel,
-            #help,
-            #clear {
-                display: none;
-            }
+			& > svg:first-child {
+				margin-right: 30px;
+			}
+		}
+	}
 
-            &>svg:first-child {
-                margin-right: 30px;
-            }
-        }
-    }
+	#header {
+		display: grid;
+		grid-template-columns: max-content 1fr repeat(4, max-content);
+		border-bottom: 1px solid #aaa;
+		padding: 5px;
+		align-items: center;
+		cursor: move;
 
-    #header {
-        display: grid;
-        grid-template-columns: max-content 1fr repeat(4, max-content);
-        border-bottom: 1px solid #aaa;
-        padding: 5px;
-        align-items: center;
-        cursor: move;
+		& > svg:first-child {
+			margin-right: 5px;
+		}
 
+		& > svg,
+		#headerLabel {
+			pointer-events: none;
+		}
+	}
 
-        &>svg:first-child {
-            margin-right: 5px;
-        }
+	#main {
+		padding: 5px;
+	}
 
-        &>svg,
-        #headerLabel {
-            pointer-events: none;
-        }
-    }
+	&.hidden {
+		#main {
+			display: none;
+		}
+	}
 
-    #main {
-        padding: 5px;
-    }
+	#mode {
+		--mode-font-scalar: 1;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		font-size: calc(1em * var(--mode-font-scalar));
+		align-items: center;
+		column-gap: 5px;
+	}
 
-    &.hidden {
-        #main {
-            display: none;
-        }
-    }
+	#color {
+		display: grid;
+		grid-template-columns: repeat(6, 1fr);
+		align-items: center;
+		column-gap: 5px;
+		row-gap: 5px;
 
-    #mode {
-        --mode-font-scalar: 1;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        font-size: calc(1em * var(--mode-font-scalar));
-        align-items: center;
-        column-gap: 5px;
-    }
-    
-    #color {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        align-items: center;
-        column-gap: 5px;
-        row-gap: 5px;
+		& > label {
+			text-align: center;
+		}
+	}
 
-        &>label {
-            text-align: center;
-        }
-    }
+	#color,
+	#mode,
+	#brushSize,
+	#eraserSize {
+		& > span:first-child {
+			width: calc(45px * var(--label-scale));
+		}
+	}
 
-    #color,
-    #mode,
-    #brushSize,
-    #eraserSize {
-        &>span:first-child {
-            width: calc(45px * var(--label-scale));
-        }
-    }
+	#main > *:nth-child(1n + 2) {
+		margin-top: 5px;
+	}
 
-    #main>*:nth-child(1n+2) {
-        margin-top: 5px;
-    }
+	#brushSize,
+	#eraserSize {
+		display: grid;
+		grid-template-columns: max-content 1fr;
+		align-items: center;
+	}
 
+	& > .color {
+		color: black;
+		text-shadow: 1px 1px 2px white;
+		width: 30px;
+	}
 
-    #brushSize,
-    #eraserSize {
-        display: grid;
-        grid-template-columns: max-content 1fr;
-        align-items: center;
-    }
+	& > button,
+	& > label {
+		border: 1px solid #555;
 
-    &>.color {
-        color: black;
-        text-shadow: 1px 1px 2px white;
-        width: 30px;
+		&.selected {
+			outline: 1px solid yellow;
+		}
+	}
 
-    }
+	& > #custom {
+		background: linear-gradient(to bottom right, red, yellow);
+		color: black;
+		text-shadow: 1px 1px 2px white;
+	}
 
-    &>button,
-    &>label {
-        border: 1px solid #555;
+	#colorContextMenu {
+		position: fixed;
+		background: #2a2a2a;
+		border: 1px solid #444;
+		border-radius: 4px;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+		padding: 4px 0;
+		min-width: 120px;
+		font-size: 13px;
+		color: #fff;
 
-        &.selected {
-            outline: 1px solid yellow;
-        }
-    }
+		& > div {
+			padding: 6px 12px;
+			cursor: pointer;
 
-    &>#custom {
-        background: linear-gradient(to bottom right, red, yellow);
-        color: black;
-        text-shadow: 1px 1px 2px white;
-    }
-
-    #colorContextMenu {
-        position: fixed;
-        background: #2a2a2a;
-        border: 1px solid #444;
-        border-radius: 4px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        padding: 4px 0;
-        min-width: 120px;
-        font-size: 13px;
-        color: #fff;
-
-        &>div {
-            padding: 6px 12px;
-            cursor: pointer;
-
-            &:hover {
-                background-color: #444;
-            }
-        }
-    }
+			&:hover {
+				background-color: #444;
+			}
+		}
+	}
 }

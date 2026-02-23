@@ -1,44 +1,40 @@
-
-
 .CycleInput {
+	& .close {
+		opacity: 0;
+	}
 
-  & .close {
-    opacity: 0;
-  }
+	&:hover .close {
+		opacity: 0.9;
+	}
 
-  &:hover .close {
-    opacity: 0.9;
-  }
+	& > .values {
+		display: grid;
+		grid-template-columns: repeat(4, max-content);
+		align-items: center;
+		grid-gap: 7px;
 
+		& button {
+			font-size: 0.7rem;
+		}
 
-  & > .values {
-    display: grid;
-    grid-template-columns: repeat(4, max-content);
-    align-items: center;
-    grid-gap: 7px;
+		& > .value {
+			position: relative;
+			width: 44px;
 
-    & button {
-      font-size: 0.7rem;
-    }
-    
-    & > .value {
-      position: relative;
-      width: 44px;
+			& > .close {
+				position: absolute;
+				top: -5px;
+				right: -5px;
+				width: 11px;
+				height: 11px;
+				background-color: var(--error-color);
+				border: 1px solid var(--error-border-color);
+				border-radius: 50%;
 
-      & > .close {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        width: 11px;
-        height: 11px;
-        background-color: var(--error-color);
-        border: 1px solid var(--error-border-color);
-        border-radius: 50%;
-
-        &:hover {
-          opacity: 1;
-        }
-      }
-    }
-  } 
+				&:hover {
+					opacity: 1;
+				}
+			}
+		}
+	}
 }

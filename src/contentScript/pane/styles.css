@@ -1,50 +1,50 @@
 .pane:focus {
-  outline: none;
+	outline: none;
 }
 .pane.hasBorder:focus {
-  outline: 2px solid black;
+	outline: 2px solid black;
 }
 
 .menu {
-  position: absolute;
-  right: 3px;
-  top: 3px;
-  opacity: 0;
-  display: grid;
-  pointer-events: none;
-  grid-auto-flow: column;
-  justify-content: right;
-  column-gap: 5px;
-  font-size: 16px;
-  transition: opacity 0.1s ease-out;
+	position: absolute;
+	right: 3px;
+	top: 3px;
+	opacity: 0;
+	display: grid;
+	pointer-events: none;
+	grid-auto-flow: column;
+	justify-content: right;
+	column-gap: 5px;
+	font-size: 16px;
+	transition: opacity 0.1s ease-out;
 }
 
 .inner {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 .pane:focus > .menu,
 .pane:hover > .menu {
-  opacity: 1;
-  pointer-events: initial;
+	opacity: 1;
+	pointer-events: initial;
 }
 
 svg {
-  opacity: 0.5;
-  background-color: black;
-  color: white;
-  padding: 5px;
+	opacity: 0.5;
+	background-color: black;
+	color: white;
+	padding: 5px;
 }
 
 svg:hover {
-  opacity: 1;
+	opacity: 1;
 }
 
 input[type="color"] {
-  position: absolute;
-  pointer-events: none;
-  opacity: 0;
-  width: 0px;
-  height: 0px;
+	position: absolute;
+	pointer-events: none;
+	opacity: 0;
+	width: 0px;
+	height: 0px;
 }

@@ -16,95 +16,104 @@ import { Interactive } from "./utils/Interactive"
 import type { Circle } from "./utils/Circle"
 
 export class Overseer {
-    eListen: EventsListener
-    detectOpen: DetectOpen
-    stratumServer: StratumServer
-    mediaTower: MediaTower
-    smartFs: SmartFs
-    nativeFs: NativeFs
-    messageTower: MessageTower
-    speedSync: SpeedSync
+	eListen: EventsListener
+	detectOpen: DetectOpen
+	stratumServer: StratumServer
+	mediaTower: MediaTower
+	smartFs: SmartFs
+	nativeFs: NativeFs
+	messageTower: MessageTower
+	speedSync: SpeedSync
 
-    visibleSync: VisibleSync
-    configSync: ConfigSync
-    indicator: Indicator
-    indicatorAlt: Indicator
-    itc?: Interactive
-    circle?: Circle
+	visibleSync: VisibleSync
+	configSync: ConfigSync
+	indicator: Indicator
+	indicatorAlt: Indicator
+	itc?: Interactive
+	circle?: Circle
 
-    orphaned = false
-    released = false
+	orphaned = false
+	released = false
 
-    init = async () => {
-        console.log("Overseer started")
-        this.eListen = new EventsListener()
-        this.detectOpen = new DetectOpen()
-        this.stratumServer = new StratumServer()
-        this.mediaTower = new MediaTower()
-        this.smartFs = new SmartFs()
-        this.nativeFs = new NativeFs()
-        this.messageTower = new MessageTower()
-        this.speedSync = new SpeedSync()
+	init = async () => {
+		console.log("Overseer started")
+		this.eListen = new EventsListener()
+		this.detectOpen = new DetectOpen()
+		this.stratumServer = new StratumServer()
+		this.mediaTower = new MediaTower()
+		this.smartFs = new SmartFs()
+		this.nativeFs = new NativeFs()
+		this.messageTower = new MessageTower()
+		this.speedSync = new SpeedSync()
 
-        this.detectOpen.cbs.add(() => {
-            this.eListen.update()
-        })
-        await this.initAsync()
-        if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", this.handleDOMLoaded, { capture: true, passive: true, once: true })
-        } else {
-            this.handleDOMLoaded()
-        }
-    }
-    initAsync = async () => {
-        gvar.tabInfo = await requestTabInfo()
+		this.detectOpen.cbs.add(() => {
+			this.eListen.update()
+		})
+		await this.initAsync()
+		if (document.readyState === "loading") {
+			document.addEventListener("DOMContentLoaded", this.handleDOMLoaded, { capture: true, passive: true, once: true })
+		} else {
+			this.handleDOMLoaded()
+		}
+	}
+	initAsync = async () => {
+		gvar.tabInfo = await requestTabInfo()
 
-        // if failed to get, try again after a few seconds. (firefox sometimes)
-        if (!gvar.tabInfo) {
-            await timeout(3000)
-            gvar.tabInfo = await requestTabInfo()
+		// if failed to get, try again after a few seconds. (firefox sometimes)
+		if (!gvar.tabInfo) {
+			await timeout(3000)
+			gvar.tabInfo = await requestTabInfo()
 
-            if (!gvar.tabInfo) return
-        }
+			if (!gvar.tabInfo) return
+		}
 
-        const view = (await fetchView({ indicatorInit: true })) || {}
+		const view = (await fetchView({ indicatorInit: true })) || {}
 
-        if (gvar.isTopFrame) {
-            this.indicator = new Indicator()
-            this.indicator.setInit(view.indicatorInit || {})
-        }
+		if (gvar.isTopFrame) {
+			this.indicator = new Indicator()
+			this.indicator.setInit(view.indicatorInit || {})
+		}
 
-        // Top frame notifies subframes on changes to its url, but ensure we have the current one. 
-        if (!gvar.isTopFrame) chrome.runtime.sendMessage({ type: 'REQUEST_TOP_FRAME_URL' } as Messages)
-    }
-    handleDOMLoaded = () => {
-        this.visibleSync = new VisibleSync(this.handleVisibleChange)
-    }
-    handleVisibleChange = () => {
-        if (document.hidden) {
-            this.configSync?.release()
-            delete this.configSync
-        } else {
-            this.configSync = this.configSync ?? new ConfigSync()
-        }
-    }
-    handleOrphan = () => {
-        if (this.orphaned) return
-        this.orphaned = true
-        this.release()
-    }
-    release = () => {
-        if (this.released) return
-        this.released = true
+		// Top frame notifies subframes on changes to its url, but ensure we have the current one.
+		if (!gvar.isTopFrame) chrome.runtime.sendMessage({ type: "REQUEST_TOP_FRAME_URL" } as Messages)
+	}
+	handleDOMLoaded = () => {
+		this.visibleSync = new VisibleSync(this.handleVisibleChange)
+	}
+	handleVisibleChange = () => {
+		if (document.hidden) {
+			this.configSync?.release()
+			delete this.configSync
+		} else {
+			this.configSync = this.configSync ?? new ConfigSync()
+		}
+	}
+	handleOrphan = () => {
+		if (this.orphaned) return
+		this.orphaned = true
+		this.release()
+	}
+	release = () => {
+		if (this.released) return
+		this.released = true
 
-        this.indicator?.release(); delete this.indicator
-        this.indicatorAlt?.release(); delete this.indicatorAlt
-        this.smartFs?.release(); delete this.smartFs
-        this.nativeFs?.release(); delete this.nativeFs
-        this.visibleSync?.release(); delete this.visibleSync
-        this.configSync?.release(); delete this.configSync
-        this.itc?.release(); delete this.itc
-        this.circle?.release(); delete this.circle
-        this.speedSync?.release(); delete this.speedSync
-    }
+		this.indicator?.release()
+		delete this.indicator
+		this.indicatorAlt?.release()
+		delete this.indicatorAlt
+		this.smartFs?.release()
+		delete this.smartFs
+		this.nativeFs?.release()
+		delete this.nativeFs
+		this.visibleSync?.release()
+		delete this.visibleSync
+		this.configSync?.release()
+		delete this.configSync
+		this.itc?.release()
+		delete this.itc
+		this.circle?.release()
+		delete this.circle
+		this.speedSync?.release()
+		delete this.speedSync
+	}
 }

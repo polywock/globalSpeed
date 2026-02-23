@@ -1,66 +1,66 @@
 .AudioPanel {
-  font-size: 0.928rem;
-  background-color: var(--fg-color);
-  padding-right: 20px;
+	font-size: 0.928rem;
+	background-color: var(--fg-color);
+	padding-right: 20px;
 
-  & > * {
-    margin-bottom: 10px;
-  }
+	& > * {
+		margin-bottom: 10px;
+	}
 
-  & > .capture {
-    font-size: 1.3em;
-    width: 100%;
-    padding: 5px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border-width: 3px;
-  }
+	& > .capture {
+		font-size: 1.3em;
+		width: 100%;
+		padding: 5px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		border-width: 3px;
+	}
 
-  & > .SliderPlus {
-    margin-bottom: 20px;
-  }
+	& > .SliderPlus {
+		margin-bottom: 20px;
+	}
 
-  & > .mainControls {
-    margin-bottom: 10px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 4px;
+	& > .mainControls {
+		margin-bottom: 10px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		column-gap: 4px;
 
-    & button {
-      border-width: 2px;
-      width: 100%;
-    }
-  }
+		& button {
+			border-width: 2px;
+			width: 100%;
+		}
+	}
 
-  & > .control {
-    display: grid;
-    grid-template-columns: 1fr max-content;
-    column-gap: 10px;
+	& > .control {
+		display: grid;
+		grid-template-columns: 1fr max-content;
+		column-gap: 10px;
 
-    &.split {
-      margin-bottom: 30px;
-    }
-  }
+		&.split {
+			margin-bottom: 30px;
+		}
+	}
 
-  & > .audioTab {
-    & > .controls {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      column-gap: 10px;
+	& > .audioTab {
+		& > .controls {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			column-gap: 10px;
 
-      & > button {
-        color: var(--icon-color);
-        &.active {
-          color: var(--icon-vibrant-color);
-        }
-        &.muted {
-          color: var(--icon-muted-color);
-        }
-      }
-    }
+			& > button {
+				color: var(--icon-color);
+				&.active {
+					color: var(--icon-vibrant-color);
+				}
+				&.muted {
+					color: var(--icon-muted-color);
+				}
+			}
+		}
 
-    & .SliderPlus {
-      margin-top: 10px;
-    }
-  }
+		& .SliderPlus {
+			margin-top: 10px;
+		}
+	}
 }

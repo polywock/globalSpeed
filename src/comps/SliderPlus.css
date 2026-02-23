@@ -1,26 +1,26 @@
 .SliderPlus {
-  background-color: var(--fg-color);
+	background-color: var(--fg-color);
 
-  & > .header {
-    display: grid;
-    grid-template-columns: 1fr 60px max-content;
-    column-gap: 5px;
-    margin-bottom: 2px;
-    align-items: center;
+	& > .header {
+		display: grid;
+		grid-template-columns: 1fr 60px max-content;
+		column-gap: 5px;
+		margin-bottom: 2px;
+		align-items: center;
 
-    & > span {
-      align-self: center;
-      font-weight: 400;
-      color: var(--text-color);
-    }
-  }
+		& > span {
+			align-self: center;
+			font-weight: 400;
+			color: var(--text-color);
+		}
+	}
 
-  &.highlight > .header > span {
-    color: var(--icon-vibrant-color);
-    font-weight: 600;
-  }
+	&.highlight > .header > span {
+		color: var(--icon-vibrant-color);
+		font-weight: 600;
+	}
 
-  & > input[type="range"] {
-    width: 100%;
-  }
+	& > input[type="range"] {
+		width: 100%;
+	}
 }

@@ -1,26 +1,26 @@
 .SectionEditor {
-  & > .keybindControls {
-    margin-top: 20px;
+	& > .keybindControls {
+		margin-top: 20px;
 
-    &,
-    & > .KeybindControl > .label {
-      user-select: none;
-      cursor: ns-resize;
-    }
+		&,
+		& > .KeybindControl > .label {
+			user-select: none;
+			cursor: ns-resize;
+		}
 
-    & > .KeybindControl,
-    & > .KeybindControl > .label > span {
-      user-select: text;
-      cursor: auto;
-    }
-  }
+		& > .KeybindControl,
+		& > .KeybindControl > .label > span {
+			user-select: text;
+			cursor: auto;
+		}
+	}
 
-  & > .sectionControls {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, max-content) 1fr;
-    justify-items: right;
-    align-items: stretch;
-    column-gap: 10px;
-  }
+	& > .sectionControls {
+		margin-top: 20px;
+		display: grid;
+		grid-template-columns: repeat(3, max-content) 1fr;
+		justify-items: right;
+		align-items: stretch;
+		column-gap: 10px;
+	}
 }

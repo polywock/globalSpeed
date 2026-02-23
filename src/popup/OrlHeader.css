@@ -1,22 +1,22 @@
 .OrmHeader {
-  background-color: var(--mg-color);
-  border-bottom: 1px solid var(--border);
-  color: var(--text-color);
-  padding: 5px 10px;
-  font-size: 0.8rem;
-  font-weight: bolder;
-  display: grid;
-  grid-template-columns: 1fr max-content max-content;
-  align-items: center;
-  column-gap: 7px;
-  user-select: none;
+	background-color: var(--mg-color);
+	border-bottom: 1px solid var(--border);
+	color: var(--text-color);
+	padding: 5px 10px;
+	font-size: 0.8rem;
+	font-weight: bolder;
+	display: grid;
+	grid-template-columns: 1fr max-content max-content;
+	align-items: center;
+	column-gap: 7px;
+	user-select: none;
 
-  & > span {
-    opacity: 0.7;
-  }
+	& > span {
+		opacity: 0.7;
+	}
 
-  & > svg:hover {
-    opacity: 0.5;
-    cursor: pointer;
-  }
+	& > svg:hover {
+		opacity: 0.5;
+		cursor: pointer;
+	}
 }

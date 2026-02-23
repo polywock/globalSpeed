@@ -13,33 +13,40 @@ import { isMac, isMobile } from "@/utils/helper"
 import "./options.css"
 
 declare global {
-  interface Window {
-    root?: Root
-    
-  }
+	interface Window {
+		root?: Root
+	}
 
-  interface GlobalVar {
-    indicator?: Indicator,
-    isOptionsPage?: boolean
-  }
+	interface GlobalVar {
+		indicator?: Indicator
+		isOptionsPage?: boolean
+	}
 }
 
 const Options = (props: {}) => {
-  useThemeSync()
-  return <TooltipProvider><div id="App">
-      <SectionFlags/>
-      <SectionEditor/>
-      {!(isMac() && isMobile()) && <SectionRules/>}
-      <SectionHelp/>
-    </div></TooltipProvider>
+	useThemeSync()
+	return (
+		<TooltipProvider>
+			<div id="App">
+				<SectionFlags />
+				<SectionEditor />
+				{!(isMac() && isMobile()) && <SectionRules />}
+				<SectionHelp />
+			</div>
+		</TooltipProvider>
+	)
 }
 
-if (isMobile())  document.documentElement.classList.add("mobile") 
+if (isMobile()) document.documentElement.classList.add("mobile")
 Promise.all([loadGsm(), requestTabInfo()]).then(([gsm, tabInfo]) => {
-  gvar.isOptionsPage = true 
-  gvar.gsm = gsm 
-  gvar.tabInfo = tabInfo 
-  document.documentElement.lang = gsm._lang
-  window.root = createRoot(document.querySelector("#root"))
-  window.root.render(<ErrorFallback><Options/></ErrorFallback>)
+	gvar.isOptionsPage = true
+	gvar.gsm = gsm
+	gvar.tabInfo = tabInfo
+	document.documentElement.lang = gsm._lang
+	window.root = createRoot(document.querySelector("#root"))
+	window.root.render(
+		<ErrorFallback>
+			<Options />
+		</ErrorFallback>,
+	)
 })

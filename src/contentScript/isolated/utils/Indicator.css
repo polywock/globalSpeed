@@ -1,42 +1,70 @@
 @keyframes keyframe_1 {
-    from { transform: scale(0.95); opacity: 1 }
-    to { transform: scale(1.05); opacity: 0 }
+	from {
+		transform: scale(0.95);
+		opacity: 1;
+	}
+	to {
+		transform: scale(1.05);
+		opacity: 0;
+	}
 }
 
 @keyframes keyframe_3 {
-    0% { transform: scale(1) }
-    80% { transform: scale(0.75) }
-    100% { transform: scale(0) }
+	0% {
+		transform: scale(1);
+	}
+	80% {
+		transform: scale(0.75);
+	}
+	100% {
+		transform: scale(0);
+	}
 }
 
 @keyframes keyframe_4 {
-    0% { transform: scale(1) }
-    60% { transform: scale(0.95) }
-    90% { transform: scale(0.5); opacity: 0.5 }
-    100% { transform: scale(1.2); opacity: 0 }
+	0% {
+		transform: scale(1);
+	}
+	60% {
+		transform: scale(0.95);
+	}
+	90% {
+		transform: scale(0.5);
+		opacity: 0.5;
+	}
+	100% {
+		transform: scale(1.2);
+		opacity: 0;
+	}
 }
 
 @keyframes keyframe_5 {
-    0% { transform: scale(0.95) }
-    30% { transform: scale(1.05) }
-    100% { transform: scale(0) rotateZ(100deg); opacity: 0 }
+	0% {
+		transform: scale(0.95);
+	}
+	30% {
+		transform: scale(1.05);
+	}
+	100% {
+		transform: scale(0) rotateZ(100deg);
+		opacity: 0;
+	}
 }
 
-
 :is(div:popover-open, div.popoverOpenYah, #proo) {
-    border: none;
-    position: fixed;
-    width: 100vw;
-    left: 0px;
-    top: 0px;
-    height: 100vh;
-    margin: 0px;
-    pointer-events: none;
-    white-space: pre;
-    grid-auto-flow: column;
-    align-items: center;
-    justify-content: center;
-    display: grid !important;
-    background-color: transparent;
-    font-family: "Segoe UI", "Avenir", system-ui, Courier, monospace;
+	border: none;
+	position: fixed;
+	width: 100vw;
+	left: 0px;
+	top: 0px;
+	height: 100vh;
+	margin: 0px;
+	pointer-events: none;
+	white-space: pre;
+	grid-auto-flow: column;
+	align-items: center;
+	justify-content: center;
+	display: grid !important;
+	background-color: transparent;
+	font-family: "Segoe UI", "Avenir", system-ui, Courier, monospace;
 }

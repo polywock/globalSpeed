@@ -1,13 +1,13 @@
 .IndicatorModal {
-  background-color: var(--fg-color);
+	background-color: var(--fg-color);
 }
 
 .SectionFlags {
-  --field-name-width: 300px;
+	--field-name-width: 300px;
 
-  & button.icon.gear {
-    color: var(--text-color);
-  }
+	& button.icon.gear {
+		color: var(--text-color);
+	}
 }
 
 .SectionFlags > .fields,
@@ -15,88 +15,88 @@
 .SpeedPresetModal,
 .WidgetModal,
 .CinemaModal {
-  margin-top: 20px;
+	margin-top: 20px;
 
-  & > .presetControl {
-    margin-top: 20px;
-    margin-left: 20px;
-  }
+	& > .presetControl {
+		margin-top: 20px;
+		margin-left: 20px;
+	}
 
-  & > .field {
-    display: grid;
-    grid-template-columns: var(--field-name-width, 300px) max-content;
-    column-gap: 10px;
-    margin-bottom: 14px;
-    align-items: center;
+	& > .field {
+		display: grid;
+		grid-template-columns: var(--field-name-width, 300px) max-content;
+		column-gap: 10px;
+		margin-bottom: 14px;
+		align-items: center;
 
-    & > .SliderMicro {
-      grid-template-columns: 120px max-content;
-    }
+		& > .SliderMicro {
+			grid-template-columns: 120px max-content;
+		}
 
-    &.indentFloat > .fieldValue > .float {
-      left: 50px;
-      top: -4px;
-      position: absolute;
-    }
+		&.indentFloat > .fieldValue > .float {
+			left: 50px;
+			top: -4px;
+			position: absolute;
+		}
 
-    &.speedSlider {
-      margin-bottom: 10px;
+		&.speedSlider {
+			margin-bottom: 10px;
 
-      & > .control {
-        display: grid;
-        grid-template-columns: 8rem max-content;
-        column-gap: 5px;
-      }
-    }
+			& > .control {
+				display: grid;
+				grid-template-columns: 8rem max-content;
+				column-gap: 5px;
+			}
+		}
 
-    &.holdToSpeed {
-      margin-bottom: 30px;
+		&.holdToSpeed {
+			margin-bottom: 30px;
 
-      & > .control {
-        display: grid;
-        grid-template-columns: 4rem max-content;
-        column-gap: 5px;
-      }
-    }
+			& > .control {
+				display: grid;
+				grid-template-columns: 4rem max-content;
+				column-gap: 5px;
+			}
+		}
 
-    & > .fieldValue {
-      position: relative;
-      line-height: 0;
-    }
+		& > .fieldValue {
+			position: relative;
+			line-height: 0;
+		}
 
-    & > .fieldValue div.NumericInput {
-      width: 60px;
-      display: inline-block;
-    }
+		& > .fieldValue div.NumericInput {
+			width: 60px;
+			display: inline-block;
+		}
 
-    &.indent {
-      & > span:first-child,
-      & > div.labelWithTooltip:first-child {
-        margin-left: 20px;
-      }
-    }
+		&.indent {
+			& > span:first-child,
+			& > div.labelWithTooltip:first-child {
+				margin-left: 20px;
+			}
+		}
 
-    &.marginTop {
-      margin-top: 30px;
-    }
+		&.marginTop {
+			margin-top: 30px;
+		}
 
-    & > .colorControl {
-      display: grid;
-      grid-template-columns: repeat(3, max-content);
-      grid-gap: 10px;
-      align-items: center;
-    }
+		& > .colorControl {
+			display: grid;
+			grid-template-columns: repeat(3, max-content);
+			grid-gap: 10px;
+			align-items: center;
+		}
 
-    & > .col {
-      display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: max-content;
-      column-gap: 20px;
-    }
-  }
+		& > .col {
+			display: grid;
+			grid-auto-flow: column;
+			grid-auto-columns: max-content;
+			column-gap: 20px;
+		}
+	}
 
-  & > .showMoreTooltip {
-    margin-top: 20px;
-    font-family: monospace;
-  }
+	& > .showMoreTooltip {
+		margin-top: 20px;
+		font-family: monospace;
+	}
 }

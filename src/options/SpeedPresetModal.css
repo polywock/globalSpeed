@@ -1,34 +1,31 @@
-
 .SpeedPresetModal {
-    width: 400px;
-    --field-name-width: 150px;
+	width: 400px;
+	--field-name-width: 150px;
 
-    & > button.reset {
-        font-size: 1.14rem;
-    }
+	& > button.reset {
+		font-size: 1.14rem;
+	}
 
-    .presetControl {
-        display: grid;
-        grid-template-columns: repeat(3, max-content);
-        align-items: center;
-        justify-items: center;
-        gap: 10px;
-        font-size: 0.95em;
-        margin-bottom: 15px;
-      
-        
-        & > .NumericInput {
-          width: 60px;
-      
-          &.wide {
-            width: 130px;
-            grid-column: auto / span 2;
-          }
-      
-          &.preset input {
-            padding: var(--padding) 0px;
-          }
-        }
-      }
-      
+	.presetControl {
+		display: grid;
+		grid-template-columns: repeat(3, max-content);
+		align-items: center;
+		justify-items: center;
+		gap: 10px;
+		font-size: 0.95em;
+		margin-bottom: 15px;
+
+		& > .NumericInput {
+			width: 60px;
+
+			&.wide {
+				width: 130px;
+				grid-column: auto / span 2;
+			}
+
+			&.preset input {
+				padding: var(--padding) 0px;
+			}
+		}
+	}
 }

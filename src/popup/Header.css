@@ -1,109 +1,111 @@
-
 .Header {
-  display: grid;
-  grid-template-columns: repeat(3, max-content) 1fr repeat(5, max-content);
-  justify-items: right;
-  align-items: center;
-  padding: 3px 5px 0px 5px;
-  border-bottom: 1px solid var(--border);
-  background-color: var(--fg-color);
+	display: grid;
+	grid-template-columns: repeat(3, max-content) 1fr repeat(5, max-content);
+	justify-items: right;
+	align-items: center;
+	padding: 3px 5px 0px 5px;
+	border-bottom: 1px solid var(--border);
+	background-color: var(--fg-color);
 
-  & > .kebab {
-    margin-top: -3px;
-    padding-left: 2px;
-    margin-left: -5px;
-    line-height: 0;
-    position: relative;
+	& > .kebab {
+		margin-top: -3px;
+		padding-left: 2px;
+		margin-left: -5px;
+		line-height: 0;
+		position: relative;
 
-    .alert {
-        pointer-events: none;
-        position: absolute;
-        right: -5px;
-        top: -6px;
-        color: var(--icon-vibrant-color);
-    }
-  }
+		.alert {
+			pointer-events: none;
+			position: absolute;
+			right: -5px;
+			top: -6px;
+			color: var(--icon-vibrant-color);
+		}
+	}
 
+	& .kebabTooltip {
+		margin-top: -3px;
+		padding-left: 2px;
+		line-height: 0;
+	}
 
-  & .kebabTooltip {
-    margin-top: -3px;
-    padding-left: 2px;
-    line-height: 0;
-  }
+	& > div {
+		padding: 0 5px;
+		color: var(--icon-color);
+		border: none;
+		cursor: pointer;
 
+		&.noPadding {
+			padding: 0;
+		}
 
-  & > div {
-    padding: 0 5px;
-    color: var(--icon-color);
-    border: none;
-    cursor: pointer;
+		&:focus {
+			outline: none;
+		}
 
-    &.noPadding {
-      padding: 0;
-    }
+		&:hover {
+			opacity: 0.9;
+		}
 
-    &:focus {
-      outline: none;
-    }
+		@keyframes beat {
+			0% {
+				transform: scale(1);
+			}
+			90% {
+				transform: scale(0.8);
+			}
+			95% {
+				transform: scale(1.1);
+			}
+		}
 
-    &:hover {
-      opacity: 0.9;
-    }
+		&.active {
+			color: var(--icon-vibrant-color);
 
-    @keyframes beat {
-      0% {transform: scale(1)}
-      90% {transform: scale(0.8)}
-      95% {transform: scale(1.1)}
-    }
+			&.red {
+				color: var(--error-border-color);
+			}
 
-    &.active {
-      color: var(--icon-vibrant-color);
+			&.beat {
+				animation: 1s ease-in beat infinite;
+			}
 
-      &.red {
-        color: var(--error-border-color); 
-      }
+			&:hover {
+				opacity: 0.9;
+			}
+		}
 
-      &.beat {
-        animation: 1s ease-in beat infinite;
-      }
+		&.muted {
+			color: var(--icon-muted-color);
 
-      &:hover {
-        opacity: 0.9;
-      }
-    }
+			&:hover {
+				opacity: 0.9;
+			}
+		}
 
-    &.muted {
-      color: var(--icon-muted-color);
-
-      &:hover {
-        opacity: 0.9;
-      }
-    }
-
-
-    & > svg {
-      vertical-align: baseline;
-    }
-  }
+		& > svg {
+			vertical-align: baseline;
+		}
+	}
 }
 
+.kebabOverlayOutline,
+.kebabOverlayMessage {
+	z-index: 999999999999;
+	pointer-events: none;
+	position: fixed;
 
-.kebabOverlayOutline, .kebabOverlayMessage {
-  z-index: 999999999999;
-  pointer-events: none;
-  position: fixed;
+	&.kebabOverlayOutline {
+		border: 4px solid var(--icon-vibrant-color);
+	}
 
-  &.kebabOverlayOutline {
-    border: 4px solid var(--icon-vibrant-color);
-  }
-
-  &.kebabOverlayMessage {
-    background-color: var(--bg-color);
-    color: var(--icon-vibrant-color);
-    padding: 10px;
-    width: 100%;
-    text-align: center;
-    font-weight: bold;
-    font-size: 0.9em;
-  }
+	&.kebabOverlayMessage {
+		background-color: var(--bg-color);
+		color: var(--icon-vibrant-color);
+		padding: 10px;
+		width: 100%;
+		text-align: center;
+		font-weight: bold;
+		font-size: 0.9em;
+	}
 }

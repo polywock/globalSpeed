@@ -1,4 +1,3 @@
-
 import { createElement as m } from "@/utils/helper"
 
 export const gripIcon = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M15,5 L17,5 L17,3 L15,3 L15,5 Z M7,5 L9,5 L9,3 L7,3 L7,5 Z M15,13 L17,13 L17,11 L15,11 L15,13 Z M7,13 L9,13 L9,11 L7,11 L7,13 Z M15,21 L17,21 L17,19 L15,19 L15,21 Z M7,21 L9,21 L9,19 L7,19 L7,21 Z"></path></svg>`
@@ -31,20 +30,20 @@ export const resetIcon = `<svg stroke="currentColor" fill="currentColor" stroke-
 export const speedChangesPitchIcon = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2z"></path><path fill-rule="evenodd" d="M12 3v10h-1V3h1z" clip-rule="evenodd"></path><path d="M11 2.82a1 1 0 01.804-.98l3-.6A1 1 0 0116 2.22V4l-5 1V2.82z"></path><path fill-rule="evenodd" d="M0 11.5a.5.5 0 01.5-.5H4a.5.5 0 010 1H.5a.5.5 0 01-.5-.5zm0-4A.5.5 0 01.5 7H8a.5.5 0 010 1H.5a.5.5 0 01-.5-.5zm0-4A.5.5 0 01.5 3H8a.5.5 0 010 1H.5a.5.5 0 01-.5-.5z" clip-rule="evenodd"></path></svg>`
 
 export function createOverlayIcons() {
-  return {
-    play: m(playIcon) as SVGElement,
-    pause: m(pauseIcon) as SVGElement,
-    bookmark: m(bookmarkIcon) as SVGElement,
-    arrowRight: m(arrowRightIcon) as SVGElement,
-    arrowLeft: m(arrowLeftIcon) as SVGElement,
-    forward: m(forwardIcon) as SVGElement,
-    backward: m(backwardIcon) as SVGElement,
-    loop: m(loopIcon) as SVGElement,
-    skip: m(skipIcon),
-    fx: m(fxIcon) as SVGElement,
-    power: m(powerIcon) as SVGElement,
-    swap: m(swapIcon) as SVGElement,
-    reset: m(resetIcon) as SVGElement,
-    speedChangesPitch: m(speedChangesPitchIcon) as SVGElement,
-  }
+	return {
+		play: m(playIcon) as SVGElement,
+		pause: m(pauseIcon) as SVGElement,
+		bookmark: m(bookmarkIcon) as SVGElement,
+		arrowRight: m(arrowRightIcon) as SVGElement,
+		arrowLeft: m(arrowLeftIcon) as SVGElement,
+		forward: m(forwardIcon) as SVGElement,
+		backward: m(backwardIcon) as SVGElement,
+		loop: m(loopIcon) as SVGElement,
+		skip: m(skipIcon),
+		fx: m(fxIcon) as SVGElement,
+		power: m(powerIcon) as SVGElement,
+		swap: m(swapIcon) as SVGElement,
+		reset: m(resetIcon) as SVGElement,
+		speedChangesPitch: m(speedChangesPitchIcon) as SVGElement,
+	}
 }

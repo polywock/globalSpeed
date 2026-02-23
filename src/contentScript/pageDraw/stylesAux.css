@@ -1,12 +1,11 @@
-
 :root.noUseraSelectScroll {
-    * {
-        user-select: none !important;
-    }
+	* {
+		user-select: none !important;
+	}
 }
 
 :root.noUseraSelect {
-    * {
-        user-select: none !important;
-    }
+	* {
+		user-select: none !important;
+	}
 }

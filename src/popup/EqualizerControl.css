@@ -1,49 +1,49 @@
 .EqualizerControl {
-  margin-top: 15px;
-  padding: 10px;
-  border: 1px solid var(--border);
-  user-select: none;
-  border-radius: var(--radius);
+	margin-top: 15px;
+	padding: 10px;
+	border: 1px solid var(--border);
+	user-select: none;
+	border-radius: var(--radius);
 
-  & > .header {
-    font-size: 1.2em;
-    display: grid;
-    grid-template-columns: max-content 1fr max-content;
-    align-items: center;
-    column-gap: 5px;
-    margin-bottom: 10px;
-  }
+	& > .header {
+		font-size: 1.2em;
+		display: grid;
+		grid-template-columns: max-content 1fr max-content;
+		align-items: center;
+		column-gap: 5px;
+		margin-bottom: 10px;
+	}
 
-  & > .header > .active {
-    color: var(--icon-vibrant-color);
-  }
+	& > .header > .active {
+		color: var(--icon-vibrant-color);
+	}
 
-  & > .header > .muted {
-    color: var(--icon-muted-color);
-  }
+	& > .header > .muted {
+		color: var(--icon-muted-color);
+	}
 
-  & > .header > .active > svg,
-  & > .header > .muted > svg {
-    cursor: pointer;
-  }
+	& > .header > .active > svg,
+	& > .header > .muted > svg {
+		cursor: pointer;
+	}
 
-  & > .header > .reset {
-    justify-self: end;
-  }
+	& > .header > .reset {
+		justify-self: end;
+	}
 
-  & > .header > .reset > .Reset {
-    cursor: pointer;
-  }
+	& > .header > .reset > .Reset {
+		cursor: pointer;
+	}
 
-  & > .preset {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    column-gap: 5px;
-    margin-bottom: 10px;
-    width: 100%;
+	& > .preset {
+		display: grid;
+		grid-template-columns: max-content 1fr;
+		column-gap: 5px;
+		margin-bottom: 10px;
+		width: 100%;
 
-    select {
-      width: inherit;
-    }
-  }
+		select {
+			width: inherit;
+		}
+	}
 }

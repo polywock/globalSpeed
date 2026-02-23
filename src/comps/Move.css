@@ -1,5 +1,4 @@
-
 .Move {
-  display: grid;
-  grid-auto-flow: row;
+	display: grid;
+	grid-auto-flow: row;
 }

@@ -1,14 +1,13 @@
-
 .CinemaModal {
-    --field-name-width: 200px;
-    width: 600px;
-    max-width: 90vw;
+	--field-name-width: 200px;
+	width: 600px;
+	max-width: 90vw;
 
-    .filters {
-        max-width: 300px;
-        margin: 30px 0px;
-        padding: 20px 0px;
-        border-bottom: 1px solid var(--border);
-        border-top: 1px solid var(--border);
-    }
+	.filters {
+		max-width: 300px;
+		margin: 30px 0px;
+		padding: 20px 0px;
+		border-bottom: 1px solid var(--border);
+		border-top: 1px solid var(--border);
+	}
 }

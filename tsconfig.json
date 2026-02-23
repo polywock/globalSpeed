@@ -1,27 +1,27 @@
 {
-  "compilerOptions": {
-    "target": "es2022",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["DOM", "DOM.iterable", "ESNext", "WebWorker"],
-    "types": ["@types/chrome", "@types/react", "@types/react-dom", "@types/audioworklet"],
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noImplicitAny": true,
-    "noEmit": true,
-    "allowJs": true,
-    "sourceMap": false,
-    "jsx": "react-jsx",
-    "baseUrl": "./",
-    "paths": {
-        "@/*": ["./src/*"],
-        "notFirefox/*": ["./src/*"],
-        "isFirefox/*": ["./src/*"] 
-    },
-    "outDir": "build"
-  },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./tools/**/*.ts"],
-  "exclude": ["./node_modules", "./build", "./buildFf"]
+	"compilerOptions": {
+		"target": "es2022",
+		"useDefineForClassFields": true,
+		"module": "ESNext",
+		"lib": ["DOM", "DOM.iterable", "ESNext", "WebWorker"],
+		"types": ["@types/chrome", "@types/react", "@types/react-dom", "@types/audioworklet"],
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noImplicitAny": true,
+		"noEmit": true,
+		"allowJs": true,
+		"sourceMap": false,
+		"jsx": "react-jsx",
+		"baseUrl": "./",
+		"paths": {
+			"@/*": ["./src/*"],
+			"notFirefox/*": ["./src/*"],
+			"isFirefox/*": ["./src/*"]
+		},
+		"outDir": "build"
+	},
+	"include": ["./src/**/*.ts", "./src/**/*.tsx", "./tools/**/*.ts"],
+	"exclude": ["./node_modules", "./build", "./buildFf"]
 }

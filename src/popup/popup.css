@@ -1,40 +1,36 @@
-
 @import "../_common.css";
 
-
 :root.mobile body {
-  width: unset;
+	width: unset;
 }
 
-
 body {
-  width: 300px;
-  min-width: 300px;
-  margin: 0;
-  padding: 0;
-  background-color: var(--fg-color);
+	width: 300px;
+	min-width: 300px;
+	margin: 0;
+	padding: 0;
+	background-color: var(--fg-color);
 }
 
 #SuperDisable {
-  padding: 10px;
-  background-color: var(--fg-color); 
-  color: var(--icon-color); 
-  cursor: pointer;
+	padding: 10px;
+	background-color: var(--fg-color);
+	color: var(--icon-color);
+	cursor: pointer;
 }
 
 #App {
+	&.mobile {
+		width: unset;
+		--font-size-scalar: 1.2;
+	}
 
-  &.mobile {
-    width: unset;
-    --font-size-scalar: 1.2;
-  }
+	& > .panel {
+		padding: 8px;
+		min-height: 40px;
 
-  & > .panel {
-    padding: 8px;
-    min-height: 40px;
-
-    & > .unloaded {
-      min-height: 9.28rem;
-    }
-  }
+		& > .unloaded {
+			min-height: 9.28rem;
+		}
+	}
 }

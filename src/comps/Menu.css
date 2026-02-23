@@ -1,27 +1,27 @@
 .Menu {
-  position: fixed;
-  z-index: 99999999;
-  background-color: var(--text-color);
-  color: var(--pure-color);
-  user-select: none;
-  border-radius: var(--radius);
+	position: fixed;
+	z-index: 99999999;
+	background-color: var(--text-color);
+	color: var(--pure-color);
+	user-select: none;
+	border-radius: var(--radius);
 
-  & > div {
-    display: grid;
-    grid-template-columns: 20px auto;
-    padding: 5px 10px;
-    border-bottom: 1px solid var(--border);
-    padding-right: 20px;
-    opacity: 0.85;
-    line-height: 1.5;
+	& > div {
+		display: grid;
+		grid-template-columns: 20px auto;
+		padding: 5px 10px;
+		border-bottom: 1px solid var(--border);
+		padding-right: 20px;
+		opacity: 0.85;
+		line-height: 1.5;
 
-    &:hover {
-      opacity: 1;
-    }
-  }
+		&:hover {
+			opacity: 1;
+		}
+	}
 
-  .RegularTooltip {
-    margin-left: 10px;
-    filter: invert(1);
-  }
+	.RegularTooltip {
+		margin-left: 10px;
+		filter: invert(1);
+	}
 }

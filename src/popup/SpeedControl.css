@@ -1,83 +1,82 @@
-
 .SpeedControl {
-  user-select: none;
-  font-size: 1.1em;
-  background-color: var(--fg-color);  
+	user-select: none;
+	font-size: 1.1em;
+	background-color: var(--fg-color);
 
-  & > .options {
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    grid-gap: 3px;
-  
-    & > button {
-      width: 75%;
-      text-align: center;
-      border: none;
-      padding: var(--padding) 0px;
-      
-      &:focus {
-        outline: 1px solid var(--focus-color);
-      }
-  
-      &.selected {
-        background-color: var(--icon-vibrant-color);
-        color: var(--pure-color);
-        border-radius: 3px;
-        /* font-weight: bold; */
-      }
-    }
-  
-  }
-  
-  & > .NumericControl {
-    margin-top: 15px;
+	& > .options {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		justify-items: center;
+		grid-gap: 3px;
 
-    button, input[type="text"] {
-      padding: var(--padding) 0px !important;
-    }
-  }
+		& > button {
+			width: 75%;
+			text-align: center;
+			border: none;
+			padding: var(--padding) 0px;
 
-  & > .slider {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    align-items: center; 
-    margin-top: 15px;
-    column-gap: 5px; 
+			&:focus {
+				outline: 1px solid var(--focus-color);
+			}
 
-    & > svg {
-      color: var(--icon-color);
-      opacity: 0.5;
+			&.selected {
+				background-color: var(--icon-vibrant-color);
+				color: var(--pure-color);
+				border-radius: 3px;
+				/* font-weight: bold; */
+			}
+		}
+	}
 
-      &.active {
-        opacity: 1;
-        color: var(--icon-vibrant-color);
-      }
-    }
-  }
+	& > .NumericControl {
+		margin-top: 15px;
+
+		button,
+		input[type="text"] {
+			padding: var(--padding) 0px !important;
+		}
+	}
+
+	& > .slider {
+		display: grid;
+		grid-template-columns: max-content 1fr;
+		align-items: center;
+		margin-top: 15px;
+		column-gap: 5px;
+
+		& > svg {
+			color: var(--icon-color);
+			opacity: 0.5;
+
+			&.active {
+				opacity: 1;
+				color: var(--icon-vibrant-color);
+			}
+		}
+	}
 }
 
-
 .NumericControl {
-  display: grid;
-  grid-template-columns: repeat(2, 50fr) 64fr repeat(2, 50fr);
-  column-gap: 5px;
-  align-items: stretch;
+	display: grid;
+	grid-template-columns: repeat(2, 50fr) 64fr repeat(2, 50fr);
+	column-gap: 5px;
+	align-items: stretch;
 
-  & > button {
-    font-size: 0.75em;
-  }
+	& > button {
+		font-size: 0.75em;
+	}
 
-  & > button, & input[type="text"] {
-    padding: none;
-    text-align: center;
-  }
+	& > button,
+	& input[type="text"] {
+		padding: none;
+		text-align: center;
+	}
 
-  & > .NumericInput > input[type="text"] {
-    padding: 2px 0;
-  }
+	& > .NumericInput > input[type="text"] {
+		padding: 2px 0;
+	}
 
-  & > .NumericInput {
-    font-size: 0.9em;
-  }
+	& > .NumericInput {
+		font-size: 0.9em;
+	}
 }

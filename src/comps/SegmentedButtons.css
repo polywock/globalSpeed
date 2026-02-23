@@ -1,23 +1,22 @@
-
 .SegmentedButtons {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
-  user-select: none;
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: 1fr;
+	user-select: none;
 
-  & > button {
-    padding: 5px 10px;
-    opacity: 0.5;
+	& > button {
+		padding: 5px 10px;
+		opacity: 0.5;
 
-    &.selected {
-      filter: brightness(0.9);
-      opacity: 1;
-    }
-  }
+		&.selected {
+			filter: brightness(0.9);
+			opacity: 1;
+		}
+	}
 }
 
 :root.darkTheme {
-  .SegmentedButtons > button.selected {
-    filter: brightness(1.3);
-  }
+	.SegmentedButtons > button.selected {
+		filter: brightness(1.3);
+	}
 }

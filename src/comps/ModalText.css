@@ -1,9 +1,9 @@
 .ModalText {
-  & textarea {
-    width: 50vw;
-    height: 75vh;
-    padding: 20px;
-    border-radius: var(--radius-2xl);
-    font-family: "Courier New", Courier, monospace;
-  }
+	& textarea {
+		width: 50vw;
+		height: 75vh;
+		padding: 20px;
+		border-radius: var(--radius-2xl);
+		font-family: "Courier New", Courier, monospace;
+	}
 }

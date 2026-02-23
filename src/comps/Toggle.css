@@ -1,34 +1,34 @@
 .Toggle {
-  display: inline-block;
-  width: 40px;
-  border-radius: var(--radius);
-  background-color: var(--border);
-  border: 1.5px solid var(--border);
-  cursor: pointer;
-  line-height: 0;
-  user-select: none;
-  cursor: pointer;
+	display: inline-block;
+	width: 40px;
+	border-radius: var(--radius);
+	background-color: var(--border);
+	border: 1.5px solid var(--border);
+	cursor: pointer;
+	line-height: 0;
+	user-select: none;
+	cursor: pointer;
 
-  &::after {
-    content: "";
-    display: inline-block;
-    background-color: var(--fg-color);
-    border: 1px solid var(--border);
-    border-radius: inherit;
-    box-sizing: border-box;
-    width: 18px;
-    height: 14px;
-    transition: transform 0.05s linear;
-    transform: translateX(0px);
-    pointer-events: none;
-  }
+	&::after {
+		content: "";
+		display: inline-block;
+		background-color: var(--fg-color);
+		border: 1px solid var(--border);
+		border-radius: inherit;
+		box-sizing: border-box;
+		width: 18px;
+		height: 14px;
+		transition: transform 0.05s linear;
+		transform: translateX(0px);
+		pointer-events: none;
+	}
 
-  &.active {
-    background-color: var(--icon-vibrant-color);
-    border-color: var(--border);
+	&.active {
+		background-color: var(--icon-vibrant-color);
+		border-color: var(--border);
 
-    &::after {
-      transform: translateX(20px);
-    }
-  }
+		&::after {
+			transform: translateX(20px);
+		}
+	}
 }

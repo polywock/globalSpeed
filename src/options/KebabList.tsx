@@ -4,68 +4,72 @@ import { Menu, type MenuProps } from "@/comps/Menu"
 import { TooltipOpts, useTooltip, useTooltipAnchor } from "@/comps/Tooltip"
 
 export type KebabListProps = {
-    list:  MenuProps["items"],
-    onSelect: (name: string) => boolean | void,
-    divIfEmpty?: boolean,
-    title?: string,
-    centered?: boolean,
-    onOpen?: () => void,
-    tooltipAlign?: TooltipOpts["align"]
+	list: MenuProps["items"]
+	onSelect: (name: string) => boolean | void
+	divIfEmpty?: boolean
+	title?: string
+	centered?: boolean
+	onOpen?: () => void
+	tooltipAlign?: TooltipOpts["align"]
 }
 
 export function KebabList(props: KebabListProps) {
-    const [menu, setMenu] = useState(null as { x?: number, y?: number, adjusted?: boolean, centered?: boolean })
-    const menuRef = useRef<HTMLDivElement>(null)
-    const buttonRef = useRef<HTMLButtonElement>(null)
-    const kebabTip = useTooltipAnchor<HTMLButtonElement>({
-        label: props.title || gvar.gsm.token.more,
-        align: props.tooltipAlign || "top",
-        closeOnPointerDown: true
-    })
-    
-    const onContext = (e: React.MouseEvent) => {
-        e.preventDefault()
-        props.onOpen?.()
-        if (props.centered) {
-            setMenu({centered: true})
-            return 
-        }
-        setMenu({ x: e.clientX, y: e.clientY })
-    }
+	const [menu, setMenu] = useState(null as { x?: number; y?: number; adjusted?: boolean; centered?: boolean })
+	const menuRef = useRef<HTMLDivElement>(null)
+	const buttonRef = useRef<HTMLButtonElement>(null)
+	const kebabTip = useTooltipAnchor<HTMLButtonElement>({
+		label: props.title || gvar.gsm.token.more,
+		align: props.tooltipAlign || "top",
+		closeOnPointerDown: true,
+	})
 
-    useEffect(() => {
-        if (!menu || menu.adjusted || menu.centered) return 
+	const onContext = (e: React.MouseEvent) => {
+		e.preventDefault()
+		props.onOpen?.()
+		if (props.centered) {
+			setMenu({ centered: true })
+			return
+		}
+		setMenu({ x: e.clientX, y: e.clientY })
+	}
 
-        const bounds = menuRef.current.getBoundingClientRect()
-        const buttonBounds = buttonRef.current.getBoundingClientRect()
-        let x = menu.x
-        let y = menu.y
+	useEffect(() => {
+		if (!menu || menu.adjusted || menu.centered) return
 
+		const bounds = menuRef.current.getBoundingClientRect()
+		const buttonBounds = buttonRef.current.getBoundingClientRect()
+		let x = menu.x
+		let y = menu.y
 
-        if ((bounds.x + bounds.width) > (window.innerWidth - 15)) {
-            x = buttonBounds.x - 10 - bounds.width
-        }
-        if ((bounds.y + bounds.height) > window.innerHeight) {
-            y = buttonBounds.y - 10 - bounds.height
-        }
-        setMenu({x, y, adjusted: true})
-    }, [menu])
+		if (bounds.x + bounds.width > window.innerWidth - 15) {
+			x = buttonBounds.x - 10 - bounds.width
+		}
+		if (bounds.y + bounds.height > window.innerHeight) {
+			y = buttonBounds.y - 10 - bounds.height
+		}
+		setMenu({ x, y, adjusted: true })
+	}, [menu])
 
-    return <>
-        {props.title}
-        <button
-            ref={elem => {
-                buttonRef.current = elem
-                kebabTip.current = elem
-            }}
-            className="icon kebabTooltip"
-            onClick={onContext}
-        >
-            <IoEllipsisVertical style={{ pointerEvents: "none" }} size="1.3em" />
-        </button>
-        {!menu ? (props.divIfEmpty ? <div/> : null) : (
-            <Menu menuRef={menuRef} items={[...(props.list || [])]} position={menu} onClose={() => setMenu(null)} onSelect={props.onSelect} />
-            
-        )}
-    </>
+	return (
+		<>
+			{props.title}
+			<button
+				ref={(elem) => {
+					buttonRef.current = elem
+					kebabTip.current = elem
+				}}
+				className="icon kebabTooltip"
+				onClick={onContext}
+			>
+				<IoEllipsisVertical style={{ pointerEvents: "none" }} size="1.3em" />
+			</button>
+			{!menu ? (
+				props.divIfEmpty ? (
+					<div />
+				) : null
+			) : (
+				<Menu menuRef={menuRef} items={[...(props.list || [])]} position={menu} onClose={() => setMenu(null)} onSelect={props.onSelect} />
+			)}
+		</>
+	)
 }

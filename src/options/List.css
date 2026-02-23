@@ -1,12 +1,11 @@
-
-.List, .ListItem .ListItemLabel {
-    user-select: none;
-    cursor: ns-resize;
+.List,
+.ListItem .ListItemLabel {
+	user-select: none;
+	cursor: ns-resize;
 }
 
-
-.ListItemCore, .ListItemLabel span {
-    cursor: initial;
-    user-select: initial;
+.ListItemCore,
+.ListItemLabel span {
+	cursor: initial;
+	user-select: initial;
 }
-

@@ -1,69 +1,71 @@
-
 body {
-    background-color: black; 
-    font-family: Segoe UI, Avenir, system-ui, Courier, monospace;
-    color: white; 
-    margin: 0;
-    padding: 0;
-    height: 100vh;
+	background-color: black;
+	font-family:
+		Segoe UI,
+		Avenir,
+		system-ui,
+		Courier,
+		monospace;
+	color: white;
+	margin: 0;
+	padding: 0;
+	height: 100vh;
 
-    display: grid;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-    align-content: center;
-    font-size: 22px;
+	display: grid;
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: center;
+	font-size: 22px;
 
-    #intro {
-        font-size: 0.9em;
-        margin-bottom: 30px;
-        text-align: center;
-        max-width: 50vw;
-    }
+	#intro {
+		font-size: 0.9em;
+		margin-bottom: 30px;
+		text-align: center;
+		max-width: 50vw;
+	}
 
-    .dims {
-        display: grid;
-        grid-template-columns: max-content max-content;
-        gap: 25px;
-        padding: 25px;
-        border: 1px solid #888;
-        margin-bottom: 25px;
+	.dims {
+		display: grid;
+		grid-template-columns: max-content max-content;
+		gap: 25px;
+		padding: 25px;
+		border: 1px solid #888;
+		margin-bottom: 25px;
 
-        & > div {
-            display: grid;
-            justify-items: center;
-            row-gap: 10px;
+		& > div {
+			display: grid;
+			justify-items: center;
+			row-gap: 10px;
 
-            & > div:first-child {
-                opacity: 0.7;
-                font-size: 0.9em;
-            }
+			& > div:first-child {
+				opacity: 0.7;
+				font-size: 0.9em;
+			}
 
-            & > div:last-child {
+			& > div:last-child {
+			}
+		}
+	}
 
-            }
-        }
-    }
+	.controls {
+		display: grid;
+		grid-auto-flow: column;
+		justify-content: center;
+		column-gap: 20px;
 
-    .controls {
-        display: grid;
-        grid-auto-flow: column;
-        justify-content: center;
-        column-gap: 20px;
-        
-        button {
-            font-size: 0.9em;
-            font-family: inherit;
-            background-color: inherit;
-            color: inherit;
-            width: max-content;
-            padding: 8px;
-            border: 1px solid #888;
+		button {
+			font-size: 0.9em;
+			font-family: inherit;
+			background-color: inherit;
+			color: inherit;
+			width: max-content;
+			padding: 8px;
+			border: 1px solid #888;
 
-            &:hover {
-                background-color: #448;
-            }
-        }
-    }
-
+			&:hover {
+				background-color: #448;
+			}
+		}
+	}
 }

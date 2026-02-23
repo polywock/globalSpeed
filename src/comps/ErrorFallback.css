@@ -1,21 +1,19 @@
-
-
 .ErrorFallback {
-  padding: 10px;
-  background-color: var(--fg-color);
-  font-size: 1.1em;
-  border: 3px solid var(--error-border-color);
+	padding: 10px;
+	background-color: var(--fg-color);
+	font-size: 1.1em;
+	border: 3px solid var(--error-border-color);
 
-  button {
-    display: block;
-    margin-top: 5px;
-  }
+	button {
+		display: block;
+		margin-top: 5px;
+	}
 
-  li {
-    margin-bottom: 15px;
+	li {
+		margin-bottom: 15px;
 
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
 }

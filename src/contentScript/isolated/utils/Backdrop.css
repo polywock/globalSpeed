@@ -1,11 +1,11 @@
-:is(div:popover-open, div.popoverOpenYah)  { 
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    left: 0px;
-    top: 0px;
-    margin: 0px;
-    pointer-events: none;
-    background-color: transparent;
-    border: none;
+:is(div:popover-open, div.popoverOpenYah) {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	left: 0px;
+	top: 0px;
+	margin: 0px;
+	pointer-events: none;
+	background-color: transparent;
+	border: none;
 }

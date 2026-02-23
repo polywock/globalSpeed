@@ -1,35 +1,35 @@
 .SliderMicro {
-  background-color: var(--fg-color);
+	background-color: var(--fg-color);
 
-  display: grid;
-  grid-template-columns: 1fr max-content;
-  column-gap: 5px;
-  margin-bottom: 2px;
-  align-items: center;
+	display: grid;
+	grid-template-columns: 1fr max-content;
+	column-gap: 5px;
+	margin-bottom: 2px;
+	align-items: center;
 
-  &.withInput {
-    grid-template-columns: 1fr 60px max-content;
-  }
+	&.withInput {
+		grid-template-columns: 1fr 60px max-content;
+	}
 
-  &.withLabel {
-    grid-template-columns: 80px 1fr max-content;
-  }
+	&.withLabel {
+		grid-template-columns: 80px 1fr max-content;
+	}
 
-  &.withLabel.withInput {
-    grid-template-columns: 80px 1fr 60px max-content;
-  }
+	&.withLabel.withInput {
+		grid-template-columns: 80px 1fr 60px max-content;
+	}
 
-  & > input[type="range"] {
-    width: 100%;
-  }
+	& > input[type="range"] {
+		width: 100%;
+	}
 
-  & > span {
-    color: var(--text-color);
-    font-weight: 400;
-  }
+	& > span {
+		color: var(--text-color);
+		font-weight: 400;
+	}
 
-  &.highlight > span {
-    color: var(--icon-vibrant-color);
-    font-weight: 600;
-  }
+	&.highlight > span {
+		color: var(--icon-vibrant-color);
+		font-weight: 600;
+	}
 }

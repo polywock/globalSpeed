@@ -4,344 +4,341 @@ import { isFirefox, randomId } from "../../utils/helper"
 import { availableCommandNames } from "@/defaults/commands"
 
 export function migrateSchema(state?: State) {
-  const initialVersion = state?.version
-  const defaultState = getDefaultState()
+	const initialVersion = state?.version
+	const defaultState = getDefaultState()
 
-  if (!state || state.version < 7) {
-    return defaultState
-  }
+	if (!state || state.version < 7) {
+		return defaultState
+	}
 
-  if (state.version === 7) {
-    state = sevenToEight(state)
-  }
+	if (state.version === 7) {
+		state = sevenToEight(state)
+	}
 
-  if (state.version === 8) {
-    state = eightToNine(state)
-  }
+	if (state.version === 8) {
+		state = eightToNine(state)
+	}
 
-  if (state.version === 9) {
-    state = nineToTen(state)
-  }
+	if (state.version === 9) {
+		state = nineToTen(state)
+	}
 
-  if (state.version === 10) {
-    state = tenToEleven(state)
-  }
+	if (state.version === 10) {
+		state = tenToEleven(state)
+	}
 
-  if (state.version === 11) {
-    state = elevenToTwelve(state, initialVersion)
-  }
+	if (state.version === 11) {
+		state = elevenToTwelve(state, initialVersion)
+	}
 
-  if (state.version === 12) {
-    state = twelveToThirteen(state)
-  }
+	if (state.version === 12) {
+		state = twelveToThirteen(state)
+	}
 
-  if (state.version === 13) {
-    state = thirteenToFourteen(state)
-  }
+	if (state.version === 13) {
+		state = thirteenToFourteen(state)
+	}
 
-  if (!(state?.version === defaultState.version)) {
-    return defaultState
-  }
+	if (!(state?.version === defaultState.version)) {
+		return defaultState
+	}
 
-  if (isFirefox()) {
-    state = migrateForFirefox(state)
-  } else {
-    state = migrateForChrome(state)
-  }
+	if (isFirefox()) {
+		state = migrateForFirefox(state)
+	} else {
+		state = migrateForChrome(state)
+	}
 
-  state = migrateShortcutsDisabledList(state) || state
-  return state
+	state = migrateShortcutsDisabledList(state) || state
+	return state
 }
 
 function migrateShortcutsDisabledList(state: State) {
-  state.websitesAddedToUrlConditionsExclusion = state.websitesAddedToUrlConditionsExclusion || []
-  const excludedSet = new Set(state.websitesAddedToUrlConditionsExclusion)
-  state.keybindsUrlCondition = state.keybindsUrlCondition || getEmptyUrlConditions(true)
-  const cond = state.keybindsUrlCondition
-  cond.blockParts = cond.blockParts || []
+	state.websitesAddedToUrlConditionsExclusion = state.websitesAddedToUrlConditionsExclusion || []
+	const excludedSet = new Set(state.websitesAddedToUrlConditionsExclusion)
+	state.keybindsUrlCondition = state.keybindsUrlCondition || getEmptyUrlConditions(true)
+	const cond = state.keybindsUrlCondition
+	cond.blockParts = cond.blockParts || []
 
-  SHORTCUT_DISABLED_WEBSITES.forEach(website => {
-    const key = turnWebsiteInfoIntoString(website)
-    if (excludedSet.has(key)) return
+	SHORTCUT_DISABLED_WEBSITES.forEach((website) => {
+		const key = turnWebsiteInfoIntoString(website)
+		if (excludedSet.has(key)) return
 
-    // Check if they already have it (User added)
-    if (website.contains) {
-      if (cond.blockParts.find(p => p.valueContains === website.v && p.type === "CONTAINS")) return
-    } else {
-      if (cond.blockParts.find(p => p.valueStartsWith === website.v && p.type === "STARTS_WITH")) return
-    }
+		// Check if they already have it (User added)
+		if (website.contains) {
+			if (cond.blockParts.find((p) => p.valueContains === website.v && p.type === "CONTAINS")) return
+		} else {
+			if (cond.blockParts.find((p) => p.valueStartsWith === website.v && p.type === "STARTS_WITH")) return
+		}
 
-    state.websitesAddedToUrlConditionsExclusion.push(key)
-    const part = generateUrlPart(website.v)
-    if (website.contains) part.type = "CONTAINS"
-    cond.blockParts.push(part)
-  })
-  return state
+		state.websitesAddedToUrlConditionsExclusion.push(key)
+		const part = generateUrlPart(website.v)
+		if (website.contains) part.type = "CONTAINS"
+		cond.blockParts.push(part)
+	})
+	return state
 }
 
-// These migration functions should be self contained. 
+// These migration functions should be self contained.
 function sevenToEight(state: any) {
-  state.version = 8
-  state.rules?.forEach((rule: any) => {
-    rule.condition = {
-      parts: [{ type: rule.matchType || "CONTAINS", id: randomId(), value: rule.match || "" }]
-    }
-    delete rule.matchType
-    delete rule.match
-  })
-  return state
+	state.version = 8
+	state.rules?.forEach((rule: any) => {
+		rule.condition = {
+			parts: [{ type: rule.matchType || "CONTAINS", id: randomId(), value: rule.match || "" }],
+		}
+		delete rule.matchType
+		delete rule.match
+	})
+	return state
 }
 
 function eightToNine(state: any) {
-  state.version = 9
-  state.keybinds?.forEach((kb: any) => {
-    if (kb.command === "seek") {
-      kb.valueBool2 = true
-    }
-  })
-  return state
+	state.version = 9
+	state.keybinds?.forEach((kb: any) => {
+		if (kb.command === "seek") {
+			kb.valueBool2 = true
+		}
+	})
+	return state
 }
 
 function nineToTen(state: any) {
-  state.version = 10
-  state.keybinds?.forEach((kb: any) => {
-    if (kb.command === "preservePitch") {
-      kb.command = "speedChangesPitch"
-      kb.valueState = kb.valueState === "on" ? "off" : kb.valueState === "off" ? "on" : "toggle"
-    }
-  })
-  return state
+	state.version = 10
+	state.keybinds?.forEach((kb: any) => {
+		if (kb.command === "preservePitch") {
+			kb.command = "speedChangesPitch"
+			kb.valueState = kb.valueState === "on" ? "off" : kb.valueState === "off" ? "on" : "toggle"
+		}
+	})
+	return state
 }
-
-
 
 function tenToEleven(state: State) {
-  const renameMap: { [key: string]: any } = {
-    adjustSpeed: "speed",
-    setPin: "pin",
-    setState: "state",
-    setPause: "pause",
-    setMute: "mute",
-    adjustVolume: "volume",
-    toggleLoop: "loop",
-    setFx: "fxState",
-    resetFx: "fxReset",
-    flipFx: "fxSwap",
-    adjustFilter: "fxFilter",
-    adjustGain: "afxGain",
-    adjustPitch: "afxPitch",
-    adjustDelay: "afxDelay",
-    adjustPan: "afxPan",
-    tabCapture: "afxCapture" 
-  }
+	const renameMap: { [key: string]: any } = {
+		adjustSpeed: "speed",
+		setPin: "pin",
+		setState: "state",
+		setPause: "pause",
+		setMute: "mute",
+		adjustVolume: "volume",
+		toggleLoop: "loop",
+		setFx: "fxState",
+		resetFx: "fxReset",
+		flipFx: "fxSwap",
+		adjustFilter: "fxFilter",
+		adjustGain: "afxGain",
+		adjustPitch: "afxPitch",
+		adjustDelay: "afxDelay",
+		adjustPan: "afxPan",
+		tabCapture: "afxCapture",
+	}
 
-  const migrateURLCondition = (c: URLCondition, rule?: URLRule, kb?: Keybind) => {
-    if (rule && !isFirefox()) (c as any).parts = rule.type === "JS" ? (c as any).parts.filter((p: any) => p.type !== "REGEX") : (c as any).parts
+	const migrateURLCondition = (c: URLCondition, rule?: URLRule, kb?: Keybind) => {
+		if (rule && !isFirefox()) (c as any).parts = rule.type === "JS" ? (c as any).parts.filter((p: any) => p.type !== "REGEX") : (c as any).parts
+		;(c as any).parts.forEach((p: URLConditionPart) => {
+			p.valueContains = p.type === "CONTAINS" ? (p as any).value : String.raw`example.com`
+			p.valueStartsWith = p.type === "STARTS_WITH" ? (p as any).value : String.raw`https://example.com`
+			p.valueRegex = p.type === "REGEX" ? (p as any).value : String.raw`example\.com`
+			delete (p as any).value
+		})
 
-      ;(c as any).parts.forEach((p: URLConditionPart) => {
-        p.valueContains = p.type === "CONTAINS" ? (p as any).value : String.raw`example.com`
-        p.valueStartsWith = p.type === "STARTS_WITH" ? (p as any).value : String.raw`https://example.com`
-        p.valueRegex = p.type === "REGEX" ? (p as any).value : String.raw`example\.com`
-        delete (p as any).value
-      })
+		if ((c as any).matchAll && (c as any).parts.every((p: any) => p.inverse)) {
+			;(c as URLCondition).block = true
+		} else if (!(c as any).matchAll && (c as any).parts.every((p: any) => !p.inverse)) {
+			// do nothing
+		} else {
+			// Frankenstein rules should be disabled until further user action.
+			if (rule) {
+				rule.enabled = false
+			} else {
+				;(c as any).parts = []
+			}
+		}
 
-    if ((c as any).matchAll && (c as any).parts.every((p: any) => p.inverse)) {
-      (c as URLCondition).block = true
-    } else if (!(c as any).matchAll && (c as any).parts.every((p: any) => !p.inverse)) {
-      // do nothing
-    } else {
-      // Frankenstein rules should be disabled until further user action.
-      if (rule) {
-        rule.enabled = false
-      } else {
-        (c as any).parts = []
-      }
-    }
+		// clear depreciated keys
+		;(c as any).parts.forEach((p: any) => {
+			delete p.inverse
+		})
+		delete (c as any).matchAll
+	}
 
-    // clear depreciated keys
-    ;(c as any).parts.forEach((p: any) => {
-      delete p.inverse
-    })
-    delete (c as any).matchAll
-  }
+	state.version = 11
+	state.rules?.forEach((rule) => {
+		if ((rule as any).type === "STATE") {
+			rule.type = (rule as any).overrideEnabled ? "ON" : "OFF"
+		}
 
+		if ((rule as any).condition) migrateURLCondition((rule as any).condition, rule)
 
-  state.version = 11
-  state.rules?.forEach(rule => {
-    if ((rule as any).type === "STATE") {
-      rule.type = (rule as any).overrideEnabled ? "ON" : "OFF"
-    }
+		delete (rule as any).overrideEnabled
+		delete (rule as any).strict
+		delete (rule as any).initialLoadOnly
+	})
+	;((state as any).common as Context).latestViaShortcut = !(state as any).common.enabledLatestViaPopup
+	delete (state as any).common.enabledLatestViaPopup
+	;(state as any).keybinds = (state as any).keybinds ?? []
 
+	// Rename
+	;(state as any).keybinds.forEach((kb: any) => {
+		if (Object.hasOwn(renameMap, kb.command)) {
+			kb.command = renameMap[kb.command]
+		}
+	})
 
-    if ((rule as any).condition) migrateURLCondition((rule as any).condition, rule)
+	if (state.keybindsUrlCondition)
+		migrateURLCondition(state.keybindsUrlCondition)
 
-    delete (rule as any).overrideEnabled
-    delete (rule as any).strict
-    delete (rule as any).initialLoadOnly
-  })
-  ;((state as any).common as Context).latestViaShortcut = !(state as any).common.enabledLatestViaPopup
-  delete (state as any).common.enabledLatestViaPopup
+		// Migrate keybinds
+	;(state as any).keybinds.forEach((kb: any) => {
+		if ((kb as any).global) {
+			kb.trigger = Trigger.BROWSER
+		}
 
-  ;(state as any).keybinds = (state as any).keybinds ?? []
+		if (kb.condition) {
+			if ((kb.condition as any).parts?.length) {
+				migrateURLCondition(kb.condition)
+			} else {
+				delete kb.condition
+			}
+		}
 
-  // Rename 
-  ;(state as any).keybinds.forEach((kb: any) => {
-    if (Object.hasOwn(renameMap, kb.command)) {
-      kb.command = renameMap[kb.command]
-    }
-  })
+		if (kb.adjustMode === AdjustMode.ADD) {
+			kb.valueNumber = kb.valueNumberAlt
+		}
 
-  if (state.keybindsUrlCondition) migrateURLCondition(state.keybindsUrlCondition)
+		// Migrate seek
+		if (kb.command === "seek") {
+			if ((kb as any).valueBool) kb.relativeToSpeed = true
+			if ((kb as any).valueBool2) kb.fastSeek = true
+			if ((kb as any).valueBool3) kb.autoPause = true
 
-  // Migrate keybinds 
-  ;(state as any).keybinds.forEach((kb: any) => {
+			kb.adjustMode = AdjustMode.ADD
 
-    if ((kb as any).global) {
-      kb.trigger = Trigger.BROWSER
-    }
+			if ((kb as any).valueBool4) {
+				kb.adjustMode = AdjustMode.SET
+				kb.duration = Duration.PERCENT
+				kb.valueNumber = (kb as any).valueNumberAlt
+			} else if (Math.abs(kb.valueNumber) < 0.05) {
+				kb.duration = Duration.FRAMES
+				kb.valueNumber = kb.valueNumber < 0 ? -1 : 1
+			}
 
-    if (kb.condition) {
-      if ((kb.condition as any).parts?.length) {
-        migrateURLCondition(kb.condition)
-      } else {
-        delete kb.condition
-      }
-    }
+			;(delete (kb as any).valueBool, delete (kb as any).valueBool2, delete (kb as any).valueBool3, delete (kb as any).valueBool4)
+		}
 
-    if (kb.adjustMode === AdjustMode.ADD) {
-      kb.valueNumber = kb.valueNumberAlt
-    }
+		// Migrate volume
+		if (kb.command === "volume") {
+			kb.adjustMode = AdjustMode.ADD
+		}
 
-    // Migrate seek
-    if (kb.command === "seek") {
-      if ((kb as any).valueBool) kb.relativeToSpeed = true
-      if ((kb as any).valueBool2) kb.fastSeek = true
-      if ((kb as any).valueBool3) kb.autoPause = true
+		// Migrate seekMark
+		else if (kb.command === "seekMark") {
+			if ((kb as any).valueBool2) kb.fastSeek = true
+			delete (kb as any).valueBool2
+		}
+		// Migrate fullscreen
+		else if (kb.command === "fullscreen") {
+			if ((kb as any).valueBool) kb.direct = true
+			delete (kb as any).valueBool
+		}
 
-      kb.adjustMode = AdjustMode.ADD
+		delete (kb as any).valueNumberAlt
+	})
 
-      if ((kb as any).valueBool4) {
-        kb.adjustMode = AdjustMode.SET
-        kb.duration = Duration.PERCENT
-        kb.valueNumber = (kb as any).valueNumberAlt
-      } else if (Math.abs(kb.valueNumber) < 0.05) {
-        kb.duration = Duration.FRAMES
-        kb.valueNumber = kb.valueNumber < 0 ? -1 : 1
-      }
+	state.initialContext = (state as any).inheritPreviousContext ? 1 : 2
+	delete (state as any).staticOverlay
 
-      delete (kb as any).valueBool, delete (kb as any).valueBool2, delete (kb as any).valueBool3, delete (kb as any).valueBool4
-    }
+	const common = (state as any).common as Context
+	delete (state as any).common
+	Object.assign(state, common)
 
-    // Migrate volume 
-    if (kb.command === "volume") {
-      kb.adjustMode = AdjustMode.ADD
-    }
-
-    // Migrate seekMark
-    else if (kb.command === "seekMark") {
-      if ((kb as any).valueBool2) kb.fastSeek = true
-      delete (kb as any).valueBool2
-    }
-    // Migrate fullscreen
-    else if (kb.command === "fullscreen") {
-      if ((kb as any).valueBool) kb.direct = true
-      delete (kb as any).valueBool
-    }
-
-    delete (kb as any).valueNumberAlt
-  })
-
-  state.initialContext = (state as any).inheritPreviousContext ? 1 : 2
-  delete (state as any).staticOverlay
-
-  const common = (state as any).common as Context
-  delete (state as any).common
-  Object.assign(state, common)
-
-  return state
+	return state
 }
 
-
 function elevenToTwelve(state: State, initialVersion?: number) {
-  state.version = 12
-  if (initialVersion === 11) {
-    // Restore incorrectly ported 
-    let hasDefaultIncrease = (state as any).keybinds.some((kb: any) => kb.command === "speed" && kb.key === "KeyD" && kb.valueNumber === 0.1 && kb.adjustMode === AdjustMode.ADD)
-    if (hasDefaultIncrease) {
-      let kb = (state as any).keybinds.find((kb: any) => kb.command === "speed" && kb.adjustMode === AdjustMode.ADD && kb.key === "KeyA" && kb.valueNumber == null)
-      if (kb) {
-        kb.valueNumber = -0.1
-      }
-    }
+	state.version = 12
+	if (initialVersion === 11) {
+		// Restore incorrectly ported
+		let hasDefaultIncrease = (state as any).keybinds.some(
+			(kb: any) => kb.command === "speed" && kb.key === "KeyD" && kb.valueNumber === 0.1 && kb.adjustMode === AdjustMode.ADD,
+		)
+		if (hasDefaultIncrease) {
+			let kb = (state as any).keybinds.find(
+				(kb: any) => kb.command === "speed" && kb.adjustMode === AdjustMode.ADD && kb.key === "KeyA" && kb.valueNumber == null,
+			)
+			if (kb) {
+				kb.valueNumber = -0.1
+			}
+		}
 
-    // Restore nothing
-    ;(state as any).keybinds.filter((kb: any) => kb.command === "speed" && kb.valueNumber === 0 && kb.adjustMode === AdjustMode.ADD).forEach((kb: any) => {
-      kb.command = "nothing"
-    })
-  }
-  return state
+		// Restore nothing
+		;(state as any).keybinds
+			.filter((kb: any) => kb.command === "speed" && kb.valueNumber === 0 && kb.adjustMode === AdjustMode.ADD)
+			.forEach((kb: any) => {
+				kb.command = "nothing"
+			})
+	}
+	return state
 }
 
 function twelveToThirteen(state: any) {
-  state.version = 13
+	state.version = 13
 
-  const migrateCondition = (c: any) => {
-    if (!c) return
-    const parts = c.parts || []
-    c.blockPorts = []
-    c.allowParts = []
-    
-    if (c.block) {
-      c.blockParts = parts
-    } else {
-      c.allowParts = parts
-    }
-    delete c.parts
-  }
+	const migrateCondition = (c: any) => {
+		if (!c) return
+		const parts = c.parts || []
+		c.blockPorts = []
+		c.allowParts = []
 
-  migrateCondition(state.keybindsUrlCondition)
-  migrateCondition(state.ghostModeUrlCondition)
+		if (c.block) {
+			c.blockParts = parts
+		} else {
+			c.allowParts = parts
+		}
+		delete c.parts
+	}
 
-  state.rules?.forEach((rule: any) => {
-    migrateCondition(rule.condition)
-  })
+	migrateCondition(state.keybindsUrlCondition)
+	migrateCondition(state.ghostModeUrlCondition)
 
-  state.keybinds?.forEach((kb: any) => {
-    migrateCondition(kb.condition)
-  })
+	state.rules?.forEach((rule: any) => {
+		migrateCondition(rule.condition)
+	})
 
-  return state
+	state.keybinds?.forEach((kb: any) => {
+		migrateCondition(kb.condition)
+	})
+
+	return state
 }
 
 function thirteenToFourteen(state: State) {
-  state.version = 14
-  
-  state.pageKeybinds = []
-  state.browserKeybinds = []
-  state.menuKeybinds = []
-  ;(state as any).keybinds?.forEach((kb: Keybind) => {
-    const trigger = kb.trigger || Trigger.PAGE
-    if (trigger === Trigger.PAGE) {
-      state.pageKeybinds.push(kb)
-    } else if (trigger === Trigger.BROWSER) {
-      state.browserKeybinds.push(kb)
-    } else if (trigger === Trigger.MENU) {
-      state.menuKeybinds.push(kb)
-    }
-  })
-  return state 
+	state.version = 14
+
+	state.pageKeybinds = []
+	state.browserKeybinds = []
+	state.menuKeybinds = []
+	;(state as any).keybinds?.forEach((kb: Keybind) => {
+		const trigger = kb.trigger || Trigger.PAGE
+		if (trigger === Trigger.PAGE) {
+			state.pageKeybinds.push(kb)
+		} else if (trigger === Trigger.BROWSER) {
+			state.browserKeybinds.push(kb)
+		} else if (trigger === Trigger.MENU) {
+			state.menuKeybinds.push(kb)
+		}
+	})
+	return state
 }
 
 function migrateForChrome(state: State) {
-
-
-  return state
+	return state
 }
 
 function migrateForFirefox(state: State) {
-  state.pageKeybinds = state.pageKeybinds.filter(kb => availableCommandNames.includes(kb.command))
-  state.browserKeybinds = []
-  state.menuKeybinds = state.menuKeybinds.filter(kb => availableCommandNames.includes(kb.command))
+	state.pageKeybinds = state.pageKeybinds.filter((kb) => availableCommandNames.includes(kb.command))
+	state.browserKeybinds = []
+	state.menuKeybinds = state.menuKeybinds.filter((kb) => availableCommandNames.includes(kb.command))
 
-  return state
+	return state
 }

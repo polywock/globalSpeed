@@ -1,54 +1,54 @@
 #App.firefox .FxControl {
-  margin-right: 20px;
+	margin-right: 20px;
 }
 
 .FxControl {
-  font-size: 1rem;
-  background-color: var(--fg-color);
-  user-select: none;
+	font-size: 1rem;
+	background-color: var(--fg-color);
+	user-select: none;
 
-  & > * {
-    margin-bottom: 10px;
-  }
+	& > * {
+		margin-bottom: 10px;
+	}
 
-  & > .controls {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 10px;
+	& > .controls {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		column-gap: 10px;
 
-    & > button {
-      color: var(--icon-color);
-      &.active {
-        color: var(--icon-vibrant-color);
-      }
-      &.muted {
-        color: var(--icon-muted-color);
-      }
+		& > button {
+			color: var(--icon-color);
+			&.active {
+				color: var(--icon-vibrant-color);
+			}
+			&.muted {
+				color: var(--icon-muted-color);
+			}
 
-      &.active.levelup {
-        outline: 1px solid var(--icon-vibrant-color);
-        & > svg {
-          transform: scale(1.15);
-        }
-      }
-    }
-  }
+			&.active.levelup {
+				outline: 1px solid var(--icon-vibrant-color);
+				& > svg {
+					transform: scale(1.15);
+				}
+			}
+		}
+	}
 
-  & > .buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 10px;
-  }
+	& > .buttons {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		column-gap: 10px;
+	}
 
-  & > .selector {
-    ma12px-top: 10px;
-    display: grid;
-    row-gap: 5px;
-  }
+	& > .selector {
+		ma12px-top: 10px;
+		display: grid;
+		row-gap: 5px;
+	}
 
-  & > .origin {
-    display: grid;
-    grid-template-columns: 1fr max-content max-content;
-    gr12pxolumn-gap: 10px;
-  }
+	& > .origin {
+		display: grid;
+		grid-template-columns: 1fr max-content max-content;
+		gr12pxolumn-gap: 10px;
+	}
 }

@@ -3,138 +3,138 @@
 } */
 
 .KeybindControl {
-  display: grid;
-  grid-template-columns:
-    max-content minmax(200px, 1.5fr)
-    175px 200px max-content;
-  column-gap: 10px;
-  align-items: center;
+	display: grid;
+	grid-template-columns:
+		max-content minmax(200px, 1.5fr)
+		175px 200px max-content;
+	column-gap: 10px;
+	align-items: center;
 
-  & > input[type="text"],
-  & > select,
-  & > .talues > [type="text"] {
-    text-align: center;
-  }
+	& > input[type="text"],
+	& > select,
+	& > .talues > [type="text"] {
+		text-align: center;
+	}
 
-  select {
-    text-align-last: center;
-  }
+	select {
+		text-align-last: center;
+	}
 
-  & > .urlBubble {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: var(--error-border-color);
-    color: var(--pure-color);
-    padding: 0 5px;
-    border-radius: 10px;
-    display: block;
-  }
+	& > .urlBubble {
+		position: absolute;
+		top: -5px;
+		right: -5px;
+		background-color: var(--error-border-color);
+		color: var(--pure-color);
+		padding: 0 5px;
+		border-radius: 10px;
+		display: block;
+	}
 
-  & > .command {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+	& > .command {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
 
-    & > .label {
-      &::first-letter {
-        font-size: 1.2em;
-      }
-    }
+		& > .label {
+			&::first-letter {
+				font-size: 1.2em;
+			}
+		}
 
-    & > *:nth-child(1n + 2) {
-      margin-left: 10px;
-    }
+		& > *:nth-child(1n + 2) {
+			margin-left: 10px;
+		}
 
-    .kebabTooltip {
-      margin-left: 5px;
-    }
+		.kebabTooltip {
+			margin-left: 5px;
+		}
 
-    & > input[type="color"] {
-      width: 30px;
-    }
-    & > .NumericInput input {
-      width: 60px;
-    }
-    & > .nothingInput input {
-      margin-left: 10px;
-      width: 40px;
-      padding: 0px;
-    }
+		& > input[type="color"] {
+			width: 30px;
+		}
+		& > .NumericInput input {
+			width: 60px;
+		}
+		& > .nothingInput input {
+			margin-left: 10px;
+			width: 40px;
+			padding: 0px;
+		}
 
-    & > svg,
-    & > .svg,
-    .captureIcon {
-      color: var(--icon-vibrant-color);
-      margin-right: 10px;
-      font-size: 16px;
-    }
+		& > svg,
+		& > .svg,
+		.captureIcon {
+			color: var(--icon-vibrant-color);
+			margin-right: 10px;
+			font-size: 16px;
+		}
 
-    & > div.captureIcon {
-      @keyframes blink {
-        0% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0;
-        }
-      }
+		& > div.captureIcon {
+			@keyframes blink {
+				0% {
+					opacity: 1;
+				}
+				50% {
+					opacity: 0;
+				}
+			}
 
-      border: 1px solid var(--icon-vibrant-color);
+			border: 1px solid var(--icon-vibrant-color);
 
-      &.active {
-        animation: 1.5s ease-out blink 5;
-      }
+			&.active {
+				animation: 1.5s ease-out blink 5;
+			}
 
-      & > div {
-        background-color: var(--icon-vibrant-color);
-        width: 1.14rem;
-        height: 1rem;
-        border: 2px solid var(--fg-color);
-      }
-    }
+			& > div {
+				background-color: var(--icon-vibrant-color);
+				width: 1.14rem;
+				height: 1rem;
+				border: 2px solid var(--fg-color);
+			}
+		}
 
-    & > .RegularTooltip,
-    & > .warningTooltip {
-      margin-left: 5px;
-    }
+		& > .RegularTooltip,
+		& > .warningTooltip {
+			margin-left: 5px;
+		}
 
-    & > .warningTooltip {
-      color: var(--icon-vibrant-color);
-    }
+		& > .warningTooltip {
+			color: var(--icon-vibrant-color);
+		}
 
-    & > button.adjustMode {
-      margin-left: 11px;
-      padding: 3px;
-      background-color: var(--fg-color);
-      color: var(--text-color);
-      border: 1px solid var(--border);
-      font-size: 0.8em;
-    }
+		& > button.adjustMode {
+			margin-left: 11px;
+			padding: 3px;
+			background-color: var(--fg-color);
+			color: var(--text-color);
+			border: 1px solid var(--border);
+			font-size: 0.8em;
+		}
 
-    & > .support {
-      & > *:nth-child(1n + 2) {
-        margin-left: 4px;
-      }
-    }
-  }
+		& > .support {
+			& > *:nth-child(1n + 2) {
+				margin-left: 4px;
+			}
+		}
+	}
 
-  & > .talues {
-    display: grid;
-    row-gap: 10px;
-    width: 175px;
+	& > .talues {
+		display: grid;
+		row-gap: 10px;
+		width: 175px;
 
-    & > .globalPicker {
-      display: grid;
-      grid-template-columns: 1fr max-content;
-      column-gap: 7px;
-      align-items: center;
+		& > .globalPicker {
+			display: grid;
+			grid-template-columns: 1fr max-content;
+			column-gap: 7px;
+			align-items: center;
 
-      & button {
-        background-color: var(--fg-color);
-        color: var(--text-color);
-        translate: 0px -2px;
-      }
-    }
-  }
+			& button {
+				background-color: var(--fg-color);
+				color: var(--text-color);
+				translate: 0px -2px;
+			}
+		}
+	}
 }

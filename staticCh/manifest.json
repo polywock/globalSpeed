@@ -1,65 +1,63 @@
 {
-  "name": "__MSG_appName__",
-  "short_name": "Global Speed",
-  "version": "3.2.59",
-  "default_locale": "en",
-  "description": "__MSG_appDesc__",
-  "manifest_version": 3,
-  "host_permissions": ["https://*/*", "http://*/*", "file://*/*"],
-  "permissions": ["storage", "tabCapture", "webNavigation", "scripting", "offscreen", "userScripts", "contextMenus"],
-  "action": {
-    "default_popup": "popup.html"
-  },
-  "icons": {  "128": "icons/128.png" },
-  "background": {
-    "service_worker": "background.js",
-    "type": "module"
-  },
-  "web_accessible_resources": [
-    {"resources": ["circles/*.svg"], "matches": ["http://*/*", "https://*/*"]}
-  ],
-  "content_scripts": [
-    {
-      "matches": ["https://*/*", "http://*/*", "file://*/*"],
-      "exclude_matches": ["https://*.ubs.com/*", "https://*.591.com.tw/*", "https://*.91huayi.com/*"],
-      "js": ["isolated.js"],
-      "all_frames": true,
-      "match_about_blank": true,
-      "run_at": "document_start"
-    },
-    {
-      "matches": ["https://*/*", "http://*/*", "file://*/*"],
-      "exclude_matches": ["https://*.ubs.com/*", "https://*.591.com.tw/*", "https://*.91huayi.com/*"],
-      "js": ["main.js"],
-      "all_frames": true,
-      "match_about_blank": true,
-      "run_at": "document_start",
-      "world": "MAIN"
-    }
-  ],
-  "options_ui": {
-    "open_in_tab": true,
-    "page": "options.html"
-  },
-  "commands": {
-    "commandA": {"description": "command A"},
-    "commandB": {"description": "command B"},
-    "commandC": {"description": "command C"},
-    "commandD": {"description": "command D"},
-    "commandE": {"description": "command E"},
-    "commandF": {"description": "command F"},
-    "commandG": {"description": "command G"},
-    "commandH": {"description": "command H"},
-    "commandI": {"description": "command I"},
-    "commandJ": {"description": "command J"},
-    "commandK": {"description": "command K"},
-    "commandL": {"description": "command L"},
-    "commandM": {"description": "command M"},
-    "commandN": {"description": "command N"},
-    "commandO": {"description": "command O"},
-    "commandP": {"description": "command P"},
-    "commandQ": {"description": "command Q"},
-    "commandR": {"description": "command R"},
-    "commandS": {"description": "command S"}
-  }
+	"name": "__MSG_appName__",
+	"short_name": "Global Speed",
+	"version": "3.2.59",
+	"default_locale": "en",
+	"description": "__MSG_appDesc__",
+	"manifest_version": 3,
+	"host_permissions": ["https://*/*", "http://*/*", "file://*/*"],
+	"permissions": ["storage", "tabCapture", "webNavigation", "scripting", "offscreen", "userScripts", "contextMenus"],
+	"action": {
+		"default_popup": "popup.html"
+	},
+	"icons": { "128": "icons/128.png" },
+	"background": {
+		"service_worker": "background.js",
+		"type": "module"
+	},
+	"web_accessible_resources": [{ "resources": ["circles/*.svg"], "matches": ["http://*/*", "https://*/*"] }],
+	"content_scripts": [
+		{
+			"matches": ["https://*/*", "http://*/*", "file://*/*"],
+			"exclude_matches": ["https://*.ubs.com/*", "https://*.591.com.tw/*", "https://*.91huayi.com/*"],
+			"js": ["isolated.js"],
+			"all_frames": true,
+			"match_about_blank": true,
+			"run_at": "document_start"
+		},
+		{
+			"matches": ["https://*/*", "http://*/*", "file://*/*"],
+			"exclude_matches": ["https://*.ubs.com/*", "https://*.591.com.tw/*", "https://*.91huayi.com/*"],
+			"js": ["main.js"],
+			"all_frames": true,
+			"match_about_blank": true,
+			"run_at": "document_start",
+			"world": "MAIN"
+		}
+	],
+	"options_ui": {
+		"open_in_tab": true,
+		"page": "options.html"
+	},
+	"commands": {
+		"commandA": { "description": "command A" },
+		"commandB": { "description": "command B" },
+		"commandC": { "description": "command C" },
+		"commandD": { "description": "command D" },
+		"commandE": { "description": "command E" },
+		"commandF": { "description": "command F" },
+		"commandG": { "description": "command G" },
+		"commandH": { "description": "command H" },
+		"commandI": { "description": "command I" },
+		"commandJ": { "description": "command J" },
+		"commandK": { "description": "command K" },
+		"commandL": { "description": "command L" },
+		"commandM": { "description": "command M" },
+		"commandN": { "description": "command N" },
+		"commandO": { "description": "command O" },
+		"commandP": { "description": "command P" },
+		"commandQ": { "description": "command Q" },
+		"commandR": { "description": "command R" },
+		"commandS": { "description": "command S" }
+	}
 }

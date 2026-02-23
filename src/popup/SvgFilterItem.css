@@ -1,27 +1,27 @@
 .SvgFilter {
-  margin-top: 15px;
-  padding: 10px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+	margin-top: 15px;
+	padding: 10px;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
 
-  & > .header {
-    font-size: 1.2em;
-    display: grid;
-    grid-template-columns: max-content 1fr max-content max-content max-content;
-    align-items: center;
-    column-gap: 5px;
-    margin-bottom: 5px;
-  }
+	& > .header {
+		font-size: 1.2em;
+		display: grid;
+		grid-template-columns: max-content 1fr max-content max-content max-content;
+		align-items: center;
+		column-gap: 5px;
+		margin-bottom: 5px;
+	}
 
-  & > .presets {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    column-gap: 5px;
-    align-items: center;
-    margin-top: 7px;
-  }
+	& > .presets {
+		display: grid;
+		grid-template-columns: max-content 1fr;
+		column-gap: 5px;
+		align-items: center;
+		margin-top: 7px;
+	}
 
-  & > .core {
-    margin-top: 7px;
-  }
+	& > .core {
+		margin-top: 7px;
+	}
 }

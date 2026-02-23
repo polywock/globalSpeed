@@ -2,56 +2,54 @@ import { useState, KeyboardEvent } from "react"
 import { Hotkey, extractHotkey, formatHotkey } from "../utils/keys"
 import "./KeyPicker.css"
 
-
-
 type KeyPickerProps = {
-  onChange: (key: Hotkey) => void
-  value: Hotkey
-  virtual: boolean
+	onChange: (key: Hotkey) => void
+	value: Hotkey
+	virtual: boolean
 }
 
 const MODIFIER_KEYS = ["Control", "Alt", "Shift", "Meta"]
 
 export const KeyPicker = (props: KeyPickerProps) => {
-  const [enterState, setEnterState] = useState(false)
+	const [enterState, setEnterState] = useState(false)
 
-  const handleOnKeyDown = (e: KeyboardEvent) => {
-    if (!enterState && e.key === "Enter") {
-      setEnterState(!enterState)
-      return 
-    }
+	const handleOnKeyDown = (e: KeyboardEvent) => {
+		if (!enterState && e.key === "Enter") {
+			setEnterState(!enterState)
+			return
+		}
 
-    if (!enterState) {
-      return 
-    }
+		if (!enterState) {
+			return
+		}
 
+		// skip if modifier fear is target.
+		if (MODIFIER_KEYS.includes(e.key)) {
+			return
+		}
 
-    // skip if modifier fear is target.
-    if (MODIFIER_KEYS.includes(e.key)) {
-      return 
-    }
+		e.preventDefault()
 
-    e.preventDefault()
+		props.onChange && props.onChange(extractHotkey(e.nativeEvent, !props.virtual, props.virtual))
+		setEnterState(false)
+	}
 
-    props.onChange && props.onChange(extractHotkey(e.nativeEvent, !props.virtual, props.virtual))
-    setEnterState(false)
-  }
-
-  return (
-    <div 
-      onBlur={() => setEnterState(false)} 
-      onKeyDown={handleOnKeyDown} 
-      onClick={e => setEnterState(!enterState)} 
-      tabIndex={0} 
-      onContextMenuCapture={e => {
-        e.preventDefault()
-        e.stopPropagation()
-        enterState && setEnterState(false)
-        props.onChange?.(null)
-      }}
-      style={{fontFamily: enterState ? 'monospace' : null}}
-      className="KeyPicker">
-      {enterState ? '...' : formatHotkey(props.value)}
-    </div>
-  )
+	return (
+		<div
+			onBlur={() => setEnterState(false)}
+			onKeyDown={handleOnKeyDown}
+			onClick={(e) => setEnterState(!enterState)}
+			tabIndex={0}
+			onContextMenuCapture={(e) => {
+				e.preventDefault()
+				e.stopPropagation()
+				enterState && setEnterState(false)
+				props.onChange?.(null)
+			}}
+			style={{ fontFamily: enterState ? "monospace" : null }}
+			className="KeyPicker"
+		>
+			{enterState ? "..." : formatHotkey(props.value)}
+		</div>
+	)
 }

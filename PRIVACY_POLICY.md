@@ -1,3 +1,3 @@
+# Privacy Policy
 
-# Privacy Policy 
-1. Global Speed does not collect any personal information. 
+1. Global Speed does not collect any personal information.
