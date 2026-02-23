@@ -1,11 +1,11 @@
 import { formatFilters, hasActiveSvgFilters } from "../../utils/configUtils"
 import { SubscribeView } from "../../utils/state"
 import { StateView, SvgFilter } from "../../types"
-import { getDefaultFx } from "src/defaults"
+import { getDefaultFx } from "@/defaults"
 import { Backdrop } from "./utils/Backdrop"
-import { createSVGElement, randomId } from "src/utils/helper"
-import { SVG_FILTER_ADDITIONAL } from "src/defaults/svgFilterAdditional"
-import { svgFilterIsValid } from "src/defaults/filters"
+import { createSVGElement, randomId } from "@/utils/helper"
+import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
+import { svgFilterIsValid } from "@/defaults/filters"
 
 export class FxSync {
   released: boolean

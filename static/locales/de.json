@@ -29,18 +29,23 @@
     "videoBrightness": "Videohelligkeit",
     "videoContrast": "Videokontrast"
   },
+  "header": {
+    "pinTooltip": "Aktuellen Tab anpinnen, um eigenen Kontext zu verwenden",
+    "unpinTooltip": "Aktuellen Tab loslösen, um globalen Kontext zu verwenden"
+  },
   "token": {
     "create": "Erstellen",
     "reset": "Zurücksetzen",
     "duplicate": "Duplizieren",
     "delete": "Löschen",
     "aspectLock": "Seitenverhältnis sperren",
-    "pinTooltip": "Tab anheften, um Einstellungen getrennt zu halten.",
     "mergeBoth": "Beide zusammenführen",
     "min": "Min",
     "max": "Max",
     "on": "Ein",
     "off": "Aus",
+    "turnOn": "Einschalten",
+    "turnOff": "Ausschalten",
     "toggle": "Umschalten",
     "video": "Video",
     "page": "Seite",
@@ -224,7 +229,7 @@
       "pinByDefault": "Standardmäßig anheften",
       "pinByDefaultTooltip": "Neue Tabs werden automatisch angeheftet.",
       "initialState": "Anfangszustand",
-      "previousTab": "Kontext des vorherigen Tabs.",
+      "initialStateTooltip": "Der Startkontext für neu angeheftete Tabs.",
       "globalContext": "Globaler Kontext",
       "previousContext": "Kontext des vorherigen Tabs",
       "newContext": "Neuer Kontext",

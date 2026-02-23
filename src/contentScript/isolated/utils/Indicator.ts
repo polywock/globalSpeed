@@ -1,8 +1,8 @@
-import { createOverlayIcons } from "src/defaults/icons";
+import { createOverlayIcons } from "@/defaults/icons";
 import { Popover } from "./Popover";
-import { insertStyle } from "src/utils/nativeUtils";
-import { IndicatorInit } from "src/types";
-import { INDICATOR_INIT } from "src/defaults";
+import { insertStyle } from "@/utils/nativeUtils";
+import { IndicatorInit } from "@/types";
+import { INDICATOR_INIT } from "@/defaults";
 import styles from "./Indicator.css?raw"
 
 const BASE_FONT_SIZE = 30 

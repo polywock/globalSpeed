@@ -29,18 +29,23 @@
     "videoBrightness": "Jasność wideo",
     "videoContrast": "Kontrast wideo"
   },
+  "header": {
+    "pinTooltip": "Przypnij bieżącą kartę, aby używać własnego kontekstu",
+    "unpinTooltip": "Odepnij bieżącą kartę, aby używać kontekstu globalnego"
+  },
   "token": {
     "create": "Utwórz",
     "reset": "Zresetuj",
     "duplicate": "Duplikuj",
     "delete": "Usuń",
     "aspectLock": "Blokada proporcji",
-    "pinTooltip": "Przypnij kartę, aby zachować oddzielne ustawienia.",
     "mergeBoth": "Połącz oba",
     "min": "Min",
     "max": "Max",
     "on": "Włącz",
     "off": "Wyłącz",
+    "turnOn": "Włącz",
+    "turnOff": "Wyłącz",
     "toggle": "Przełącz",
     "video": "Wideo",
     "page": "Strona",
@@ -224,7 +229,7 @@
       "pinByDefault": "Domyślnie przypinaj",
       "pinByDefaultTooltip": "Nowe karty będą automatycznie przypinane.",
       "initialState": "Stan początkowy",
-      "previousTab": "Kontekst poprzedniej karty.",
+      "initialStateTooltip": "Początkowy kontekst dla nowo przypiętych kart.",
       "globalContext": "Kontekst globalny",
       "previousContext": "Kontekst poprzedniej karty",
       "newContext": "Nowy kontekst",

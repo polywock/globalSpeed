@@ -1,5 +1,5 @@
-import { AnyDict } from "src/types"
-import { randomId } from "src/utils/helper"
+import { AnyDict } from "@/types"
+import { randomId } from "@/utils/helper"
 
 declare global {
     interface GlobalVar {

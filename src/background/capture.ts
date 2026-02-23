@@ -1,6 +1,6 @@
 import debounce from "lodash.debounce"
-import { AUDIO_CONTEXT_KEYS, AnyDict } from "src/types"
-import { fetchView } from "src/utils/state"
+import { AUDIO_CONTEXT_KEYS, AnyDict } from "@/types"
+import { fetchView } from "@/utils/state"
 
 
 

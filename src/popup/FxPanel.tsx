@@ -1,4 +1,4 @@
-import { getDefaultFx } from "src/defaults"
+import { getDefaultFx } from "@/defaults"
 import { useStateView } from "../hooks/useStateView"
 import { FxControl } from "./FxControl"
 import { produce } from "immer"

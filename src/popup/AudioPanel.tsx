@@ -8,8 +8,8 @@ import { MdAccessTime } from "react-icons/md";
 import { getDefaultAudioFx } from "../defaults";
 import { ReverseButton } from "./ReverseButton";
 import { produce } from "immer";
-import { initTabCapture, releaseTabCapture } from "src/background/utils/tabCapture";
-import { useTooltipAnchor } from "src/comps/Tooltip";
+import { initTabCapture, releaseTabCapture } from "@/background/utils/tabCapture";
+import { useTooltipAnchor } from "@/comps/Tooltip";
 import "./AudioPanel.css"
 
 export function AudioPanel(props: {}) {

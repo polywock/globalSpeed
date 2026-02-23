@@ -1,4 +1,4 @@
-import { type CinemaInit } from "src/types"
+import { type CinemaInit } from "@/types"
 
 export const MIN_SPEED_CHROMIUM = 0.07
 export const MAX_SPEED_CHROMIUM = 16

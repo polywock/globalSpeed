@@ -29,18 +29,23 @@
     "videoBrightness": "Brillo del video",
     "videoContrast": "Contraste del video"
   },
+  "header": {
+    "pinTooltip": "Fija la pestaña actual para usar su propio contexto",
+    "unpinTooltip": "Desfija la pestaña actual para usar el contexto global"
+  },
   "token": {
     "create": "Crear",
     "reset": "Restablecer",
     "duplicate": "Duplicar",
     "delete": "Eliminar",
     "aspectLock": "Bloqueo de aspecto",
-    "pinTooltip": "Fija la pestaña para mantener la configuración separada.",
     "mergeBoth": "Fusionar ambos",
     "min": "Min",
     "max": "Max",
     "on": "Encendido",
     "off": "Apagado",
+    "turnOn": "Activar",
+    "turnOff": "Desactivar",
     "toggle": "Alternar",
     "video": "Video",
     "page": "Página",
@@ -223,7 +228,7 @@
       "pinByDefault": "Pin automático",
       "pinByDefaultTooltip": "Las nuevas pestañas se fijarán automáticamente.",
       "initialState": "Estado inicial",
-      "previousTab": "Contexto de la pestaña anterior.",
+      "initialStateTooltip": "El contexto inicial para pestañas recién fijadas.",
       "globalContext": "Contexto global",
       "previousContext": "Contexto de la pestaña anterior",
       "newContext": "Nuevo contexto",

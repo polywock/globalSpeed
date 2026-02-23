@@ -1,4 +1,4 @@
-import { insertStyle } from "src/utils/nativeUtils"
+import { insertStyle } from "@/utils/nativeUtils"
 import { IS_NATIVE, IS_YOUTUBE } from "./isWebsite"
 
 export class NativeFs {

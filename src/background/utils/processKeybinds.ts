@@ -11,8 +11,8 @@ import { produce } from "immer"
 import { PushViewInit, fetchView, pushView } from "../../utils/state"
 import { getAutoMedia } from "./getAutoMedia"
 import { initTabCapture, isTabCaptured, releaseTabCapture } from "./tabCapture"
-import { hashWithStoredSalt } from "src/utils/hash"
-import { IndicatorShowOpts } from "src/contentScript/isolated/utils/Indicator"
+import { hashWithStoredSalt } from "@/utils/hash"
+import { IndicatorShowOpts } from "@/contentScript/isolated/utils/Indicator"
 import { KeepAlive } from "./KeepAlive"
 
 

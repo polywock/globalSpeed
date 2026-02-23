@@ -1,5 +1,5 @@
-import { AUDIO_CONTEXT_KEYS } from "src/types"
-import { fetchView } from "src/utils/state"
+import { AUDIO_CONTEXT_KEYS } from "@/types"
+import { fetchView } from "@/utils/state"
 
 const offscreenUrl = chrome.runtime.getURL("offscreen.html")
 

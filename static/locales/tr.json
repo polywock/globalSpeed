@@ -29,18 +29,23 @@
     "videoBrightness": "Video parlaklığı",
     "videoContrast": "Video kontrastı"
   },
+  "header": {
+    "pinTooltip": "Kendi bağlamını kullanmak için mevcut sekmeyi sabitle",
+    "unpinTooltip": "Küresel bağlamı kullanmak için mevcut sekmenin sabitlemesini kaldır"
+  },
   "token": {
     "create": "Ekle",
     "reset": "Sıfırla",
     "duplicate": "Çiftleştir",
     "delete": "Sil",
     "aspectLock": "En-boy oranını kilitle",
-    "pinTooltip": "Ayarları ayrı tutmak için sekmeyi sabitle.",
     "mergeBoth": "Her ikisini birleştir",
     "min": "Min",
     "max": "Maks",
     "on": "Açık",
     "off": "Kapalı",
+    "turnOn": "Etkinleştir",
+    "turnOff": "Kapat",
     "toggle": "Geçiş",
     "video": "Video",
     "page": "Sayfa",
@@ -224,7 +229,7 @@
       "pinByDefault": "Varsayılan olarak sabitle",
       "pinByDefaultTooltip": "Yeni sekmeler otomatik olarak sabitlenir.",
       "initialState": "Başlangıç durumu",
-      "previousTab": "Önceki sekmenin bağlamı.",
+      "initialStateTooltip": "Yeni sabitlenen sekmelerin başlangıç bağlamı.",
       "globalContext": "Küresel bağlam",
       "previousContext": "Önceki sekmenin bağlamı",
       "newContext": "Yeni bağlam",

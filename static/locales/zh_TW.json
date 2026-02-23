@@ -30,18 +30,23 @@
     "videoBrightness": "影片亮度",
     "videoContrast": "影片對比"
   },
+  "header": {
+    "pinTooltip": "將目前分頁釘選以使用獨立內容",
+    "unpinTooltip": "取消釘選目前分頁以使用全域內容"
+  },
   "token": {
     "create": "建立",
     "reset": "重設",
     "duplicate": "複製",
     "delete": "刪除",
     "aspectLock": "鎖定比例",
-    "pinTooltip": "釘選分頁以保持設定獨立。",
     "mergeBoth": "合併兩者",
     "min": "最小",
     "max": "最大",
     "on": "開啟",
     "off": "關閉",
+    "turnOn": "啟用",
+    "turnOff": "停用",
     "toggle": "切換",
     "video": "影片",
     "page": "頁面",
@@ -225,7 +230,7 @@
       "pinByDefault": "預設固定",
       "pinByDefaultTooltip": "新分頁將自動固定。",
       "initialState": "初始狀態",
-      "previousTab": "前一個分頁的內容。",
+      "initialStateTooltip": "新釘選分頁的起始內容。",
       "globalContext": "全域內容",
       "previousContext": "前一個分頁的內容",
       "newContext": "新內容",

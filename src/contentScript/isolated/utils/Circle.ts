@@ -1,10 +1,10 @@
-import { CircleInit } from "src/types";
+import { CircleInit } from "@/types";
 import { Popover } from "./Popover";
-import { insertStyle } from "src/utils/nativeUtils";
-import { fetchView, pushView } from "src/utils/state";
-import { conformSpeed, formatSpeed } from "src/utils/configUtils";
+import { insertStyle } from "@/utils/nativeUtils";
+import { fetchView, pushView } from "@/utils/state";
+import { conformSpeed, formatSpeed } from "@/utils/configUtils";
 import { Indicator } from "./Indicator";
-import { between, clamp, extractClient, formatDuration, inverseLerp, isFirefoxMobile, isMac, isMobile, lerp, roundTo } from "src/utils/helper";
+import { between, clamp, extractClient, formatDuration, inverseLerp, isFirefoxMobile, isMac, isMobile, lerp, roundTo } from "@/utils/helper";
 import { seekTo, setPause } from "./applyMediaEvent";
 import debounce from "lodash.debounce";
 import styles from "./Circle.css?raw"

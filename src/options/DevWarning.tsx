@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react"
 import { canPotentiallyUserScriptExecute, canUserScript, requestCreateTab } from "../utils/browserUtils"
 import { FaLink } from "react-icons/fa"
 import { MdWarning } from "react-icons/md"
-import { isEdge } from "src/utils/helper"
+import { isEdge } from "@/utils/helper"
 
 enum WarningType {
     NONE = 0,

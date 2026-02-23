@@ -1,7 +1,7 @@
-import { formatSpeedForBadge } from "src/utils/configUtils"
-import { fetchView } from "src/utils/state"
 import debounce from "lodash.debounce"
-import { isMobile } from "src/utils/helper"
+import { formatSpeedForBadge } from "@/utils/configUtils"
+import { fetchView } from "@/utils/state"
+import { isMobile } from "@/utils/helper"
 
 type BadgeInit = Awaited<ReturnType<typeof getBadgeInit>>
 

@@ -1,10 +1,10 @@
-import { createElement as m } from "src/utils/helper"
+import { createElement as m } from "@/utils/helper"
 import styles from "./styles.css?raw"
 import { ScalableDiv } from "./ScalableDiv"
-import { FilterEntry, SvgFilter } from "src/types"
+import { FilterEntry, SvgFilter } from "@/types"
 import { calculateStyle } from "../isolated/FxSync"
-import { formatFilters } from "src/utils/configUtils"
-import { cellIcon, cloneIcon, crossIcon, paintRollerIcon } from "src/defaults/icons"
+import { formatFilters } from "@/utils/configUtils"
+import { cellIcon, cloneIcon, crossIcon, paintRollerIcon } from "@/defaults/icons"
 
 declare global {
   interface GlobalVar {

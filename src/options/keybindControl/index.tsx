@@ -12,11 +12,11 @@ import { domRectGetOffset, feedbackText, isFirefox, isMobile } from "../../utils
 import { ThrottledTextInput } from "../../comps/ThrottledTextInput"
 import { URLModal } from "../URLModal"
 import { getDefaultURLCondition } from "../../defaults"
-import { getSelectedParts, requestSyncContextMenu } from "src/utils/configUtils"
+import { getSelectedParts, requestSyncContextMenu } from "@/utils/configUtils"
 import { DurationSelect, NameArea, makeLabelWithTooltip } from "./NameArea"
-import { Minmax } from "src/comps/Minmax"
+import { Minmax } from "@/comps/Minmax"
 import { KebabList, KebabListProps } from "../KebabList"
-import { useTooltipAnchor } from "src/comps/Tooltip"
+import { useTooltipAnchor } from "@/comps/Tooltip"
 import "./styles.css"
 
 

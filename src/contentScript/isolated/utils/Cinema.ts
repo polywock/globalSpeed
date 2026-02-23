@@ -1,11 +1,11 @@
-import { clamp } from "src/utils/helper";
+import { clamp } from "@/utils/helper";
 import { Popover } from "./Popover";
-import { insertStyle } from "src/utils/nativeUtils";
+import { insertStyle } from "@/utils/nativeUtils";
 import styles from "./Cinema.css?raw"
-import { CinemaInit, CinemaMode } from "src/types"
-import { getDefaultCinemaInit } from "src/defaults/constants"
-import { formatFilters } from "src/utils/configUtils"
-import { getDefaultCinemaFilter } from "src/defaults/filters"
+import { CinemaInit, CinemaMode } from "@/types"
+import { getDefaultCinemaInit } from "@/defaults/constants"
+import { formatFilters } from "@/utils/configUtils"
+import { getDefaultCinemaFilter } from "@/defaults/filters"
 
 const BLEED = 1 
 const PADDING = 5 

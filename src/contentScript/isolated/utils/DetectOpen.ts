@@ -1,4 +1,4 @@
-import { randomId } from "src/utils/helper"
+import { randomId } from "@/utils/helper"
 
 
 export class DetectOpen {

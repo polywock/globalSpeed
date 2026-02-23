@@ -31,18 +31,23 @@
     "videoBrightness": "Video brightness",
     "videoContrast": "Video contrast"
   },
+  "header": {
+    "pinTooltip": "Pin current tab to use its own context",
+    "unpinTooltip": "Unpin current tab to use global context"
+  },
   "token": {
     "create": "Create",
     "reset": "Reset",
     "duplicate": "Duplicate",
     "delete": "Delete",
     "aspectLock": "Aspect lock",
-    "pinTooltip": "Pin tab to keep settings separate.",
     "mergeBoth": "Merge both",
     "min": "Min",
     "max": "Max",
     "on": "On",
     "off": "Off",
+    "turnOn": "Turn on",
+    "turnOff": "Turn off",
     "toggle": "Toggle",
     "video": "Video",
     "page": "Page",
@@ -226,7 +231,7 @@
       "pinByDefault": "Pin by default",
       "pinByDefaultTooltip": "New tabs will automatically be pinned.",
       "initialState": "Initial state",
-      "previousTab": "Previous tab's context.",
+      "initialStateTooltip": "The starting context for newly pinned tabs.",
       "globalContext": "Global context",
       "previousContext": "Previous tab's context",
       "newContext": "New context",

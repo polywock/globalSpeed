@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useStateView } from "../hooks/useStateView"
-import { isMobile } from "src/utils/helper"
+import { isMobile } from "@/utils/helper"
 
 
 export function useThemeSync() {

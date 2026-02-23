@@ -29,18 +29,23 @@
     "videoBrightness": "ビデオの明るさ",
     "videoContrast": "ビデオのコントラスト"
   },
+  "header": {
+    "pinTooltip": "現在のタブをピン留めして独自のコンテキストを使用",
+    "unpinTooltip": "現在のタブのピン留めを解除してグローバルコンテキストを使用"
+  },
   "token": {
     "create": "作成",
     "reset": "リセット",
     "duplicate": "複製",
     "delete": "削除",
     "aspectLock": "アスペクト固定",
-    "pinTooltip": "タブをピン留めして設定を個別に保持します。",
     "mergeBoth": "両方を統合",
     "min": "最小",
     "max": "最大",
     "on": "オン",
     "off": "オフ",
+    "turnOn": "オンにする",
+    "turnOff": "オフにする",
     "toggle": "トグル",
     "video": "ビデオ",
     "page": "ページ",
@@ -223,7 +228,7 @@
       "pinByDefault": "デフォルトでピン留め",
       "pinByDefaultTooltip": "各タブはデフォルトで固定されます。",
       "initialState": "初期状態",
-      "previousTab": "前のタブのコンテキスト。",
+      "initialStateTooltip": "新しくピン留めされたタブの初期コンテキスト。",
       "globalContext": "グローバルコンテキスト",
       "previousContext": "前のタブのコンテキスト",
       "newContext": "新しいコンテキスト",

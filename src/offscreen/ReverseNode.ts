@@ -1,4 +1,4 @@
-import { assertType } from "src/utils/helper"
+import { assertType } from "@/utils/helper"
 
 declare global {
   interface AudioWorkletMessage {

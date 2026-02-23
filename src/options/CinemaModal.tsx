@@ -1,14 +1,14 @@
 import { produce } from "immer"
 import { ModalBase } from "../comps/ModalBase"
-import { SliderMicro } from "src/comps/SliderMicro"
+import { SliderMicro } from "@/comps/SliderMicro"
 import { useStateView } from "../hooks/useStateView"
-import { Reset } from "src/comps/Reset"
-import { CinemaMode, Keybind } from "src/types"
-import { NumericInput } from "src/comps/NumericInput"
+import { Reset } from "@/comps/Reset"
+import { CinemaMode, Keybind } from "@/types"
+import { NumericInput } from "@/comps/NumericInput"
 import "./CinemaModal.css"
-import { getDefaultCinemaInit } from "src/defaults/constants"
-import { Filters } from "src/popup/Filters"
-import { getDefaultCinemaFilter } from "src/defaults/filters"
+import { getDefaultCinemaInit } from "@/defaults/constants"
+import { Filters } from "@/popup/Filters"
+import { getDefaultCinemaFilter } from "@/defaults/filters"
 
 type Props = {
   value: Keybind,

@@ -1,8 +1,8 @@
-import { getDefaultFx } from "src/defaults"
-import { AnyDict, CONTEXT_KEYS, State, URLRule, URLStrictness } from "src/types"
-import { canUserScript } from "src/utils/browserUtils"
-import { hasActiveParts, testURL } from "src/utils/configUtils"
-import { isFirefox, isMac, isMobile, listToDict, timeout } from "src/utils/helper"
+import { getDefaultFx } from "@/defaults"
+import { AnyDict, CONTEXT_KEYS, State, URLRule, URLStrictness } from "@/types"
+import { canUserScript } from "@/utils/browserUtils"
+import { hasActiveParts, testURL } from "@/utils/configUtils"
+import { isFirefox, isMac, isMobile, listToDict, timeout } from "@/utils/helper"
 
 type UrlRuleBehavior = [URLRule["type"][], (isfake: boolean, tabId: number, rule: URLRule, override: AnyDict, deets: chrome.webNavigation.WebNavigationTransitionCallbackDetails) => void]
 

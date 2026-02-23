@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
-import { clamp } from "src/utils/helper"
+import { clamp } from "@/utils/helper"
 import "./Tooltip.css"
 
 const EDGE_PADDING = 15

@@ -29,18 +29,23 @@
     "videoBrightness": "Kecerahan video",
     "videoContrast": "Kontras video"
   },
+  "header": {
+    "pinTooltip": "Sematkan tab saat ini untuk menggunakan konteksnya sendiri",
+    "unpinTooltip": "Lepas sematan tab saat ini untuk menggunakan konteks global"
+  },
   "token": {
     "create": "Buat",
     "reset": "Atur ulang",
     "duplicate": "Duplikat",
     "delete": "Hapus",
     "aspectLock": "Kunci aspek",
-    "pinTooltip": "Sematkan tab agar pengaturan tetap terpisah.",
     "mergeBoth": "Gabungkan keduanya",
     "min": "Min",
     "max": "Maks",
     "on": "Nyala",
     "off": "Mati",
+    "turnOn": "Aktifkan",
+    "turnOff": "Nonaktifkan",
     "toggle": "Alih",
     "video": "Video",
     "page": "Halaman",
@@ -223,7 +228,7 @@
       "pinByDefault": "Pin secara default",
       "pinByDefaultTooltip": "Tab baru akan otomatis dipin.",
       "initialState": "Status awal",
-      "previousTab": "Konteks tab sebelumnya.",
+      "initialStateTooltip": "Konteks awal untuk tab yang baru disematkan.",
       "globalContext": "Konteks global",
       "previousContext": "Konteks tab sebelumnya",
       "newContext": "Konteks baru",

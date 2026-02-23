@@ -1,5 +1,5 @@
-import { isFirefox } from "src/utils/helper"
-import { getLeaf } from "src/utils/nativeUtils"
+import { isFirefox } from "@/utils/helper"
+import { getLeaf } from "@/utils/nativeUtils"
 
 
 export function documentHasFocus() {

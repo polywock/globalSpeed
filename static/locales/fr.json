@@ -29,18 +29,23 @@
     "videoBrightness": "Luminosité de la vidéo",
     "videoContrast": "Contraste de la vidéo"
   },
+  "header": {
+    "pinTooltip": "Épinglez l’onglet actuel pour utiliser son propre contexte",
+    "unpinTooltip": "Désépinglez l’onglet actuel pour utiliser le contexte global"
+  },
   "token": {
     "create": "Créer",
     "reset": "Réinitialiser",
     "duplicate": "Dupliquer",
     "delete": "Supprimer",
     "aspectLock": "Verrouillage des proportions",
-    "pinTooltip": "Épinglez l’onglet pour garder les paramètres séparés.",
     "mergeBoth": "Fusionner les deux",
     "min": "Min",
     "max": "Max",
     "on": "Activé",
     "off": "Désactivé",
+    "turnOn": "Activer",
+    "turnOff": "Désactiver",
     "toggle": "Basculer",
     "video": "Vidéo",
     "page": "Page",
@@ -224,7 +229,7 @@
       "pinByDefault": "Épinglage automatique",
       "pinByDefaultTooltip": "Les nouveaux onglets seront automatiquement épinglés.",
       "initialState": "État initial",
-      "previousTab": "Contexte de l'onglet précédent.",
+      "initialStateTooltip": "Le contexte de départ pour les onglets nouvellement épinglés.",
       "globalContext": "Contexte global",
       "previousContext": "Contexte de l'onglet précédent",
       "newContext": "Nouveau contexte",

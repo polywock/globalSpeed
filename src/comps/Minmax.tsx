@@ -1,5 +1,5 @@
 import { NumericInput } from "./NumericInput"
-import { domRectGetOffset, feedbackText } from "src/utils/helper"
+import { domRectGetOffset, feedbackText } from "@/utils/helper"
 import "./Minmax.css"
 
 type MinmaxProps = {

@@ -1,4 +1,4 @@
-import { AdjustMode, Keybind, Trigger } from "src/types";
+import { AdjustMode, Keybind, Trigger } from "@/types";
 import debounce from "lodash.debounce"
 import { fetchView } from "./state";
 

@@ -4,9 +4,9 @@ import { dumpConfig, fetchView, pushView, restoreConfig } from "../utils/state"
 import { State } from "../types"
 import { requestCreateTab } from "../utils/browserUtils"
 import { isFirefox, areYouSure, isMobile } from "../utils/helper"
-import { getDefaultState } from "src/defaults"
-import { migrateSchema } from "src/background/utils/migrateSchema"
-import { useTooltipAnchor } from "src/comps/Tooltip"
+import { getDefaultState } from "@/defaults"
+import { migrateSchema } from "@/background/utils/migrateSchema"
+import { useTooltipAnchor } from "@/comps/Tooltip"
 import "./SectionHelp.css"
 
 

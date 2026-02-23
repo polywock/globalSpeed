@@ -30,18 +30,23 @@
     "videoBrightness": "비디오 밝기",
     "videoContrast": "비디오 대비"
   },
+  "header": {
+    "pinTooltip": "현재 탭을 고정해 자체 컨텍스트 사용",
+    "unpinTooltip": "현재 탭 고정을 해제해 전역 컨텍스트 사용"
+  },
   "token": {
     "create": "생성",
     "reset": "초기화",
     "duplicate": "복제",
     "delete": "삭제",
     "aspectLock": "종횡비 잠금",
-    "pinTooltip": "설정을 분리하려면 탭을 고정하세요.",
     "mergeBoth": "상호 병합",
     "min": "최소",
     "max": "최대",
     "on": "켜짐",
     "off": "꺼짐",
+    "turnOn": "켜기",
+    "turnOff": "끄기",
     "toggle": "토글",
     "video": "비디오",
     "page": "페이지",
@@ -225,7 +230,7 @@
       "pinByDefault": "기본 고정 탭",
       "pinByDefaultTooltip": "각 탭은 기본적으로 고정되어 있습니다.",
       "initialState": "초기 상태",
-      "previousTab": "이전 탭의 컨텍스트.",
+      "initialStateTooltip": "새로 고정된 탭의 시작 컨텍스트.",
       "globalContext": "전역 컨텍스트",
       "previousContext": "이전 탭의 컨텍스트",
       "newContext": "새 컨텍스트",

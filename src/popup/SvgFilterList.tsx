@@ -1,10 +1,10 @@
 import { produce } from "immer"
 import { useState } from "react"
-import { SvgFilter } from "src/types"
-import { svgFilterGenerate, svgFilterInfos } from "src/defaults/filters"
+import { SvgFilter } from "@/types"
+import { svgFilterGenerate, svgFilterInfos } from "@/defaults/filters"
 import { SvgFilterItem } from "./SvgFilterItem"
-import { SVG_FILTER_ADDITIONAL } from "src/defaults/svgFilterAdditional"
-import { svgFilterIsValid } from "src/defaults/filters"
+import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
+import { svgFilterIsValid } from "@/defaults/filters"
 import "./SvgFilterList.css"
 
 const filterTypes = Object.keys(svgFilterInfos)

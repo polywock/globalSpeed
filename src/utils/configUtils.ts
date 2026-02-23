@@ -3,8 +3,8 @@ import { clamp, isFirefox, round } from "./helper";
 import { filterInfos } from "../defaults/filters";
 import type { MediaEvent } from "../contentScript/isolated/utils/applyMediaEvent";
 import { Hotkey, compareHotkeys } from "./keys";
-import { SVG_FILTER_ADDITIONAL } from "src/defaults/svgFilterAdditional"
-import { svgFilterIsValid } from "src/defaults/filters"
+import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
+import { svgFilterIsValid } from "@/defaults/filters"
 
 
 

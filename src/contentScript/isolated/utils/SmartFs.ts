@@ -1,5 +1,5 @@
 
-import { getStoredSalt, hashWithStoredSalt } from "src/utils/hash"
+import { getStoredSalt, hashWithStoredSalt } from "@/utils/hash"
 import { IS_SMART } from "./isWebsite"
 
 export class SmartFs {

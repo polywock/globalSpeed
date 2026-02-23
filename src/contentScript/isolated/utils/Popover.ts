@@ -1,4 +1,4 @@
-import { getLeaf, insertStyle } from "src/utils/nativeUtils"
+import { getLeaf, insertStyle } from "@/utils/nativeUtils"
 import styles from "./Popover.css?raw"
 
 export class Popover {

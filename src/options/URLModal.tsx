@@ -5,7 +5,7 @@ import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { GoX } from "react-icons/go"
 import { getDefaultURLConditionPart } from "../defaults"
 import { findRemoveFromArray } from "../utils/helper"
-import { extractURLPartValueKey, getSelectedParts } from "src/utils/configUtils"
+import { extractURLPartValueKey, getSelectedParts } from "@/utils/configUtils"
 import "./URLModal.css"
 
 type Props = {

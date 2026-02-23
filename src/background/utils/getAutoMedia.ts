@@ -1,6 +1,6 @@
-import { FlatMediaInfo, MediaData, MediaDataWithScopes, MediaPath, MediaScope, flattenMediaInfos } from "src/contentScript/isolated/utils/genMediaInfo"
-import { TabInfo, checkContentScript, compareFrame } from "src/utils/browserUtils"
-import { fetchView } from "src/utils/state"
+import { FlatMediaInfo, MediaData, MediaDataWithScopes, MediaPath, MediaScope, flattenMediaInfos } from "@/contentScript/isolated/utils/genMediaInfo"
+import { TabInfo, checkContentScript, compareFrame } from "@/utils/browserUtils"
+import { fetchView } from "@/utils/state"
 
 const WEIGHTS = {
   SAME_FRAME: 0b10_000_000_000_000,

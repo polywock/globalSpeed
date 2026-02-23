@@ -4,7 +4,7 @@ import { isFirefox } from "../utils/helper"
 import { requestCreateTab } from "../utils/browserUtils"
 import { FaMousePointer, FaPowerOff } from "react-icons/fa"
 import { createRoot } from "react-dom/client"
-import { Pin, Zap } from "src/comps/svgs"
+import { Pin, Zap } from "@/comps/svgs"
 import "./faqs.css"
 import { IoEllipsisVertical } from "react-icons/io5"
 

@@ -1,7 +1,7 @@
 import type { DebouncedFunc } from "lodash";
 import debounce from "lodash.debounce";
-import { CONTEXT_KEYS, ORL_CONTEXT_KEYS_SET, CONTEXT_KEYS_SET, Context, State, StateView, StateViewSelector, StoredKey, AnyDict, ORL_CONTEXT_KEYS, REVERSE_ORL_GROUP } from "src/types"
-import { deepEqual, listToDict, randomId } from "src/utils/helper"
+import { CONTEXT_KEYS, ORL_CONTEXT_KEYS_SET, CONTEXT_KEYS_SET, Context, State, StateView, StateViewSelector, StoredKey, AnyDict, ORL_CONTEXT_KEYS, REVERSE_ORL_GROUP } from "@/types"
+import { deepEqual, listToDict, randomId } from "@/utils/helper"
 import { syncContextMenu } from "./contextMenus";
 
 export function getAllRelevantStorageKeys(selector: StateViewSelector, tabId: number, ignoreRuleOverrides = false, includeIsPinned = false) {

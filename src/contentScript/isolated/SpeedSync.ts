@@ -1,5 +1,5 @@
-import { between } from "src/utils/helper"
-import { SubscribeView } from "src/utils/state"
+import { between } from "@/utils/helper"
+import { SubscribeView } from "@/utils/state"
 
 export class SpeedSync {
   intervalId: number

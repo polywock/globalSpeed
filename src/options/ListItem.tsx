@@ -1,9 +1,9 @@
 import { useRef, useState } from "react"
-import { MoveDrag } from "src/comps/MoveDrag"
+import { MoveDrag } from "@/comps/MoveDrag"
 import clsx from "clsx"
 import { GoX } from "react-icons/go"
 import "./ListItem.css"
-import { useTooltipAnchor } from "src/comps/Tooltip"
+import { useTooltipAnchor } from "@/comps/Tooltip"
 
 type ListItemProps = {
     children?: React.ReactNode,

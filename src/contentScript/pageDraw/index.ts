@@ -1,11 +1,11 @@
-import { areYouSure, assertType, clamp, randomNumber } from "src/utils/helper"
+import { areYouSure, assertType, clamp, randomNumber } from "@/utils/helper"
 import styles from "./styles.css?raw"
 import pageStyles from "./stylesAux.css?raw"
 import debounce from "lodash.debounce"
-import { requestGsm } from "src/utils/gsm"
-import { replaceArgs } from "src/utils/helper"
-import { Gsm } from "src/utils/GsmType"
-import { createElement as m } from "src/utils/helper"
+import { requestGsm } from "@/utils/gsm"
+import { replaceArgs } from "@/utils/helper"
+import { Gsm } from "@/utils/GsmType"
+import { createElement as m } from "@/utils/helper"
 import { Popover } from "../isolated/utils/Popover"
 import {
     gripIcon, flatBrushIcon, questionIcon, eyeIcon, crossIcon,

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { IoEllipsisVertical } from "react-icons/io5"
-import { Menu, type MenuProps } from "src/comps/Menu"
-import { useTooltipAnchor } from "src/comps/Tooltip"
+import { Menu, type MenuProps } from "@/comps/Menu"
+import { useTooltipAnchor } from "@/comps/Tooltip"
 
 export type KebabListProps = {
     list:  MenuProps["items"],

@@ -29,18 +29,23 @@
     "videoBrightness": "Độ sáng video",
     "videoContrast": "Độ tương phản video"
   },
+  "header": {
+    "pinTooltip": "Ghim thẻ hiện tại để dùng ngữ cảnh riêng",
+    "unpinTooltip": "Bỏ ghim thẻ hiện tại để dùng ngữ cảnh toàn cầu"
+  },
   "token": {
     "create": "Tạo mới",
     "reset": "Cài lại",
     "duplicate": "Nhân bản",
     "delete": "Xóa",
     "aspectLock": "Khoá tỉ lệ",
-    "pinTooltip": "Ghim thẻ để giữ cài đặt riêng.",
     "mergeBoth": "Hợp nhất cả hai",
     "min": "Tối thiểu",
     "max": "Tối đa",
     "on": "Bật",
     "off": "Tắt",
+    "turnOn": "Bật",
+    "turnOff": "Tắt",
     "toggle": "Chuyển đổi",
     "video": "Video",
     "page": "Trang",
@@ -224,7 +229,7 @@
       "pinByDefault": "Ghim theo mặc định",
       "pinByDefaultTooltip": "Các tab mới sẽ tự động được ghim.",
       "initialState": "Trạng thái ban đầu",
-      "previousTab": "Ngữ cảnh của tab trước.",
+      "initialStateTooltip": "Ngữ cảnh khởi đầu cho các tab mới được ghim.",
       "globalContext": "Ngữ cảnh toàn cầu",
       "previousContext": "Ngữ cảnh của tab trước",
       "newContext": "Ngữ cảnh mới",

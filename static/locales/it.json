@@ -29,18 +29,23 @@
     "videoBrightness": "Luminosità del video",
     "videoContrast": "Contrasto del video"
   },
+  "header": {
+    "pinTooltip": "Fissa la scheda corrente per usare il proprio contesto",
+    "unpinTooltip": "Rimuovi il fissaggio della scheda corrente per usare il contesto globale"
+  },
   "token": {
     "create": "Crea",
     "reset": "Ripristina",
     "duplicate": "Duplica",
     "delete": "Elimina",
     "aspectLock": "Blocca proporzioni",
-    "pinTooltip": "Fissa la scheda per mantenere separate le impostazioni.",
     "mergeBoth": "Unisci entrambi",
     "min": "Min",
     "max": "Max",
     "on": "On",
     "off": "Off",
+    "turnOn": "Attiva",
+    "turnOff": "Disattiva",
     "toggle": "Cambia",
     "video": "Video",
     "page": "Pagina",
@@ -224,7 +229,7 @@
       "pinByDefault": "Fissa automaticamente",
       "pinByDefaultTooltip": "Le nuove schede saranno fissate automaticamente.",
       "initialState": "Stato iniziale",
-      "previousTab": "Contesto della scheda precedente.",
+      "initialStateTooltip": "Il contesto di partenza per le schede appena fissate.",
       "globalContext": "Contesto globale",
       "previousContext": "Contesto della scheda precedente",
       "newContext": "Nuovo contesto",

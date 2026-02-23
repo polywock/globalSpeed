@@ -3,7 +3,7 @@ import { conformSpeed } from "../../utils/configUtils"
 import { applyMediaEvent, MediaEvent } from "./utils/applyMediaEvent"
 import { generateScopeState } from "./utils/genMediaInfo"
 import debounce from "lodash.debounce"
-import { getShadow } from "src/utils/nativeUtils"
+import { getShadow } from "@/utils/nativeUtils"
 
 const EVENTS_LAST_PLAYED = new Set(['pause', 'playing', 'timeupdate'])
 

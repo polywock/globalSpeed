@@ -9,7 +9,7 @@ import "./EqualizerControl.css"
 import { useMemo } from "react"
 import equal from "fast-deep-equal"
 import { Reset } from "../comps/Reset"
-import { useTooltipAnchor } from "src/comps/Tooltip"
+import { useTooltipAnchor } from "@/comps/Tooltip"
 
 type EqualizerControlProps = {
   value: AudioFx["eq"],

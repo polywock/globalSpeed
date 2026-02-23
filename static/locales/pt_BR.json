@@ -29,18 +29,23 @@
     "videoBrightness": "Brilho do vídeo",
     "videoContrast": "Contraste do vídeo"
   },
+  "header": {
+    "pinTooltip": "Fixe a aba atual para usar seu próprio contexto",
+    "unpinTooltip": "Desafixe a aba atual para usar o contexto global"
+  },
   "token": {
     "create": "Crio",
     "reset": "Redefinir",
     "duplicate": "Duplicar",
     "delete": "Excluir",
     "aspectLock": "Bloqueio de proporção",
-    "pinTooltip": "Fixe a aba para manter as configurações separadas.",
     "mergeBoth": "Fundir ambos",
     "min": "Mín",
     "max": "Máx",
     "on": "Ligado",
     "off": "Desligado",
+    "turnOn": "Ativar",
+    "turnOff": "Desativar",
     "toggle": "Alternancia",
     "video": "Vídeo",
     "page": "Página",
@@ -223,7 +228,7 @@
       "pinByDefault": "Fixar por padrão",
       "pinByDefaultTooltip": "Novas guias serão automaticamente fixadas.",
       "initialState": "Estado inicial",
-      "previousTab": "Contexto da aba anterior.",
+      "initialStateTooltip": "O contexto inicial para abas recém-fixadas.",
       "globalContext": "Contexto global",
       "previousContext": "Contexto da aba anterior",
       "newContext": "Novo contexto",

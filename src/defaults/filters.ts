@@ -1,4 +1,4 @@
-import { randomId } from "src/utils/helper"
+import { randomId } from "@/utils/helper"
 import { getDefaultFx } from "."
 import { FilterInfo, MatrixTemplate, MosaicSvgInit, SvgFilter, TargetFx } from "../types"
 

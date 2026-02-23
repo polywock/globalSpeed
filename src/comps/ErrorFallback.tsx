@@ -1,7 +1,7 @@
 import { ErrorBoundary, FallbackProps } from "react-error-boundary"
 import { ReactNode } from "react"
 import { restoreConfig } from "../utils/state"
-import { getDefaultState } from "src/defaults"
+import { getDefaultState } from "@/defaults"
 import "./ErrorFallback.css"
 
 function Fallback({ error, resetErrorBoundary }: FallbackProps) {

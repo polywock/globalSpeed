@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react"
 import { LOCALE_MAP } from "../utils/gsm"
 import { SetView, useStateView } from "../hooks/useStateView"
-import { getDefaultSpeedSlider } from "src/defaults/constants"
+import { getDefaultSpeedSlider } from "@/defaults/constants"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "../defaults/constants"
 import { IndicatorModal } from "./IndicatorModal"
 import { SpeedPresetModal } from "./SpeedPresetModal"
-import { SliderMicro } from "src/comps/SliderMicro"
-import { clamp, isMobile } from "src/utils/helper"
-import { Toggle } from "src/comps/Toggle"
-import { CONTEXT_KEYS, Context, InitialContext, StateView } from "src/types"
-import { fetchView } from "src/utils/state"
-import { getDefaultURLCondition } from "src/defaults"
+import { SliderMicro } from "@/comps/SliderMicro"
+import { clamp, isMobile } from "@/utils/helper"
+import { Toggle } from "@/comps/Toggle"
+import { CONTEXT_KEYS, Context, InitialContext, StateView } from "@/types"
+import { fetchView } from "@/utils/state"
+import { getDefaultURLCondition } from "@/defaults"
 import { URLModal } from "./URLModal"
 import { produce } from "immer"
-import { Minmax } from "src/comps/Minmax"
+import { Minmax } from "@/comps/Minmax"
 import { GoX } from "react-icons/go"
 import { WidgetModal } from "./WidgetModal"
-import { RegularTooltip } from "src/comps/RegularTooltip"
-import { useTooltipAnchor } from "src/comps/Tooltip"
-import { GearIcon } from "src/comps/GearIcon"
-import { NumericInput } from "src/comps/NumericInput"
+import { RegularTooltip } from "@/comps/RegularTooltip"
+import { useTooltipAnchor } from "@/comps/Tooltip"
+import { GearIcon } from "@/comps/GearIcon"
+import { NumericInput } from "@/comps/NumericInput"
 import "./SectionFlags.css"
 
 export function SectionFlags(props: {}) {
@@ -177,7 +177,10 @@ export function SectionFlags(props: {}) {
         {/* Initial state */}
         {!!view.pinByDefault && (
           <div className="field indent">
-            <span>{gvar.gsm.options.flags.initialState}</span>
+            <div className="labelWithTooltip">
+              <span>{gvar.gsm.options.flags.initialState}</span>
+              {<RegularTooltip title={gvar.gsm.options.flags.initialStateTooltip} align="right"/>}
+            </div>
             <select value={view.initialContext ?? InitialContext.PREVIOUS} onChange={async e => {
               
               const partial = {initialContext: parseInt(e.target.value)} as Partial<StateView>

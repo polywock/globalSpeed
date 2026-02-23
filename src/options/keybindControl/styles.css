@@ -4,10 +4,9 @@
 
 .KeybindControl {
   display: grid;
-  grid-template-columns: repeat(1, max-content) minmax(
-      200px,
-      1.5fr
-    ) max-content 175px 200px max-content;
+  grid-template-columns:
+    repeat(1, max-content) minmax(200px, 1.5fr)
+    max-content 175px 200px max-content;
   column-gap: 10px;
   align-items: center;
 
@@ -37,7 +36,13 @@
     align-items: center;
     flex-wrap: wrap;
 
-    & > *:nth-child(1n + 3) {
+    & > .label {
+      &::first-letter {
+        font-size: 1.2em;
+      }
+    }
+
+    & > *:nth-child(1n + 2) {
       margin-left: 10px;
     }
 

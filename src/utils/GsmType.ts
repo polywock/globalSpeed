@@ -30,18 +30,23 @@ export type Gsm = {
     videoBrightness: string,
     videoContrast: string
   },
+  header: {
+    pinTooltip: string,
+    unpinTooltip: string
+  },
   token: {
     create: string,
     reset: string,
     duplicate: string,
     delete: string,
     aspectLock: string,
-    pinTooltip: string,
     mergeBoth: string,
     min: string,
     max: string,
     on: string,
     off: string,
+    turnOn: string,
+    turnOff: string,
     toggle: string,
     video: string,
     page: string,
@@ -225,7 +230,7 @@ export type Gsm = {
       pinByDefault: string,
       pinByDefaultTooltip: string,
       initialState: string,
-      previousTab: string,
+      initialStateTooltip: string,
       globalContext: string,
       previousContext: string,
       newContext: string,

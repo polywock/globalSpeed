@@ -6,17 +6,18 @@ import { FaPowerOff, FaVolumeUp } from "react-icons/fa"
 import { SetView, useStateView } from "../hooks/useStateView"
 import { getDefaultAudioFx, getDefaultFx, getDefaultURLCondition, getDefaultURLConditionPart } from "../defaults"
 import { useCaptureStatus } from "../hooks/useCaptureStatus"
-import { AnyDict, ORL_CONTEXT_KEYS, StateView } from "src/types"
-import { releaseTabCapture } from "src/background/utils/tabCapture"
-import { Gear, Pin, Zap } from "src/comps/svgs";
-import { pushView } from "src/utils/state";
+import { AnyDict, ORL_CONTEXT_KEYS, StateView } from "@/types"
+import { releaseTabCapture } from "@/background/utils/tabCapture"
+import { Gear, Pin, Zap } from "@/comps/svgs";
+import { pushView } from "@/utils/state";
 import { FaCircleDot } from "react-icons/fa6";
-import { feedbackText, isMobile } from "src/utils/helper";
-import { KebabList, KebabListProps } from "src/options/KebabList";
-import { replaceArgs } from "src/utils/helper";
+import { feedbackText, isMobile } from "@/utils/helper";
+import { KebabList, KebabListProps } from "@/options/KebabList";
+import { replaceArgs } from "@/utils/helper";
 import { produce } from "immer";
 import { IoIosInformationCircle } from "react-icons/io"
 import "./Header.css"
+import { useTooltipAnchor } from "@/comps/Tooltip"
 
 
 const SUPPORTS_TAB_CAPTURE = !!(chrome.tabCapture?.capture && chrome.offscreen?.createDocument)
@@ -28,6 +29,9 @@ type HeaderProps = {
 
 export function Header(props: HeaderProps) {
   const [view, setView] = useStateView({enabled: true, isPinned: true, superDisable: true, circleWidget: true, keybindsUrlCondition: true, sawEnableShortcutOverlayCount: true})
+
+  const statusTip = useTooltipAnchor<HTMLDivElement>({ label: view?.enabled ? gvar.gsm.token.turnOff: gvar.gsm.token.turnOn, align: "bottom" })
+  const pinTip = useTooltipAnchor<HTMLDivElement>({ label: view?.isPinned ? gvar.gsm.header.unpinTooltip : gvar.gsm.header.pinTooltip, align: "bottom" })
 
   let kebabInfo: {
     list: KebabListProps['list'],
@@ -61,6 +65,7 @@ export function Header(props: HeaderProps) {
 
       {/* Status */}
       <div 
+        ref={statusTip}
         className={view.enabled ? "active" : "muted"}
         onClick={() => {
           setView({enabled: !view.enabled, latestViaShortcut: false})
@@ -76,10 +81,10 @@ export function Header(props: HeaderProps) {
 
       {/* Pin */}
       <div 
+        ref={pinTip}
         className={`pin ${view.isPinned ? "active" : "muted"}`}
         onClick={() => clearPin()}
         onContextMenu={e => clearPin(e)}
-        title={gvar.gsm.token.pinTooltip}
       >
         <Pin size="1.42rem"/>
       </div>

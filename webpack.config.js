@@ -27,7 +27,7 @@ if (env.FIREFOX) {
 const common = {
   entry,
   output: {
-    path: resolve(__dirname, env.FIREFOX ? "buildFf": "build", "unpacked"),
+    path: resolve(__dirname, env.FIREFOX ? "buildFf" : "build", "unpacked"),
     chunkFilename: "chunks/[name].js"
   },
   module: {
@@ -43,15 +43,15 @@ const common = {
         exclude: /node_modules/,
         resourceQuery: { not: [/raw/] },
         use: [
-            "style-loader", 
-            {
-              loader: "css-loader",
-              options: {
-                url: false,
-                importLoaders: 1
-              }
-            },
-            "postcss-loader"
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              url: false,
+              importLoaders: 1
+            }
+          },
+          "postcss-loader"
         ],
       },
       {
@@ -60,7 +60,7 @@ const common = {
         exclude: [/node_modules/],
         type: 'asset/source',
         use: [
-            "postcss-loader"
+          "postcss-loader"
         ]
       }
     ]
@@ -68,9 +68,9 @@ const common = {
   resolve: {
     extensions: [".tsx", ".ts", '.js'],
     alias: {
-      src: resolve(__dirname, "src"),
+      "@": resolve(__dirname, "src"),
       notFirefox: env.FIREFOX ? false : resolve(__dirname, "src"),
-      isFirefox: env.FIREFOX ? resolve(__dirname, "src") : false 
+      isFirefox: env.FIREFOX ? resolve(__dirname, "src") : false
     }
   },
   plugins: [

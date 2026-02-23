@@ -1,10 +1,10 @@
 import { useRef, useState } from "react"
 import { FaMicrophone, FaVolumeUp } from "react-icons/fa"
-import { connectReversePort } from "src/background/utils/tabCapture"
-import { getMediaDataWithScopes } from "src/background/utils/getAutoMedia"
-import { sendMediaEvent } from "src/utils/configUtils"
+import { connectReversePort } from "@/background/utils/tabCapture"
+import { getMediaDataWithScopes } from "@/background/utils/getAutoMedia"
+import { sendMediaEvent } from "@/utils/configUtils"
 import "./ReverseButton.css"
-import { useTooltipAnchor } from "src/comps/Tooltip"
+import { useTooltipAnchor } from "@/comps/Tooltip"
 
 declare global {
   interface Message {

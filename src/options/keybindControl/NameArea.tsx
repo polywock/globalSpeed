@@ -12,20 +12,20 @@ import { TiArrowLoop } from "react-icons/ti"
 import { MdDarkMode, MdFullscreen, MdPictureInPictureAlt, MdWarning } from "react-icons/md"
 import { assertType, createWindowWithSafeBounds, getPopupSize, isMobile } from "../../utils/helper"
 import { MenuProps } from "../../comps/Menu"
-import { replaceArgs } from "src/utils/helper"
+import { replaceArgs } from "@/utils/helper"
 import { MdSpeed } from "react-icons/md";
-import { Pin, Zap } from "src/comps/svgs"
+import { Pin, Zap } from "@/comps/svgs"
 import { KeybindControlProps } from "."
 import { FaRegWindowRestore } from "react-icons/fa6"
 import { KebabList, KebabListProps } from "../KebabList"
-import { isSeekSmall } from "src/utils/configUtils"
+import { isSeekSmall } from "@/utils/configUtils"
 import { PiArrowArcRightFill } from "react-icons/pi"
 import { CinemaModal } from "../CinemaModal"
 import { useState } from "react"
 import { IoEllipsisVertical } from "react-icons/io5"
-import { TooltipAlign, useTooltipAnchor } from "src/comps/Tooltip"
-import { RegularTooltip } from "src/comps/RegularTooltip"
-import { GearIcon } from "src/comps/GearIcon"
+import { TooltipAlign, useTooltipAnchor } from "@/comps/Tooltip"
+import { RegularTooltip } from "@/comps/RegularTooltip"
+import { GearIcon } from "@/comps/GearIcon"
 
 const invertableKeys = new Set(["autoPause", "skipPauseSmall", "pauseWhileScrubbing", "relativeToSpeed", "wraparound", "itcWraparound", "showNetDuration", "seekOnce", "allowAlt", "cycleNoWrap", "noHold", "ignoreNavigate", "skipToggleSpeed", "alwaysOn"])
 const memMap = new Map<string, any>()
@@ -109,49 +109,8 @@ export function NameArea(props: NameAreaProps) {
 
     return (
         <div className="command">
-
-            {/* Icons */}
-            {(value.command === "speed" || value.command === "temporarySpeed") && <MdSpeed className="tr120" />}
-            {value.command === "speedChangesPitch" && <BsMusicNoteList className="tr103" />}
-            {value.command === "runCode" && <GoCode strokeWidth="1px" className="tr105" />}
-            {value.command === "openUrl" && <FaLink />}
-            {value.command === "intoPopup" && <FaRegWindowRestore/>}
-            {value.command === "pin" && <Pin className="tr105" />}
-            {value.command === "fxFilter" && <Zap className="tr130" />}
-            {value.command === "fxState" && <FaPowerOff className="tr110" />}
-            {(value.command === "fxReset" || value.command === "afxReset") && <GiAnticlockwiseRotation className="tr110" />}
-            {value.command === "fxSwap" && <FaExchangeAlt className="tr110" />}
-            {value.command === "pause" && <FaPause className="tr95" />}
-            {(value.command === "mute" || value.command === "muteTab") && <FaVolumeMute className="tr105" />}
-            {value.command === "volume" && <FaVolumeUp className="tr105" />}
-            {value.command === "PiP" && <MdPictureInPictureAlt className="tr105" />}
-            {value.command === "cinema" && <MdDarkMode/>}
-            {value.command === "fullscreen" && <MdFullscreen className="tr140" />}
-            {value.command === "mediaInfo" && <FaInfoCircle className="tr9" />}
-            {value.command === "afxGain" && <FaVolumeUp className="tr105" />}
-            {value.command === "afxPitch" && <FaMusic />}
-            {value.command === "state" && <FaPowerOff />}
-            {(value.command === "setMark" && !hasSpecial) && <FaBookmark className="tr95" />}
-            {hasSpecial && <FaStar />}
-            {value.command === "seekMark" && <FaArrowRight className="tr95" />}
-            {(value.command === "loop" || value.command === "loopEntire") && <TiArrowLoop className="tr140" />}
-            {value.command === "skip" && <PiArrowArcRightFill />}
-
-            {/* FaRightArrowLeft */}
-            {value.command === "seek" && (
-                (adjustMode === AdjustMode.ADD || adjustMode === AdjustMode.ITC_REL) && value.valueNumber < 0 ? (
-                    <FaBackward className="tr95" />
-                ) : <FaForward className="tr95" />
-            )}
-            {value.command === "afxPan" && <TbArrowsHorizontal className="tr120" />}
-            {value.command === "afxMono" && <GoRepoForked className="tr120" />}
-            {value.command === "afxDelay" && <GoHistory strokeWidth="1px" className="tr115" />}
-            {value.command === "afxCapture" && <div className={`captureIcon ${value.enabled ? "active" : ""}`}><div></div></div>}
-
-            {value.command === "drawPage" && <BsFillBrushFill />}
-
             {/* Label */}
-            <span>{label}</span>
+            <span className="label">{label}</span>
 
             {/* Capture shortcut warning */}
             {tabCaptureWarning && (

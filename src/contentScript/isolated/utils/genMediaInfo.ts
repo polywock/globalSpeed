@@ -1,4 +1,4 @@
-import { capitalize, isDipWindow, parseDomain, removeDomainFromTitle } from "src/utils/helper"
+import { capitalize, isDipWindow, parseDomain, removeDomainFromTitle } from "@/utils/helper"
 import { TabInfo } from "../../../utils/browserUtils"
 
 export function generateMediaState(elem: HTMLMediaElement): MediaInfo {

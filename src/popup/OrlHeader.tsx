@@ -1,6 +1,6 @@
 
 import { BsXCircle, BsArrowUpCircle } from "react-icons/bs"
-import { useStateView } from "src/hooks/useStateView"
+import { useStateView } from "@/hooks/useStateView"
 import "./OrlHeader.css"
 
 type OrlHeaderProps = {}

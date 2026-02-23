@@ -2,11 +2,11 @@ import { extractHotkey } from "../../utils/keys"
 import { SubscribeView } from "../../utils/state"
 import { FxSync } from "./FxSync"
 import { findMatchingKeybindsLocal, getActiveParts, hasActiveParts, testURL, testURLWithPart } from "../../utils/configUtils"
-import { AdjustMode, Trigger, URLCondition, URLConditionPart } from "src/types"
+import { AdjustMode, Trigger, URLCondition, URLConditionPart } from "@/types"
 import { Circle } from "./utils/Circle"
-import { getLeaf } from "src/utils/nativeUtils"
-import { getEmptyUrlConditions } from "src/defaults"
-import { getPracticalRuntimeUrl } from "src/utils/helper"
+import { getLeaf } from "@/utils/nativeUtils"
+import { getEmptyUrlConditions } from "@/defaults"
+import { getPracticalRuntimeUrl } from "@/utils/helper"
 
 const ghostModeStatic = [".qq.com", "wetv.vip", "web.whatsapp.com", "pan.baidu.com", "onedrive.live.com", "open.spotify.com", ".instagram.com", ".descript.com", "www.ccmtv.cn", ".douyin.com", ".tiktok.com", ".linkedin.com", "mooc1.chaoxing.com"]
   .some(site => (location.hostname || "").includes(site))

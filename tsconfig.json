@@ -16,9 +16,9 @@
     "jsx": "react-jsx",
     "baseUrl": "./",
     "paths": {
-        "src/*": ["src/*"],
-        "notFirefox/*": ["src/*"],
-        "isFirefox/*": ["src/*"] 
+        "@/*": ["./src/*"],
+        "notFirefox/*": ["./src/*"],
+        "isFirefox/*": ["./src/*"] 
     },
     "outDir": "build"
   },
