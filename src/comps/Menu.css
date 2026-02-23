@@ -22,6 +22,6 @@
 
   .RegularTooltip {
     margin-left: 10px;
-    filter: invert(1) grayscale(1);
+    filter: invert(1);
   }
 }

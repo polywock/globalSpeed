@@ -95,7 +95,7 @@ export function Header(props: HeaderProps) {
       {/* Kebab list */}
       {kebabInfo?.list.length > 0 ? (
         <div className="kebab">
-          <KebabList tooltipAlign="bottom"  list={kebabInfo.list} onSelect={kebabInfo.onSelect} onOpen={() => {
+          <KebabList centered={true} tooltipAlign="bottom"  list={kebabInfo.list} onSelect={kebabInfo.onSelect} onOpen={() => {
             kebabInfo.showAlert && (view.sawEnableShortcutOverlayCount || 0) < 5 && setTimeout(showOverlayForKebab.bind(null, view.sawEnableShortcutOverlayCount), 0)
           }}/>
           {kebabInfo.showAlert && <div className="alert"><IoIosInformationCircle size={"1.2em"}/></div>}
