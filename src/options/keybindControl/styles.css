@@ -36,10 +36,8 @@
 		align-items: center;
 		flex-wrap: wrap;
 
-		& > .label {
-			&::first-letter {
-				font-size: 1.2em;
-			}
+		:root:not(.rtl) & > .label::first-letter {
+			font-size: 1.2em;
 		}
 
 		& > *:nth-child(1n + 2) {

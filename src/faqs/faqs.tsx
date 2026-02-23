@@ -66,7 +66,7 @@ function Faqs(props: {}) {
 							}
 						/>
 						<Item
-							q={"Why doesn't the Firefox version support audio FX and global shortcut keys? "}
+							q={"Why doesn't the Firefox version support audio FX and browser shortcut keys? "}
 							a={<div>Firefox doesn't support the required APIs. </div>}
 						/>
 					</>
@@ -144,7 +144,7 @@ function Faqs(props: {}) {
 							<li>
 								1. Go to <code>geforcenow.com</code>.
 							</li>
-							<li>2. Open the Global Speed menu.</li>
+							<li>2. Open the Global Speed popup menu.</li>
 							<li>
 								3. Near the power-off button <FaPowerOff color={"#02a"} size="1.21rem" />, click on the 3 vertical dots{" "}
 								<IoEllipsisVertical style={{ verticalAlign: "middle" }} size="1.2em" /> to show more options.
@@ -217,14 +217,14 @@ function Faqs(props: {}) {
 					/>
 				)}
 				<Item
-					q={"What does the native option do for the fullscreen hotkey?"}
+					q={"What does the simple option do for the fullscreen hotkey?"}
 					a={
 						<div>
 							<p>
-								<b>native mode:</b> enters fullscreen mode directly on the video and activates the HTML5 native controls.
+								<b>Simple mode:</b> enters fullscreen mode directly on the video and activates the basic controls.
 							</p>
 							<p>
-								<b>standard mode:</b> tries to enter fullscreen mode on the container element to mimic the website's standard fullscreen
+								<b>Smart mode:</b> tries to enter fullscreen mode on the container element to mimic the website's standard fullscreen
 								behavior. This method requires learning. If you visit a new website, you must manually click on the fullscreen button at least
 								once. Otherwise, Global Speed won't know which element is the video player container.
 							</p>
@@ -255,10 +255,10 @@ function Faqs(props: {}) {
 			</Group>
 			<Group label="shortcut trigger modes">
 				<Item
-					q={"How do I group context menu items? "}
+					q={"How do I group menu shortcuts? "}
 					a={
 						<div>
-							You can organize by changing the menu label to <code>group :: name</code>. For example, to group a context menu shortcut called{" "}
+							You can organize by changing the menu label to <code>group :: name</code>. For example, to group a menu shortcut called{" "}
 							<code>pitch</code> under a group called <code>audio</code>, you will format it like so: <code>audio :: pitch</code>{" "}
 						</div>
 					}
@@ -283,16 +283,16 @@ function Faqs(props: {}) {
 							a={
 								<div>
 									The API does not allow entering fullscreen if the tab's audio is already captured. You need to first enter fullscreen and
-									then capture the audio using the optional "tab capture" shortcut key.
+									then capture the audio using the optional "capture audio" menu or browser shortcut.
 								</div>
 							}
 						/>
 						<Item
-							q={"Why don't the audio effects work well with local shortcuts? "}
+							q={"Why don't the audio effects work well with page shortcuts? "}
 							a={
 								<div>
-									The browser only allow extension's to modify the tab's audio if the user invokes the extension. Only global shortcuts and
-									context menu shortcuts can invoke an extension. If using local shortcuts, pair it with a tab capture shortcut.
+									The browser only allow extension's to modify the tab's audio if the user invokes the extension. Only browser shortcuts and
+									menu shortcuts can invoke an extension. If using page shortcuts, pair it with a tab capture shortcut.
 								</div>
 							}
 						/>

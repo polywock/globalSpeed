@@ -23,6 +23,7 @@
 	/* Remove when OKLCH calc is more available */
 	--text-color-opaque: oklch(22.359% 0.03316 265.722 / 0.5);
 	--border-strong: #23324d66;
+	--border-weak: #23324d22;
 
 	--error-color: #fde8e8;
 	--error-text-color: #7a1b21;
@@ -54,6 +55,8 @@
 	--focus-color: #a8c8ff;
 	--link-color: #c5d7ff;
 	--border: #d5e0ff3d;
+
+	--border-weak: #d5e0ff11;
 	--border-strong: #d5e0ff88;
 	--text-color-opaque: oklch(96.386% 0.01706 267.821 / 0.5);
 
@@ -219,6 +222,11 @@ code {
 	display: inline-block;
 	font-size: 1.1em;
 	line-height: 2;
+	opacity: 0.65;
+
+	&:hover {
+		opacity: 1;
+	}
 }
 
 input[type="checkbox"] {

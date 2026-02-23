@@ -1,3 +1,7 @@
+.List {
+	interpolate-size: allow-keywords;
+}
+
 .List,
 .ListItem .ListItemLabel {
 	user-select: none;

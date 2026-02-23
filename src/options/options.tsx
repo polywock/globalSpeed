@@ -43,6 +43,7 @@ Promise.all([loadGsm(), requestTabInfo()]).then(([gsm, tabInfo]) => {
 	gvar.gsm = gsm
 	gvar.tabInfo = tabInfo
 	document.documentElement.lang = gsm._lang
+	if (gsm._rtl) document.documentElement.classList.add("rtl")
 	window.root = createRoot(document.querySelector("#root"))
 	window.root.render(
 		<ErrorFallback>

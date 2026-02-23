@@ -1,6 +1,17 @@
+.dragging .ListItem {
+	transition: none;
+}
+
 .ListItem {
 	position: relative;
 	margin-bottom: 10px;
+	height: auto;
+	overflow: clip;
+	transition: height 100ms ease-out;
+
+	@starting-style {
+		height: 0;
+	}
 
 	&.spacing {
 		margin-bottom: 25px;
@@ -16,6 +27,10 @@
 
 	&:last-child {
 		margin-bottom: 0;
+
+		& > .ListItemSub {
+			border-color: var(--border-weak);
+		}
 	}
 
 	&.focus {

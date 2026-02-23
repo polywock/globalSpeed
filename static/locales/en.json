@@ -3,6 +3,7 @@
 	":appDesc": "Universal speed control for video and audio.",
 	"_scale": 1.0,
 	"_lang": "en",
+	"_rtl": false,
 	"audio": {
 		"releaseTab": "Release audio",
 		"split": "Split",
@@ -184,7 +185,7 @@
 		"autoBreakTooltip": "Break loop if you navigate outside the bounds.",
 		"autoBreakTooltipAlt": "Break skip if you navigate inside it.",
 		"fullscreen": "Fullscreen",
-		"nativeTooltip": "Native",
+		"nativeTooltip": "Simple",
 		"PiP": "Picture-in-picture",
 		"fxState": "FX state",
 		"fxReset": "FX reset",
@@ -210,6 +211,7 @@
 		"cinemaTooltip": "Darken the background of the video. To exit out, press on the background or use shortcut again.",
 		"presets": "Presets...",
 		"temporarySpeed": "Fast forward",
+		"temporarySpeedTooltip": "Press and hold to speed up videos",
 		"toggleSpeed": "Toggle speed",
 		"toggleSpeedTooltip": "Toggle between shortcut speed and the last speed.",
 		"alwaysOn": "Always on",
@@ -327,7 +329,13 @@
 			"blocklist": "Blocklist",
 			"status": "URL rules have changed some values.",
 			"strictness": "Strictness",
-			"strictnessTooltip": "Control how frequently the URL rule is applied. \n1: Apply only once until no longer matching.\n2: Re-apply if domain name is different.\n3: Re-apply every page load.\n4: Re-apply every time URL changes."
+			"strictnessTooltip": "Control how frequently the URL rule is applied. \n1: Apply only once until no longer matching.\n2: Re-apply if domain name is different.\n3: Re-apply every page load.\n4: Re-apply every time URL changes.",
+			"conditionsKeybindsAllow": "",
+			"conditionsKeybindsBlock": "",
+			"conditionsKeybindBlock": "",
+			"conditionsKeybindAllow": "",
+			"conditionsGhostBlock": "",
+			"conditionsGhostAllow": ""
 		},
 		"help": {
 			"header": "Help",

@@ -21,6 +21,8 @@ import { useTooltipAnchor } from "@/comps/Tooltip"
 import { GearIcon } from "@/comps/GearIcon"
 import { NumericInput } from "@/comps/NumericInput"
 import "./SectionFlags.css"
+import { IoIosMore } from "react-icons/io"
+import { TfiMoreAlt } from "react-icons/tfi"
 
 export function SectionFlags(props: {}) {
 	const [showIndicatorModal, setShowIndicatorModal] = useState(false)
@@ -332,7 +334,7 @@ export function SectionFlags(props: {}) {
 
 				{!showMore ? (
 					<button ref={showMoreRef} className="showMoreTooltip" onClick={() => setShowMore(true)}>
-						...
+						<TfiMoreAlt />
 					</button>
 				) : (
 					<>
