@@ -14,7 +14,7 @@ export function ModalText(props: ModalTextProps) {
 	const [modal, setModal] = useState(false)
 
 	return (
-		<div className="ModalText">
+		<div>
 			<GearIcon tooltip={gvar.gsm.token.edit} onClick={(e) => setModal(!modal)} />
 			{modal && (
 				<ModalBase

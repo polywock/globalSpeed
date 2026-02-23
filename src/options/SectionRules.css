@@ -20,29 +20,6 @@
 			& > .NumericInput {
 				width: 60px;
 			}
-
-			& > .FxControlButton {
-				& > .wrapper {
-					position: fixed;
-					left: 0;
-					top: 0;
-					width: 100vw;
-					height: 100vh;
-					z-index: 9999999999;
-					background-color: var(--overlay-color);
-					display: grid;
-					justify-content: center;
-					align-content: center;
-
-					& > .FxControl {
-						padding: 8px;
-						max-height: 80vh;
-						overflow-y: scroll;
-						width: 300px;
-						max-width: 400px;
-					}
-				}
-			}
 		}
 	}
 
@@ -50,4 +27,16 @@
 		margin-top: 30px;
 		display: block;
 	}
+}
+
+.ModalBase .FxControl {
+	padding: 8px;
+	max-height: 80vh;
+	overflow-y: scroll;
+	width: 300px;
+	max-width: 400px;
+}
+
+.ModalBase.isMobile .FxControl {
+	max-height: 80%;
 }

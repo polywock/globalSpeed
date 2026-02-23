@@ -10,10 +10,6 @@
 	display: grid;
 	justify-content: center;
 	align-items: center;
-
-	&.passThrough {
-		pointer-events: none;
-	}
 }
 
 .ModalMain {
@@ -24,4 +20,9 @@
 	padding: 20px;
 	overflow-y: auto;
 	border-radius: var(--radius);
+}
+
+.ModalBase.isMobile .ModalMain {
+	max-width: 90%;
+	max-height: 90%;
 }

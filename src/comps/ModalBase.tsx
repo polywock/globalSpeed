@@ -2,13 +2,13 @@ import { useEffect } from "react"
 import { createPortal } from "react-dom"
 import { ReactElement, useRef } from "react"
 import "./ModalBase.css"
+import { isMobile } from "@/utils/helper"
 
 type Props = {
 	children: ReactElement
 	onClose: () => void
 	color?: string
 	keepOnWheel?: boolean
-	passThrough?: boolean
 	passClass?: string
 }
 
@@ -16,9 +16,7 @@ export function ModalBase(props: Props) {
 	const ref = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		if (props.keepOnWheel || props.passThrough) {
-			return
-		}
+		if (props.keepOnWheel) return
 
 		const handleScroll = (e: Event) => {
 			props.onClose()
@@ -28,7 +26,29 @@ export function ModalBase(props: Props) {
 		return () => {
 			document.removeEventListener("wheel", handleScroll, true)
 		}
-	}, [props.keepOnWheel, props.passThrough])
+	}, [props.keepOnWheel])
+
+	useEffect(() => {
+		if (!window.visualViewport || !isMobile()) return
+		const vv = window.visualViewport
+
+		const update = () => {
+			if (!ref.current) return
+			ref.current.style.width = `${vv.width}px`
+			ref.current.style.height = `${vv.height}px`
+			ref.current.style.left = `${vv.offsetLeft}px`
+			ref.current.style.top = `${vv.offsetTop}px`
+		}
+
+		update()
+
+		vv.addEventListener("resize", update)
+		vv.addEventListener("scroll", update)
+		return () => {
+			vv.removeEventListener("resize", update)
+			vv.removeEventListener("scroll", update)
+		}
+	}, [])
 
 	return createPortal(
 		<div
@@ -39,7 +59,7 @@ export function ModalBase(props: Props) {
 					props.onClose()
 				}
 			}}
-			className={`ModalBase ${props.passThrough ? "passThrough" : ""} ${props.passClass || ""}`}
+			className={`ModalBase ${props.passClass || ""} ${isMobile() ? "isMobile" : ""}`}
 		>
 			{props.children}
 		</div>,

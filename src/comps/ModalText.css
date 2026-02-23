@@ -7,3 +7,8 @@
 		font-family: "Courier New", Courier, monospace;
 	}
 }
+
+.ModalBase.isMobile.ModalText textarea {
+	width: 50%;
+	height: 75%;
+}

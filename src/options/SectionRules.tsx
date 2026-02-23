@@ -6,6 +6,7 @@ import { NumericInput } from "../comps/NumericInput"
 import { FxControl } from "../popup/FxControl"
 import { isFirefox, moveItem, randomId } from "../utils/helper"
 import { ModalText } from "../comps/ModalText"
+import { ModalBase } from "../comps/ModalBase"
 import { URLModal } from "./URLModal"
 import { getSelectedParts } from "@/utils/configUtils"
 import { produce } from "immer"
@@ -287,7 +288,6 @@ type FxRuleControlProps = {
 
 function FxRuleControl(props: FxRuleControlProps) {
 	const [open, setOpen] = useState(false)
-	const wrapperRef = useRef<HTMLDivElement>(null)
 
 	let overrideFx = (props.rule.overrideFx || {}) as typeof props.rule.overrideFx
 	overrideFx.backdropFx = overrideFx.backdropFx || getDefaultFx()
@@ -297,13 +297,7 @@ function FxRuleControl(props: FxRuleControlProps) {
 		<div className="FxControlButton">
 			<GearIcon onClick={(e) => setOpen(!open)} />
 			{open && (
-				<div
-					ref={wrapperRef}
-					className="wrapper"
-					onClick={(e) => {
-						if (e.target === wrapperRef.current) setOpen(false)
-					}}
-				>
+				<ModalBase keepOnWheel={true} onClose={() => setOpen(false)}>
 					<FxControl
 						enabled={true}
 						_elementFx={overrideFx.elementFx}
@@ -319,7 +313,7 @@ function FxRuleControl(props: FxRuleControlProps) {
 							)
 						}}
 					/>
-				</div>
+				</ModalBase>
 			)}
 		</div>
 	)

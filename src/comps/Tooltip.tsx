@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
-import { clamp } from "@/utils/helper"
+import { clamp, isMobile } from "@/utils/helper"
 import "./Tooltip.css"
 
 const EDGE_PADDING = 15
@@ -109,7 +109,7 @@ export function useTooltipAnchor<T extends HTMLElement = HTMLElement>(opts: Tool
 				suppressShow = false
 			})
 		}
-		const onPointerLeave = (e: PointerEvent) => {
+		const onMouseLeave = (e: MouseEvent) => {
 			const relatedTarget = e.relatedTarget as Node | null
 			if (relatedTarget && elem.contains(relatedTarget)) return
 			if (!opts.dontAllowFocus && document.activeElement === elem) return
@@ -123,12 +123,15 @@ export function useTooltipAnchor<T extends HTMLElement = HTMLElement>(opts: Tool
 
 		const controller = new AbortController()
 
-		elem.addEventListener("pointerenter", show, { signal: controller.signal })
-		elem.addEventListener("pointerleave", onPointerLeave, { signal: controller.signal })
-		if (!opts.dontAllowFocus) {
-			elem.addEventListener("focusin", show, { signal: controller.signal })
-			elem.addEventListener("focusout", onFocusOut, { signal: controller.signal })
+		if (!isMobile()) {
+			elem.addEventListener("mouseenter", show, { signal: controller.signal })
+			elem.addEventListener("mouseleave", onMouseLeave, { signal: controller.signal })
+			if (!opts.dontAllowFocus) {
+				elem.addEventListener("focusin", show, { signal: controller.signal })
+				elem.addEventListener("focusout", onFocusOut, { signal: controller.signal })
+			}
 		}
+
 		if (opts.allowClick) {
 			elem.addEventListener("click", show, { signal: controller.signal })
 		}
