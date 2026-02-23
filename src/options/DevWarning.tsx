@@ -2,11 +2,10 @@ import { useState, useEffect, useRef } from "react"
 import { canPotentiallyUserScriptExecute, canUserScript, requestCreateTab } from "../utils/browserUtils"
 import { FaLink } from "react-icons/fa"
 import { MdWarning } from "react-icons/md"
-import { isEdge } from "@/utils/helper"
 
 export enum DevWarningType {
 	NONE = 0,
-	ENABLE_DEV = 1,
+	ENABLE_USERSCRIPTS = 1,
 	NO_SUPPORT = 2,
 }
 
@@ -24,7 +23,7 @@ export function useDevWarningType(hasJs: boolean): DevWarningType {
 		const handleInterval = () => {
 			let target = DevWarningType.NO_SUPPORT
 			if (canPotentiallyUserScriptExecute()) {
-				target = canUserScript() ? DevWarningType.NONE : DevWarningType.ENABLE_DEV
+				target = canUserScript() ? DevWarningType.NONE : DevWarningType.ENABLE_USERSCRIPTS
 			}
 
 			target !== env.type && setType(target)
@@ -64,17 +63,11 @@ export function DevWarning(props: Props) {
 	return (
 		<div className="CommandWarning">
 			<MdWarning size={"1.15rem"} />
-			{show === DevWarningType.ENABLE_DEV && (
-				<span>{gvar.gsm.warnings[`${props.forUrlRules ? "jsWarningRules" : "jsWarning"}${isEdge() ? "Edge" : ""}`]}</span>
-			)}
+			{show === DevWarningType.ENABLE_USERSCRIPTS && <span>{gvar.gsm.warnings[`${props.forUrlRules ? "jsWarningRules" : "jsWarning"}`]}</span>}
 			{show === DevWarningType.NO_SUPPORT && <span>{gvar.gsm.warnings.jsUpdate}</span>}
-			{show === DevWarningType.ENABLE_DEV && (
+			{show === DevWarningType.ENABLE_USERSCRIPTS && (
 				<button
-					onClick={() =>
-						isEdge()
-							? requestCreateTab(`chrome://extensions`)
-							: requestCreateTab(`chrome://extensions/?id=${chrome.runtime.id}#:~:text=${encodeURIComponent("Allow User Scripts")}`)
-					}
+					onClick={() => requestCreateTab(`chrome://extensions/?id=${chrome.runtime.id}#:~:text=${encodeURIComponent("Allow User Scripts")}`)}
 				>
 					<FaLink size={"1.21rem"} />
 					<span>{gvar.gsm.token.openPage}</span>

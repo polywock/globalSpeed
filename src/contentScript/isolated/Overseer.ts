@@ -36,7 +36,6 @@ export class Overseer {
 	released = false
 
 	init = async () => {
-		console.log("Overseer started")
 		this.eListen = new EventsListener()
 		this.detectOpen = new DetectOpen()
 		this.stratumServer = new StratumServer()
