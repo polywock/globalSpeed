@@ -326,7 +326,21 @@
       "blocklist": "Engellenenler listesi",
       "status": "URL kuralları bazı değerleri değiştirdi.",
       "strictness": "Katılık",
-      "strictnessTooltip": "URL kuralının ne sıklıkla uygulandığını kontrol edin. \n1: Artık eşleşmeyene kadar yalnızca bir kez uygulayın.\n2: Etki alanı adı farklıysa yeniden uygulayın.\n3: Her sayfa yüklendiğinde yeniden uygulayın.\n4: URL değiştiğinde her seferinde yeniden uygulayın."
+      "strictnessTooltip": "URL kuralının ne sıklıkla uygulandığını kontrol edin. \n1: Artık eşleşmeyene kadar yalnızca bir kez uygulayın.\n2: Etki alanı adı farklıysa yeniden uygulayın.\n3: Her sayfa yüklendiğinde yeniden uygulayın.\n4: URL değiştiğinde her seferinde yeniden uygulayın.",
+      "headers": {
+        "keybindsAllow": "Kısayolların çalışacağı web siteleri",
+        "keybindsBlock": "Kısayolların devre dışı olacağı web siteleri",
+        "keybindsNeutral": "Kısayollar tüm web sitelerinde çalışır",
+        "keybindAllow": "Bu kısayolun çalışacağı web siteleri",
+        "keybindBlock": "Bu kısayolun devre dışı olacağı web siteleri",
+        "keybindNeutral": "Bu kısayol tüm web sitelerinde çalışır",
+        "ghostAllow": "Hayalet modun etkin olacağı web siteleri",
+        "ghostBlock": "Hayalet modun devre dışı olacağı web siteleri",
+        "ghostNeutral": "Hayalet mod tüm web sitelerinde etkin",
+        "ruleAllow": "Bu kuralın uygulanacağı web siteleri",
+        "ruleBlock": "Bu kuralın geçerli olmayacağı web siteleri",
+        "ruleNeutral": "Bu kural hiçbir web sitesinde geçerli olmayacak"
+      }
     },
     "help": {
       "header": "Yardım",

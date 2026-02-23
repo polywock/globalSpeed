@@ -326,7 +326,21 @@
       "blocklist": "Senarai Sekat",
       "status": "Peraturan URL telah mengubah beberapa nilai.",
       "strictness": "Kekerasan",
-      "strictnessTooltip": "Kawal seberapa kerap peraturan URL diterapkan. \n1: Terapkan sekali sahaja sehingga tidak lagi sepadan.\n2: Terapkan semula jika nama domain berbeza.\n3: Terapkan semula setiap kali halaman dimuat.\n4: Terapkan semula setiap kali URL berubah."
+      "strictnessTooltip": "Kawal seberapa kerap peraturan URL diterapkan. \n1: Terapkan sekali sahaja sehingga tidak lagi sepadan.\n2: Terapkan semula jika nama domain berbeza.\n3: Terapkan semula setiap kali halaman dimuat.\n4: Terapkan semula setiap kali URL berubah.",
+      "headers": {
+        "keybindsAllow": "Laman web di mana pintasan akan berfungsi",
+        "keybindsBlock": "Laman web di mana pintasan akan dinyahdayakan",
+        "keybindsNeutral": "Pintasan berfungsi pada semua laman web",
+        "keybindAllow": "Laman web di mana pintasan ini akan berfungsi",
+        "keybindBlock": "Laman web di mana pintasan ini akan dinyahdayakan",
+        "keybindNeutral": "Pintasan ini berfungsi pada semua laman web",
+        "ghostAllow": "Laman web di mana mod hantu akan aktif",
+        "ghostBlock": "Laman web di mana mod hantu akan tidak aktif",
+        "ghostNeutral": "Mod hantu aktif pada semua laman web",
+        "ruleAllow": "Laman web di mana peraturan ini akan digunakan",
+        "ruleBlock": "Laman web di mana peraturan ini tidak akan digunakan",
+        "ruleNeutral": "Peraturan ini tidak akan digunakan pada mana-mana laman web"
+      }
     },
     "help": {
       "header": "Bantuan",

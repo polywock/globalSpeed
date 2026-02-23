@@ -326,7 +326,21 @@
       "blocklist": "Lista zablokowanych",
       "status": "Reguły URL zmieniły niektóre wartości.",
       "strictness": "Ścisłość",
-      "strictnessTooltip": "Kontroluj, jak często stosowana jest reguła URL.\n1: Zastosuj tylko raz, aż przestanie pasować.\n2: Zastosuj ponownie, jeśli domena jest inna.\n3: Zastosuj przy każdym ładowaniu strony.\n4: Zastosuj przy każdej zmianie URL."
+      "strictnessTooltip": "Kontroluj, jak często stosowana jest reguła URL.\n1: Zastosuj tylko raz, aż przestanie pasować.\n2: Zastosuj ponownie, jeśli domena jest inna.\n3: Zastosuj przy każdym ładowaniu strony.\n4: Zastosuj przy każdej zmianie URL.",
+      "headers": {
+        "keybindsAllow": "Strony internetowe, na których skróty będą działać",
+        "keybindsBlock": "Strony internetowe, na których skróty będą wyłączone",
+        "keybindsNeutral": "Skróty działają na wszystkich stronach internetowych",
+        "keybindAllow": "Strony internetowe, na których ten skrót będzie działać",
+        "keybindBlock": "Strony internetowe, na których ten skrót będzie wyłączony",
+        "keybindNeutral": "Ten skrót działa na wszystkich stronach internetowych",
+        "ghostAllow": "Strony internetowe, na których tryb ducha będzie aktywny",
+        "ghostBlock": "Strony internetowe, na których tryb ducha będzie nieaktywny",
+        "ghostNeutral": "Tryb ducha jest aktywny na wszystkich stronach internetowych",
+        "ruleAllow": "Strony internetowe, na których ta reguła będzie obowiązywać",
+        "ruleBlock": "Strony internetowe, na których ta reguła nie będzie obowiązywać",
+        "ruleNeutral": "Ta reguła nie będzie obowiązywać na żadnej stronie internetowej"
+      }
     },
     "help": {
       "header": "Pomoc",

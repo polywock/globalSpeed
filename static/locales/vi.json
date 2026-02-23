@@ -326,7 +326,21 @@
       "blocklist": "Danh sách chặn",
       "status": "Các quy tắc URL đã thay đổi một số giá trị.",
       "strictness": "Tính nghiêm khắc",
-      "strictnessTooltip": "Kiểm soát tần suất áp dụng quy tắc URL. \n1: Chỉ áp dụng một lần cho đến khi không còn khớp.\n2: Áp dụng lại nếu tên miền khác.\n3: Áp dụng lại mỗi lần tải trang.\n4: Áp dụng lại mỗi khi URL thay đổi."
+      "strictnessTooltip": "Kiểm soát tần suất áp dụng quy tắc URL. \n1: Chỉ áp dụng một lần cho đến khi không còn khớp.\n2: Áp dụng lại nếu tên miền khác.\n3: Áp dụng lại mỗi lần tải trang.\n4: Áp dụng lại mỗi khi URL thay đổi.",
+      "headers": {
+        "keybindsAllow": "Các trang web nơi phím tắt sẽ hoạt động",
+        "keybindsBlock": "Các trang web nơi phím tắt sẽ bị vô hiệu hóa",
+        "keybindsNeutral": "Phím tắt hoạt động trên tất cả trang web",
+        "keybindAllow": "Các trang web nơi phím tắt này sẽ hoạt động",
+        "keybindBlock": "Các trang web nơi phím tắt này sẽ bị vô hiệu hóa",
+        "keybindNeutral": "Phím tắt này hoạt động trên tất cả trang web",
+        "ghostAllow": "Các trang web nơi chế độ ẩn danh sẽ hoạt động",
+        "ghostBlock": "Các trang web nơi chế độ ẩn danh sẽ bị vô hiệu hóa",
+        "ghostNeutral": "Chế độ ẩn danh đang hoạt động trên tất cả trang web",
+        "ruleAllow": "Các trang web nơi quy tắc này sẽ áp dụng",
+        "ruleBlock": "Các trang web nơi quy tắc này sẽ không áp dụng",
+        "ruleNeutral": "Quy tắc này sẽ không áp dụng trên bất kỳ trang web nào"
+      }
     },
     "help": {
       "header": "Trợ giúp",

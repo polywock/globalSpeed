@@ -326,7 +326,21 @@
       "blocklist": "Liste noire",
       "status": "Les règles d'URL ont changé certaines valeurs.",
       "strictness": "Rigueur",
-      "strictnessTooltip": "Contrôle la fréquence d'application de la règle d'URL. \n1: Appliquer une seule fois jusqu'à ce qu'elle ne corresponde plus.\n2: Réappliquer si le nom de domaine est différent.\n3: Réappliquer chaque fois que la page se charge.\n4: Réappliquer chaque fois que l'URL change."
+      "strictnessTooltip": "Contrôle la fréquence d'application de la règle d'URL. \n1: Appliquer une seule fois jusqu'à ce qu'elle ne corresponde plus.\n2: Réappliquer si le nom de domaine est différent.\n3: Réappliquer chaque fois que la page se charge.\n4: Réappliquer chaque fois que l'URL change.",
+      "headers": {
+        "keybindsAllow": "Sites web où les raccourcis fonctionneront",
+        "keybindsBlock": "Sites web où les raccourcis seront désactivés",
+        "keybindsNeutral": "Les raccourcis fonctionnent sur tous les sites web",
+        "keybindAllow": "Sites web où ce raccourci fonctionnera",
+        "keybindBlock": "Sites web où ce raccourci sera désactivé",
+        "keybindNeutral": "Ce raccourci fonctionne sur tous les sites web",
+        "ghostAllow": "Sites web où le mode fantôme sera actif",
+        "ghostBlock": "Sites web où le mode fantôme sera inactif",
+        "ghostNeutral": "Le mode fantôme est actif sur tous les sites web",
+        "ruleAllow": "Sites web où cette règle s’appliquera",
+        "ruleBlock": "Sites web où cette règle ne s’appliquera pas",
+        "ruleNeutral": "Cette règle ne s’appliquera sur aucun site web"
+      }
     },
     "help": {
       "header": "Aide",

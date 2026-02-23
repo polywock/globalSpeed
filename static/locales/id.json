@@ -325,7 +325,21 @@
       "blocklist": "Daftar Blokir",
       "status": "Aturan URL telah mengubah beberapa nilai.",
       "strictness": "Tingkat ketat",
-      "strictnessTooltip": "Kendalikan seberapa sering aturan URL diterapkan. \n1: Terapkan hanya sekali hingga tidak lagi cocok.\n2: Terapkan ulang jika nama domain berbeda.\n3: Terapkan ulang setiap kali halaman dimuat.\n4: Terapkan ulang setiap kali URL berubah."
+      "strictnessTooltip": "Kendalikan seberapa sering aturan URL diterapkan. \n1: Terapkan hanya sekali hingga tidak lagi cocok.\n2: Terapkan ulang jika nama domain berbeda.\n3: Terapkan ulang setiap kali halaman dimuat.\n4: Terapkan ulang setiap kali URL berubah.",
+      "headers": {
+        "keybindsAllow": "Situs web tempat pintasan akan berfungsi",
+        "keybindsBlock": "Situs web tempat pintasan akan dinonaktifkan",
+        "keybindsNeutral": "Pintasan berfungsi di semua situs web",
+        "keybindAllow": "Situs web tempat pintasan ini akan berfungsi",
+        "keybindBlock": "Situs web tempat pintasan ini akan dinonaktifkan",
+        "keybindNeutral": "Pintasan ini berfungsi di semua situs web",
+        "ghostAllow": "Situs web tempat mode hantu akan aktif",
+        "ghostBlock": "Situs web tempat mode hantu akan dinonaktifkan",
+        "ghostNeutral": "Mode hantu aktif di semua situs web",
+        "ruleAllow": "Situs web tempat aturan ini akan berlaku",
+        "ruleBlock": "Situs web tempat aturan ini tidak akan berlaku",
+        "ruleNeutral": "Aturan ini tidak akan berlaku di situs web mana pun"
+      }
     },
     "help": {
       "header": "Bantuan",

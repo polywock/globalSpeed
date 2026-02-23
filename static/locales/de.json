@@ -326,7 +326,21 @@
       "blocklist": "Sperrliste",
       "status": "URL-Regeln haben einige Werte geändert.",
       "strictness": "Strenge",
-      "strictnessTooltip": "Steuere, wie häufig die URL-Regel angewendet wird.\n1: Nur einmal anwenden, bis sie nicht mehr übereinstimmt.\n2: Erneut anwenden, wenn der Domainname unterschiedlich ist.\n3: Erneut anwenden bei jedem Seitenladen.\n4: Erneut anwenden, wenn sich die URL ändert."
+      "strictnessTooltip": "Steuere, wie häufig die URL-Regel angewendet wird.\n1: Nur einmal anwenden, bis sie nicht mehr übereinstimmt.\n2: Erneut anwenden, wenn der Domainname unterschiedlich ist.\n3: Erneut anwenden bei jedem Seitenladen.\n4: Erneut anwenden, wenn sich die URL ändert.",
+      "headers": {
+        "keybindsAllow": "Websites, auf denen Tastenkürzel funktionieren",
+        "keybindsBlock": "Websites, auf denen Tastenkürzel deaktiviert werden",
+        "keybindsNeutral": "Tastenkürzel funktionieren auf allen Websites",
+        "keybindAllow": "Websites, auf denen dieses Tastenkürzel funktioniert",
+        "keybindBlock": "Websites, auf denen dieses Tastenkürzel deaktiviert wird",
+        "keybindNeutral": "Dieses Tastenkürzel funktioniert auf allen Websites",
+        "ghostAllow": "Websites, auf denen der Geistermodus aktiv ist",
+        "ghostBlock": "Websites, auf denen der Geistermodus inaktiv ist",
+        "ghostNeutral": "Geistermodus ist auf allen Websites aktiv",
+        "ruleAllow": "Websites, auf denen diese Regel gilt",
+        "ruleBlock": "Websites, auf denen diese Regel nicht gilt",
+        "ruleNeutral": "Diese Regel gilt auf keiner Website"
+      }
     },
     "help": {
       "header": "Hilfe",

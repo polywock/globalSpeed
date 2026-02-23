@@ -330,12 +330,20 @@
 			"status": "URL rules have changed some values.",
 			"strictness": "Strictness",
 			"strictnessTooltip": "Control how frequently the URL rule is applied. \n1: Apply only once until no longer matching.\n2: Re-apply if domain name is different.\n3: Re-apply every page load.\n4: Re-apply every time URL changes.",
-			"conditionsKeybindsAllow": "",
-			"conditionsKeybindsBlock": "",
-			"conditionsKeybindBlock": "",
-			"conditionsKeybindAllow": "",
-			"conditionsGhostBlock": "",
-			"conditionsGhostAllow": ""
+			"headers": {
+				"keybindsAllow": "Websites where shortcuts will work",
+				"keybindsBlock": "Websites where shortcuts will be disabled",
+				"keybindsNeutral": "Shortcuts work on all websites",
+				"keybindAllow": "Websites where this shortcut will work",
+				"keybindBlock": "Websites where this shortcut will be disabled",
+				"keybindNeutral": "This shortcut works on all websites",
+				"ghostAllow": "Websites where ghost mode will be active",
+				"ghostBlock": "Websites where ghost mode will be inactive",
+				"ghostNeutral": "Ghost mode is active on all websites",
+				"ruleAllow": "Websites where this rule will apply",
+				"ruleBlock": "Websites where this rule won't apply",
+				"ruleNeutral": "This rule won't apply on any website"
+			}
 		},
 		"help": {
 			"header": "Help",

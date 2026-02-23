@@ -326,7 +326,21 @@
       "blocklist": "Lista nera",
       "status": "Le regole URL hanno modificato alcuni valori.",
       "strictness": "Severità",
-      "strictnessTooltip": "Controlla con quale frequenza viene applicata la regola dell'URL. \n1: Applicare solo una volta fino a quando non corrisponde più.\n2: Riapplicare se il nome di dominio è diverso.\n3: Riapplicare ogni volta che la pagina viene caricata.\n4: Riapplicare ogni volta che l'URL cambia."
+      "strictnessTooltip": "Controlla con quale frequenza viene applicata la regola dell'URL. \n1: Applicare solo una volta fino a quando non corrisponde più.\n2: Riapplicare se il nome di dominio è diverso.\n3: Riapplicare ogni volta che la pagina viene caricata.\n4: Riapplicare ogni volta che l'URL cambia.",
+      "headers": {
+        "keybindsAllow": "Siti web in cui le scorciatoie funzioneranno",
+        "keybindsBlock": "Siti web in cui le scorciatoie saranno disabilitate",
+        "keybindsNeutral": "Le scorciatoie funzionano su tutti i siti web",
+        "keybindAllow": "Siti web in cui questa scorciatoia funzionerà",
+        "keybindBlock": "Siti web in cui questa scorciatoia sarà disabilitata",
+        "keybindNeutral": "Questa scorciatoia funziona su tutti i siti web",
+        "ghostAllow": "Siti web in cui la modalità fantasma sarà attiva",
+        "ghostBlock": "Siti web in cui la modalità fantasma sarà inattiva",
+        "ghostNeutral": "La modalità fantasma è attiva su tutti i siti web",
+        "ruleAllow": "Siti web in cui questa regola si applicherà",
+        "ruleBlock": "Siti web in cui questa regola non si applicherà",
+        "ruleNeutral": "Questa regola non si applicherà a nessun sito web"
+      }
     },
     "help": {
       "header": "Aiuto",

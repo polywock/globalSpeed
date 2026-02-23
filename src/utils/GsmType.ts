@@ -328,7 +328,21 @@ export type Gsm = {
       blocklist: string,
       status: string,
       strictness: string,
-      strictnessTooltip: string
+      strictnessTooltip: string,
+      headers: {
+        keybindsAllow: string,
+        keybindsBlock: string,
+        keybindsNeutral: string,
+        keybindAllow: string,
+        keybindBlock: string,
+        keybindNeutral: string,
+        ghostAllow: string,
+        ghostBlock: string,
+        ghostNeutral: string,
+        ruleAllow: string,
+        ruleBlock: string,
+        ruleNeutral: string
+      }
     },
     help: {
       header: string,

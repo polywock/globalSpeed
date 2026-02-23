@@ -327,7 +327,21 @@
       "blocklist": "黑名单",
       "status": "URL规则已更改一些值。",
       "strictness": "严格性",
-      "strictnessTooltip": "控制 URL 规则应用的频率。\n1: 仅应用一次，直到不再匹配。\n2: 如果域名不同，则重新应用。\n3: 每次页面加载时重新应用。\n4: 每次 URL 更改时重新应用。"
+      "strictnessTooltip": "控制 URL 规则应用的频率。\n1: 仅应用一次，直到不再匹配。\n2: 如果域名不同，则重新应用。\n3: 每次页面加载时重新应用。\n4: 每次 URL 更改时重新应用。",
+      "headers": {
+        "keybindsAllow": "快捷键可用的网站",
+        "keybindsBlock": "快捷键禁用的网站",
+        "keybindsNeutral": "快捷键在所有网站上可用",
+        "keybindAllow": "此快捷键可用的网站",
+        "keybindBlock": "此快捷键禁用的网站",
+        "keybindNeutral": "此快捷键在所有网站上可用",
+        "ghostAllow": "幽灵模式启用的网站",
+        "ghostBlock": "幽灵模式禁用的网站",
+        "ghostNeutral": "幽灵模式在所有网站上启用",
+        "ruleAllow": "此规则生效的网站",
+        "ruleBlock": "此规则不生效的网站",
+        "ruleNeutral": "此规则在任何网站上都不生效"
+      }
     },
     "help": {
       "header": "帮助",

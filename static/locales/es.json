@@ -325,7 +325,21 @@
       "blocklist": "Lista de bloqueados",
       "status": "Las reglas de URL han cambiado algunos valores.",
       "strictness": "Estrictitud",
-      "strictnessTooltip": "Controla con qué frecuencia se aplica la regla de URL. \n1: Aplicar solo una vez hasta que deje de coincidir.\n2: Volver a aplicar si el nombre de dominio es diferente.\n3: Volver a aplicar cada vez que se carga la página.\n4: Volver a aplicar cada vez que cambia la URL."
+      "strictnessTooltip": "Controla con qué frecuencia se aplica la regla de URL. \n1: Aplicar solo una vez hasta que deje de coincidir.\n2: Volver a aplicar si el nombre de dominio es diferente.\n3: Volver a aplicar cada vez que se carga la página.\n4: Volver a aplicar cada vez que cambia la URL.",
+      "headers": {
+        "keybindsAllow": "Sitios web donde funcionarán los atajos",
+        "keybindsBlock": "Sitios web donde se desactivarán los atajos",
+        "keybindsNeutral": "Los atajos funcionan en todos los sitios web",
+        "keybindAllow": "Sitios web donde funcionará este atajo",
+        "keybindBlock": "Sitios web donde se desactivará este atajo",
+        "keybindNeutral": "Este atajo funciona en todos los sitios web",
+        "ghostAllow": "Sitios web donde se activará el modo fantasma",
+        "ghostBlock": "Sitios web donde se desactivará el modo fantasma",
+        "ghostNeutral": "El modo fantasma está activo en todos los sitios web",
+        "ruleAllow": "Sitios web donde se aplicará esta regla",
+        "ruleBlock": "Sitios web donde no se aplicará esta regla",
+        "ruleNeutral": "Esta regla no se aplicará en ningún sitio web"
+      }
     },
     "help": {
       "header": "Ayuda",
