@@ -537,7 +537,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
       enabled: true,
       greedy: true,
       valueState: "toggle",
-      trigger: Trigger.GLOBAL
+      trigger: Trigger.BROWSER
     })
   },
   afxReset: {
@@ -554,7 +554,7 @@ export let commandInfos: {[key in CommandName]: Command} = {
 }
 
 
-export function getDefaultKeybinds(): Keybind[] {
+export function getDefaultPageKeybinds(): Keybind[] {
   if (isMobile()) return []
   
   let kbs: Keybind[] = [
@@ -627,22 +627,30 @@ export function getDefaultKeybinds(): Keybind[] {
       key: "KeyR",
       valueString: "mark1",
       spacing: 2
-    },
+    }
+  ]
+  return kbs 
+}
+
+export function getDefaultMenuKeybinds(): Keybind[] {
+  if (isMobile()) return []
+  
+  let kbs: Keybind[] = [
     {
       ...commandInfos.drawPage.generate(),
-      trigger: Trigger.CONTEXT,
+      trigger: Trigger.MENU,
       contextLabel: "- Draw on Page",
       replaceWithGsm: 4
     },
     {
       ...commandInfos.cinema.generate(),
-      trigger: Trigger.CONTEXT,
+      trigger: Trigger.MENU,
       contextLabel: "- Darken Background",
       replaceWithGsm: 10
     },
     {
       ...commandInfos.fxFilter.generate(),
-      trigger: Trigger.CONTEXT,
+      trigger: Trigger.MENU,
       replaceWithGsm: 6,
       contextLabel: "- Fx :: Invert Page",
       filterOption: "invert",
@@ -652,7 +660,7 @@ export function getDefaultKeybinds(): Keybind[] {
     },
     {
       ...commandInfos.fxFilter.generate(),
-      trigger: Trigger.CONTEXT,
+      trigger: Trigger.MENU,
       replaceWithGsm: 7,
       contextLabel: "- Fx :: Grayscale Page",
       filterOption: "grayscale",
@@ -662,7 +670,7 @@ export function getDefaultKeybinds(): Keybind[] {
     },
     {
       ...commandInfos.fxFilter.generate(),
-      trigger: Trigger.CONTEXT,
+      trigger: Trigger.MENU,
       replaceWithGsm: 8,
       contextLabel: "- Fx :: Video Brightness",
       filterOption: "brightness",
@@ -672,7 +680,7 @@ export function getDefaultKeybinds(): Keybind[] {
     },
     {
       ...commandInfos.fxFilter.generate(),
-      trigger: Trigger.CONTEXT,
+      trigger: Trigger.MENU,
       replaceWithGsm: 9,
       contextLabel: "- Fx :: Video Contrast",
       filterOption: "contrast",
@@ -682,7 +690,7 @@ export function getDefaultKeybinds(): Keybind[] {
     },
     {
       ...commandInfos.fxReset.generate(),
-      trigger: Trigger.CONTEXT,
+      trigger: Trigger.MENU,
       filterTarget: "both",
       contextLabel: "- Fx :: Reset",
       replaceWithGsm: 5
@@ -692,21 +700,21 @@ export function getDefaultKeybinds(): Keybind[] {
     kbs.push(
       {
         ...commandInfos.afxPitch.generate(),
-        trigger: Trigger.CONTEXT,
+        trigger: Trigger.MENU,
         contextLabel: "- pitch",
         adjustMode: AdjustMode.ITC,
         replaceWithGsm: 1
       },
       {
         ...commandInfos.afxGain.generate(),
-        trigger: Trigger.CONTEXT,
+        trigger: Trigger.MENU,
         contextLabel: "- gain",
         adjustMode: AdjustMode.ITC,
         replaceWithGsm: 2,
       },
       {
         ...commandInfos.afxReset.generate(),
-        trigger: Trigger.CONTEXT,
+        trigger: Trigger.MENU,
         contextLabel: "- audio reset",
         replaceWithGsm: 3,
         spacing: 2

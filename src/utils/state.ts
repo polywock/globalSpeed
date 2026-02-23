@@ -374,13 +374,13 @@ export async function dumpConfig() {
 
 export async function restoreConfig(config: State, clearBase = true) {
     // Base clear all session and global values.
-    const newItems = clearBase ? Object.fromEntries((await getKeysByPrefix(PREFIX_SETS.G)).map(v => [v, null])) : {}
+    const newItems = clearBase ? Object.fromEntries((await getKeysByPrefix(PREFIX_SETS.G)).map((v) => [v, null])) : {}
 
     for (let key in config) {
         newItems[`g:${key}`] = config[key as keyof State]
     } 
     setTimeout(() => {
-        syncContextMenu(config.keybinds)
+        syncContextMenu(config.menuKeybinds)
     }, 100)
     return chrome.storage.local.set(newItems)
 }

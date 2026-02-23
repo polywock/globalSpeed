@@ -67,7 +67,9 @@ export type State = {
   hideBadge?: boolean,
   hideMediaView?: boolean,
   darkTheme?: boolean,
-  keybinds?: Keybind[],
+  pageKeybinds?: Keybind[],
+  browserKeybinds?: Keybind[],
+  menuKeybinds?: Keybind[],
   keybindsUrlCondition?: URLCondition,
   websitesAddedToUrlConditionsExclusion?: string[]
   ghostMode?: boolean,
@@ -203,9 +205,9 @@ export enum Duration {
 }
 
 export enum Trigger {
-  LOCAL = 0,
-  GLOBAL = 1,
-  CONTEXT = 2
+  PAGE = 0,
+  BROWSER = 1,
+  MENU = 2
 }
 
 export type Command = {

@@ -35,6 +35,10 @@ export function migrateSchema(state?: State) {
     state = twelveToThirteen(state)
   }
 
+  if (state.version === 13) {
+    state = thirteenToFourteen(state)
+  }
+
   if (!(state?.version === defaultState.version)) {
     return defaultState
   }
@@ -178,10 +182,10 @@ function tenToEleven(state: State) {
   ;((state as any).common as Context).latestViaShortcut = !(state as any).common.enabledLatestViaPopup
   delete (state as any).common.enabledLatestViaPopup
 
-  state.keybinds = state.keybinds ?? []
+  ;(state as any).keybinds = (state as any).keybinds ?? []
 
   // Rename 
-  state.keybinds.forEach(kb => {
+  ;(state as any).keybinds.forEach((kb: any) => {
     if (Object.hasOwn(renameMap, kb.command)) {
       kb.command = renameMap[kb.command]
     }
@@ -190,10 +194,10 @@ function tenToEleven(state: State) {
   if (state.keybindsUrlCondition) migrateURLCondition(state.keybindsUrlCondition)
 
   // Migrate keybinds 
-  state.keybinds.forEach(kb => {
+  ;(state as any).keybinds.forEach((kb: any) => {
 
     if ((kb as any).global) {
-      kb.trigger = Trigger.GLOBAL
+      kb.trigger = Trigger.BROWSER
     }
 
     if (kb.condition) {
@@ -262,16 +266,16 @@ function elevenToTwelve(state: State, initialVersion?: number) {
   state.version = 12
   if (initialVersion === 11) {
     // Restore incorrectly ported 
-    let hasDefaultIncrease = state.keybinds.some(kb => kb.command === "speed" && kb.key === "KeyD" && kb.valueNumber === 0.1 && kb.adjustMode === AdjustMode.ADD)
+    let hasDefaultIncrease = (state as any).keybinds.some((kb: any) => kb.command === "speed" && kb.key === "KeyD" && kb.valueNumber === 0.1 && kb.adjustMode === AdjustMode.ADD)
     if (hasDefaultIncrease) {
-      let kb = state.keybinds.find(kb => kb.command === "speed" && kb.adjustMode === AdjustMode.ADD && kb.key === "KeyA" && kb.valueNumber == null)
+      let kb = (state as any).keybinds.find((kb: any) => kb.command === "speed" && kb.adjustMode === AdjustMode.ADD && kb.key === "KeyA" && kb.valueNumber == null)
       if (kb) {
         kb.valueNumber = -0.1
       }
     }
 
     // Restore nothing
-    state.keybinds.filter(kb => kb.command === "speed" && kb.valueNumber === 0 && kb.adjustMode === AdjustMode.ADD).forEach(kb => {
+    ;(state as any).keybinds.filter((kb: any) => kb.command === "speed" && kb.valueNumber === 0 && kb.adjustMode === AdjustMode.ADD).forEach((kb: any) => {
       kb.command = "nothing"
     })
   }
@@ -309,6 +313,25 @@ function twelveToThirteen(state: any) {
   return state
 }
 
+function thirteenToFourteen(state: State) {
+  state.version = 14
+  
+  state.pageKeybinds = []
+  state.browserKeybinds = []
+  state.menuKeybinds = []
+  ;(state as any).keybinds?.forEach((kb: Keybind) => {
+    const trigger = kb.trigger || Trigger.PAGE
+    if (trigger === Trigger.PAGE) {
+      state.pageKeybinds.push(kb)
+    } else if (trigger === Trigger.BROWSER) {
+      state.browserKeybinds.push(kb)
+    } else if (trigger === Trigger.MENU) {
+      state.menuKeybinds.push(kb)
+    }
+  })
+  return state 
+}
+
 function migrateForChrome(state: State) {
 
 
@@ -316,7 +339,9 @@ function migrateForChrome(state: State) {
 }
 
 function migrateForFirefox(state: State) {
-  state.keybinds = state.keybinds.filter(kb => availableCommandNames.includes(kb.command))
+  state.pageKeybinds = state.pageKeybinds.filter(kb => availableCommandNames.includes(kb.command))
+  state.browserKeybinds = []
+  state.menuKeybinds = state.menuKeybinds.filter(kb => availableCommandNames.includes(kb.command))
 
   return state
 }

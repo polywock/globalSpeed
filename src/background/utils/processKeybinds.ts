@@ -1,6 +1,6 @@
 import { Keybind, Command, StateView, StateViewSelector, AdjustMode, ReferenceValues, MediaProbe, ItcInit, Duration, KeybindMatch, Trigger } from "../../types"
 import { CommandName, commandInfos } from "../../defaults/commands"
-import { sendMessageToConfigSync, intoFxFlags, sendMediaEvent, isSeekSmall } from "../../utils/configUtils"
+import { sendMessageToConfigSync, intoFxFlags, sendMediaEvent, isSeekSmall, triggerToKey } from "../../utils/configUtils"
 import { checkContentScript, TabInfo } from "../../utils/browserUtils"
 import type { MediaEvent, MediaEventCinema } from "../../contentScript/isolated/utils/applyMediaEvent"
 import { round, clamp, createWindowWithSafeBounds, formatDuration, isFirefox, wraparound, timeout } from "../../utils/helper"
@@ -685,7 +685,7 @@ async function getItcInit(args: CommandHandlerArgs): Promise<ItcInit> {
     sliderMax: kb.valueItcMax ?? ref.sliderMax,
     step: kb.valueNumber ?? ref.itcStep,
     shouldShow: !args.shortcutHideIndicator,
-    dontReleaseKeyUp: (kb.trigger || Trigger.LOCAL) === Trigger.LOCAL ? kb.noHold : undefined,
+    dontReleaseKeyUp: (kb.trigger || Trigger.PAGE) === Trigger.PAGE ? kb.noHold : undefined,
     kb
   } 
 
@@ -739,7 +739,8 @@ async function getItcInit(args: CommandHandlerArgs): Promise<ItcInit> {
 
 async function getCycle(args: CommandHandlerArgs) {
   const { fetch, override, kb, isAlt  } = args 
-  let keybinds = (await fetch({keybinds: true})).keybinds || []
+  const listKey = triggerToKey(kb.trigger)
+  let keybinds = (await fetch({[listKey]: true}))[listKey] || []
 
   if (!kb.valueCycle?.length) return null 
   const cycleLength = kb.valueCycle.length 
@@ -753,7 +754,7 @@ async function getCycle(args: CommandHandlerArgs) {
   }
   newIndex = clamp(0, cycleLength - 1, newIndex)
 
-  override.keybinds = produce(keybinds, d => {
+  override[listKey] = produce(keybinds, d => {
     d.find(v => v.id === kb.id).cycleIncrement = newIndex
   })
 

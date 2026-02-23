@@ -67,7 +67,7 @@ export function NameArea(props: NameAreaProps) {
     let label = (gvar.gsm.command as any)[command.ffName || value.command]
     let tooltip = (gvar.gsm.command as any)[value.command.concat("Tooltip")]
     
-    let tabCaptureHint = command.requiresTabCapture && !(value.command === "afxCapture" || value.command === "afxReset") && (value.trigger || Trigger.LOCAL) === Trigger.LOCAL
+    let tabCaptureHint = command.requiresTabCapture && !(value.command === "afxCapture" || value.command === "afxReset") && (value.trigger || Trigger.PAGE) === Trigger.PAGE
     const tabCaptureHintTooltip = useTooltipAnchor<HTMLSpanElement>({
         label: replaceArgs(gvar.gsm.warnings.captureRequired, [`[ ${gvar.gsm.command.afxCapture} ]`]),
         align: "top",
@@ -96,7 +96,7 @@ export function NameArea(props: NameAreaProps) {
     value.command === "speed" && ensureSpeedList(kebabList, kebabListHandlers, value, invertFlag)
     ;(value.adjustMode === AdjustMode.ITC || value.adjustMode === AdjustMode.ITC_REL) && ensureItcList(kebabList, kebabListHandlers, value, invertFlag)
     value.adjustMode === AdjustMode.CYCLE && ensureCycleList(kebabList, kebabListHandlers, value, invertFlag)
-    if (value.command === "state" && value.trigger !== Trigger.CONTEXT) kebabList.push({name: "alwaysOn", checked: value.alwaysOn, label: makeLabelWithTooltip(gvar.gsm.command.alwaysOn, gvar.gsm.command.alwaysOnTooltip) })
+    if (value.command === "state" && value.trigger !== Trigger.MENU) kebabList.push({name: "alwaysOn", checked: value.alwaysOn, label: makeLabelWithTooltip(gvar.gsm.command.alwaysOn, gvar.gsm.command.alwaysOnTooltip) })
     if (value.command === "loop" || value.command === "skip") kebabList.push({name: "ignoreNavigate", checked: !value.ignoreNavigate, label: makeLabelWithTooltip(gvar.gsm.command.autoBreak, value.command === "loop" ? gvar.gsm.command.autoBreakTooltip : gvar.gsm.command.autoBreakTooltipAlt) })
 
     return (
@@ -210,7 +210,7 @@ function ensureItcList(list: KebabListProps["list"], handlers: KebabListProps["o
     let relative = value.adjustMode === AdjustMode.ITC_REL
 
     list.push({name: "seekOnce", label: makeLabelWithTooltip(gvar.gsm.options.editor.liveScrubbing, gvar.gsm.options.editor.liveScrubbingTooltip), checked: !value.seekOnce})
-    if ((value.trigger || Trigger.LOCAL) === Trigger.LOCAL) {
+    if ((value.trigger || Trigger.PAGE) === Trigger.PAGE) {
         list.push({name: "noHold", label: makeLabelWithTooltip(gvar.gsm.options.editor.pressAndHold, gvar.gsm.options.editor.pressAndHoldTooltip), checked: !value.noHold})
     }
 }

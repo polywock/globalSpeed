@@ -11,7 +11,7 @@ import { getDefaultContext, getDefaultState } from "@/defaults"
 import { isFirefox, isMobile } from "@/utils/helper"
 import { getLatestActiveTabInfo, tabToTabInfo } from "@/utils/browserUtils"
 import { ProcessKeybinds, setValue, type SetValueInit } from "./utils/processKeybinds"
-import { findMatchingKeybindsContext, findMatchingKeybindsGlobal, hasActiveParts, testURL } from "@/utils/configUtils"
+import { findMatchingBrowserKeybinds, findMatchingMenuKeybinds, hasActiveParts, testURL } from "@/utils/configUtils"
 import { loadGsm } from "@/utils/gsm"
 import { clearClosed } from "./utils/getAutoMedia"
 import { syncContextMenu, syncContextMenuDeb } from "@/utils/contextMenus"
@@ -115,16 +115,16 @@ async function processNewTab(tab: chrome.tabs.Tab, view?: StateView, ignorePrevi
 !isFirefox() && !isMobile() && chrome.commands?.onCommand.addListener(
     async (command: string, tab: chrome.tabs.Tab) => {
       const isGlobal = !tab
-      const view = await fetchView({enabled: true, superDisable: true, keybinds: true, keybindsUrlCondition: true, latestViaShortcut: true})
+      const view = await fetchView({enabled: true, superDisable: true, browserKeybinds: true, keybindsUrlCondition: true, latestViaShortcut: true})
       if (view.superDisable) return 
 
-      let keybinds: Keybind[] = view.keybinds || []
+      let keybinds: Keybind[] = view.browserKeybinds || []
       if (!view.enabled) {
-        keybinds = keybinds.filter(kb => kb.command === "state" && kb.enabled && kb.trigger === Trigger.GLOBAL && (view.latestViaShortcut || kb.alwaysOn))
+        keybinds = keybinds.filter(kb => kb.command === "state" && kb.enabled && (view.latestViaShortcut || kb.alwaysOn))
         if (!keybinds.length) return 
       }
 
-      let matches = findMatchingKeybindsGlobal(keybinds, command)
+      let matches = findMatchingBrowserKeybinds(keybinds, command)
     
       if (!matches.length) return 
 
@@ -150,8 +150,8 @@ async function processNewTab(tab: chrome.tabs.Tab, view?: StateView, ignorePrevi
 )
 
 chrome.contextMenus?.onClicked.addListener(async (item, tab) => {
-    const keybinds = (await fetchView({keybinds: true})).keybinds
-    const matches = findMatchingKeybindsContext(keybinds, item.menuItemId as string)
+    const keybinds = (await fetchView({menuKeybinds: true})).menuKeybinds
+    const matches = findMatchingMenuKeybinds(keybinds, item.menuItemId as string)
     if (matches.length !== 1) return 
     new ProcessKeybinds([matches[0]], tabToTabInfo(tab))
 })
@@ -207,9 +207,9 @@ chrome.runtime.onMessage.addListener((msg: Messages, sender, reply) => {
         chrome.scripting.executeScript({target: {tabId: sender.tab.id}, files: ["pane.js"], injectImmediately: true}).finally(() => reply(true))
         return true 
     } else if (msg.type === "TRIGGER_KEYBINDS") {
-        fetchView({keybinds: true}).then(({keybinds}) => {
+        fetchView({pageKeybinds: true}).then(({pageKeybinds}) => {
             let matches = msg.ids.map(v => {
-                let kb = keybinds.find(kb => kb.id === v.id)
+                let kb = pageKeybinds.find(kb => kb.id === v.id)
                 if (!kb) return null 
                 return {
                     kb,

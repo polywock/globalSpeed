@@ -81,7 +81,7 @@ Promise.all([
 })
 
 async function loadInitialView() {
-  gvar.initialView = await fetchView({keybinds: true})
+  gvar.initialView = await fetchView({pageKeybinds: true})
 }
 
 function processInitialView() {
@@ -89,7 +89,7 @@ function processInitialView() {
   if (
     gvar.tabInfo.url && 
     gvar.tabInfo.url.startsWith('http') && 
-    view.keybinds?.some(kb => kb.enabled && (kb.trigger || Trigger.LOCAL) === Trigger.LOCAL && kb.key)
+    view.pageKeybinds?.some(kb => kb.enabled && kb.key)
   ) {
     gvar.showShortcutControl = true 
   }

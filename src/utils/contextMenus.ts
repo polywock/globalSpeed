@@ -7,8 +7,8 @@ export async function syncContextMenu(keybinds?: Keybind[]) {
     if (!chrome.contextMenus) return 
     let createdParents = new Set<string>()
     await removeAll()
-    keybinds = (await fetchView(['keybinds'])).keybinds
-    keybinds = keybinds.filter(kb => kb.trigger === Trigger.CONTEXT && kb.enabled)
+    keybinds = (await fetchView(["menuKeybinds"])).menuKeybinds
+    keybinds = keybinds.filter(kb => kb.enabled)
     if (!keybinds.length) return 
 
     await create({

@@ -1,7 +1,7 @@
 
-import { Fx, AudioFx, URLRule, IndicatorInit, URLCondition, URLConditionPart, Context, CONTEXT_KEYS, AnyDict, State } from "../types"
+import { Fx, AudioFx, URLRule, IndicatorInit, URLCondition, URLConditionPart, Context, CONTEXT_KEYS, AnyDict, State, Keybind } from "../types"
 import { FilterName, filterInfos } from "./filters"
-import { getDefaultKeybinds } from "./commands"
+import { getDefaultMenuKeybinds, getDefaultPageKeybinds } from "./commands"
 import { chunkByPredicate, isMobile, randomId } from "../utils/helper"
 
 export type WebsiteInfo = {
@@ -53,16 +53,18 @@ export function generateUrlPart(origin: string): URLConditionPart {
 
 export function getDefaultState(): State {
   let state = {
-    version: 13,
+    version: 14,
     firstUse: Date.now(),
-    keybinds: getDefaultKeybinds(),
+    pageKeybinds: getDefaultPageKeybinds(),
+    menuKeybinds: getDefaultMenuKeybinds(),
+    browserKeybinds: [] as Keybind[],
     freshKeybinds: true,
     ...getDefaultContext(),
     keybindsUrlCondition: getDefaultKeybindsUrlConditions(),
     websitesAddedToUrlConditionsExclusion: SHORTCUT_DISABLED_WEBSITES.map(w => turnWebsiteInfoIntoString(w)),
     hideMediaView: isMobile(),
     holdToSpeed: isMobile() ? 2 : undefined
-  } as State
+  } satisfies State
 
   return state
 }

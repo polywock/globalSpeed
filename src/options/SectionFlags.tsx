@@ -133,14 +133,21 @@ export function SectionFlags(props: {}) {
             </div>
             <div className="fieldValue">
               <Toggle value={!viewAlt.hideIndicator} onChange={async e => {
-                setView({
-                  hideIndicator: !viewAlt.hideIndicator,
-                  keybinds: produce((await fetchView({keybinds: true})).keybinds || [], d => {
-                    d.forEach(d => {
-                      delete d.invertIndicator
-                    })
+                const view = await fetchView({pageKeybinds: true, browserKeybinds: true, menuKeybinds: true})
+                const updated = produce(view, d => {
+                  d.pageKeybinds?.forEach(kb => {
+                    delete kb.invertIndicator
                   })
+                  d.browserKeybinds?.forEach(kb => {
+                    delete kb.invertIndicator
+                  })
+                  d.menuKeybinds?.forEach(kb => {
+                    delete kb.invertIndicator
+                  })
+                  d.hideIndicator = !viewAlt.hideIndicator
                 })
+
+                setView(updated)
               }}/>
               <div className="float">
                 {viewAlt.hideIndicator ? null : <>

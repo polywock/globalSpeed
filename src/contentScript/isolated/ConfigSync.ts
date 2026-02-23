@@ -1,8 +1,8 @@
 import { extractHotkey } from "../../utils/keys"
 import { SubscribeView } from "../../utils/state"
 import { FxSync } from "./FxSync"
-import { findMatchingKeybindsLocal, getActiveParts, hasActiveParts, testURL, testURLWithPart } from "../../utils/configUtils"
-import { AdjustMode, Trigger, URLCondition, URLConditionPart } from "@/types"
+import { findMatchingPageKeybinds, getActiveParts, hasActiveParts, testURL, testURLWithPart } from "../../utils/configUtils"
+import { AdjustMode, URLCondition, URLConditionPart } from "@/types"
 import { Circle } from "./utils/Circle"
 import { getLeaf } from "@/utils/nativeUtils"
 import { getEmptyUrlConditions } from "@/defaults"
@@ -19,7 +19,7 @@ export class ConfigSync {
   urlConditionsClient = new SubscribeView({ keybindsUrlCondition: true }, gvar.tabInfo.tabId, true, (v, onLaunch) => {
     this.handleChangeUrlConditionsList()
   }, 300)
-  client = new SubscribeView({ ghostMode: true, ghostModeUrlCondition: true, enabled: true, superDisable: true, latestViaShortcut: true, keybinds: true, indicatorInit: true, circleWidget: true, circleInit: true, holdToSpeed: true }, gvar.tabInfo.tabId, true, (v, onLaunch) => {
+  client = new SubscribeView({ ghostMode: true, ghostModeUrlCondition: true, enabled: true, superDisable: true, latestViaShortcut: true, pageKeybinds: true, indicatorInit: true, circleWidget: true, circleInit: true, holdToSpeed: true }, gvar.tabInfo.tabId, true, (v, onLaunch) => {
     if (onLaunch) this.init()
     this.handleChange()
   }, 300)
@@ -170,12 +170,11 @@ export class ConfigSync {
 
     const enabled = this.client.view.enabled
 
-    let keybinds = this.client.view.keybinds
+    let keybinds = this.client.view.pageKeybinds
     if (!enabled) {
       keybinds = (keybinds || []).filter(kb =>
         kb.command === "state" &&
         kb.enabled &&
-        (kb.trigger || Trigger.LOCAL) === Trigger.LOCAL &&
         (this.client.view.latestViaShortcut || kb.alwaysOn)
       )
 
@@ -201,7 +200,7 @@ export class ConfigSync {
     if (this.checkUrlRuntime() === 'Off') return
 
     const eventHotkey = extractHotkey(e, true, true)
-    let matches = findMatchingKeybindsLocal(keybinds, eventHotkey)
+    let matches = findMatchingPageKeybinds(keybinds, eventHotkey)
 
     matches = matches.filter(match => {
       if (match.kb.condition && hasActiveParts(match.kb.condition)) {

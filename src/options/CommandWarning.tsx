@@ -23,7 +23,7 @@ export function CommandWarning(props: Props) {
     const handleInterval = () => {
       chrome.commands.getAll(cc => {
         const target = cc.some(c => c.name.startsWith("command") && c.shortcut && (
-          !env.keybinds.some(kb => kb.enabled && kb.trigger === Trigger.GLOBAL && (kb.globalKey || "commandA") === c.name)
+          !env.keybinds.some(kb => kb.enabled && kb.trigger === Trigger.BROWSER && (kb.globalKey || "commandA") === c.name)
         ))
         target !== env.show && setShow(target)
       }) 

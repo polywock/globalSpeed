@@ -1,4 +1,4 @@
-import { AdjustMode, Duration, KeybindMatch, ReferenceValues, SvgFilter, Trigger, type FilterEntry, type Keybind, type TargetFx, type TargetFxFlags, type URLCondition, type URLConditionPart } from "../types";
+import { AdjustMode, Duration, KeybindMatch, ReferenceValues, State, SvgFilter, Trigger, type FilterEntry, type Keybind, type TargetFx, type TargetFxFlags, type URLCondition, type URLConditionPart } from "../types";
 import { clamp, isFirefox, round } from "./helper";
 import { filterInfos } from "../defaults/filters";
 import type { MediaEvent } from "../contentScript/isolated/utils/applyMediaEvent";
@@ -130,25 +130,30 @@ export function isSeekSmall(kb: Keybind, ref?: ReferenceValues) {
   }
 }
 
-export function findMatchingKeybindsLocal(kbs: Keybind[], key?: Hotkey): KeybindMatch[] {
-  return kbs.filter(kb => kb.enabled && (kb.trigger || Trigger.LOCAL) === Trigger.LOCAL).map(kb => {
+export function findMatchingPageKeybinds(kbs: Keybind[], key?: Hotkey): KeybindMatch[] {
+  return kbs.filter(kb => kb.enabled).map(kb => {
     if (kb.key && compareHotkeys(kb.key, key)) return {kb}
     if (kb.allowAlt && kb.adjustMode === AdjustMode.CYCLE && compareHotkeys(kb.keyAlt, key)) return {kb, alt: true}
   }).filter(v => v)
 }
 
-export function findMatchingKeybindsGlobal(kbs: Keybind[], global?: string): KeybindMatch[] {
-  return kbs.filter(kb => kb.enabled && kb.trigger === Trigger.GLOBAL).map(kb => {
+export function findMatchingBrowserKeybinds(kbs: Keybind[], global?: string): KeybindMatch[] {
+  return kbs.filter(kb => kb.enabled).map(kb => {
     if ((kb.globalKey || 'commandA') === global) return {kb}
     if (kb.allowAlt && kb.adjustMode === AdjustMode.CYCLE && (kb.globalKeyAlt || 'commandA') === global) return {kb, alt: true}
   }).filter(v => v)
 }
 
-export function findMatchingKeybindsContext(kbs: Keybind[], id: string): KeybindMatch[] {
-  return kbs.filter(kb => kb.enabled && kb.trigger === Trigger.CONTEXT).map(kb => {
+export function findMatchingMenuKeybinds(kbs: Keybind[], id: string): KeybindMatch[] {
+  return kbs.filter(kb => kb.enabled).map(kb => {
     if (kb.id === id) return {kb}
     if (kb.allowAlt && kb.adjustMode === AdjustMode.CYCLE && `ALT_${kb.id}` === id) return {kb, alt: true}
   }).filter(v => v)
 }
 
+export function triggerToKey(trigger: Trigger): "pageKeybinds" | "browserKeybinds" | "menuKeybinds" {
+  if (trigger === Trigger.BROWSER) return "browserKeybinds"
+  if (trigger === Trigger.PAGE) return "pageKeybinds"
+  return "pageKeybinds"
+}
 

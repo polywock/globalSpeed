@@ -36,12 +36,12 @@ export const KeybindControl = (props: KeybindControlProps) => {
   const { value } = props
   const [show, setShow] = useState(false)
   const triggerModeRef = useTooltipAnchor<HTMLButtonElement>({
-    label: gvar.gsm.options.editor.triggerModes[value.trigger || Trigger.LOCAL],
+    label: gvar.gsm.options.editor.triggerModes[value.trigger || Trigger.PAGE],
     align: "top"
   })
 
   const command = commandInfos[value.command]
-  const urlAllowed = value.trigger !== Trigger.CONTEXT
+  const urlAllowed = value.trigger !== Trigger.MENU
   let adjustMode = command.valueType === "adjustMode" ? (value.adjustMode || AdjustMode.SET) : null
 
   let showNumericControl = false
@@ -174,8 +174,8 @@ export const KeybindControl = (props: KeybindControlProps) => {
 
           requestSyncContextMenu()
         }}>
-          {value.trigger === Trigger.GLOBAL ? <FaGlobe className="tr115"/> : (
-            value.trigger === Trigger.CONTEXT ? <FaBars className="tr115"/> : <FaFile className="tr115" />
+          {value.trigger === Trigger.BROWSER ? <FaGlobe className="tr115"/> : (
+            value.trigger === Trigger.MENU ? <FaBars className="tr115"/> : <FaFile className="tr115" />
           )}
         </button>
       )}
@@ -313,7 +313,7 @@ export const TriggerValues = (props: Props) => {
 
   return <>
     {/* Global key picker */}
-    {value.trigger === Trigger.GLOBAL && (
+    {value.trigger === Trigger.BROWSER && (
       (
         <div className="globalPicker">
           <select value={value[keyForGlobal] || "commandA"} onChange={e => {
@@ -333,7 +333,7 @@ export const TriggerValues = (props: Props) => {
     )}
 
     {/* Local key picker */}
-    {(value.trigger || Trigger.LOCAL) === Trigger.LOCAL && (
+    {(value.trigger || Trigger.PAGE) === Trigger.PAGE && (
       <KeyPicker virtual={props.virtualInput} value={value[keyForLocal]} onChange={newKey => {
         props.onChange(value.id, produce(value, d => {
           d[keyForLocal] = newKey
