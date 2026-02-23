@@ -6,7 +6,6 @@
     "split": "Separa",
     "splitTooltip": "Controlla separatamente i canali audio",
     "reverse": "Audio inverso",
-    "reverseTooltip": "Tieni premuto per registrare l'audio della scheda e riprodurlo al contrario",
     "equalizer": "Equalizzatore",
     "pitchHdTooltip": "Qualità migliore",
     "equalizerPower": "Amplifica la potenza dell'equalizzatore"

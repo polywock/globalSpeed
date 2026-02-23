@@ -7,7 +7,6 @@
     "split": "분할",
     "splitTooltip": "오디오 채널을 개별 제어",
     "reverse": "오디오 역재생",
-    "reverseTooltip": "길게 눌러 탭 오디오를 녹음하고 역재생",
     "equalizer": "이퀄라이저",
     "pitchHdTooltip": "더 나은 품질",
     "equalizerPower": "이퀄라이저 출력을 증폭합니다"

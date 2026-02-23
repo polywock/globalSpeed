@@ -8,7 +8,6 @@
     "split": "Split",
     "splitTooltip": "Control audio channels separately",
     "reverse": "Reverse audio",
-    "reverseTooltip": "Press and hold to record tab's audio and play in reverse",
     "equalizer": "Equalizer",
     "pitchHdTooltip": "Better quality",
     "equalizerPower": "Amplifies equalizer power"

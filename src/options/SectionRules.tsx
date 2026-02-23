@@ -72,7 +72,7 @@ export function SectionRules(props: {}) {
       {isFirefox() ? null : <DevWarning forUrlRules={true} hasJs={rules?.some(r => r.enabled && r.type === "JS")}/>}
       <List listRef={listRef} spacingChange={handleSpacingChange}>
           {rules.map((rule, i) => (
-            <ListItem key={rule.id} listRef={listRef} onMove={newIdx => handleMove(rule.id, newIdx)} spacing={rule.spacing} onRemove={() => handleChange(rule, true)} label={rule.label} onClearLabel={() => {
+            <ListItem key={rule.id} isEnabled={rule.enabled} listRef={listRef} onMove={newIdx => handleMove(rule.id, newIdx)} spacing={rule.spacing} onRemove={() => handleChange(rule, true)} label={rule.label} onClearLabel={() => {
               handleChange(produce(rule, d => {
                 delete d.label
               }))

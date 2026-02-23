@@ -42,7 +42,7 @@ export function AudioPanel(props: {}) {
     <button className={`colored toggle capture ${status ? "active" : ""}`} onClick={e => {
       env.viaButton = true 
       status ? releaseTabCapture(gvar.tabInfo.tabId) : initTabCapture(gvar.tabInfo.tabId)
-    }}>{status ? gvar.gsm.audio.releaseTab : gvar.gsm.audio.captureTab}</button>
+    }}>{status ? gvar.gsm.audio.releaseTab : gvar.gsm.command.afxCapture}</button>
 
     <div className="mainControls">
 

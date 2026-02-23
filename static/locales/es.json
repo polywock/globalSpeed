@@ -6,7 +6,6 @@
     "split": "Dividir",
     "splitTooltip": "Controlar los canales de audio por separado",
     "reverse": "Invertir audio",
-    "reverseTooltip": "Mantén pulsado para grabar el audio de la pestaña y reproducirlo al revés",
     "equalizer": "Ecualizador",
     "pitchHdTooltip": "Mejor calidad",
     "equalizerPower": "Amplifica la potencia del ecualizador"

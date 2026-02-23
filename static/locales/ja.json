@@ -6,7 +6,6 @@
     "split": "分割",
     "splitTooltip": "音声チャンネルを個別に制御",
     "reverse": "音声を逆再生",
-    "reverseTooltip": "押し続けてタブの音声を録音し、逆再生します",
     "equalizer": "イコライザー",
     "pitchHdTooltip": "高音質",
     "equalizerPower": "イコライザーの出力を増幅します"

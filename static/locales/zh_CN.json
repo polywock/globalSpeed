@@ -7,7 +7,6 @@
     "split": "分离声道",
     "splitTooltip": "分别控制音频声道",
     "reverse": "音频反转",
-    "reverseTooltip": "按住以录制标签页音频并倒放",
     "equalizer": "均衡器",
     "pitchHdTooltip": "更佳质量",
     "equalizerPower": "增强均衡器功率"

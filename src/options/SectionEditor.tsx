@@ -66,7 +66,7 @@ function EditorKeybinds(props: {view: StateView, setView: SetView}) {
   return (
     <List listRef={listRef} spacingChange={idx => onSpacingChange(setView, view, idx)}>
       {props.view.keybinds.map((kb, i) => (
-        <ListItem key={kb.id} label={kb.label} spacing={kb.spacing} listRef={listRef} onMove={newIndex => onMove(setView, view, kb.id, newIndex)} onRemove={() => onRemove(setView, view, kb.id)} onClearLabel={() => {
+        <ListItem key={kb.id} isEnabled={kb.enabled} label={kb.label} spacing={kb.spacing} listRef={listRef} onMove={newIndex => onMove(setView, view, kb.id, newIndex)} onRemove={() => onRemove(setView, view, kb.id)} onClearLabel={() => {
           onChange(setView, view, kb.id, produce(kb, d => {
             delete d.label
           }))

@@ -31,7 +31,8 @@ const TooltipContext = createContext(null as TooltipContextState | null)
 export type TooltipAnchorOpts = Omit<TooltipOpts, "anchor" | "label"> & {
     label?: string,
     allowClick?: boolean,
-    dontAllowFocus?: boolean
+    dontAllowFocus?: boolean,
+    closeOnPointerDown?: boolean
 }
 
 export function TooltipProvider(props: {
@@ -78,8 +79,10 @@ export function useTooltipAnchor<T extends HTMLElement = HTMLElement>(opts: Tool
         const elem = ref.current
         if (!elem) return 
         let isActive = false
+        let suppressShow = false
 
         const show = () => {
+            if (suppressShow) return
             if (!opts.label) return 
             isActive = true
             showTooltip({
@@ -99,6 +102,11 @@ export function useTooltipAnchor<T extends HTMLElement = HTMLElement>(opts: Tool
             isActive = false
             clearTooltip(elem)
         }
+        const clearAndSuppress = () => {
+            clear()
+            suppressShow = true
+            requestAnimationFrame(() => { suppressShow = false })
+        }
         const onPointerLeave = (e: PointerEvent) => {
             const relatedTarget = e.relatedTarget as Node | null
             if (relatedTarget && elem.contains(relatedTarget)) return 
@@ -111,26 +119,23 @@ export function useTooltipAnchor<T extends HTMLElement = HTMLElement>(opts: Tool
             clear()
         }
 
-        elem.addEventListener("pointerenter", show)
-        elem.addEventListener("pointerleave", onPointerLeave)
+        const controller = new AbortController()
+
+        elem.addEventListener("pointerenter", show, { signal: controller.signal })
+        elem.addEventListener("pointerleave", onPointerLeave, { signal: controller.signal })
         if (!opts.dontAllowFocus) {
-            elem.addEventListener("focusin", show)
-            elem.addEventListener("focusout", onFocusOut)
+            elem.addEventListener("focusin", show, { signal: controller.signal })
+            elem.addEventListener("focusout", onFocusOut, { signal: controller.signal })
         }
         if (opts.allowClick) {
-            elem.addEventListener("click", show)
+            elem.addEventListener("click", show, { signal: controller.signal })
+        }
+        if (opts.closeOnPointerDown) {
+            elem.addEventListener("pointerdown", clearAndSuppress, { signal: controller.signal, capture: true })
         }
 
         return () => {
-            elem.removeEventListener("pointerenter", show)
-            elem.removeEventListener("pointerleave", onPointerLeave)
-            if (!opts.dontAllowFocus) {
-                elem.removeEventListener("focusin", show)
-                elem.removeEventListener("focusout", onFocusOut)
-            }
-            if (opts.allowClick) {
-                elem.removeEventListener("click", show)
-            }
+            controller.abort()
             clear()
         }
     }, [
@@ -138,6 +143,7 @@ export function useTooltipAnchor<T extends HTMLElement = HTMLElement>(opts: Tool
         elemNonce,
         opts.align,
         opts.allowClick,
+        opts.closeOnPointerDown,
         opts.dontAllowFocus,
         opts.fixed,
         opts.label,
@@ -225,6 +231,11 @@ export function TooltipPopover(props: {
         window.addEventListener("wheel", clear, {signal: signal.signal, once: true})
         document.addEventListener("scroll", clear, {signal: signal.signal, once: true, capture: true})
         window.addEventListener("resize", clear, {signal: signal.signal, once: true})
+        document.addEventListener("pointerdown", (e) => {
+            const anchor = props.opts.anchor?.elem
+            if (anchor && anchor.contains(e.target as Node)) return
+            clear()
+        }, {signal: signal.signal, once: true})
         const timeoutId = window.setTimeout(clear, DEFAULT_TIMEOUT)
 
         return () => {

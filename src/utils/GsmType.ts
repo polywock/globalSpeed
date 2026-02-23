@@ -7,7 +7,6 @@ export type Gsm = {
     split: string,
     splitTooltip: string,
     reverse: string,
-    reverseTooltip: string,
     equalizer: string,
     pitchHdTooltip: string,
     equalizerPower: string

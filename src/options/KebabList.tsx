@@ -15,16 +15,15 @@ export type KebabListProps = {
 
 export function KebabList(props: KebabListProps) {
     const [menu, setMenu] = useState(null as { x?: number, y?: number, adjusted?: boolean, centered?: boolean })
-    const { clearTooltip } = useTooltip()
     const menuRef = useRef<HTMLDivElement>(null)
     const buttonRef = useRef<HTMLButtonElement>(null)
     const kebabTip = useTooltipAnchor<HTMLButtonElement>({
         label: props.title || gvar.gsm.token.more,
-        align: props.tooltipAlign || "top"
+        align: props.tooltipAlign || "top",
+        closeOnPointerDown: true
     })
     
     const onContext = (e: React.MouseEvent) => {
-        clearTooltip()
         e.preventDefault()
         props.onOpen?.()
         if (props.centered) {

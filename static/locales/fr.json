@@ -6,7 +6,6 @@
     "split": "Diviser",
     "splitTooltip": "Contrôler les canaux audio séparément",
     "reverse": "Inverser l’audio",
-    "reverseTooltip": "Maintenez enfoncé pour enregistrer l’audio de l’onglet et le lire à l’envers",
     "equalizer": "Égaliseur",
     "pitchHdTooltip": "Meilleure qualité",
     "equalizerPower": "Amplifie la puissance de l’égaliseur"

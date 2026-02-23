@@ -12,7 +12,8 @@ type ListItemProps = {
     label: string,
     onMove: (newIndex: number) => void,
     onRemove: () => void,
-    onClearLabel: () => void 
+    onClearLabel: () => void,
+    isEnabled: boolean
     
 }
 
@@ -29,6 +30,7 @@ export function ListItem(props: ListItemProps) {
             focus,
             spacing: props.spacing === 1,
             doubleSpacing: props.spacing === 2,
+            disabled: !props.isEnabled
         })}>
             {props.label && (
             <div className="ListItemLabel" onClick={props.onClearLabel}>

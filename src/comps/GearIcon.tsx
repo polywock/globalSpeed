@@ -9,7 +9,8 @@ export function GearIcon(props: {
 }) {
     const ref = useTooltipAnchor<HTMLButtonElement>({
         label: props.tooltip || gvar.gsm.token.customize,
-        align: props.align || 'top'
+        align: props.align || 'top',
+        closeOnPointerDown: true
     })
     return <button ref={ref} className="icon gear interactive" onClick={props.onClick}>
         <Gear size="1.57rem"/>
