@@ -1,5 +1,5 @@
 {
-  ":appName": "Global Speed: Contrôle de vitesse des vidéo",
+  ":appName": "Global Speed: Contrôle de vitesse des vidéos",
   ":appDesc": "Contrôle universel de la vitesse pour la vidéo et l'audio.",
   "audio": {
     "releaseTab": "Libérer l'audio",
@@ -164,7 +164,7 @@
     "nothing": "Aucune action",
     "nothingTooltip": "Ne fait rien. Peut être utilisé pour bloquer les raccourcis. Par exemple, si vous appuyez accidentellement sur la barre d'espace, vous pouvez la configurer pour qu'elle ne fasse rien. Avec ce raccourci, vous pouvez également configurer un délai. Cela est utile car vous pouvez configurer plusieurs raccourcis pour s'activer avec la même touche et s'exécuter séquentiellement. Par exemple, inversez la page avec un filtre, attendez 5 secondes, puis réinitialisez les filtres.",
     "runCode": "Exécuter le code",
-    "openUrl": "URL",
+    "openUrl": "Ouvrir l'URL",
     "speed": "Vitesse",
     "speedChangesPitch": "La vitesse change le ton",
     "pin": "Épingler l'onglet",
@@ -189,7 +189,7 @@
     "fxState": "État FX",
     "fxReset": "Réinitialiser FX",
     "fxSwap": "Échanger FX",
-    "fxFilter": "Filtre FX",
+    "fxFilter": "Filtre",
     "afxCapture": "Capturer l’audio",
     "afxPitch": "Ton",
     "afxGain": "Amplification du volume",
@@ -238,7 +238,7 @@
       "previousContext": "Contexte de l'onglet précédent",
       "newContext": "Nouveau contexte",
       "customContext": "Contexte personnalisé",
-      "customContextTooltip": "Enregistre un instantané du contexte actuel de cet onglet. Les onglets récemment créés utiliseront cet instantané comme état initial.",
+      "customContextTooltip": "Un instantané du contexte actuel de cet onglet a été enregistré. Les onglets nouvellement créés utiliseront cet instantané comme état initial.",
       "keyboardInput": "Entrée clavier",
       "keyboardInputTooltip": "Envisagez de passer au mode d'entrée virtuelle si vous utilisez un clavier virtuel ou un clavier avec une disposition non QWERTY. Cela s'applique uniquement aux futurs changements de raccourcis et les raccourcis existants ne seront pas affectés.",
       "qwerty": "Disposition QWERTY",
@@ -259,15 +259,15 @@
         "fullscreenOnlyTooltip": "Afficher le widget uniquement lorsque la vidéo est en plein écran.",
         "pressAction": "Action de pression",
         "togglePause": "Basculer la pause",
-        "fixedSpeedStep": "Pas de vitesse fixe",
+        "fixedSpeedStep": "Incrément de vitesse fixe",
         "fixedSpeedStepTooltip": "Ajuster toujours la vitesse d'un montant fixe lors du déplacement du widget circulaire.",
-        "fixedSeekStep": "Pas de recherche fixe",
+        "fixedSeekStep": "Incrément de recherche fixe",
         "fixedSeekStepTooltip": "Toujours avancer ou reculer d'un nombre fixe de secondes lors du déplacement du widget circulaire."
       },
       "qrCodeTop": "Scannez pour utiliser sur...",
       "qrCodeBottom": "Edge pour mobile",
       "holdToSpeedUp": "Appuyez et maintenez pour accélérer",
-      "holdToSpeedUpTooltip": "Maintenez la vidéo pour accélérer temporairement."
+      "holdToSpeedUpTooltip": "Appuyez longuement sur une vidéo pour accélérer temporairement."
     },
     "editor": {
       "header": "Éditeur de raccourcis",
@@ -294,9 +294,9 @@
       "wraparound": "Bouclage",
       "wraparoundTooltip": "Si vous dépassez le début ou la fin, vous revenez de l'autre côté.",
       "addLabel": "Ajouter une étiquette",
-      "liveScrubbing": "Frottement en direct",
+      "liveScrubbing": "Défilement en direct",
       "liveScrubbingTooltip": "Prévisualisez continuellement les changements pendant que vous déplacez le curseur.",
-      "pauseWhileScrubbing": "Pause pendant le frottement",
+      "pauseWhileScrubbing": "Pause pendant le défilement",
       "adjustModes": {
         "1": "Définir à la valeur",
         "2": "Ajuster par valeur",
