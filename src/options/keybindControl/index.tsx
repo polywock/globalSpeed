@@ -16,7 +16,7 @@ import { getSelectedParts, requestSyncContextMenu } from "@/utils/configUtils"
 import { DurationSelect, NameArea, makeLabelWithTooltip } from "./NameArea"
 import { Minmax } from "@/comps/Minmax"
 import { KebabList, KebabListProps } from "../KebabList"
-import { useTooltipAnchor } from "@/comps/Tooltip"
+import { Tooltip } from "@/comps/Tooltip"
 import "./styles.css"
 
 export type KeybindControlProps = {
@@ -403,10 +403,6 @@ export const TriggerValues = (props: Props) => {
 	let keyForGlobal = (isAlt ? "globalKeyAlt" : "globalKey") as "globalKey"
 	let keyForLocal = (isAlt ? "keyAlt" : "key") as "key"
 	let keyForLabel = (isAlt ? "contextLabelAlt" : "contextLabel") as "contextLabel"
-	const assignRef = useTooltipAnchor<HTMLButtonElement>({
-		label: gvar.gsm.token.assign,
-		align: "top",
-	})
 
 	return (
 		<>
@@ -433,19 +429,20 @@ export const TriggerValues = (props: Props) => {
 								</option>
 							))}
 					</select>
-					<button
-						ref={assignRef}
-						className="icon"
-						onClick={() => {
-							requestCreateTab(
-								isFirefox()
-									? `https://support.mozilla.org/kb/manage-extension-shortcuts-firefox`
-									: `chrome://extensions/shortcuts/#:~:text=${encodeURIComponent(`Command ${(value[keyForGlobal] || "commandA").slice(7)}`)}`,
-							)
-						}}
-					>
-						<FaRegEdit className="tr120" />
-					</button>
+					<Tooltip title={gvar.gsm.token.assign} align="top">
+						<button
+							className="icon"
+							onClick={() => {
+								requestCreateTab(
+									isFirefox()
+										? `https://support.mozilla.org/kb/manage-extension-shortcuts-firefox`
+										: `chrome://extensions/shortcuts/#:~:text=${encodeURIComponent(`Command ${(value[keyForGlobal] || "commandA").slice(7)}`)}`,
+								)
+							}}
+						>
+							<FaRegEdit className="tr120" />
+						</button>
+					</Tooltip>
 				</div>
 			)}
 

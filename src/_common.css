@@ -191,6 +191,7 @@ a:visited {
 
 svg {
 	vertical-align: middle;
+	pointer-events: bounding-box;
 }
 
 code {

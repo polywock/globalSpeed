@@ -9,7 +9,7 @@ import { getDefaultAudioFx } from "../defaults"
 import { ReverseButton } from "./ReverseButton"
 import { produce } from "immer"
 import { initTabCapture, releaseTabCapture } from "@/background/utils/tabCapture"
-import { useTooltipAnchor } from "@/comps/Tooltip"
+import { Tooltip } from "@/comps/Tooltip"
 import "./AudioPanel.css"
 
 export function AudioPanel(props: {}) {
@@ -17,10 +17,6 @@ export function AudioPanel(props: {}) {
 	const env = useRef({ viaButton: true }).current
 	let [rightTab, setRightTab] = useState(false)
 	const status = useCaptureStatus()
-	const splitTip = useTooltipAnchor<HTMLButtonElement>({ label: gvar.gsm.audio.splitTooltip, align: "top" })
-	const monoTip = useTooltipAnchor<HTMLButtonElement>({ label: gvar.gsm.command.afxMonoTooltip, align: "top" })
-	const pitchTip = useTooltipAnchor<HTMLButtonElement>({ label: gvar.gsm.audio.pitchHdTooltip, align: "top" })
-	const mergeTip = useTooltipAnchor<HTMLButtonElement>({ label: gvar.gsm.token.mergeBoth, align: "top" })
 
 	if (!view) return <div className="panel unloaded"></div>
 
@@ -51,35 +47,37 @@ export function AudioPanel(props: {}) {
 
 			<div className="mainControls">
 				{/* Split */}
-				<button
-					ref={splitTip}
-					className={`toggle ${view.audioFxAlt ? "active" : ""}`}
-					onClick={() => {
-						setView(
-							produce(view, (d) => {
-								d.audioFxAlt = d.audioFxAlt ? null : structuredClone(view.audioFx || getDefaultAudioFx())
-							}),
-						)
-					}}
-				>
-					{gvar.gsm.audio.split}
-				</button>
+				<Tooltip title={gvar.gsm.audio.splitTooltip} align="top">
+					<button
+						className={`toggle ${view.audioFxAlt ? "active" : ""}`}
+						onClick={() => {
+							setView(
+								produce(view, (d) => {
+									d.audioFxAlt = d.audioFxAlt ? null : structuredClone(view.audioFx || getDefaultAudioFx())
+								}),
+							)
+						}}
+					>
+						{gvar.gsm.audio.split}
+					</button>
+				</Tooltip>
 
 				{/* Mono */}
-				<button
-					ref={monoTip}
-					className={`toggle ${view.monoOutput ? "active" : ""}`}
-					onClick={() => {
-						setView(
-							produce(view, (d) => {
-								d.monoOutput = !d.monoOutput
-								d.monoOutput && ensureCaptured()
-							}),
-						)
-					}}
-				>
-					{gvar.gsm.command.afxMono}
-				</button>
+				<Tooltip title={gvar.gsm.command.afxMonoTooltip} align="top">
+					<button
+						className={`toggle ${view.monoOutput ? "active" : ""}`}
+						onClick={() => {
+							setView(
+								produce(view, (d) => {
+									d.monoOutput = !d.monoOutput
+									d.monoOutput && ensureCaptured()
+								}),
+							)
+						}}
+					>
+						{gvar.gsm.command.afxMono}
+					</button>
+				</Tooltip>
 			</div>
 
 			{/* Split tabs */}
@@ -110,20 +108,21 @@ export function AudioPanel(props: {}) {
 					<div>
 						<FaMusic size="1.21rem" />
 						<span style={{ marginLeft: "10px" }}>{gvar.gsm.command.afxPitch}</span>
-						<button
-							ref={pitchTip}
-							style={{ marginLeft: "10px" }}
-							className={`micro toggle ${starAudioFx.jungleMode ? "" : "active"}`}
-							onClick={(e) => {
-								setView(
-									produce(view, (d) => {
-										d[starKey].jungleMode = !starAudioFx.jungleMode
-									}),
-								)
-							}}
-						>
-							HD
-						</button>
+						<Tooltip title={gvar.gsm.audio.pitchHdTooltip} align="top">
+							<button
+								style={{ marginLeft: "10px" }}
+								className={`micro toggle ${starAudioFx.jungleMode ? "" : "active"}`}
+								onClick={(e) => {
+									setView(
+										produce(view, (d) => {
+											d[starKey].jungleMode = !starAudioFx.jungleMode
+										}),
+									)
+								}}
+							>
+								HD
+							</button>
+						</Tooltip>
 					</div>
 				}
 				value={starAudioFx.pitch ?? 1}
@@ -195,20 +194,21 @@ export function AudioPanel(props: {}) {
 					<div>
 						<MdAccessTime size="1.42rem" />
 						<span style={{ marginLeft: "10px" }}>{gvar.gsm.command.afxDelay}</span>
-						<button
-							ref={mergeTip}
-							style={{ marginLeft: "10px" }}
-							className={`micro toggle ${starAudioFx.delayMerge ? "active" : ""}`}
-							onClick={(e) => {
-								setView(
-									produce(view, (d) => {
-										d[starKey].delayMerge = !starAudioFx.delayMerge
-									}),
-								)
-							}}
-						>
-							+
-						</button>
+						<Tooltip title={gvar.gsm.token.mergeBoth} align="top">
+							<button
+								style={{ marginLeft: "10px" }}
+								className={`micro toggle ${starAudioFx.delayMerge ? "active" : ""}`}
+								onClick={(e) => {
+									setView(
+										produce(view, (d) => {
+											d[starKey].delayMerge = !starAudioFx.delayMerge
+										}),
+									)
+								}}
+							>
+								+
+							</button>
+						</Tooltip>
 					</div>
 				}
 				value={starAudioFx.delay ?? 0}

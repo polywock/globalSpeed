@@ -12,7 +12,7 @@ import { isSeekSmall } from "@/utils/configUtils"
 import { CinemaModal } from "../CinemaModal"
 import { useState } from "react"
 import { IoEllipsisVertical } from "react-icons/io5"
-import { TooltipAlign, useTooltipAnchor } from "@/comps/Tooltip"
+import { Tooltip, TooltipProps } from "@/comps/Tooltip"
 import { RegularTooltip } from "@/comps/RegularTooltip"
 import { GearIcon } from "@/comps/GearIcon"
 
@@ -84,19 +84,8 @@ export function NameArea(props: NameAreaProps) {
 		command.requiresTabCapture &&
 		!(value.command === "afxCapture" || value.command === "afxReset") &&
 		(value.trigger || Trigger.PAGE) === Trigger.PAGE
-	const tabCaptureHintTooltip = useTooltipAnchor<HTMLSpanElement>({
-		label: replaceArgs(gvar.gsm.warnings.captureRequired, [`(${gvar.gsm.command.afxCapture})`]),
-		align: "top",
-		allowClick: true,
-	})
-
 	let adjustMode = command.valueType === "adjustMode" ? value.adjustMode || AdjustMode.SET : null
 	let showNumeric = adjustMode !== AdjustMode.ITC && adjustMode !== AdjustMode.CYCLE
-
-	const adjustModeRef = useTooltipAnchor<HTMLButtonElement>({
-		label: gvar.gsm.options.editor.adjustModes[value.adjustMode || AdjustMode.SET],
-		align: "top",
-	})
 
 	if (hasSpecial) label = "special"
 
@@ -138,43 +127,46 @@ export function NameArea(props: NameAreaProps) {
 
 			{/* Capture shortcut warning */}
 			{tabCaptureHint && (
-				<span ref={tabCaptureHintTooltip} className="warningTooltip">
-					<MdWarning size="1.35rem" />
-				</span>
+				<Tooltip title={replaceArgs(gvar.gsm.warnings.captureRequired, [`(${gvar.gsm.command.afxCapture})`])} align="top" allowClick>
+					<span className="warningTooltip">
+						<MdWarning size="1.35rem" />
+					</span>
+				</Tooltip>
 			)}
 
 			{/* cycle adjustMode */}
 			{command.valueType === "adjustMode" && (
-				<button
-					ref={adjustModeRef}
-					className="adjustMode"
-					onClick={(e) => {
-						props.onChange(
-							value.id,
-							produce(value, (d) => {
-								saveToMem(value, adjustMode)
-								d.adjustMode = (adjustMode % (isMobile() ? 3 : 5)) + 1
-								restoreFromMem(d, d.adjustMode, true)
-							}),
-						)
-					}}
-				>
-					{(value.adjustMode || AdjustMode.SET) === AdjustMode.SET && <FaEquals size="1em" />}
-					{value.adjustMode === AdjustMode.ADD && <FaPlus size="1em" />}
-					{value.adjustMode === AdjustMode.CYCLE && <FaList size="1em" />}
-					{value.adjustMode === AdjustMode.ITC && (
-						<>
-							<FaMousePointer size="1em" />
-							<FaEquals size="1em" />
-						</>
-					)}
-					{value.adjustMode === AdjustMode.ITC_REL && (
-						<>
-							<FaMousePointer size="1em" />
-							<FaPlus size="1em" />
-						</>
-					)}
-				</button>
+				<Tooltip title={gvar.gsm.options.editor.adjustModes[value.adjustMode || AdjustMode.SET]} align="top">
+					<button
+						className="adjustMode"
+						onClick={(e) => {
+							props.onChange(
+								value.id,
+								produce(value, (d) => {
+									saveToMem(value, adjustMode)
+									d.adjustMode = (adjustMode % (isMobile() ? 3 : 5)) + 1
+									restoreFromMem(d, d.adjustMode, true)
+								}),
+							)
+						}}
+					>
+						{(value.adjustMode || AdjustMode.SET) === AdjustMode.SET && <FaEquals size="1em" />}
+						{value.adjustMode === AdjustMode.ADD && <FaPlus size="1em" />}
+						{value.adjustMode === AdjustMode.CYCLE && <FaList size="1em" />}
+						{value.adjustMode === AdjustMode.ITC && (
+							<>
+								<FaMousePointer size="1em" />
+								<FaEquals size="1em" />
+							</>
+						)}
+						{value.adjustMode === AdjustMode.ITC_REL && (
+							<>
+								<FaMousePointer size="1em" />
+								<FaPlus size="1em" />
+							</>
+						)}
+					</button>
+				</Tooltip>
 			)}
 
 			{/* Tooltip */}
@@ -341,7 +333,7 @@ function ensureSpeedList(
 	})
 }
 
-export function makeLabelWithTooltip(name: string, tooltip: string, align: TooltipAlign = "right") {
+export function makeLabelWithTooltip(name: string, tooltip: string, align: TooltipProps["align"] = "right") {
 	return (
 		<>
 			{name}
@@ -492,13 +484,14 @@ export function DurationSelect(props: DurationSelectProps) {
 
 function Cinema(props: { value: Keybind; onChange: (id: string, v: Keybind) => void }) {
 	let [show, setShow] = useState(false)
-	const moreTip = useTooltipAnchor<HTMLButtonElement>({ label: gvar.gsm.token.more, align: "top", closeOnPointerDown: true })
 
 	return (
 		<>
-			<button ref={moreTip} className="icon kebab" onClick={() => setShow(true)}>
-				<IoEllipsisVertical style={{ pointerEvents: "none" }} title="..." size="1.3em" />
-			</button>
+			<Tooltip title={gvar.gsm.token.more} align="top">
+				<button className="icon kebab" onClick={() => setShow(true)}>
+					<IoEllipsisVertical style={{ pointerEvents: "none" }} title="..." size="1.3em" />
+				</button>
+			</Tooltip>
 			{show && <CinemaModal value={props.value} onChange={props.onChange} onClose={() => setShow(false)} />}
 		</>
 	)

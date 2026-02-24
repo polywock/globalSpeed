@@ -5,7 +5,7 @@ import { GoArrowDown, GoArrowUp, GoX } from "react-icons/go"
 import { moveItem } from "@/utils/helper"
 import { SliderPlus } from "@/comps/SliderPlus"
 import { SVG_COLOR_MATRIX_PRESETS, SVG_MOSAIC_PRESETS, SVG_RGB_PRESETS, SVG_SPECIAL_PRESETS, svgFilterInfos } from "@/defaults/filters"
-import { useTooltipAnchor } from "@/comps/Tooltip"
+import { Tooltip } from "@/comps/Tooltip"
 import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
 import { useState } from "react"
 import "./SvgFilterItem.css"
@@ -528,20 +528,12 @@ export function SvgFilterItem(props: {
 }
 
 function AspectLockButton(props: { active: boolean; onClick: () => void }) {
-	const ref = useTooltipAnchor<HTMLButtonElement>({
-		label: gvar.gsm.token.aspectLock,
-		align: "top",
-	})
-
 	return (
-		<button
-			ref={ref}
-			onClick={props.onClick}
-			style={{ padding: "0px 5px", marginLeft: "10px" }}
-			className={`toggle ${props.active ? "active" : ""}`}
-		>
-			:
-		</button>
+		<Tooltip title={gvar.gsm.token.aspectLock} align="top">
+			<button onClick={props.onClick} style={{ padding: "0px 5px", marginLeft: "10px" }} className={`toggle ${props.active ? "active" : ""}`}>
+				:
+			</button>
+		</Tooltip>
 	)
 }
 

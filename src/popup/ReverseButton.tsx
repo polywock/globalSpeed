@@ -4,7 +4,6 @@ import { connectReversePort } from "@/background/utils/tabCapture"
 import { getMediaDataWithScopes } from "@/background/utils/getAutoMedia"
 import { sendMediaEvent } from "@/utils/configUtils"
 import "./ReverseButton.css"
-import { useTooltipAnchor } from "@/comps/Tooltip"
 
 declare global {
 	interface Message {

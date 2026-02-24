@@ -8,7 +8,7 @@ import "./EqualizerControl.css"
 import { useMemo } from "react"
 import equal from "fast-deep-equal"
 import { Reset } from "../comps/Reset"
-import { useTooltipAnchor } from "@/comps/Tooltip"
+import { Tooltip } from "@/comps/Tooltip"
 
 type EqualizerControlProps = {
 	value: AudioFx["eq"]
@@ -20,8 +20,6 @@ export function EqualizerControl(props: EqualizerControlProps) {
 	const presets = (EQ_PRESETS as any)[eq.values.length.toString()] as (typeof EQ_PRESETS)["10"]
 
 	const isEmpty = useMemo(() => equal(eq || getDefaultEq(), getDefaultEq()), [eq])
-
-	const powTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.audio.equalizerPower, align: "top" })
 
 	return (
 		<div className="EqualizerControl audioTab">
@@ -103,23 +101,25 @@ export function EqualizerControl(props: EqualizerControlProps) {
 
 			<div className="values">
 				{/* Power */}
-				<SliderMicro
-					key="intensity"
-					label={"POW"}
-					value={eq.factor ?? 1}
-					sliderMin={0}
-					sliderMax={3}
-					default={1}
-					pass={{ style: { marginBottom: "10px" }, ref: powTip }}
-					onChange={(newValue) => {
-						props.onChange(
-							produce(eq, (d) => {
-								d.factor = newValue
-								delete d.name
-							}),
-						)
-					}}
-				/>
+				<Tooltip title={gvar.gsm.audio.equalizerPower} align="top">
+					<div><SliderMicro
+						key="intensity"
+						label={"POW"}
+						value={eq.factor ?? 1}
+						sliderMin={0}
+						sliderMax={3}
+						default={1}
+						pass={{ style: { marginBottom: "10px" } }}
+						onChange={(newValue) => {
+							props.onChange(
+								produce(eq, (d) => {
+									d.factor = newValue
+									delete d.name
+								}),
+							)
+						}}
+					/></div>
+				</Tooltip>
 
 				{/* EQ sliders */}
 				{eq.values.map((value, i) => {

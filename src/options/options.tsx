@@ -4,7 +4,6 @@ import { SectionEditor } from "./SectionEditor"
 import { SectionHelp } from "./SectionHelp"
 import { SectionRules } from "./SectionRules"
 import { ErrorFallback } from "../comps/ErrorFallback"
-import { TooltipProvider } from "@/comps/Tooltip"
 import { useThemeSync } from "@/hooks/useThemeSync"
 import { loadGsm } from "@/utils/gsm"
 import { requestTabInfo } from "@/utils/browserUtils"
@@ -26,14 +25,12 @@ declare global {
 const Options = (props: {}) => {
 	useThemeSync()
 	return (
-		<TooltipProvider>
-			<div id="App">
-				<SectionFlags />
-				<SectionEditor />
-				{!(isMac() && isMobile()) && <SectionRules />}
-				<SectionHelp />
-			</div>
-		</TooltipProvider>
+		<div id="App">
+			<SectionFlags />
+			<SectionEditor />
+			{!(isMac() && isMobile()) && <SectionRules />}
+			<SectionHelp />
+		</div>
 	)
 }
 

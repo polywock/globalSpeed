@@ -17,7 +17,7 @@ import { replaceArgs } from "@/utils/helper"
 import { produce } from "immer"
 import { IoIosInformationCircle } from "react-icons/io"
 import "./Header.css"
-import { useTooltipAnchor } from "@/comps/Tooltip"
+import { Tooltip } from "@/comps/Tooltip"
 
 const SUPPORTS_TAB_CAPTURE = !!(chrome.tabCapture?.capture && chrome.offscreen?.createDocument)
 
@@ -35,12 +35,6 @@ export function Header(props: HeaderProps) {
 		keybindsUrlCondition: true,
 		sawEnableShortcutOverlayCount: true,
 	})
-
-	const statusTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.header.powerTooltip, align: "bottom" })
-	const pinTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.header.pinTooltip, align: "bottom" })
-	const settingsTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.header.settingsPage, align: "bottom" })
-	const githubTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.header.github, align: "bottom" })
-	const backTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.token.back, align: "bottom" })
 
 	let kebabInfo: {
 		list: KebabListProps["list"]
@@ -73,25 +67,28 @@ export function Header(props: HeaderProps) {
 	return (
 		<div className="Header">
 			{/* Status */}
-			<div
-				ref={statusTip}
-				className={view.enabled ? "active" : "muted"}
-				onClick={() => {
-					setView({ enabled: !view.enabled, latestViaShortcut: false })
-				}}
-				onContextMenu={(e) => {
-					e.preventDefault()
-					setView({ superDisable: true })
-					requestSyncContextMenu()
-				}}
-			>
-				<FaPowerOff size="1.21rem" />
-			</div>
+			<Tooltip title={gvar.gsm.header.powerTooltip} align="bottom">
+				<div
+					className={view.enabled ? "active" : "muted"}
+					onClick={() => {
+						setView({ enabled: !view.enabled, latestViaShortcut: false })
+					}}
+					onContextMenu={(e) => {
+						e.preventDefault()
+						setView({ superDisable: true })
+						requestSyncContextMenu()
+					}}
+				>
+					<FaPowerOff size="1.21rem" />
+				</div>
+			</Tooltip>
 
 			{/* Pin */}
-			<div ref={pinTip} className={`pin ${view.isPinned ? "active" : "muted"}`} onClick={() => clearPin()} onContextMenu={(e) => clearPin(e)}>
-				<Pin size="1.42rem" />
-			</div>
+			<Tooltip title={gvar.gsm.header.pinTooltip} align="bottom">
+				<div className={`pin ${view.isPinned ? "active" : "muted"}`} onClick={() => clearPin()} onContextMenu={(e) => clearPin(e)}>
+					<Pin size="1.42rem" />
+				</div>
+			</Tooltip>
 
 			{/* Kebab list */}
 			{kebabInfo?.list.length > 0 ? (
@@ -128,34 +125,38 @@ export function Header(props: HeaderProps) {
 
 			{/* Back button */}
 			{props.panel !== 0 ? (
-				<div ref={backTip} onClick={(e) => props.setPanel(0)}>
-					<GoArrowLeft size="1.42rem" />
-				</div>
+				<Tooltip title={gvar.gsm.token.back} align="bottom">
+					<div onClick={(e) => props.setPanel(0)}>
+						<GoArrowLeft size="1.42rem" />
+					</div>
+				</Tooltip>
 			) : (
 				<div className="noPadding" />
 			)}
 
 			{/* Options page */}
-			<div
-				ref={settingsTip}
-				onClick={async (e) => {
-					chrome.tabs.create({ url: chrome.runtime.getURL("options.html") })
-					window.close()
-				}}
-			>
-				<Gear size="1.42rem" />
-			</div>
+			<Tooltip title={gvar.gsm.header.settingsPage} align="bottom">
+				<div
+					onClick={async (e) => {
+						chrome.tabs.create({ url: chrome.runtime.getURL("options.html") })
+						window.close()
+					}}
+				>
+					<Gear size="1.42rem" />
+				</div>
+			</Tooltip>
 
 			{/* Github */}
-			<div
-				ref={githubTip}
-				onClick={(e) => {
-					chrome.tabs.create({ url: "https://github.com/polywock/globalSpeed" })
-					window.close()
-				}}
-			>
-				<FaGithub size="1.28rem" />
-			</div>
+			<Tooltip title={gvar.gsm.header.github} align="bottom">
+				<div
+					onClick={(e) => {
+						chrome.tabs.create({ url: "https://github.com/polywock/globalSpeed" })
+						window.close()
+					}}
+				>
+					<FaGithub size="1.28rem" />
+				</div>
+			</Tooltip>
 		</div>
 	)
 }
@@ -167,7 +168,6 @@ type FxIconProps = {
 
 export function FxIcon(props: FxIconProps) {
 	const [view, setView] = useStateView({ elementFx: true, backdropFx: true })
-	const videoFxTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.header.videoEffects, align: "bottom" })
 
 	const fxActive = useMemo(() => {
 		if (view && props.enabled) {
@@ -186,17 +186,18 @@ export function FxIcon(props: FxIconProps) {
 	}, [props.enabled, view])
 
 	return (
-		<div
-			ref={videoFxTip}
-			className={`beat ${fxActive ? "active" : ""}`}
-			onClick={(e) => props.onClick()}
-			onContextMenu={(e) => {
-				e.preventDefault()
-				setView({ elementFx: getDefaultFx(), backdropFx: getDefaultFx() })
-			}}
-		>
-			<Zap size="1.42rem" />
-		</div>
+		<Tooltip title={gvar.gsm.header.videoEffects} align="bottom">
+			<div
+				className={`beat ${fxActive ? "active" : ""}`}
+				onClick={(e) => props.onClick()}
+				onContextMenu={(e) => {
+					e.preventDefault()
+					setView({ elementFx: getDefaultFx(), backdropFx: getDefaultFx() })
+				}}
+			>
+				<Zap size="1.42rem" />
+			</div>
+		</Tooltip>
 	)
 }
 
@@ -206,27 +207,27 @@ type AudioIconProps = {
 
 export function AudioIcon(props: AudioIconProps) {
 	const status = useCaptureStatus()
-	const audioFxTip = useTooltipAnchor<HTMLDivElement>({ label: gvar.gsm.header.audioEffects, align: "bottom" })
 	return (
-		<div
-			ref={audioFxTip}
-			className={`beat ${status ? "active" : ""}`}
-			onClick={props.onClick}
-			onContextMenu={(e) => {
-				e.preventDefault()
-				releaseTabCapture(gvar.tabInfo.tabId)
-				pushView({
-					override: {
-						audioFx: getDefaultAudioFx(),
-						audioFxAlt: null,
-						audioPan: null,
-					},
-					tabId: gvar.tabInfo.tabId,
-				})
-			}}
-		>
-			<FaVolumeUp size="1.2rem" />
-		</div>
+		<Tooltip title={gvar.gsm.header.audioEffects} align="bottom">
+			<div
+				className={`beat ${status ? "active" : ""}`}
+				onClick={props.onClick}
+				onContextMenu={(e) => {
+					e.preventDefault()
+					releaseTabCapture(gvar.tabInfo.tabId)
+					pushView({
+						override: {
+							audioFx: getDefaultAudioFx(),
+							audioFxAlt: null,
+							audioPan: null,
+						},
+						tabId: gvar.tabInfo.tabId,
+					})
+				}}
+			>
+				<FaVolumeUp size="1.2rem" />
+			</div>
+		</Tooltip>
 	)
 }
 
