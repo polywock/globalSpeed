@@ -18,8 +18,8 @@
     "jsUpdate": "Javascript-Verknüpfungen erfordern Chrome oder Edge Version 136 oder neuer",
     "jsWarning": "Aktiviere 'Benutzer-Skripte zulassen', um JavaScript-Verknüpfungen zu verwenden",
     "jsWarningRules": "Aktiviere 'Benutzer-Skripte zulassen', um JavaScript-URL-Regeln zu verwenden",
-    "jsWarningEdge": "Aktivieren Sie den Entwicklermodus, um JavaScript-Verknüpfungen zu verwenden",
-    "jsWarningRulesEdge": "Aktivieren Sie den Entwicklermodus, um JavaScript-URL-Regeln zu verwenden"
+    "jsWarningEdge": "Aktiviere den Entwicklermodus, um JavaScript-Verknüpfungen zu verwenden",
+    "jsWarningRulesEdge": "Aktiviere den Entwicklermodus, um JavaScript-URL-Regeln zu verwenden"
   },
   "menuLabels": {
     "invertPage": "Seite umkehren",
@@ -52,7 +52,7 @@
     "page": "Seite",
     "both": "Beide",
     "selector": "Selektor",
-    "selectorTooltip": "CSS-Selektor, der verwendet wird, um zu filternde Elemente zu finden. Standardmäßig werden nur Videos erfasst, aber Sie können 'video, img, canvas' verwenden, um Videos, Bilder und Spiele zu erfassen.",
+    "selectorTooltip": "CSS-Selektor, der verwendet wird, um zu filternde Elemente zu finden. Standardmäßig werden nur Videos erfasst, aber du kannst 'video, img, canvas' verwenden, um Videos, Bilder und Spiele zu erfassen.",
     "intoPane": "In den Bereich",
     "warning": "Warnung",
     "filters": "Filter",
@@ -88,7 +88,7 @@
     "none": "Keine",
     "edit": "Bearbeiten",
     "customize": "Anpassen",
-    "allowShortcuts": "Abkürzungen auf $1 zulassen",
+    "allowShortcuts": "Tastenkürzel auf $1 zulassen",
     "allowOn": "Zulassen auf $1",
     "mode": "Modus",
     "darkness": "Dunkelheit",
@@ -156,7 +156,7 @@
       "motion": "Bewegung",
       "noise": "Rauschen",
       "multiply": "Multiplizieren",
-      "colorBurn": "Farbabwedeln",
+      "colorBurn": "Nachbelichten",
       "hardLight": "Hartes Licht"
     }
   },
@@ -229,7 +229,7 @@
       "showIndicator": "Indikator anzeigen",
       "showIndicatorTooltip": "Der Indikator ist visuelles Feedback beim Verwenden von Tastenkombinationen.",
       "ghostMode": "Geistermodus",
-      "ghostModeTooltip": "Verhindert, dass Websites Änderungen der Wiedergabegeschwindigkeit erkennen. Wenn aktiviert, gilt dies standardmäßig für alle Websites. Dies kann auf einigen Websites zu Problemen führen. Verwenden Sie das Zahnradsymbol, um es auf bestimmte Websites zu beschränken.",
+      "ghostModeTooltip": "Verhindert, dass Websites Änderungen der Wiedergabegeschwindigkeit erkennen. Wenn aktiviert, gilt dies standardmäßig für alle Websites. Dies kann auf einigen Websites zu Problemen führen. Verwende das Zahnradsymbol, um es auf bestimmte Websites zu beschränken.",
       "pinByDefault": "Standardmäßig anheften",
       "pinByDefaultTooltip": "Neue Tabs werden automatisch angeheftet.",
       "initialState": "Anfangszustand",
