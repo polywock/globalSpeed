@@ -6,7 +6,6 @@
 	position: relative;
 	margin-bottom: 10px;
 	height: auto;
-	overflow: clip;
 	transition: height 100ms ease-out;
 
 	@starting-style {
