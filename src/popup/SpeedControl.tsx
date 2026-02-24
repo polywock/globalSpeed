@@ -40,6 +40,9 @@ export function SpeedControl(props: SpeedControlProps) {
 
 	const smallStep = view.speedSmallStep || 0.01
 	const largeStep = view.speedBigStep || 0.1
+	const speedSliderMin = view.speedSlider?.min ?? MIN_SPEED_CHROMIUM
+	const speedSliderMax = view.speedSlider?.max ?? MAX_SPEED_CHROMIUM
+	const speedSliderProgress = speedSliderMax === speedSliderMin ? 0 : clamp(0, 1, (props.speed - speedSliderMin) / (speedSliderMax - speedSliderMin))
 
 	let padding = (view.speedPresetPadding ?? 0) * (view.fontSize ?? 1)
 	if (isMobile()) padding = Math.max(padding, 10)
@@ -138,9 +141,10 @@ export function SpeedControl(props: SpeedControlProps) {
 					<input
 						step={0.01}
 						type="range"
-						min={view.speedSlider.min}
-						max={view.speedSlider.max}
+						min={speedSliderMin}
+						max={speedSliderMax}
 						value={props.speed}
+						style={{ "--slider-progress": `${speedSliderProgress * 100}%` } as CSSProperties}
 						onChange={(e) => {
 							props.onChange(e.target.valueAsNumber)
 						}}

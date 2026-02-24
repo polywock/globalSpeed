@@ -1,0 +1,86 @@
+input[type="range"] {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100%;
+	background-color: transparent;
+	cursor: pointer;
+
+	--slider-track-height: 6px;
+	--slider-thumb-size: 16px;
+	--slider-fill-color: var(--focus-color);
+	--slider-track-color: var(--track-color);
+	--slider-thumb-color: var(--slider-fill-color);
+	--slider-thumb-border: transparent;
+	--slider-progress: 0%;
+}
+
+/* Track */
+input[type="range"]::-webkit-slider-runnable-track {
+	background: linear-gradient(
+		to right,
+		var(--slider-fill-color) 0%,
+		var(--slider-fill-color) var(--slider-progress),
+		var(--slider-track-color) var(--slider-progress),
+		var(--slider-track-color) 100%
+	);
+	border: none;
+	width: 100%;
+	height: var(--slider-track-height);
+	border-radius: 999px;
+	cursor: pointer;
+}
+input[type="range"]::-moz-range-track {
+	background: var(--slider-track-color);
+	border: none;
+	width: 100%;
+	height: var(--slider-track-height);
+	border-radius: 999px;
+	cursor: pointer;
+}
+input[type="range"]::-moz-range-progress {
+	background: var(--slider-fill-color);
+	border: none;
+	height: var(--slider-track-height);
+	border-radius: 999px;
+}
+
+/* Thumb */
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: var(--slider-thumb-size);
+	height: var(--slider-thumb-size);
+	background: var(--slider-thumb-color);
+	border: 1px solid var(--slider-thumb-border);
+	border-radius: 50%;
+	box-sizing: border-box;
+	box-shadow: 0 1px 2px var(--shadow-color);
+	cursor: pointer;
+	margin-top: calc((var(--slider-track-height) - var(--slider-thumb-size)) * 0.5);
+}
+input[type="range"]::-moz-range-thumb {
+	width: var(--slider-thumb-size);
+	height: var(--slider-thumb-size);
+	background: var(--slider-thumb-color);
+	border: 1px solid var(--slider-thumb-border);
+	border-radius: 50%;
+	box-sizing: border-box;
+	box-shadow: 0 1px 2px var(--shadow-color);
+	cursor: pointer;
+}
+
+input[type="range"]:focus-visible {
+	outline: none;
+}
+
+input[type="range"]:focus-visible::-webkit-slider-thumb {
+	box-shadow:
+		0 0 0 3px var(--border-weak),
+		0 1px 2px var(--shadow-color);
+}
+
+input[type="range"]:focus-visible::-moz-range-thumb {
+	box-shadow:
+		0 0 0 3px var(--border-weak),
+		0 1px 2px var(--shadow-color);
+}

@@ -39,10 +39,7 @@
 	--icon-muted-color: #7a879e;
 	--icon-vibrant-color: #295cda;
 	--control-hover-bg-color: #1f2f4a1a;
-
 	--track-color: #a9b6cd;
-	--thumb-color: #6f7f99;
-	--thumb-border-color: #4d5f79;
 }
 
 :root.darkTheme {
@@ -74,15 +71,7 @@
 	--icon-muted-color: #8895ad;
 	--icon-vibrant-color: #8db6ff;
 	--control-hover-bg-color: #ffffff14;
-
 	--track-color: #687792;
-	--thumb-color: #d5deee;
-	--thumb-border-color: #f0f5ff;
-
-	input[type="checkbox"],
-	input[type="range"] {
-		filter: hue-rotate(26deg);
-	}
 }
 
 body {
@@ -293,28 +282,6 @@ input[type="checkbox"] {
 			outline: 1px solid var(--focus-color);
 		}
 	}
-}
-
-input[type="range"] {
-	width: 100%;
-	background-color: transparent;
-}
-
-input[type="range"]::-moz-range-track {
-	background: var(--track-color);
-	border: none;
-	width: 100%;
-	height: 6px;
-	cursor: pointer;
-}
-input[type="range"]::-moz-range-thumb {
-	width: 10px;
-	height: 20px;
-	background: var(--thumb-color);
-	border: 1px solid var(--thumb-border-color);
-	border-radius: 0px;
-	/* border-radius: 8px; */
-	cursor: pointer;
 }
 
 /* TODO: Remove */

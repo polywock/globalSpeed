@@ -1,6 +1,7 @@
-import { useMemo, useCallback, useEffect, useState } from "react"
+import { useMemo, useCallback, useEffect, useState, type CSSProperties } from "react"
 import { clamp, inverseLerp, lerp } from "../utils/helper"
 import debounce from "lodash.debounce"
+import "./Slider.css"
 
 type SliderProps = {
 	min: number
@@ -54,10 +55,16 @@ export function Slider(props: SliderProps) {
 		setAnchor(null)
 	}
 
+	const progressNormal = max === min ? 0 : clamp(0, 1, inverseLerp(min, max, props.value))
+	const sliderStyle = {
+		"--slider-progress": `${progressNormal * 100}%`,
+		...(anchor ? { outline: "2px solid red", transformOrigin: "center", transform: "scaleY(1.5)" } : {}),
+	} as CSSProperties
+
 	return (
 		<input
 			title={gvar.gsm.warnings.sliderTooltip}
-			style={anchor ? { outline: "2px solid red", transformOrigin: "center", transform: "scaleY(1.5)" } : {}}
+			style={sliderStyle}
 			onMouseDown={(e) => {
 				e.shiftKey && ensureAnchored()
 			}}

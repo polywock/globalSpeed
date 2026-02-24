@@ -1,4 +1,5 @@
-import { formatDuration, formatDomain, feedbackText } from "../utils/helper"
+import { type CSSProperties } from "react"
+import { clamp, formatDuration, formatDomain, feedbackText } from "../utils/helper"
 import { FaPlay, FaPause, FaBackward, FaForward, FaMousePointer } from "react-icons/fa"
 import { MdPictureInPictureAlt } from "react-icons/md"
 import { FaVolumeMute, FaVolumeUp, FaVolumeDown } from "react-icons/fa"
@@ -110,6 +111,7 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 						</button>
 						<input
 							className="slider"
+							style={{ "--slider-progress": `${clamp(0, 1, info.volume) * 100}%` } as CSSProperties}
 							onChange={(e) => {
 								const event: MediaEvent = { type: "SET_VOLUME", value: e.target.valueAsNumber, relative: false }
 								sendMediaEvent(event, info.key, tabId, frameId)
