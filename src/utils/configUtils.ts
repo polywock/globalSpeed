@@ -177,6 +177,6 @@ export function findMatchingMenuKeybinds(kbs: Keybind[], id: string): KeybindMat
 
 export function triggerToKey(trigger: Trigger): "pageKeybinds" | "browserKeybinds" | "menuKeybinds" {
 	if (trigger === Trigger.BROWSER) return "browserKeybinds"
-	if (trigger === Trigger.PAGE) return "pageKeybinds"
+	if (trigger === Trigger.MENU) return "menuKeybinds"
 	return "pageKeybinds"
 }

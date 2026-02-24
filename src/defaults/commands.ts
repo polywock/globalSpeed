@@ -604,7 +604,8 @@ export function getDefaultPageKeybinds(): Keybind[] {
 		},
 		{
 			...commandInfos.temporarySpeed.generate(),
-			key: "KeyF",
+			key: "KeyG",
+			valueNumber: 3,
 			spacing: 1,
 		},
 		{
@@ -617,7 +618,6 @@ export function getDefaultPageKeybinds(): Keybind[] {
 			...commandInfos.seek.generate(),
 			key: "KeyX",
 			adjustMode: AdjustMode.ADD,
-			spacing: 1,
 		},
 		{
 			...commandInfos.seek.generate(),
