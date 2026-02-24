@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent } from "react"
+import { useState, useEffect, ChangeEvent, RefObject } from "react"
 import { FloatTooltip } from "./FloatTooltip"
 import { round } from "../utils/helper"
 
@@ -15,6 +15,7 @@ type NumericInputProps = {
 	rounding?: number
 	disabled?: boolean
 	className?: string
+	ref?: RefObject<any>
 }
 
 export const NumericInput = (props: NumericInputProps) => {
@@ -69,7 +70,7 @@ export const NumericInput = (props: NumericInputProps) => {
 	}
 
 	return (
-		<div className={`NumericInput ${props.className || ""}`} style={{ position: "relative" }}>
+		<div ref={props.ref} className={`NumericInput ${props.className || ""}`} style={{ position: "relative" }}>
 			<input
 				disabled={props.disabled ?? false}
 				onBlur={(e) => {

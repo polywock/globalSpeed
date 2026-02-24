@@ -100,9 +100,9 @@ export const KeybindControl = (props: KeybindControlProps) => {
 			preLabel: value.spacing === 2 ? "2" : value.spacing === 1 ? "1" : null,
 		})
 
-	let onFocusTooltip: string
+	let valueFocusTooltip: string
 	if (value.command === "nothing") {
-		onFocusTooltip = gvar.gsm.command.afxDelay
+		valueFocusTooltip = gvar.gsm.command.afxDelay
 	}
 
 	return (
@@ -195,10 +195,10 @@ export const KeybindControl = (props: KeybindControlProps) => {
 			{showNumericControl && !command.withDuration && (
 				<NumericInput
 					onFocus={
-						onFocusTooltip
+						valueFocusTooltip
 							? (e) => {
 									feedbackText(
-										onFocusTooltip,
+										valueFocusTooltip,
 										domRectGetOffset((e.currentTarget as HTMLInputElement).getBoundingClientRect(), 20, -50, true),
 									)
 								}

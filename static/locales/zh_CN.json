@@ -97,7 +97,9 @@
     "modeCustomColor": "自定义颜色",
     "modeCustomFilter": "自定义滤镜",
     "left": "左",
-    "right": "右"
+    "right": "右",
+    "smallStep": "小步",
+    "largeStep": "大步"
   },
   "placer": {
     "windowBounds": {

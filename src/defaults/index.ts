@@ -284,7 +284,7 @@ export const INDICATOR_INIT: IndicatorInit = {
 	backgroundColor: "#000000",
 	textColor: "#ffffff",
 	scaling: 1,
-	rounding: 0,
+	rounding: 4,
 	duration: 1,
 	offset: 1,
 }

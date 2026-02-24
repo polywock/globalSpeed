@@ -118,7 +118,7 @@ export function IndicatorModal(props: Props) {
 							setView({ indicatorInit })
 						}}
 						default={INDICATOR_INIT.scaling}
-						sliderMin={0.75}
+						sliderMin={0.5}
 						sliderMax={1.5}
 						sliderStep={0.01}
 					/>

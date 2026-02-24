@@ -33,7 +33,7 @@
 
 		button,
 		input[type="text"] {
-			padding: var(--padding) 0px !important;
+			padding: calc(var(--padding) * 0.75) 0px !important;
 		}
 	}
 

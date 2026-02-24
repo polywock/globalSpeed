@@ -8,6 +8,7 @@ import { NumericInput } from "../comps/NumericInput"
 import { getDefaultSpeedPresets } from "@/defaults/constants"
 import { useStateView } from "../hooks/useStateView"
 import "./SpeedPresetModal.css"
+import { Tooltip } from "@/comps/Tooltip"
 
 type Props = {
 	onClose: () => void
@@ -64,8 +65,34 @@ export function SpeedPresetModal(props: Props) {
 						}}
 						default={0}
 						sliderMin={0}
-						sliderMax={15}
+						sliderMax={10}
 						sliderStep={0.1}
+					/>
+				</div>
+
+				{/* Small step */}
+				<div className="field">
+					<span>{gvar.gsm.token.smallStep}</span>
+					<NumericInput
+						className="wide"
+						value={view.speedSmallStep || 0.01}
+						onChange={(t) => handleStepChange(t, false)}
+						min={0.001}
+						noNull={false}
+						placeholder={"0.01"}
+					/>
+				</div>
+
+				{/* Large step */}
+				<div className="field">
+					<span>{gvar.gsm.token.largeStep}</span>
+					<NumericInput
+						className="wide"
+						value={view.speedBigStep || 0.1}
+						onChange={(t) => handleStepChange(t, true)}
+						min={0.001}
+						noNull={false}
+						placeholder={"0.1"}
 					/>
 				</div>
 
@@ -82,28 +109,6 @@ export function SpeedPresetModal(props: Props) {
 					{presets.slice(0, clamp(1, 4, view.speedPresetRows ?? 4) * 3).map((v, i) => (
 						<NumericInput className="preset" key={i} value={v} onChange={(t) => handlePresetChange(i, t)} min={0.07} max={16} noNull={true} />
 					))}
-
-					{/* Small increment */}
-					<span>{">"}</span>
-					<NumericInput
-						className="wide"
-						value={view.speedSmallStep || 0.01}
-						onChange={(t) => handleStepChange(t, false)}
-						min={0.001}
-						noNull={false}
-						placeholder={"0.01"}
-					/>
-
-					{/* Big increment */}
-					<span>{">>"}</span>
-					<NumericInput
-						className="wide"
-						value={view.speedBigStep || 0.1}
-						onChange={(t) => handleStepChange(t, true)}
-						min={0.001}
-						noNull={false}
-						placeholder={"0.1"}
-					/>
 				</div>
 
 				{/* Reset */}

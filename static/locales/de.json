@@ -96,7 +96,9 @@
     "modeCustomColor": "Benutzerdefinierte Farbe",
     "modeCustomFilter": "Benutzerdefinierter Filter",
     "left": "Links",
-    "right": "Rechts"
+    "right": "Rechts",
+    "smallStep": "Kleiner Schritt",
+    "largeStep": "Großer Schritt"
   },
   "placer": {
     "windowBounds": {

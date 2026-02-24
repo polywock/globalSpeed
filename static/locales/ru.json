@@ -96,7 +96,9 @@
     "modeCustomColor": "Пользовательский цвет",
     "modeCustomFilter": "Пользовательский фильтр",
     "left": "Левый",
-    "right": "Правый"
+    "right": "Правый",
+    "smallStep": "Малый шаг",
+    "largeStep": "Большой шаг"
   },
   "placer": {
     "windowBounds": {

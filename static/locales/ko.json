@@ -97,7 +97,9 @@
     "modeCustomColor": "사용자 지정 색상",
     "modeCustomFilter": "사용자 필터",
     "left": "왼쪽",
-    "right": "오른쪽"
+    "right": "오른쪽",
+    "smallStep": "작은 단계",
+    "largeStep": "큰 단계"
   },
   "placer": {
     "windowBounds": {

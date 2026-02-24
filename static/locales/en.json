@@ -99,7 +99,9 @@
 		"modeCustomColor": "Custom color",
 		"modeCustomFilter": "Custom filter",
 		"left": "Left",
-		"right": "Right"
+		"right": "Right",
+		"smallStep": "Small step",
+		"largeStep": "Large step"
 	},
 	"placer": {
 		"windowBounds": {

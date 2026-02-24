@@ -96,7 +96,9 @@
     "modeCustomColor": "Niestandardowy kolor",
     "modeCustomFilter": "Niestandardowy filtr",
     "left": "Lewy",
-    "right": "Prawy"
+    "right": "Prawy",
+    "smallStep": "Mały krok",
+    "largeStep": "Duży krok"
   },
   "placer": {
     "windowBounds": {

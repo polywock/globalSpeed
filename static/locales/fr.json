@@ -96,7 +96,9 @@
     "modeCustomColor": "Couleur personnalisée",
     "modeCustomFilter": "Filtre personnalisé",
     "left": "Gauche",
-    "right": "Droite"
+    "right": "Droite",
+    "smallStep": "Petit pas",
+    "largeStep": "Grand pas"
   },
   "placer": {
     "windowBounds": {

@@ -7,10 +7,19 @@
 	& > button {
 		padding: 5px 10px;
 		opacity: 0.5;
+		border-radius: 0;
 
 		&.selected {
 			filter: brightness(0.9);
 			opacity: 1;
+		}
+
+		&:first-child {
+			border-radius: var(--radius) 0 0 var(--radius);
+		}
+
+		&:last-child {
+			border-radius: 0 var(--radius) var(--radius) 0;
 		}
 	}
 }

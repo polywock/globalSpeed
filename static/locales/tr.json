@@ -96,7 +96,9 @@
     "modeCustomColor": "Özel renk",
     "modeCustomFilter": "Özel Filtre",
     "left": "Sol",
-    "right": "Sağ"
+    "right": "Sağ",
+    "smallStep": "Küçük adım",
+    "largeStep": "Büyük adım"
   },
   "placer": {
     "windowBounds": {

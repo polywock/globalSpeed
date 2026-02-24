@@ -96,7 +96,9 @@
     "modeCustomColor": "カスタムカラー",
     "modeCustomFilter": "カスタムフィルター",
     "left": "左",
-    "right": "右"
+    "right": "右",
+    "smallStep": "小ステップ",
+    "largeStep": "大ステップ"
   },
   "placer": {
     "windowBounds": {

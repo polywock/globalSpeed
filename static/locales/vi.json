@@ -96,7 +96,9 @@
     "modeCustomColor": "Màu tùy chỉnh",
     "modeCustomFilter": "Bộ lọc tùy chỉnh",
     "left": "Trái",
-    "right": "Phải"
+    "right": "Phải",
+    "smallStep": "Bước nhỏ",
+    "largeStep": "Bước lớn"
   },
   "placer": {
     "windowBounds": {

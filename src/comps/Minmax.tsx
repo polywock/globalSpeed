@@ -1,5 +1,5 @@
 import { NumericInput } from "./NumericInput"
-import { domRectGetOffset, feedbackText } from "@/utils/helper"
+import { Tooltip } from "./Tooltip"
 import "./Minmax.css"
 
 type MinmaxProps = {
@@ -16,32 +16,30 @@ type MinmaxProps = {
 export function Minmax(props: MinmaxProps) {
 	return (
 		<div className="Minmax">
-			<NumericInput
-				value={props.min}
-				onChange={(v) => {
-					props.onChange(v, props.max)
-				}}
-				min={props.realMin}
-				max={props.realMax}
-				noNull={props.noNull}
-				placeholder={props.defaultMin?.toString()}
-				onFocus={(e) => {
-					feedbackText(gvar.gsm.token.min, domRectGetOffset((e.currentTarget as any).getBoundingClientRect(), 20, -50, true))
-				}}
-			/>
-			<NumericInput
-				value={props.max}
-				onChange={(v) => {
-					props.onChange(props.min, v)
-				}}
-				min={props.realMin}
-				max={props.realMax}
-				noNull={props.noNull}
-				placeholder={props.defaultMax?.toString()}
-				onFocus={(e) => {
-					feedbackText(gvar.gsm.token.max, domRectGetOffset((e.currentTarget as any).getBoundingClientRect(), 20, -50, true))
-				}}
-			/>
+			<Tooltip title={gvar.gsm.token.min} align="top">
+				<NumericInput
+					value={props.min}
+					onChange={(v) => {
+						props.onChange(v, props.max)
+					}}
+					min={props.realMin}
+					max={props.realMax}
+					noNull={props.noNull}
+					placeholder={props.defaultMin?.toString()}
+				/>
+			</Tooltip>
+			<Tooltip title={gvar.gsm.token.max} align="top">
+				<NumericInput
+					value={props.max}
+					onChange={(v) => {
+						props.onChange(props.min, v)
+					}}
+					min={props.realMin}
+					max={props.realMax}
+					noNull={props.noNull}
+					placeholder={props.defaultMax?.toString()}
+				/>
+			</Tooltip>
 		</div>
 	)
 }

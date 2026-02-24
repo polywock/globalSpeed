@@ -285,12 +285,12 @@ input[type="checkbox"] {
 	}
 }
 
-/* TODO: Remove */
 input[type="color"] {
 	background-color: var(--fg-color);
 	border: none;
 	width: 3.5rem;
 	height: 2.14rem;
+	border-radius: var(--radius);
 }
 
 select {

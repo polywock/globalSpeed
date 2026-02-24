@@ -98,7 +98,9 @@ export type Gsm = {
     modeCustomColor: string,
     modeCustomFilter: string,
     left: string,
-    right: string
+    right: string,
+    smallStep: string,
+    largeStep: string
   },
   placer: {
     windowBounds: {

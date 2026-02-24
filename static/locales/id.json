@@ -96,7 +96,9 @@
     "modeCustomColor": "Warna kustom",
     "modeCustomFilter": "Filter Kustom",
     "left": "Kiri",
-    "right": "Kanan"
+    "right": "Kanan",
+    "smallStep": "Langkah kecil",
+    "largeStep": "Langkah besar"
   },
   "placer": {
     "windowBounds": {
