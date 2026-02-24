@@ -133,6 +133,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
 			{/* URL modal */}
 			{!show ? null : (
 				<URLModal
+					context="keybind"
 					onReset={() => {
 						props.onChange(
 							value.id,

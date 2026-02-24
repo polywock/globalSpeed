@@ -1,4 +1,7 @@
 .URLModal {
+	scrollbar-width: thin;
+	scrollbar-color: var(--bg-color) var(--fg-color);
+
 	& > .header {
 		display: grid;
 		grid-template-columns: 1fr max-content;
@@ -8,6 +11,15 @@
 		}
 
 		margin-bottom: 10px;
+	}
+
+	& > .subHeader {
+		opacity: 0.5;
+		font-style: italic;
+		font-size: 1.1em;
+		margin-top: -10px;
+		margin-bottom: 15px;
+		translate: -2px 0px;
 	}
 
 	& > .parts {

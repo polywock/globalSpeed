@@ -6,6 +6,7 @@
 		justify-content: center;
 	}
 	scrollbar-width: thin;
+	scrollbar-color: var(--bg-color) var(--fg-color);
 }
 
 #App {
@@ -27,7 +28,7 @@
 		box-shadow: var(--card-shadow);
 		border-radius: var(--radius-2xl);
 
-		& > .subheader {
+		& > .subHeader {
 			opacity: 0.5;
 			font-style: italic;
 			font-size: 1.2em;

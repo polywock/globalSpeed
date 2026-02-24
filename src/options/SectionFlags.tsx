@@ -68,6 +68,7 @@ export function SectionFlags(props: {}) {
 			{showIndicatorModal && <IndicatorModal view={viewAlt} setView={setView} onClose={() => setShowIndicatorModal(null)} />}
 			{showGhostModal && (
 				<URLModal
+					context="ghost"
 					value={view.ghostModeUrlCondition || getDefaultURLCondition()}
 					onClose={() => setShowGhostModal(false)}
 					onReset={() => setView({ ghostModeUrlCondition: null })}

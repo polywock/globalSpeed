@@ -1,5 +1,5 @@
-import { ReactNode, useRef, useState } from "react"
-import { AdjustMode, CommandGroup, Keybind, StateView, Trigger } from "../types"
+import { useRef, useState } from "react"
+import { CommandGroup, Keybind, StateView, Trigger } from "../types"
 import { areYouSure, isFirefox, isMobile, moveItem, randomId } from "../utils/helper"
 import { commandInfos, CommandName, getDefaultPageKeybinds, getDefaultMenuKeybinds, availableCommandNames } from "../defaults/commands"
 import { KeybindControl } from "./keybindControl"
@@ -94,7 +94,7 @@ function KeybindSection(props: {
 	return (
 		<div className="section SectionEditor">
 			<h2>{getSectionTitle(listKey)}</h2>
-			{!!getSectionSubheader(listKey) && <div className="subheader">{getSectionSubheader(listKey)}</div>}
+			{!!getSectionSubheader(listKey) && <div className="subHeader">{getSectionSubheader(listKey)}</div>}
 			{devWarningType ? <DevWarning warningType={hasJs ? devWarningType : DevWarningType.NONE} /> : null}
 			{listKey === "browserKeybinds" && <CommandWarning keybinds={view[listKey] || []} />}
 
@@ -293,6 +293,7 @@ function SectionControls(props: { listKey: ListKey; view: StateView; setView: Se
 
 					{show && (
 						<URLModal
+							context="keybinds"
 							value={view.keybindsUrlCondition || getDefaultURLCondition(true)}
 							onClose={() => setShow(false)}
 							onReset={() => setView({ keybindsUrlCondition: null })}

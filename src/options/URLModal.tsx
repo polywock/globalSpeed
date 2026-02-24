@@ -5,7 +5,7 @@ import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { GoX } from "react-icons/go"
 import { getDefaultURLConditionPart } from "../defaults"
 import { findRemoveFromArray } from "../utils/helper"
-import { extractURLPartValueKey, getSelectedParts } from "@/utils/configUtils"
+import { extractURLPartValueKey, getActiveParts, getSelectedParts } from "@/utils/configUtils"
 import "./URLModal.css"
 
 type Props = {
@@ -13,12 +13,16 @@ type Props = {
 	onChange: (value: URLCondition) => void
 	onReset: () => void
 	value: URLCondition
+	context: "keybinds" | "keybind" | "ghost" | "rule"
 }
 
 export function URLModal(props: Props) {
 	const { value } = props
 	const listKey = value.block ? "blockParts" : "allowParts"
 	const parts = getSelectedParts(value)
+	const isNeutral = !getActiveParts(value).length
+	const subheadKey = `${props.context}${isNeutral ? "Neutral" : value.block ? "Block" : "Allow"}`
+	const subheader = (gvar.gsm.options.rules.headers as any)[subheadKey]
 
 	const onChange = (part: URLConditionPart) => {
 		props.onChange(
@@ -62,6 +66,9 @@ export function URLModal(props: Props) {
 						<option value="BLOCK">{gvar.gsm.options.rules.blocklist}</option>
 					</select>
 				</div>
+
+				{/* Subheader */}
+				{subheader && <div className="subHeader">{`${subheader}${isNeutral ? "" : ":"}`}</div>}
 
 				{/* Parts  */}
 				<div className="parts">

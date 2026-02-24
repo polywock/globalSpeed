@@ -169,6 +169,7 @@ export function Rule(props: RuleProps) {
 			{/* URL conditions modal */}
 			{show ? (
 				<URLModal
+					context="rule"
 					onReset={() => {
 						onChange(
 							produce(rule, (d) => {
