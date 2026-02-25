@@ -3,7 +3,7 @@ node_modules/
 build/
 buildFf/
 Archive*
-*.md
+z.md
 .DS_Store
 **/*.env
 private/

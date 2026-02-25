@@ -19,7 +19,7 @@
 		"build:prod": "  export NODE_ENV=production && npm run build:common   && cd build/unpacked   && zip -r '../global-speed-chromium.zip' .",
 		"build:prodEdge": "  export NODE_ENV=production && npm run build:common   && cd build/unpacked && sed -i '' 's/ - Video Speed Control//' _locales/en/messages.json && zip -r '../global-speed-chromium.zip' .",
 		"build:prodFf": "export NODE_ENV=production && npm run build:commonFf && cd buildFf/unpacked && zip -r '../global-speed-firefox.zip' .",
-		"build:prodFff": "npm run build:prodFf && rm -rf zed && mkdir -p zed/unpacked && cp -r src static staticCh staticFf tools .babelrc package-lock.json package.json postcss.config.js tsconfig.json webpack.config.js zed/unpacked && (cd zed/unpacked && zip -r ../packed.zip .) && mv zed/packed.zip buildFf/source.zip && rm -rf zed",
+		"build:prodFff": "npm run build:prodFf && rm -rf zed && mkdir -p zed/unpacked && cp -r src static staticCh staticFf tools .babelrc package-lock.json package.json postcss.config.js tsconfig.json webpack.config.js zed/unpacked && cp firefox-build.md zed/unpacked/README.md && (cd zed/unpacked && zip -r ../packed.zip .) && mv zed/packed.zip buildFf/source.zip && rm -rf zed",
 		"adhere": "node tools/processLocale.js && node tools/generateGsmType.js",
 		"release": "node tools/release.js",
 		"format": "prettier --check '**/*.{js,ts,tsx,json,css}'",
