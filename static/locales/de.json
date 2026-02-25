@@ -6,9 +6,12 @@
     "split": "Teilen",
     "splitTooltip": "Audiokanäle separat steuern",
     "reverse": "Audio umkehren",
+    "reverseTooltip": "Gedrückt halten, um das Audio dieses Tabs aufzunehmen und rückwärts abzuspielen",
     "equalizer": "Equalizer",
     "pitchHdTooltip": "Bessere Qualität",
-    "equalizerPower": "Erhöht die Equalizer-Leistung"
+    "equalizerPower": "Erhöht die Equalizer-Leistung",
+    "recording": "Aufnahme",
+    "playing": "Wiedergabe"
   },
   "warnings": {
     "unusedGlobal": "Freigabe nicht genutzter globaler Tastenkombinationen",
@@ -53,7 +56,8 @@
     "both": "Beide",
     "selector": "Selektor",
     "selectorTooltip": "CSS-Selektor, der verwendet wird, um zu filternde Elemente zu finden. Standardmäßig werden nur Videos erfasst, aber du kannst 'video, img, canvas' verwenden, um Videos, Bilder und Spiele zu erfassen.",
-    "intoPane": "In den Bereich",
+    "intoPane": "Zum Fenster",
+    "intoPaneTooltip": "Filter in ein schwebendes, verschiebbares Fenster umwandeln",
     "warning": "Warnung",
     "filters": "Filter",
     "transforms": "Transformationen",
@@ -98,7 +102,9 @@
     "left": "Links",
     "right": "Rechts",
     "smallStep": "Kleiner Schritt",
-    "largeStep": "Großer Schritt"
+    "largeStep": "Großer Schritt",
+    "moveDown": "Nach unten verschieben",
+    "moveUp": "Nach oben verschieben"
   },
   "placer": {
     "windowBounds": {
@@ -113,6 +119,7 @@
     "cancel": "Abbrechen"
   },
   "filter": {
+    "swap": "Video- und Seitenfilter tauschen",
     "grayscale": "Graustufen",
     "sepia": "Sepia",
     "hueRotate": "Farbton drehen",
@@ -166,7 +173,8 @@
     "runCode": "Code ausführen",
     "openUrl": "URL öffnen",
     "speed": "Geschwindigkeit",
-    "speedChangesPitch": "Geschwindigkeit ändert Tonhöhe",
+    "speedChangesPitch": "Tonhöhenverschiebung erlauben",
+    "speedChangesPitchTooltip": "Wenn aktiviert, ändert eine Geschwindigkeitsänderung auch die Tonhöhe des Audios.",
     "pin": "Tab anheften",
     "state": "Status",
     "seek": "Suchen",
@@ -245,7 +253,7 @@
       "virtual": "Virtuell",
       "grantPermission": "Berechtigung erteilen",
       "grantPermissionTooltip": "Um die volle Funktionalität, einschließlich Unterstützung für eingebettete Videos, zu ermöglichen, muss diese Berechtigung erteilt werden. Für eingeschränkte Funktionalität kannst du sie fallweise pro Website aktivieren, indem du mit der rechten Maustaste auf das Symbol in der Symbolleiste klickst.",
-      "speedSlider": "Geschwindigkeitsregler",
+      "speedSlider": "Geschwindigkeitsregler anzeigen",
       "textSize": "Textgröße",
       "speedPresets": "Geschwindigkeitsvoreinstellungen",
       "widget": {
@@ -312,7 +320,9 @@
         "sameTab": "Aktueller Tab"
       },
       "pressAndHold": "Drücken und halten",
-      "pressAndHoldTooltip": "Wenn aktiviert, muss die Taste gedrückt gehalten werden, während der Wert interaktiv angepasst wird."
+      "pressAndHoldTooltip": "Wenn aktiviert, muss die Taste gedrückt gehalten werden, während der Wert interaktiv angepasst wird.",
+      "keyPickerInput": "Klicken zum Ändern",
+      "keyPickerInputTooltip": "Neue Tastenkombination drücken"
     },
     "rules": {
       "header": "URL-Regeln",

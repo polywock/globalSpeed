@@ -6,9 +6,12 @@
     "split": "Tách",
     "splitTooltip": "Điều khiển từng kênh âm thanh riêng",
     "reverse": "Đảo ngược âm thanh",
+    "reverseTooltip": "Nhấn và giữ để ghi âm thanh của thẻ này và phát lại đảo ngược",
     "equalizer": "Bộ cân bằng âm thanh",
     "pitchHdTooltip": "Chất lượng tốt hơn",
-    "equalizerPower": "Tăng công suất bộ cân bằng"
+    "equalizerPower": "Tăng công suất bộ cân bằng",
+    "recording": "Đang ghi âm",
+    "playing": "Đang phát"
   },
   "warnings": {
     "unusedGlobal": "Giải phóng các phím tắt toàn cầu không được sử dụng.",
@@ -53,7 +56,8 @@
     "both": "Cả hai",
     "selector": "Bộ chọn",
     "selectorTooltip": "Bộ chọn CSS được sử dụng để tìm các phần tử cần lọc. Mặc định chỉ nhắm vào video, nhưng bạn có thể sử dụng 'video, img, canvas' để nhắm vào video, hình ảnh và trò chơi.",
-    "intoPane": "Chuyển vào khung",
+    "intoPane": "Thành cửa sổ",
+    "intoPaneTooltip": "Chuyển bộ lọc thành cửa sổ nổi có thể kéo thả",
     "warning": "Cảnh báo",
     "filters": "Bộ lọc",
     "transforms": "Biến đổi",
@@ -98,7 +102,9 @@
     "left": "Trái",
     "right": "Phải",
     "smallStep": "Bước nhỏ",
-    "largeStep": "Bước lớn"
+    "largeStep": "Bước lớn",
+    "moveDown": "Di chuyển xuống",
+    "moveUp": "Di chuyển lên"
   },
   "placer": {
     "windowBounds": {
@@ -113,6 +119,7 @@
     "cancel": "Hủy bỏ"
   },
   "filter": {
+    "swap": "Hoán đổi bộ lọc video và trang",
     "grayscale": "Thang xám",
     "sepia": "Nâu đỏ",
     "hueRotate": "Màu xoay vòng",
@@ -166,7 +173,8 @@
     "runCode": "Chạy mã",
     "openUrl": "Mở URL",
     "speed": "Tốc độ",
-    "speedChangesPitch": "Tốc độ thay đổi cao độ",
+    "speedChangesPitch": "Cho phép thay đổi cao độ",
+    "speedChangesPitchTooltip": "Khi bật, thay đổi tốc độ cũng sẽ làm thay đổi cao độ của âm thanh.",
     "pin": "Ghim tab",
     "state": "Trạng thái",
     "seek": "Tua",
@@ -245,7 +253,7 @@
       "virtual": "Ảo",
       "grantPermission": "Cấp quyền",
       "grantPermissionTooltip": "Để kích hoạt đầy đủ chức năng, bao gồm hỗ trợ nhúng video, quyền này phải được kích hoạt. Đối với chức năng hạn chế, bạn có thể kích hoạt trên cơ sở từng trang web bằng cách nhấp chuột phải vào biểu tượng thanh công cụ.",
-      "speedSlider": "Thanh trượt tốc độ",
+      "speedSlider": "Hiển thị thanh trượt tốc độ",
       "textSize": "Kích thước văn bản",
       "speedPresets": "Cài đặt trước tốc độ",
       "widget": {
@@ -312,7 +320,9 @@
         "sameTab": "Tab hiện tại"
       },
       "pressAndHold": "Nhấn và giữ",
-      "pressAndHoldTooltip": "Nếu được bật, phím phải được giữ trong khi điều chỉnh giá trị tương tác."
+      "pressAndHoldTooltip": "Nếu được bật, phím phải được giữ trong khi điều chỉnh giá trị tương tác.",
+      "keyPickerInput": "Nhấp để thay đổi",
+      "keyPickerInputTooltip": "Nhấn phím tắt mới"
     },
     "rules": {
       "header": "Quy tắc URL",

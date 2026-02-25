@@ -6,9 +6,12 @@
     "split": "分割",
     "splitTooltip": "音声チャンネルを個別に制御",
     "reverse": "音声を逆再生",
+    "reverseTooltip": "押し続けると、このタブの音声を録音して逆再生します",
     "equalizer": "イコライザー",
     "pitchHdTooltip": "高音質",
-    "equalizerPower": "イコライザーの出力を増幅します"
+    "equalizerPower": "イコライザーの出力を増幅します",
+    "recording": "録音中",
+    "playing": "再生中"
   },
   "warnings": {
     "unusedGlobal": "使用されていないグローバルショートカットキーを解放してください。",
@@ -53,7 +56,8 @@
     "both": "両方",
     "selector": "セレクター",
     "selectorTooltip": "フィルタリングする要素を見つけるために使用されるCSSセレクタ。デフォルトでは動画のみが対象ですが、「video, img, canvas」と指定することで、動画、画像、ゲームを対象にできます。",
-    "intoPane": "窓として",
+    "intoPane": "ウィンドウへ",
+    "intoPaneTooltip": "フィルターを浮動・ドラッグ可能なウィンドウにする",
     "warning": "警告",
     "filters": "フィルター",
     "transforms": "変換",
@@ -98,7 +102,9 @@
     "left": "左",
     "right": "右",
     "smallStep": "小ステップ",
-    "largeStep": "大ステップ"
+    "largeStep": "大ステップ",
+    "moveDown": "下に移動",
+    "moveUp": "上に移動"
   },
   "placer": {
     "windowBounds": {
@@ -113,6 +119,7 @@
     "cancel": "キャンセル"
   },
   "filter": {
+    "swap": "ビデオとページのフィルターを入れ替える",
     "grayscale": "グレースケール",
     "sepia": "セピア",
     "hueRotate": "色相回転",
@@ -166,7 +173,8 @@
     "runCode": "コードを実行",
     "openUrl": "URLを開く",
     "speed": "速度",
-    "speedChangesPitch": "速度がピッチを変える",
+    "speedChangesPitch": "ピッチシフトを許可",
+    "speedChangesPitchTooltip": "有効にすると、速度を変更すると音声のピッチも変わります。",
     "pin": "タブをピン留め",
     "state": "状態",
     "seek": "シーク",
@@ -244,7 +252,7 @@
       "virtual": "仮想",
       "grantPermission": "許可を与える",
       "grantPermissionTooltip": "埋め込み動画サポートを含む完全な機能を有効にするには、この許可が必要です。限定的な機能の場合、ツールバーアイコンを右クリックしてサイトごとに有効にすることができます。",
-      "speedSlider": "速度スライダー",
+      "speedSlider": "速度スライダーを表示",
       "textSize": "テキストサイズ",
       "speedPresets": "速度プリセット",
       "widget": {
@@ -311,7 +319,9 @@
         "sameTab": "現在のタブ"
       },
       "pressAndHold": "長押し",
-      "pressAndHoldTooltip": "有効にすると、キーを押し続けている間に値をインタラクティブに調整する必要があります。"
+      "pressAndHoldTooltip": "有効にすると、キーを押し続けている間に値をインタラクティブに調整する必要があります。",
+      "keyPickerInput": "クリックして変更",
+      "keyPickerInputTooltip": "新しいショートカットを押す"
     },
     "rules": {
       "header": "URLルール",

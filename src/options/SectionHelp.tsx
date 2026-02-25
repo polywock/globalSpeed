@@ -109,7 +109,7 @@ function ExportImport(props: {}) {
 
 	return (
 		<>
-			<Tooltip title={gvar.gsm.options.help.exportTooltip} align="top">
+			<Tooltip title={gvar.gsm.options.help.exportTooltip}>
 				<button
 					className="large"
 					onClick={async () => {
@@ -119,7 +119,7 @@ function ExportImport(props: {}) {
 					{gvar.gsm.options.help.export}
 				</button>
 			</Tooltip>
-			<Tooltip title={showWasCopied ? gvar.gsm.options.help.copied : gvar.gsm.options.help.copy} align="top">
+			<Tooltip title={showWasCopied ? gvar.gsm.options.help.copied : gvar.gsm.options.help.copy}>
 				<button
 					className="large"
 					onClick={async (e) => {
@@ -131,7 +131,7 @@ function ExportImport(props: {}) {
 					<MdContentCopy style={{ pointerEvents: "none" }} />
 				</button>
 			</Tooltip>
-			<Tooltip title={gvar.gsm.options.help.importTooltip} align="top">
+			<Tooltip title={gvar.gsm.options.help.importTooltip}>
 				<button
 					className="large"
 					onClick={(e) => {
@@ -141,7 +141,7 @@ function ExportImport(props: {}) {
 					{gvar.gsm.options.help.import}
 				</button>
 			</Tooltip>
-			<Tooltip title={gvar.gsm.options.help.paste} align="top">
+			<Tooltip title={gvar.gsm.options.help.paste}>
 				<button
 					className="large"
 					onClick={async (e) => {

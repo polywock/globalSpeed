@@ -264,7 +264,10 @@ export function SectionFlags(props: {}) {
 
 				{/* Speed changes pitch */}
 				<div className="field marginTop">
-					<span>{gvar.gsm.command.speedChangesPitch}</span>
+					<div className="labelWithTooltip">
+						<span>{gvar.gsm.command.speedChangesPitch}</span>
+						<RegularTooltip title={gvar.gsm.command.speedChangesPitchTooltip} align="right" />
+					</div>
 					<Toggle
 						value={!!view.freePitch}
 						onChange={(e) => {
@@ -291,14 +294,16 @@ export function SectionFlags(props: {}) {
 								defaultMin={defaultSlider.min}
 								defaultMax={defaultSlider.max}
 							/>
-							<button
-								className="icon"
-								onClick={() => {
-									setView({ speedSlider: null })
-								}}
-							>
-								<GoX size="1.6rem" />
-							</button>
+							<Tooltip title={gvar.gsm.token.delete}>
+								<button
+									className="icon"
+									onClick={() => {
+										setView({ speedSlider: null })
+									}}
+								>
+									<GoX size="1.6rem" />
+								</button>
+							</Tooltip>
 						</div>
 					) : (
 						<Toggle value={!!view.speedSlider} onChange={(v) => setView({ speedSlider: view.speedSlider ? null : getDefaultSpeedSlider() })} />
@@ -330,7 +335,7 @@ export function SectionFlags(props: {}) {
 				</div>
 
 				{!showMore ? (
-					<Tooltip title={gvar.gsm.token.more} align="top">
+					<Tooltip title={gvar.gsm.token.more}>
 						<button className="showMoreTooltip" onClick={() => setShowMore(true)}>
 							<TfiMoreAlt />
 						</button>

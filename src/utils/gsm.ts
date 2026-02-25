@@ -44,7 +44,7 @@ export const LOCALE_MAP: {
 		title: string
 	}
 } = {
-	detect: { display: "Auto", title: "Try to find a match using browser language settings, system language settings, or fallback to English." },
+	detect: { display: "Auto", title: "" },
 	ar: { display: "عربي", title: "Arabic" },
 	de: { display: "Deutsch", title: "German" },
 	en: { display: "English", title: "English" },

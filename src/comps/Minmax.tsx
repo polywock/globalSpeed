@@ -16,7 +16,7 @@ type MinmaxProps = {
 export function Minmax(props: MinmaxProps) {
 	return (
 		<div className="Minmax">
-			<Tooltip title={gvar.gsm.token.min} align="top">
+			<Tooltip title={gvar.gsm.token.min}>
 				<NumericInput
 					value={props.min}
 					onChange={(v) => {
@@ -28,7 +28,7 @@ export function Minmax(props: MinmaxProps) {
 					placeholder={props.defaultMin?.toString()}
 				/>
 			</Tooltip>
-			<Tooltip title={gvar.gsm.token.max} align="top">
+			<Tooltip title={gvar.gsm.token.max}>
 				<NumericInput
 					value={props.max}
 					onChange={(v) => {

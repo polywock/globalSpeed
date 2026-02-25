@@ -6,9 +6,12 @@
     "split": "Ayır",
     "splitTooltip": "Ses kanallarını ayrı ayrı kontrol et",
     "reverse": "Sesi ters çevir",
+    "reverseTooltip": "Bu sekmenin sesini kaydetmek ve tersine çalmak için basılı tutun",
     "equalizer": "Ekolayzır",
     "pitchHdTooltip": "Daha iyi kalite",
-    "equalizerPower": "Ekolayzır gücünü artırır"
+    "equalizerPower": "Ekolayzır gücünü artırır",
+    "recording": "Kayıt",
+    "playing": "Çalıyor"
   },
   "warnings": {
     "unusedGlobal": "Kullanılmayan genel kısayol tuşlarını kaldırın.",
@@ -53,7 +56,8 @@
     "both": "Her ikisi",
     "selector": "Seçici",
     "selectorTooltip": "Filtrelenecek öğeleri bulmak için kullanılan CSS seçici. Varsayılan olarak yalnızca videoları hedefler, ancak videoları, resimleri ve oyunları hedeflemek için 'video, img, canvas' kullanabilirsiniz.",
-    "intoPane": "Pencere oluştur",
+    "intoPane": "Pencereye dönüştür",
+    "intoPaneTooltip": "Filtreleri sürüklenebilir, yüzen bir pencereye dönüştür",
     "warning": "Uyarı",
     "filters": "Filtreler",
     "transforms": "Dönüşümler",
@@ -98,7 +102,9 @@
     "left": "Sol",
     "right": "Sağ",
     "smallStep": "Küçük adım",
-    "largeStep": "Büyük adım"
+    "largeStep": "Büyük adım",
+    "moveDown": "Aşağı taşı",
+    "moveUp": "Yukarı taşı"
   },
   "placer": {
     "windowBounds": {
@@ -113,6 +119,7 @@
     "cancel": "İptal"
   },
   "filter": {
+    "swap": "Video ve sayfa filtrelerini değiştir",
     "grayscale": "Gri tonlama",
     "sepia": "Sepya",
     "hueRotate": "Renk tonu",
@@ -166,7 +173,8 @@
     "runCode": "Kodu çalıştır",
     "openUrl": "Link aç",
     "speed": "Hız",
-    "speedChangesPitch": "Hız ses perdesini değiştirir",
+    "speedChangesPitch": "Perde kaydırmaya izin ver",
+    "speedChangesPitchTooltip": "Etkinleştirildiğinde, hızı değiştirmek sesin perdesini de değiştirir.",
     "pin": "Sekmeyi sabitle",
     "state": "Durum",
     "seek": "İlerlet",
@@ -245,7 +253,7 @@
       "virtual": "Sanal",
       "grantPermission": "İzin ver",
       "grantPermissionTooltip": "Video gömme desteği de dahil olmak üzere tam işlevselliği etkinleştirmek için bu iznin etkinleştirilmesi gerekir. Sınırlı işlevsellik için, araç çubuğu simgesine sağ tıklayarak site bazında etkinleştirebilirsiniz.",
-      "speedSlider": "Hız kaydırıcı",
+      "speedSlider": "Hız kaydırıcısını göster",
       "textSize": "Metin boyutu",
       "speedPresets": "Hız ön ayarları",
       "widget": {
@@ -312,7 +320,9 @@
         "sameTab": "Mevcut sekme"
       },
       "pressAndHold": "Basılı tut",
-      "pressAndHoldTooltip": "Etkinleştirilirse, değeri etkileşimli olarak ayarlarken tuş basılı tutulmalıdır."
+      "pressAndHoldTooltip": "Etkinleştirilirse, değeri etkileşimli olarak ayarlarken tuş basılı tutulmalıdır.",
+      "keyPickerInput": "Değiştirmek için tıkla",
+      "keyPickerInputTooltip": "Yeni kısayola bas"
     },
     "rules": {
       "header": "URL Kuralları",

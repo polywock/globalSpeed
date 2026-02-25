@@ -28,55 +28,63 @@ export function SvgFilterItem(props: {
 		<div className="SvgFilter">
 			<div className="header">
 				<div className={filter.enabled ? "active" : "muted"}>
-					<FaPowerOff
-						size="1.21rem"
-						onClick={() => {
-							onChange(
-								produce(filter, (v) => {
-									v.enabled = !v.enabled
-								}),
-							)
-						}}
-					/>
+					<Tooltip title={filter.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
+						<FaPowerOff
+							size="1.21rem"
+							onClick={() => {
+								onChange(
+									produce(filter, (v) => {
+										v.enabled = !v.enabled
+									}),
+								)
+							}}
+						/>
+					</Tooltip>
 				</div>
 				{(gvar.gsm.filter.otherFilters as any)[filter.type]}
-				<button
-					className="icon"
-					onClick={() => {
-						listOnChange(
-							produce(list, (d) => {
-								moveItem(d, (v) => v.id === filter.id, "U")
-							}),
-						)
-					}}
-				>
-					<GoArrowUp size="1.42rem" />
-				</button>
-				<button
-					className="icon"
-					onClick={() => {
-						listOnChange(
-							produce(list, (d) => {
-								moveItem(d, (v) => v.id === filter.id, "D")
-							}),
-						)
-					}}
-				>
-					<GoArrowDown size="1.42rem" />
-				</button>
-				<button className="icon">
-					<GoX
-						size="1.6rem"
+				<Tooltip title={gvar.gsm.token.moveUp}>
+					<button
+						className="icon"
 						onClick={() => {
 							listOnChange(
-								produce(list, (list) => {
-									const idx = list.findIndex((v) => v.id === filter.id)
-									if (idx >= 0) list.splice(idx, 1)
+								produce(list, (d) => {
+									moveItem(d, (v) => v.id === filter.id, "U")
 								}),
 							)
 						}}
-					/>
-				</button>
+					>
+						<GoArrowUp size="1.42rem" />
+					</button>
+				</Tooltip>
+				<Tooltip title={gvar.gsm.token.moveUp}>
+					<button
+						className="icon"
+						onClick={() => {
+							listOnChange(
+								produce(list, (d) => {
+									moveItem(d, (v) => v.id === filter.id, "D")
+								}),
+							)
+						}}
+					>
+						<GoArrowDown size="1.42rem" />
+					</button>
+				</Tooltip>
+				<Tooltip title={gvar.gsm.token.delete}>
+					<button className="icon">
+						<GoX
+							size="1.6rem"
+							onClick={() => {
+								listOnChange(
+									produce(list, (list) => {
+										const idx = list.findIndex((v) => v.id === filter.id)
+										if (idx >= 0) list.splice(idx, 1)
+									}),
+								)
+							}}
+						/>
+					</button>
+				</Tooltip>
 			</div>
 			{presetInfo && (
 				<div className="presets">
@@ -529,7 +537,7 @@ export function SvgFilterItem(props: {
 
 function AspectLockButton(props: { active: boolean; onClick: () => void }) {
 	return (
-		<Tooltip title={gvar.gsm.token.aspectLock} align="top">
+		<Tooltip title={gvar.gsm.token.aspectLock}>
 			<button onClick={props.onClick} style={{ padding: "0px 5px", marginLeft: "10px" }} className={`toggle ${props.active ? "active" : ""}`}>
 				:
 			</button>

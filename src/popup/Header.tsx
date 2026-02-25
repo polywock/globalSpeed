@@ -67,7 +67,7 @@ export function Header(props: HeaderProps) {
 	return (
 		<div className="Header">
 			{/* Status */}
-			<Tooltip title={gvar.gsm.header.powerTooltip} align="bottom">
+			<Tooltip title={view.enabled ? gvar.gsm.token.off : gvar.gsm.token.on} align="bottom">
 				<div
 					className={view.enabled ? "active" : "muted"}
 					onClick={() => {

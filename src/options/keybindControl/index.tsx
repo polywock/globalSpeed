@@ -429,7 +429,7 @@ export const TriggerValues = (props: Props) => {
 								</option>
 							))}
 					</select>
-					<Tooltip title={gvar.gsm.token.assign} align="top">
+					<Tooltip title={gvar.gsm.token.assign}>
 						<button
 							className="icon"
 							onClick={() => {

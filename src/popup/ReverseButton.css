@@ -3,6 +3,11 @@
 	width: 100%;
 	padding: 5px;
 	border-width: 3px;
+	line-height: 1.5;
+
+	& > svg {
+		margin-right: 10px;
+	}
 
 	&.recording {
 		border-color: var(--error-border-color);

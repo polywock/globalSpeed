@@ -1,4 +1,5 @@
 import { GiAnticlockwiseRotation } from "react-icons/gi"
+import { Tooltip } from "./Tooltip"
 
 type ResetProps = {
 	onClick?: () => void
@@ -7,6 +8,12 @@ type ResetProps = {
 
 export function Reset(props: ResetProps) {
 	return (
-		<GiAnticlockwiseRotation size={"1.07rem"} className={`Reset ${props.active ? "active" : ""}`} onClick={() => props.active && props.onClick()} />
+		<Tooltip title={gvar.gsm.token.reset}>
+			<GiAnticlockwiseRotation
+				size={"1.07rem"}
+				className={`Reset ${props.active ? "active" : ""}`}
+				onClick={() => props.active && props.onClick()}
+			/>
+		</Tooltip>
 	)
 }

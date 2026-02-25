@@ -25,16 +25,18 @@ export function EqualizerControl(props: EqualizerControlProps) {
 		<div className="EqualizerControl audioTab">
 			<div className="header">
 				<div className={eq.enabled ? "active" : "muted"}>
-					<FaPowerOff
-						size="1.21rem"
-						onClick={() => {
-							props.onChange(
-								produce(eq, (d) => {
-									d.enabled = !d.enabled
-								}),
-							)
-						}}
-					/>
+					<Tooltip title={eq.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
+						<FaPowerOff
+							size="1.21rem"
+							onClick={() => {
+								props.onChange(
+									produce(eq, (d) => {
+										d.enabled = !d.enabled
+									}),
+								)
+							}}
+						/>
+					</Tooltip>
 				</div>
 				<div className="name">{gvar.gsm.audio.equalizer}</div>
 				<div className="reset">
@@ -101,24 +103,26 @@ export function EqualizerControl(props: EqualizerControlProps) {
 
 			<div className="values">
 				{/* Power */}
-				<Tooltip title={gvar.gsm.audio.equalizerPower} align="top">
-					<div><SliderMicro
-						key="intensity"
-						label={"POW"}
-						value={eq.factor ?? 1}
-						sliderMin={0}
-						sliderMax={3}
-						default={1}
-						pass={{ style: { marginBottom: "10px" } }}
-						onChange={(newValue) => {
-							props.onChange(
-								produce(eq, (d) => {
-									d.factor = newValue
-									delete d.name
-								}),
-							)
-						}}
-					/></div>
+				<Tooltip title={gvar.gsm.audio.equalizerPower}>
+					<div>
+						<SliderMicro
+							key="intensity"
+							label={"POW"}
+							value={eq.factor ?? 1}
+							sliderMin={0}
+							sliderMax={3}
+							default={1}
+							pass={{ style: { marginBottom: "10px" } }}
+							onChange={(newValue) => {
+								props.onChange(
+									produce(eq, (d) => {
+										d.factor = newValue
+										delete d.name
+									}),
+								)
+							}}
+						/>
+					</div>
 				</Tooltip>
 
 				{/* EQ sliders */}

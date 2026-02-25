@@ -1,6 +1,7 @@
 import { useState, KeyboardEvent } from "react"
 import { Hotkey, extractHotkey, formatHotkey } from "../utils/keys"
 import "./KeyPicker.css"
+import { Tooltip } from "./Tooltip"
 
 type KeyPickerProps = {
 	onChange: (key: Hotkey) => void
@@ -35,21 +36,22 @@ export const KeyPicker = (props: KeyPickerProps) => {
 	}
 
 	return (
-		<div
-			onBlur={() => setEnterState(false)}
-			onKeyDown={handleOnKeyDown}
-			onClick={(e) => setEnterState(!enterState)}
-			tabIndex={0}
-			onContextMenuCapture={(e) => {
-				e.preventDefault()
-				e.stopPropagation()
-				enterState && setEnterState(false)
-				props.onChange?.(null)
-			}}
-			style={{ fontFamily: enterState ? "monospace" : null }}
-			className="KeyPicker"
-		>
-			{enterState ? "..." : formatHotkey(props.value)}
-		</div>
+		<Tooltip maxHmr={1} title={enterState ? gvar.gsm.options.editor.keyPickerInputTooltip : gvar.gsm.options.editor.keyPickerInput}>
+			<div
+				onBlur={() => setEnterState(false)}
+				onKeyDown={handleOnKeyDown}
+				onClick={(e) => setEnterState(!enterState)}
+				tabIndex={0}
+				onContextMenuCapture={(e) => {
+					e.preventDefault()
+					e.stopPropagation()
+					enterState && setEnterState(false)
+					props.onChange?.(null)
+				}}
+				className="KeyPicker"
+			>
+				{enterState ? "..." : formatHotkey(props.value)}
+			</div>
+		</Tooltip>
 	)
 }

@@ -10,7 +10,7 @@ import { KeybindControlProps } from "."
 import { KebabList, KebabListProps } from "../KebabList"
 import { isSeekSmall } from "@/utils/configUtils"
 import { CinemaModal } from "../CinemaModal"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { IoEllipsisVertical } from "react-icons/io5"
 import { Tooltip, TooltipProps } from "@/comps/Tooltip"
 import { RegularTooltip } from "@/comps/RegularTooltip"
@@ -64,8 +64,13 @@ type NameAreaProps = {
 	reference: ReferenceValues
 }
 
+type Env = {
+	adjustModeTitle?: string
+}
+
 export function NameArea(props: NameAreaProps) {
 	const { command, value, hasSpecial } = props
+	const env = useRef({} as Env).current
 
 	const kebabList: KebabListProps["list"] = []
 	const kebabListHandlers: KebabListProps["onSelect"][] = [
@@ -127,7 +132,7 @@ export function NameArea(props: NameAreaProps) {
 
 			{/* Capture shortcut warning */}
 			{tabCaptureHint && (
-				<Tooltip title={replaceArgs(gvar.gsm.warnings.captureRequired, [`(${gvar.gsm.command.afxCapture})`])} align="top" allowClick>
+				<Tooltip title={replaceArgs(gvar.gsm.warnings.captureRequired, [`(${gvar.gsm.command.afxCapture})`])} allowClick>
 					<span className="warningTooltip">
 						<MdWarning size="1.35rem" />
 					</span>
@@ -136,7 +141,7 @@ export function NameArea(props: NameAreaProps) {
 
 			{/* cycle adjustMode */}
 			{command.valueType === "adjustMode" && (
-				<Tooltip title={gvar.gsm.options.editor.adjustModes[value.adjustMode || AdjustMode.SET]} align="top">
+				<Tooltip title={gvar.gsm.options.editor.adjustModes[value.adjustMode || AdjustMode.SET]}>
 					<button
 						className="adjustMode"
 						onClick={(e) => {
@@ -487,7 +492,7 @@ function Cinema(props: { value: Keybind; onChange: (id: string, v: Keybind) => v
 
 	return (
 		<>
-			<Tooltip title={gvar.gsm.token.more} align="top">
+			<Tooltip title={gvar.gsm.token.more}>
 				<button className="icon kebab" onClick={() => setShow(true)}>
 					<IoEllipsisVertical style={{ pointerEvents: "none" }} title="..." size="1.3em" />
 				</button>

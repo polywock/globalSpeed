@@ -47,7 +47,7 @@ export function AudioPanel(props: {}) {
 
 			<div className="mainControls">
 				{/* Split */}
-				<Tooltip title={gvar.gsm.audio.splitTooltip} align="top">
+				<Tooltip title={gvar.gsm.audio.splitTooltip}>
 					<button
 						className={`toggle ${view.audioFxAlt ? "active" : ""}`}
 						onClick={() => {
@@ -63,7 +63,7 @@ export function AudioPanel(props: {}) {
 				</Tooltip>
 
 				{/* Mono */}
-				<Tooltip title={gvar.gsm.command.afxMonoTooltip} align="top">
+				<Tooltip title={gvar.gsm.command.afxMonoTooltip}>
 					<button
 						className={`toggle ${view.monoOutput ? "active" : ""}`}
 						onClick={() => {
@@ -108,7 +108,7 @@ export function AudioPanel(props: {}) {
 					<div>
 						<FaMusic size="1.21rem" />
 						<span style={{ marginLeft: "10px" }}>{gvar.gsm.command.afxPitch}</span>
-						<Tooltip title={gvar.gsm.audio.pitchHdTooltip} align="top">
+						<Tooltip title={gvar.gsm.audio.pitchHdTooltip}>
 							<button
 								style={{ marginLeft: "10px" }}
 								className={`micro toggle ${starAudioFx.jungleMode ? "" : "active"}`}
@@ -194,7 +194,7 @@ export function AudioPanel(props: {}) {
 					<div>
 						<MdAccessTime size="1.42rem" />
 						<span style={{ marginLeft: "10px" }}>{gvar.gsm.command.afxDelay}</span>
-						<Tooltip title={gvar.gsm.token.mergeBoth} align="top">
+						<Tooltip title={gvar.gsm.token.mergeBoth}>
 							<button
 								style={{ marginLeft: "10px" }}
 								className={`micro toggle ${starAudioFx.delayMerge ? "active" : ""}`}

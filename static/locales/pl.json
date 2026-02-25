@@ -6,9 +6,12 @@
     "split": "Podziel",
     "splitTooltip": "Steruj kanałami audio osobno",
     "reverse": "Odwróć dźwięk",
+    "reverseTooltip": "Naciśnij i przytrzymaj, aby nagrać dźwięk z tej karty i odtworzyć go od tyłu",
     "equalizer": "Korektor dźwięku",
     "pitchHdTooltip": "Lepsza jakość",
-    "equalizerPower": "Wzmacnia moc korektora"
+    "equalizerPower": "Wzmacnia moc korektora",
+    "recording": "Nagrywanie",
+    "playing": "Odtwarzanie"
   },
   "warnings": {
     "unusedGlobal": "Zwolnij nieużywane globalne skróty klawiszowe",
@@ -53,7 +56,8 @@
     "both": "Oba",
     "selector": "Selektor",
     "selectorTooltip": "Selektor CSS używany do znajdowania elementów do filtrowania. Domyślnie obejmuje tylko filmy, ale możesz użyć 'video, img, canvas', aby dopasować filmy, obrazy i gry.",
-    "intoPane": "Do panelu",
+    "intoPane": "W okno",
+    "intoPaneTooltip": "Zmień filtry w pływające, przeciągalne okno",
     "warning": "Ostrzeżenie",
     "filters": "Filtry",
     "transforms": "Transformacje",
@@ -98,7 +102,9 @@
     "left": "Lewy",
     "right": "Prawy",
     "smallStep": "Mały krok",
-    "largeStep": "Duży krok"
+    "largeStep": "Duży krok",
+    "moveDown": "Przesuń w dół",
+    "moveUp": "Przesuń w górę"
   },
   "placer": {
     "windowBounds": {
@@ -113,6 +119,7 @@
     "cancel": "Anuluj"
   },
   "filter": {
+    "swap": "Zamień filtry wideo i strony",
     "grayscale": "Odcienie szarości",
     "sepia": "Sepia",
     "hueRotate": "Obrót odcienia",
@@ -166,7 +173,8 @@
     "runCode": "Uruchom kod",
     "openUrl": "Otwórz URL",
     "speed": "Prędkość",
-    "speedChangesPitch": "Prędkość zmienia ton",
+    "speedChangesPitch": "Zezwól na zmianę wysokości dźwięku",
+    "speedChangesPitchTooltip": "Gdy ta opcja jest włączona, zmiana prędkości spowoduje też zmianę wysokości dźwięku.",
     "pin": "Przypnij kartę",
     "state": "Stan",
     "seek": "Przewiń",
@@ -245,7 +253,7 @@
       "virtual": "Wirtualny",
       "grantPermission": "Przyznaj pozwolenie",
       "grantPermissionTooltip": "Aby włączyć pełną funkcjonalność, w tym wsparcie dla osadzonych filmów, to uprawnienie musi być włączone. Dla ograniczonej funkcjonalności możesz włączyć je na podstawie witryny, klikając prawym przyciskiem myszy ikonę paska narzędzi.",
-      "speedSlider": "Suwak prędkości",
+      "speedSlider": "Pokaż suwak prędkości",
       "textSize": "Rozmiar tekstu",
       "speedPresets": "Ustawienia wstępne prędkości",
       "widget": {
@@ -312,7 +320,9 @@
         "sameTab": "Bieżąca karta"
       },
       "pressAndHold": "Naciśnij i przytrzymaj",
-      "pressAndHoldTooltip": "Jeśli włączone, klawisz musi być przytrzymany podczas interaktywnego dostosowywania wartości."
+      "pressAndHoldTooltip": "Jeśli włączone, klawisz musi być przytrzymany podczas interaktywnego dostosowywania wartości.",
+      "keyPickerInput": "Kliknij, aby zmienić",
+      "keyPickerInputTooltip": "Naciśnij nowy skrót"
     },
     "rules": {
       "header": "Reguły URL",

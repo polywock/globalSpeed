@@ -8,29 +8,10 @@
 	color: var(--pure-color);
 	padding: 10px;
 	white-space: break-spaces;
-	border-radius: 5px;
+	border-radius: var(--radius);
 	opacity: 0.85;
 	z-index: 9999999999999;
 	overflow-wrap: break-word;
 	font-size: 1rem;
 	user-select: none;
 }
-
-/* .TooltipTip {
-	line-height: normal !important;
-	pointer-events: none;
-	position: fixed;
-	width: fit-content;
-	height: auto;
-	background-color: var(--text-color);
-	border: 1px solid var(--pure-color);
-	color: var(--pure-color);
-	padding: 8px;
-	white-space: break-spaces;
-	border-radius: var(--radius);
-	opacity: 0.85;
-	z-index: 9999999999999;
-	overflow-wrap: break-word;
-	font-size: 0.95rem;
-	user-select: none;
-} */

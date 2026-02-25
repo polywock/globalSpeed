@@ -13,6 +13,7 @@ import equal from "fast-deep-equal"
 import { isMobile } from "@/utils/helper"
 import { SvgFilterList } from "./SvgFilterList"
 import "./FxControl.css"
+import { Tooltip } from "@/comps/Tooltip"
 
 type FxControlProps = {
 	live?: boolean
@@ -74,37 +75,43 @@ export function FxControl(props: FxControlProps) {
 
 			<div className="controls">
 				{/* Status */}
-				<button
-					className={fx.enabled ? "active" : "muted"}
-					onClick={(e) => {
-						setCurrent(
-							produce(fx, (d) => {
-								d.enabled = !d.enabled
-							}),
-						)
-					}}
-				>
-					<FaPowerOff size={"1.07rem"} />
-				</button>
+				<Tooltip align="bottom" title={fx.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
+					<button
+						className={fx.enabled ? "active" : "muted"}
+						onClick={(e) => {
+							setCurrent(
+								produce(fx, (d) => {
+									d.enabled = !d.enabled
+								}),
+							)
+						}}
+					>
+						<FaPowerOff size={"1.07rem"} />
+					</button>
+				</Tooltip>
 
 				{/* Swap */}
-				<button
-					onClick={(e) => {
-						props.handleChange(backdropFx, elementFx)
-					}}
-				>
-					<FaExchangeAlt size={"1.07rem"} />
-				</button>
+				<Tooltip align="bottom" title={gvar.gsm.filter.swap}>
+					<button
+						onClick={(e) => {
+							props.handleChange(backdropFx, elementFx)
+						}}
+					>
+						<FaExchangeAlt size={"1.07rem"} />
+					</button>
+				</Tooltip>
 
 				{/* Reset */}
-				<button
-					className={isEmpty ? "" : "active levelup"}
-					onClick={(e) => {
-						setCurrent(null)
-					}}
-				>
-					<GiAnticlockwiseRotation size={"1.07rem"} />
-				</button>
+				<Tooltip align="bottom" title={gvar.gsm.token.reset}>
+					<button
+						className={isEmpty ? "" : "active levelup"}
+						onClick={(e) => {
+							setCurrent(null)
+						}}
+					>
+						<GiAnticlockwiseRotation size={"1.07rem"} />
+					</button>
+				</Tooltip>
 			</div>
 
 			{/* Selector */}
@@ -166,26 +173,28 @@ export function FxControl(props: FxControlProps) {
 			{/* Into pane */}
 			{!isMobile() && props.live && !transformTab && gvar.tabInfo.url?.startsWith("http") && (
 				<div className="buttons">
-					<button
-						className="intoPane"
-						disabled={!fx.enabled || !(backdropTab ? active.backdropFilter : active.elemFilter)}
-						onClick={(e) => {
-							if (!checkFilterDeviationOrActiveSvg(fx.filters, fx.svgFilters)) return
-							setCurrent(
-								produce(fx, (d) => {
-									d.filters = getDefaultFx().filters
-									d.enabled = false
-									delete d.svgFilters
-								}),
-							)
-							sendMessageToConfigSync({ type: "ADD_PANE", filters: fx.filters, svgFilters: fx.svgFilters }, gvar.tabInfo.tabId, 0)
-							setTimeout(() => {
-								window.close()
-							}, 50)
-						}}
-					>
-						{gvar.gsm.token.intoPane}
-					</button>
+					<Tooltip title={gvar.gsm.token.intoPaneTooltip}>
+						<button
+							className="intoPane"
+							disabled={!fx.enabled || !(backdropTab ? active.backdropFilter : active.elemFilter)}
+							onClick={(e) => {
+								if (!checkFilterDeviationOrActiveSvg(fx.filters, fx.svgFilters)) return
+								setCurrent(
+									produce(fx, (d) => {
+										d.filters = getDefaultFx().filters
+										d.enabled = false
+										delete d.svgFilters
+									}),
+								)
+								sendMessageToConfigSync({ type: "ADD_PANE", filters: fx.filters, svgFilters: fx.svgFilters }, gvar.tabInfo.tabId, 0)
+								setTimeout(() => {
+									window.close()
+								}, 50)
+							}}
+						>
+							{gvar.gsm.token.intoPane}
+						</button>
+					</Tooltip>
 					<button
 						onClick={(e) => {
 							chrome.scripting.executeScript({ target: { tabId: gvar.tabInfo.tabId, allFrames: false }, files: ["pageDraw.js"] })

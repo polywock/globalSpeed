@@ -7,9 +7,12 @@
     "split": "分离声道",
     "splitTooltip": "分别控制音频声道",
     "reverse": "音频反转",
+    "reverseTooltip": "按住录制此标签页的音频并倒放",
     "equalizer": "均衡器",
     "pitchHdTooltip": "更佳质量",
-    "equalizerPower": "增强均衡器功率"
+    "equalizerPower": "增强均衡器功率",
+    "recording": "录音中",
+    "playing": "播放中"
   },
   "warnings": {
     "unusedGlobal": "释放未使用的全局快捷键。",
@@ -54,7 +57,8 @@
     "both": "两者",
     "selector": "选择器",
     "selectorTooltip": "用于查找要过滤元素的 CSS 选择器。默认情况下只针对视频，但你可以使用 'video, img, canvas' 来同时选择视频、图像和游戏。",
-    "intoPane": "制成窗格",
+    "intoPane": "制成窗口",
+    "intoPaneTooltip": "将滤镜变为可浮动、可拖拽的窗口",
     "warning": "警告",
     "filters": "滤镜",
     "transforms": "变换",
@@ -99,7 +103,9 @@
     "left": "左",
     "right": "右",
     "smallStep": "小步",
-    "largeStep": "大步"
+    "largeStep": "大步",
+    "moveDown": "下移",
+    "moveUp": "上移"
   },
   "placer": {
     "windowBounds": {
@@ -114,6 +120,7 @@
     "cancel": "取消"
   },
   "filter": {
+    "swap": "交换视频和页面筛选器",
     "grayscale": "灰度",
     "sepia": "棕褐色",
     "hueRotate": "色相旋转",
@@ -167,7 +174,8 @@
     "runCode": "运行代码",
     "openUrl": "打开网址",
     "speed": "速度",
-    "speedChangesPitch": "速度改变音高",
+    "speedChangesPitch": "允许改变音高",
+    "speedChangesPitchTooltip": "启用后，改变速度也会改变音频的音高。",
     "pin": "固定标签页",
     "state": "状态",
     "seek": "移动时间轴",
@@ -246,7 +254,7 @@
       "virtual": "虚拟",
       "grantPermission": "授权",
       "grantPermissionTooltip": "为了启用全部功能，包括嵌入视频支持，必须启用此权限。对于有限功能，您可以通过右键点击工具栏图标按站点启用。",
-      "speedSlider": "速度滑块",
+      "speedSlider": "显示速度滑块",
       "textSize": "文字大小",
       "speedPresets": "速度预设",
       "widget": {
@@ -313,7 +321,9 @@
         "sameTab": "当前标签页"
       },
       "pressAndHold": "按住",
-      "pressAndHoldTooltip": "如果启用，则在交互调整值时必须按住键。"
+      "pressAndHoldTooltip": "如果启用，则在交互调整值时必须按住键。",
+      "keyPickerInput": "点击更改",
+      "keyPickerInputTooltip": "按下新快捷键"
     },
     "rules": {
       "header": "URL规则",

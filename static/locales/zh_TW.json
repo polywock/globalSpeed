@@ -7,9 +7,12 @@
     "split": "聲道分離",
     "splitTooltip": "分別控制音訊聲道",
     "reverse": "反轉音訊",
+    "reverseTooltip": "按住以錄製此分頁的音訊並倒放播放",
     "equalizer": "等化器",
     "pitchHdTooltip": "更佳品質",
-    "equalizerPower": "增強等化器功率"
+    "equalizerPower": "增強等化器功率",
+    "recording": "錄音中",
+    "playing": "播放中"
   },
   "warnings": {
     "unusedGlobal": "釋出未使用的全域快捷鍵",
@@ -55,6 +58,7 @@
     "selector": "選擇器",
     "selectorTooltip": "用來尋找要過濾元素的 CSS 選擇器。預設僅針對影片，但你也可以使用 'video, img, canvas' 來同時針對影片、圖片和遊戲。",
     "intoPane": "轉為視窗",
+    "intoPaneTooltip": "將濾鏡變成可浮動、可拖曳的視窗",
     "warning": "警告",
     "filters": "濾鏡",
     "transforms": "轉換",
@@ -99,7 +103,9 @@
     "left": "左",
     "right": "右",
     "smallStep": "小步",
-    "largeStep": "大步"
+    "largeStep": "大步",
+    "moveDown": "下移",
+    "moveUp": "上移"
   },
   "placer": {
     "windowBounds": {
@@ -114,6 +120,7 @@
     "cancel": "取消"
   },
   "filter": {
+    "swap": "交換影片與頁面篩選器",
     "grayscale": "灰階",
     "sepia": "復古",
     "hueRotate": "色相旋轉",
@@ -167,7 +174,8 @@
     "runCode": "執行程式碼",
     "openUrl": "開啟網址",
     "speed": "速度",
-    "speedChangesPitch": "速度影響音高",
+    "speedChangesPitch": "允許音高變化",
+    "speedChangesPitchTooltip": "啟用後，變更速度也會改變音訊的音高。",
     "pin": "釘選分頁",
     "state": "狀態",
     "seek": "移動時間軸",
@@ -246,7 +254,7 @@
       "virtual": "虛擬",
       "grantPermission": "授予權限",
       "grantPermissionTooltip": "要啟用完整功能（包含嵌入影片支援），必須啟用此權限。如需有限功能，您可以透過在工具列圖示上按右鍵逐一啟用各個網站。",
-      "speedSlider": "速度滑桿",
+      "speedSlider": "顯示速度滑桿",
       "textSize": "文字大小",
       "speedPresets": "速度預設設定",
       "widget": {
@@ -313,7 +321,9 @@
         "sameTab": "目前分頁"
       },
       "pressAndHold": "按住不放",
-      "pressAndHoldTooltip": "啟用時，互動調整數值時必須按住按鍵。"
+      "pressAndHoldTooltip": "啟用時，互動調整數值時必須按住按鍵。",
+      "keyPickerInput": "點擊以更改",
+      "keyPickerInputTooltip": "按下新的快捷鍵"
     },
     "rules": {
       "header": "網址規則",

@@ -6,9 +6,12 @@
     "split": "Pisah",
     "splitTooltip": "Kontrol saluran audio secara terpisah",
     "reverse": "Balikkan audio",
+    "reverseTooltip": "Tekan dan tahan untuk merekam audio tab ini dan memutarnya kembali secara terbalik",
     "equalizer": "Ekualiser",
     "pitchHdTooltip": "Kualitas lebih baik",
-    "equalizerPower": "Memperkuat daya ekualiser"
+    "equalizerPower": "Memperkuat daya ekualiser",
+    "recording": "Merekam",
+    "playing": "Memutar"
   },
   "warnings": {
     "unusedGlobal": "Lepaskan kunci pintas global yang tidak digunakan",
@@ -53,7 +56,8 @@
     "both": "Keduanya",
     "selector": "Pemilih",
     "selectorTooltip": "Selector CSS yang digunakan untuk menemukan elemen yang akan difilter. Secara default hanya menargetkan video, tetapi Anda dapat menggunakan 'video, img, canvas' untuk menargetkan video, gambar, dan permainan.",
-    "intoPane": "Ke panel",
+    "intoPane": "Ke jendela",
+    "intoPaneTooltip": "Ubah filter menjadi jendela melayang yang bisa diseret",
     "warning": "Peringatan",
     "filters": "Filter",
     "transforms": "Transformasi",
@@ -98,7 +102,9 @@
     "left": "Kiri",
     "right": "Kanan",
     "smallStep": "Langkah kecil",
-    "largeStep": "Langkah besar"
+    "largeStep": "Langkah besar",
+    "moveDown": "Pindahkan ke bawah",
+    "moveUp": "Pindahkan ke atas"
   },
   "placer": {
     "windowBounds": {
@@ -113,6 +119,7 @@
     "cancel": "Batal"
   },
   "filter": {
+    "swap": "Tukar filter video dan halaman",
     "grayscale": "Abu-abu",
     "sepia": "Sepia",
     "hueRotate": "Putar-hue",
@@ -166,7 +173,8 @@
     "runCode": "Jalankan kode",
     "openUrl": "Buka URL",
     "speed": "Kecepatan",
-    "speedChangesPitch": "Kecepatan mengubah nada",
+    "speedChangesPitch": "Izinkan perubahan nada",
+    "speedChangesPitchTooltip": "Jika diaktifkan, mengubah kecepatan juga akan mengubah nada audio.",
     "pin": "Sematkan tab",
     "state": "Status",
     "seek": "Cari",
@@ -244,7 +252,7 @@
       "virtual": "Virtual",
       "grantPermission": "Berikan izin",
       "grantPermissionTooltip": "Untuk mengaktifkan fungsionalitas penuh, termasuk dukungan video embed, izin ini harus diaktifkan. Untuk fungsionalitas terbatas, Anda dapat mengaktifkannya per situs dengan mengklik kanan ikon toolbar.",
-      "speedSlider": "Slider kecepatan",
+      "speedSlider": "Tampilkan penggeser kecepatan",
       "textSize": "Ukuran teks",
       "speedPresets": "Preset kecepatan",
       "widget": {
@@ -311,7 +319,9 @@
         "sameTab": "Tab saat ini"
       },
       "pressAndHold": "Tekan dan tahan",
-      "pressAndHoldTooltip": "Jika diaktifkan, tombol harus ditekan dan ditahan saat menyesuaikan nilai secara interaktif."
+      "pressAndHoldTooltip": "Jika diaktifkan, tombol harus ditekan dan ditahan saat menyesuaikan nilai secara interaktif.",
+      "keyPickerInput": "Klik untuk mengubah",
+      "keyPickerInputTooltip": "Tekan pintasan baru"
     },
     "rules": {
       "header": "Aturan URL",

@@ -32,10 +32,12 @@ export function ListItem(props: ListItemProps) {
 		>
 			{props.label && (
 				<div className="ListItemLabel" onClick={props.onClearLabel}>
-					<span>
-						{props.label}
-						<GoX />
-					</span>
+					<Tooltip title={gvar.gsm.token.delete}>
+						<span>
+							{props.label}
+							<GoX />
+						</span>
+					</Tooltip>
 				</div>
 			)}
 			<div className="ListItemCore">
@@ -45,7 +47,7 @@ export function ListItem(props: ListItemProps) {
 				<div className="children">{props.children}</div>
 
 				{/* Delete */}
-				<Tooltip title={gvar.gsm.token.delete} align="top">
+				<Tooltip title={gvar.gsm.token.delete}>
 					<button className="close icon" onClick={(e) => props.onRemove()}>
 						<GoX size="1.6rem" />
 					</button>

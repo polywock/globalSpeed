@@ -9,9 +9,12 @@
 		"split": "Split",
 		"splitTooltip": "Control audio channels separately",
 		"reverse": "Reverse audio",
+		"reverseTooltip": "Press and hold to record this tab's audio and play it back in reverse",
 		"equalizer": "Equalizer",
 		"pitchHdTooltip": "Better quality",
-		"equalizerPower": "Amplifies equalizer power"
+		"equalizerPower": "Amplifies equalizer power",
+		"recording": "Recording",
+		"playing": "Playing"
 	},
 	"warnings": {
 		"unusedGlobal": "Release unused global shortcut keys",
@@ -56,7 +59,8 @@
 		"both": "Both",
 		"selector": "Selector",
 		"selectorTooltip": "CSS selector used to find elements to filter. By default it only targets videos, but you can use 'video, img, canvas' to target videos, images and games.",
-		"intoPane": "Into pane",
+		"intoPane": "Into window",
+		"intoPaneTooltip": "Turn filters into a floating, draggable window",
 		"warning": "Warning",
 		"filters": "Filters",
 		"transforms": "Transforms",
@@ -101,7 +105,9 @@
 		"left": "Left",
 		"right": "Right",
 		"smallStep": "Small step",
-		"largeStep": "Large step"
+		"largeStep": "Large step",
+		"moveDown": "Move down",
+		"moveUp": "Move up"
 	},
 	"placer": {
 		"windowBounds": {
@@ -116,6 +122,7 @@
 		"cancel": "Cancel"
 	},
 	"filter": {
+		"swap": "Swap video and page filters",
 		"grayscale": "Grayscale",
 		"sepia": "Sepia",
 		"hueRotate": "Hue-rotate",
@@ -169,7 +176,8 @@
 		"runCode": "Run code",
 		"openUrl": "Open URL",
 		"speed": "Speed",
-		"speedChangesPitch": "Speed changes pitch",
+		"speedChangesPitch": "Allow pitch shift",
+		"speedChangesPitchTooltip": "When enabled, changing speed will also change the pitch of the audio.",
 		"pin": "Pin tab",
 		"state": "State",
 		"seek": "Seek",
@@ -248,7 +256,7 @@
 			"virtual": "Virtual",
 			"grantPermission": "Grant permission",
 			"grantPermissionTooltip": "To enable full functionality, including embed video support, this permission must be enabled. For limited functionality, you can enable on a site-by-site basis by right clicking the toolbar icon.",
-			"speedSlider": "Speed slider",
+			"speedSlider": "Show speed slider",
 			"textSize": "Text size",
 			"speedPresets": "Speed presets",
 			"widget": {
@@ -315,7 +323,9 @@
 				"sameTab": "Current tab"
 			},
 			"pressAndHold": "Press and hold",
-			"pressAndHoldTooltip": "If enabled, the key must be held down while interactively adjusting the value."
+			"pressAndHoldTooltip": "If enabled, the key must be held down while interactively adjusting the value.",
+			"keyPickerInput": "Click to change",
+			"keyPickerInputTooltip": "Press new shortcut"
 		},
 		"rules": {
 			"header": "URL Rules",

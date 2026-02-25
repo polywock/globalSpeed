@@ -4,6 +4,7 @@ import { connectReversePort } from "@/background/utils/tabCapture"
 import { getMediaDataWithScopes } from "@/background/utils/getAutoMedia"
 import { sendMediaEvent } from "@/utils/configUtils"
 import "./ReverseButton.css"
+import { Tooltip } from "@/comps/Tooltip"
 
 declare global {
 	interface Message {
@@ -64,12 +65,29 @@ export function ReverseButton(props: ReverseButtonProps) {
 	}
 
 	return (
-		<button
-			className={`toggle ReverseButton ${status == null ? "" : status ? "enabled playing" : "enabled recording"}`}
-			onPointerDown={onPointerDown}
-		>
-			{status == null ? gvar.gsm.audio.reverse : status ? <FaVolumeUp size="1em" /> : <FaMicrophone size="1em" />}
-		</button>
+		<Tooltip title={status == null ? gvar.gsm.audio.reverseTooltip : ""}>
+			<button
+				className={`toggle ReverseButton ${status == null ? "" : status ? "enabled playing" : "enabled recording"}`}
+				onPointerDown={onPointerDown}
+			>
+				{status == null ? (
+					<>
+						<FaMicrophone size="1em" />
+						{gvar.gsm.audio.reverse}
+					</>
+				) : status ? (
+					<>
+						<FaVolumeUp size="1em" />
+						{gvar.gsm.audio.playing}
+					</>
+				) : (
+					<>
+						<FaMicrophone size="1em" />
+						{gvar.gsm.audio.recording}
+					</>
+				)}
+			</button>
+		</Tooltip>
 	)
 }
 

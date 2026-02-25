@@ -118,7 +118,8 @@ textarea {
 	padding: 5px;
 
 	&:focus {
-		border: 1px solid var(--focus-color);
+		border-color: var(--focus-color);
+		border-style: solid;
 		outline: none;
 	}
 
@@ -311,6 +312,7 @@ select {
 	box-sizing: content-box;
 	visibility: hidden;
 	user-select: none;
+	border-radius: var(--radius);
 
 	&.active {
 		color: var(--icon-vibrant-color);

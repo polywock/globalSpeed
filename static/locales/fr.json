@@ -6,9 +6,12 @@
     "split": "Diviser",
     "splitTooltip": "Contrôler les canaux audio séparément",
     "reverse": "Inverser l’audio",
+    "reverseTooltip": "Appuyez et maintenez pour enregistrer l’audio de cet onglet et le rejouer à l’envers",
     "equalizer": "Égaliseur",
     "pitchHdTooltip": "Meilleure qualité",
-    "equalizerPower": "Amplifie la puissance de l’égaliseur"
+    "equalizerPower": "Amplifie la puissance de l’égaliseur",
+    "recording": "Enregistrement",
+    "playing": "Lecture"
   },
   "warnings": {
     "unusedGlobal": "Libérez les raccourcis globaux inutilisés.",
@@ -53,7 +56,8 @@
     "both": "Les deux",
     "selector": "Sélecteur",
     "selectorTooltip": "Sélecteur CSS utilisé pour trouver les éléments à filtrer. Par défaut, il cible uniquement les vidéos, mais vous pouvez utiliser 'video, img, canvas' pour cibler les vidéos, les images et les jeux.",
-    "intoPane": "Créer une fenêtre",
+    "intoPane": "En fenêtre",
+    "intoPaneTooltip": "Transformer les filtres en fenêtre flottante déplaçable",
     "warning": "Avertissement",
     "filters": "Filtres",
     "transforms": "Transformations",
@@ -98,7 +102,9 @@
     "left": "Gauche",
     "right": "Droite",
     "smallStep": "Petit pas",
-    "largeStep": "Grand pas"
+    "largeStep": "Grand pas",
+    "moveDown": "Descendre",
+    "moveUp": "Monter"
   },
   "placer": {
     "windowBounds": {
@@ -113,6 +119,7 @@
     "cancel": "Annuler"
   },
   "filter": {
+    "swap": "Permuter les filtres vidéo et de page",
     "grayscale": "Niveaux de gris",
     "sepia": "Sépia",
     "hueRotate": "Rotation des teintes",
@@ -166,7 +173,8 @@
     "runCode": "Exécuter le code",
     "openUrl": "Ouvrir l'URL",
     "speed": "Vitesse",
-    "speedChangesPitch": "La vitesse change le ton",
+    "speedChangesPitch": "Autoriser le changement de hauteur",
+    "speedChangesPitchTooltip": "Lorsque cette option est activée, modifier la vitesse modifiera aussi la hauteur du son.",
     "pin": "Épingler l'onglet",
     "state": "État",
     "seek": "Rechercher",
@@ -245,7 +253,7 @@
       "virtual": "Virtuel",
       "grantPermission": "Accorder l'autorisation",
       "grantPermissionTooltip": "Pour activer toutes les fonctionnalités, y compris la prise en charge des vidéos intégrées, cette autorisation doit être activée. Pour une fonctionnalité limitée, vous pouvez l'activer individuellement sur chaque site en cliquant avec le bouton droit sur l'icône de la barre d'outils.",
-      "speedSlider": "Curseur de vitesse",
+      "speedSlider": "Afficher le curseur de vitesse",
       "textSize": "Taille du texte",
       "speedPresets": "Préréglages de vitesse",
       "widget": {
@@ -312,7 +320,9 @@
         "sameTab": "Onglet actuel"
       },
       "pressAndHold": "Appuyer et maintenir",
-      "pressAndHoldTooltip": "Si activé, la touche doit être maintenue enfoncée pendant que la valeur est ajustée de manière interactive."
+      "pressAndHoldTooltip": "Si activé, la touche doit être maintenue enfoncée pendant que la valeur est ajustée de manière interactive.",
+      "keyPickerInput": "Cliquer pour modifier",
+      "keyPickerInputTooltip": "Appuyez sur le nouveau raccourci"
     },
     "rules": {
       "header": "Règles d'URL",

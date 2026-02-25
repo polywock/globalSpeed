@@ -41,23 +41,30 @@
 	& > .ListItemLabel {
 		& > span {
 			display: inline-block;
-			padding: 2px 10px;
+			padding: 4px 8px;
 			background-color: var(--icon-vibrant-color);
 			color: var(--pure-color);
 			font-size: 0.95em;
 			user-select: none;
-
+			border-radius: var(--radius);
 			&:hover {
 				svg {
-					display: inline-block;
+					width: auto;
+					padding-left: 5px;
 				}
 			}
 
 			svg {
+				display: inline-block;
 				line-height: none;
-				display: none;
-				transform: scale(2);
-				padding-left: 5px;
+				width: 0;
+				overflow: hidden;
+				vertical-align: middle;
+				font-size: 1.3em;
+				interpolate-size: allow-keywords;
+				transition:
+					width 150ms ease-out,
+					padding 150ms ease-out;
 			}
 		}
 	}

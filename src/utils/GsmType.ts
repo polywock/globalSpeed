@@ -8,9 +8,12 @@ export type Gsm = {
     split: string,
     splitTooltip: string,
     reverse: string,
+    reverseTooltip: string,
     equalizer: string,
     pitchHdTooltip: string,
-    equalizerPower: string
+    equalizerPower: string,
+    recording: string,
+    playing: string
   },
   warnings: {
     unusedGlobal: string,
@@ -56,6 +59,7 @@ export type Gsm = {
     selector: string,
     selectorTooltip: string,
     intoPane: string,
+    intoPaneTooltip: string,
     warning: string,
     filters: string,
     transforms: string,
@@ -100,7 +104,9 @@ export type Gsm = {
     left: string,
     right: string,
     smallStep: string,
-    largeStep: string
+    largeStep: string,
+    moveDown: string,
+    moveUp: string
   },
   placer: {
     windowBounds: {
@@ -115,6 +121,7 @@ export type Gsm = {
     cancel: string
   },
   filter: {
+    swap: string,
     grayscale: string,
     sepia: string,
     hueRotate: string,
@@ -169,6 +176,7 @@ export type Gsm = {
     openUrl: string,
     speed: string,
     speedChangesPitch: string,
+    speedChangesPitchTooltip: string,
     pin: string,
     state: string,
     seek: string,
@@ -314,7 +322,9 @@ export type Gsm = {
         sameTab: string
       },
       pressAndHold: string,
-      pressAndHoldTooltip: string
+      pressAndHoldTooltip: string,
+      keyPickerInput: string,
+      keyPickerInputTooltip: string
     },
     rules: {
       header: string,

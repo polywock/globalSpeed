@@ -10,4 +10,8 @@
 		display: flex;
 		column-gap: 10px;
 	}
+
+	.RegularTooltip {
+		margin-left: 7px;
+	}
 }

@@ -12,6 +12,8 @@ type Env = {
 	activeAc?: AbortController
 	timeoutId?: number
 	wasClicked?: boolean
+	redo?: () => void
+	redoCount?: number
 }
 
 let latestCleanupFn: Function
@@ -19,7 +21,7 @@ let latestCleanupFn: Function
 export type TooltipProps = {
 	children: React.ReactNode
 	title?: string
-	align: "top" | "bottom" | "left" | "right"
+	align?: "top" | "bottom" | "left" | "right"
 	offset?: number
 	maxWidth?: number
 	withClass?: string
@@ -27,6 +29,8 @@ export type TooltipProps = {
 	rawOffsetY?: number
 	allowClick?: boolean
 	timeout?: ReturnType<typeof setTimeout>
+	hmr?: boolean
+	maxHmr?: number
 }
 
 let popup = document.createElement("div")
@@ -47,6 +51,7 @@ export function Tooltip(props: TooltipProps) {
 			clearTimeout(env.timeoutId)
 			env.activeAc?.abort()
 			delete env.activeAc
+			delete env.redo
 			popup.remove()
 		}
 
@@ -75,6 +80,7 @@ export function Tooltip(props: TooltipProps) {
 
 			// Update env
 			env.activeAc = new AbortController()
+			env.redoCount = 0
 			env.wasClicked = !isHover
 			env.timeoutId = setTimeout(ensureClean, env.props.timeout || DEFAULT_TIMEOUT)
 			latestCleanupFn = ensureClean
@@ -83,15 +89,27 @@ export function Tooltip(props: TooltipProps) {
 			window.addEventListener("wheel", ensureClean, { signal: env.activeAc.signal, once: true })
 			window.addEventListener("scroll", ensureClean, { signal: env.activeAc.signal, once: true })
 			window.addEventListener("resize", ensureClean, { signal: env.activeAc.signal, once: true })
-			env.wasClicked && window.addEventListener("pointerdown", ensureCleanForClick, { signal: env.activeAc.signal, once: true })
+			env.wasClicked && window.addEventListener("pointerdown", ensureCleanForClick, { signal: env.activeAc.signal })
 
 			// Set popup
 			popup.innerText = env.props.title
 			positionAndPresentPopup(env.props, main.getBoundingClientRect())
+
+			// For HMR
+			env.redo = () => {
+				popup.innerText = env.props.title
+				positionAndPresentPopup(env.props, main.getBoundingClientRect())
+				env.redoCount = (env.redoCount || 0) + 1
+
+				// Push timeout
+				clearTimeout(env.timeoutId)
+				env.timeoutId = setTimeout(ensureClean, env.props.timeout || DEFAULT_TIMEOUT)
+			}
 		}
 
-		const onPointerLeave = (e?: React.PointerEvent | React.FocusEvent) => {
+		const onPointerLeave = (e: PointerEvent) => {
 			if (!env.activeAc || env.wasClicked) return
+			if (e.relatedTarget instanceof Node && main.contains(e.relatedTarget)) return
 			ensureClean()
 		}
 
@@ -106,11 +124,21 @@ export function Tooltip(props: TooltipProps) {
 		}
 	}, [props.allowClick])
 
+	// Apply HMR
+	useEffect(() => {
+		if (!env.activeAc) return
+		if (env.props.hmr !== false && (!env.props.maxHmr || env.props.maxHmr > (env.redoCount || 0))) {
+			env.redo?.()
+		} else {
+			latestCleanupFn?.()
+		}
+	}, [props.title])
+
 	return cloneElement(props.children as React.ReactElement<any>, { ref })
 }
 
 function positionAndPresentPopup(props: TooltipProps, mainBounds: DOMRect) {
-	let align = props.align
+	let align = props.align || "top"
 	let offset = props.offset ?? DEFAULT_OFFSET
 	let maxWidth = props.maxWidth ?? DEFAULT_MAX_WIDTH
 	let x = 0
@@ -128,7 +156,11 @@ function positionAndPresentPopup(props: TooltipProps, mainBounds: DOMRect) {
 	popup.style.top = "0px"
 	popup.style.transform = "translate(-9999px, -9999px)"
 	let popupBounds = popup.getBoundingClientRect()
-	popup.style.transform = ""
+
+	// Keep hidden if empty text.
+	if (popup.textContent.trim()) {
+		popup.style.transform = ""
+	}
 
 	// Swap directions if need be.
 	const remainingTop = mainBounds.y - offset
