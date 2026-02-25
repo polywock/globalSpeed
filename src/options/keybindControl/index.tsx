@@ -167,19 +167,21 @@ export const KeybindControl = (props: KeybindControlProps) => {
 			)}
 
 			{/* Status */}
-			<input
-				type="checkbox"
-				checked={!!value.enabled}
-				onChange={(e) => {
-					props.onChange(
-						value.id,
-						produce(value, (d) => {
-							d.enabled = !value.enabled
-							requestSyncContextMenu()
-						}),
-					)
-				}}
-			/>
+			<Tooltip title={value.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
+				<input
+					type="checkbox"
+					checked={!!value.enabled}
+					onChange={(e) => {
+						props.onChange(
+							value.id,
+							produce(value, (d) => {
+								d.enabled = !value.enabled
+								requestSyncContextMenu()
+							}),
+						)
+					}}
+				/>
+			</Tooltip>
 
 			{/* Name area */}
 			<NameArea command={command} onChange={props.onChange} value={value} hasSpecial={hasSpecial} reference={ref} />

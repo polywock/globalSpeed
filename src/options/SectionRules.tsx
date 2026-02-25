@@ -16,6 +16,7 @@ import { KebabList, KebabListProps } from "./KebabList"
 import { makeLabelWithTooltip } from "./keybindControl/NameArea"
 import { GearIcon } from "@/comps/GearIcon"
 import { DevWarning } from "./DevWarning"
+import { Tooltip } from "@/comps/Tooltip"
 import "./SectionRules.css"
 
 export function SectionRules(props: {}) {
@@ -146,17 +147,19 @@ export function Rule(props: RuleProps) {
 	return (
 		<div className="Rule">
 			{/* Status */}
-			<input
-				type="checkbox"
-				checked={!!rule.enabled}
-				onChange={(e) => {
-					onChange(
-						produce(rule, (d) => {
-							d.enabled = !d.enabled
-						}),
-					)
-				}}
-			/>
+			<Tooltip title={rule.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
+				<input
+					type="checkbox"
+					checked={!!rule.enabled}
+					onChange={(e) => {
+						onChange(
+							produce(rule, (d) => {
+								d.enabled = !d.enabled
+							}),
+						)
+					}}
+				/>
+			</Tooltip>
 
 			{/* URL conditions entry */}
 			<button

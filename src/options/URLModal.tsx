@@ -7,6 +7,7 @@ import { getDefaultURLConditionPart } from "../defaults"
 import { findRemoveFromArray } from "../utils/helper"
 import { extractURLPartValueKey, getActiveParts, getSelectedParts } from "@/utils/configUtils"
 import "./URLModal.css"
+import { Tooltip } from "@/comps/Tooltip"
 
 type Props = {
 	onClose: () => void
@@ -107,17 +108,19 @@ function ULRConditionPart(props: { part: URLConditionPart; onChange: (part: URLC
 	return (
 		<div key={part.id}>
 			{/* Status */}
-			<input
-				type="checkbox"
-				checked={!part.disabled}
-				onChange={() => {
-					onChange(
-						produce(part, (d) => {
-							d.disabled = !d.disabled
-						}),
-					)
-				}}
-			/>
+			<Tooltip title={part.disabled ? gvar.gsm.token.on : gvar.gsm.token.off}>
+				<input
+					type="checkbox"
+					checked={!part.disabled}
+					onChange={() => {
+						onChange(
+							produce(part, (d) => {
+								d.disabled = !d.disabled
+							}),
+						)
+					}}
+				/>
+			</Tooltip>
 
 			{/* Match type */}
 			<select
@@ -148,14 +151,16 @@ function ULRConditionPart(props: { part: URLConditionPart; onChange: (part: URLC
 			/>
 
 			{/* Delete */}
-			<button
-				className="close icon"
-				onClick={() => {
-					onRemove(part)
-				}}
-			>
-				<GoX size="1.6rem" />
-			</button>
+			<Tooltip title={gvar.gsm.token.delete}>
+				<button
+					className="close icon"
+					onClick={() => {
+						onRemove(part)
+					}}
+				>
+					<GoX size="1.6rem" />
+				</button>
+			</Tooltip>
 		</div>
 	)
 }
