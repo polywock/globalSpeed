@@ -15,7 +15,7 @@
   },
   "warnings": {
     "unusedGlobal": "Kullanılmayan genel kısayol tuşlarını kaldırın.",
-    "selectTooltip": "Medya sıcak tuşları için tercih ettiğiniz videoyu seçin. Arka plandaki müziği farklı bir sekmeden (veya global kısayol tuşları olan başka bir programdan) kontrol etmek istiyorsanız kullanışlıdır.",
+    "selectTooltip": "Kısayollar için etkin video olarak ayarla. Birden çok videolu sayfalarda veya arka plan videolarını kontrol etmek için faydalıdır.",
     "sliderTooltip": "Kesin kontrol için Shift tuşunu basılı tutun.",
     "captureRequired": "Tarayıcı veya menü kısayolu olarak ayarlanması gereken $1 kısayolunu gerektirir.",
     "jsUpdate": "Javascript kısayolları için Chrome veya Edge 136 veya daha yeni bir sürüm gereklidir",

@@ -15,7 +15,7 @@
   },
   "warnings": {
     "unusedGlobal": "Rilascia i tasti di scelta rapida globali non utilizzati.",
-    "selectTooltip": "Seleziona il video preferito per i tasti di scelta rapida multimediali. Utile se vuoi controllare la musica di sottofondo da una scheda diversa (o da un altro programma con tasti di scelta rapida globali).",
+    "selectTooltip": "Imposta come video attivo per le scorciatoie. Utile nelle pagine con più video o per controllare i video in background.",
     "sliderTooltip": "Tieni premuto il tasto Shift per un controllo preciso.",
     "captureRequired": "Richiede la scorciatoia $1, che deve essere configurata come scorciatoia del browser o del menu.",
     "jsUpdate": "Le scorciatoie Javascript richiedono Chrome o Edge versione 136 o successiva",

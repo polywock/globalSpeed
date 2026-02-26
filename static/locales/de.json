@@ -15,7 +15,7 @@
   },
   "warnings": {
     "unusedGlobal": "Freigabe nicht genutzter globaler Tastenkombinationen",
-    "selectTooltip": "Wähle ein bevorzugtes Video für Medientastenkombinationen aus. Nützlich, wenn du Hintergrundmusik von einem anderen Tab (oder einem anderen Programm mit globalen Hotkeys) steuern möchtest.",
+    "selectTooltip": "Als aktives Video für Tastenkürzel festlegen. Hilfreich auf Seiten mit mehreren Videos oder zur Steuerung von Hintergrundvideos.",
     "sliderTooltip": "Halte die Umschalttaste gedrückt für präzise Steuerung.",
     "captureRequired": "Erfordert den Kurzbefehl $1, der als Browser- oder Menü-Kurzbefehl eingerichtet sein muss.",
     "jsUpdate": "Javascript-Verknüpfungen erfordern Chrome oder Edge Version 136 oder neuer",

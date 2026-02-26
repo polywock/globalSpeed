@@ -15,7 +15,7 @@
   },
   "warnings": {
     "unusedGlobal": "Libera las teclas de acceso rápido globales no utilizadas.",
-    "selectTooltip": "Selecciona el video preferido para las teclas de acceso rápido de medios. Útil si quieres controlar la música de fondo desde una pestaña diferente (o desde otro programa con teclas de acceso rápido globales).",
+    "selectTooltip": "Establecer como el vídeo activo para los atajos. Útil en páginas con varios vídeos o para controlar vídeos de fondo.",
     "sliderTooltip": "Mantén presionada la tecla Shift para un control preciso.",
     "captureRequired": "Requiere el atajo $1, que debe configurarse como un atajo del navegador o del menú.",
     "jsUpdate": "Los atajos de Javascript requieren Chrome o Edge versión 136 o más reciente",

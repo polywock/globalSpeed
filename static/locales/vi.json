@@ -15,7 +15,7 @@
   },
   "warnings": {
     "unusedGlobal": "Giải phóng các phím tắt toàn cầu không được sử dụng.",
-    "selectTooltip": "Chọn video ưa thích cho các phím tắt phương tiện. Hữu ích nếu bạn muốn điều khiển âm nhạc nền từ một tab khác (hoặc từ một chương trình khác với các phím tắt toàn cầu).",
+    "selectTooltip": "Đặt làm video đang hoạt động cho phím tắt. Hữu ích trên trang có nhiều video hoặc để điều khiển video nền.",
     "sliderTooltip": "Giữ phím Shift để điều chỉnh chính xác.",
     "captureRequired": "Yêu cầu phím tắt $1, phải được thiết lập làm phím tắt trên trình duyệt hoặc trong menu.",
     "jsUpdate": "Phím tắt Javascript yêu cầu Chrome hoặc Edge phiên bản 136 trở lên",

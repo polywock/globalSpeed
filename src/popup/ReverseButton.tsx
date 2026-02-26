@@ -65,7 +65,7 @@ export function ReverseButton(props: ReverseButtonProps) {
 	}
 
 	return (
-		<Tooltip title={status == null ? gvar.gsm.audio.reverseTooltip : ""}>
+		<Tooltip hmr={false} title={status == null ? gvar.gsm.audio.reverseTooltip : ""}>
 			<button
 				className={`toggle ReverseButton ${status == null ? "" : status ? "enabled playing" : "enabled recording"}`}
 				onPointerDown={onPointerDown}

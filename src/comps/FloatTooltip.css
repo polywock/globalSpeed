@@ -12,5 +12,6 @@
 		padding: 5px;
 		background-color: var(--error-border-color);
 		color: var(--pure-color);
+		border-radius: var(--radius);
 	}
 }

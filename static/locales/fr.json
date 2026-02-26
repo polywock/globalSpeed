@@ -15,7 +15,7 @@
   },
   "warnings": {
     "unusedGlobal": "Libérez les raccourcis globaux inutilisés.",
-    "selectTooltip": "Sélectionnez la vidéo préférée pour les raccourcis multimédias. Utile si vous voulez contrôler la musique de fond depuis un autre onglet (ou depuis un autre programme avec des raccourcis globaux).",
+    "selectTooltip": "Définir comme vidéo active pour les raccourcis. Utile sur les pages avec plusieurs vidéos ou pour contrôler les vidéos d’arrière-plan.",
     "sliderTooltip": "Maintenez la touche Shift pour un contrôle précis.",
     "captureRequired": "Nécessite le raccourci $1, qui doit être configuré comme raccourci de navigateur ou de menu.",
     "jsUpdate": "Les raccourcis JavaScript nécessitent Chrome ou Edge version 136 ou plus récente",

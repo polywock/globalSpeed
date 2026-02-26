@@ -16,7 +16,7 @@
   },
   "warnings": {
     "unusedGlobal": "释放未使用的全局快捷键。",
-    "selectTooltip": "选择媒体热键的首选视频。如果你想从不同的标签页（或使用全局热键的另一程序）控制背景音乐，这会很有用。",
+    "selectTooltip": "设为快捷键的当前视频。在含多个视频的页面上很有用，也可用于控制背景视频。",
     "sliderTooltip": "按住Shift键以进行精确控制。",
     "captureRequired": "需要 $1 快捷键，且必须设置为浏览器或菜单快捷键。",
     "jsUpdate": "Javascript 快捷键需要 Chrome 或 Edge 版本 136 或更高版本",

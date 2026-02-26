@@ -15,7 +15,7 @@
   },
   "warnings": {
     "unusedGlobal": "Lepaskan kekunci pintasan global yang tidak digunakan",
-    "selectTooltip": "Pilih video pilihan untuk kekunci pintasan media. Berguna jika anda mahu mengawal muzik latar dari tab lain (atau dari program lain dengan kekunci pintasan global).",
+    "selectTooltip": "Tetapkan sebagai video aktif untuk pintasan. Berguna pada halaman dengan berbilang video atau untuk mengawal video latar belakang.",
     "sliderTooltip": "Tekan kekunci shift untuk kawalan yang lebih tepat.",
     "captureRequired": "Memerlukan pintasan $1, yang mesti disediakan sebagai pintasan pelayar atau menu.",
     "jsUpdate": "Pintasan Javascript memerlukan Chrome atau Edge versi 136 atau lebih baru",

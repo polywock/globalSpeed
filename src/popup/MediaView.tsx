@@ -8,6 +8,7 @@ import type { MediaEvent } from "../contentScript/isolated/utils/applyMediaEvent
 import { FlatMediaInfo, MediaPath } from "../contentScript/isolated/utils/genMediaInfo"
 import { GrRevert } from "react-icons/gr"
 import "./MediaView.css"
+import { Tooltip } from "@/comps/Tooltip"
 
 const HAS_REQUEST_PIP = !!HTMLVideoElement.prototype.requestPictureInPicture
 
@@ -129,34 +130,38 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 				{!(HAS_REQUEST_PIP && info.hasVideoTrack && info.duration) ? (
 					<div />
 				) : (
-					<button
-						className={info.pipMode ? "active" : ""}
-						onClick={(e) => {
-							const event: MediaEvent = e.shiftKey ? { type: "FULLSCREEN", direct: true } : { type: "PIP" }
-							sendMediaEvent(event, info.key, tabId, frameId)
-						}}
-					>
-						<MdPictureInPictureAlt size={"1.285rem"} />
-					</button>
+					<Tooltip title={gvar.gsm.command.PiP}>
+						<button
+							className={info.pipMode ? "active" : ""}
+							onClick={(e) => {
+								const event: MediaEvent = e.shiftKey ? { type: "FULLSCREEN", direct: true } : { type: "PIP" }
+								sendMediaEvent(event, info.key, tabId, frameId)
+							}}
+						>
+							<MdPictureInPictureAlt size={"1.285rem"} />
+						</button>
+					</Tooltip>
 				)}
 
 				{/* Select */}
-				<button
-					title={gvar.gsm.warnings.selectTooltip}
-					className={pinned ? "active" : ""}
-					onClick={(e) => {
-						chrome.storage.session.set({
-							[`m:pin`]: pinned
-								? null
-								: ({
-										key: info.key,
-										tabInfo: info.tabInfo,
-									} as MediaPath),
-						})
-					}}
-				>
-					<FaMousePointer size={"1.285rem"} />
-				</button>
+				<Tooltip title={gvar.gsm.warnings.selectTooltip}>
+					<button
+						// title={gvar.gsm.warnings.selectTooltip}
+						className={pinned ? "active" : ""}
+						onClick={(e) => {
+							chrome.storage.session.set({
+								[`m:pin`]: pinned
+									? null
+									: ({
+											key: info.key,
+											tabInfo: info.tabInfo,
+										} as MediaPath),
+							})
+						}}
+					>
+						<FaMousePointer size={"1.285rem"} />
+					</button>
+				</Tooltip>
 			</div>
 		</div>
 	)

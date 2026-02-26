@@ -18,7 +18,7 @@
 	},
 	"warnings": {
 		"unusedGlobal": "Release unused global shortcut keys",
-		"selectTooltip": "Select preferred video for media hotkeys. Useful if you want to control background music from a different tab (or from another program with global hotkeys).",
+		"selectTooltip": "Set as the active video for shortcuts. Helpful on pages with multiple videos or to control background videos.",
 		"sliderTooltip": "Hold shift key for precise control.",
 		"captureRequired": "Requires the $1 shortcut, which must be set up as a browser or menu shortcut.",
 		"jsUpdate": "Javascript shortcuts require Chrome or Edge version 136 or newer",
@@ -39,7 +39,7 @@
 		"audioEffects": "Audio effects",
 		"videoEffects": "Video effects",
 		"settingsPage": "Settings",
-		"github": "View source code"
+		"github": "View source"
 	},
 	"token": {
 		"create": "Create",

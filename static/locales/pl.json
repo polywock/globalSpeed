@@ -15,7 +15,7 @@
   },
   "warnings": {
     "unusedGlobal": "Zwolnij nieużywane globalne skróty klawiszowe",
-    "selectTooltip": "Wybierz preferowane wideo dla skrótów multimedialnych. Przydatne, jeśli chcesz sterować muzyką w tle z innej karty (lub innego programu z globalnymi skrótami).",
+    "selectTooltip": "Ustaw jako aktywny film dla skrótów. Przydatne na stronach z wieloma filmami lub do sterowania filmami w tle.",
     "sliderTooltip": "Przytrzymaj klawisz shift dla precyzyjnej kontroli.",
     "captureRequired": "Wymaga skrótu $1, który musi być skonfigurowany jako skrót przeglądarki lub menu.",
     "jsUpdate": "Skróty Javascript wymagają przeglądarki Chrome lub Edge w wersji 136 lub nowszej",

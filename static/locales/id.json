@@ -15,7 +15,7 @@
   },
   "warnings": {
     "unusedGlobal": "Lepaskan kunci pintas global yang tidak digunakan",
-    "selectTooltip": "Pilih video yang diinginkan untuk hotkey media. Berguna jika Anda ingin mengontrol musik latar dari tab berbeda (atau dari program lain dengan hotkey global).",
+    "selectTooltip": "Tetapkan sebagai video aktif untuk pintasan. Berguna pada halaman dengan beberapa video atau untuk mengontrol video latar belakang.",
     "sliderTooltip": "Tahan tombol shift untuk kontrol presisi.",
     "captureRequired": "Memerlukan pintasan $1, yang harus disiapkan sebagai pintasan browser atau menu.",
     "jsUpdate": "Pintasan Javascript memerlukan Chrome atau Edge versi 136 atau lebih baru",

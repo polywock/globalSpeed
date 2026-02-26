@@ -16,7 +16,7 @@
   },
   "warnings": {
     "unusedGlobal": "釋出未使用的全域快捷鍵",
-    "selectTooltip": "選擇要使用媒體快捷鍵的影片。當您想要從不同分頁（或使用全域快捷鍵的其他程式）控制背景音樂時很有用。",
+    "selectTooltip": "設為捷徑的作用中影片。在有多部影片的頁面或要控制背景影片時很實用。",
     "sliderTooltip": "按住 Shift 鍵以精確控制。",
     "captureRequired": "需要 $1 快捷鍵，且必須設為瀏覽器或選單快捷鍵。",
     "jsUpdate": "Javascript 快捷方式需要 Chrome 或 Edge 版本 136 或更新版本",
