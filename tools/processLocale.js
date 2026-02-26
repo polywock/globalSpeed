@@ -123,7 +123,8 @@ async function ensureCasing() {
 		for (let leave of englishLeaves) {
 			let locale = lang.replace("_", "-")
 			const value = getNestedValue(otherJson, leave.path)
-			if (!value) continue
+			if (!value || typeof value !== "string") continue
+			if (firstLetterIndex(value) !== 0) continue
 			if (!isCapitalized(value, locale)) {
 				setNestedValue(otherJson, leave.path, capitalize(value, locale))
 				adjustedCount++
@@ -274,15 +275,26 @@ function getLeaves(obj, ctx = [], ignoreOptional = false) {
 	return leafs
 }
 
+function firstLetterIndex(text) {
+	for (let i = 0; i < text.length; i++) {
+		if (text[i].toLocaleUpperCase() !== text[i].toLocaleLowerCase()) return i
+	}
+	return -1
+}
+
 function isCapitalized(text, locale) {
 	if (!text) return
-	return text[0].toLocaleUpperCase(locale.replace("_", "-")) === text[0]
+	const i = firstLetterIndex(text)
+	if (i < 0) return
+	return text[i].toLocaleUpperCase(locale.replace("_", "-")) === text[i]
 }
 
 function capitalize(text, locale) {
 	if (!text) return
+	const i = firstLetterIndex(text)
+	if (i < 0) return text
 	const textArray = [...text]
-	textArray[0] = textArray[0].toLocaleUpperCase(locale)
+	textArray[i] = textArray[i].toLocaleUpperCase(locale.replace("_", "-"))
 	return textArray.join("")
 }
 
