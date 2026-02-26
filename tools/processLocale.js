@@ -17,6 +17,8 @@ let openai
 async function main() {
 	if (argv[2] === "--casing") {
 		ensureCasing()
+	} else if (argv[2] === "--punctuation") {
+		ensurePunctuation()
 	} else if (argv[2] === "--build") {
 		build()
 	} else {
@@ -24,10 +26,11 @@ async function main() {
 			console.error("No OpenAI key provided as environmental variable.")
 			exit(1)
 		}
+		await ensurePunctuation()
 		openai = new OpenAI({
 			apiKey: env.OPENAI_API_KEY,
 		})
-		adhereEnglish()
+		await adhereEnglish()
 	}
 }
 
@@ -131,6 +134,38 @@ async function ensureCasing() {
 				encoding: "utf8",
 			}))
 		console.log(`${lang}.json required ${adjustedCount} adjustments.`)
+	}
+}
+
+async function ensurePunctuation() {
+	let rootLocales = join("static", "locales")
+
+	for (let lang of ["en", ...ALL_LANGUAGES]) {
+		const path = join(rootLocales, `${lang}.json`)
+		const json = JSON.parse(await readFile(path, { encoding: "utf8" }))
+		const leaves = getLeaves(json)
+		let adjustedCount = 0
+
+		for (let leaf of leaves) {
+			if (leaf.path[0].startsWith(":")) continue
+			if (typeof leaf.value !== "string" || !leaf.value) continue
+
+			const v = leaf.value
+			const endsWithPeriod = v.endsWith(".") || v.endsWith("\u3002")
+			if (!endsWithPeriod) continue
+			if (v.endsWith("...")) continue
+			if (v.includes("\n")) continue
+			if (/\. [A-Z]/.test(v)) continue
+			if (v.indexOf("\u3002") >= 0 && v.indexOf("\u3002") < v.length - 1) continue
+
+			setNestedValue(json, leaf.path, v.slice(0, -1))
+			adjustedCount++
+		}
+
+		if (adjustedCount) {
+			await writeFile(path, JSON.stringify(json, null, 2), { encoding: "utf8" })
+		}
+		console.log(`${lang}.json: ${adjustedCount} period adjustments`)
 	}
 }
 
