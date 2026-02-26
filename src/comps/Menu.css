@@ -1,10 +1,12 @@
 .Menu {
 	position: fixed;
 	z-index: 99999999;
-	background-color: var(--text-color);
-	color: var(--pure-color);
 	user-select: none;
+	background-color: var(--fg-color-opp);
+	color: var(--text-color-opp);
+	border-color: var(--text-color-opp);
 	border-radius: var(--radius);
+	border: 2px solid var(--border);
 
 	& > div {
 		display: grid;
@@ -22,6 +24,8 @@
 
 	.RegularTooltip {
 		margin-left: 10px;
-		filter: invert(1);
+		background-color: inherit;
+		color: inherit;
+		border-color: inherit;
 	}
 }

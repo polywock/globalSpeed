@@ -9,7 +9,8 @@ const config = {
 	quoteProps: "as-needed",
 	bracketSpacing: true,
 	arrowParens: "always",
-	plugins: [],
+	plugins: ["@ianvs/prettier-plugin-sort-imports"],
+	importOrder: ["<BUILTIN_MODULES>", "<THIRD_PARTY_MODULES>", "^@/(.*)$", "^firefox/(.*)$", "^notFirefox/(.*)$", "^[./].*(?<!\\.css)$", "\\.css$"],
 }
 
 export default config

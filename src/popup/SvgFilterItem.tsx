@@ -1,13 +1,13 @@
 import { produce } from "immer"
-import { SvgFilter } from "@/types"
+import { useState } from "react"
 import { FaPowerOff } from "react-icons/fa"
 import { GoArrowDown, GoArrowUp, GoX } from "react-icons/go"
-import { moveItem } from "@/utils/helper"
 import { SliderPlus } from "@/comps/SliderPlus"
-import { SVG_COLOR_MATRIX_PRESETS, SVG_MOSAIC_PRESETS, SVG_RGB_PRESETS, SVG_SPECIAL_PRESETS, svgFilterInfos } from "@/defaults/filters"
 import { Tooltip } from "@/comps/Tooltip"
+import { SVG_COLOR_MATRIX_PRESETS, SVG_MOSAIC_PRESETS, SVG_RGB_PRESETS, SVG_SPECIAL_PRESETS, svgFilterInfos } from "@/defaults/filters"
 import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
-import { useState } from "react"
+import { SvgFilter } from "@/types"
+import { moveItem } from "@/utils/helper"
 import "./SvgFilterItem.css"
 
 const MOSAIC_DEFAULT = svgFilterInfos["mosaic"].generate()

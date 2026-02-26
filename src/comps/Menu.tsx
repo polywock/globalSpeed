@@ -1,5 +1,5 @@
-import { ModalBase } from "./ModalBase"
 import { FaCheck } from "react-icons/fa"
+import { ModalBase } from "./ModalBase"
 import "./Menu.css"
 
 export type MenuProps = {

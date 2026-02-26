@@ -1,31 +1,31 @@
-import {
-	Keybind,
-	Command,
-	StateView,
-	StateViewSelector,
-	AdjustMode,
-	ReferenceValues,
-	MediaProbe,
-	ItcInit,
-	Duration,
-	KeybindMatch,
-	Trigger,
-} from "../../types"
-import { CommandName, commandInfos } from "../../defaults/commands"
-import { sendMessageToConfigSync, intoFxFlags, sendMediaEvent, isSeekSmall, triggerToKey } from "../../utils/configUtils"
-import { checkContentScript, TabInfo } from "../../utils/browserUtils"
+import { produce } from "immer"
+import { IndicatorShowOpts } from "@/contentScript/isolated/utils/Indicator"
+import { hashWithStoredSalt } from "@/utils/hash"
 import type { MediaEvent, MediaEventCinema } from "../../contentScript/isolated/utils/applyMediaEvent"
-import { round, clamp, createWindowWithSafeBounds, formatDuration, isFirefox, wraparound, timeout } from "../../utils/helper"
 import { FlatMediaInfo } from "../../contentScript/isolated/utils/genMediaInfo"
 import { getDefaultAudioFx, getDefaultFx } from "../../defaults"
+import { commandInfos, CommandName } from "../../defaults/commands"
 import { filterInfos } from "../../defaults/filters"
-import { produce } from "immer"
-import { PushViewInit, fetchView, pushView } from "../../utils/state"
+import {
+	AdjustMode,
+	Command,
+	Duration,
+	ItcInit,
+	Keybind,
+	KeybindMatch,
+	MediaProbe,
+	ReferenceValues,
+	StateView,
+	StateViewSelector,
+	Trigger,
+} from "../../types"
+import { checkContentScript, TabInfo } from "../../utils/browserUtils"
+import { intoFxFlags, isSeekSmall, sendMediaEvent, sendMessageToConfigSync, triggerToKey } from "../../utils/configUtils"
+import { clamp, createWindowWithSafeBounds, formatDuration, isFirefox, round, timeout, wraparound } from "../../utils/helper"
+import { fetchView, pushView, PushViewInit } from "../../utils/state"
 import { getAutoMedia } from "./getAutoMedia"
-import { initTabCapture, isTabCaptured, releaseTabCapture } from "./tabCapture"
-import { hashWithStoredSalt } from "@/utils/hash"
-import { IndicatorShowOpts } from "@/contentScript/isolated/utils/Indicator"
 import { KeepAlive } from "./KeepAlive"
+import { initTabCapture, isTabCaptured, releaseTabCapture } from "./tabCapture"
 
 let lastSeek: { key: string; time: number; net: number }
 

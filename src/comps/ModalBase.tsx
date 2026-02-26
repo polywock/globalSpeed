@@ -1,8 +1,7 @@
-import { useEffect } from "react"
+import { ReactElement, useEffect, useRef } from "react"
 import { createPortal } from "react-dom"
-import { ReactElement, useRef } from "react"
-import "./ModalBase.css"
 import { isMobile } from "@/utils/helper"
+import "./ModalBase.css"
 
 type Props = {
 	children: ReactElement

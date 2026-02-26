@@ -1,18 +1,18 @@
+import { produce } from "immer"
 import { useRef, useState } from "react"
+import { getSelectedParts, requestSyncContextMenu } from "@/utils/configUtils"
+import { getDefaultURLCondition } from "../defaults"
+import { availableCommandNames, commandInfos, CommandName, getDefaultMenuKeybinds, getDefaultPageKeybinds } from "../defaults/commands"
+import { SetView, useStateView } from "../hooks/useStateView"
 import { CommandGroup, Keybind, StateView, Trigger } from "../types"
 import { areYouSure, isFirefox, isMobile, moveItem, randomId } from "../utils/helper"
-import { commandInfos, CommandName, getDefaultPageKeybinds, getDefaultMenuKeybinds, availableCommandNames } from "../defaults/commands"
-import { KeybindControl } from "./keybindControl"
 import { CommandWarning } from "./CommandWarning"
-import { SetView, useStateView } from "../hooks/useStateView"
-import { produce } from "immer"
-import { URLModal } from "./URLModal"
-import { getDefaultURLCondition } from "../defaults"
-import { getSelectedParts, requestSyncContextMenu } from "@/utils/configUtils"
-import { ListItem } from "./ListItem"
-import { List } from "./List"
-import "./SectionEditor.css"
 import { DevWarning, DevWarningType, useDevWarningType } from "./DevWarning"
+import { KeybindControl } from "./keybindControl"
+import { List } from "./List"
+import { ListItem } from "./ListItem"
+import { URLModal } from "./URLModal"
+import "./SectionEditor.css"
 
 type ListKey = "pageKeybinds" | "browserKeybinds" | "menuKeybinds"
 
@@ -280,7 +280,6 @@ function SectionControls(props: { listKey: ListKey; view: StateView; setView: Se
 					}
 					if (listKey === "menuKeybinds") updates.freshKeybinds = true
 					setView(updates as StateView)
-					if (listKey === "menuKeybinds") requestSyncContextMenu()
 				}}
 			>
 				{gvar.gsm.token.reset}

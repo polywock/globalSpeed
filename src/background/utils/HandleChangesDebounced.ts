@@ -1,5 +1,5 @@
-import debounce from "lodash.debounce"
 import type { DebouncedFunc, DebounceSettingsLeading } from "lodash"
+import debounce from "lodash.debounce"
 
 type HandleChangesFunction = (changes: chrome.storage.StorageChanges) => void
 

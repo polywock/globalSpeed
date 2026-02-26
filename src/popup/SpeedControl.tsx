@@ -1,13 +1,13 @@
+import { produce } from "immer"
 import { CSSProperties } from "react"
+import { BsMusicNoteList } from "react-icons/bs"
+import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight } from "react-icons/fa"
+import { NumericInput } from "@/comps/NumericInput"
+import { Tooltip } from "@/comps/Tooltip"
 import { getDefaultSpeedPresets } from "@/defaults/constants"
+import { clamp, isFirefox, isMobile, replaceArgs } from "@/utils/helper"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "../defaults/constants"
 import { useStateView } from "../hooks/useStateView"
-import { BsMusicNoteList } from "react-icons/bs"
-import { produce } from "immer"
-import { replaceArgs } from "@/utils/helper"
-import { clamp, domRectGetOffset, feedbackText, isFirefox, isMobile } from "@/utils/helper"
-import { NumericInput } from "@/comps/NumericInput"
-import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight } from "react-icons/fa"
 import "./SpeedControl.css"
 
 type SpeedControlProps = {
@@ -124,20 +124,16 @@ export function SpeedControl(props: SpeedControlProps) {
 			{/* Slider */}
 			{!!view.speedSlider && (
 				<div className="slider">
-					<BsMusicNoteList
-						title={gvar.gsm.command.speedChangesPitch}
-						size={"1.2rem"}
-						className={`${view.freePitch ? "active" : ""}`}
-						onClick={(e: React.MouseEvent<SVGElement>) => {
-							if (!view.freePitch) {
-								feedbackText(
-									gvar.gsm.command.speedChangesPitch,
-									domRectGetOffset((e.currentTarget as any as HTMLButtonElement).getBoundingClientRect(), 8, 30),
-								)
-							}
-							setView({ freePitch: !view.freePitch })
-						}}
-					/>
+					<Tooltip title={gvar.gsm.command.speedChangesPitch}>
+						<BsMusicNoteList
+							title={gvar.gsm.command.speedChangesPitch}
+							size={"1.2rem"}
+							className={`${view.freePitch ? "active" : ""}`}
+							onClick={(e: React.MouseEvent<SVGElement>) => {
+								setView({ freePitch: !view.freePitch })
+							}}
+						/>
+					</Tooltip>
 					<input
 						step={0.01}
 						type="range"

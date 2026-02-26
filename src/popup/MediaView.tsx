@@ -1,14 +1,13 @@
 import { type CSSProperties } from "react"
-import { clamp, formatDuration, formatDomain, feedbackText } from "../utils/helper"
-import { FaPlay, FaPause, FaBackward, FaForward, FaMousePointer } from "react-icons/fa"
+import { FaBackward, FaForward, FaMousePointer, FaPause, FaPlay, FaVolumeDown, FaVolumeMute, FaVolumeUp } from "react-icons/fa"
+import { GrRevert } from "react-icons/gr"
 import { MdPictureInPictureAlt } from "react-icons/md"
-import { FaVolumeMute, FaVolumeUp, FaVolumeDown } from "react-icons/fa"
-import { sendMediaEvent } from "../utils/configUtils"
+import { Tooltip } from "@/comps/Tooltip"
 import type { MediaEvent } from "../contentScript/isolated/utils/applyMediaEvent"
 import { FlatMediaInfo, MediaPath } from "../contentScript/isolated/utils/genMediaInfo"
-import { GrRevert } from "react-icons/gr"
+import { sendMediaEvent } from "../utils/configUtils"
+import { clamp, feedbackText, formatDomain, formatDuration } from "../utils/helper"
 import "./MediaView.css"
-import { Tooltip } from "@/comps/Tooltip"
 
 const HAS_REQUEST_PIP = !!HTMLVideoElement.prototype.requestPictureInPicture
 

@@ -1,6 +1,6 @@
-import { useState, useEffect, ChangeEvent, RefObject } from "react"
-import { FloatTooltip } from "./FloatTooltip"
+import { ChangeEvent, RefObject, useEffect, useState } from "react"
 import { round } from "../utils/helper"
+import { FloatTooltip } from "./FloatTooltip"
 
 const NUMERIC_REGEX = /^-?(?=[\d\.])\d*(\.\d+)?$/
 

@@ -1,6 +1,6 @@
-import { useState, useEffect, useMemo } from "react"
-import { MediaData, MediaPath, MediaScope, flattenMediaInfos } from "../contentScript/isolated/utils/genMediaInfo"
+import { useEffect, useMemo, useState } from "react"
 import { checkContentScript } from "@/utils/browserUtils"
+import { flattenMediaInfos, MediaData, MediaPath, MediaScope } from "../contentScript/isolated/utils/genMediaInfo"
 
 type Env = {
 	client: SubscribeMedia

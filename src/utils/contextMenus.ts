@@ -1,5 +1,5 @@
-import { AdjustMode, Keybind, Trigger } from "@/types"
 import debounce from "lodash.debounce"
+import { AdjustMode, Keybind, Trigger } from "@/types"
 import { fetchView } from "./state"
 
 export async function syncContextMenu(keybinds?: Keybind[]) {

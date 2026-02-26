@@ -1,20 +1,21 @@
 import { useState } from "react"
-import { Header } from "./Header"
-import { getLatestActiveTabInfo } from "../utils/browserUtils"
-import { MainPanel } from "./MainPanel"
-import { FxPanel } from "./FxPanel"
-import { AudioPanel } from "notFirefox/popup/AudioPanel"
-import { ErrorFallback } from "../comps/ErrorFallback"
-import { useStateView } from "../hooks/useStateView"
+import { createRoot } from "react-dom/client"
 import { FaPowerOff } from "react-icons/fa"
 import { useThemeSync } from "@/hooks/useThemeSync"
-import { createRoot } from "react-dom/client"
-import { OrlHeader } from "./OrlHeader"
+import { StateView } from "@/types"
 import { loadGsm } from "@/utils/gsm"
 import { isFirefox, isMobile } from "@/utils/helper"
 import { fetchView } from "@/utils/state"
-import { StateView, Trigger } from "@/types"
+import { AudioPanel } from "notFirefox/popup/AudioPanel"
+import { ErrorFallback } from "../comps/ErrorFallback"
+import { useStateView } from "../hooks/useStateView"
+import { getLatestActiveTabInfo } from "../utils/browserUtils"
+import { FxPanel } from "./FxPanel"
+import { Header } from "./Header"
+import { MainPanel } from "./MainPanel"
+import { OrlHeader } from "./OrlHeader"
 import "./popup.css"
+import { handleFreshState } from "@/utils/configUtils"
 
 declare global {
 	interface GlobalVar {
@@ -67,6 +68,7 @@ Promise.all([
 		gvar.tabInfo || window.close()
 	}),
 	loadInitialView(),
+	handleFreshState(),
 ]).then(() => {
 	processInitialView()
 	const root = createRoot(document.querySelector("#root"))

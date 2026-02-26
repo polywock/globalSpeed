@@ -1,6 +1,6 @@
-import { seekNetflix } from "./utils/seekNetflix"
-import { native } from "./utils/nativeCodes"
 import { isFirefox, randomId } from "../../utils/helper"
+import { native } from "./utils/nativeCodes"
+import { seekNetflix } from "./utils/seekNetflix"
 
 declare global {
 	interface Window {

@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from "react"
-import { Keybind } from "../types"
-import { requestCreateTab } from "../utils/browserUtils"
+import { useEffect, useRef, useState } from "react"
 import { FaLink } from "react-icons/fa"
 import { MdWarning } from "react-icons/md"
+import { Keybind } from "../types"
+import { requestCreateTab } from "../utils/browserUtils"
 import "./CommandWarning.css"
 
 type Props = {

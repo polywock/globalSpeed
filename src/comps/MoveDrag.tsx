@@ -1,5 +1,5 @@
+import { RefObject, useEffect, useRef } from "react"
 import { VscGripper } from "react-icons/vsc"
-import { useRef, RefObject, useEffect } from "react"
 import "./MoveDrag.css"
 
 type MoveDragProps = {

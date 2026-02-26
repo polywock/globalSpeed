@@ -1,4 +1,4 @@
-import { BsXCircle, BsArrowUpCircle } from "react-icons/bs"
+import { BsArrowUpCircle, BsXCircle } from "react-icons/bs"
 import { useStateView } from "@/hooks/useStateView"
 import "./OrlHeader.css"
 

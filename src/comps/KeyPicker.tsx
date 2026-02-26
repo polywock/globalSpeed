@@ -1,7 +1,7 @@
-import { useState, KeyboardEvent } from "react"
-import { Hotkey, extractHotkey, formatHotkey } from "../utils/keys"
-import "./KeyPicker.css"
+import { KeyboardEvent, useState } from "react"
+import { extractHotkey, formatHotkey, Hotkey } from "../utils/keys"
 import { Tooltip } from "./Tooltip"
+import "./KeyPicker.css"
 
 type KeyPickerProps = {
 	onChange: (key: Hotkey) => void

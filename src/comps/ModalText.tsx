@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { ThrottledTextInput } from "./ThrottledTextInput"
-import { ModalBase } from "./ModalBase"
 import { GearIcon } from "./GearIcon"
+import { ModalBase } from "./ModalBase"
+import { ThrottledTextInput } from "./ThrottledTextInput"
 import "./ModalText.css"
 
 type ModalTextProps = {

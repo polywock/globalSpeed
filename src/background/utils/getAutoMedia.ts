@@ -1,5 +1,5 @@
-import { FlatMediaInfo, MediaData, MediaDataWithScopes, MediaPath, MediaScope, flattenMediaInfos } from "@/contentScript/isolated/utils/genMediaInfo"
-import { TabInfo, checkContentScript, compareFrame } from "@/utils/browserUtils"
+import { FlatMediaInfo, flattenMediaInfos, MediaData, MediaDataWithScopes, MediaPath, MediaScope } from "@/contentScript/isolated/utils/genMediaInfo"
+import { checkContentScript, compareFrame, TabInfo } from "@/utils/browserUtils"
 import { fetchView } from "@/utils/state"
 
 const WEIGHTS = {

@@ -1,10 +1,10 @@
+import { setSession } from "@/utils/browserUtils"
+import { hashWithStoredSalt } from "@/utils/hash"
 import { HAS_PIP_API } from "@/utils/supports"
 import { CinemaInit, MediaProbe, StateOption } from "../../../types"
 import { clamp, formatDuration, round } from "../../../utils/helper"
-import { IS_SPECIAL_SEEK, IS_AMAZON, IS_NETFLIX, IS_NATIVE, IS_SMART, IS_BILIBILI, IS_YOUTUBE } from "./isWebsite"
-import { hashWithStoredSalt } from "@/utils/hash"
-import { setSession } from "@/utils/browserUtils"
 import { Cinema } from "./Cinema"
+import { IS_AMAZON, IS_BILIBILI, IS_NATIVE, IS_NETFLIX, IS_SMART, IS_SPECIAL_SEEK, IS_YOUTUBE } from "./isWebsite"
 
 export function getMediaProbe(media: HTMLMediaElement, includeFormatted?: boolean): MediaProbe {
 	if (!media) return

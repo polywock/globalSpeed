@@ -1,6 +1,6 @@
-import { useMemo, useCallback, useEffect, useState, type CSSProperties } from "react"
-import { clamp, inverseLerp, lerp } from "../utils/helper"
 import debounce from "lodash.debounce"
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react"
+import { clamp, inverseLerp, lerp } from "../utils/helper"
 import "./Slider.css"
 
 type SliderProps = {

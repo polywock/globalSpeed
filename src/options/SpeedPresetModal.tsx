@@ -1,14 +1,13 @@
 import { produce } from "immer"
-import { ModalBase } from "../comps/ModalBase"
 import { CSSProperties } from "react"
 import { SegmentedButtons } from "@/comps/SegmentedButtons"
 import { SliderMicro } from "@/comps/SliderMicro"
-import { clamp } from "@/utils/helper"
-import { NumericInput } from "../comps/NumericInput"
 import { getDefaultSpeedPresets } from "@/defaults/constants"
+import { clamp } from "@/utils/helper"
+import { ModalBase } from "../comps/ModalBase"
+import { NumericInput } from "../comps/NumericInput"
 import { useStateView } from "../hooks/useStateView"
 import "./SpeedPresetModal.css"
-import { Tooltip } from "@/comps/Tooltip"
 
 type Props = {
 	onClose: () => void

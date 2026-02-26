@@ -1,10 +1,10 @@
+import type { FilterEntry, ItcInit, SvgFilter } from "@/types"
 import { MessageCallback } from "@/utils/browserUtils"
-import { MediaEvent, MediaEventCinema, applyCinema, getMediaProbe, realizeMediaEvent } from "./utils/applyMediaEvent"
+import { getLeaf } from "@/utils/nativeUtils"
 import { documentHasFocus, injectScript } from "./utils"
+import { applyCinema, getMediaProbe, MediaEvent, MediaEventCinema, realizeMediaEvent } from "./utils/applyMediaEvent"
 import { Indicator, IndicatorShowOpts } from "./utils/Indicator"
 import { Interactive } from "./utils/Interactive"
-import type { FilterEntry, ItcInit, SvgFilter } from "@/types"
-import { getLeaf } from "@/utils/nativeUtils"
 
 declare global {
 	interface GlobalVar {

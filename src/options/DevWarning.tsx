@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react"
-import { canPotentiallyUserScriptExecute, canUserScript, requestCreateTab } from "../utils/browserUtils"
+import { useEffect, useRef, useState } from "react"
 import { FaLink } from "react-icons/fa"
 import { MdWarning } from "react-icons/md"
+import { canPotentiallyUserScriptExecute, canUserScript, requestCreateTab } from "../utils/browserUtils"
 
 export enum DevWarningType {
 	NONE = 0,

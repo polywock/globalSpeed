@@ -1,6 +1,6 @@
+import { AdjustMode, Command, CommandGroup, Duration, Keybind, Trigger } from "../types"
+import { getPopupSize, isFirefox, isMobile, randomId } from "../utils/helper"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "./constants"
-import { Command, Keybind, AdjustMode, CommandGroup, Duration, Trigger } from "../types"
-import { randomId, isFirefox, getPopupSize, isMobile } from "../utils/helper"
 import { filterInfos } from "./filters"
 
 export type CommandName =

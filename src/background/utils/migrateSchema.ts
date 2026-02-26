@@ -1,7 +1,7 @@
-import { AdjustMode, Context, Duration, Keybind, State, Trigger, URLCondition, URLConditionPart, URLRule } from "../../types"
-import { generateUrlPart, getDefaultState, getEmptyUrlConditions, SHORTCUT_DISABLED_WEBSITES, turnWebsiteInfoIntoString } from "../../defaults"
-import { isFirefox, randomId } from "../../utils/helper"
 import { availableCommandNames } from "@/defaults/commands"
+import { generateUrlPart, getDefaultState, getEmptyUrlConditions, SHORTCUT_DISABLED_WEBSITES, turnWebsiteInfoIntoString } from "../../defaults"
+import { AdjustMode, Context, Duration, Keybind, State, Trigger, URLCondition, URLConditionPart, URLRule } from "../../types"
+import { isFirefox, randomId } from "../../utils/helper"
 
 export function migrateSchema(state?: State) {
 	const initialVersion = state?.version

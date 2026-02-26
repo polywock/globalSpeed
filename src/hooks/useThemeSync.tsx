@@ -1,6 +1,6 @@
 import { useEffect } from "react"
-import { useStateView } from "../hooks/useStateView"
 import { isMobile } from "@/utils/helper"
+import { useStateView } from "../hooks/useStateView"
 
 export function useThemeSync() {
 	const [view] = useStateView({ darkTheme: true, fontSize: true })

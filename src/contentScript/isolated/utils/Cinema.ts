@@ -1,11 +1,11 @@
+import { getDefaultCinemaInit } from "@/defaults/constants"
+import { getDefaultCinemaFilter } from "@/defaults/filters"
+import { CinemaInit, CinemaMode } from "@/types"
+import { formatFilters } from "@/utils/configUtils"
 import { clamp } from "@/utils/helper"
-import { Popover } from "./Popover"
 import { insertStyle } from "@/utils/nativeUtils"
 import styles from "./Cinema.css?raw"
-import { CinemaInit, CinemaMode } from "@/types"
-import { getDefaultCinemaInit } from "@/defaults/constants"
-import { formatFilters } from "@/utils/configUtils"
-import { getDefaultCinemaFilter } from "@/defaults/filters"
+import { Popover } from "./Popover"
 
 const BLEED = 1
 const PADDING = 5

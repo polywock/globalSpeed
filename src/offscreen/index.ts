@@ -1,9 +1,9 @@
-import { MessageCallback } from "../utils/browserUtils"
 import { AudioFx, StateView } from "../types"
+import { MessageCallback } from "../utils/browserUtils"
+import { clamp, round } from "../utils/helper"
 import { Jungle } from "./Jungle"
-import { round, clamp } from "../utils/helper"
-import { SoundTouchNode } from "./SoundTouchNode"
 import { ReverseNode } from "./ReverseNode"
+import { SoundTouchNode } from "./SoundTouchNode"
 
 declare global {
 	namespace chrome.runtime {

@@ -1,12 +1,12 @@
 import { produce } from "immer"
-import { ModalBase } from "../comps/ModalBase"
-import { IndicatorInit, StateView } from "../types"
-import { INDICATOR_INIT } from "../defaults"
-import { SetView } from "@/hooks/useStateView"
 import { Reset } from "@/comps/Reset"
 import { SliderMicro } from "@/comps/SliderMicro"
 import { Indicator } from "@/contentScript/isolated/utils/Indicator"
+import { SetView } from "@/hooks/useStateView"
 import { randomId } from "@/utils/helper"
+import { ModalBase } from "../comps/ModalBase"
+import { INDICATOR_INIT } from "../defaults"
+import { IndicatorInit, StateView } from "../types"
 import "./IndicatorModal.css"
 
 type Props = {

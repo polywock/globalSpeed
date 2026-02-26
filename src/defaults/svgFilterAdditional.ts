@@ -1,6 +1,6 @@
 import { SvgFilter } from "@/types"
-import { SvgFilterName } from "./filters"
 import { lerp } from "@/utils/helper"
+import { SvgFilterName } from "./filters"
 
 export const SVG_FILTER_ADDITIONAL: {
 	[key in SvgFilterName]: {

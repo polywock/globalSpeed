@@ -1,9 +1,9 @@
-import { conformSpeed } from "../utils/configUtils"
-import { SpeedControl } from "./SpeedControl"
-import { MediaView } from "./MediaView"
-import { useStateView } from "../hooks/useStateView"
 import { useMediaWatch } from "../hooks/useMediaWatch"
+import { useStateView } from "../hooks/useStateView"
+import { conformSpeed } from "../utils/configUtils"
+import { MediaView } from "./MediaView"
 import { QrPromo } from "./QrPromo"
+import { SpeedControl } from "./SpeedControl"
 
 export function MainPanel(props: {}) {
 	const [view, setView] = useStateView({ speed: true, hideMediaView: true, enabled: true, speedChangeCounter: true })

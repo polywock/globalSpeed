@@ -1,9 +1,9 @@
 import { TiDelete } from "react-icons/ti"
-import { useStateView } from "@/hooks/useStateView"
-import { pushView } from "@/utils/state"
-import { isEdge, isMobile } from "@/utils/helper"
-import "./QrPromo.css"
 import { Tooltip } from "@/comps/Tooltip"
+import { useStateView } from "@/hooks/useStateView"
+import { isEdge, isMobile } from "@/utils/helper"
+import { pushView } from "@/utils/state"
+import "./QrPromo.css"
 
 const ALWAYS_SHOW = false
 

@@ -1,11 +1,11 @@
-import { useState, ReactElement } from "react"
-import { isFirefox } from "../utils/helper"
-import { requestCreateTab } from "../utils/browserUtils"
-import { FaMousePointer, FaPowerOff } from "react-icons/fa"
+import { ReactElement, useState } from "react"
 import { createRoot } from "react-dom/client"
-import { Pin, Zap } from "@/comps/svgs"
-import "./faqs.css"
+import { FaMousePointer, FaPowerOff } from "react-icons/fa"
 import { IoEllipsisVertical } from "react-icons/io5"
+import { Pin, Zap } from "@/comps/svgs"
+import { requestCreateTab } from "../utils/browserUtils"
+import { isFirefox } from "../utils/helper"
+import "./faqs.css"
 
 function Faqs(props: {}) {
 	return (

@@ -1,6 +1,6 @@
-import { NumericInput } from "./NumericInput"
 import { produce } from "immer"
 import { FaPlus } from "react-icons/fa"
+import { NumericInput } from "./NumericInput"
 import "./CycleInput.css"
 
 type CycleInputProps = {

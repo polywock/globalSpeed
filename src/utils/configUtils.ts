@@ -1,3 +1,7 @@
+import { svgFilterIsValid } from "@/defaults/filters"
+import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
+import type { MediaEvent } from "../contentScript/isolated/utils/applyMediaEvent"
+import { filterInfos } from "../defaults/filters"
 import {
 	AdjustMode,
 	Duration,
@@ -14,11 +18,8 @@ import {
 	type URLConditionPart,
 } from "../types"
 import { clamp, isFirefox, round } from "./helper"
-import { filterInfos } from "../defaults/filters"
-import type { MediaEvent } from "../contentScript/isolated/utils/applyMediaEvent"
-import { Hotkey, compareHotkeys } from "./keys"
-import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
-import { svgFilterIsValid } from "@/defaults/filters"
+import { compareHotkeys, Hotkey } from "./keys"
+import { fetchView, pushView } from "./state"
 
 export function conformSpeed(speed: number, rounding = 2) {
 	return clamp(0.07, 16, round(speed, rounding))
@@ -179,4 +180,15 @@ export function triggerToKey(trigger: Trigger): "pageKeybinds" | "browserKeybind
 	if (trigger === Trigger.BROWSER) return "browserKeybinds"
 	if (trigger === Trigger.MENU) return "menuKeybinds"
 	return "pageKeybinds"
+}
+
+export async function handleFreshState() {
+	if (!(await fetchView({ freshState: true })).freshState) return
+	const darkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+	await pushView({
+		override: {
+			freshState: null,
+			darkTheme,
+		},
+	})
 }

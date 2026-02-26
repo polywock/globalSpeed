@@ -1,24 +1,22 @@
-import { areYouSure, assertType, clamp, randomNumber } from "@/utils/helper"
-import styles from "./styles.css?raw"
-import pageStyles from "./stylesAux.css?raw"
 import debounce from "lodash.debounce"
 import { requestGsm } from "@/utils/gsm"
-import { replaceArgs } from "@/utils/helper"
 import { Gsm } from "@/utils/GsmType"
-import { createElement as m } from "@/utils/helper"
-import { Popover } from "../isolated/utils/Popover"
+import { areYouSure, assertType, clamp, createElement as m, randomNumber, replaceArgs } from "@/utils/helper"
 import {
-	gripIcon,
-	flatBrushIcon,
-	questionIcon,
-	eyeIcon,
+	clockwiseIcon,
 	crossIcon,
-	paintIcon,
-	eraserIcon,
 	cursorIcon,
 	dropperIcon,
-	clockwiseIcon,
+	eraserIcon,
+	eyeIcon,
+	flatBrushIcon,
+	gripIcon,
+	paintIcon,
+	questionIcon,
 } from "../../defaults/icons"
+import { Popover } from "../isolated/utils/Popover"
+import styles from "./styles.css?raw"
+import pageStyles from "./stylesAux.css?raw"
 
 const ERASER_MIN = 5
 const ERASER_MAX = 200

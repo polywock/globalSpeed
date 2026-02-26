@@ -1,4 +1,4 @@
-import { GoArrowUp, GoArrowDown } from "react-icons/go"
+import { GoArrowDown, GoArrowUp } from "react-icons/go"
 import "./Move.css"
 
 type MoveProps = {

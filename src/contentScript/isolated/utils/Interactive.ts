@@ -1,11 +1,10 @@
-import { between, clamp, extractClient, inverseLerp, lerp } from "@/utils/helper"
-import { Popover } from "./Popover"
-import { insertStyle } from "@/utils/nativeUtils"
-import { ItcInit } from "@/types"
-import { requestApplyMediaEvent } from "./applyMediaEvent"
-import { createElement as m } from "@/utils/helper"
-import styles from "./Interactive.css?raw"
 import { crossIcon, resetIcon } from "@/defaults/icons"
+import { ItcInit } from "@/types"
+import { between, clamp, extractClient, inverseLerp, lerp, createElement as m } from "@/utils/helper"
+import { insertStyle } from "@/utils/nativeUtils"
+import { requestApplyMediaEvent } from "./applyMediaEvent"
+import styles from "./Interactive.css?raw"
+import { Popover } from "./Popover"
 
 const SLIDER_WIDTH = 100
 const SLIDER_HEIGHT = 100

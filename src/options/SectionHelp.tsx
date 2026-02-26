@@ -1,12 +1,12 @@
 import { MouseEvent, useEffect, useRef, useState } from "react"
 import { MdContentCopy, MdContentPaste } from "react-icons/md"
-import { dumpConfig, fetchView, pushView, restoreConfig } from "../utils/state"
-import { State } from "../types"
-import { requestCreateTab } from "../utils/browserUtils"
-import { isFirefox, areYouSure, isMobile } from "../utils/helper"
-import { getDefaultState } from "@/defaults"
 import { migrateSchema } from "@/background/utils/migrateSchema"
 import { Tooltip } from "@/comps/Tooltip"
+import { getDefaultState } from "@/defaults"
+import { State } from "../types"
+import { requestCreateTab } from "../utils/browserUtils"
+import { areYouSure, isFirefox, isMobile } from "../utils/helper"
+import { dumpConfig, fetchView, pushView, restoreConfig } from "../utils/state"
 import "./SectionHelp.css"
 
 export function SectionHelp(props: {}) {

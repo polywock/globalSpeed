@@ -1,13 +1,13 @@
+import debounce from "lodash.debounce"
 import { CircleInit } from "@/types"
-import { Popover } from "./Popover"
+import { conformSpeed, formatSpeed } from "@/utils/configUtils"
+import { between, clamp, extractClient, formatDuration, inverseLerp, isFirefoxMobile, isMac, isMobile, lerp, roundTo } from "@/utils/helper"
 import { insertStyle } from "@/utils/nativeUtils"
 import { fetchView, pushView } from "@/utils/state"
-import { conformSpeed, formatSpeed } from "@/utils/configUtils"
-import { Indicator } from "./Indicator"
-import { between, clamp, extractClient, formatDuration, inverseLerp, isFirefoxMobile, isMac, isMobile, lerp, roundTo } from "@/utils/helper"
 import { seekTo, setPause } from "./applyMediaEvent"
-import debounce from "lodash.debounce"
 import styles from "./Circle.css?raw"
+import { Indicator } from "./Indicator"
+import { Popover } from "./Popover"
 
 const MIN_TO_ACTIVATE = 50
 const MIN_STRONG = 115

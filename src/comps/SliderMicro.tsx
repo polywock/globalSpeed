@@ -1,8 +1,8 @@
-import { ReactNode, RefObject } from "react"
-import { clamp, round } from "../utils/helper"
+import { ReactNode } from "react"
 import { NumericInput } from "../comps/NumericInput"
-import { Slider } from "./Slider"
+import { clamp } from "../utils/helper"
 import { Reset } from "./Reset"
+import { Slider } from "./Slider"
 import "./SliderMicro.css"
 
 type SliderMicroProps = {

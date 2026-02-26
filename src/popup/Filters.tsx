@@ -1,10 +1,10 @@
-import { useState } from "react"
-import { FilterEntry } from "../types"
-import { filterInfos } from "../defaults/filters"
-import { SliderPlus } from "../comps/SliderPlus"
-import { moveItem } from "../utils/helper"
 import { produce } from "immer"
+import { useState } from "react"
 import { Move } from "../comps/Move"
+import { SliderPlus } from "../comps/SliderPlus"
+import { filterInfos } from "../defaults/filters"
+import { FilterEntry } from "../types"
+import { moveItem } from "../utils/helper"
 import "./Filters.css"
 
 type FiltersProps = {

@@ -1,7 +1,7 @@
-import { Fx, AudioFx, URLRule, IndicatorInit, URLCondition, URLConditionPart, Context, CONTEXT_KEYS, AnyDict, State, Keybind } from "../types"
-import { FilterName, filterInfos } from "./filters"
-import { getDefaultMenuKeybinds, getDefaultPageKeybinds } from "./commands"
+import { AnyDict, AudioFx, Context, CONTEXT_KEYS, Fx, IndicatorInit, Keybind, State, URLCondition, URLConditionPart, URLRule } from "../types"
 import { chunkByPredicate, isMobile, randomId } from "../utils/helper"
+import { getDefaultMenuKeybinds, getDefaultPageKeybinds } from "./commands"
+import { filterInfos, FilterName } from "./filters"
 
 export type WebsiteInfo = {
 	v: string
@@ -52,6 +52,7 @@ export function generateUrlPart(origin: string): URLConditionPart {
 export function getDefaultState(): State {
 	let state = {
 		version: 14,
+		freshState: true,
 		firstUse: Date.now(),
 		pageKeybinds: getDefaultPageKeybinds(),
 		menuKeybinds: getDefaultMenuKeybinds(),

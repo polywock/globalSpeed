@@ -9,7 +9,8 @@
 		"./src/background/utils/*.ts",
 		"./src/background/badge.ts",
 		"./src/background/rules.ts",
-		"./src/background/capture.ts"
+		"./src/background/capture.ts",
+		"notFirefox/background/capture"
 	],
 	"scripts": {
 		"build:common": "  rm -rf build   &&              webpack --config webpack.config.js && cp -r static/. staticCh/. build/unpacked                               &&              node tools/processLocale.js --build && find build   -name '.DS_Store' -type f -delete",
@@ -32,6 +33,7 @@
 		"@babel/preset-react": "^7.28.5",
 		"@babel/preset-typescript": "^7.28.5",
 		"@babel/runtime": "^7.28.4",
+		"@ianvs/prettier-plugin-sort-imports": "^4.7.1",
 		"@types/audioworklet": "^0.0.92",
 		"@types/chrome": "^0.1.32",
 		"autoprefixer": "^10.4.23",

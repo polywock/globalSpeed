@@ -1,6 +1,6 @@
-import { Popover } from "./Popover"
 import { insertStyle } from "@/utils/nativeUtils"
 import styles from "./Backdrop.css?raw"
+import { Popover } from "./Popover"
 
 export class Backdrop extends Popover {
 	constructor() {

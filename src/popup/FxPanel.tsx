@@ -1,7 +1,7 @@
+import { produce } from "immer"
 import { getDefaultFx } from "@/defaults"
 import { useStateView } from "../hooks/useStateView"
 import { FxControl } from "./FxControl"
-import { produce } from "immer"
 
 type FxPanelProps = {}
 

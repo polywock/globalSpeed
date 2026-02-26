@@ -15,6 +15,9 @@
 	--mg-color: #e4e9f1;
 	--fg-color: #f8fbff;
 
+	--fg-color-opp: #1d2533;
+	--text-color-opp: oklch(96.386% 0.01706 267.821);
+
 	--text-color: oklch(22.359% 0.03316 265.722);
 	--focus-color: #2f65f6;
 	--link-color: #1546c8;
@@ -47,6 +50,9 @@
 	--bg-color: #0f141d;
 	--mg-color: #171d28;
 	--fg-color: #1d2533;
+
+	--fg-color-opp: #f8fbff;
+	--text-color-opp: oklch(22.359% 0.03316 265.722);
 
 	--text-color: oklch(96.386% 0.01706 267.821);
 	--focus-color: #a8c8ff;

@@ -1,8 +1,8 @@
 import { ReactNode } from "react"
-import { clamp } from "../utils/helper"
 import { NumericInput } from "../comps/NumericInput"
-import { Slider } from "./Slider"
+import { clamp } from "../utils/helper"
 import { Reset } from "./Reset"
+import { Slider } from "./Slider"
 import "./SliderPlus.css"
 
 type SliderPlusProps = {

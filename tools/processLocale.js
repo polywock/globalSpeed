@@ -96,7 +96,7 @@ async function adhereEnglish() {
 			}
 		}
 
-		await writeFile(path, JSON.stringify(newJson, null, 2), {
+		await writeFile(path, JSON.stringify(newJson, null, "\t") + "\n", {
 			encoding: "utf8",
 		})
 	}
@@ -130,7 +130,7 @@ async function ensureCasing() {
 			}
 		}
 		adjustedCount &&
-			(await writeFile(path, JSON.stringify(otherJson, null, 2), {
+			(await writeFile(path, JSON.stringify(otherJson, null, "\t") + "\n", {
 				encoding: "utf8",
 			}))
 		console.log(`${lang}.json required ${adjustedCount} adjustments.`)
@@ -163,7 +163,7 @@ async function ensurePunctuation() {
 		}
 
 		if (adjustedCount) {
-			await writeFile(path, JSON.stringify(json, null, 2), { encoding: "utf8" })
+			await writeFile(path, JSON.stringify(json, null, "\t") + "\n", { encoding: "utf8" })
 		}
 		console.log(`${lang}.json: ${adjustedCount} period adjustments`)
 	}

@@ -1,5 +1,5 @@
 import debounce from "lodash.debounce"
-import { AUDIO_CONTEXT_KEYS, AnyDict } from "@/types"
+import { AnyDict, AUDIO_CONTEXT_KEYS } from "@/types"
 import { fetchView } from "@/utils/state"
 
 async function handleChange(changes: chrome.storage.StorageChanges) {

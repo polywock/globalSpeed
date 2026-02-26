@@ -1,14 +1,14 @@
 import { produce } from "immer"
-import { ModalBase } from "../comps/ModalBase"
-import { SliderMicro } from "@/comps/SliderMicro"
-import { useStateView } from "../hooks/useStateView"
-import { Toggle } from "@/comps/Toggle"
+import { GoX } from "react-icons/go"
 import { NumericInput } from "@/comps/NumericInput"
+import { RegularTooltip } from "@/comps/RegularTooltip"
+import { SliderMicro } from "@/comps/SliderMicro"
+import { Toggle } from "@/comps/Toggle"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "@/defaults/constants"
 import { randomId } from "@/utils/helper"
-import { RegularTooltip } from "@/comps/RegularTooltip"
+import { ModalBase } from "../comps/ModalBase"
+import { useStateView } from "../hooks/useStateView"
 import "./WidgetModal.css"
-import { GoX } from "react-icons/go"
 
 type Props = {
 	onClose: () => void

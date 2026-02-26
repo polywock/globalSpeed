@@ -1,14 +1,15 @@
-import { Root, createRoot } from "react-dom/client"
-import { SectionFlags } from "./SectionFlags"
+import { createRoot, Root } from "react-dom/client"
+import type { Indicator } from "@/contentScript/isolated/utils/Indicator"
+import { useThemeSync } from "@/hooks/useThemeSync"
+import { requestTabInfo } from "@/utils/browserUtils"
+import { handleFreshState } from "@/utils/configUtils"
+import { loadGsm } from "@/utils/gsm"
+import { isMac, isMobile } from "@/utils/helper"
+import { ErrorFallback } from "../comps/ErrorFallback"
 import { SectionEditor } from "./SectionEditor"
+import { SectionFlags } from "./SectionFlags"
 import { SectionHelp } from "./SectionHelp"
 import { SectionRules } from "./SectionRules"
-import { ErrorFallback } from "../comps/ErrorFallback"
-import { useThemeSync } from "@/hooks/useThemeSync"
-import { loadGsm } from "@/utils/gsm"
-import { requestTabInfo } from "@/utils/browserUtils"
-import type { Indicator } from "@/contentScript/isolated/utils/Indicator"
-import { isMac, isMobile } from "@/utils/helper"
 import "./options.css"
 
 declare global {
@@ -35,7 +36,7 @@ const Options = (props: {}) => {
 }
 
 if (isMobile()) document.documentElement.classList.add("mobile")
-Promise.all([loadGsm(), requestTabInfo()]).then(([gsm, tabInfo]) => {
+Promise.all([loadGsm(), requestTabInfo(), handleFreshState()]).then(([gsm, tabInfo]) => {
 	gvar.isOptionsPage = true
 	gvar.gsm = gsm
 	gvar.tabInfo = tabInfo

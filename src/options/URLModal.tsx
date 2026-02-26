@@ -1,13 +1,13 @@
 import { produce } from "immer"
-import { ModalBase } from "../comps/ModalBase"
-import { URLCondition, URLConditionPart } from "../types"
-import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { GoX } from "react-icons/go"
-import { getDefaultURLConditionPart } from "../defaults"
-import { findRemoveFromArray } from "../utils/helper"
-import { extractURLPartValueKey, getActiveParts, getSelectedParts } from "@/utils/configUtils"
-import "./URLModal.css"
 import { Tooltip } from "@/comps/Tooltip"
+import { extractURLPartValueKey, getActiveParts, getSelectedParts } from "@/utils/configUtils"
+import { ModalBase } from "../comps/ModalBase"
+import { ThrottledTextInput } from "../comps/ThrottledTextInput"
+import { getDefaultURLConditionPart } from "../defaults"
+import { URLCondition, URLConditionPart } from "../types"
+import { findRemoveFromArray } from "../utils/helper"
+import "./URLModal.css"
 
 type Props = {
 	onClose: () => void

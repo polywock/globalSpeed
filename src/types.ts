@@ -1,7 +1,7 @@
-import { Hotkey } from "./utils/keys"
 import { CommandName } from "./defaults/commands"
 import { FilterName } from "./defaults/filters"
 import { TabInfo } from "./utils/browserUtils"
+import { Hotkey } from "./utils/keys"
 
 declare global {
 	interface GlobalVar {}
@@ -52,6 +52,7 @@ export type AnyDict = { [key: string]: any }
 
 export type State = {
 	version: number
+	freshState?: boolean
 	qrCodeHide?: boolean
 	qrCodeSeenCounter?: number
 	speedChangeCounter?: number

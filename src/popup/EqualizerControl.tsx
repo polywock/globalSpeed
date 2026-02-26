@@ -1,14 +1,14 @@
-import { AudioFx } from "../types"
-import { FaPowerOff } from "react-icons/fa"
-import { getDefaultEq, EQ_PRESETS } from "../defaults"
-import { formatFreq } from "../utils/helper"
-import { SliderMicro } from "../comps/SliderMicro"
-import { produce } from "immer"
-import "./EqualizerControl.css"
-import { useMemo } from "react"
 import equal from "fast-deep-equal"
-import { Reset } from "../comps/Reset"
+import { produce } from "immer"
+import { useMemo } from "react"
+import { FaPowerOff } from "react-icons/fa"
 import { Tooltip } from "@/comps/Tooltip"
+import { Reset } from "../comps/Reset"
+import { SliderMicro } from "../comps/SliderMicro"
+import { EQ_PRESETS, getDefaultEq } from "../defaults"
+import { AudioFx } from "../types"
+import { formatFreq } from "../utils/helper"
+import "./EqualizerControl.css"
 
 type EqualizerControlProps = {
 	value: AudioFx["eq"]
