@@ -3,6 +3,7 @@ import { useStateView } from "@/hooks/useStateView"
 import { pushView } from "@/utils/state"
 import { isEdge, isMobile } from "@/utils/helper"
 import "./QrPromo.css"
+import { Tooltip } from "@/comps/Tooltip"
 
 const ALWAYS_SHOW = false
 
@@ -31,14 +32,16 @@ export function QrPromo(props: {}) {
 				}}
 				src={chrome.runtime.getURL("icons/qr.png")}
 			/>
-			<button
-				onClick={() => {
-					setView({ qrCodeHide: true })
-				}}
-				className="icon"
-			>
-				<TiDelete size="30px" />
-			</button>
+			<Tooltip title={gvar.gsm.token.delete}>
+				<button
+					onClick={() => {
+						setView({ qrCodeHide: true })
+					}}
+					className="icon"
+				>
+					<TiDelete size="30px" />
+				</button>
+			</Tooltip>
 		</div>
 	)
 }

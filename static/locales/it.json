@@ -327,7 +327,7 @@
     "rules": {
       "header": "Regole URL",
       "setTitleKeywords": "Imposta parole chiave del titolo",
-      "clearTitleKeywords": "Cancella parole chiave del titolo",
+      "clearTitleKeywords": "Elimina parole chiave del titolo",
       "ChangeTitleKeywords": "Modifica parole chiave del titolo",
       "pageTitleLabel": "Il titolo della pagina deve includere:",
       "pageTitleTooltip": "Specifica un elenco di termini separati da virgola e almeno uno deve essere nel titolo della pagina. Ad esempio, può essere utilizzato su YouTube per impostare la velocità a 1x per i video musicali.",

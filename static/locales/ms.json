@@ -327,7 +327,7 @@
     "rules": {
       "header": "Peraturan URL",
       "setTitleKeywords": "Tetapkan kata kunci tajuk",
-      "clearTitleKeywords": "Kosongkan kata kunci tajuk",
+      "clearTitleKeywords": "Padam kata kunci tajuk",
       "ChangeTitleKeywords": "Tukar kata kunci tajuk",
       "pageTitleLabel": "Tajuk halaman mesti termasuk:",
       "pageTitleTooltip": "Tentukan senarai istilah yang dipisahkan dengan koma dan sekurang-kurangnya satu mesti berada dalam tajuk halaman. Contohnya, ia boleh digunakan di Youtube untuk menetapkan kelajuan kepada 1x untuk video muzik.",

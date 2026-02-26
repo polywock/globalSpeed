@@ -326,7 +326,7 @@
     "rules": {
       "header": "Reglas de URL",
       "setTitleKeywords": "Establecer palabras clave del título",
-      "clearTitleKeywords": "Borrar palabras clave del título",
+      "clearTitleKeywords": "Eliminar palabras clave del título",
       "ChangeTitleKeywords": "Cambiar palabras clave del título",
       "pageTitleLabel": "El título de la página debe incluir:",
       "pageTitleTooltip": "Especifique una lista de términos separados por comas y al menos uno debe estar en el título de la página. Por ejemplo, se puede usar en YouTube para ajustar la velocidad a 1x para videos musicales.",

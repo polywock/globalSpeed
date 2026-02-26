@@ -326,7 +326,7 @@
     "rules": {
       "header": "URLルール",
       "setTitleKeywords": "タイトルのキーワードを設定",
-      "clearTitleKeywords": "タイトルのキーワードをクリア",
+      "clearTitleKeywords": "タイトルのキーワードを削除",
       "ChangeTitleKeywords": "タイトルのキーワードを変更",
       "pageTitleLabel": "ページタイトルには以下を含む必要があります:",
       "pageTitleTooltip": "カンマで区切られた用語のリストを指定し、少なくとも1つがページタイトルに含まれている必要があります。たとえば、YouTubeで音楽ビデオの速度を1xに設定するのに使用できます。",

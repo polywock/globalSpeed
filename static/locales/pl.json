@@ -327,7 +327,7 @@
     "rules": {
       "header": "Reguły URL",
       "setTitleKeywords": "Ustaw słowa kluczowe tytułu",
-      "clearTitleKeywords": "Wyczyść słowa kluczowe tytułu",
+      "clearTitleKeywords": "Usuń słowa kluczowe tytułu",
       "ChangeTitleKeywords": "Zmień słowa kluczowe tytułu",
       "pageTitleLabel": "Tytuł strony musi zawierać:",
       "pageTitleTooltip": "Określ listę terminów oddzielonych przecinkami, z których co najmniej jeden musi znajdować się w tytule strony. Na przykład, można używać na YouTube, aby ustawić prędkość na 1x dla teledysków.",

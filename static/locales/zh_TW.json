@@ -328,7 +328,7 @@
     "rules": {
       "header": "網址規則",
       "setTitleKeywords": "設定標題關鍵字",
-      "clearTitleKeywords": "清除標題關鍵字",
+      "clearTitleKeywords": "刪除標題關鍵字",
       "ChangeTitleKeywords": "變更標題關鍵字",
       "pageTitleLabel": "頁面標題必須包含：",
       "pageTitleTooltip": "指定以逗號分隔的詞彙清單，頁面標題必須包含其中至少一個。例如，可用於在 YouTube 上將音樂影片的速度設為 1 倍速。",

@@ -327,7 +327,7 @@
     "rules": {
       "header": "URL-Regeln",
       "setTitleKeywords": "Titel-Schlüsselwörter festlegen",
-      "clearTitleKeywords": "Titel-Schlüsselwörter löschen",
+      "clearTitleKeywords": "Titel-Schlüsselwörter entfernen",
       "ChangeTitleKeywords": "Titel-Schlüsselwörter ändern",
       "pageTitleLabel": "Seitentitel muss enthalten:",
       "pageTitleTooltip": "Gib eine durch Kommas getrennte Liste von Begriffen an, und mindestens einer muss im Seitentitel vorkommen. Zum Beispiel kann es auf YouTube verwendet werden, um die Geschwindigkeit für Musikvideos auf 1x zu setzen.",

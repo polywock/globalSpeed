@@ -327,7 +327,7 @@
     "rules": {
       "header": "URL Kuralları",
       "setTitleKeywords": "Başlık anahtar kelimelerini ayarla",
-      "clearTitleKeywords": "Başlık anahtar kelimelerini temizle",
+      "clearTitleKeywords": "Başlık anahtar kelimelerini sil",
       "ChangeTitleKeywords": "Başlık anahtar kelimelerini değiştir",
       "pageTitleLabel": "Sayfa başlığı şunları içermelidir:",
       "pageTitleTooltip": "Virgülle ayrılmış bir terim listesi belirtin ve bunlardan en az biri sayfa başlığında olmalıdır. Örneğin, YouTube'da müzik videoları için hızı 1x olarak ayarlamak için kullanılabilir",

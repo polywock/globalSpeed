@@ -330,7 +330,7 @@
 		"rules": {
 			"header": "URL Rules",
 			"setTitleKeywords": "Set title keywords",
-			"clearTitleKeywords": "Clear title keywords",
+			"clearTitleKeywords": "Delete title keywords",
 			"ChangeTitleKeywords": "Change title keywords",
 			"pageTitleLabel": "Page title must include:",
 			"pageTitleTooltip": "Specify a comma separated list of terms and at least one must be in the page title. For example, it can be used on Youtube to set speed to 1x for music videos.",
