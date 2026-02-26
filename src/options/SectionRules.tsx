@@ -121,13 +121,21 @@ export function Rule(props: RuleProps) {
 		{
 			name: "titleRestrict",
 			label: makeLabelWithTooltip(
-				rule.titleRestrict ? gvar.gsm.options.rules.clearTitleConditions : gvar.gsm.options.rules.setTitleConditions,
-				gvar.gsm.options.rules.titleConditionsTooltip,
+				rule.titleRestrict ? gvar.gsm.options.rules.clearTitleKeywords : gvar.gsm.options.rules.setTitleKeywords,
+				gvar.gsm.options.rules.pageTitleTooltip,
 				"left",
 			),
 			close: true,
 		},
 	]
+
+	if (rule.titleRestrict) {
+		list.push({
+			name: "changeTitleRestrict",
+			label: gvar.gsm.options.rules.ChangeTitleKeywords,
+			close: true,
+		})
+	}
 
 	if (rule.type !== "JS") {
 		list.push({
@@ -275,7 +283,13 @@ export function Rule(props: RuleProps) {
 							produce(rule, (d) => {
 								d.titleRestrict = d.titleRestrict
 									? null
-									: prompt(gvar.gsm.options.rules.titleConditionsLabel, "top hits, music, official video, live, lyrics")
+									: normalizeTitleKeywords(prompt(gvar.gsm.options.rules.pageTitleLabel, "top hits, music, official video, live, lyrics"))
+							}),
+						)
+					} else if (name === "changeTitleRestrict") {
+						props.onChange(
+							produce(rule, (d) => {
+								d.titleRestrict = normalizeTitleKeywords(prompt(gvar.gsm.options.rules.pageTitleLabel, d.titleRestrict))
 							}),
 						)
 					}
@@ -321,4 +335,16 @@ function FxRuleControl(props: FxRuleControlProps) {
 			)}
 		</div>
 	)
+}
+
+function normalizeTitleKeywords(titles: string) {
+	titles = titles || ""
+	return [
+		...new Set(
+			titles
+				.toLowerCase()
+				.split(/,+\s+/)
+				.filter((tag) => tag.trim()),
+		),
+	].join(", ")
 }

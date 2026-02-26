@@ -77,7 +77,7 @@ async function handleNavigation(deets: chrome.webNavigation.WebNavigationTransit
 				const tabInfo = await chrome.tabs.get(deets.tabId)
 				pageTitle = tabInfo.title || null
 			}
-			if (!(pageTitle && matchesPageTitle(pageTitle.toLowerCase(), rule.titleRestrict))) {
+			if (!(pageTitle && matchesPageTitle(pageTitle, rule.titleRestrict))) {
 				match = false
 			}
 		}
@@ -104,10 +104,23 @@ async function handleNavigation(deets: chrome.webNavigation.WebNavigationTransit
 	overrideKeys.length && gvar.es.set(override)
 }
 
-function matchesPageTitle(pageTitle: string, condition: string) {
-	if (!condition) return true
-	const tags = condition.toLowerCase().split(/,+\s+/)
+function matchesPageTitle(pageTitle: string, tagList: string) {
+	if (!tagList) return true
+	pageTitle = pageTitle.toLocaleLowerCase()
+	const tags = getTags(tagList)
 	return tags.some((tag) => pageTitle.includes(tag))
+}
+
+function getTags(tagList: string) {
+	tagList = tagList || ""
+	return [
+		...new Set(
+			tagList
+				.toLowerCase()
+				.split(/,+\s+/)
+				.filter((tag) => tag.trim()),
+		),
+	]
 }
 
 function getEnabledRules(raw: AnyDict) {

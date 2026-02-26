@@ -26,7 +26,6 @@ async function main() {
 			console.error("No OpenAI key provided as environmental variable.")
 			exit(1)
 		}
-		await ensurePunctuation()
 		openai = new OpenAI({
 			apiKey: env.OPENAI_API_KEY,
 		})
