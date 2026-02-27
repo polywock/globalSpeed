@@ -9,7 +9,6 @@
 		"reverseTooltip": "押し続けると、このタブの音声を録音して逆再生します",
 		"equalizer": "イコライザー",
 		"pitchHdTooltip": "高音質",
-		"equalizerPower": "イコライザーの出力を増幅します",
 		"recording": "録音中",
 		"playing": "再生中"
 	},

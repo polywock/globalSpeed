@@ -103,27 +103,25 @@ export function EqualizerControl(props: EqualizerControlProps) {
 
 			<div className="values">
 				{/* Power */}
-				<Tooltip title={gvar.gsm.audio.equalizerPower}>
-					<div>
-						<SliderMicro
-							key="intensity"
-							label={"POW"}
-							value={eq.factor ?? 1}
-							sliderMin={0}
-							sliderMax={3}
-							default={1}
-							pass={{ style: { marginBottom: "10px" } }}
-							onChange={(newValue) => {
-								props.onChange(
-									produce(eq, (d) => {
-										d.factor = newValue
-										delete d.name
-									}),
-								)
-							}}
-						/>
-					</div>
-				</Tooltip>
+				<div>
+					<SliderMicro
+						key="intensity"
+						label={"POW"}
+						value={eq.factor ?? 1}
+						sliderMin={0}
+						sliderMax={3}
+						default={1}
+						pass={{ style: { marginBottom: "10px" } }}
+						onChange={(newValue) => {
+							props.onChange(
+								produce(eq, (d) => {
+									d.factor = newValue
+									delete d.name
+								}),
+							)
+						}}
+					/>
+				</div>
 
 				{/* EQ sliders */}
 				{eq.values.map((value, i) => {

@@ -9,7 +9,6 @@
 		"reverseTooltip": "Mantén pulsado para grabar el audio de esta pestaña y reproducirlo al revés",
 		"equalizer": "Ecualizador",
 		"pitchHdTooltip": "Mejor calidad",
-		"equalizerPower": "Amplifica la potencia del ecualizador",
 		"recording": "Grabando",
 		"playing": "Reproduciendo"
 	},

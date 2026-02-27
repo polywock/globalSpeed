@@ -14,4 +14,9 @@
 	overflow-wrap: break-word;
 	font-size: 1rem;
 	user-select: none;
+	/* transition: opacity 0s linear 200ms; */
+
+	/* @starting-style {
+		opacity: 0;
+	} */
 }

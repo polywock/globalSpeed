@@ -52,6 +52,7 @@ export function Tooltip(props: TooltipProps) {
 			env.activeAc?.abort()
 			delete env.activeAc
 			delete env.redo
+			popup.style.opacity = ""
 			popup.remove()
 		}
 
@@ -196,4 +197,5 @@ function positionAndPresentPopup(props: TooltipProps, mainBounds: DOMRect) {
 
 	popup.style.left = `${x + (props.rawOffsetX || 0)}px`
 	popup.style.top = `${y + (props.rawOffsetY || 0)}px`
+	popup.style.opacity = "1"
 }

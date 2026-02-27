@@ -11,7 +11,6 @@ export type Gsm = {
     reverseTooltip: string,
     equalizer: string,
     pitchHdTooltip: string,
-    equalizerPower: string,
     recording: string,
     playing: string
   },

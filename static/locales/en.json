@@ -12,7 +12,6 @@
 		"reverseTooltip": "Press and hold to record this tab's audio and play it back in reverse",
 		"equalizer": "Equalizer",
 		"pitchHdTooltip": "Better quality",
-		"equalizerPower": "Amplifies equalizer power",
 		"recording": "Recording",
 		"playing": "Playing"
 	},
