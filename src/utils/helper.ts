@@ -571,6 +571,15 @@ export function getPracticalRuntimeUrl() {
 	return gvar.isTopFrame ? location.href : gvar.topFrameUrl || getTopFrameOrigin() || location.href || ""
 }
 
+export function walkGetKey(obj: any, keys: string[]): any {
+	let current = obj
+	for (let key of keys) {
+		if (current == null || typeof current !== "object") return null
+		current = current[key]
+	}
+	return current ?? null
+}
+
 export function interpolateMatrices(lhs: number[], rhs: number[], normal: number) {
 	lhs = lhs || []
 	rhs = rhs || []

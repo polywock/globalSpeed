@@ -663,22 +663,25 @@ export function getDefaultMenuKeybinds(): Keybind[] {
 
 	let kbs: Keybind[] = [
 		{
+			...commandInfos.intoPopup.generate(),
+			trigger: Trigger.MENU,
+			labelGsm: "command.intoPopup",
+		},
+		{
 			...commandInfos.drawPage.generate(),
 			trigger: Trigger.MENU,
-			contextLabel: "- Draw on Page",
-			replaceWithGsm: 4,
+			labelGsm: "command.drawPage",
 		},
 		{
 			...commandInfos.cinema.generate(),
 			trigger: Trigger.MENU,
-			contextLabel: "- Darken Background",
-			replaceWithGsm: 10,
+			labelGsm: "command.cinema",
 		},
 		{
 			...commandInfos.fxFilter.generate(),
 			trigger: Trigger.MENU,
-			replaceWithGsm: 6,
-			contextLabel: "- Fx :: Invert Page",
+			labelGsm: "menuLabels.invertPage",
+			labelGsmPrefix: "Fx :: ",
 			filterOption: "invert",
 			filterTarget: "both",
 			adjustMode: AdjustMode.CYCLE,
@@ -687,8 +690,8 @@ export function getDefaultMenuKeybinds(): Keybind[] {
 		{
 			...commandInfos.fxFilter.generate(),
 			trigger: Trigger.MENU,
-			replaceWithGsm: 7,
-			contextLabel: "- Fx :: Grayscale Page",
+			labelGsm: "menuLabels.grayscalePage",
+			labelGsmPrefix: "Fx :: ",
 			filterOption: "grayscale",
 			filterTarget: "backdrop",
 			adjustMode: AdjustMode.CYCLE,
@@ -697,8 +700,8 @@ export function getDefaultMenuKeybinds(): Keybind[] {
 		{
 			...commandInfos.fxFilter.generate(),
 			trigger: Trigger.MENU,
-			replaceWithGsm: 8,
-			contextLabel: "- Fx :: Video Brightness",
+			labelGsm: "menuLabels.videoBrightness",
+			labelGsmPrefix: "Fx :: ",
 			filterOption: "brightness",
 			adjustMode: AdjustMode.ITC,
 			valueItcMin: 0.5,
@@ -707,8 +710,8 @@ export function getDefaultMenuKeybinds(): Keybind[] {
 		{
 			...commandInfos.fxFilter.generate(),
 			trigger: Trigger.MENU,
-			replaceWithGsm: 9,
-			contextLabel: "- Fx :: Video Contrast",
+			labelGsm: "menuLabels.videoContrast",
+			labelGsmPrefix: "Fx :: ",
 			filterOption: "contrast",
 			adjustMode: AdjustMode.ITC,
 			valueItcMin: 0.75,
@@ -718,8 +721,8 @@ export function getDefaultMenuKeybinds(): Keybind[] {
 			...commandInfos.fxReset.generate(),
 			trigger: Trigger.MENU,
 			filterTarget: "both",
-			contextLabel: "- Fx :: Reset",
-			replaceWithGsm: 5,
+			labelGsm: "token.reset",
+			labelGsmPrefix: "Fx :: ",
 		},
 	]
 	if (chrome.tabCapture && chrome.offscreen) {
@@ -727,22 +730,19 @@ export function getDefaultMenuKeybinds(): Keybind[] {
 			{
 				...commandInfos.afxPitch.generate(),
 				trigger: Trigger.MENU,
-				contextLabel: "- pitch",
+				labelGsm: "command.afxPitch",
 				adjustMode: AdjustMode.ITC,
-				replaceWithGsm: 1,
 			},
 			{
 				...commandInfos.afxGain.generate(),
 				trigger: Trigger.MENU,
-				contextLabel: "- gain",
+				labelGsm: "command.afxGain",
 				adjustMode: AdjustMode.ITC,
-				replaceWithGsm: 2,
 			},
 			{
 				...commandInfos.afxReset.generate(),
 				trigger: Trigger.MENU,
-				contextLabel: "- audio reset",
-				replaceWithGsm: 3,
+				labelGsm: "command.afxReset",
 			},
 		)
 	}

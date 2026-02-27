@@ -1,13 +1,21 @@
 import debounce from "lodash.debounce"
-import { AdjustMode, Keybind, Trigger } from "@/types"
+import { AdjustMode, Keybind } from "@/types"
 import { fetchView } from "./state"
 
 export async function syncContextMenu(keybinds?: Keybind[]) {
+	try {
+		return await _syncContextMenus(keybinds)
+	} catch {
+		console.log("Failed syncing context menu items")
+	}
+}
+
+async function _syncContextMenus(keybinds?: Keybind[]) {
 	if (!chrome.contextMenus) return
 	let createdParents = new Set<string>()
 	await removeAll()
-	keybinds = (await fetchView(["menuKeybinds"])).menuKeybinds
-	keybinds = keybinds.filter((kb) => kb.enabled)
+	keybinds = keybinds || (await fetchView(["menuKeybinds"])).menuKeybinds
+	keybinds = keybinds.filter((kb) => kb.enabled && (kb.contextLabel || kb.contextLabelAlt))
 	if (!keybinds.length) return
 
 	await create({
@@ -17,48 +25,41 @@ export async function syncContextMenu(keybinds?: Keybind[]) {
 		documentUrlPatterns: ["https://*/*", "http://*/*"],
 	})
 
-	await Promise.all(
-		keybinds.map(async (kb) => {
-			await createScaffoldForKeybind(createdParents, kb)
-			if (kb.allowAlt && kb.adjustMode === AdjustMode.CYCLE) await createScaffoldForKeybind(createdParents, kb, true)
-		}),
-	)
-
-	keybinds.forEach((kb) => {
-		createForKeybind(createdParents, kb)
-		if (kb.allowAlt && kb.adjustMode === AdjustMode.CYCLE) createForKeybind(createdParents, kb, true)
-	})
-}
-
-function createScaffoldForKeybind(created: Set<string>, kb: Keybind, alt?: boolean) {
-	const label = (alt ? kb.contextLabelAlt : kb.contextLabel) || ""
-	if (!label.includes("::")) return
-	const title = label.split("::")[0].trim()
-	if (!title) return
-	const id = `fold_${title.toLowerCase()}`
-	if (created.has(id)) return
-	created.add(id)
-
-	return create({
-		id,
-		title,
-		contexts: ["all"],
-		parentId: "parent",
-		documentUrlPatterns: ["https://*/*", "http://*/*"],
-	})
-}
-
-function createForKeybind(created: Set<string>, kb: Keybind, alt?: boolean) {
-	let parentId = "parent"
-	let label = (alt ? kb.contextLabelAlt : kb.contextLabel) || ""
-	if (label.includes("::")) {
-		let [folder, rest] = label.split("::")
-		folder = `fold_${folder.trim().toLowerCase()}`
-		if (created.has(folder)) {
-			parentId = folder
-			label = rest.trim()
+	for (let kb of keybinds) {
+		await createContextMenuItem(createdParents, kb)
+		if (kb.allowAlt && kb.adjustMode === AdjustMode.CYCLE) {
+			await createContextMenuItem(createdParents, kb, true)
 		}
 	}
+}
+
+async function getContextMenuParent(created: Set<string>, path: string[]) {
+	let parentId = "parent"
+	for (let i = 0; i < path.length - 1; i++) {
+		let parents = path.slice(0, i + 1)
+		let id = parents.map((p) => `fold_${p.toLowerCase()}`).join(".")
+		if (!created.has(id)) {
+			await create({
+				id,
+				title: path[i],
+				contexts: ["all"],
+				parentId,
+				documentUrlPatterns: ["https://*/*", "http://*/*"],
+			})
+		}
+		created.add(id)
+		parentId = id
+	}
+
+	return parentId
+}
+
+async function createContextMenuItem(created: Set<string>, kb: Keybind, alt?: boolean) {
+	let label = (alt ? kb.contextLabelAlt : kb.contextLabel) || ""
+	if (!label) return
+	const path = extractContextMenuPath(label)
+	label = path.at(-1)
+	let parentId = await getContextMenuParent(created, path)
 
 	return create({
 		id: alt ? `ALT_${kb.id}` : kb.id,
@@ -88,4 +89,10 @@ function create(opts: chrome.contextMenus.CreateProperties): Promise<void> {
 			res()
 		})
 	})
+}
+
+function extractContextMenuPath(label: string) {
+	const path = label.split("::").map((part) => part.trim())
+	if (path.some((v) => !v)) return [label]
+	return path
 }

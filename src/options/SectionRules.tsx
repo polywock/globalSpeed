@@ -170,12 +170,14 @@ export function Rule(props: RuleProps) {
 			</Tooltip>
 
 			{/* URL conditions entry */}
-			<button
-				className="show"
-				onClick={(e) => {
-					setShow(!show)
-				}}
-			>{`— ${rule.condition ? getSelectedParts(rule.condition).length : 0} —`}</button>
+			<Tooltip title={gvar.gsm.options.rules.conditions}>
+				<button
+					className="show"
+					onClick={(e) => {
+						setShow(!show)
+					}}
+				>{`— ${rule.condition ? getSelectedParts(rule.condition).length : 0} —`}</button>
+			</Tooltip>
 
 			{/* URL conditions modal */}
 			{show ? (

@@ -88,8 +88,7 @@ export function Tooltip(props: TooltipProps) {
 
 			// Add terminators
 			window.addEventListener("wheel", ensureClean, { signal: env.activeAc.signal, once: true })
-			window.addEventListener("scroll", ensureClean, { signal: env.activeAc.signal, once: true })
-			window.addEventListener("resize", ensureClean, { signal: env.activeAc.signal, once: true })
+
 			env.wasClicked && window.addEventListener("pointerdown", ensureCleanForClick, { signal: env.activeAc.signal })
 
 			// Set popup

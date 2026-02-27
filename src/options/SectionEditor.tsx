@@ -1,11 +1,11 @@
 import { produce } from "immer"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { getSelectedParts, requestSyncContextMenu } from "@/utils/configUtils"
 import { getDefaultURLCondition } from "../defaults"
 import { availableCommandNames, commandInfos, CommandName, getDefaultMenuKeybinds, getDefaultPageKeybinds } from "../defaults/commands"
 import { SetView, useStateView } from "../hooks/useStateView"
 import { CommandGroup, Keybind, StateView, Trigger } from "../types"
-import { areYouSure, isFirefox, isMobile, moveItem, randomId } from "../utils/helper"
+import { areYouSure, isFirefox, isMobile, moveItem, randomId, walkGetKey } from "../utils/helper"
 import { CommandWarning } from "./CommandWarning"
 import { DevWarning, DevWarningType, useDevWarningType } from "./DevWarning"
 import { KeybindControl } from "./keybindControl"
@@ -13,6 +13,7 @@ import { List } from "./List"
 import { ListItem } from "./ListItem"
 import { URLModal } from "./URLModal"
 import "./SectionEditor.css"
+import { Tooltip } from "@/comps/Tooltip"
 
 type ListKey = "pageKeybinds" | "browserKeybinds" | "menuKeybinds"
 
@@ -29,12 +30,12 @@ export function SectionEditor(props: {}) {
 	const allKeybinds = view ? [...(view.pageKeybinds || []), ...(view.browserKeybinds || []), ...(view.menuKeybinds || [])] : []
 	const devWarningType = useDevWarningType(allKeybinds.some((kb) => kb.enabled && kb.command === "runCode"))
 
-	if (!view) return <div></div>
+	useEffect(() => {
+		if (!view) return
+		localizeMenuShortcutLabels(view, setView)
+	}, [view?.pageKeybinds])
 
-	if (view.freshKeybinds) {
-		handleFreshKeybinds(view, setView)
-		return <div></div>
-	}
+	if (!view) return <div></div>
 
 	return (
 		<>
@@ -307,46 +308,25 @@ function SectionControls(props: { listKey: ListKey; view: StateView; setView: Se
 	)
 }
 
-function handleFreshKeybinds(view: StateView, setView: SetView) {
-	setView({
-		menuKeybinds: produce(view.menuKeybinds, (d) => {
-			d.forEach((kb) => {
-				switch (kb.replaceWithGsm) {
-					case 1:
-						kb.contextLabel = gvar.gsm.command.afxPitch
-						break
-					case 2:
-						kb.contextLabel = gvar.gsm.command.afxGain
-						break
-					case 3:
-						kb.contextLabel = gvar.gsm.command.afxReset
-						break
-					case 4:
-						kb.contextLabel = gvar.gsm.command.drawPage
-						break
-					case 5:
-						kb.contextLabel = `Fx :: ${gvar.gsm.token.reset}`
-						break
-					case 6:
-						kb.contextLabel = `Fx :: ${gvar.gsm.menuLabels.invertPage}`
-						break
-					case 7:
-						kb.contextLabel = `Fx :: ${gvar.gsm.menuLabels.grayscalePage}`
-						break
-					case 8:
-						kb.contextLabel = `Fx :: ${gvar.gsm.menuLabels.videoBrightness}`
-						break
-					case 9:
-						kb.contextLabel = `Fx :: ${gvar.gsm.menuLabels.videoContrast}`
-						break
-					case 10:
-						kb.contextLabel = gvar.gsm.command.cinema
-						break
+function localizeMenuShortcutLabels(view: StateView, setView: SetView) {
+	let wasUpdated = false
+	const menuKeybinds = produce(view.menuKeybinds || [], (d) => {
+		d.forEach((kb) => {
+			if (kb.labelGsm && kb.labelGsmLang !== gvar.gsm._lang) {
+				const label = walkGetKey(gvar.gsm, kb.labelGsm.split("."))
+				if (label) {
+					kb.contextLabel = `${kb.labelGsmPrefix || ""}${label}`
+					kb.labelGsmLang = gvar.gsm._lang
+					wasUpdated = true
+				} else {
+					console.log("Failed to get GSM key", kb.labelGsm)
 				}
-				delete kb.replaceWithGsm
-			})
-		}),
-		freshKeybinds: false,
+			}
+		})
 	})
-	requestSyncContextMenu()
+
+	if (wasUpdated) {
+		setView({ menuKeybinds })
+		requestSyncContextMenu()
+	}
 }

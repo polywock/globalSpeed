@@ -7,7 +7,6 @@ import {
 	Duration,
 	KeybindMatch,
 	ReferenceValues,
-	State,
 	SvgFilter,
 	Trigger,
 	type FilterEntry,

@@ -264,7 +264,9 @@ export type Keybind = {
 	trigger?: Trigger
 	allowAlt?: boolean
 	cycleNoWrap?: boolean
-	replaceWithGsm?: number
+	labelGsm?: string
+	labelGsmPrefix?: string
+	labelGsmLang?: string
 
 	key?: Hotkey
 	keyAlt?: Hotkey

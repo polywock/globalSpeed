@@ -109,23 +109,25 @@ export const KeybindControl = (props: KeybindControlProps) => {
 		<div className="KeybindControl">
 			{/* Url condition bubble */}
 			{value.condition && getSelectedParts(value.condition).length ? (
-				<div
-					className={`urlBubble`}
-					onClick={() => setShow(!show)}
-					onContextMenu={(e) => {
-						if (value.condition) {
-							props.onChange(
-								value.id,
-								produce(value, (d) => {
-									d.condition = getDefaultURLCondition()
-								}),
-							)
-							e.preventDefault()
-						}
-					}}
-				>
-					{getSelectedParts(value.condition).length}
-				</div>
+				<Tooltip title={gvar.gsm.options.rules.conditions}>
+					<div
+						className={`urlBubble`}
+						onClick={() => setShow(!show)}
+						onContextMenu={(e) => {
+							if (value.condition) {
+								props.onChange(
+									value.id,
+									produce(value, (d) => {
+										d.condition = getDefaultURLCondition()
+									}),
+								)
+								e.preventDefault()
+							}
+						}}
+					>
+						{getSelectedParts(value.condition).length}
+					</div>
+				</Tooltip>
 			) : (
 				<div className="displaynone" />
 			)}
@@ -474,6 +476,9 @@ export const TriggerValues = (props: Props) => {
 							value.id,
 							produce(value, (d) => {
 								d[keyForLabel] = newValue
+								delete d.labelGsm
+								delete d.labelGsmLang
+								delete d.labelGsmPrefix
 							}),
 						)
 						requestSyncContextMenu()
