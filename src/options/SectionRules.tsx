@@ -291,7 +291,7 @@ export function Rule(props: RuleProps) {
 					} else if (name === "changeTitleRestrict") {
 						props.onChange(
 							produce(rule, (d) => {
-								d.titleRestrict = normalizeTitleKeywords(prompt(gvar.gsm.options.rules.pageTitleLabel, d.titleRestrict))
+								d.titleRestrict = normalizeTitleKeywords(prompt(gvar.gsm.options.rules.pageTitleLabel, d.titleRestrict) ?? d.titleRestrict)
 							}),
 						)
 					}

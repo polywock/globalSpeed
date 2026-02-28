@@ -424,7 +424,7 @@ export const TriggerValues = (props: Props) => {
 							)
 						}}
 					>
-						{"ABCDEFGHIJKLMNO"
+						{"ABCDEFGHIJKLMNOPQRS"
 							.split("")
 							.map((v) => [`command${v}`, `command ${v}`])
 							.map((v) => (
