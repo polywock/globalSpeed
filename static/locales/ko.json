@@ -104,7 +104,8 @@
 		"smallStep": "작은 단계",
 		"largeStep": "큰 단계",
 		"moveDown": "아래로 이동",
-		"moveUp": "위로 이동"
+		"moveUp": "위로 이동",
+		"jumpToTab": "탭으로 이동"
 	},
 	"placer": {
 		"windowBounds": {

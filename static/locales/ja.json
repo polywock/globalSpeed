@@ -103,7 +103,8 @@
 		"smallStep": "小ステップ",
 		"largeStep": "大ステップ",
 		"moveDown": "下に移動",
-		"moveUp": "上に移動"
+		"moveUp": "上に移動",
+		"jumpToTab": "タブへ移動"
 	},
 	"placer": {
 		"windowBounds": {

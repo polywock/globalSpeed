@@ -2,6 +2,7 @@ import debounce from "lodash.debounce"
 import { getShadow } from "@/utils/nativeUtils"
 import { conformSpeed } from "../../utils/configUtils"
 import { assertType, between, randomId } from "../../utils/helper"
+import { IterableWeakSet } from "@/utils/IterableWeakSet"
 import { applyMediaEvent, MediaEvent } from "./utils/applyMediaEvent"
 import { generateScopeState } from "./utils/genMediaInfo"
 
@@ -9,8 +10,8 @@ const EVENTS_LAST_PLAYED = new Set(["pause", "playing", "timeupdate"])
 
 export class MediaTower {
 	scopeStorageKey: string
-	media: Set<HTMLMediaElement> = new Set()
-	docs: Set<Window | ShadowRoot> = new Set()
+	media = new IterableWeakSet<HTMLMediaElement>()
+	docs = new IterableWeakSet<Window | ShadowRoot>()
 	newDocCallbacks: Set<() => void> = new Set()
 	forceSpeedCallbacks: Set<() => void> = new Set()
 	observer: IntersectionObserver

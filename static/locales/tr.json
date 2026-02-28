@@ -103,7 +103,8 @@
 		"smallStep": "Küçük adım",
 		"largeStep": "Büyük adım",
 		"moveDown": "Aşağı taşı",
-		"moveUp": "Yukarı taşı"
+		"moveUp": "Yukarı taşı",
+		"jumpToTab": "Sekmeye git"
 	},
 	"placer": {
 		"windowBounds": {

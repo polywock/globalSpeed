@@ -103,7 +103,8 @@
 		"smallStep": "Bước nhỏ",
 		"largeStep": "Bước lớn",
 		"moveDown": "Di chuyển xuống",
-		"moveUp": "Di chuyển lên"
+		"moveUp": "Di chuyển lên",
+		"jumpToTab": "Chuyển đến thẻ"
 	},
 	"placer": {
 		"windowBounds": {

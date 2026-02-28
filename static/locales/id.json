@@ -103,7 +103,8 @@
 		"smallStep": "Langkah kecil",
 		"largeStep": "Langkah besar",
 		"moveDown": "Pindahkan ke bawah",
-		"moveUp": "Pindahkan ke atas"
+		"moveUp": "Pindahkan ke atas",
+		"jumpToTab": "Lompat ke tab"
 	},
 	"placer": {
 		"windowBounds": {

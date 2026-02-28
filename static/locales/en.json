@@ -106,7 +106,8 @@
 		"smallStep": "Small step",
 		"largeStep": "Large step",
 		"moveDown": "Move down",
-		"moveUp": "Move up"
+		"moveUp": "Move up",
+		"jumpToTab": "Jump to tab"
 	},
 	"placer": {
 		"windowBounds": {

@@ -103,7 +103,8 @@
 		"smallStep": "Petit pas",
 		"largeStep": "Grand pas",
 		"moveDown": "Descendre",
-		"moveUp": "Monter"
+		"moveUp": "Monter",
+		"jumpToTab": "Aller à l’onglet"
 	},
 	"placer": {
 		"windowBounds": {

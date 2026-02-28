@@ -104,7 +104,8 @@
 		"smallStep": "小步",
 		"largeStep": "大步",
 		"moveDown": "下移",
-		"moveUp": "上移"
+		"moveUp": "上移",
+		"jumpToTab": "跳至分頁"
 	},
 	"placer": {
 		"windowBounds": {

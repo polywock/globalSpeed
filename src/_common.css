@@ -343,3 +343,13 @@ select {
 	column-gap: 5px;
 	align-items: center;
 }
+
+.FeedbackText {
+	position: fixed;
+	background-color: var(--fg-color-opp);
+	color: var(--text-color-opp);
+	padding: 10px;
+	z-index: 99999999999;
+	white-space: break-spaces;
+	border-radius: var(--radius);
+}

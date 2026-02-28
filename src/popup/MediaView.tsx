@@ -39,14 +39,16 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 					{parts.join(info.shadowMode == null ? " - " : ` • `)}
 				</span>
 				{differentTab && (
-					<button
-						className="jump"
-						onClick={() => {
-							chrome.tabs.update(tabId, { active: true })
-						}}
-					>
-						<GrRevert />
-					</button>
+					<Tooltip title={gvar.gsm.token.jumpToTab}>
+						<button
+							className="jump"
+							onClick={() => {
+								chrome.tabs.update(tabId, { active: true })
+							}}
+						>
+							<GrRevert />
+						</button>
+					</Tooltip>
 				)}
 				{info.displayTitle && (
 					<div className="title" title={info.title}>

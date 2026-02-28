@@ -105,7 +105,8 @@ export type Gsm = {
     smallStep: string,
     largeStep: string,
     moveDown: string,
-    moveUp: string
+    moveUp: string,
+    jumpToTab: string
   },
   placer: {
     windowBounds: {

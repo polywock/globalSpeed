@@ -103,7 +103,8 @@
 		"smallStep": "Kleiner Schritt",
 		"largeStep": "Großer Schritt",
 		"moveDown": "Nach unten verschieben",
-		"moveUp": "Nach oben verschieben"
+		"moveUp": "Nach oben verschieben",
+		"jumpToTab": "Zum Tab wechseln"
 	},
 	"placer": {
 		"windowBounds": {

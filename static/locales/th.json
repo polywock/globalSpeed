@@ -103,7 +103,8 @@
 		"smallStep": "ก้าวเล็ก",
 		"largeStep": "ก้าวใหญ่",
 		"moveDown": "เลื่อนลง",
-		"moveUp": "เลื่อนขึ้น"
+		"moveUp": "เลื่อนขึ้น",
+		"jumpToTab": "ไปยังแท็บ"
 	},
 	"placer": {
 		"windowBounds": {

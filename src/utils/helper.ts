@@ -200,22 +200,12 @@ export function feedbackText(text: string, pos?: { x?: number; y?: number }, dec
 	if ((window as any).feedbackDiv) {
 		;(window as any).feedbackDiv.remove()
 	}
-	let darkTheme = document.documentElement.classList.contains("darkTheme")
 	;(window as any).feedbackDiv = div
 	div.textContent = text
-	div.setAttribute(
-		`style`,
-		`
-    position: fixed;
-    left: ${pos?.x || 0}px;
-    top: ${pos?.y || 0}px;
-    background-color: ${darkTheme ? "white" : "black"}; 
-    color: ${darkTheme ? "black" : "white"};
-    padding: 10px;
-    z-index: 99999999999;
-    white-space: break-spaces;
-  `,
-	)
+	div.classList.add("FeedbackText")
+	div.style.left = `${pos?.x || 0}px`
+	div.style.top = `${pos?.y || 0}px`
+
 	document.body.appendChild(div)
 	if (pos?.x == null || pos?.y == null) {
 		let b = div.getBoundingClientRect()

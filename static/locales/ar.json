@@ -104,7 +104,8 @@
 		"smallStep": "خطوة صغيرة",
 		"largeStep": "خطوة كبيرة",
 		"moveDown": "تحريك لأسفل",
-		"moveUp": "تحريك لأعلى"
+		"moveUp": "تحريك لأعلى",
+		"jumpToTab": "الانتقال إلى علامة التبويب"
 	},
 	"placer": {
 		"windowBounds": {

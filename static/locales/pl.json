@@ -103,7 +103,8 @@
 		"smallStep": "Mały krok",
 		"largeStep": "Duży krok",
 		"moveDown": "Przesuń w dół",
-		"moveUp": "Przesuń w górę"
+		"moveUp": "Przesuń w górę",
+		"jumpToTab": "Przejdź do karty"
 	},
 	"placer": {
 		"windowBounds": {

@@ -103,7 +103,8 @@
 		"smallStep": "Малый шаг",
 		"largeStep": "Большой шаг",
 		"moveDown": "Переместить вниз",
-		"moveUp": "Переместить вверх"
+		"moveUp": "Переместить вверх",
+		"jumpToTab": "Перейти на вкладку"
 	},
 	"placer": {
 		"windowBounds": {
