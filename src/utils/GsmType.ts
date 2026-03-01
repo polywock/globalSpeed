@@ -82,7 +82,6 @@ export type Gsm = {
     implode: string,
     rotate: string,
     rows: string,
-    replaceWith: string,
     invalidNumber: string,
     openPage: string,
     seconds: string,
@@ -106,7 +105,8 @@ export type Gsm = {
     largeStep: string,
     moveDown: string,
     moveUp: string,
-    jumpToTab: string
+    jumpToTab: string,
+    hide: string
   },
   placer: {
     windowBounds: {

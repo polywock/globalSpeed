@@ -80,7 +80,6 @@
 		"implode": "Implodieren",
 		"rotate": "Drehen",
 		"rows": "Zeilen",
-		"replaceWith": "Ersetze $1 durch?",
 		"invalidNumber": "Ungültige Zahl",
 		"openPage": "Seite öffnen",
 		"seconds": "Sekunden",
@@ -104,7 +103,8 @@
 		"largeStep": "Großer Schritt",
 		"moveDown": "Nach unten verschieben",
 		"moveUp": "Nach oben verschieben",
-		"jumpToTab": "Zum Tab wechseln"
+		"jumpToTab": "Zum Tab wechseln",
+		"hide": "Ausblenden"
 	},
 	"placer": {
 		"windowBounds": {

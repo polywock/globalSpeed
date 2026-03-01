@@ -7,6 +7,7 @@
 	margin-bottom: 10px;
 	height: auto;
 	transition: height 100ms ease-out;
+	border-radius: var(--radius);
 
 	@starting-style {
 		height: 0;
@@ -28,7 +29,7 @@
 		margin-bottom: 0;
 
 		& > .ListItemSub {
-			display: none;
+			border-color: transparent;
 		}
 	}
 

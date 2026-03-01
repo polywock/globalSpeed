@@ -1,6 +1,7 @@
 import { BsArrowUpCircle, BsXCircle } from "react-icons/bs"
 import { useStateView } from "@/hooks/useStateView"
 import "./OrlHeader.css"
+import { Tooltip } from "@/comps/Tooltip"
 
 type OrlHeaderProps = {}
 
@@ -19,14 +20,18 @@ export function OrlHeader(props: OrlHeaderProps) {
 			{m ? null : (
 				<>
 					<span>{gvar.gsm.options.rules.status}</span>
-					<BsArrowUpCircle size={"1.285rem"} />
-					<BsXCircle
-						onClickCapture={(e: React.MouseEvent) => {
-							setView({ hasOrl: false })
-							e.stopPropagation()
-						}}
-						size={"1.285rem"}
-					/>
+					<Tooltip title={gvar.gsm.token.hide}>
+						<BsArrowUpCircle size={"1.285rem"} />
+					</Tooltip>
+					<Tooltip title={gvar.gsm.token.delete}>
+						<BsXCircle
+							onClickCapture={(e: React.MouseEvent) => {
+								setView({ hasOrl: false })
+								e.stopPropagation()
+							}}
+							size={"1.285rem"}
+						/>
+					</Tooltip>
 				</>
 			)}
 		</div>

@@ -80,7 +80,6 @@
 		"implode": "Implodi",
 		"rotate": "Ruota",
 		"rows": "Righe",
-		"replaceWith": "Sostituire $1 con?",
 		"invalidNumber": "Numero non valido",
 		"openPage": "Apri pagina",
 		"seconds": "Secondi",
@@ -104,7 +103,8 @@
 		"largeStep": "Grande passo",
 		"moveDown": "Sposta giù",
 		"moveUp": "Sposta su",
-		"jumpToTab": "Vai alla scheda"
+		"jumpToTab": "Vai alla scheda",
+		"hide": "Nascondi"
 	},
 	"placer": {
 		"windowBounds": {

@@ -81,7 +81,6 @@
 		"implode": "內縮",
 		"rotate": "旋轉",
 		"rows": "列數",
-		"replaceWith": "將 $1 取代為？",
 		"invalidNumber": "無效數字",
 		"openPage": "開啟頁面",
 		"seconds": "秒",
@@ -105,7 +104,8 @@
 		"largeStep": "大步",
 		"moveDown": "下移",
 		"moveUp": "上移",
-		"jumpToTab": "跳至分頁"
+		"jumpToTab": "跳至分頁",
+		"hide": "隱藏"
 	},
 	"placer": {
 		"windowBounds": {

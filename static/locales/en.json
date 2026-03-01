@@ -83,7 +83,6 @@
 		"implode": "Implode",
 		"rotate": "Rotate",
 		"rows": "Rows",
-		"replaceWith": "Replace $1 with?",
 		"invalidNumber": "Invalid number",
 		"openPage": "Open page",
 		"seconds": "Seconds",
@@ -107,7 +106,8 @@
 		"largeStep": "Large step",
 		"moveDown": "Move down",
 		"moveUp": "Move up",
-		"jumpToTab": "Jump to tab"
+		"jumpToTab": "Jump to tab",
+		"hide": "Hide"
 	},
 	"placer": {
 		"windowBounds": {

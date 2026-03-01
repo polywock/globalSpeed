@@ -80,7 +80,6 @@
 		"implode": "Meledak ke dalam",
 		"rotate": "Putar",
 		"rows": "Baris",
-		"replaceWith": "Ganti $1 dengan?",
 		"invalidNumber": "Nomor tidak valid",
 		"openPage": "Buka halaman",
 		"seconds": "Detik",
@@ -104,7 +103,8 @@
 		"largeStep": "Langkah besar",
 		"moveDown": "Pindahkan ke bawah",
 		"moveUp": "Pindahkan ke atas",
-		"jumpToTab": "Lompat ke tab"
+		"jumpToTab": "Lompat ke tab",
+		"hide": "Sembunyikan"
 	},
 	"placer": {
 		"windowBounds": {

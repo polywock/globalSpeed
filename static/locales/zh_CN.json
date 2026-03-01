@@ -81,7 +81,6 @@
 		"implode": "内爆",
 		"rotate": "旋转",
 		"rows": "行",
-		"replaceWith": "替换$1为？",
 		"invalidNumber": "无效数字",
 		"openPage": "打开页面",
 		"seconds": "秒",
@@ -105,7 +104,8 @@
 		"largeStep": "大步",
 		"moveDown": "下移",
 		"moveUp": "上移",
-		"jumpToTab": "跳转到标签页"
+		"jumpToTab": "跳转到标签页",
+		"hide": "隐藏"
 	},
 	"placer": {
 		"windowBounds": {

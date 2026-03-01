@@ -80,7 +80,6 @@
 		"implode": "Sụp đổ",
 		"rotate": "Xoay",
 		"rows": "Hàng",
-		"replaceWith": "Thay $1 bằng?",
 		"invalidNumber": "Số không hợp lệ",
 		"openPage": "Mở trang",
 		"seconds": "Giây",
@@ -104,7 +103,8 @@
 		"largeStep": "Bước lớn",
 		"moveDown": "Di chuyển xuống",
 		"moveUp": "Di chuyển lên",
-		"jumpToTab": "Chuyển đến thẻ"
+		"jumpToTab": "Chuyển đến thẻ",
+		"hide": "Ẩn"
 	},
 	"placer": {
 		"windowBounds": {

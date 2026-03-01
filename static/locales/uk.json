@@ -80,7 +80,6 @@
 		"implode": "Імплозія",
 		"rotate": "Обертати",
 		"rows": "Рядки",
-		"replaceWith": "Замінити $1 на?",
 		"invalidNumber": "Невірне число",
 		"openPage": "Відкрити сторінку",
 		"seconds": "Секунди",
@@ -104,7 +103,8 @@
 		"largeStep": "Великий крок",
 		"moveDown": "Перемістити вниз",
 		"moveUp": "Перемістити вгору",
-		"jumpToTab": "Перейти до вкладки"
+		"jumpToTab": "Перейти до вкладки",
+		"hide": "Сховати"
 	},
 	"placer": {
 		"windowBounds": {

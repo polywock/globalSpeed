@@ -80,7 +80,6 @@
 		"implode": "İçe çökme",
 		"rotate": "Dönme",
 		"rows": "Satırlar",
-		"replaceWith": "$1 yerine ne koymalı?",
 		"invalidNumber": "Geçersiz sayı",
 		"openPage": "Sayfayı aç",
 		"seconds": "Sn",
@@ -104,7 +103,8 @@
 		"largeStep": "Büyük adım",
 		"moveDown": "Aşağı taşı",
 		"moveUp": "Yukarı taşı",
-		"jumpToTab": "Sekmeye git"
+		"jumpToTab": "Sekmeye git",
+		"hide": "Gizle"
 	},
 	"placer": {
 		"windowBounds": {

@@ -81,7 +81,6 @@
 		"implode": "응축",
 		"rotate": "회전",
 		"rows": "행",
-		"replaceWith": "$1을(를) 어떤 값으로 교체하시겠습니까?",
 		"invalidNumber": "잘못된 숫자",
 		"openPage": "페이지 열기",
 		"seconds": "초",
@@ -105,7 +104,8 @@
 		"largeStep": "큰 단계",
 		"moveDown": "아래로 이동",
 		"moveUp": "위로 이동",
-		"jumpToTab": "탭으로 이동"
+		"jumpToTab": "탭으로 이동",
+		"hide": "숨기기"
 	},
 	"placer": {
 		"windowBounds": {

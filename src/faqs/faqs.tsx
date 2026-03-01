@@ -118,20 +118,6 @@ function Faqs(props: {}) {
 						</div>
 					}
 				/>
-				<Item
-					q={"How do I change speed without preserving pitch? "}
-					a={
-						<div>
-							You can enable "speed changes pitch" in the settings page, create a shortcut to toggle it, or by enabling the speed slider.
-						</div>
-					}
-				/>
-				{!isFirefox() && (
-					<Item
-						q={"How do I configure the speed presets?"}
-						a={<div>Right click on any speed preset to change the value. You can also change them through the options page.</div>}
-					/>
-				)}
 			</Group>
 			<Group label="shortcuts">
 				<Item
@@ -144,9 +130,9 @@ function Faqs(props: {}) {
 							<li>
 								1. Go to <code>geforcenow.com</code>.
 							</li>
-							<li>2. Open the Global Speed popup menu.</li>
+							<li>2. Open Global Speed's popup .</li>
 							<li>
-								3. Near the power-off button <FaPowerOff color={"#02a"} size="1.21rem" />, click on the 3 vertical dots{" "}
+								3. Near the power-off button <FaPowerOff color={"#02a"} size="1.21rem" />, click on the three-dot menu
 								<IoEllipsisVertical style={{ verticalAlign: "middle" }} size="1.2em" /> to show more options.
 							</li>
 							<li>
@@ -164,7 +150,7 @@ function Faqs(props: {}) {
 									Suspend Global Speed using the <FaPowerOff color={"#02a"} size="1.21rem" /> button.
 								</li>
 								<li>
-									For a permenant solution, while on the website, open Global Speed, click the 3 dots menu, and disable shortcuts for that
+									For a permenant solution, while on the website, open Global Speed, click the three-dot menu, and disable shortcuts for that
 									website
 								</li>
 							</ol>

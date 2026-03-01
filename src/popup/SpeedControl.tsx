@@ -1,11 +1,10 @@
-import { produce } from "immer"
 import { CSSProperties } from "react"
 import { BsMusicNoteList } from "react-icons/bs"
 import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight } from "react-icons/fa"
 import { NumericInput } from "@/comps/NumericInput"
 import { Tooltip } from "@/comps/Tooltip"
 import { getDefaultSpeedPresets } from "@/defaults/constants"
-import { clamp, isFirefox, isMobile, replaceArgs } from "@/utils/helper"
+import { clamp, isMobile } from "@/utils/helper"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "../defaults/constants"
 import { useStateView } from "../hooks/useStateView"
 import "./SpeedControl.css"
@@ -58,29 +57,6 @@ export function SpeedControl(props: SpeedControlProps) {
 						onClick={() => props.onChange(v)}
 						onContextMenu={(e) => {
 							e.preventDefault()
-							if (isFirefox()) return
-							const answer = prompt(replaceArgs(gvar.gsm.token.replaceWith, [v.toString()]))
-							let resetToDefault = false
-
-							const n = parseFloat(answer ?? "")
-							if (isNaN(n)) {
-								resetToDefault = true
-								answer?.trim() && alert(gvar.gsm.token.invalidNumber)
-							}
-							if (n > MAX_SPEED_CHROMIUM) {
-								resetToDefault = true
-								alert(`<= ${MAX_SPEED_CHROMIUM}`)
-							}
-							if (n < MIN_SPEED_CHROMIUM) {
-								resetToDefault = true
-								alert(`>= ${MIN_SPEED_CHROMIUM}`)
-							}
-
-							setView({
-								speedPresets: produce(presets, (d) => {
-									d[i] = resetToDefault ? getDefaultSpeedPresets()[i] : n
-								}),
-							})
 						}}
 					>
 						{v.toFixed(2)}

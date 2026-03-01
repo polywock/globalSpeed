@@ -80,7 +80,6 @@
 		"implode": "Imploduj",
 		"rotate": "Obróć",
 		"rows": "Wiersze",
-		"replaceWith": "Zastąpić $1?",
 		"invalidNumber": "Nieprawidłowa liczba",
 		"openPage": "Otwórz stronę",
 		"seconds": "Sekundy",
@@ -104,7 +103,8 @@
 		"largeStep": "Duży krok",
 		"moveDown": "Przesuń w dół",
 		"moveUp": "Przesuń w górę",
-		"jumpToTab": "Przejdź do karty"
+		"jumpToTab": "Przejdź do karty",
+		"hide": "Ukryj"
 	},
 	"placer": {
 		"windowBounds": {

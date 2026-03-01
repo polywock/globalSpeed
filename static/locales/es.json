@@ -80,7 +80,6 @@
 		"implode": "Implodir",
 		"rotate": "Rotar",
 		"rows": "Filas",
-		"replaceWith": "¿Reemplazar $1 por?",
 		"invalidNumber": "Número inválido",
 		"openPage": "Abrir página",
 		"seconds": "Segundos",
@@ -104,7 +103,8 @@
 		"largeStep": "Paso grande",
 		"moveDown": "Mover abajo",
 		"moveUp": "Mover arriba",
-		"jumpToTab": "Ir a la pestaña"
+		"jumpToTab": "Ir a la pestaña",
+		"hide": "Ocultar"
 	},
 	"placer": {
 		"windowBounds": {

@@ -80,7 +80,6 @@
 		"implode": "内部崩壊",
 		"rotate": "回転",
 		"rows": "行",
-		"replaceWith": "$1を何に置き換えますか？",
 		"invalidNumber": "無効な数字",
 		"openPage": "ページを開く",
 		"seconds": "秒",
@@ -104,7 +103,8 @@
 		"largeStep": "大ステップ",
 		"moveDown": "下に移動",
 		"moveUp": "上に移動",
-		"jumpToTab": "タブへ移動"
+		"jumpToTab": "タブへ移動",
+		"hide": "非表示"
 	},
 	"placer": {
 		"windowBounds": {

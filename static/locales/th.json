@@ -80,7 +80,6 @@
 		"implode": "หดตัว",
 		"rotate": "หมุน",
 		"rows": "แถว",
-		"replaceWith": "แทนที่ $1 ด้วย?",
 		"invalidNumber": "ตัวเลขไม่ถูกต้อง",
 		"openPage": "เปิดหน้า",
 		"seconds": "วินาที",
@@ -104,7 +103,8 @@
 		"largeStep": "ก้าวใหญ่",
 		"moveDown": "เลื่อนลง",
 		"moveUp": "เลื่อนขึ้น",
-		"jumpToTab": "ไปยังแท็บ"
+		"jumpToTab": "ไปยังแท็บ",
+		"hide": "ซ่อน"
 	},
 	"placer": {
 		"windowBounds": {

@@ -81,7 +81,6 @@
 		"implode": "انفجار للداخل",
 		"rotate": "دوران",
 		"rows": "صفوف",
-		"replaceWith": "استبدل $1 بـ؟",
 		"invalidNumber": "رقم غير صالح",
 		"openPage": "افتح الصفحة",
 		"seconds": "ثواني",
@@ -105,7 +104,8 @@
 		"largeStep": "خطوة كبيرة",
 		"moveDown": "تحريك لأسفل",
 		"moveUp": "تحريك لأعلى",
-		"jumpToTab": "الانتقال إلى علامة التبويب"
+		"jumpToTab": "الانتقال إلى علامة التبويب",
+		"hide": "إخفاء"
 	},
 	"placer": {
 		"windowBounds": {

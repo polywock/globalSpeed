@@ -80,7 +80,6 @@
 		"implode": "Имплозия",
 		"rotate": "Вращать",
 		"rows": "Строки",
-		"replaceWith": "Заменить $1 на?",
 		"invalidNumber": "Неправильное число",
 		"openPage": "Открыть страницу",
 		"seconds": "Секунды",
@@ -104,7 +103,8 @@
 		"largeStep": "Большой шаг",
 		"moveDown": "Переместить вниз",
 		"moveUp": "Переместить вверх",
-		"jumpToTab": "Перейти на вкладку"
+		"jumpToTab": "Перейти на вкладку",
+		"hide": "Скрыть"
 	},
 	"placer": {
 		"windowBounds": {
