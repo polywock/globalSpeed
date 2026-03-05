@@ -23,11 +23,16 @@ let resetButton = document.querySelector("#reset")
 
 applyButton.addEventListener("click", async (e) => {
 	if (bounds) {
-		const keybinds = (await chrome.storage.local.get<RecordAny>("g:keybinds"))["g:keybinds"]
-		const kb = keybinds.find((kb: any) => kb.id === id)
-		if (kb) {
-			kb.valuePopupRect = bounds
-			chrome.storage.local.set({ "g:keybinds": keybinds })
+		const keys = ["g:pageKeybinds", "g:menuKeybinds", "g:browserKeybinds"]
+		const data = await chrome.storage.local.get<RecordAny>(keys)
+		for (let key of keys) {
+			const keybinds = data[key]
+			const kb = keybinds.find((kb: any) => kb.id === id)
+			if (kb) {
+				kb.valuePopupRect = bounds
+				chrome.storage.local.set({ [key]: keybinds })
+				break
+			}
 		}
 	}
 	window.close()
