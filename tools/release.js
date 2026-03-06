@@ -24,10 +24,10 @@ function main() {
 
 	// Build both versions
 	console.log("\nBuilding Chromium version...")
-	run("npm run build:prod")
+	run("npm run prod")
 
 	console.log("\nBuilding Firefox version...")
-	run("npm run build:prodFf")
+	run("npm run prodFf")
 
 	// Verify zip files exist
 	if (!fs.existsSync(CHROMIUM_ZIP)) {

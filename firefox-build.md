@@ -17,7 +17,7 @@
 2. Build the Firefox extension:
 
    ```
-   npm run build:prodFf
+   npm run prodFf
    ```
 
 3. The output is in `buildFf/unpacked/`.

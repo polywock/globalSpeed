@@ -4,6 +4,7 @@ import { useThemeSync } from "@/hooks/useThemeSync"
 import { requestTabInfo } from "@/utils/browserUtils"
 import { handleFreshState } from "@/utils/configUtils"
 import { loadGsm } from "@/utils/gsm"
+import { Gsm } from "@/utils/GsmType"
 import { isMac, isMobile } from "@/utils/helper"
 import { ErrorFallback } from "../comps/ErrorFallback"
 import { SectionEditor } from "./SectionEditor"
@@ -18,6 +19,7 @@ declare global {
 	}
 
 	interface GlobalVar {
+		gsm: Gsm
 		indicator?: Indicator
 		isOptionsPage?: boolean
 	}

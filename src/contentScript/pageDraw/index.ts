@@ -1,6 +1,5 @@
 import debounce from "lodash.debounce"
 import { requestGsm } from "@/utils/gsm"
-import { Gsm } from "@/utils/GsmType"
 import { areYouSure, assertType, clamp, createElement as m, randomNumber, replaceArgs } from "@/utils/helper"
 import {
 	clockwiseIcon,
@@ -26,7 +25,6 @@ const BRUSH_MAX = 40
 declare global {
 	interface GlobalVar {
 		pageDraw: PageDraw
-		gsm: Gsm
 	}
 }
 

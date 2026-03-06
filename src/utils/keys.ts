@@ -70,6 +70,9 @@ export function compareHotkeys(lhs: Hotkey, rhs: Hotkey) {
 
 	if (!pre) return false
 
-	if (lhs.key && rhs.key && lhs.key === rhs.key) return true
-	if (lhs.code && rhs.code && lhs.code === rhs.code) return true
+	if (lhs.key) {
+		if (rhs.key && lhs.key === rhs.key) return true
+	} else if (lhs.code) {
+		if (lhs.code && rhs.code && lhs.code === rhs.code) return true
+	}
 }
