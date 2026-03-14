@@ -1,7 +1,7 @@
-import { produce } from "immer"
 import { GoX } from "react-icons/go"
 import { Tooltip } from "@/comps/Tooltip"
 import { extractURLPartValueKey, getActiveParts, getSelectedParts } from "@/utils/configUtils"
+import { produce } from "@/utils/helper"
 import { ModalBase } from "../comps/ModalBase"
 import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { getDefaultURLConditionPart } from "../defaults"

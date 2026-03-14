@@ -582,3 +582,8 @@ export function interpolateMatrices(lhs: number[], rhs: number[], normal: number
 	}
 	return out
 }
+export function produce<T>(base: T, recipe: (draft: T) => void): T {
+	const clone = structuredClone(base)
+	recipe(clone)
+	return clone
+}

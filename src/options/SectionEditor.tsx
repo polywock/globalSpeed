@@ -1,6 +1,6 @@
-import { produce } from "immer"
 import { useEffect, useRef, useState } from "react"
 import { getSelectedParts, requestSyncContextMenu } from "@/utils/configUtils"
+import { produce } from "@/utils/helper"
 import { getDefaultURLCondition } from "../defaults"
 import { availableCommandNames, commandInfos, CommandName, getDefaultMenuKeybinds, getDefaultPageKeybinds } from "../defaults/commands"
 import { SetView, useStateView } from "../hooks/useStateView"
