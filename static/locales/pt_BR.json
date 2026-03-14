@@ -269,7 +269,9 @@
 				"fixedSpeedStep": "Passo de velocidade fixo",
 				"fixedSpeedStepTooltip": "Sempre ajustar a velocidade por um valor fixo ao mover o widget circular",
 				"fixedSeekStep": "Passo de busca fixo",
-				"fixedSeekStepTooltip": "Sempre buscar por uma quantidade fixa de segundos ao mover o widget circular"
+				"fixedSeekStepTooltip": "Sempre buscar por uma quantidade fixa de segundos ao mover o widget circular",
+				"skipForward": "Pular para frente",
+				"skipBackward": "Voltar"
 			},
 			"qrCodeTop": "Escaneie para usar no...",
 			"qrCodeBottom": "Edge para celular",

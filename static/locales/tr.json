@@ -270,7 +270,9 @@
 				"fixedSpeedStep": "Sabit hız adımı",
 				"fixedSpeedStepTooltip": "Daire aracını hareket ettirirken hızı her zaman sabit bir miktarda ayarla",
 				"fixedSeekStep": "Sabit arama adımı",
-				"fixedSeekStepTooltip": "Daire aracını hareket ettirirken her zaman sabit bir saniye miktarı kadar ilerlet"
+				"fixedSeekStepTooltip": "Daire aracını hareket ettirirken her zaman sabit bir saniye miktarı kadar ilerlet",
+				"skipForward": "İleri sar",
+				"skipBackward": "Geri sar"
 			},
 			"qrCodeTop": "Kullanmak için tarayın...",
 			"qrCodeBottom": "Mobil için Edge",

@@ -9,6 +9,9 @@ import { randomId } from "@/utils/helper"
 import { ModalBase } from "../comps/ModalBase"
 import { useStateView } from "../hooks/useStateView"
 import "./WidgetModal.css"
+import { useState } from "react"
+import { GearIcon } from "@/comps/GearIcon"
+import { IndicatorModal } from "./IndicatorModal"
 
 type Props = {
 	onClose: () => void
@@ -16,12 +19,29 @@ type Props = {
 
 export function WidgetModal(props: Props) {
 	const [view, setView] = useStateView({ circleInit: true })
+	const [showIndicatorModal, setShowIndicatorModal] = useState(false)
 	if (!view) return null
 	let init = view.circleInit || {}
 
 	return (
 		<ModalBase keepOnWheel={true} onClose={props.onClose}>
 			<div className="WidgetModal ModalMain">
+				{showIndicatorModal && (
+					<IndicatorModal
+						forCircle={true}
+						indicator={init.indicatorInit}
+						onChange={(indicatorInit) => {
+							setView({
+								circleInit: produce(init, (d) => {
+									d.indicatorInit = indicatorInit
+									d.key = randomId()
+								}),
+							})
+						}}
+						onClose={() => setShowIndicatorModal(null)}
+					/>
+				)}
+
 				{/* Size */}
 				<div className="field">
 					<span>{gvar.gsm.token.size}</span>
@@ -42,7 +62,7 @@ export function WidgetModal(props: Props) {
 					/>
 				</div>
 
-				{/* Size */}
+				{/* Opacity */}
 				<div className="field">
 					<span>{gvar.gsm.filter.opacity}</span>
 					<SliderMicro
@@ -60,6 +80,34 @@ export function WidgetModal(props: Props) {
 						sliderMax={0.6}
 						sliderStep={0.01}
 					/>
+				</div>
+
+				{/* Show indicator */}
+				<div className="field indentFloat">
+					<div className="labelWithTooltip">
+						<span>{gvar.gsm.options.flags.showIndicator}</span>
+						<RegularTooltip title={gvar.gsm.options.flags.showIndicatorTooltip} align="right" />
+					</div>
+					<div className="fieldValue">
+						<Toggle
+							value={!init.hideIndicator}
+							onChange={async (e) => {
+								setView({
+									circleInit: produce(init, (d) => {
+										d.hideIndicator = !d.hideIndicator
+									d.key = randomId()
+									}),
+								})
+							}}
+						/>
+						<div className="float">
+							{init.hideIndicator ? null : (
+								<>
+									<GearIcon onClick={() => setShowIndicatorModal(true)} />
+								</>
+							)}
+						</div>
+					</div>
 				</div>
 
 				{/* Auto hide */}
@@ -113,6 +161,8 @@ export function WidgetModal(props: Props) {
 					>
 						<option value="SPEED">{gvar.gsm.command.toggleSpeed}</option>
 						<option value="PAUSE">{gvar.gsm.options.flags.widget.togglePause}</option>
+						<option value="SKIP_FORWARDS">{gvar.gsm.options.flags.widget.skipForward}</option>
+						<option value="SKIP_BACKWARDS">{gvar.gsm.options.flags.widget.skipBackward}</option>
 					</select>
 				</div>
 
@@ -153,7 +203,7 @@ export function WidgetModal(props: Props) {
 								value={init.fixedSeekStep}
 								onChange={(v) => {
 									setView({
-										circleInit: produce(view.circleInit, (d) => {
+										circleInit: produce(init, (d) => {
 											d.fixedSeekStep = v
 											d.key = randomId()
 										}),
@@ -164,7 +214,7 @@ export function WidgetModal(props: Props) {
 								className="icon"
 								onClick={() => {
 									setView({
-										circleInit: produce(view.circleInit, (d) => {
+										circleInit: produce(init, (d) => {
 											delete d.fixedSeekStep
 											d.key = randomId()
 										}),
@@ -179,7 +229,7 @@ export function WidgetModal(props: Props) {
 							value={false}
 							onChange={() =>
 								setView({
-									circleInit: produce(view.circleInit, (d) => {
+									circleInit: produce(init, (d) => {
 										d.fixedSeekStep = 5
 										d.key = randomId()
 									}),
@@ -205,7 +255,7 @@ export function WidgetModal(props: Props) {
 								value={init.fixedSpeedStep}
 								onChange={(v) => {
 									setView({
-										circleInit: produce(view.circleInit, (d) => {
+										circleInit: produce(init, (d) => {
 											d.fixedSpeedStep = v
 											d.key = randomId()
 										}),
@@ -216,7 +266,7 @@ export function WidgetModal(props: Props) {
 								className="icon"
 								onClick={() => {
 									setView({
-										circleInit: produce(view.circleInit, (d) => {
+										circleInit: produce(init, (d) => {
 											delete d.fixedSpeedStep
 											d.key = randomId()
 										}),
@@ -231,7 +281,7 @@ export function WidgetModal(props: Props) {
 							value={false}
 							onChange={() =>
 								setView({
-									circleInit: produce(view.circleInit, (d) => {
+									circleInit: produce(init, (d) => {
 										d.fixedSpeedStep = 0.1
 										d.key = randomId()
 									}),

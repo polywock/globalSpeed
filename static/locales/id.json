@@ -269,7 +269,9 @@
 				"fixedSpeedStep": "Langkah kecepatan tetap",
 				"fixedSpeedStepTooltip": "Selalu sesuaikan kecepatan dengan jumlah tetap saat memindahkan widget lingkaran",
 				"fixedSeekStep": "Langkah pencarian tetap",
-				"fixedSeekStepTooltip": "Selalu melompat dengan jumlah detik tetap saat memindahkan widget lingkaran"
+				"fixedSeekStepTooltip": "Selalu melompat dengan jumlah detik tetap saat memindahkan widget lingkaran",
+				"skipForward": "Lewati ke depan",
+				"skipBackward": "Mundur"
 			},
 			"qrCodeTop": "Pindai untuk digunakan di...",
 			"qrCodeBottom": "Edge untuk seluler",

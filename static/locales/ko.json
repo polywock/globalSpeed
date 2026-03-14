@@ -271,7 +271,9 @@
 				"fixedSpeedStep": "고정 속도 단계",
 				"fixedSpeedStepTooltip": "원형 위젯을 이동할 때 항상 고정된 속도로 조절합니다",
 				"fixedSeekStep": "고정 탐색 단계",
-				"fixedSeekStepTooltip": "원형 위젯을 이동할 때 항상 고정된 초만큼 탐색합니다"
+				"fixedSeekStepTooltip": "원형 위젯을 이동할 때 항상 고정된 초만큼 탐색합니다",
+				"skipForward": "앞으로 건너뛰기",
+				"skipBackward": "뒤로 건너뛰기"
 			},
 			"qrCodeTop": "스캔하여 사용해 보세요...",
 			"qrCodeBottom": "모바일용 Edge",

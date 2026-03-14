@@ -60,7 +60,15 @@ export function SectionFlags(props: {}) {
 
 	return (
 		<div className="section SectionFlags">
-			{showIndicatorModal && <IndicatorModal view={viewAlt} setView={setView} onClose={() => setShowIndicatorModal(null)} />}
+			{showIndicatorModal && (
+				<IndicatorModal
+					indicator={viewAlt.indicatorInit}
+					onChange={(indicatorInit) => {
+						setView({ indicatorInit })
+					}}
+					onClose={() => setShowIndicatorModal(null)}
+				/>
+			)}
 			{showGhostModal && (
 				<URLModal
 					context="ghost"

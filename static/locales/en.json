@@ -273,7 +273,9 @@
 				"fixedSpeedStep": "Fixed speed step",
 				"fixedSpeedStepTooltip": "Always adjust speed by a fixed amount when moving the circle widget",
 				"fixedSeekStep": "Fixed seek step",
-				"fixedSeekStepTooltip": "Always seek by a fixed amount of seconds when moving the circle widget"
+				"fixedSeekStepTooltip": "Always seek by a fixed amount of seconds when moving the circle widget",
+				"skipForward": "Skip forward",
+				"skipBackward": "Skip backward"
 			},
 			"qrCodeTop": "Scan to use on...",
 			"qrCodeBottom": "Edge for Mobile",

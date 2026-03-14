@@ -269,7 +269,9 @@
 				"fixedSpeedStep": "固定速度ステップ",
 				"fixedSpeedStepTooltip": "円形ウィジェットを動かすときに常に一定の量で速度を調整します",
 				"fixedSeekStep": "固定シークステップ",
-				"fixedSeekStepTooltip": "円形ウィジェットを動かすとき、常に一定の秒数だけシークします"
+				"fixedSeekStepTooltip": "円形ウィジェットを動かすとき、常に一定の秒数だけシークします",
+				"skipForward": "先へスキップ",
+				"skipBackward": "巻き戻す"
 			},
 			"qrCodeTop": "スキャンして使用開始...",
 			"qrCodeBottom": "モバイル版 Edge",

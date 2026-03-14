@@ -26,7 +26,7 @@ export class Circle extends Popover {
 	opacity = 0.5
 	visibleOpacity = 0.8
 	autoHide = true
-	indicator = new Indicator()
+	indicator: Indicator
 	video?: HTMLVideoElement
 	downAt: number
 	leftCircle?: boolean
@@ -64,8 +64,11 @@ export class Circle extends Popover {
 		let spread = (this.size / 18) * shadowScalar
 		let blur = spread * 2
 
-		this.indicator.setInit({ position: "C", rounding: 3, scaling: 1.3, showShadow: true })
-		// this.indicator.setInit({})
+		if (!init.hideIndicator) {
+			this.indicator = new Indicator(true)
+			this.indicator.setInit(init.indicatorInit)
+		}
+
 		this.circle.className = "circle"
 		this.ref.className = "ref"
 		this.delete.className = "delete"
@@ -307,7 +310,24 @@ export class Circle extends Popover {
 			return true
 	}
 	doMain = () => {
-		this.init.mainAction === "PAUSE" ? this.togglePause() : this.toggleSpeed()
+		switch (this.init.mainAction) {
+			case "PAUSE":
+				this.togglePause()
+				break
+			case "SKIP_FORWARDS":
+				this.skip(true)
+				break
+			case "SKIP_BACKWARDS":
+				this.skip(false)
+				break
+			default:
+				this.toggleSpeed()
+				break
+		}
+	}
+	skip = async (forwards: boolean) => {
+		seekTo(this.video, this.video.currentTime + (forwards ? 10 : -10))
+		this.indicator?.show({ text: `${forwards ? "+" : "-"}10s` })
 	}
 	togglePause = async () => {
 		let paused = !this.video.paused
@@ -323,7 +343,7 @@ export class Circle extends Popover {
 		}
 
 		pushView({ override: { speed, lastSpeed: view.speed }, tabId: gvar.tabInfo.tabId })
-		this.indicator.show({ text: formatSpeed(speed) })
+		this.indicator?.show({ text: formatSpeed(speed) })
 	}
 	handleDirectionalInterval = async () => {
 		if (!this.combo) {
@@ -346,14 +366,14 @@ export class Circle extends Popover {
 			const view = await fetchView({ speed: true }, gvar.tabInfo.tabId)
 			let speed = conformSpeed(roundTo(view.speed + (direction === Direction.TOP ? delta : -delta), delta))
 			pushView({ override: { speed, lastSpeed: view.speed }, tabId: gvar.tabInfo.tabId })
-			this.indicator.show({ text: formatSpeed(speed) })
+			this.indicator?.show({ text: formatSpeed(speed) })
 		} else {
 			let delta = this.strong ? 30 : this.init.fixedSeekStep || 10
 			if (!isFixed && this.combo.combo > 3) {
 				delta *= 1.2 ** this.combo.combo
 			}
 			seekTo(this.video, this.video.currentTime + (this.direction === Direction.LEFT ? -delta : delta))
-			this.indicator.show({ text: formatDuration(this.video.currentTime - this.combo.initialTime, true) })
+			this.indicator?.show({ text: formatDuration(this.video.currentTime - this.combo.initialTime, true) })
 		}
 	}
 	getDirection = (clientX: number, clientY: number): Direction => {
@@ -402,7 +422,7 @@ export class Circle extends Popover {
 	}
 	activateMovingMode = () => {
 		if (this.movingMode) return
-		this.indicator.show({ text: "Positioning", duration: 2000 })
+		this.indicator?.show({ text: "Positioning", duration: 2000 })
 		this.movingMode = true
 		if (this.delete.style.top) this.delete.style.top = null
 		this.conflictWithDelete = this.isAtDelete(true)
@@ -412,7 +432,7 @@ export class Circle extends Popover {
 	}
 	clearMovingMode = () => {
 		if (!this.movingMode) return
-		this.indicator.show({ text: "Standard", duration: 2000 })
+		this.indicator?.show({ text: "Standard", duration: 2000 })
 		this.movingMode = false
 		this.conflictWithDelete = false
 		this.circle.style.border = "5px solid white"

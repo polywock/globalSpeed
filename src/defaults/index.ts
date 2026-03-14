@@ -282,10 +282,19 @@ export function getDefaultURLRule(): URLRule {
 }
 
 export const INDICATOR_INIT: IndicatorInit = {
+	position: "TL",
 	backgroundColor: "#000000",
 	textColor: "#ffffff",
 	scaling: 1,
 	rounding: 4,
 	duration: 1,
 	offset: 1,
+}
+
+export const INDICATOR_CIRCLE_INIT: IndicatorInit = {
+	...INDICATOR_INIT,
+	position: "C",
+	rounding: 3,
+	scaling: 1.2,
+	showShadow: true,
 }

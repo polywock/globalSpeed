@@ -270,7 +270,9 @@
 				"fixedSpeedStep": "Langkah kelajuan tetap",
 				"fixedSpeedStepTooltip": "Sentiasa laras kelajuan dengan jumlah tetap apabila menggerakkan widget bulatan",
 				"fixedSeekStep": "Langkah carian tetap",
-				"fixedSeekStepTooltip": "Sentiasa langkau dengan jumlah saat yang tetap apabila menggerakkan widget bulatan"
+				"fixedSeekStepTooltip": "Sentiasa langkau dengan jumlah saat yang tetap apabila menggerakkan widget bulatan",
+				"skipForward": "Langkau ke hadapan",
+				"skipBackward": "Langkau ke belakang"
 			},
 			"qrCodeTop": "Imbas untuk digunakan di...",
 			"qrCodeBottom": "Edge untuk peranti mudah alih",

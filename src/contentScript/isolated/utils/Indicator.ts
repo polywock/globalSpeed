@@ -1,4 +1,4 @@
-import { INDICATOR_INIT } from "@/defaults"
+import { INDICATOR_CIRCLE_INIT, INDICATOR_INIT } from "@/defaults"
 import { createOverlayIcons } from "@/defaults/icons"
 import { IndicatorInit } from "@/types"
 import { insertStyle } from "@/utils/nativeUtils"
@@ -20,30 +20,31 @@ export class Indicator extends Popover {
 	timeoutId: number
 	key: string
 
-	constructor() {
+	constructor(public forCircle?: boolean) {
 		super()
 		this._div.append(this.main)
 		insertStyle(styles, this._shadow)
 	}
 	setInit = (init: IndicatorInit) => {
+		const defaultInit = this.forCircle ? INDICATOR_CIRCLE_INIT : INDICATOR_INIT
 		init = init || {}
 		this.key = init.key
 
 		this.main.removeAttribute("style")
-		this.main.style.backgroundColor = init.backgroundColor || INDICATOR_INIT.backgroundColor
-		this.main.style.color = init.textColor || INDICATOR_INIT.textColor
+		this.main.style.backgroundColor = init.backgroundColor || defaultInit.backgroundColor
+		this.main.style.color = init.textColor || defaultInit.textColor
 		if (init.showShadow) this.main.style.boxShadow = `1px 1px 35px 3px #ffffff88`
 
 		this.animation = init.animation || 1
 		this.duration = init.duration ?? 1
-		this.scaling = init.scaling ?? INDICATOR_INIT.scaling
-		const rounding = (init.rounding ?? INDICATOR_INIT.rounding) * this.scaling
+		this.scaling = init.scaling ?? defaultInit.scaling
+		const rounding = (init.rounding ?? defaultInit.rounding) * this.scaling
 
 		this.main.style.padding = `${BASE_PADDING * (this.scaling + rounding * 0.12)}px`
 		this.main.style.fontSize = `${BASE_FONT_SIZE * this.scaling}px`
 		this.main.style.borderRadius = rounding ? `${BASE_BORDER_RADIUS * rounding}px` : "0px"
 
-		const position = init.position ?? "TL"
+		const position = init.position ?? defaultInit.position
 		if (position === "C") {
 			this.main.style.position = "revert"
 			return

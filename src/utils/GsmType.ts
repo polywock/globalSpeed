@@ -272,7 +272,9 @@ export type Gsm = {
         fixedSpeedStep: string,
         fixedSpeedStepTooltip: string,
         fixedSeekStep: string,
-        fixedSeekStepTooltip: string
+        fixedSeekStepTooltip: string,
+        skipForward: string,
+        skipBackward: string
       },
       qrCodeTop: string,
       qrCodeBottom: string,

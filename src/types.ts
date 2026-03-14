@@ -124,11 +124,13 @@ export type CircleInit = {
 	autoHideDisabled?: boolean
 	opacity?: number
 	fullscreenOnly?: boolean
-	mainAction?: "PAUSE" | "SPEED"
+	mainAction?: "PAUSE" | "SPEED" | "SKIP_FORWARDS" | "SKIP_BACKWARDS"
 	mainActionSpeed?: number
 	fixedSpeedStep?: number
 	fixedSeekStep?: number
 	key?: string
+	hideIndicator?: boolean
+	indicatorInit?: IndicatorInit
 }
 
 export enum InitialContext {

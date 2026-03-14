@@ -271,7 +271,9 @@
 				"fixedSpeedStep": "固定速度步長",
 				"fixedSpeedStepTooltip": "移動圓形工具時總是以固定幅度調整速度",
 				"fixedSeekStep": "固定跳轉步長",
-				"fixedSeekStepTooltip": "移動圓形小工具時，總是以固定秒數快轉或倒轉"
+				"fixedSeekStepTooltip": "移動圓形小工具時，總是以固定秒數快轉或倒轉",
+				"skipForward": "跳到前面",
+				"skipBackward": "倒轉"
 			},
 			"qrCodeTop": "掃碼使用",
 			"qrCodeBottom": "Edge 手機版",

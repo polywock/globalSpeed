@@ -270,7 +270,9 @@
 				"fixedSpeedStep": "Stały krok prędkości",
 				"fixedSpeedStepTooltip": "Zawsze dostosowuj prędkość o stałą wartość podczas przesuwania widżetu koła",
 				"fixedSeekStep": "Stały krok przewijania",
-				"fixedSeekStepTooltip": "Zawsze przewijaj o stałą liczbę sekund podczas przesuwania widżetu koła"
+				"fixedSeekStepTooltip": "Zawsze przewijaj o stałą liczbę sekund podczas przesuwania widżetu koła",
+				"skipForward": "Przeskocz do przodu",
+				"skipBackward": "Przewiń do tyłu"
 			},
 			"qrCodeTop": "Zeskanuj, aby użyć na...",
 			"qrCodeBottom": "Edge na urządzenia mobilne",

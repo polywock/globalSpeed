@@ -2,22 +2,23 @@ import { produce } from "immer"
 import { Reset } from "@/comps/Reset"
 import { SliderMicro } from "@/comps/SliderMicro"
 import { Indicator } from "@/contentScript/isolated/utils/Indicator"
-import { SetView } from "@/hooks/useStateView"
 import { randomId } from "@/utils/helper"
 import { ModalBase } from "../comps/ModalBase"
-import { INDICATOR_INIT } from "../defaults"
-import { IndicatorInit, StateView } from "../types"
+import { INDICATOR_CIRCLE_INIT, INDICATOR_INIT } from "../defaults"
+import { IndicatorInit } from "../types"
 import "./IndicatorModal.css"
 
 type Props = {
-	view: StateView
-	setView: SetView
+	indicator: IndicatorInit
+	onChange: (newValue: IndicatorInit) => void
 	onClose: () => void
+	forCircle?: boolean
 }
 
 export function IndicatorModal(props: Props) {
-	const { view, setView } = props
-	const init = view.indicatorInit || {}
+	const { onChange } = props
+	const init = props.indicator || {}
+	const defaultInit = props.forCircle ? INDICATOR_CIRCLE_INIT : INDICATOR_INIT
 
 	return (
 		<ModalBase keepOnWheel={true} onClose={props.onClose}>
@@ -28,14 +29,14 @@ export function IndicatorModal(props: Props) {
 					<div>
 						<select
 							style={{ marginRight: "10px" }}
-							value={init?.position ?? "TL"}
+							value={init?.position ?? defaultInit.position}
 							onChange={(e) => {
 								const indicatorInit = produce(init ?? {}, (d) => {
 									d.position = e.target.value as any
 									d.key = randomId()
 								})
-								showIndicator(indicatorInit)
-								setView({ indicatorInit })
+								showIndicator(indicatorInit, props.forCircle)
+								onChange(indicatorInit)
 							}}
 						>
 							<option value="TL">{gvar.gsm.token.topLeft}</option>
@@ -50,10 +51,10 @@ export function IndicatorModal(props: Props) {
 									delete d.position
 									d.key = randomId()
 								})
-								showIndicator(indicatorInit)
-								setView({ indicatorInit })
+								showIndicator(indicatorInit, props.forCircle)
+								onChange(indicatorInit)
 							}}
-							active={(init?.position || "TL") !== "TL"}
+							active={(init?.position || defaultInit.position) !== defaultInit.position}
 						/>
 					</div>
 				</div>
@@ -64,26 +65,26 @@ export function IndicatorModal(props: Props) {
 					<div className="colorControl">
 						<input
 							type="color"
-							value={init?.backgroundColor || INDICATOR_INIT.backgroundColor}
+							value={init?.backgroundColor || defaultInit.backgroundColor}
 							onChange={(e) => {
 								const indicatorInit = produce(init ?? {}, (d) => {
 									d.backgroundColor = e.target.value
 									d.key = randomId()
 								})
-								showIndicator(indicatorInit)
-								setView({ indicatorInit })
+								showIndicator(indicatorInit, props.forCircle)
+								onChange(indicatorInit)
 							}}
 						/>
 						<input
 							type="color"
-							value={init?.textColor || INDICATOR_INIT.textColor}
+							value={init?.textColor || defaultInit.textColor}
 							onChange={(e) => {
 								const indicatorInit = produce(init ?? {}, (d) => {
 									d.textColor = e.target.value
 									d.key = randomId()
 								})
-								showIndicator(indicatorInit)
-								setView({ indicatorInit })
+								showIndicator(indicatorInit, props.forCircle)
+								onChange(indicatorInit)
 							}}
 						/>
 						<Reset
@@ -93,12 +94,12 @@ export function IndicatorModal(props: Props) {
 									d.backgroundColor = null
 									d.key = randomId()
 								})
-								showIndicator(indicatorInit)
-								setView({ indicatorInit })
+								showIndicator(indicatorInit, props.forCircle)
+								onChange(indicatorInit)
 							}}
 							active={
-								(init?.textColor || INDICATOR_INIT.textColor) !== INDICATOR_INIT.textColor ||
-								(init?.backgroundColor || INDICATOR_INIT.backgroundColor) !== INDICATOR_INIT.backgroundColor
+								(init?.textColor || defaultInit.textColor) !== defaultInit.textColor ||
+								(init?.backgroundColor || defaultInit.backgroundColor) !== defaultInit.backgroundColor
 							}
 						/>
 					</div>
@@ -108,16 +109,16 @@ export function IndicatorModal(props: Props) {
 				<div className="field">
 					<span>{gvar.gsm.token.size}</span>
 					<SliderMicro
-						value={init?.scaling ?? INDICATOR_INIT.scaling}
+						value={init?.scaling ?? defaultInit.scaling}
 						onChange={(v) => {
 							const indicatorInit = produce(init ?? {}, (d) => {
 								d.scaling = v
 								d.key = randomId()
 							})
-							showIndicator(indicatorInit)
-							setView({ indicatorInit })
+							showIndicator(indicatorInit, props.forCircle)
+							onChange(indicatorInit)
 						}}
-						default={INDICATOR_INIT.scaling}
+						default={defaultInit.scaling}
 						sliderMin={0.5}
 						sliderMax={1.5}
 						sliderStep={0.01}
@@ -128,16 +129,16 @@ export function IndicatorModal(props: Props) {
 				<div className="field">
 					<span>{gvar.gsm.token.rounding}</span>
 					<SliderMicro
-						value={init?.rounding ?? INDICATOR_INIT.rounding}
+						value={init?.rounding ?? defaultInit.rounding}
 						onChange={(v) => {
 							const indicatorInit = produce(init ?? {}, (d) => {
 								d.rounding = v
 								d.key = randomId()
 							})
-							showIndicator(indicatorInit)
-							setView({ indicatorInit })
+							showIndicator(indicatorInit, props.forCircle)
+							onChange(indicatorInit)
 						}}
-						default={INDICATOR_INIT.rounding}
+						default={defaultInit.rounding}
 						sliderMin={0}
 						sliderMax={4}
 						sliderStep={0.01}
@@ -145,20 +146,20 @@ export function IndicatorModal(props: Props) {
 				</div>
 
 				{/* Offset */}
-				{init?.position !== "C" && (
+				{(init?.position || defaultInit.position) !== "C" && (
 					<div className="field">
 						<span>{gvar.gsm.token.offset}</span>
 						<SliderMicro
-							value={init?.offset ?? INDICATOR_INIT.offset}
+							value={init?.offset ?? defaultInit.offset}
 							onChange={(v) => {
 								const indicatorInit = produce(init ?? {}, (d) => {
 									d.offset = v
 									d.key = randomId()
 								})
-								showIndicator(indicatorInit)
-								setView({ indicatorInit })
+								showIndicator(indicatorInit, props.forCircle)
+								onChange(indicatorInit)
 							}}
-							default={INDICATOR_INIT.offset}
+							default={defaultInit.offset}
 							sliderMin={0}
 							sliderMax={4}
 							sliderStep={0.01}
@@ -178,8 +179,8 @@ export function IndicatorModal(props: Props) {
 									d.animation = parseInt(e.target.value) as any
 									d.key = randomId()
 								})
-								showIndicator(indicatorInit, true)
-								setView({ indicatorInit })
+								showIndicator(indicatorInit, props.forCircle, true)
+								onChange(indicatorInit)
 							}}
 						>
 							<option value="1">{gvar.gsm.token.default}</option>
@@ -194,8 +195,8 @@ export function IndicatorModal(props: Props) {
 									delete d.animation
 									d.key = randomId()
 								})
-								showIndicator(indicatorInit, true)
-								setView({ indicatorInit })
+								showIndicator(indicatorInit, props.forCircle, true)
+								onChange(indicatorInit)
 							}}
 							active={(init?.animation || 1) !== 1}
 						/>
@@ -207,19 +208,19 @@ export function IndicatorModal(props: Props) {
 					<span>{gvar.gsm.token.duration}</span>
 					<div className="col" style={{ gridColumnGap: "10px" }}>
 						<SliderMicro
-							value={init?.duration ?? INDICATOR_INIT.duration}
+							value={init?.duration ?? defaultInit.duration}
 							onChange={(v) => {
 								const indicatorInit = produce(init ?? {}, (d) => {
 									d.duration = v
 									d.key = randomId()
 								})
-								setView({ indicatorInit })
+								onChange(indicatorInit)
 							}}
-							default={INDICATOR_INIT.duration}
+							default={defaultInit.duration}
 							sliderMin={0.1}
 							sliderMax={1.9}
 							sliderStep={0.01}
-							pass={{ onMouseUp: (v) => showIndicator(init, true) }}
+							pass={{ onMouseUp: (v) => showIndicator(init, props.forCircle, true) }}
 						/>
 					</div>
 				</div>
@@ -227,7 +228,7 @@ export function IndicatorModal(props: Props) {
 				{/* Reset */}
 				<button
 					onClick={(e) => {
-						setView({ indicatorInit: null })
+						onChange(null)
 					}}
 					className="reset"
 				>
@@ -238,8 +239,12 @@ export function IndicatorModal(props: Props) {
 	)
 }
 
-function showIndicator(init: IndicatorInit, realDuration?: boolean) {
-	gvar.indicator = gvar.indicator || new Indicator()
+function showIndicator(init: IndicatorInit, forCircle: boolean, realDuration?: boolean) {
+	if (gvar.indicator && Boolean(gvar.indicator.forCircle) !== Boolean(forCircle)) {
+		gvar.indicator.release()
+		delete gvar.indicator
+	}
+	gvar.indicator = gvar.indicator || new Indicator(forCircle)
 	gvar.indicator.setInit({ ...init, duration: realDuration ? init?.duration : 3, animation: realDuration ? init?.animation : 2 })
 	gvar.indicator.show({ text: "1.00" })
 }

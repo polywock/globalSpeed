@@ -271,7 +271,9 @@
 				"fixedSpeedStep": "خطوة سرعة ثابتة",
 				"fixedSpeedStepTooltip": "اضبط السرعة دائمًا بمقدار ثابت عند تحريك أداة الدائرة",
 				"fixedSeekStep": "خطوة بحث ثابتة",
-				"fixedSeekStepTooltip": "الانتقال دائمًا بمقدار ثابت من الثواني عند تحريك عنصر الدائرة"
+				"fixedSeekStepTooltip": "الانتقال دائمًا بمقدار ثابت من الثواني عند تحريك عنصر الدائرة",
+				"skipForward": "تخطي للأمام",
+				"skipBackward": "تخطي للخلف"
 			},
 			"qrCodeTop": "امسح للاستخدام على...",
 			"qrCodeBottom": "إيدج للجوال",
