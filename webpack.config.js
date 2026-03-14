@@ -22,11 +22,31 @@ if (env.FIREFOX) {
 	entry["offscreen"] = "./src/offscreen/index.ts"
 }
 
+const pageEntries = ["popup", "options", "faqs"]
+
 const common = {
 	entry,
 	output: {
 		path: resolve(__dirname, env.FIREFOX ? "buildFf" : "build", "unpacked"),
 		chunkFilename: "chunks/[name].js",
+	},
+	optimization: {
+		splitChunks: {
+			chunks: (chunk) => pageEntries.includes(chunk.name),
+			cacheGroups: {
+				vendor: {
+					test: /[\\/]node_modules[\\/]/,
+					name: "vendor",
+					priority: 10,
+				},
+				common: {
+					minChunks: 2,
+					name: "common",
+					priority: 5,
+					reuseExistingChunk: true,
+				},
+			},
+		},
 	},
 	module: {
 		rules: [
