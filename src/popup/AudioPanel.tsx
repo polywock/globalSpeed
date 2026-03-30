@@ -1,5 +1,6 @@
 import { useRef, useState } from "react"
 import { FaArrowsAltH, FaMusic, FaVolumeUp } from "react-icons/fa"
+import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { MdAccessTime } from "react-icons/md"
 import { initTabCapture, releaseTabCapture } from "@/background/utils/tabCapture"
 import { Tooltip } from "@/comps/Tooltip"
@@ -24,9 +25,11 @@ export function AudioPanel(props: {}) {
 		rightTab = false
 	}
 
-	let starAudioFx = rightTab ? view.audioFxAlt : view.audioFx
+	let starAudioFx = (rightTab ? view.audioFxAlt : view.audioFx) || getDefaultAudioFx()
 	let starKey: "audioFxAlt" | "audioFx" = rightTab ? "audioFxAlt" : "audioFx"
+	const ensureStar = (d: typeof view) => (d[starKey] = d[starKey] || getDefaultAudioFx())
 	const ensureCaptured = async () => {
+		setTimeout(() => setView({ enabled: true }), 0.1)
 		if (status) return status
 		env.viaButton = false
 		return initTabCapture(gvar.tabInfo.tabId)
@@ -59,6 +62,25 @@ export function AudioPanel(props: {}) {
 						}}
 					>
 						{gvar.gsm.audio.split}
+					</button>
+				</Tooltip>
+
+				{/* Reset */}
+				<Tooltip title={gvar.gsm.token.reset}>
+					<button
+						className={`toggle reset ${view.audioFx || view.audioFxAlt || status ? "active" : ""}`}
+						onClick={() => {
+							releaseTabCapture(gvar.tabInfo.tabId)
+							setView(
+								produce(view, (d) => {
+									d.audioFx = null
+									d.audioFxAlt = null
+									d.audioPan = null
+								}),
+							)
+						}}
+					>
+						<GiAnticlockwiseRotation size="1.1rem" />
 					</button>
 				</Tooltip>
 
@@ -115,7 +137,7 @@ export function AudioPanel(props: {}) {
 								onClick={(e) => {
 									setView(
 										produce(view, (d) => {
-											d[starKey].jungleMode = !starAudioFx.jungleMode
+											ensureStar(d).jungleMode = !starAudioFx.jungleMode
 										}),
 									)
 								}}
@@ -135,7 +157,7 @@ export function AudioPanel(props: {}) {
 				onChange={(newValue) => {
 					setView(
 						produce(view, (d) => {
-							d[starKey].pitch = newValue
+							ensureStar(d).pitch = newValue
 						}),
 					)
 					newValue !== 0 && ensureCaptured()
@@ -158,7 +180,7 @@ export function AudioPanel(props: {}) {
 				onChange={(newValue) => {
 					setView(
 						produce(view, (d) => {
-							d[starKey].volume = newValue
+							ensureStar(d).volume = newValue
 						}),
 					)
 					newValue !== 1 && ensureCaptured()
@@ -201,7 +223,7 @@ export function AudioPanel(props: {}) {
 								onClick={(e) => {
 									setView(
 										produce(view, (d) => {
-											d[starKey].delayMerge = !starAudioFx.delayMerge
+											ensureStar(d).delayMerge = !starAudioFx.delayMerge
 										}),
 									)
 								}}
@@ -220,7 +242,7 @@ export function AudioPanel(props: {}) {
 				onChange={(newValue) => {
 					setView(
 						produce(view, (d) => {
-							d[starKey].delay = newValue
+							ensureStar(d).delay = newValue
 						}),
 					)
 					newValue !== 0 && ensureCaptured()
@@ -236,7 +258,7 @@ export function AudioPanel(props: {}) {
 				onChange={(newValue) => {
 					setView(
 						produce(view, (d) => {
-							d[starKey].eq = newValue
+							ensureStar(d).eq = newValue
 						}),
 					)
 					newValue.enabled && ensureCaptured()

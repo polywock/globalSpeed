@@ -318,7 +318,7 @@ function prompt(input) {
 async function complete(content, zodObject) {
 	// console.log(content)
 	const response = await openai.responses.parse({
-		model: "gpt-5.2",
+		model: "gpt-5.4",
 		input: [
 			{ role: "system", content: "You are a helpful assistant." },
 			{ role: "user", content },

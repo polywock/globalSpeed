@@ -23,7 +23,7 @@
 	& > .mainControls {
 		margin-bottom: 10px;
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 1fr max-content 1fr;
 		column-gap: 4px;
 
 		& button {

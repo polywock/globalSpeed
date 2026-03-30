@@ -369,14 +369,26 @@ class AudioEffect {
 		if (this.errorCount++ < 10) this.latestUpdateFx?.()
 	}
 	latestUpdateFx: () => void
-	updateFx = async (enabled: boolean, audioFx: AudioFx) => {
+	updateFx = async (enabled: boolean, audioFx?: AudioFx) => {
 		this.latestUpdateFx = () => this.updateFx(enabled, audioFx)
 		this.estrange()
 
 		let head = this.input as AudioNode
 
+		if (!enabled || !audioFx) {
+			this.jungle?.release()
+			delete this.jungle
+			this.soundTouchNode?.release()
+			delete this.soundTouchNode
+			delete this.filterNodes
+			delete this.delayNode
+			head.connect(this.output)
+			this.output.gain.value = 1
+			return
+		}
+
 		// jungle pitch
-		if (enabled && audioFx.jungleMode && audioFx.pitch !== null && audioFx.pitch !== 0) {
+		if (audioFx.jungleMode && audioFx.pitch !== null && audioFx.pitch !== 0) {
 			this.jungle = this.jungle ?? new Jungle(this.ctx)
 			this.jungle.setPitchOffset(audioFx.pitch)
 			head.connect(this.jungle.input)
@@ -387,7 +399,7 @@ class AudioEffect {
 		}
 
 		// soundtouch pitch
-		const soundTouchActive = enabled && !audioFx.jungleMode && audioFx.pitch !== null && audioFx.pitch !== 0
+		const soundTouchActive = !audioFx.jungleMode && audioFx.pitch !== null && audioFx.pitch !== 0
 
 		// try adding module.
 		try {
@@ -410,7 +422,7 @@ class AudioEffect {
 		}
 
 		// eq
-		if (enabled && audioFx.eq?.enabled && audioFx.eq.values.some((v) => v !== 0)) {
+		if (audioFx.eq?.enabled && audioFx.eq.values.some((v) => v !== 0)) {
 			const { eq } = audioFx
 			this.filterNodes = this.filterNodes || []
 			const newFilterNodes: BiquadFilterNode[] = []
@@ -448,7 +460,7 @@ class AudioEffect {
 
 		// delay
 		let secondHead: AudioNode
-		if (enabled && audioFx.delay > 0) {
+		if (audioFx.delay > 0) {
 			this.delayNode = this.delayNode ?? this.ctx.createDelay(10)
 			if (audioFx.delay > this.delayNode.delayTime.maxValue) {
 				this.delayNode = this.ctx.createDelay(179.99)
@@ -469,7 +481,7 @@ class AudioEffect {
 		secondHead && secondHead.connect(this.output)
 
 		// gain
-		if (enabled && audioFx.volume != null && audioFx.volume !== 1) {
+		if (audioFx.volume != null && audioFx.volume !== 1) {
 			this.output.gain.value = audioFx.volume * audioFx.volume
 		} else {
 			this.output.gain.value = 1

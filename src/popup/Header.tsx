@@ -10,7 +10,7 @@ import { KebabList, KebabListProps } from "@/options/KebabList"
 import { AnyDict, ORL_CONTEXT_KEYS, StateView } from "@/types"
 import { feedbackText, isMobile, produce, replaceArgs } from "@/utils/helper"
 import { pushView } from "@/utils/state"
-import { getDefaultAudioFx, getDefaultFx, getDefaultURLCondition, getDefaultURLConditionPart } from "../defaults"
+import { getDefaultFx, getDefaultURLCondition, getDefaultURLConditionPart } from "../defaults"
 import { useCaptureStatus } from "../hooks/useCaptureStatus"
 import { SetView, useStateView } from "../hooks/useStateView"
 import { checkFilterDeviation, checkFilterDeviationOrActiveSvg, getActiveParts, requestSyncContextMenu, testURLWithPart } from "../utils/configUtils"
@@ -214,7 +214,7 @@ export function AudioIcon(props: AudioIconProps) {
 					releaseTabCapture(gvar.tabInfo.tabId)
 					pushView({
 						override: {
-							audioFx: getDefaultAudioFx(),
+							audioFx: null,
 							audioFxAlt: null,
 							audioPan: null,
 						},

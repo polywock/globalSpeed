@@ -150,7 +150,7 @@ export type Context = {
 	elementFx?: Fx
 	backdropFx?: Fx
 	monoOutput?: boolean
-	audioFx: AudioFx
+	audioFx?: AudioFx
 	audioFxAlt?: AudioFx
 	audioPan?: number
 }
