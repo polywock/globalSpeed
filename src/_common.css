@@ -37,6 +37,7 @@
 	--card-shadow: 0 2px 8px 0 #1b24331f;
 	--shadow-color: #0d152540;
 	--overlay-color: #00000066;
+	--tip-bg-color: #f2f2f2;
 
 	--icon-color: #4b5c79;
 	--icon-muted-color: #7a879e;
@@ -72,6 +73,7 @@
 	--card-shadow: 0 2px 8px 0 #000000a6;
 	--shadow-color: #00000099;
 	--overlay-color: #00000088;
+	--tip-bg-color: #293348;
 
 	--icon-color: #b6c2d8;
 	--icon-muted-color: #8895ad;

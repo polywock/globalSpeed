@@ -13,7 +13,7 @@ import { List } from "./List"
 import { ListItem } from "./ListItem"
 import { URLModal } from "./URLModal"
 import "./SectionEditor.css"
-import { Tooltip } from "@/comps/Tooltip"
+import { ShortcutWarning } from "./ShortcutWarning"
 
 type ListKey = "pageKeybinds" | "browserKeybinds" | "menuKeybinds"
 
@@ -67,7 +67,7 @@ function getSectionTitle(listKey: ListKey): string {
 
 function getSectionSubheader(listKey: ListKey): string {
 	const subs: Record<ListKey, string> = {
-		pageKeybinds: (gvar.gsm.options.editor as any).pageShortcutsSub,
+		pageKeybinds: null,
 		browserKeybinds: gvar.gsm.options.editor.browserShortcutsSub,
 		menuKeybinds: gvar.gsm.options.editor.menuShortcutsSub,
 	}
@@ -96,6 +96,7 @@ function KeybindSection(props: {
 		<div className="section SectionEditor">
 			<h2>{getSectionTitle(listKey)}</h2>
 			{!!getSectionSubheader(listKey) && <div className="subHeader">{getSectionSubheader(listKey)}</div>}
+			{listKey === "pageKeybinds" && <ShortcutWarning />}
 			{devWarningType ? <DevWarning warningType={hasJs ? devWarningType : DevWarningType.NONE} /> : null}
 			{listKey === "browserKeybinds" && <CommandWarning keybinds={view[listKey] || []} />}
 

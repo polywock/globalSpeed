@@ -30,7 +30,7 @@ export function QrPromo(props: {}) {
 				onClick={() => {
 					chrome.tabs.create({ url: "https://edgemobileapp.microsoft.com?adjustId=1mhapodf_1mwtc6ik" })
 				}}
-				src={chrome.runtime.getURL("icons/qr.png")}
+				src={chrome.runtime.getURL("images/qr.png")}
 			/>
 			<Tooltip title={gvar.gsm.token.delete}>
 				<button
