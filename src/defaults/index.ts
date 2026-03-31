@@ -8,32 +8,26 @@ export type WebsiteInfo = {
 	contains?: boolean
 }
 
-export const SHORTCUT_DISABLED_WEBSITES: WebsiteInfo[] = [
-	{ v: "https://docs.google.com" },
-	{ v: "https://play.geforcenow.com" },
-	{ v: "https://www.xbox.com" },
-	{ v: "https://docs.qq.com" },
-	{ v: "https://www.playstation.com" },
-	{ v: "https://excalidraw.com" },
-	{ v: "https://www.photopea.com" },
-	{ v: "https://www.canva.com" },
-	{ v: "https://luna.amazon.com" },
-	{ v: "https://ys.mihoyo.com" },
-	{ v: "https://chatgpt.com" },
-	{ v: "https://claude.ai" },
-	{ v: "https://gemini.google.com" },
-	{ v: "https://www.deepseek.com" },
-	{ v: "https://www.youtube.com/playables" },
-	{ v: "https://www.4399.com" },
-	{ v: "https://www.7k7k.com" },
-	{ v: "https://poki.com" },
-	{ v: "https://now.gg" },
-	{ v: "https://coderpad.io" },
-	{ v: "https://reemo.io" },
-	{ v: "https://web.parsec.app" },
-	{ v: "https://remotedesktop.google.com" },
-	{ v: "https://godbolt.org" },
-	{ v: "https://github.dev" },
+export const SHORTCUT_ALLOWED_WEBSITES: WebsiteInfo[] = [
+	{ v: "https://www.youtube.com" },
+	{ v: "https://www.netflix.com" },
+	{ v: "https://www.twitch.tv" },
+	{ v: "https://www.hulu.com" },
+	{ v: "https://www.disneyplus.com" },
+	{ v: "https://play.max.com" },
+	{ v: "https://www.amazon.com/gp/video" },
+	{ v: "https://www.peacocktv.com" },
+	{ v: "https://tv.apple.com" },
+	{ v: "https://www.paramountplus.com" },
+	{ v: "https://www.crunchyroll.com" },
+	{ v: "https://www.dailymotion.com" },
+	{ v: "https://www.bilibili.com" },
+	{ v: "https://www.iqiyi.com" },
+	{ v: "https://v.youku.com" },
+	{ v: "https://v.qq.com" },
+	{ v: "https://pan.baidu.com" },
+	{ v: "https://www.nicovideo.jp" },
+	{ v: "https://www.bbc.com/video" },
 ]
 
 export function turnWebsiteInfoIntoString(info: WebsiteInfo) {
@@ -62,7 +56,6 @@ export function getDefaultState(): State {
 		freshKeybinds: true,
 		...getDefaultContext(),
 		keybindsUrlCondition: getDefaultKeybindsUrlConditions(),
-		websitesAddedToUrlConditionsExclusion: SHORTCUT_DISABLED_WEBSITES.map((w) => turnWebsiteInfoIntoString(w)),
 		hideMediaView: isMobile(),
 		holdToSpeed: isMobile() ? 2 : undefined,
 	} satisfies State
@@ -72,13 +65,13 @@ export function getDefaultState(): State {
 
 export function getDefaultKeybindsUrlConditions(): URLCondition {
 	return {
-		block: true,
-		blockParts: SHORTCUT_DISABLED_WEBSITES.map((origin) => {
+		block: false,
+		allowParts: SHORTCUT_ALLOWED_WEBSITES.map((origin) => {
 			const part = generateUrlPart(origin.v)
 			if (origin.contains) part.type = "CONTAINS"
 			return part
 		}),
-		allowParts: [],
+		blockParts: [],
 	}
 }
 

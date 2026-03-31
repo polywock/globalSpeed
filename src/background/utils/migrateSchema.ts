@@ -1,5 +1,5 @@
 import { availableCommandNames } from "@/defaults/commands"
-import { generateUrlPart, getDefaultState, getEmptyUrlConditions, SHORTCUT_DISABLED_WEBSITES, turnWebsiteInfoIntoString } from "../../defaults"
+import { generateUrlPart, getDefaultState, getEmptyUrlConditions, turnWebsiteInfoIntoString } from "../../defaults"
 import { AdjustMode, Context, Duration, Keybind, State, Trigger, URLCondition, URLConditionPart, URLRule } from "../../types"
 import { isFirefox, randomId } from "../../utils/helper"
 
@@ -49,33 +49,6 @@ export function migrateSchema(state?: State) {
 		state = migrateForChrome(state)
 	}
 
-	state = migrateShortcutsDisabledList(state) || state
-	return state
-}
-
-function migrateShortcutsDisabledList(state: State) {
-	state.websitesAddedToUrlConditionsExclusion = state.websitesAddedToUrlConditionsExclusion || []
-	const excludedSet = new Set(state.websitesAddedToUrlConditionsExclusion)
-	state.keybindsUrlCondition = state.keybindsUrlCondition || getEmptyUrlConditions(true)
-	const cond = state.keybindsUrlCondition
-	cond.blockParts = cond.blockParts || []
-
-	SHORTCUT_DISABLED_WEBSITES.forEach((website) => {
-		const key = turnWebsiteInfoIntoString(website)
-		if (excludedSet.has(key)) return
-
-		// Check if they already have it (User added)
-		if (website.contains) {
-			if (cond.blockParts.find((p) => p.valueContains === website.v && p.type === "CONTAINS")) return
-		} else {
-			if (cond.blockParts.find((p) => p.valueStartsWith === website.v && p.type === "STARTS_WITH")) return
-		}
-
-		state.websitesAddedToUrlConditionsExclusion.push(key)
-		const part = generateUrlPart(website.v)
-		if (website.contains) part.type = "CONTAINS"
-		cond.blockParts.push(part)
-	})
 	return state
 }
 

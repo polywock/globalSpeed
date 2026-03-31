@@ -37,6 +37,7 @@ export function SectionEditor(props: {}) {
 
 	if (!view) return <div></div>
 
+	view.keybindsUrlCondition
 	return (
 		<>
 			<KeybindSection listKey="pageKeybinds" view={view} setView={setView} showUrlConditions devWarningType={devWarningType} />
@@ -96,7 +97,7 @@ function KeybindSection(props: {
 		<div className="section SectionEditor">
 			<h2>{getSectionTitle(listKey)}</h2>
 			{!!getSectionSubheader(listKey) && <div className="subHeader">{getSectionSubheader(listKey)}</div>}
-			{listKey === "pageKeybinds" && <ShortcutWarning />}
+			{listKey === "pageKeybinds" && <ShortcutWarning isBlockMode={(view.keybindsUrlCondition || getDefaultURLCondition(true)).block} />}
 			{devWarningType ? <DevWarning warningType={hasJs ? devWarningType : DevWarningType.NONE} /> : null}
 			{listKey === "browserKeybinds" && <CommandWarning keybinds={view[listKey] || []} />}
 
@@ -295,7 +296,7 @@ function SectionControls(props: { listKey: ListKey; view: StateView; setView: Se
 					{show && (
 						<URLModal
 							context="keybinds"
-							value={view.keybindsUrlCondition || getDefaultURLCondition(true)}
+							value={view.keybindsUrlCondition || getDefaultURLCondition(false)}
 							onClose={() => setShow(false)}
 							onReset={() => setView({ keybindsUrlCondition: null })}
 							onChange={(v) => {

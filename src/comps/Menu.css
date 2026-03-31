@@ -16,6 +16,7 @@
 		padding-right: 20px;
 		opacity: 0.85;
 		line-height: 1.5;
+		cursor: pointer;
 
 		&:hover {
 			opacity: 1;

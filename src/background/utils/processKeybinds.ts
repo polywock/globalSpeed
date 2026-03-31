@@ -3,7 +3,7 @@ import { hashWithStoredSalt } from "@/utils/hash"
 import { produce } from "@/utils/helper"
 import type { MediaEvent, MediaEventCinema } from "../../contentScript/isolated/utils/applyMediaEvent"
 import { FlatMediaInfo } from "../../contentScript/isolated/utils/genMediaInfo"
-import { getDefaultFx } from "../../defaults"
+import { getDefaultAudioFx, getDefaultFx } from "../../defaults"
 import { commandInfos, CommandName } from "../../defaults/commands"
 import { filterInfos } from "../../defaults/filters"
 import {
@@ -825,7 +825,7 @@ async function getValues(args: CommandHandlerArgs): Promise<{ main?: number; sec
 		}
 		let key = afxMapping[kb.command as keyof typeof afxMapping]
 		return {
-			main: view.audioFx ? (view.audioFx[key] ?? commandInfo.ref.default) : undefined,
+			main: (view.audioFx ?? getDefaultAudioFx())[key] ?? commandInfo.ref.default,
 			secondary: view.audioFxAlt ? (view.audioFxAlt[key] ?? commandInfo.ref.default) : undefined,
 		}
 	}
@@ -910,8 +910,8 @@ export async function setValue(init: SetValueInit) {
 		)
 			init.dry || initTabCapture(tabInfo.tabId)
 
-		if (view.audioFx && value != null) {
-			override.audioFx = produce(view.audioFx, (d) => {
+		if (value != null) {
+			override.audioFx = produce(view.audioFx ?? getDefaultAudioFx(), (d) => {
 				d[afxMapping[kb.command]] = value
 			})
 		}
