@@ -25,7 +25,6 @@ export function SectionEditor(props: {}) {
 		keybindsUrlCondition: true,
 		hideIndicator: true,
 		virtualInput: true,
-		freshKeybinds: true,
 	})
 	const allKeybinds = view ? [...(view.pageKeybinds || []), ...(view.browserKeybinds || []), ...(view.menuKeybinds || [])] : []
 	const devWarningType = useDevWarningType(allKeybinds.some((kb) => kb.enabled && kb.command === "runCode"))
@@ -33,7 +32,7 @@ export function SectionEditor(props: {}) {
 	useEffect(() => {
 		if (!view) return
 		localizeMenuShortcutLabels(view, setView)
-	}, [view?.pageKeybinds])
+	}, [view?.menuKeybinds])
 
 	if (!view) return <div></div>
 
@@ -281,7 +280,6 @@ function SectionControls(props: { listKey: ListKey; view: StateView; setView: Se
 					const updates: Partial<StateView> = {
 						[listKey]: SECTION_DEFAULTS[listKey](),
 					}
-					if (listKey === "menuKeybinds") updates.freshKeybinds = true
 					setView(updates as StateView)
 				}}
 			>

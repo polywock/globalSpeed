@@ -91,7 +91,6 @@ export type State = {
 	hideGrant?: boolean
 	circleWidget?: boolean
 	circleInit?: CircleInit
-	freshKeybinds?: boolean
 	holdToSpeed?: number
 	sawEnableShortcutOverlayCount?: number
 } & Context

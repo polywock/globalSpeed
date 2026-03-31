@@ -1,6 +1,7 @@
 {
 	":appName": "Global Speed: Controle de velocidade de vídeo",
 	":appDesc": "Controle universal de velocidade para vídeo e áudio.",
+	"_shortcut_screenshot": true,
 	"audio": {
 		"releaseTab": "Libertar áudio",
 		"split": "Dividir",

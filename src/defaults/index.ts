@@ -53,7 +53,6 @@ export function getDefaultState(): State {
 		pageKeybinds: getDefaultPageKeybinds(),
 		menuKeybinds: getDefaultMenuKeybinds(),
 		browserKeybinds: [] as Keybind[],
-		freshKeybinds: true,
 		...getDefaultContext(),
 		keybindsUrlCondition: getDefaultKeybindsUrlConditions(),
 		hideMediaView: isMobile(),

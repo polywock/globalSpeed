@@ -1,6 +1,7 @@
 {
 	":appName": "Global Speed: Video hız kontrolü",
 	":appDesc": "Video ve ses için evrensel hız kontrolü.",
+	"_shortcut_screenshot": true,
 	"audio": {
 		"releaseTab": "Sesi bırak",
 		"split": "Ayır",

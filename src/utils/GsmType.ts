@@ -3,6 +3,7 @@ export type Gsm = {
   _scale?: number,
   _lang?: string,
   _rtl?: boolean,
+  _shortcut_screenshot?: boolean,
   audio: {
     releaseTab: string,
     split: string,

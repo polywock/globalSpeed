@@ -15,7 +15,10 @@ export function ShortcutWarning(props: { isBlockMode: boolean }) {
 			</span>
 			{showModal && (
 				<ModalBase onClose={() => setShowModal(false)} passClass="ShortcutWarningModal">
-					<img src="images/shortcut.png" />
+					<img
+						onClick={() => setShowModal(false)}
+						src={`images/shortcut_${gvar.gsm._shortcut_screenshot ? gvar.gsm._lang.replace("-", "").toLowerCase() : "en"}.png`}
+					/>
 				</ModalBase>
 			)}
 		</div>
