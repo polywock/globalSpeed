@@ -12,6 +12,7 @@ import { SectionFlags } from "./SectionFlags"
 import { SectionHelp } from "./SectionHelp"
 import { SectionRules } from "./SectionRules"
 import "./options.css"
+import { SubscribeView } from "@/utils/state"
 
 declare global {
 	interface Window {
@@ -22,10 +23,11 @@ declare global {
 		gsm: Gsm
 		indicator?: Indicator
 		isOptionsPage?: boolean
+		subscribeLanguage?: SubscribeView
 	}
 }
 
-const Options = (props: {}) => {
+const Options = (props: { gsm: Gsm }) => {
 	useThemeSync()
 	return (
 		<div id="App">
@@ -40,14 +42,23 @@ const Options = (props: {}) => {
 if (isMobile()) document.documentElement.classList.add("mobile")
 Promise.all([loadGsm(), requestTabInfo(), handleFreshState()]).then(([gsm, tabInfo]) => {
 	gvar.isOptionsPage = true
-	gvar.gsm = gsm
 	gvar.tabInfo = tabInfo
-	document.documentElement.lang = gsm._lang
-	if (gsm._rtl) document.documentElement.classList.add("rtl")
 	window.root = createRoot(document.querySelector("#root"))
+	gvar.subscribeLanguage = new SubscribeView({ language: true }, gvar.tabInfo?.tabId, false, async () => {
+		const gsm = await loadGsm()
+		loadReact(gsm)
+	})
+	loadReact(gsm)
+})
+
+function loadReact(gsm: Gsm) {
+	gvar.gsm = gsm
+	document.documentElement.lang = gsm._lang
+	document.documentElement.classList[gsm._rtl ? "add" : "remove"]("rtl")
+
 	window.root.render(
 		<ErrorFallback>
-			<Options />
+			<Options gsm={gsm} />
 		</ErrorFallback>,
 	)
-})
+}

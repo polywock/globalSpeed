@@ -94,9 +94,6 @@ export function SectionFlags(props: {}) {
 						value={view.language || "detect"}
 						onChange={(e) => {
 							setView({ language: e.target.value })
-							setTimeout(() => {
-								window.location.reload()
-							}, 100)
 						}}
 					>
 						{Object.keys(LOCALE_MAP).map((key) => (

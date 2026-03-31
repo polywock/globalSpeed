@@ -32,7 +32,7 @@ export function SectionEditor(props: {}) {
 	useEffect(() => {
 		if (!view) return
 		localizeMenuShortcutLabels(view, setView)
-	}, [view?.menuKeybinds])
+	}, [view?.menuKeybinds, gvar.gsm._lang])
 
 	if (!view) return <div></div>
 
