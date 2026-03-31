@@ -13,5 +13,15 @@
 
 	& > .link {
 		border-bottom: 2px solid var(--text-color-opaque);
+		cursor: pointer;
+		transition: opacity 0.15s ease;
+
+		&:hover {
+			opacity: 0.65;
+		}
 	}
+}
+
+.ShortcutWarningModal img {
+	border: 5px solid white;
 }
