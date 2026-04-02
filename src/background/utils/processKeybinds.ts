@@ -40,6 +40,8 @@ export class ProcessKeybinds {
 	constructor(
 		private matches: KeybindMatch[],
 		public tabInfo: TabInfo,
+		public keyUp = false,
+		public source: 'keyboard' | 'browser' = 'keyboard',
 	) {
 		this.init()
 	}
@@ -126,7 +128,7 @@ export class ProcessKeybinds {
 
 		let override: StateView = {}
 		this.shortcutHideIndicator = kb.invertIndicator ? !this.globalHideIndicator : this.globalHideIndicator
-		await commandHandlers[kb.command]({ media, override, commandInfo, kb, isAlt: match.alt, ...this })
+		await commandHandlers[kb.command]({ media, override, commandInfo, kb, isAlt: match.alt, keyUp: this.keyUp, source: this.source, ...this })
 		if (Object.keys(override).length) await pushView({ override, tabId: this.tabInfo?.tabId })
 	}
 }
@@ -137,6 +139,7 @@ type CommandHandlerArgs = ProcessKeybinds & {
 	kb: Keybind
 	commandInfo: Command
 	isAlt?: boolean
+	source?: 'keyboard' | 'browser'
 }
 
 let nothingSymbolMap: { [key: string]: Symbol } = {}
@@ -282,10 +285,15 @@ const commandHandlers: {
 	speed: async (args) => {
 		return processAdjustMode(args)
 	},
-	temporarySpeed: async ({ media, show, kb, commandInfo }) => {
+	temporarySpeed: async ({ media, show, kb, commandInfo, keyUp, source }) => {
+		if (keyUp && source === 'keyboard') {
+			activateTemporarySpeed(media)
+			return
+		}
+
 		const factor = round(kb.valueNumber || commandInfo.ref.default, 2)
 		show({ text: `${factor}x` })
-		activateTemporarySpeed(media, factor)
+		activateTemporarySpeed(media, factor, source)
 	},
 	speedChangesPitch: async (args) => {
 		const { kb, show, override, fetch } = args
@@ -950,7 +958,14 @@ function showIndicator(opts: IndicatorShowOpts, tabId: number, showAlt?: boolean
 }
 
 let tempSpeedTimeoutId: number
-function activateTemporarySpeed(media: FlatMediaInfo, factor: number) {
+
+function activateTemporarySpeed(media: FlatMediaInfo, factor?: number, source: 'keyboard' | 'browser' = 'keyboard') {
+	if (factor === undefined) {
+		clearTimeout(tempSpeedTimeoutId)
+		chrome.tabs.sendMessage(media.tabInfo.tabId, { type: "SET_TEMPORARY_SPEED" } as Messages, { frameId: media.tabInfo.frameId })
+		return
+	}
+
 	chrome.tabs.sendMessage(
 		media.tabInfo.tabId,
 		{
@@ -959,15 +974,11 @@ function activateTemporarySpeed(media: FlatMediaInfo, factor: number) {
 		} as Messages,
 		{ frameId: media.tabInfo.frameId },
 	)
-	clearTimeout(tempSpeedTimeoutId)
 
-	tempSpeedTimeoutId = setTimeout(() => {
-		chrome.tabs.sendMessage(
-			media.tabInfo.tabId,
-			{
-				type: "SET_TEMPORARY_SPEED",
-			} as Messages,
-			{ frameId: media.tabInfo.frameId },
-		)
-	}, 150)
+	if (source === 'browser') {
+		clearTimeout(tempSpeedTimeoutId)
+		tempSpeedTimeoutId = setTimeout(() => {
+			activateTemporarySpeed(media)
+		}, 150)
+	}
 }
