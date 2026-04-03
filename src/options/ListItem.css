@@ -43,11 +43,11 @@
 		& > span {
 			display: inline-block;
 			padding: 4px 8px;
-			background-color: var(--icon-vibrant-color);
-			color: var(--pure-color);
+			background-color: var(--tip-bg-color);
+			border: 1px solid var(--border);
 			font-size: 0.95em;
 			user-select: none;
-			border-radius: var(--radius);
+			border-radius: var(--radius-sm);
 			&:hover {
 				svg {
 					width: auto;
