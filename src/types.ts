@@ -228,6 +228,9 @@ export type Command = {
 	hasFeedback?: boolean
 	requiresMedia?: boolean
 	requiresVideo?: boolean
+	prohibitAsMenu?: boolean
+	prohibitAsPage?: boolean
+	prohibitAsCommands?: boolean
 	requiresTabCapture?: boolean
 	requiresPiPApi?: boolean
 	noReset?: boolean

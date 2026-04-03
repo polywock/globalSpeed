@@ -115,6 +115,7 @@ export let commandInfos: { [key in CommandName]: Command } = {
 		valueType: "number",
 		hasFeedback: true,
 		requiresMedia: true,
+		prohibitAsMenu: true,
 		ref: {
 			default: 3,
 			min: 0,
@@ -559,6 +560,7 @@ export let commandInfos: { [key in CommandName]: Command } = {
 		hasFeedback: true,
 		valueType: "state",
 		requiresTabCapture: true,
+		prohibitAsPage: true,
 		generate: () => ({
 			id: randomId(),
 			command: "afxCapture",

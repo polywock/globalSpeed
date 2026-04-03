@@ -200,37 +200,29 @@ function onMove(setView: SetView, view: StateView, listKey: KeybindType, id: str
 	if (listKey === "menuKeybinds") requestSyncContextMenu()
 }
 
-let cachedOptions: {
-	value: string
-	label: string
-	disabled?: boolean
-}[]
+type CommandOption = { value: string; label: string; disabled?: boolean }
+const cachedOptions: Partial<Record<KeybindType, CommandOption[]>> = {}
 
-let cachedOptionsForPage: typeof cachedOptions
+function getOptions(listKey: KeybindType): CommandOption[] {
+	if (cachedOptions[listKey]) return cachedOptions[listKey]
 
-function getOptions(forPage: boolean) {
-	if (forPage && cachedOptionsForPage) return cachedOptionsForPage
-	if (!forPage && cachedOptions) return cachedOptions
-
-	const cached: typeof cachedOptions = []
-	let previousGroup: { group: CommandGroup }
+	const result: CommandOption[] = []
+	let previousGroup: CommandGroup | undefined
+	let hasItems = false
 	availableCommandNames.forEach((command) => {
-		const info = commandInfos[command as keyof typeof commandInfos]
+		const info = commandInfos[command as CommandName]
 		if (isMobile() && info.disableOnMobile) return
-		if (previousGroup && previousGroup.group !== info.group) {
-			cached.push({ label: "------", value: `${command}_group`, disabled: true })
+		if (listKey === "pageKeybinds" && info.prohibitAsPage) return
+		if (listKey === "menuKeybinds" && info.prohibitAsMenu) return
+		if (hasItems && previousGroup !== info.group) {
+			result.push({ label: "------", value: `${command}_group`, disabled: true })
 		}
-		cached.push({ label: (gvar.gsm.command as any)[command], value: command })
-		previousGroup = { group: info.group }
+		result.push({ label: (gvar.gsm.command as any)[command], value: command })
+		previousGroup = info.group
+		hasItems = true
 	})
-	if (forPage) {
-		const idx = cached.findIndex((v) => v.value === "afxCapture")
-		if (idx >= 0) cached.splice(idx, 1)
-		cachedOptionsForPage = cached
-	} else {
-		cachedOptions = cached
-	}
-	return cached
+	cachedOptions[listKey] = result
+	return result
 }
 
 function SectionControls(props: { listKey: KeybindType; view: StateView; setView: SetView; showUrlConditions?: boolean }) {
@@ -249,7 +241,7 @@ function SectionControls(props: { listKey: KeybindType; view: StateView; setView
 					setCommandOption(e.target.value)
 				}}
 			>
-				{getOptions(listKey === "pageKeybinds").map((v) => {
+				{getOptions(listKey).map((v) => {
 					return (
 						<option key={v.value} disabled={v.disabled} value={v.value}>
 							{v.label}
