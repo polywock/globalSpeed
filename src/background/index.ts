@@ -14,7 +14,7 @@ import { loadGsm } from "@/utils/gsm"
 import { isFirefox, isMobile } from "@/utils/helper"
 import { dumpConfig, fetchView, getKeysByPrefix, PREFIX_SETS, pushView, restoreConfig } from "@/utils/state"
 import { clearClosed } from "./utils/getAutoMedia"
-import { ProcessKeybinds, setValue, type SetValueInit } from "./utils/processKeybinds"
+import { ProcessKeybinds, releaseTemporarySpeed, setValue, type SetValueInit } from "./utils/processKeybinds"
 
 declare global {
 	interface GlobalVar {
@@ -139,14 +139,14 @@ async function processNewTab(tab: chrome.tabs.Tab, view?: StateView, ignorePrevi
 			return true
 		})
 
-		new ProcessKeybinds(matches, tabInfo, false, 'browser')
+		new ProcessKeybinds(matches, tabInfo, "browserKeybinds")
 	})
 
 chrome.contextMenus?.onClicked.addListener(async (item, tab) => {
 	const keybinds = (await fetchView({ menuKeybinds: true })).menuKeybinds
 	const matches = findMatchingMenuKeybinds(keybinds, item.menuItemId as string)
 	if (matches.length !== 1) return
-	new ProcessKeybinds([matches[0]], tabToTabInfo(tab))
+	new ProcessKeybinds([matches[0]], tabToTabInfo(tab), "menuKeybinds")
 })
 
 declare global {
@@ -157,7 +157,8 @@ declare global {
 		getTopOrigin: { type: "GET_TOP_ORIGIN" }
 		requestGsm: { type: "REQUEST_GSM" }
 		requestCreateTab: { type: "REQUEST_CREATE_TAB"; url: string }
-		triggerKeybinds: { type: "TRIGGER_KEYBINDS"; ids: KeybindMatchId[]; keyUp?: boolean }
+		triggerKeybinds: { type: "TRIGGER_KEYBINDS"; ids: KeybindMatchId[] }
+		releasedTemporarySpeed: { type: "RELEASED_TEMPORARY_SPEED" }
 		requestPane: { type: "REQUEST_PANE" }
 		setSession: { type: "SET_SESSION"; override: AnyDict }
 		getSession: { type: "GET_SESSION"; keys: any }
@@ -214,9 +215,11 @@ chrome.runtime.onMessage.addListener((msg: Messages, sender, reply) => {
 					alt: v.alt,
 				} as KeybindMatch
 			})
-			new ProcessKeybinds(matches, { tabId: sender.tab.id, frameId: sender.frameId, windowId: sender.tab.windowId }, !!msg.keyUp)
+			new ProcessKeybinds(matches, { tabId: sender.tab.id, frameId: sender.frameId, windowId: sender.tab.windowId }, "pageKeybinds")
 		})
 		reply(true)
+	} else if (msg.type === "RELEASED_TEMPORARY_SPEED") {
+		releaseTemporarySpeed()
 	} else if (msg.type === "SET_SESSION") {
 		chrome.storage.session.set(msg.override)
 	} else if (msg.type === "GET_SESSION") {

@@ -6,6 +6,7 @@ import {
 	AdjustMode,
 	Duration,
 	KeybindMatch,
+	KeybindType,
 	ReferenceValues,
 	SvgFilter,
 	Trigger,
@@ -175,7 +176,7 @@ export function findMatchingMenuKeybinds(kbs: Keybind[], id: string): KeybindMat
 		.filter((v) => v)
 }
 
-export function triggerToKey(trigger: Trigger): "pageKeybinds" | "browserKeybinds" | "menuKeybinds" {
+export function triggerToKey(trigger: Trigger): KeybindType {
 	if (trigger === Trigger.BROWSER) return "browserKeybinds"
 	if (trigger === Trigger.MENU) return "menuKeybinds"
 	return "pageKeybinds"

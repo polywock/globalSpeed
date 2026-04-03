@@ -13,6 +13,7 @@ import {
 	ItcInit,
 	Keybind,
 	KeybindMatch,
+	KeybindType,
 	MediaProbe,
 	ReferenceValues,
 	StateView,
@@ -40,8 +41,7 @@ export class ProcessKeybinds {
 	constructor(
 		private matches: KeybindMatch[],
 		public tabInfo: TabInfo,
-		public keyUp = false,
-		public source: 'keyboard' | 'browser' = 'keyboard',
+		public source: KeybindType,
 	) {
 		this.init()
 	}
@@ -128,7 +128,7 @@ export class ProcessKeybinds {
 
 		let override: StateView = {}
 		this.shortcutHideIndicator = kb.invertIndicator ? !this.globalHideIndicator : this.globalHideIndicator
-		await commandHandlers[kb.command]({ media, override, commandInfo, kb, isAlt: match.alt, keyUp: this.keyUp, source: this.source, ...this })
+		await commandHandlers[kb.command]({ media, override, commandInfo, kb, isAlt: match.alt, ...this })
 		if (Object.keys(override).length) await pushView({ override, tabId: this.tabInfo?.tabId })
 	}
 }
@@ -139,7 +139,6 @@ type CommandHandlerArgs = ProcessKeybinds & {
 	kb: Keybind
 	commandInfo: Command
 	isAlt?: boolean
-	source?: 'keyboard' | 'browser'
 }
 
 let nothingSymbolMap: { [key: string]: Symbol } = {}
@@ -285,12 +284,7 @@ const commandHandlers: {
 	speed: async (args) => {
 		return processAdjustMode(args)
 	},
-	temporarySpeed: async ({ media, show, kb, commandInfo, keyUp, source }) => {
-		if (keyUp && source === 'keyboard') {
-			activateTemporarySpeed(media)
-			return
-		}
-
+	temporarySpeed: async ({ media, show, kb, commandInfo, source }) => {
 		const factor = round(kb.valueNumber || commandInfo.ref.default, 2)
 		show({ text: `${factor}x` })
 		activateTemporarySpeed(media, factor, source)
@@ -958,14 +952,9 @@ function showIndicator(opts: IndicatorShowOpts, tabId: number, showAlt?: boolean
 }
 
 let tempSpeedTimeoutId: number
-
-function activateTemporarySpeed(media: FlatMediaInfo, factor?: number, source: 'keyboard' | 'browser' = 'keyboard') {
-	if (factor === undefined) {
-		clearTimeout(tempSpeedTimeoutId)
-		chrome.tabs.sendMessage(media.tabInfo.tabId, { type: "SET_TEMPORARY_SPEED" } as Messages, { frameId: media.tabInfo.frameId })
-		return
-	}
-
+let mediaSped: FlatMediaInfo
+function activateTemporarySpeed(media: FlatMediaInfo, factor: number, kbType?: KeybindType) {
+	console.log("SPEEDING")
 	chrome.tabs.sendMessage(
 		media.tabInfo.tabId,
 		{
@@ -974,11 +963,31 @@ function activateTemporarySpeed(media: FlatMediaInfo, factor?: number, source: '
 		} as Messages,
 		{ frameId: media.tabInfo.frameId },
 	)
-
-	if (source === 'browser') {
-		clearTimeout(tempSpeedTimeoutId)
-		tempSpeedTimeoutId = setTimeout(() => {
-			activateTemporarySpeed(media)
-		}, 150)
+	if (mediaSped && mediaSped.key !== media?.key) {
+		releaseTemporarySpeed(mediaSped)
 	}
+	mediaSped = media
+	clearTimeout(tempSpeedTimeoutId)
+	KeepAlive.start(2)
+
+	tempSpeedTimeoutId = setTimeout(
+		() => {
+			releaseTemporarySpeed(media)
+		},
+		kbType === "pageKeybinds" ? 500 : 225,
+	)
+}
+
+export function releaseTemporarySpeed(media?: FlatMediaInfo) {
+	console.log("RELEASING")
+	media = media || mediaSped
+	if (!media) return
+	chrome.tabs.sendMessage(
+		media.tabInfo.tabId,
+		{
+			type: "SET_TEMPORARY_SPEED",
+		} as Messages,
+		{ frameId: media.tabInfo.frameId },
+	)
+	mediaSped = null
 }

@@ -2,7 +2,6 @@ export class KeepAlive {
 	intervalId: number
 	started = Date.now()
 	softMax = Date.now() + 60_000 * 10
-	hardMax: number
 	constructor(minutes: number) {
 		this.softMax = this.started + 60_000 * minutes
 		this.intervalId = setInterval(this.handleInterval, 20_000)
@@ -12,7 +11,7 @@ export class KeepAlive {
 	}
 	handleInterval = async () => {
 		const now = Date.now()
-		if (now > this.softMax || now > this.hardMax) {
+		if (now > this.softMax) {
 			this.release()
 		}
 		await chrome.storage.local.get("g:version")
