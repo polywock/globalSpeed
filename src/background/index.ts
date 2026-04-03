@@ -139,7 +139,7 @@ async function processNewTab(tab: chrome.tabs.Tab, view?: StateView, ignorePrevi
 			return true
 		})
 
-		new ProcessKeybinds(matches, tabInfo)
+		new ProcessKeybinds(matches, tabInfo, false, 'browser')
 	})
 
 chrome.contextMenus?.onClicked.addListener(async (item, tab) => {
@@ -157,7 +157,7 @@ declare global {
 		getTopOrigin: { type: "GET_TOP_ORIGIN" }
 		requestGsm: { type: "REQUEST_GSM" }
 		requestCreateTab: { type: "REQUEST_CREATE_TAB"; url: string }
-		triggerKeybinds: { type: "TRIGGER_KEYBINDS"; ids: KeybindMatchId[] }
+		triggerKeybinds: { type: "TRIGGER_KEYBINDS"; ids: KeybindMatchId[]; keyUp?: boolean }
 		requestPane: { type: "REQUEST_PANE" }
 		setSession: { type: "SET_SESSION"; override: AnyDict }
 		getSession: { type: "GET_SESSION"; keys: any }
@@ -214,7 +214,7 @@ chrome.runtime.onMessage.addListener((msg: Messages, sender, reply) => {
 					alt: v.alt,
 				} as KeybindMatch
 			})
-			new ProcessKeybinds(matches, { tabId: sender.tab.id, frameId: sender.frameId, windowId: sender.tab.windowId })
+			new ProcessKeybinds(matches, { tabId: sender.tab.id, frameId: sender.frameId, windowId: sender.tab.windowId }, !!msg.keyUp)
 		})
 		reply(true)
 	} else if (msg.type === "SET_SESSION") {

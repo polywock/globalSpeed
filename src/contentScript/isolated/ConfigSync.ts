@@ -207,6 +207,25 @@ export class ConfigSync {
 			e.stopImmediatePropagation()
 			e.preventDefault()
 		}
+
+		if (this.checkUrlRuntime() !== "Off") {
+			const eventHotkey = extractHotkey(e, true, true)
+			let keybinds = this.client?.view?.pageKeybinds || []
+			let matches = findMatchingPageKeybinds(keybinds, eventHotkey)
+
+			matches = matches.filter((match) => {
+				if (match.kb.condition && hasActiveParts(match.kb.condition)) {
+					return testURL(getPracticalRuntimeUrl(), match.kb.condition, true)
+				}
+				return true
+			})
+
+			matches = matches.filter((match) => match.kb.command === "temporarySpeed")
+
+			if (matches.length) {
+				chrome.runtime.sendMessage({ type: "TRIGGER_KEYBINDS", ids: matches.map((match) => ({ id: match.kb.id, alt: match.alt })), keyUp: true })
+			}
+		}
 	}
 	handleKeyDown = (e: KeyboardEvent) => {
 		if (document.activeElement?.tagName === "IFRAME") return
