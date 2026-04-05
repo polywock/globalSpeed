@@ -94,6 +94,7 @@ export let commandInfos: { [key in CommandName]: Command } = {
 	speed: {
 		valueType: "adjustMode",
 		hasFeedback: true,
+		requiresMedia: true,
 		ref: {
 			min: MIN_SPEED_CHROMIUM,
 			max: MAX_SPEED_CHROMIUM,

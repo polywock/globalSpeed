@@ -2,6 +2,48 @@ import { FlatMediaInfo, flattenMediaInfos, MediaData, MediaDataWithScopes, Media
 import { checkContentScript, compareFrame, TabInfo } from "@/utils/browserUtils"
 import { fetchView } from "@/utils/state"
 
+const DEBUG_PREFIX = "[GS-DBG]"
+
+// Color styles per module
+const LogStyles = {
+	sendMediaEvent: { color: "#FF6B6B" }, // Red
+	getAutoMedia: { color: "#51CF66" }, // Green
+	processKeybindMatch: { color: "#4DABF7" }, // Blue
+	temporarySpeed: { color: "#B197FC" }, // Purple
+	setValue: { color: "#22B8CF" }, // Cyan
+	MessageTower: { color: "#FFD43B" }, // Yellow
+}
+
+function getModuleStyle(scope: string) {
+	const module = scope.split(":")[0]
+	return LogStyles[module as keyof typeof LogStyles] || { color: "#999", emoji: "🔹" }
+}
+
+function logInfo(scope: string, details?: {[key: string]: any} | string) {
+	const style = getModuleStyle(scope)
+	const headerStyle = `color: ${style.color}; font-weight: bold; font-size: 12px;`
+	const detailStr = typeof details === "string" ? details : objectToString(details)
+	console.log(`%c[${scope}]`, headerStyle, detailStr || "")
+}
+
+function logError(scope: string, details?: {[key: string]: any} | string) {
+	const style = getModuleStyle(scope)
+	const headerStyle = `color: ${style.color}; font-weight: bold; font-size: 12px; background: #f0f0f0; padding: 2px 4px;`
+	const detailStr = typeof details === "string" ? details : objectToString(details)
+	console.error(`%c[ERROR][${scope}]`, headerStyle, detailStr || "")
+}
+
+function objectToString(obj?: {[key: string]: any}): string {
+	if (!obj) return ""
+	return Object.entries(obj)
+		.map(([k, v]) => {
+			if (v === undefined || v === null) return `${k}: —`
+			if (typeof v === "object") return `${k}: [${typeof v}]`
+			return `${k}: ${v}`
+		})
+		.join(" | ")
+}
+
 const WEIGHTS = {
 	SAME_FRAME: 0b10_000_000_000_000,
 	IS_VISIBLE: 0b1_000_000_000_000,
@@ -52,25 +94,36 @@ export async function getMediaData() {
 
 export async function getAutoMedia(tabInfo: TabInfo, videoOnly?: boolean) {
 	let [{ ignorePiP }, { infos, pinned }] = await Promise.all([fetchView({ ignorePiP: true }), getMediaData()])
+	logInfo("getAutoMedia:start", `tabId=${tabInfo?.tabId} frameId=${tabInfo?.frameId} videoOnly=${!!videoOnly} ignorePiP=${ignorePiP} total=${infos?.length}`)
 
 	infos = infos.filter((info) => info.readyState)
 	infos = videoOnly ? infos.filter((info) => info.videoSize) : infos
+	logInfo("getAutoMedia:after-filter", `count=${infos.length} keys=[${infos.map((i) => `${i.key}(${i.tabInfo?.tabId}:${i.tabInfo?.frameId})`).join(",")}]`)
 
 	const pinnedInfo = infos.find((info) => info.key === pinned?.key)
-	if (pinnedInfo && (await checkContentScript(pinnedInfo.tabInfo.tabId, pinnedInfo.tabInfo.frameId))) return pinnedInfo
+	if (pinnedInfo) {
+		const pinnedAlive = await checkContentScript(pinnedInfo.tabInfo.tabId, pinnedInfo.tabInfo.frameId)
+		logInfo("getAutoMedia:pinned-candidate", `key=${pinnedInfo.key} tab=${pinnedInfo.tabInfo?.tabId} frame=${pinnedInfo.tabInfo?.frameId} alive=${pinnedAlive}`)
+		if (pinnedAlive) return pinnedInfo
+	}
 
 	infos.sort((a, b) => b.creationTime - a.creationTime)
 	let pippedInfo = infos.find((info) => info.pipMode) || infos.find((info) => info.isDip)
 	if (pippedInfo && !(await checkContentScript(pippedInfo.tabInfo.tabId, pippedInfo.tabInfo.frameId))) {
+		logError("getAutoMedia:pip-dead", `key=${pippedInfo.key} tab=${pippedInfo.tabInfo?.tabId} frame=${pippedInfo.tabInfo?.frameId}`)
 		pippedInfo = null
 	}
 
 	if (!ignorePiP && pippedInfo) return pippedInfo
 	if (tabInfo) {
 		infos = infos.filter((info) => info.tabInfo.tabId === tabInfo.tabId)
+		logInfo("getAutoMedia:tab-filter", `tabId=${tabInfo.tabId} remaining=${infos.length}`)
 	}
 
-	if (!infos.length) return pippedInfo || undefined
+	if (!infos.length) {
+		logInfo("getAutoMedia:no-info-return-pip", `pip=${pippedInfo?.key} tab=${pippedInfo?.tabInfo?.tabId} frame=${pippedInfo?.tabInfo?.frameId}`)
+		return pippedInfo || undefined
+	}
 
 	const now = Date.now()
 	let peakIntersect = infos
@@ -113,6 +166,8 @@ export async function getAutoMedia(tabInfo: TabInfo, videoOnly?: boolean) {
 			highest = { info, score }
 		}
 	})
+
+	logInfo("getAutoMedia:selected", `key=${highest?.info?.key} tab=${highest?.info?.tabInfo?.tabId} frame=${highest?.info?.tabInfo?.frameId} score=${highest?.score}`)
 
 	return highest?.info
 }
