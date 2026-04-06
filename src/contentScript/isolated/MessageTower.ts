@@ -6,53 +6,6 @@ import { applyCinema, getMediaProbe, MediaEvent, MediaEventCinema, realizeMediaE
 import { Indicator, IndicatorShowOpts } from "./utils/Indicator"
 import { Interactive } from "./utils/Interactive"
 
-const DEBUG_PREFIX = "[GS-DBG]"
-
-// Color styles per module
-const LogStyles = {
-	sendMediaEvent: { color: "#FF6B6B" }, // Red
-	getAutoMedia: { color: "#51CF66" }, // Green
-	processKeybindMatch: { color: "#4DABF7" }, // Blue
-	temporarySpeed: { color: "#B197FC" }, // Purple
-	setValue: { color: "#22B8CF" }, // Cyan
-	MessageTower: { color: "#FFD43B" }, // Yellow
-}
-
-function getModuleStyle(scope: string) {
-	const module = scope.split(":")[0]
-	return LogStyles[module as keyof typeof LogStyles] || { color: "#999" }
-}
-
-function logInfo(scope: string, details?: {[key: string]: any} | string) {
-	const style = getModuleStyle(scope)
-	const headerStyle = `color: ${style.color}; font-weight: bold; font-size: 12px;`
-	const detailStr = typeof details === "string" ? details : objectToString(details)
-	console.log(`%c[${scope}]`, headerStyle, detailStr || "")
-}
-
-function logError(scope: string, details?: {[key: string]: any} | string) {
-	const style = getModuleStyle(scope)
-	const headerStyle = `color: ${style.color}; font-weight: bold; font-size: 12px; background: #f0f0f0; padding: 2px 4px;`
-	const detailStr = typeof details === "string" ? details : objectToString(details)
-	console.error(`%c[ERROR][${scope}]`, headerStyle, detailStr || "")
-}
-
-function objectToString(obj?: {[key: string]: any}): string {
-	if (!obj) return ""
-	return Object.entries(obj)
-		.map(([k, v]) => {
-			if (v === undefined || v === null) return `${k}: —`
-			if (typeof v === "object") return `${k}: [${typeof v}]`
-			return `${k}: ${v}`
-		})
-		.join(" | ")
-}
-
-function logReceiveSeparator(label: string, extra = "") {
-	const headerStyle = "color: #666; font-weight: bold;"
-	console.log(`%c========== [RECV ${label}] ${extra} ==========`, headerStyle)
-}
-
 declare global {
 	interface GlobalVar {
 		mt: typeof MessageTower
@@ -79,21 +32,11 @@ export class MessageTower {
 	}
 	handleMessage: MessageCallback = (msg: Messages, sender, reply) => {
 		if (msg.type === "APPLY_MEDIA_EVENT") {
-			logReceiveSeparator(`MEDIA:${msg.event?.type || "UNKNOWN"}`, `key=${msg.key}`)
-			logInfo("MessageTower:received-apply-media-event", `key=${msg.key} event=${msg.event?.type} sender=[${sender?.tab?.id}:${sender?.frameId}] top=${gvar?.isTopFrame}`)
-			try {
-				realizeMediaEvent(msg.key, msg.event)
-				reply(true)
-				logInfo("MessageTower:applied-media-event", `key=${msg.key} event=${msg.event?.type}`)
-			} catch (error) {
-				logError("MessageTower:apply-media-event-failed", `key=${msg.key} event=${msg.event?.type} error=${error}`)
-				reply(false)
-			}
+			realizeMediaEvent(msg.key, msg.event)
+			reply(true)
 			return
 		} else if (msg.type === "SET_TEMPORARY_SPEED") {
-			logReceiveSeparator("TEMP_SPEED", `factor=${msg.factor}`)
 			reply(true)
-			logInfo("MessageTower:received-temporary-speed", `factor=${msg.factor} sender=[${sender?.tab?.id}:${sender?.frameId}]`)
 			gvar.os.speedSync?.processTemporarySpeed(msg.factor)
 		} else if (msg.type === "TOP_FRAME_URL_UPDATE") {
 			gvar.topFrameUrl = msg.value
@@ -106,9 +49,7 @@ export class MessageTower {
 			reply(true)
 			return
 		} else if (msg.type === "BG_SPEED_OVERRIDE") {
-			logReceiveSeparator("BG_SPEED_OVERRIDE", `speed=${msg.value?.speed}`)
 			if (!gvar.os?.speedSync) return
-			logInfo("MessageTower:bg-speed-override", `speed=${msg.value?.speed} freePitch=${msg.value?.freePitch}`)
 			gvar.os.speedSync.latest = msg.value
 			gvar.os.speedSync.update()
 		} else if (msg.type === "SHOW_INDICATOR") {

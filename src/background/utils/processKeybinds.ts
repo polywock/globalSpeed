@@ -28,54 +28,6 @@ import { getAutoMedia } from "./getAutoMedia"
 import { KeepAlive } from "./KeepAlive"
 import { initTabCapture, isTabCaptured, releaseTabCapture } from "./tabCapture"
 
-const DEBUG_PREFIX = "[GS-DBG]"
-
-// Color styles per module
-const LogStyles = {
-	sendMediaEvent: { color: "#FF6B6B" }, // Red
-	getAutoMedia: { color: "#51CF66" }, // Green
-	processKeybindMatch: { color: "#4DABF7" }, // Blue
-	temporarySpeed: { color: "#B197FC" }, // Purple
-	setValue: { color: "#22B8CF" }, // Cyan
-	MessageTower: { color: "#FFD43B" }, // Yellow
-}
-
-function getModuleStyle(scope: string) {
-	const module = scope.split(":")[0]
-	return LogStyles[module as keyof typeof LogStyles] || { color: "#999" }
-}
-
-function logInfo(scope: string, details?: {[key: string]: any} | string) {
-	const style = getModuleStyle(scope)
-	const headerStyle = `color: ${style.color}; font-weight: bold; font-size: 12px;`
-	const detailStr = typeof details === "string" ? details : objectToString(details)
-	console.log(`%c[${scope}]`, headerStyle, detailStr || "")
-}
-
-function logError(scope: string, details?: {[key: string]: any} | string) {
-	const style = getModuleStyle(scope)
-	const headerStyle = `color: ${style.color}; font-weight: bold; font-size: 12px; background: #f0f0f0; padding: 2px 4px;`
-	const detailStr = typeof details === "string" ? details : objectToString(details)
-	console.error(`%c[ERROR][${scope}]`, headerStyle, detailStr || "")
-}
-
-function objectToString(obj?: {[key: string]: any}): string {
-	if (!obj) return ""
-	return Object.entries(obj)
-		.map(([k, v]) => {
-			if (v === undefined || v === null) return `${k}: —`
-			if (typeof v === "object") return `${k}: [${typeof v}]`
-			return `${k}: ${v}`
-		})
-		.join(" | ")
-}
-
-function logCommandSeparator(command: string, tabInfo?: TabInfo) {
-	if (!command) return
-	const headerStyle = "color: #666; font-weight: bold;"
-	console.log(`%c========== [KEY ${command.toUpperCase()}] tab=${tabInfo?.tabId} frame=${tabInfo?.frameId} ==========`, headerStyle)
-}
-
 let lastSeek: { key: string; time: number; net: number }
 
 export class ProcessKeybinds {
@@ -164,11 +116,7 @@ export class ProcessKeybinds {
 	processKeybindMatch = async (match: KeybindMatch) => {
 		let kb = match.kb
 		let commandInfo = commandInfos[kb.command]
-		let media = null as any as FlatMediaInfo
-
-		logCommandSeparator(kb.command, this.tabInfo)
-		logInfo("processKeybindMatch:start", `cmd=${kb.command} tabId=${this.tabInfo?.tabId} frameId=${this.tabInfo?.frameId} requiresMedia=${commandInfo.requiresMedia}`)
-
+		let media: FlatMediaInfo
 
 		if (commandInfo.requiresVideo) {
 			media = await this.getMediaVideo()
@@ -178,17 +126,9 @@ export class ProcessKeybinds {
 			if (!media) return
 		}
 
-		logInfo("processKeybindMatch:media-selected", `cmd=${kb.command} key=${media?.key} tabId=${media?.tabInfo?.tabId} frameId=${media?.tabInfo?.frameId}`)
-
-
 		let override: StateView = {}
 		this.shortcutHideIndicator = kb.invertIndicator ? !this.globalHideIndicator : this.globalHideIndicator
-		try {
-			await commandHandlers[kb.command]({ media, override, commandInfo, kb, isAlt: match.alt, ...this })
-		} catch (error) {
-			logError("processKeybindMatch:handler-failed", `cmd=${kb.command} tabId=${this.tabInfo?.tabId} error=${error}`)
-			throw error
-		}
+		await commandHandlers[kb.command]({ media, override, commandInfo, kb, isAlt: match.alt, ...this })
 		if (Object.keys(override).length) await pushView({ override, tabId: this.tabInfo?.tabId })
 	}
 }
@@ -914,9 +854,6 @@ export async function setValue(init: SetValueInit) {
 	if (value == null && valueAlt == null) return
 	const command = commandInfos[kb.command]
 
-	logInfo("setValue:start", `cmd=${kb.command} dry=${!!init.dry} val=${value} tabId=${tabInfo?.tabId} frameId=${tabInfo?.frameId}`)
-
-
 	ref = ref || command.ref || command.getRef?.(command, kb.command === "seek" ? ({ duration: Duration.SECS } as any) : kb)
 	let max = kb.command === "seek" ? init.mediaDuration : ref.max
 
@@ -934,40 +871,14 @@ export async function setValue(init: SetValueInit) {
 	}
 
 	let override: StateView = {}
-	let overrideTabId = tabInfo.tabId
 
 	if (kb.command === "speed") {
-		const targetSpeedTabId = mediaTabInfo?.tabId ?? tabInfo.tabId
-		overrideTabId = targetSpeedTabId
-		override.lastSpeed = (await fetchView({ speed: true }, targetSpeedTabId)).speed
+		override.lastSpeed = (await fetchView({ speed: true }, tabInfo.tabId)).speed
 		if (override.lastSpeed === value) delete override.lastSpeed
 		override.speed = value
-		const freePitch = (await fetchView({ freePitch: true }, targetSpeedTabId)).freePitch
-		if (init.dry) {
-			logInfo("setValue:skip-send-dry", `cmd=speed (dry mode) key=${mediaKey}`)
-		} else if (mediaKey && mediaTabInfo?.tabId != null) {
-			sendMediaEvent({ type: "PLAYBACK_RATE", value, freePitch }, mediaKey, mediaTabInfo.tabId, mediaTabInfo.frameId)
-			chrome.tabs
-				.sendMessage(mediaTabInfo.tabId, { type: "BG_SPEED_OVERRIDE", value: { speed: value, freePitch } } as Messages, { frameId: 0 })
-				.then(() => {
-					logInfo("setValue:speed-sync-override", `tabId=${mediaTabInfo.tabId} speed=${value} freePitch=${freePitch}`)
-				})
-				.catch((err) => {
-					logError("setValue:speed-sync-override-failed", `tabId=${mediaTabInfo.tabId} speed=${value} error=${err}`)
-				})
-		} else {
-			logError("setValue:speed-missing-media-route", `cmd=speed val=${value} NO media route key=${mediaKey} tabId=${mediaTabInfo?.tabId}`)
-		}
-		logInfo("setValue:speed-override", `val=${value} lastSpeed=${override.lastSpeed} key=${mediaKey} targetTabId=${targetSpeedTabId}`)
 	} else if (kb.command === "volume") {
-		if (init.dry) {
-			logInfo("setValue:skip-send-dry", `cmd=volume (dry mode) key=${mediaKey}`)
-		}
 		init.dry || sendMediaEvent({ type: "SET_VOLUME", value, relative: false }, mediaKey, mediaTabInfo.tabId, mediaTabInfo.frameId)
 	} else if (kb.command === "seek") {
-		if (init.dry) {
-			logInfo("setValue:skip-send-dry", `cmd=seek (dry mode) key=${mediaKey}`)
-		}
 		init.dry || sendMediaEvent({ type: "SEEK", value, fast: kb.fastSeek }, mediaKey, mediaTabInfo.tabId, mediaTabInfo.frameId)
 	} else if (kb.command === "fxFilter") {
 		const view = await fetchView({ elementFx: true, backdropFx: true }, init.tabInfo?.tabId)
@@ -1014,7 +925,7 @@ export async function setValue(init: SetValueInit) {
 		}
 	}
 
-	if (!init.dry && Object.keys(override).length) await pushView({ override, tabId: overrideTabId })
+	if (!init.dry && Object.keys(override)) await pushView({ override, tabId: tabInfo.tabId })
 
 	value = value ?? valueAlt
 
@@ -1043,48 +954,24 @@ function showIndicator(opts: IndicatorShowOpts, tabId: number, showAlt?: boolean
 let tempSpeedTimeoutId: number
 let mediaSped: FlatMediaInfo
 
-function sendTemporarySpeedWithFallback(media: FlatMediaInfo, factor?: number) {
-	const payload = factor === undefined ? ({ type: "SET_TEMPORARY_SPEED" } as Messages) : ({ type: "SET_TEMPORARY_SPEED", factor } as Messages)
-	const originalFrameId = media.tabInfo.frameId ?? 0
-	const frameAttempts = [originalFrameId, 0].filter((v, i, arr) => arr.indexOf(v) === i)
+function sendTemporarySpeed(media: FlatMediaInfo, factor?: number) {
+	const payload = factor == null ? ({ type: "SET_TEMPORARY_SPEED" } as Messages) : ({ type: "SET_TEMPORARY_SPEED", factor } as Messages)
+	const frameIds = [media.tabInfo.frameId, 0].filter((v, i, arr) => v != null && arr.indexOf(v) === i)
 
 	void (async () => {
-		let lastError: any
-		const checkContentScript = async (tabId: number, frameId: number): Promise<boolean> => {
+		for (const frameId of frameIds) {
+			if (!(await checkContentScript(media.tabInfo.tabId, frameId))) continue
+
 			try {
-				await chrome.tabs.sendMessage(tabId, { type: "CS_ALIVE" }, { frameId: frameId || 0 })
-				return true
-			} catch (err) {
-				return false
-			}
-		}
-
-		for (const attemptFrameId of frameAttempts) {
-			try {
-				const isAlive = await checkContentScript(media.tabInfo.tabId, attemptFrameId)
-				logInfo("temporarySpeed:frame-check", `key=${media.key} attemptFrame=${attemptFrameId} alive=${isAlive}`)
-
-				if (!isAlive) {
-					logError("temporarySpeed:frame-dead", `key=${media.key} frame=${attemptFrameId} skipping`)
-					continue
-				}
-
-				logInfo("temporarySpeed:attempt", `key=${media.key} attemptFrame=${attemptFrameId} factor=${factor}`)
-				await chrome.tabs.sendMessage(media.tabInfo.tabId, payload, { frameId: attemptFrameId })
-				logInfo("temporarySpeed:success", `key=${media.key} frame=${attemptFrameId} fallback=${attemptFrameId !== originalFrameId} factor=${factor}`)
+				await chrome.tabs.sendMessage(media.tabInfo.tabId, payload, { frameId })
 				return
-			} catch (error) {
-				lastError = error
-				logError("temporarySpeed:attempt-failed", `key=${media.key} attemptFrame=${attemptFrameId} factor=${factor} error=${error}`)
-			}
+			} catch {}
 		}
-
-		logError("temporarySpeed:failed", `key=${media.key} allAttempts=${frameAttempts} factor=${factor}`)
 	})()
 }
 
 function activateTemporarySpeed(media: FlatMediaInfo, factor: number, kbType?: KeybindType) {
-	sendTemporarySpeedWithFallback(media, factor)
+	sendTemporarySpeed(media, factor)
 	if (mediaSped && mediaSped.key !== media?.key) {
 		releaseTemporarySpeed(mediaSped)
 	}
@@ -1103,6 +990,6 @@ function activateTemporarySpeed(media: FlatMediaInfo, factor: number, kbType?: K
 export function releaseTemporarySpeed(media?: FlatMediaInfo) {
 	media = media || mediaSped
 	if (!media) return
-	sendTemporarySpeedWithFallback(media)
+	sendTemporarySpeed(media)
 	mediaSped = null
 }

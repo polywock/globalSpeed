@@ -2,48 +2,6 @@ import { FlatMediaInfo, flattenMediaInfos, MediaData, MediaDataWithScopes, Media
 import { checkContentScript, compareFrame, TabInfo } from "@/utils/browserUtils"
 import { fetchView } from "@/utils/state"
 
-const DEBUG_PREFIX = "[GS-DBG]"
-
-// Color styles per module
-const LogStyles = {
-	sendMediaEvent: { color: "#FF6B6B" }, // Red
-	getAutoMedia: { color: "#51CF66" }, // Green
-	processKeybindMatch: { color: "#4DABF7" }, // Blue
-	temporarySpeed: { color: "#B197FC" }, // Purple
-	setValue: { color: "#22B8CF" }, // Cyan
-	MessageTower: { color: "#FFD43B" }, // Yellow
-}
-
-function getModuleStyle(scope: string) {
-	const module = scope.split(":")[0]
-	return LogStyles[module as keyof typeof LogStyles] || { color: "#999", emoji: "🔹" }
-}
-
-function logInfo(scope: string, details?: {[key: string]: any} | string) {
-	const style = getModuleStyle(scope)
-	const headerStyle = `color: ${style.color}; font-weight: bold; font-size: 12px;`
-	const detailStr = typeof details === "string" ? details : objectToString(details)
-	console.log(`%c[${scope}]`, headerStyle, detailStr || "")
-}
-
-function logError(scope: string, details?: {[key: string]: any} | string) {
-	const style = getModuleStyle(scope)
-	const headerStyle = `color: ${style.color}; font-weight: bold; font-size: 12px; background: #f0f0f0; padding: 2px 4px;`
-	const detailStr = typeof details === "string" ? details : objectToString(details)
-	console.error(`%c[ERROR][${scope}]`, headerStyle, detailStr || "")
-}
-
-function objectToString(obj?: {[key: string]: any}): string {
-	if (!obj) return ""
-	return Object.entries(obj)
-		.map(([k, v]) => {
-			if (v === undefined || v === null) return `${k}: —`
-			if (typeof v === "object") return `${k}: [${typeof v}]`
-			return `${k}: ${v}`
-		})
-		.join(" | ")
-}
-
 const WEIGHTS = {
 	SAME_FRAME: 0b10_000_000_000_000,
 	IS_VISIBLE: 0b1_000_000_000_000,
@@ -80,57 +38,16 @@ export async function clearClosed() {
 	const tabIds = new Set(tabs.map((t) => t.id))
 	const clearKeys: string[] = []
 	for (let key in data) {
-		if (!key.startsWith("m:scope:")) return
-		if (tabIds.has(data[key]?.tabInfo.tabId)) return
+		if (!key.startsWith("m:scope:")) continue
+		if (tabIds.has(data[key]?.tabInfo.tabId)) continue
 		clearKeys.push(key)
 	}
 	chrome.storage.session.remove(clearKeys)
 }
 
-export async function getMediaData() {
-	const d = await getMediaDataWithScopes()
-	return { pinned: d.pinned, infos: flattenMediaInfos(d.scopes) } satisfies MediaData
-}
-
-export async function getAutoMedia(tabInfo: TabInfo, videoOnly?: boolean) {
-	let [{ ignorePiP }, { infos, pinned }] = await Promise.all([fetchView({ ignorePiP: true }), getMediaData()])
-	logInfo("getAutoMedia:start", `tabId=${tabInfo?.tabId} frameId=${tabInfo?.frameId} videoOnly=${!!videoOnly} ignorePiP=${ignorePiP} total=${infos?.length}`)
-
-	infos = infos.filter((info) => info.readyState)
-	infos = videoOnly ? infos.filter((info) => info.videoSize) : infos
-	logInfo("getAutoMedia:after-filter", `count=${infos.length} keys=[${infos.map((i) => `${i.key}(${i.tabInfo?.tabId}:${i.tabInfo?.frameId})`).join(",")}]`)
-
-	const pinnedInfo = infos.find((info) => info.key === pinned?.key)
-	if (pinnedInfo) {
-		const pinnedAlive = await checkContentScript(pinnedInfo.tabInfo.tabId, pinnedInfo.tabInfo.frameId)
-		logInfo("getAutoMedia:pinned-candidate", `key=${pinnedInfo.key} tab=${pinnedInfo.tabInfo?.tabId} frame=${pinnedInfo.tabInfo?.frameId} alive=${pinnedAlive}`)
-		if (pinnedAlive) return pinnedInfo
-	}
-
-	infos.sort((a, b) => b.creationTime - a.creationTime)
-	let pippedInfo = infos.find((info) => info.pipMode) || infos.find((info) => info.isDip)
-	if (pippedInfo && !(await checkContentScript(pippedInfo.tabInfo.tabId, pippedInfo.tabInfo.frameId))) {
-		logError("getAutoMedia:pip-dead", `key=${pippedInfo.key} tab=${pippedInfo.tabInfo?.tabId} frame=${pippedInfo.tabInfo?.frameId}`)
-		pippedInfo = null
-	}
-
-	if (!ignorePiP && pippedInfo) return pippedInfo
-	if (tabInfo) {
-		infos = infos.filter((info) => info.tabInfo.tabId === tabInfo.tabId)
-		logInfo("getAutoMedia:tab-filter", `tabId=${tabInfo.tabId} remaining=${infos.length}`)
-	}
-
-	if (!infos.length) {
-		logInfo("getAutoMedia:no-info-return-pip", `pip=${pippedInfo?.key} tab=${pippedInfo?.tabInfo?.tabId} frame=${pippedInfo?.tabInfo?.frameId}`)
-		return pippedInfo || undefined
-	}
-
-	const now = Date.now()
-	let peakIntersect = infos
-		.filter((v) => v.intersectionRatio != null)
-		.sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.intersectionRatio
-
+function pickHighest(infos: FlatMediaInfo[], tabInfo: TabInfo, now: number, peakIntersect: number) {
 	let highest: { info: FlatMediaInfo; score: number }
+
 	infos.forEach((info) => {
 		let score = 0
 
@@ -167,36 +84,57 @@ export async function getAutoMedia(tabInfo: TabInfo, videoOnly?: boolean) {
 		}
 	})
 
-	if (!highest) {
-		logInfo("getAutoMedia:selected", `key=none`)
-		return undefined
+	return highest
+}
+
+export async function getMediaData() {
+	const d = await getMediaDataWithScopes()
+	return { pinned: d.pinned, infos: flattenMediaInfos(d.scopes) } satisfies MediaData
+}
+
+export async function getAutoMedia(tabInfo: TabInfo, videoOnly?: boolean) {
+	let [{ ignorePiP }, { infos, pinned }] = await Promise.all([fetchView({ ignorePiP: true }), getMediaData()])
+
+	infos = infos.filter((info) => info.readyState)
+	infos = videoOnly ? infos.filter((info) => info.videoSize) : infos
+
+	const pinnedInfo = infos.find((info) => info.key === pinned?.key)
+	if (pinnedInfo && (await checkContentScript(pinnedInfo.tabInfo.tabId, pinnedInfo.tabInfo.frameId))) return pinnedInfo
+
+	infos.sort((a, b) => b.creationTime - a.creationTime)
+	let pippedInfo = infos.find((info) => info.pipMode) || infos.find((info) => info.isDip)
+	if (pippedInfo && !(await checkContentScript(pippedInfo.tabInfo.tabId, pippedInfo.tabInfo.frameId))) {
+		pippedInfo = null
 	}
 
-	// Validate selected candidate's frame is still alive (guard against stale navigation caches)
-	const selectedAlive = await checkContentScript(highest.info.tabInfo.tabId, highest.info.tabInfo.frameId)
-	if (!selectedAlive) {
-		logError("getAutoMedia:selected-dead", `key=${highest.info.key} tab=${highest.info.tabInfo?.tabId} frame=${highest.info.tabInfo?.frameId} — stale cache, dropping and retrying`)
-		// Remove stale entry from session storage and retry with remaining candidates
-		const staleKey = `m:scope:${highest.info.tabInfo.tabId}:${highest.info.tabInfo.frameId}`
-		chrome.storage.session.remove(staleKey)
-		infos = infos.filter((info) => info.key !== highest.info.key)
-		if (!infos.length) return pippedInfo || undefined
-		// Re-score remaining candidates
-		highest = undefined
-		infos.forEach((info) => {
-			let score = 0
-			if (compareFrame(info.tabInfo, tabInfo) && tabInfo?.frameId !== 0) score += WEIGHTS.SAME_FRAME
-			if (info.isVisible) score += WEIGHTS.IS_VISIBLE
-			if (!info.paused || (info.lastPlayed && Date.now() - info.lastPlayed < 60_000)) score += WEIGHTS.ACTIVE
-			if (!highest || score > highest.score || (score === highest.score && (info.infinity ? 60 : info.duration) > highest.info.duration)) {
-				highest = { info, score }
-			}
-		})
-		logInfo("getAutoMedia:selected-retry", `key=${highest?.info?.key} tab=${highest?.info?.tabInfo?.tabId} frame=${highest?.info?.tabInfo?.frameId} score=${highest?.score}`)
-		return highest?.info
+	if (!ignorePiP && pippedInfo) return pippedInfo
+	if (tabInfo) {
+		infos = infos.filter((info) => info.tabInfo.tabId === tabInfo.tabId)
 	}
 
-	logInfo("getAutoMedia:selected", `key=${highest?.info?.key} tab=${highest?.info?.tabInfo?.tabId} frame=${highest?.info?.tabInfo?.frameId} score=${highest?.score}`)
+	if (!infos.length) return pippedInfo || undefined
 
-	return highest?.info
+	const now = Date.now()
+	let peakIntersect = infos
+		.filter((v) => v.intersectionRatio != null)
+		.sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.intersectionRatio
+
+	let highest = pickHighest(infos, tabInfo, now, peakIntersect)
+	if (!highest) return undefined
+
+	const isAlive = await checkContentScript(highest.info.tabInfo.tabId, highest.info.tabInfo.frameId)
+	if (isAlive) return highest.info
+
+	const staleKey = `m:scope:${highest.info.tabInfo.tabId}:${highest.info.tabInfo.frameId}`
+	await chrome.storage.session.remove(staleKey)
+
+	infos = infos.filter((info) => info.key !== highest.info.key)
+	if (!infos.length) return pippedInfo || undefined
+
+	peakIntersect = infos
+		.filter((v) => v.intersectionRatio != null)
+		.sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.intersectionRatio
+	highest = pickHighest(infos, tabInfo, Date.now(), peakIntersect)
+
+	return highest?.info || pippedInfo || undefined
 }

@@ -189,13 +189,9 @@ export class ConfigSync {
 		const speedView = this.speedClient.view
 
 		if (speedView && speedView.enabled && !speedView.superDisable) {
-			console.log(
-				`[ConfigSync:speed-change] tab=${gvar?.tabInfo?.tabId} speed=${speedView.speed} freePitch=${speedView.freePitch} enabled=${speedView.enabled}`,
-			)
 			gvar.os.speedSync.latest = { speed: speedView.speed, freePitch: speedView.freePitch }
 			gvar.os.speedSync.update()
 		} else {
-			console.log(`[ConfigSync:speed-change] tab=${gvar?.tabInfo?.tabId} disabled=true`)
 			delete gvar.os.speedSync.latest
 			gvar.os.speedSync.update()
 		}

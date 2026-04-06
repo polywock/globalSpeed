@@ -100,9 +100,6 @@ export class SpeedSync {
 			} else if (this.holdToSpeedForKeyboard && this.keyDownActive()) {
 				speed *= this.holdToSpeedForKeyboard
 			}
-			console.log(
-				`[SpeedSync:realize] tab=${gvar?.tabInfo?.tabId} speed=${speed} freePitch=${this.latest.freePitch} keyDown=${!!this.keyDownAt} pointerDown=${!!this.pointerDownAt}`,
-			)
 
 			gvar.os.mediaTower.applySpeedToAll(speed, this.latest.freePitch)
 		}

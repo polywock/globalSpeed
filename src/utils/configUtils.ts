@@ -20,48 +20,7 @@ import {
 import { clamp, isFirefox, round } from "./helper"
 import { compareHotkeys, Hotkey } from "./keys"
 import { fetchView, pushView } from "./state"
-
-const DEBUG_PREFIX = "[GS-DBG]"
-
-// Color styles per module
-const LogStyles = {
-	sendMediaEvent: { color: "#FF6B6B" }, // Red
-	getAutoMedia: { color: "#51CF66" }, // Green
-	processKeybindMatch: { color: "#4DABF7" }, // Blue
-	temporarySpeed: { color: "#B197FC" }, // Purple
-	setValue: { color: "#22B8CF" }, // Cyan
-	MessageTower: { color: "#FFD43B" }, // Yellow
-}
-
-function getModuleStyle(scope: string) {
-	const module = scope.split(":")[0]
-	return LogStyles[module as keyof typeof LogStyles] || { color: "#999", emoji: "🔹" }
-}
-
-function logInfo(scope: string, details?: {[key: string]: any} | string) {
-	const style = getModuleStyle(scope)
-	const headerStyle = `color: ${style.color}; font-weight: bold; font-size: 12px;`
-	const detailStr = typeof details === "string" ? details : objectToString(details)
-	console.log(`%c[${scope}]`, headerStyle, detailStr || "")
-}
-
-function logError(scope: string, details?: {[key: string]: any} | string) {
-	const style = getModuleStyle(scope)
-	const headerStyle = `color: ${style.color}; font-weight: bold; font-size: 12px; background: #f0f0f0; padding: 2px 4px;`
-	const detailStr = typeof details === "string" ? details : objectToString(details)
-	console.error(`%c[ERROR][${scope}]`, headerStyle, detailStr || "")
-}
-
-function objectToString(obj?: {[key: string]: any}): string {
-	if (!obj) return ""
-	return Object.entries(obj)
-		.map(([k, v]) => {
-			if (v === undefined || v === null) return `${k}: —`
-			if (typeof v === "object") return `${k}: [${typeof v}]`
-			return `${k}: ${v}`
-		})
-		.join(" | ")
-}
+import { checkContentScript } from "./browserUtils"
 
 export function conformSpeed(speed: number, rounding = 2) {
 	return clamp(0.07, 16, round(speed, rounding))
@@ -130,48 +89,22 @@ export function intoFxFlags(target: TargetFx) {
 }
 
 export function sendMediaEvent(event: MediaEvent, key: string, tabId: number, frameId: number) {
-	const payload = { type: "APPLY_MEDIA_EVENT", event, key }
-	const frameAttempts = [frameId, 0].filter((v, i, arr) => v != null && arr.indexOf(v) === i)
-	logInfo("sendMediaEvent:start", `event=${event?.type} key=${key} target=[${tabId}:${frameId}] attempts=${frameAttempts.join(",")}`)
-
 	if (gvar?.tabInfo?.tabId === tabId && gvar.tabInfo.frameId === frameId) {
 		// realizeMediaEvent(key, event)
-		logInfo("sendMediaEvent:same-frame", `key=${key} event=${event?.type}`)
+	} else {
 	}
 
+	const frameIds = [frameId, 0].filter((v, i, arr) => v != null && arr.indexOf(v) === i)
+
 	void (async () => {
-		let lastError: any
-		const checkContentScript = async (tabId: number, frameId: number): Promise<boolean> => {
+		for (const attemptFrameId of frameIds) {
+			if (!(await checkContentScript(tabId, attemptFrameId))) continue
+
 			try {
-				await chrome.tabs.sendMessage(tabId, { type: "CS_ALIVE" }, { frameId: frameId || 0 })
-				return true
-			} catch (err) {
-				return false
-			}
-		}
-
-		for (const attemptFrameId of frameAttempts) {
-			try {
-				const isAlive = await checkContentScript(tabId, attemptFrameId)
-				logInfo("sendMediaEvent:frame-check", `key=${key} frame=${attemptFrameId} alive=${isAlive}`)
-
-				if (!isAlive) {
-					logError("sendMediaEvent:frame-dead", `key=${key} frame=${attemptFrameId} (skipping)`)
-					continue
-				}
-
-				logInfo("sendMediaEvent:attempt", `event=${event?.type} key=${key} frame=${attemptFrameId}`)
-
-				const response = await chrome.tabs.sendMessage(tabId, payload, { frameId: attemptFrameId })
-				logInfo("sendMediaEvent:success", `event=${event?.type} key=${key} frame=${attemptFrameId} fallback=${attemptFrameId !== frameId}`)
+				await chrome.tabs.sendMessage(tabId, { type: "APPLY_MEDIA_EVENT", event, key }, { frameId: attemptFrameId })
 				return
-			} catch (error) {
-				lastError = error
-				logError("sendMediaEvent:attempt-failed", `event=${event?.type} key=${key} frame=${attemptFrameId} error=${error}`)
-			}
+			} catch {}
 		}
-
-		logError("sendMediaEvent:failed", `event=${event?.type} key=${key} allAttempts=${frameAttempts} error=${lastError}`)
 	})()
 }
 
