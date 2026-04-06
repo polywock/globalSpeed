@@ -20,7 +20,7 @@ const LogStyles = {
 
 function getModuleStyle(scope: string) {
 	const module = scope.split(":")[0]
-	return LogStyles[module as keyof typeof LogStyles] || { color: "#999", emoji: "🔹" }
+	return LogStyles[module as keyof typeof LogStyles] || { color: "#999" }
 }
 
 function logInfo(scope: string, details?: {[key: string]: any} | string) {
@@ -46,6 +46,11 @@ function objectToString(obj?: {[key: string]: any}): string {
 			return `${k}: ${v}`
 		})
 		.join(" | ")
+}
+
+function logReceiveSeparator(label: string, extra = "") {
+	const headerStyle = "color: #666; font-weight: bold;"
+	console.log(`%c========== [RECV ${label}] ${extra} ==========`, headerStyle)
 }
 
 declare global {
@@ -74,6 +79,7 @@ export class MessageTower {
 	}
 	handleMessage: MessageCallback = (msg: Messages, sender, reply) => {
 		if (msg.type === "APPLY_MEDIA_EVENT") {
+			logReceiveSeparator(`MEDIA:${msg.event?.type || "UNKNOWN"}`, `key=${msg.key}`)
 			logInfo("MessageTower:received-apply-media-event", `key=${msg.key} event=${msg.event?.type} sender=[${sender?.tab?.id}:${sender?.frameId}] top=${gvar?.isTopFrame}`)
 			try {
 				realizeMediaEvent(msg.key, msg.event)
@@ -85,6 +91,7 @@ export class MessageTower {
 			}
 			return
 		} else if (msg.type === "SET_TEMPORARY_SPEED") {
+			logReceiveSeparator("TEMP_SPEED", `factor=${msg.factor}`)
 			reply(true)
 			logInfo("MessageTower:received-temporary-speed", `factor=${msg.factor} sender=[${sender?.tab?.id}:${sender?.frameId}]`)
 			gvar.os.speedSync?.processTemporarySpeed(msg.factor)
@@ -99,7 +106,9 @@ export class MessageTower {
 			reply(true)
 			return
 		} else if (msg.type === "BG_SPEED_OVERRIDE") {
+			logReceiveSeparator("BG_SPEED_OVERRIDE", `speed=${msg.value?.speed}`)
 			if (!gvar.os?.speedSync) return
+			logInfo("MessageTower:bg-speed-override", `speed=${msg.value?.speed} freePitch=${msg.value?.freePitch}`)
 			gvar.os.speedSync.latest = msg.value
 			gvar.os.speedSync.update()
 		} else if (msg.type === "SHOW_INDICATOR") {

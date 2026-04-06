@@ -167,6 +167,35 @@ export async function getAutoMedia(tabInfo: TabInfo, videoOnly?: boolean) {
 		}
 	})
 
+	if (!highest) {
+		logInfo("getAutoMedia:selected", `key=none`)
+		return undefined
+	}
+
+	// Validate selected candidate's frame is still alive (guard against stale navigation caches)
+	const selectedAlive = await checkContentScript(highest.info.tabInfo.tabId, highest.info.tabInfo.frameId)
+	if (!selectedAlive) {
+		logError("getAutoMedia:selected-dead", `key=${highest.info.key} tab=${highest.info.tabInfo?.tabId} frame=${highest.info.tabInfo?.frameId} — stale cache, dropping and retrying`)
+		// Remove stale entry from session storage and retry with remaining candidates
+		const staleKey = `m:scope:${highest.info.tabInfo.tabId}:${highest.info.tabInfo.frameId}`
+		chrome.storage.session.remove(staleKey)
+		infos = infos.filter((info) => info.key !== highest.info.key)
+		if (!infos.length) return pippedInfo || undefined
+		// Re-score remaining candidates
+		highest = undefined
+		infos.forEach((info) => {
+			let score = 0
+			if (compareFrame(info.tabInfo, tabInfo) && tabInfo?.frameId !== 0) score += WEIGHTS.SAME_FRAME
+			if (info.isVisible) score += WEIGHTS.IS_VISIBLE
+			if (!info.paused || (info.lastPlayed && Date.now() - info.lastPlayed < 60_000)) score += WEIGHTS.ACTIVE
+			if (!highest || score > highest.score || (score === highest.score && (info.infinity ? 60 : info.duration) > highest.info.duration)) {
+				highest = { info, score }
+			}
+		})
+		logInfo("getAutoMedia:selected-retry", `key=${highest?.info?.key} tab=${highest?.info?.tabInfo?.tabId} frame=${highest?.info?.tabInfo?.frameId} score=${highest?.score}`)
+		return highest?.info
+	}
+
 	logInfo("getAutoMedia:selected", `key=${highest?.info?.key} tab=${highest?.info?.tabInfo?.tabId} frame=${highest?.info?.tabInfo?.frameId} score=${highest?.score}`)
 
 	return highest?.info

@@ -70,6 +70,12 @@ function objectToString(obj?: {[key: string]: any}): string {
 		.join(" | ")
 }
 
+function logCommandSeparator(command: string, tabInfo?: TabInfo) {
+	if (!command) return
+	const headerStyle = "color: #666; font-weight: bold;"
+	console.log(`%c========== [KEY ${command.toUpperCase()}] tab=${tabInfo?.tabId} frame=${tabInfo?.frameId} ==========`, headerStyle)
+}
+
 let lastSeek: { key: string; time: number; net: number }
 
 export class ProcessKeybinds {
@@ -160,6 +166,7 @@ export class ProcessKeybinds {
 		let commandInfo = commandInfos[kb.command]
 		let media = null as any as FlatMediaInfo
 
+		logCommandSeparator(kb.command, this.tabInfo)
 		logInfo("processKeybindMatch:start", `cmd=${kb.command} tabId=${this.tabInfo?.tabId} frameId=${this.tabInfo?.frameId} requiresMedia=${commandInfo.requiresMedia}`)
 
 
@@ -927,20 +934,31 @@ export async function setValue(init: SetValueInit) {
 	}
 
 	let override: StateView = {}
+	let overrideTabId = tabInfo.tabId
 
 	if (kb.command === "speed") {
-		override.lastSpeed = (await fetchView({ speed: true }, tabInfo.tabId)).speed
+		const targetSpeedTabId = mediaTabInfo?.tabId ?? tabInfo.tabId
+		overrideTabId = targetSpeedTabId
+		override.lastSpeed = (await fetchView({ speed: true }, targetSpeedTabId)).speed
 		if (override.lastSpeed === value) delete override.lastSpeed
 		override.speed = value
-		const freePitch = (await fetchView({ freePitch: true }, tabInfo.tabId)).freePitch
+		const freePitch = (await fetchView({ freePitch: true }, targetSpeedTabId)).freePitch
 		if (init.dry) {
 			logInfo("setValue:skip-send-dry", `cmd=speed (dry mode) key=${mediaKey}`)
 		} else if (mediaKey && mediaTabInfo?.tabId != null) {
 			sendMediaEvent({ type: "PLAYBACK_RATE", value, freePitch }, mediaKey, mediaTabInfo.tabId, mediaTabInfo.frameId)
+			chrome.tabs
+				.sendMessage(mediaTabInfo.tabId, { type: "BG_SPEED_OVERRIDE", value: { speed: value, freePitch } } as Messages, { frameId: 0 })
+				.then(() => {
+					logInfo("setValue:speed-sync-override", `tabId=${mediaTabInfo.tabId} speed=${value} freePitch=${freePitch}`)
+				})
+				.catch((err) => {
+					logError("setValue:speed-sync-override-failed", `tabId=${mediaTabInfo.tabId} speed=${value} error=${err}`)
+				})
 		} else {
 			logError("setValue:speed-missing-media-route", `cmd=speed val=${value} NO media route key=${mediaKey} tabId=${mediaTabInfo?.tabId}`)
 		}
-		logInfo("setValue:speed-override", `val=${value} lastSpeed=${override.lastSpeed} key=${mediaKey}`)
+		logInfo("setValue:speed-override", `val=${value} lastSpeed=${override.lastSpeed} key=${mediaKey} targetTabId=${targetSpeedTabId}`)
 	} else if (kb.command === "volume") {
 		if (init.dry) {
 			logInfo("setValue:skip-send-dry", `cmd=volume (dry mode) key=${mediaKey}`)
@@ -996,7 +1014,7 @@ export async function setValue(init: SetValueInit) {
 		}
 	}
 
-	if (!init.dry && Object.keys(override)) await pushView({ override, tabId: tabInfo.tabId })
+	if (!init.dry && Object.keys(override).length) await pushView({ override, tabId: overrideTabId })
 
 	value = value ?? valueAlt
 
