@@ -38,46 +38,16 @@ export async function clearClosed() {
 	const tabIds = new Set(tabs.map((t) => t.id))
 	const clearKeys: string[] = []
 	for (let key in data) {
-		if (!key.startsWith("m:scope:")) return
-		if (tabIds.has(data[key]?.tabInfo.tabId)) return
+		if (!key.startsWith("m:scope:")) continue
+		if (tabIds.has(data[key]?.tabInfo.tabId)) continue
 		clearKeys.push(key)
 	}
 	chrome.storage.session.remove(clearKeys)
 }
 
-export async function getMediaData() {
-	const d = await getMediaDataWithScopes()
-	return { pinned: d.pinned, infos: flattenMediaInfos(d.scopes) } satisfies MediaData
-}
-
-export async function getAutoMedia(tabInfo: TabInfo, videoOnly?: boolean) {
-	let [{ ignorePiP }, { infos, pinned }] = await Promise.all([fetchView({ ignorePiP: true }), getMediaData()])
-
-	infos = infos.filter((info) => info.readyState)
-	infos = videoOnly ? infos.filter((info) => info.videoSize) : infos
-
-	const pinnedInfo = infos.find((info) => info.key === pinned?.key)
-	if (pinnedInfo && (await checkContentScript(pinnedInfo.tabInfo.tabId, pinnedInfo.tabInfo.frameId))) return pinnedInfo
-
-	infos.sort((a, b) => b.creationTime - a.creationTime)
-	let pippedInfo = infos.find((info) => info.pipMode) || infos.find((info) => info.isDip)
-	if (pippedInfo && !(await checkContentScript(pippedInfo.tabInfo.tabId, pippedInfo.tabInfo.frameId))) {
-		pippedInfo = null
-	}
-
-	if (!ignorePiP && pippedInfo) return pippedInfo
-	if (tabInfo) {
-		infos = infos.filter((info) => info.tabInfo.tabId === tabInfo.tabId)
-	}
-
-	if (!infos.length) return pippedInfo || undefined
-
-	const now = Date.now()
-	let peakIntersect = infos
-		.filter((v) => v.intersectionRatio != null)
-		.sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.intersectionRatio
-
+function pickHighest(infos: FlatMediaInfo[], tabInfo: TabInfo, now: number, peakIntersect: number) {
 	let highest: { info: FlatMediaInfo; score: number }
+
 	infos.forEach((info) => {
 		let score = 0
 
@@ -114,5 +84,57 @@ export async function getAutoMedia(tabInfo: TabInfo, videoOnly?: boolean) {
 		}
 	})
 
-	return highest?.info
+	return highest
+}
+
+export async function getMediaData() {
+	const d = await getMediaDataWithScopes()
+	return { pinned: d.pinned, infos: flattenMediaInfos(d.scopes) } satisfies MediaData
+}
+
+export async function getAutoMedia(tabInfo: TabInfo, videoOnly?: boolean) {
+	let [{ ignorePiP }, { infos, pinned }] = await Promise.all([fetchView({ ignorePiP: true }), getMediaData()])
+
+	infos = infos.filter((info) => info.readyState)
+	infos = videoOnly ? infos.filter((info) => info.videoSize) : infos
+
+	const pinnedInfo = infos.find((info) => info.key === pinned?.key)
+	if (pinnedInfo && (await checkContentScript(pinnedInfo.tabInfo.tabId, pinnedInfo.tabInfo.frameId))) return pinnedInfo
+
+	infos.sort((a, b) => b.creationTime - a.creationTime)
+	let pippedInfo = infos.find((info) => info.pipMode) || infos.find((info) => info.isDip)
+	if (pippedInfo && !(await checkContentScript(pippedInfo.tabInfo.tabId, pippedInfo.tabInfo.frameId))) {
+		pippedInfo = null
+	}
+
+	if (!ignorePiP && pippedInfo) return pippedInfo
+	if (tabInfo) {
+		infos = infos.filter((info) => info.tabInfo.tabId === tabInfo.tabId)
+	}
+
+	if (!infos.length) return pippedInfo || undefined
+
+	const now = Date.now()
+	let peakIntersect = infos
+		.filter((v) => v.intersectionRatio != null)
+		.sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.intersectionRatio
+
+	let highest = pickHighest(infos, tabInfo, now, peakIntersect)
+	if (!highest) return undefined
+
+	const isAlive = await checkContentScript(highest.info.tabInfo.tabId, highest.info.tabInfo.frameId)
+	if (isAlive) return highest.info
+
+	const staleKey = `m:scope:${highest.info.tabInfo.tabId}:${highest.info.tabInfo.frameId}`
+	await chrome.storage.session.remove(staleKey)
+
+	infos = infos.filter((info) => info.key !== highest.info.key)
+	if (!infos.length) return pippedInfo || undefined
+
+	peakIntersect = infos
+		.filter((v) => v.intersectionRatio != null)
+		.sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.intersectionRatio
+	highest = pickHighest(infos, tabInfo, Date.now(), peakIntersect)
+
+	return highest?.info || pippedInfo || undefined
 }
