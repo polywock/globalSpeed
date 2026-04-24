@@ -184,11 +184,10 @@ export function triggerToKey(trigger: Trigger): KeybindType {
 
 export async function handleFreshState() {
 	if (!(await fetchView({ freshState: true })).freshState) return
-	const darkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
 	await pushView({
 		override: {
 			freshState: null,
-			darkTheme,
+			darkTheme: "system",
 		},
 	})
 }

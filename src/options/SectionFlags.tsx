@@ -107,12 +107,17 @@ export function SectionFlags(props: {}) {
 				{/* Dark theme */}
 				<div className="field">
 					<span>{gvar.gsm.options.flags.darkTheme}</span>
-					<Toggle
-						value={!!view.darkTheme}
+					<select
+						value={view.darkTheme === "system" ? "system" : view.darkTheme ? "dark" : "light"}
 						onChange={(e) => {
-							setView({ darkTheme: !view.darkTheme })
+							const val = e.target.value
+							setView({ darkTheme: val === "system" ? "system" : val === "dark" ? true : false })
 						}}
-					/>
+					>
+						<option value="light">{gvar.gsm.options.flags.themeLight}</option>
+						<option value="dark">{gvar.gsm.options.flags.themeDark}</option>
+						<option value="system">{gvar.gsm.options.flags.themeSystem}</option>
+					</select>
 				</div>
 
 				{/* Permission */}
