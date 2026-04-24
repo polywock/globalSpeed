@@ -229,7 +229,10 @@
 		"flags": {
 			"header": "Параметры",
 			"language": "Язык",
-			"darkTheme": "Темная тема",
+			"darkTheme": "Тема",
+			"themeLight": "Светлая",
+			"themeDark": "Тёмная",
+			"themeSystem": "Системная",
 			"showBadge": "Показать значок",
 			"showBadgeTooltip": "Значок — это текст на иконке расширения",
 			"showMediaView": "Показать список медиа",
