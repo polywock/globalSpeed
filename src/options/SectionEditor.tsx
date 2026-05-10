@@ -236,6 +236,7 @@ function SectionControls(props: { listKey: KeybindType; view: StateView; setView
 		<div className="sectionControls">
 			{/* Primary select */}
 			<select
+				aria-label={gvar.gsm.token.create}
 				value={commandOption}
 				onChange={(e) => {
 					setCommandOption(e.target.value)

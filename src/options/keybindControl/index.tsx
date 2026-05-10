@@ -172,6 +172,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
 			<Tooltip title={value.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
 				<input
 					type="checkbox"
+					aria-label={gvar.gsm.token.on}
 					checked={!!value.enabled}
 					onChange={(e) => {
 						props.onChange(
@@ -318,6 +319,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
 			{/* State input  */}
 			{command.valueType === "state" && (
 				<select
+					aria-label={gvar.gsm.token.on}
 					value={value.valueState}
 					onChange={(e) => {
 						props.onChange(
@@ -414,6 +416,7 @@ export const TriggerValues = (props: Props) => {
 			{value.trigger === Trigger.BROWSER && (
 				<div className="globalPicker">
 					<select
+						aria-label={gvar.gsm.token.assign}
 						value={value[keyForGlobal] || "commandA"}
 						onChange={(e) => {
 							props.onChange(
@@ -435,6 +438,7 @@ export const TriggerValues = (props: Props) => {
 					</select>
 					<Tooltip title={gvar.gsm.token.assign}>
 						<button
+							aria-label={gvar.gsm.token.assign}
 							className="icon"
 							onClick={() => {
 								requestCreateTab(

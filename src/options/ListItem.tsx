@@ -48,7 +48,7 @@ export function ListItem(props: ListItemProps) {
 
 				{/* Delete */}
 				<Tooltip title={gvar.gsm.token.delete}>
-					<button className="close icon" onClick={(e) => props.onRemove()}>
+					<button aria-label={gvar.gsm.token.delete} className="close icon" onClick={(e) => props.onRemove()}>
 						<GoX size="1.6rem" />
 					</button>
 				</Tooltip>
