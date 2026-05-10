@@ -953,16 +953,25 @@ function showIndicator(opts: IndicatorShowOpts, tabId: number, showAlt?: boolean
 
 let tempSpeedTimeoutId: number
 let mediaSped: FlatMediaInfo
+
+function sendTemporarySpeed(media: FlatMediaInfo, factor?: number) {
+	const payload = factor == null ? ({ type: "SET_TEMPORARY_SPEED" } as Messages) : ({ type: "SET_TEMPORARY_SPEED", factor } as Messages)
+	const frameIds = [media.tabInfo.frameId, 0].filter((v, i, arr) => v != null && arr.indexOf(v) === i)
+
+	void (async () => {
+		for (const frameId of frameIds) {
+			if (!(await checkContentScript(media.tabInfo.tabId, frameId))) continue
+
+			try {
+				await chrome.tabs.sendMessage(media.tabInfo.tabId, payload, { frameId })
+				return
+			} catch {}
+		}
+	})()
+}
+
 function activateTemporarySpeed(media: FlatMediaInfo, factor: number, kbType?: KeybindType) {
-	console.log("SPEEDING")
-	chrome.tabs.sendMessage(
-		media.tabInfo.tabId,
-		{
-			type: "SET_TEMPORARY_SPEED",
-			factor,
-		} as Messages,
-		{ frameId: media.tabInfo.frameId },
-	)
+	sendTemporarySpeed(media, factor)
 	if (mediaSped && mediaSped.key !== media?.key) {
 		releaseTemporarySpeed(mediaSped)
 	}
@@ -979,15 +988,8 @@ function activateTemporarySpeed(media: FlatMediaInfo, factor: number, kbType?: K
 }
 
 export function releaseTemporarySpeed(media?: FlatMediaInfo) {
-	console.log("RELEASING")
 	media = media || mediaSped
 	if (!media) return
-	chrome.tabs.sendMessage(
-		media.tabInfo.tabId,
-		{
-			type: "SET_TEMPORARY_SPEED",
-		} as Messages,
-		{ frameId: media.tabInfo.frameId },
-	)
+	sendTemporarySpeed(media)
 	mediaSped = null
 }

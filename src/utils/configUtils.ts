@@ -20,6 +20,7 @@ import {
 import { clamp, isFirefox, round } from "./helper"
 import { compareHotkeys, Hotkey } from "./keys"
 import { fetchView, pushView } from "./state"
+import { checkContentScript } from "./browserUtils"
 
 export function conformSpeed(speed: number, rounding = 2) {
 	return clamp(0.07, 16, round(speed, rounding))
@@ -92,7 +93,19 @@ export function sendMediaEvent(event: MediaEvent, key: string, tabId: number, fr
 		// realizeMediaEvent(key, event)
 	} else {
 	}
-	chrome.tabs.sendMessage(tabId, { type: "APPLY_MEDIA_EVENT", event, key }, frameId == null ? undefined : { frameId })
+
+	const frameIds = [frameId, 0].filter((v, i, arr) => v != null && arr.indexOf(v) === i)
+
+	void (async () => {
+		for (const attemptFrameId of frameIds) {
+			if (!(await checkContentScript(tabId, attemptFrameId))) continue
+
+			try {
+				await chrome.tabs.sendMessage(tabId, { type: "APPLY_MEDIA_EVENT", event, key }, { frameId: attemptFrameId })
+				return
+			} catch {}
+		}
+	})()
 }
 
 export function sendMessageToConfigSync(msg: any, tabId: number, frameId?: number) {
