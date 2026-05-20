@@ -51,50 +51,51 @@ export function randomId() {
 	return Math.ceil(Math.random() * 1e10).toString()
 }
 
-let isFirefoxResult: boolean
-export function isFirefox() {
-	isFirefoxResult = isFirefoxResult ?? navigator.userAgent.includes("Firefox/")
-	return isFirefoxResult
-}
+export const isFirefox = (() => {
+	let cached: boolean | undefined
+	return () => {
+		return (cached ??= navigator.userAgent.includes("Firefox/"))
+	}
+})()
 
-let firefoxVersionResult: number = undefined
-export function getFirefoxVersion() {
-	if (firefoxVersionResult !== undefined) return firefoxVersionResult
-	firefoxVersionResult = null
-	const firefoxInfo = navigator.userAgent.split(" ").find((v) => v.includes("Firefox/"))
-	if (firefoxInfo) {
-		const version = parseInt(firefoxInfo.slice(8))
-		if (version > 1) {
-			firefoxVersionResult = version
+export const getFirefoxVersion = (() => {
+	let cached: number | null | undefined
+	return () => {
+		if (cached !== undefined) return cached
+		const firefoxInfo = navigator.userAgent.split(" ").find((v) => v.includes("Firefox/"))
+		if (firefoxInfo) {
+			const version = parseInt(firefoxInfo.slice(8))
+			if (version > 1) return (cached = version)
 		}
+		return (cached = null)
 	}
-	return firefoxVersionResult
-}
+})()
 
-let isEdgeResult: boolean
-export function isEdge() {
-	isEdgeResult = isEdgeResult ?? navigator.userAgent.includes("Edg")
-	return isEdgeResult
-}
-
-let isMacResult: boolean
-export function isMac() {
-	isMacResult = isMacResult ?? navigator.userAgent.includes("Mac OS")
-	return isMacResult
-}
-
-let isMobileResult: boolean
-export function isMobile() {
-	if (isMobileResult != null) return isMobileResult
-	let data = (navigator as any).userAgentData
-	if (data) {
-		isMobileResult = data.mobile
-		return isMobileResult
+export const isEdge = (() => {
+	let cached: boolean | undefined
+	return () => {
+		return (cached ??= navigator.userAgent.includes("Edg"))
 	}
-	isMobileResult = /Mobi|Android|iPhone|iTabletPad/i.test(navigator.userAgent)
+})()
 
-	return isMobileResult
-}
+export const isMac = (() => {
+	let cached: boolean | undefined
+	return () => {
+		return (cached ??= navigator.userAgent.includes("Mac OS"))
+	}
+})()
+
+export const isMobile = (() => {
+	let cached: boolean | undefined
+	return () => {
+		if (cached !== undefined) return cached
+		let data = (navigator as any).userAgentData
+		if (data) {
+			return (cached ??= data.mobile)
+		}
+		return (cached ??= /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent))
+	}
+})()
 
 export function isFirefoxMobile() {
 	return isFirefox() && isMobile()
