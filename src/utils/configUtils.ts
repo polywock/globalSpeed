@@ -25,10 +25,6 @@ export function conformSpeed(speed: number, rounding = 2) {
 	return clamp(0.07, 16, round(speed, rounding))
 }
 
-export function formatSpeedOld(speed: number) {
-	return speed.toFixed(2)
-}
-
 export function formatSpeed(speed: number, snip = false) {
 	let speedString = speed.toFixed(2)
 	if (snip && speedString.at(-1) === "0") {

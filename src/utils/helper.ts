@@ -38,11 +38,6 @@ export function roundTo(value: number, nearest: number): number {
 	return round(Math.round(value / nearest) * nearest, 6)
 }
 
-export function ceil(value: number, precision: number): number {
-	const scalar = 10 ** precision
-	return round(Math.ceil(value * scalar) / scalar, 8)
-}
-
 export function randomNumber(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min)) + min
 }
@@ -147,18 +142,6 @@ export function formatDuration(secs: number, includePositive?: boolean) {
 	}
 }
 
-export function formatDurationMinimal(secs: number) {
-	if (secs < 60) return round(secs, 2)
-	return formatDuration(secs)
-}
-
-export function formatFreq(value: number) {
-	if (value >= 1000) {
-		return `${round(value / 1000, 1)}kHz`
-	}
-	return `${Math.round(value)}hz`
-}
-
 export function moveItem<T>(list: T[], test: ((v: T) => boolean) | number, to: "D" | "U" | number) {
 	let idx = typeof test === "number" ? test : list.findIndex(test)
 	let item = list[idx]
@@ -180,16 +163,6 @@ export function lerp(lb: number, rb: number, normal: number) {
 
 export function inverseLerp(lb: number, rb: number, value: number) {
 	return (value - lb) / (rb - lb)
-}
-
-export function freqToLinear(freq: number) {
-	return Math.log2(freq / 440)
-}
-
-const chromatic = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"]
-
-export function linearToChromatic(linear: number): string {
-	return chromatic[(Math.round(linear * 12) + 12 * 1000) % 12]
 }
 
 export function areYouSure() {
@@ -240,12 +213,6 @@ export function domRectGetOffset(rect: DOMRect, xOffset = 10, yOffset = 10, topL
 	return { x: rect.x + rect.width + xOffset, y: rect.y - rect.height - yOffset }
 }
 
-export function speak(text: string) {
-	let utter = new SpeechSynthesisUtterance(text)
-	utter.lang = "en"
-	speechSynthesis.speak(utter)
-}
-
 export function assertType<T>(value: any): asserts value is T {}
 
 /** Very limited comparison */
@@ -274,25 +241,8 @@ export function timeout(ms: number) {
 	})
 }
 
-export function pickObject(obj: AnyDict, keys: string[]) {
-	let newObj = {} as AnyDict
-	for (let key of keys) {
-		if (Object.hasOwn(obj, key)) {
-			newObj[key] = obj[key]
-		}
-	}
-	return newObj
-}
-
 export function listToDict<V>(arr: string[], val: V): { [key: string]: V } {
 	return Object.fromEntries(arr.map((k) => [k, val]))
-}
-
-export function removeFromArray<V>(arr: V[], val: V) {
-	const idx = arr.indexOf(val)
-	if (idx >= 0) {
-		arr.splice(idx, 1)
-	}
 }
 
 export function findRemoveFromArray<V>(arr: V[], test: (v: V) => boolean) {
@@ -571,18 +521,6 @@ export function walkGetKey(obj: any, keys: string[]): any {
 	return current ?? null
 }
 
-export function interpolateMatrices(lhs: number[], rhs: number[], normal: number) {
-	lhs = lhs || []
-	rhs = rhs || []
-	if (lhs.length !== rhs.length) throw "Incompatible matrices"
-	let out: number[] = []
-	for (let i = 0; i < lhs.length; i++) {
-		let l = lhs[i]
-		let r = rhs[i]
-		out.push(lerp(l, r, normal))
-	}
-	return out
-}
 export function produce<T>(base: T, recipe: (draft: T) => void): T {
 	const clone = structuredClone(base)
 	recipe(clone)

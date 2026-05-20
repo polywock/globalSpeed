@@ -1,5 +1,5 @@
 import { availableCommandNames } from "@/defaults/commands"
-import { generateUrlPart, getDefaultState, getEmptyUrlConditions, turnWebsiteInfoIntoString } from "../../defaults"
+import { generateUrlPart, getDefaultState } from "../../defaults"
 import { AdjustMode, Context, Duration, Keybind, State, Trigger, URLCondition, URLConditionPart, URLRule } from "../../types"
 import { isFirefox, randomId } from "../../utils/helper"
 

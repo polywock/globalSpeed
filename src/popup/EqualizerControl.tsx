@@ -3,12 +3,11 @@ import { useMemo } from "react"
 import { FaPowerOff } from "react-icons/fa"
 import { Tooltip } from "@/comps/Tooltip"
 import { EQ_PRESETS } from "@/defaults/eqPresets"
-import { produce } from "@/utils/helper"
+import { produce, round } from "@/utils/helper"
 import { Reset } from "../comps/Reset"
 import { SliderMicro } from "../comps/SliderMicro"
 import { getDefaultEq } from "../defaults"
 import { AudioFx } from "../types"
-import { formatFreq } from "../utils/helper"
 import "./EqualizerControl.css"
 
 type EqualizerControlProps = {
@@ -155,4 +154,11 @@ export function EqualizerControl(props: EqualizerControlProps) {
 			</div>
 		</div>
 	)
+}
+
+export function formatFreq(value: number) {
+	if (value >= 1000) {
+		return `${round(value / 1000, 1)}kHz`
+	}
+	return `${Math.round(value)}hz`
 }
