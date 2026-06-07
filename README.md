@@ -2,7 +2,7 @@
 
 Universal speed control for video and audio.
 
-## Install the [Chrome](https://chrome.google.com/webstore/detail/global-speed-youtube-netf/jpbjcnkcffbooppibceonlgknpkniiff), [Firefox](https://addons.mozilla.org/firefox/addon/global-speed/), or [Edge](https://microsoftedge.microsoft.com/addons/detail/mjhlabbcmjflkpjknnicihkfnmbdfced) extension.
+## Install the [Edge](https://microsoftedge.microsoft.com/addons/detail/mjhlabbcmjflkpjknnicihkfnmbdfced), [Firefox](https://addons.mozilla.org/firefox/addon/global-speed/), or [Chrome](https://chrome.google.com/webstore/detail/global-speed-youtube-netf/jpbjcnkcffbooppibceonlgknpkniiff) extension.
 
 ### Speed Control
 
