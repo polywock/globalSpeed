@@ -27,9 +27,12 @@ const ghostModeStatic = [
 type HeldKeyState = {
 	shortMatches: KeybindMatch[]
 	longMatches: KeybindMatch[]
-	timerId: ReturnType<typeof setTimeout>
+	timerId: ReturnType<typeof setInterval>
 	longTriggered: boolean
+	pressedAt: number
 }
+
+const HOLD_CHECK_INTERVAL_MS = 100
 
 export class ConfigSync {
 	released = false
@@ -87,7 +90,7 @@ export class ConfigSync {
 	release = () => {
 		if (this.released) return
 		this.released = true
-		this.heldKeys.forEach((state) => clearTimeout(state.timerId))
+		this.heldKeys.forEach((state) => clearInterval(state.timerId))
 		this.heldKeys.clear()
 		this.urlConditionsClient?.release()
 		delete this.urlConditionsClient
@@ -225,7 +228,7 @@ export class ConfigSync {
 
 		if (heldState) {
 			// Cancel the long-press timer
-			clearTimeout(heldState.timerId)
+			clearInterval(heldState.timerId)
 			this.heldKeys.delete(heldKeyId)
 
 			if (heldState.longTriggered) {
@@ -311,19 +314,27 @@ export class ConfigSync {
 			return
 		}
 
-		// We have long matches - defer short matches, start long-press timer
-		const timerId = setTimeout(() => {
+		// We have long matches - defer short matches, start long-press polling
+		const pressedAt = Date.now()
+		const threshold = this.client?.view?.holdThreshold ?? 300
+		const timerId = setInterval(() => {
 			const state = this.heldKeys.get(heldKeyId)
 			if (!state) return
-			state.longTriggered = true
+
+			if (!state.longTriggered) {
+				if (Date.now() - state.pressedAt < threshold) return
+				state.longTriggered = true
+			}
+
 			this.triggerMatches(state.longMatches)
-		}, this.client?.view?.holdThreshold ?? 300)
+		}, HOLD_CHECK_INTERVAL_MS)
 
 		this.heldKeys.set(heldKeyId, {
 			shortMatches,
 			longMatches,
 			timerId,
 			longTriggered: false,
+			pressedAt,
 		})
 	}
 
