@@ -51,6 +51,7 @@ export function SectionFlags(props: {}) {
 		virtualInput: true,
 		circleWidget: true,
 		holdToSpeed: true,
+			holdThreshold: true,
 	})
 	const [viewAlt] = useStateView({ indicatorInit: true, hideIndicator: true })
 	if (!view || !viewAlt) return <div></div>
