@@ -62,6 +62,7 @@ export class ConfigSync {
 			circleWidget: true,
 			circleInit: true,
 			holdToSpeed: true,
+			holdThreshold: true,
 		},
 		gvar.tabInfo.tabId,
 		true,
@@ -227,7 +228,7 @@ export class ConfigSync {
 		const heldState = this.heldKeys.get(heldKeyId)
 
 		if (heldState) {
-			// Cancel the long-press timer
+			// Cancel the long-press interval
 			clearInterval(heldState.timerId)
 			this.heldKeys.delete(heldKeyId)
 
@@ -282,8 +283,14 @@ export class ConfigSync {
 
 		if (this.checkUrlRuntime() === "Off") return
 
-		// Ignore keydown repeat events
-		if (e.repeat) return
+		// Ignore keydown repeat events - but still block website from seeing them during long-press
+		if (e.repeat) {
+			if (e.code && this.heldKeys.has(e.code)) {
+				e.preventDefault()
+				e.stopImmediatePropagation()
+			}
+			return
+		}
 
 		const eventHotkey = extractHotkey(e, true, true)
 		let matches = findMatchingPageKeybinds(keybinds, eventHotkey)
