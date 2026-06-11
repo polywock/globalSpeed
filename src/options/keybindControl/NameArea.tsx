@@ -179,6 +179,26 @@ export function NameArea(props: NameAreaProps) {
 
 			{value.command === "cinema" && <Cinema value={value} onChange={props.onChange} />}
 
+			{/* Press type: short/long */}
+			<button
+				style={{ marginLeft: "10px", padding: "2px 5px" }}
+				className={`toggle ${value.pressType === "long" ? "active" : ""}`}
+				onClick={(e) => {
+					props.onChange(
+						value.id,
+						produce(value, (d) => {
+							if (d.pressType === "long") {
+								delete d.pressType
+							} else {
+								d.pressType = "long"
+							}
+						}),
+					)
+				}}
+			>
+				{gvar.gsm.options.editor.pressType}
+			</button>
+
 			{/* Fullscreen: native */}
 			{value.command === "fullscreen" && (
 				<>

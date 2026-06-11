@@ -329,6 +329,8 @@
 			},
 			"pressAndHold": "Press and hold",
 			"pressAndHoldTooltip": "If enabled, the key must be held down while interactively adjusting the value",
+			"pressType": "Long press",
+			"pressTypeTooltip": "Enable long-press mode: hold the key past the threshold to trigger this action",
 			"keyPickerInput": "Click to change",
 			"keyPickerInputTooltip": "Press new shortcut"
 		},

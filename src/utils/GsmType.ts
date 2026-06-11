@@ -328,6 +328,8 @@ export type Gsm = {
       },
       pressAndHold: string,
       pressAndHoldTooltip: string,
+      pressType: string,
+      pressTypeTooltip: string,
       keyPickerInput: string,
       keyPickerInputTooltip: string
     },

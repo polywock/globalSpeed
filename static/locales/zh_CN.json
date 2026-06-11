@@ -327,6 +327,8 @@
 			},
 			"pressAndHold": "按住",
 			"pressAndHoldTooltip": "如果启用，则在交互调整值时必须按住键",
+			"pressType": "长按模式",
+			"pressTypeTooltip": "启用长按：按住超过阈值后触发此动作，短按时不触发",
 			"keyPickerInput": "点击更改",
 			"keyPickerInputTooltip": "按下新快捷键"
 		},
