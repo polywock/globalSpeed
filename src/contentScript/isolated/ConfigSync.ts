@@ -1,5 +1,5 @@
 import { getEmptyUrlConditions } from "@/defaults"
-import { AdjustMode, URLCondition, URLConditionPart } from "@/types"
+import { AdjustMode, KeybindMatch, URLCondition, URLConditionPart } from "@/types"
 import { getPracticalRuntimeUrl } from "@/utils/helper"
 import { getLeaf } from "@/utils/nativeUtils"
 import { findMatchingPageKeybinds, getActiveParts, hasActiveParts, testURL, testURLWithPart } from "../../utils/configUtils"
@@ -24,11 +24,21 @@ const ghostModeStatic = [
 	"mooc1.chaoxing.com",
 ].some((site) => (location.hostname || "").includes(site))
 
+const HOLD_THRESHOLD_MS = 300
+
+type HeldKeyState = {
+	shortMatches: KeybindMatch[]
+	longMatches: KeybindMatch[]
+	timerId: ReturnType<typeof setTimeout>
+	longTriggered: boolean
+}
+
 export class ConfigSync {
 	released = false
 	blockKeyUp = false
 	justRanTemporarySpeed = false
 	lastTrigger = 0
+	heldKeys: Map<string, HeldKeyState> = new Map()
 	fxSync: FxSync
 	urlConditionsClient = new SubscribeView(
 		{ keybindsUrlCondition: true },
@@ -79,6 +89,8 @@ export class ConfigSync {
 	release = () => {
 		if (this.released) return
 		this.released = true
+		this.heldKeys.forEach((state) => clearTimeout(state.timerId))
+		this.heldKeys.clear()
 		this.urlConditionsClient?.release()
 		delete this.urlConditionsClient
 		this.client?.release()
@@ -209,8 +221,31 @@ export class ConfigSync {
 			e.preventDefault()
 		}
 
+		const eventHotkey = extractHotkey(e, true, true)
+		const heldKeyId = eventHotkey.code
+		const heldState = this.heldKeys.get(heldKeyId)
+
+		if (heldState) {
+			// Cancel the long-press timer
+			clearTimeout(heldState.timerId)
+			this.heldKeys.delete(heldKeyId)
+
+			if (heldState.longTriggered) {
+				// Long press was triggered - release temporary speed if applicable
+				if (heldState.longMatches.some((m) => m.kb.command === "temporarySpeed")) {
+					this.justRanTemporarySpeed = false
+					chrome.runtime.sendMessage({ type: "RELEASED_TEMPORARY_SPEED" })
+				}
+				return
+			}
+
+			// Long press timer did NOT fire - trigger short matches
+			this.triggerMatches(heldState.shortMatches)
+			return
+		}
+
+		// No held state for this key - existing cleanup logic
 		if (this.justRanTemporarySpeed) {
-			console.log(e.code, e.key, e.shiftKey)
 			this.justRanTemporarySpeed = false
 			chrome.runtime.sendMessage({ type: "RELEASED_TEMPORARY_SPEED" })
 		}
@@ -226,7 +261,6 @@ export class ConfigSync {
 		let keybinds = this.client.view.pageKeybinds
 		if (!enabled) {
 			keybinds = (keybinds || []).filter((kb) => kb.command === "state" && kb.enabled && (this.client.view.latestViaShortcut || kb.alwaysOn))
-
 			if (!keybinds.length) return
 		}
 
@@ -247,6 +281,9 @@ export class ConfigSync {
 
 		if (this.checkUrlRuntime() === "Off") return
 
+		// Ignore keydown repeat events
+		if (e.repeat) return
+
 		const eventHotkey = extractHotkey(e, true, true)
 		let matches = findMatchingPageKeybinds(keybinds, eventHotkey)
 
@@ -263,23 +300,50 @@ export class ConfigSync {
 			e.stopImmediatePropagation()
 		}
 
-		matches = matches.filter(
-			(match) => !(match.kb.adjustMode === AdjustMode.ITC || match.kb.adjustMode === AdjustMode.ITC_REL) || !this.ignoreList.has(match.kb.id),
-		)
+		// Split matches by pressType
+		const shortMatches = matches.filter((m) => m.kb.pressType !== "long")
+		const longMatches = matches.filter((m) => m.kb.pressType === "long")
 
-		if (matches.length) {
-			const now = Date.now()
-			if (now - this.lastTrigger > 50) {
-				this.lastTrigger = now
-				matches
-					.filter((match) => match.kb.adjustMode === AdjustMode.ITC || match.kb.adjustMode === AdjustMode.ITC_REL)
-					.forEach((v) => this.ignoreList.add(v.kb.id))
-				chrome.runtime.sendMessage({ type: "TRIGGER_KEYBINDS", ids: matches.map((match) => ({ id: match.kb.id, alt: match.alt })) })
+		// Derive a key string for tracking held keys
+		const heldKeyId = eventHotkey.code
 
-				if (matches.some((match) => match.kb.command === "temporarySpeed")) {
-					this.justRanTemporarySpeed = true
-				}
-			}
+		// No long matches: trigger immediately (existing behavior, no delay)
+		if (!longMatches.length) {
+			this.triggerMatches(shortMatches)
+			return
+		}
+
+		// We have long matches - defer short matches, start long-press timer
+		const timerId = setTimeout(() => {
+			const state = this.heldKeys.get(heldKeyId)
+			if (!state) return
+			state.longTriggered = true
+			this.triggerMatches(state.longMatches)
+		}, HOLD_THRESHOLD_MS)
+
+		this.heldKeys.set(heldKeyId, {
+			shortMatches,
+			longMatches,
+			timerId,
+			longTriggered: false,
+		})
+	}
+
+	triggerMatches = (matches: KeybindMatch[]) => {
+		if (!matches.length) return
+
+		const now = Date.now()
+		if (now - this.lastTrigger <= 50) return
+		this.lastTrigger = now
+
+		matches
+			.filter((match) => match.kb.adjustMode === AdjustMode.ITC || match.kb.adjustMode === AdjustMode.ITC_REL)
+			.forEach((v) => this.ignoreList.add(v.kb.id))
+
+		chrome.runtime.sendMessage({ type: "TRIGGER_KEYBINDS", ids: matches.map((match) => ({ id: match.kb.id, alt: match.alt })) })
+
+		if (matches.some((match) => match.kb.command === "temporarySpeed")) {
+			this.justRanTemporarySpeed = true
 		}
 	}
 }
