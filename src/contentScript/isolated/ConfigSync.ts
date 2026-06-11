@@ -325,6 +325,11 @@ export class ConfigSync {
 		const pressedAt = Date.now()
 		const threshold = this.client?.view?.holdThreshold ?? 300
 		const timerId = setInterval(() => {
+			if (!chrome.runtime?.id) {
+				this.heldKeys.delete(heldKeyId)
+				clearInterval(timerId)
+				return
+			}
 			const state = this.heldKeys.get(heldKeyId)
 			if (!state) return
 
@@ -347,6 +352,7 @@ export class ConfigSync {
 
 	triggerMatches = (matches: KeybindMatch[]) => {
 		if (!matches.length) return
+		if (!chrome.runtime?.id) return
 
 		const now = Date.now()
 		if (now - this.lastTrigger <= 50) return

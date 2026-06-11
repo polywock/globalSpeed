@@ -6,5 +6,4 @@ Archive*
 z.md
 .DS_Store
 **/*.env
-private/
-.codegraph/
+private/
