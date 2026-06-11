@@ -126,6 +126,7 @@ export let commandInfos: { [key in CommandName]: Command } = {
 			enabled: true,
 			greedy: true,
 			valueNumber: 3,
+			pressType: "long",
 		}),
 	},
 	speedChangesPitch: {
