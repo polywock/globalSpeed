@@ -24,8 +24,6 @@ const ghostModeStatic = [
 	"mooc1.chaoxing.com",
 ].some((site) => (location.hostname || "").includes(site))
 
-const HOLD_THRESHOLD_MS = 300
-
 type HeldKeyState = {
 	shortMatches: KeybindMatch[]
 	longMatches: KeybindMatch[]
@@ -319,7 +317,7 @@ export class ConfigSync {
 			if (!state) return
 			state.longTriggered = true
 			this.triggerMatches(state.longMatches)
-		}, HOLD_THRESHOLD_MS)
+		}, this.client?.view?.holdThreshold ?? 300)
 
 		this.heldKeys.set(heldKeyId, {
 			shortMatches,

@@ -280,7 +280,9 @@ export type Gsm = {
       qrCodeTop: string,
       qrCodeBottom: string,
       holdToSpeedUp: string,
-      holdToSpeedUpTooltip: string
+      holdToSpeedUpTooltip: string,
+      holdThreshold: string,
+      holdThresholdTooltip: string
     },
     editor: {
       header: string,

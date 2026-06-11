@@ -92,6 +92,7 @@ export type State = {
 	circleWidget?: boolean
 	circleInit?: CircleInit
 	holdToSpeed?: number
+	holdThreshold?: number
 	sawEnableShortcutOverlayCount?: number
 } & Context
 

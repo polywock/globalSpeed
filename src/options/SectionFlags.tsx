@@ -349,7 +349,21 @@ export function SectionFlags(props: {}) {
 					)}
 				</div>
 
+				{/* Long-press threshold */}
+
+				<div className="field holdThreshold">
+					<div className="labelWithTooltip">
+						<span>{gvar.gsm.options.flags.holdThreshold}</span>
+						<RegularTooltip title={gvar.gsm.options.flags.holdThresholdTooltip} align="right" />
+					</div>
+
+					<div className="control">
+						<NumericInput noNull={true} min={100} max={2000} value={view.holdThreshold ?? 300} onChange={(v) => setView({ holdThreshold: v })} />
+					</div>
+				</div>
+
 				{!showMore ? (
+
 					<Tooltip title={gvar.gsm.token.more}>
 						<button aria-label={gvar.gsm.token.more} className="showMoreTooltip" onClick={() => setShowMore(true)}>
 							<TfiMoreAlt />

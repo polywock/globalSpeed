@@ -279,7 +279,9 @@
 			"qrCodeTop": "扫码使用",
 			"qrCodeBottom": "Edge 手机版",
 			"holdToSpeedUp": "按住快进",
-			"holdToSpeedUpTooltip": "按住视频可临时加速播放"
+			"holdToSpeedUpTooltip": "按住视频可临时加速播放",
+			"holdThreshold": "长按阈值",
+			"holdThresholdTooltip": "按键按住多长时间 (毫秒) 才被判定为长按"
 		},
 		"editor": {
 			"header": "快捷键编辑器",

@@ -281,7 +281,9 @@
 			"qrCodeTop": "Scan to use on...",
 			"qrCodeBottom": "Edge for Mobile",
 			"holdToSpeedUp": "Press and hold to fast forward",
-			"holdToSpeedUpTooltip": "Press and hold videos to temporarily speed up"
+			"holdToSpeedUpTooltip": "Press and hold videos to temporarily speed up",
+			"holdThreshold": "Long-press threshold",
+			"holdThresholdTooltip": "How long (ms) a key must be held before a long-press action triggers"
 		},
 		"editor": {
 			"header": "Shortcut Editor",

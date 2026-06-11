@@ -52,6 +52,7 @@ export function getDefaultState(): State {
 		keybindsUrlCondition: getDefaultKeybindsUrlConditions(),
 		hideMediaView: isMobile(),
 		holdToSpeed: isMobile() ? 2 : undefined,
+		holdThreshold: 300,
 	} satisfies State
 
 	return state
