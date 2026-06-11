@@ -314,6 +314,7 @@ export type Keybind = {
 	condition?: URLCondition
 	oncePerUp?: boolean
 	alwaysOn?: boolean
+	pressType?: "short" | "long"
 	cinemaInit?: CinemaInit
 }
 
