@@ -230,6 +230,7 @@
 			"header": "Opzioni",
 			"language": "Lingua",
 			"_languageTooltip": "Utenti che hanno contribuito alle traduzioni italiane: @albertopasqualetto",
+			"theme": "Tema",
 			"themeLight": "Chiaro",
 			"themeDark": "Scuro",
 			"themeSystem": "Sistema",
@@ -281,8 +282,7 @@
 			"holdToSpeedUp": "Tieni premuto per avanzare velocemente",
 			"holdToSpeedUpTooltip": "Tieni premuto sui video per accelerare temporaneamente",
 			"longPressThreshold": "Durata pressione prolungata",
-			"longPressThresholdTooltip": "Quanto a lungo tenere premuto un tasto prima che attivi le scorciatoie con pressione prolungata",
-			"theme": "Tema"
+			"longPressThresholdTooltip": "Quanto a lungo tenere premuto un tasto prima che attivi le scorciatoie con pressione prolungata"
 		},
 		"editor": {
 			"header": "Modifica Scorciatoie",
@@ -292,7 +292,7 @@
 			"shortcutWarningBlock": "Per impostazione predefinita, le scorciatoie sono attivate sulla maggior parte dei siti web.",
 			"shortcutWarningLearn": "Scopri come attivare o disattivare le scorciatoie per un sito web.",
 			"browserShortcuts": "Scorciatoie browser",
-			"browserShortcutsSub": "Può essere usato per controllare i video nelle schede in background o anche mentre si usa un'altra app",
+			"browserShortcutsSub": "Può essere usato per controllare i video mentre si usa un'altra app",
 			"menuShortcuts": "Scorciatoie menu",
 			"menuShortcutsSub": "Queste scorciatoie vengono mostrate quando fai clic destro su una pagina",
 			"toggleModeTooltip": "Le scorciatoie globali sono utili quando vuoi controllare video o audio mentre stai usando un altro programma",

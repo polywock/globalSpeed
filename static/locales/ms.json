@@ -230,6 +230,7 @@
 			"header": "Pilihan",
 			"language": "Bahasa",
 			"_languageTooltip": "",
+			"theme": "Tema",
 			"themeLight": "Cerah",
 			"themeDark": "Gelap",
 			"themeSystem": "Sistem",
@@ -281,8 +282,7 @@
 			"holdToSpeedUp": "Tekan dan tahan untuk percepat",
 			"holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara",
 			"longPressThreshold": "Tempoh tekan lama",
-			"longPressThresholdTooltip": "Berapa lama menahan kekunci sebelum ia mencetuskan pintasan tekan lama",
-			"theme": "Tema"
+			"longPressThresholdTooltip": "Berapa lama menahan kekunci sebelum ia mencetuskan pintasan tekan lama"
 		},
 		"editor": {
 			"header": "Penyunting Pintasan",
@@ -292,7 +292,7 @@
 			"shortcutWarningBlock": "Secara lalai, pintasan didayakan pada kebanyakan laman web.",
 			"shortcutWarningLearn": "Ketahui cara menogol pintasan untuk laman web.",
 			"browserShortcuts": "Pintasan Pelayar",
-			"browserShortcutsSub": "Boleh digunakan untuk mengawal video dalam tab latar belakang atau ketika menggunakan aplikasi lain",
+			"browserShortcutsSub": "Boleh digunakan untuk mengawal video semasa menggunakan aplikasi lain",
 			"menuShortcuts": "Pintasan Menu",
 			"menuShortcutsSub": "Pintasan ini dipaparkan apabila anda klik kanan pada halaman",
 			"toggleModeTooltip": "Pintasan global berguna apabila anda mahu mengawal video atau audio semasa menggunakan program lain",

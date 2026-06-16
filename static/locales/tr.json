@@ -231,6 +231,7 @@
 			"header": "Seçenekler",
 			"language": "Dil",
 			"_languageTooltip": "Türkçe çevirilere katkıda bulunan kullanıcılar: @FoofAPP",
+			"theme": "Tema",
 			"themeLight": "Açık",
 			"themeDark": "Koyu",
 			"themeSystem": "Sistem",
@@ -282,8 +283,7 @@
 			"holdToSpeedUp": "Hızlandırmak için basılı tutun",
 			"holdToSpeedUpTooltip": "Videoları geçici olarak hızlandırmak için basılı tutun",
 			"longPressThreshold": "Uzun basma süresi",
-			"longPressThresholdTooltip": "Bir tuşu uzun basma kısayollarını tetiklemeden önce ne kadar süre basılı tutmak gerektiği",
-			"theme": "Tema"
+			"longPressThresholdTooltip": "Bir tuşu uzun basma kısayollarını tetiklemeden önce ne kadar süre basılı tutmak gerektiği"
 		},
 		"editor": {
 			"header": "Kısayol Düzenleyici",
@@ -293,7 +293,7 @@
 			"shortcutWarningBlock": "Varsayılan olarak, çoğu web sitesinde kısayollar etkindir.",
 			"shortcutWarningLearn": "Bir web sitesi için kısayolları açmayı veya kapatmayı öğrenin.",
 			"browserShortcuts": "Tarayıcı Kısayolları",
-			"browserShortcutsSub": "Arka plan sekmelerindeki videoları veya başka bir uygulama kullanırken bile kontrol etmek için kullanılabilir",
+			"browserShortcutsSub": "Başka bir uygulama kullanırken videoları kontrol etmek için kullanılabilir",
 			"menuShortcuts": "Menü Kısayolları",
 			"menuShortcutsSub": "Bu kısayollar, bir sayfaya sağ tıkladığınızda gösterilir",
 			"toggleModeTooltip": "Genel kısayollar, başka bir program kullanırken video veya sesi kontrol etmek istediğinizde yararlıdır",

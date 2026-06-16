@@ -230,6 +230,7 @@
 			"header": "Opcje",
 			"language": "Język",
 			"_languageTooltip": "",
+			"theme": "Motyw",
 			"themeLight": "Jasny",
 			"themeDark": "Ciemny",
 			"themeSystem": "Systemowy",
@@ -281,8 +282,7 @@
 			"holdToSpeedUp": "Naciśnij i przytrzymaj, aby przyspieszyć",
 			"holdToSpeedUpTooltip": "Naciśnij i przytrzymaj wideo, aby tymczasowo przyspieszyć",
 			"longPressThreshold": "Czas długiego naciśnięcia",
-			"longPressThresholdTooltip": "Jak długo przytrzymać klawisz, zanim uruchomi skróty długiego naciśnięcia",
-			"theme": "Motyw"
+			"longPressThresholdTooltip": "Jak długo przytrzymać klawisz, zanim uruchomi skróty długiego naciśnięcia"
 		},
 		"editor": {
 			"header": "Edytor skrótów",
@@ -292,7 +292,7 @@
 			"shortcutWarningBlock": "Domyślnie skróty są włączone na większości stron internetowych.",
 			"shortcutWarningLearn": "Dowiedz się, jak przełączać skróty na stronie internetowej.",
 			"browserShortcuts": "Skróty przeglądarki",
-			"browserShortcutsSub": "Może służyć do sterowania filmami w kartach w tle lub nawet podczas korzystania z innej aplikacji",
+			"browserShortcutsSub": "Może służyć do sterowania filmami podczas korzystania z innej aplikacji",
 			"menuShortcuts": "Skróty menu",
 			"menuShortcutsSub": "Te skróty są wyświetlane po kliknięciu prawym przyciskiem myszy na stronie",
 			"toggleModeTooltip": "Globalne skróty są przydatne, gdy chcesz sterować wideo lub dźwiękiem podczas korzystania z innego programu",

@@ -231,6 +231,7 @@
 			"header": "選項",
 			"language": "語言",
 			"_languageTooltip": "對繁體中文翻譯做出貢獻的使用者：@PeterDaveHello @nathan60107",
+			"theme": "主題",
 			"themeLight": "淺色",
 			"themeDark": "深色",
 			"themeSystem": "跟隨系統",
@@ -282,8 +283,7 @@
 			"holdToSpeedUp": "長按以快轉",
 			"holdToSpeedUpTooltip": "按住影片可暫時加速播放",
 			"longPressThreshold": "長按持續時間",
-			"longPressThresholdTooltip": "按住按鍵多久後才會觸發長按快捷鍵",
-			"theme": "主題"
+			"longPressThresholdTooltip": "按住按鍵多久後才會觸發長按快捷鍵"
 		},
 		"editor": {
 			"header": "快捷鍵編輯器",
@@ -293,7 +293,7 @@
 			"shortcutWarningBlock": "預設情況下，大多數網站已啟用快捷鍵。",
 			"shortcutWarningLearn": "了解如何為網站切換快捷鍵。",
 			"browserShortcuts": "瀏覽器快捷鍵",
-			"browserShortcutsSub": "可用於控制背景分頁中的影片，甚至在使用其他應用程式時也能控制",
+			"browserShortcutsSub": "可在使用其他應用程式時控制影片",
 			"menuShortcuts": "選單快捷鍵",
 			"menuShortcutsSub": "當你在頁面上按右鍵時會顯示這些快捷鍵",
 			"toggleModeTooltip": "全域快捷鍵可讓您在使用其他程式時控制影片或音訊",

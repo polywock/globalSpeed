@@ -230,6 +230,7 @@
 			"header": "Optionen",
 			"language": "Sprache",
 			"_languageTooltip": "",
+			"theme": "Design",
 			"themeLight": "Hell",
 			"themeDark": "Dunkel",
 			"themeSystem": "System",
@@ -281,8 +282,7 @@
 			"holdToSpeedUp": "Zum Vorspulen gedrückt halten",
 			"holdToSpeedUpTooltip": "Gedrückt halten, um Videos vorübergehend zu beschleunigen",
 			"longPressThreshold": "Dauer für langes Drücken",
-			"longPressThresholdTooltip": "Wie lange eine Taste gehalten werden muss, bevor Langdruck-Kurzbefehle ausgelöst werden",
-			"theme": "Design"
+			"longPressThresholdTooltip": "Wie lange eine Taste gehalten werden muss, bevor Langdruck-Kurzbefehle ausgelöst werden"
 		},
 		"editor": {
 			"header": "Tastenkombinationen-Editor",
@@ -292,7 +292,7 @@
 			"shortcutWarningBlock": "Standardmäßig sind Tastenkürzel auf den meisten Websites aktiviert.",
 			"shortcutWarningLearn": "Erfahren Sie, wie Sie Tastenkürzel für eine Website umschalten.",
 			"browserShortcuts": "Browser-Kurzbefehle",
-			"browserShortcutsSub": "Kann zur Steuerung von Videos in Hintergrund-Tabs oder sogar bei Verwendung einer anderen App genutzt werden",
+			"browserShortcutsSub": "Kann zur Steuerung von Videos verwendet werden, während eine andere App genutzt wird",
 			"menuShortcuts": "Menü-Kurzbefehle",
 			"menuShortcutsSub": "Diese Tastenkürzel werden angezeigt, wenn du auf einer Seite mit der rechten Maustaste klickst",
 			"toggleModeTooltip": "Globale Tastenkombinationen sind nützlich, wenn du Videos oder Audios steuern möchtest, während du ein anderes Programm verwendest",

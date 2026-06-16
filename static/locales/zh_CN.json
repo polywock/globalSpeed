@@ -232,6 +232,7 @@
 			"header": "选项",
 			"language": "语言",
 			"_languageTooltip": "对中文翻译做出贡献的用户：@liangjiancang",
+			"theme": "主题",
 			"themeLight": "浅色",
 			"themeDark": "深色",
 			"themeSystem": "跟随系统",
@@ -283,8 +284,7 @@
 			"holdToSpeedUp": "按住快进",
 			"holdToSpeedUpTooltip": "按住视频可临时加速播放",
 			"longPressThreshold": "长按时长",
-			"longPressThresholdTooltip": "触发长按快捷键前需按住按键的时长",
-			"theme": "主题"
+			"longPressThresholdTooltip": "触发长按快捷键前需按住按键的时长"
 		},
 		"editor": {
 			"header": "快捷键编辑器",
@@ -294,7 +294,7 @@
 			"shortcutWarningBlock": "默认情况下，大多数网站启用快捷键。",
 			"shortcutWarningLearn": "了解如何切换网站快捷键。",
 			"browserShortcuts": "浏览器快捷键",
-			"browserShortcutsSub": "可用于在后台标签页中控制视频，甚至在使用其他应用时也可控制",
+			"browserShortcutsSub": "可在使用其他应用时控制视频",
 			"menuShortcuts": "菜单快捷键",
 			"menuShortcutsSub": "右键点击页面时会显示这些快捷键",
 			"toggleModeTooltip": "全局热键可以让您在使用其他应用程序时控制视频或音频",

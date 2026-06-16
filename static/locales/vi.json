@@ -230,6 +230,7 @@
 			"header": "Tùy chọn",
 			"language": "Ngôn ngữ",
 			"_languageTooltip": "Những người dùng đã đóng góp cho bản dịch tiếng Việt: @zeref-dragneel",
+			"theme": "Chủ đề",
 			"themeLight": "Sáng",
 			"themeDark": "Tối",
 			"themeSystem": "Hệ thống",
@@ -281,8 +282,7 @@
 			"holdToSpeedUp": "Nhấn và giữ để tua nhanh",
 			"holdToSpeedUpTooltip": "Nhấn và giữ video để tạm thời tăng tốc",
 			"longPressThreshold": "Thời lượng nhấn giữ",
-			"longPressThresholdTooltip": "Thời gian giữ phím trước khi kích hoạt phím tắt nhấn giữ",
-			"theme": "Chủ đề"
+			"longPressThresholdTooltip": "Thời gian giữ phím trước khi kích hoạt phím tắt nhấn giữ"
 		},
 		"editor": {
 			"header": "Chỉnh sửa phím tắt",
@@ -292,7 +292,7 @@
 			"shortcutWarningBlock": "Theo mặc định, phím tắt được kích hoạt trên hầu hết các trang web.",
 			"shortcutWarningLearn": "Tìm hiểu cách bật/tắt phím tắt cho một trang web.",
 			"browserShortcuts": "Phím tắt trình duyệt",
-			"browserShortcutsSub": "Có thể dùng để điều khiển video trong các tab nền hoặc thậm chí khi đang dùng ứng dụng khác",
+			"browserShortcutsSub": "Có thể dùng để điều khiển video khi đang dùng ứng dụng khác",
 			"menuShortcuts": "Phím tắt menu",
 			"menuShortcutsSub": "Các phím tắt này sẽ hiển thị khi bạn nhấp chuột phải vào trang",
 			"toggleModeTooltip": "Các phím tắt chung rất hữu ích khi bạn muốn điều khiển video hoặc âm thanh trong khi sử dụng một chương trình khác",

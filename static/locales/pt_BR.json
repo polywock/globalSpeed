@@ -230,6 +230,7 @@
 		"flags": {
 			"header": "Opções",
 			"language": "Idioma",
+			"theme": "Tema",
 			"themeLight": "Claro",
 			"themeDark": "Escuro",
 			"themeSystem": "Sistema",
@@ -281,8 +282,7 @@
 			"holdToSpeedUp": "Pressione e segure para avançar rapidamente",
 			"holdToSpeedUpTooltip": "Pressione e segure vídeos para acelerar temporariamente",
 			"longPressThreshold": "Duração do toque longo",
-			"longPressThresholdTooltip": "Por quanto tempo manter uma tecla pressionada antes de acionar atalhos de toque longo",
-			"theme": "Tema"
+			"longPressThresholdTooltip": "Por quanto tempo manter uma tecla pressionada antes de acionar atalhos de toque longo"
 		},
 		"editor": {
 			"header": "Editor de Atalhos",
@@ -292,7 +292,7 @@
 			"shortcutWarningBlock": "Por padrão, os atalhos são ativados na maioria dos sites.",
 			"shortcutWarningLearn": "Saiba como ativar ou desativar os atalhos em um site.",
 			"browserShortcuts": "Atalhos do navegador",
-			"browserShortcutsSub": "Pode ser usado para controlar vídeos em abas em segundo plano ou até mesmo enquanto usa outro app",
+			"browserShortcutsSub": "Pode ser usado para controlar vídeos enquanto usa outro app",
 			"menuShortcuts": "Atalhos do menu",
 			"menuShortcutsSub": "Esses atalhos são exibidos ao clicar com o botão direito em uma página",
 			"toggleModeTooltip": "Atalhos globais são úteis quando você deseja controlar vídeo ou áudio enquanto usa outro programa",

@@ -296,7 +296,7 @@
 			"shortcutWarningBlock": "By default, shortcuts are enabled on most websites.",
 			"shortcutWarningLearn": "Learn to toggle shortcuts for a website.",
 			"browserShortcuts": "Browser Shortcuts",
-			"browserShortcutsSub": "Can be used to control videos in background tabs or even while using another app",
+			"browserShortcutsSub": "Can be used to control videos while using another app",
 			"menuShortcuts": "Menu Shortcuts",
 			"menuShortcutsSub": "These shortcuts are shown when you right click on a page",
 			"toggleModeTooltip": "Global shortcuts are useful when you want to control video or audio while using another program",

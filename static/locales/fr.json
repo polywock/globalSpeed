@@ -230,6 +230,7 @@
 			"header": "Options",
 			"language": "Langue",
 			"_languageTooltip": "Utilisateurs ayant contribué aux traductions françaises : @bounis67",
+			"theme": "Thème",
 			"themeLight": "Clair",
 			"themeDark": "Sombre",
 			"themeSystem": "Système",
@@ -281,8 +282,7 @@
 			"holdToSpeedUp": "Appuyez et maintenez pour accélérer",
 			"holdToSpeedUpTooltip": "Appuyez longuement sur une vidéo pour accélérer temporairement",
 			"longPressThreshold": "Durée d'appui long",
-			"longPressThresholdTooltip": "Combien de temps maintenir une touche avant qu'elle ne déclenche les raccourcis d'appui long",
-			"theme": "Thème"
+			"longPressThresholdTooltip": "Combien de temps maintenir une touche avant qu'elle ne déclenche les raccourcis d'appui long"
 		},
 		"editor": {
 			"header": "Éditeur de raccourcis",
@@ -292,7 +292,7 @@
 			"shortcutWarningBlock": "Par défaut, les raccourcis sont activés sur la plupart des sites web.",
 			"shortcutWarningLearn": "Découvrez comment activer ou désactiver les raccourcis pour un site web.",
 			"browserShortcuts": "Raccourcis du navigateur",
-			"browserShortcutsSub": "Peut servir à contrôler des vidéos dans des onglets en arrière-plan ou même en utilisant une autre appli",
+			"browserShortcutsSub": "Peut être utilisé pour contrôler les vidéos en utilisant une autre application",
 			"menuShortcuts": "Raccourcis de menu",
 			"menuShortcutsSub": "Ces raccourcis s’affichent lorsque vous faites un clic droit sur une page",
 			"toggleModeTooltip": "Les raccourcis globaux sont utiles lorsque vous souhaitez contrôler la vidéo ou l'audio tout en utilisant un autre programme",

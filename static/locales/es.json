@@ -229,6 +229,7 @@
 		"flags": {
 			"header": "Opciones",
 			"language": "Idioma",
+			"theme": "Tema",
 			"themeLight": "Claro",
 			"themeDark": "Oscuro",
 			"themeSystem": "Sistema",
@@ -280,8 +281,7 @@
 			"holdToSpeedUp": "Mantén presionado para adelantar",
 			"holdToSpeedUpTooltip": "Mantén presionado el video para acelerar temporalmente",
 			"longPressThreshold": "Duración de pulsación larga",
-			"longPressThresholdTooltip": "Cuánto tiempo mantener una tecla pulsada antes de que active los atajos de pulsación larga",
-			"theme": "Tema"
+			"longPressThresholdTooltip": "Cuánto tiempo mantener una tecla pulsada antes de que active los atajos de pulsación larga"
 		},
 		"editor": {
 			"header": "Editor de atajos",
@@ -291,7 +291,7 @@
 			"shortcutWarningBlock": "De forma predeterminada, los atajos están activados en la mayoría de los sitios web.",
 			"shortcutWarningLearn": "Aprende a activar o desactivar los atajos para un sitio web.",
 			"browserShortcuts": "Atajos del navegador",
-			"browserShortcutsSub": "Se puede usar para controlar videos en pestañas en segundo plano o incluso mientras usas otra app",
+			"browserShortcutsSub": "Se puede usar para controlar videos mientras se usa otra app",
 			"menuShortcuts": "Atajos del menú",
 			"menuShortcutsSub": "Estos atajos se muestran al hacer clic derecho en una página",
 			"toggleModeTooltip": "Los atajos globales son útiles cuando quieres controlar video o audio mientras usas otro programa",
