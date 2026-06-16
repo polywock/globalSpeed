@@ -731,7 +731,7 @@ export function getDefaultMenuKeybinds(): Keybind[] {
 	return kbs
 }
 
-export const availableCommandNames = Object.entries(commandInfos)
+export const availableCommandNames: string[] = Object.entries(commandInfos)
 	.filter((v) => !v[1].requiresTabCapture || (chrome.tabCapture && chrome.offscreen))
 	.filter((v) => !v[1].requiresPiPApi || !isFirefox())
 	.map((v) => v[0])

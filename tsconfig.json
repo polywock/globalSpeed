@@ -2,6 +2,7 @@
 	"compilerOptions": {
 		"target": "es2022",
 		"useDefineForClassFields": true,
+		"strict": false,
 		"module": "ESNext",
 		"lib": ["DOM", "DOM.iterable", "ESNext", "WebWorker"],
 		"types": ["@types/chrome", "@types/react", "@types/react-dom", "@types/audioworklet"],
@@ -14,7 +15,6 @@
 		"allowJs": true,
 		"sourceMap": false,
 		"jsx": "react-jsx",
-		"baseUrl": "./",
 		"paths": {
 			"@/*": ["./src/*"],
 			"notFirefox/*": ["./src/*"],
