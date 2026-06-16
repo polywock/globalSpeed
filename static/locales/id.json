@@ -229,7 +229,6 @@
 		"flags": {
 			"header": "Opsi",
 			"language": "Bahasa",
-			"darkTheme": "Tema",
 			"themeLight": "Terang",
 			"themeDark": "Gelap",
 			"themeSystem": "Sistem",
@@ -281,7 +280,8 @@
 			"holdToSpeedUp": "Tekan dan tahan untuk mempercepat",
 			"holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara",
 			"longPressThreshold": "Durasi tekan lama",
-			"longPressThresholdTooltip": "Berapa lama tombol ditekan sebelum memicu pintasan tekan lama"
+			"longPressThresholdTooltip": "Berapa lama tombol ditekan sebelum memicu pintasan tekan lama",
+			"theme": "Tema"
 		},
 		"editor": {
 			"header": "Editor Pintasan",

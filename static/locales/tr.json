@@ -231,7 +231,6 @@
 			"header": "Seçenekler",
 			"language": "Dil",
 			"_languageTooltip": "Türkçe çevirilere katkıda bulunan kullanıcılar: @FoofAPP",
-			"darkTheme": "Tema",
 			"themeLight": "Açık",
 			"themeDark": "Koyu",
 			"themeSystem": "Sistem",
@@ -283,7 +282,8 @@
 			"holdToSpeedUp": "Hızlandırmak için basılı tutun",
 			"holdToSpeedUpTooltip": "Videoları geçici olarak hızlandırmak için basılı tutun",
 			"longPressThreshold": "Uzun basma süresi",
-			"longPressThresholdTooltip": "Bir tuşu uzun basma kısayollarını tetiklemeden önce ne kadar süre basılı tutmak gerektiği"
+			"longPressThresholdTooltip": "Bir tuşu uzun basma kısayollarını tetiklemeden önce ne kadar süre basılı tutmak gerektiği",
+			"theme": "Tema"
 		},
 		"editor": {
 			"header": "Kısayol Düzenleyici",

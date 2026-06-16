@@ -17,15 +17,9 @@ export function useThemeSync() {
 
 		document.documentElement.style.setProperty("--font-size-scalar", `${view?.fontSize ?? (isMobile() ? 1.3 : 1)}`)
 
-		if (darkTheme === "system") {
+		if (darkTheme == null) {
 			const mql = window.matchMedia("(prefers-color-scheme: dark)")
 			applyDarkTheme(mql.matches)
-
-			const handler = (e: MediaQueryListEvent) => {
-				applyDarkTheme(e.matches)
-			}
-			mql.addEventListener("change", handler)
-			return () => mql.removeEventListener("change", handler)
 		} else {
 			applyDarkTheme(!!darkTheme)
 		}

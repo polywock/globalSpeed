@@ -178,7 +178,6 @@ export async function handleFreshState() {
 	await pushView({
 		override: {
 			freshState: null,
-			darkTheme: "system",
 		},
 	})
 }

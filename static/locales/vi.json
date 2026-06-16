@@ -230,7 +230,6 @@
 			"header": "Tùy chọn",
 			"language": "Ngôn ngữ",
 			"_languageTooltip": "Những người dùng đã đóng góp cho bản dịch tiếng Việt: @zeref-dragneel",
-			"darkTheme": "Chủ đề",
 			"themeLight": "Sáng",
 			"themeDark": "Tối",
 			"themeSystem": "Hệ thống",
@@ -282,7 +281,8 @@
 			"holdToSpeedUp": "Nhấn và giữ để tua nhanh",
 			"holdToSpeedUpTooltip": "Nhấn và giữ video để tạm thời tăng tốc",
 			"longPressThreshold": "Thời lượng nhấn giữ",
-			"longPressThresholdTooltip": "Thời gian giữ phím trước khi kích hoạt phím tắt nhấn giữ"
+			"longPressThresholdTooltip": "Thời gian giữ phím trước khi kích hoạt phím tắt nhấn giữ",
+			"theme": "Chủ đề"
 		},
 		"editor": {
 			"header": "Chỉnh sửa phím tắt",

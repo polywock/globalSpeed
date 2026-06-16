@@ -231,7 +231,6 @@
 			"header": "الخيارات",
 			"language": "اللغة",
 			"_languageTooltip": "المستخدمون الذين ساهموا في الترجمات العربية: @LotfiBoukhemerra",
-			"darkTheme": "المظهر",
 			"themeLight": "فاتح",
 			"themeDark": "داكن",
 			"themeSystem": "النظام",
@@ -283,7 +282,8 @@
 			"holdToSpeedUp": "اضغط مع الاستمرار للتقديم السريع",
 			"holdToSpeedUpTooltip": "اضغط مطولاً على الفيديو لتسريعه مؤقتًا",
 			"longPressThreshold": "مدة الضغط المطول",
-			"longPressThresholdTooltip": "مدة الضغط على المفتاح قبل تفعيل اختصارات الضغط المطول"
+			"longPressThresholdTooltip": "مدة الضغط على المفتاح قبل تفعيل اختصارات الضغط المطول",
+			"theme": "المظهر"
 		},
 		"editor": {
 			"header": "محرر الاختصارات",

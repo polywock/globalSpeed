@@ -229,7 +229,6 @@
 		"flags": {
 			"header": "Opciones",
 			"language": "Idioma",
-			"darkTheme": "Tema",
 			"themeLight": "Claro",
 			"themeDark": "Oscuro",
 			"themeSystem": "Sistema",
@@ -281,7 +280,8 @@
 			"holdToSpeedUp": "Mantén presionado para adelantar",
 			"holdToSpeedUpTooltip": "Mantén presionado el video para acelerar temporalmente",
 			"longPressThreshold": "Duración de pulsación larga",
-			"longPressThresholdTooltip": "Cuánto tiempo mantener una tecla pulsada antes de que active los atajos de pulsación larga"
+			"longPressThresholdTooltip": "Cuánto tiempo mantener una tecla pulsada antes de que active los atajos de pulsación larga",
+			"theme": "Tema"
 		},
 		"editor": {
 			"header": "Editor de atajos",

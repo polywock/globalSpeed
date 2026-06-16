@@ -230,7 +230,6 @@
 			"header": "ตัวเลือก",
 			"language": "ภาษา",
 			"_languageTooltip": "",
-			"darkTheme": "ธีม",
 			"themeLight": "สว่าง",
 			"themeDark": "มืด",
 			"themeSystem": "ระบบ",
@@ -282,7 +281,8 @@
 			"holdToSpeedUp": "กดค้างเพื่อกรอไปข้างหน้า",
 			"holdToSpeedUpTooltip": "กดค้างที่วิดีโอเพื่อเพิ่มความเร็วชั่วคราว",
 			"longPressThreshold": "ระยะเวลากดค้าง",
-			"longPressThresholdTooltip": "ระยะเวลาที่ต้องกดปุ่มค้างไว้ก่อนที่จะเรียกใช้ทางลัดแบบกดค้าง"
+			"longPressThresholdTooltip": "ระยะเวลาที่ต้องกดปุ่มค้างไว้ก่อนที่จะเรียกใช้ทางลัดแบบกดค้าง",
+			"theme": "ธีม"
 		},
 		"editor": {
 			"header": "ตัวแก้ไขคีย์ลัด",

@@ -230,7 +230,6 @@
 			"header": "Pilihan",
 			"language": "Bahasa",
 			"_languageTooltip": "",
-			"darkTheme": "Tema",
 			"themeLight": "Cerah",
 			"themeDark": "Gelap",
 			"themeSystem": "Sistem",
@@ -282,7 +281,8 @@
 			"holdToSpeedUp": "Tekan dan tahan untuk percepat",
 			"holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara",
 			"longPressThreshold": "Tempoh tekan lama",
-			"longPressThresholdTooltip": "Berapa lama menahan kekunci sebelum ia mencetuskan pintasan tekan lama"
+			"longPressThresholdTooltip": "Berapa lama menahan kekunci sebelum ia mencetuskan pintasan tekan lama",
+			"theme": "Tema"
 		},
 		"editor": {
 			"header": "Penyunting Pintasan",

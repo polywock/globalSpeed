@@ -232,7 +232,6 @@
 			"header": "选项",
 			"language": "语言",
 			"_languageTooltip": "对中文翻译做出贡献的用户：@liangjiancang",
-			"darkTheme": "主题",
 			"themeLight": "浅色",
 			"themeDark": "深色",
 			"themeSystem": "跟随系统",
@@ -284,7 +283,8 @@
 			"holdToSpeedUp": "按住快进",
 			"holdToSpeedUpTooltip": "按住视频可临时加速播放",
 			"longPressThreshold": "长按时长",
-			"longPressThresholdTooltip": "触发长按快捷键前需按住按键的时长"
+			"longPressThresholdTooltip": "触发长按快捷键前需按住按键的时长",
+			"theme": "主题"
 		},
 		"editor": {
 			"header": "快捷键编辑器",

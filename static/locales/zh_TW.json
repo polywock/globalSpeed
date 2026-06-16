@@ -231,7 +231,6 @@
 			"header": "選項",
 			"language": "語言",
 			"_languageTooltip": "對繁體中文翻譯做出貢獻的使用者：@PeterDaveHello @nathan60107",
-			"darkTheme": "主題",
 			"themeLight": "淺色",
 			"themeDark": "深色",
 			"themeSystem": "跟隨系統",
@@ -283,7 +282,8 @@
 			"holdToSpeedUp": "長按以快轉",
 			"holdToSpeedUpTooltip": "按住影片可暫時加速播放",
 			"longPressThreshold": "長按持續時間",
-			"longPressThresholdTooltip": "按住按鍵多久後才會觸發長按快捷鍵"
+			"longPressThresholdTooltip": "按住按鍵多久後才會觸發長按快捷鍵",
+			"theme": "主題"
 		},
 		"editor": {
 			"header": "快捷鍵編輯器",

@@ -230,7 +230,6 @@
 		"flags": {
 			"header": "Opções",
 			"language": "Idioma",
-			"darkTheme": "Tema",
 			"themeLight": "Claro",
 			"themeDark": "Escuro",
 			"themeSystem": "Sistema",
@@ -282,7 +281,8 @@
 			"holdToSpeedUp": "Pressione e segure para avançar rapidamente",
 			"holdToSpeedUpTooltip": "Pressione e segure vídeos para acelerar temporariamente",
 			"longPressThreshold": "Duração do toque longo",
-			"longPressThresholdTooltip": "Por quanto tempo manter uma tecla pressionada antes de acionar atalhos de toque longo"
+			"longPressThresholdTooltip": "Por quanto tempo manter uma tecla pressionada antes de acionar atalhos de toque longo",
+			"theme": "Tema"
 		},
 		"editor": {
 			"header": "Editor de Atalhos",

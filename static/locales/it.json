@@ -230,7 +230,6 @@
 			"header": "Opzioni",
 			"language": "Lingua",
 			"_languageTooltip": "Utenti che hanno contribuito alle traduzioni italiane: @albertopasqualetto",
-			"darkTheme": "Tema",
 			"themeLight": "Chiaro",
 			"themeDark": "Scuro",
 			"themeSystem": "Sistema",
@@ -282,7 +281,8 @@
 			"holdToSpeedUp": "Tieni premuto per avanzare velocemente",
 			"holdToSpeedUpTooltip": "Tieni premuto sui video per accelerare temporaneamente",
 			"longPressThreshold": "Durata pressione prolungata",
-			"longPressThresholdTooltip": "Quanto a lungo tenere premuto un tasto prima che attivi le scorciatoie con pressione prolungata"
+			"longPressThresholdTooltip": "Quanto a lungo tenere premuto un tasto prima che attivi le scorciatoie con pressione prolungata",
+			"theme": "Tema"
 		},
 		"editor": {
 			"header": "Modifica Scorciatoie",

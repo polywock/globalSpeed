@@ -230,7 +230,6 @@
 			"header": "Options",
 			"language": "Langue",
 			"_languageTooltip": "Utilisateurs ayant contribué aux traductions françaises : @bounis67",
-			"darkTheme": "Thème",
 			"themeLight": "Clair",
 			"themeDark": "Sombre",
 			"themeSystem": "Système",
@@ -282,7 +281,8 @@
 			"holdToSpeedUp": "Appuyez et maintenez pour accélérer",
 			"holdToSpeedUpTooltip": "Appuyez longuement sur une vidéo pour accélérer temporairement",
 			"longPressThreshold": "Durée d'appui long",
-			"longPressThresholdTooltip": "Combien de temps maintenir une touche avant qu'elle ne déclenche les raccourcis d'appui long"
+			"longPressThresholdTooltip": "Combien de temps maintenir une touche avant qu'elle ne déclenche les raccourcis d'appui long",
+			"theme": "Thème"
 		},
 		"editor": {
 			"header": "Éditeur de raccourcis",

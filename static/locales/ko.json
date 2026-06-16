@@ -231,7 +231,6 @@
 			"header": "옵션",
 			"language": "언어",
 			"_languageTooltip": "한국어 번역에 기여한 사용자: @dev-diver",
-			"darkTheme": "테마",
 			"themeLight": "라이트",
 			"themeDark": "다크",
 			"themeSystem": "시스템",
@@ -283,7 +282,8 @@
 			"holdToSpeedUp": "길게 눌러 빨리 감기",
 			"holdToSpeedUpTooltip": "영상을 길게 누르면 일시적으로 속도가 빨라집니다",
 			"longPressThreshold": "길게 누르기 지속 시간",
-			"longPressThresholdTooltip": "길게 누르기 단축키가 실행되기 전 키를 누르고 있을 시간"
+			"longPressThresholdTooltip": "길게 누르기 단축키가 실행되기 전 키를 누르고 있을 시간",
+			"theme": "테마"
 		},
 		"editor": {
 			"header": "단축키 편집기",

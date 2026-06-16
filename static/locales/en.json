@@ -234,7 +234,7 @@
 			"header": "Options",
 			"language": "Language",
 			"_languageTooltip": "",
-			"darkTheme": "Theme",
+			"theme": "Theme",
 			"themeLight": "Light",
 			"themeDark": "Dark",
 			"themeSystem": "System",

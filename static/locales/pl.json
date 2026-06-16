@@ -230,7 +230,6 @@
 			"header": "Opcje",
 			"language": "Język",
 			"_languageTooltip": "",
-			"darkTheme": "Motyw",
 			"themeLight": "Jasny",
 			"themeDark": "Ciemny",
 			"themeSystem": "Systemowy",
@@ -282,7 +281,8 @@
 			"holdToSpeedUp": "Naciśnij i przytrzymaj, aby przyspieszyć",
 			"holdToSpeedUpTooltip": "Naciśnij i przytrzymaj wideo, aby tymczasowo przyspieszyć",
 			"longPressThreshold": "Czas długiego naciśnięcia",
-			"longPressThresholdTooltip": "Jak długo przytrzymać klawisz, zanim uruchomi skróty długiego naciśnięcia"
+			"longPressThresholdTooltip": "Jak długo przytrzymać klawisz, zanim uruchomi skróty długiego naciśnięcia",
+			"theme": "Motyw"
 		},
 		"editor": {
 			"header": "Edytor skrótów",
