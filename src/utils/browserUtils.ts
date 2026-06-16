@@ -48,6 +48,29 @@ export async function checkContentScript(tabId: number, frameId: number) {
 	} catch (err) {}
 }
 
+// Sends to a specific frame, optimistically (no upfront liveness ping). If delivery fails because the
+// frame id is stale (e.g. iframe recreated), drop its cached scope and retry on the top frame. Frozen
+// tabs are left untouched — their media is real and recovers on unfreeze, so we must not evict them.
+export async function sendToFrame(tabId: number, frameId: number, payload: Messages) {
+	try {
+		await chrome.tabs.sendMessage(tabId, payload, { frameId })
+		return
+	} catch {}
+
+	let tab: chrome.tabs.Tab
+	try {
+		tab = await chrome.tabs.get(tabId)
+	} catch {}
+	if (tab?.frozen) return
+
+	chrome.storage.session.remove(`m:scope:${tabId}:${frameId}`)
+	if (tab && !tab.discarded && frameId !== 0) {
+		try {
+			await chrome.tabs.sendMessage(tabId, payload, { frameId: 0 })
+		} catch {}
+	}
+}
+
 let cachedCanUserScriptExecute: { result: boolean }
 export function canPotentiallyUserScriptExecute() {
 	if (cachedCanUserScriptExecute) return cachedCanUserScriptExecute.result

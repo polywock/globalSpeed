@@ -17,6 +17,7 @@ import {
 	type URLCondition,
 	type URLConditionPart,
 } from "../types"
+import { sendToFrame } from "./browserUtils"
 import { clamp, isFirefox, round } from "./helper"
 import { fetchView, pushView } from "./state"
 
@@ -87,7 +88,12 @@ export function sendMediaEvent(event: MediaEvent, key: string, tabId: number, fr
 		// realizeMediaEvent(key, event)
 	} else {
 	}
-	chrome.tabs.sendMessage(tabId, { type: "APPLY_MEDIA_EVENT", event, key }, frameId == null ? undefined : { frameId })
+	const msg = { type: "APPLY_MEDIA_EVENT", event, key } as Messages
+	if (frameId == null) {
+		chrome.tabs.sendMessage(tabId, msg)
+		return
+	}
+	void sendToFrame(tabId, frameId, msg)
 }
 
 export function sendMessageToConfigSync(msg: any, tabId: number, frameId?: number) {
