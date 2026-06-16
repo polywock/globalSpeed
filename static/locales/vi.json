@@ -277,7 +277,9 @@
 			"qrCodeTop": "Quét để sử dụng trên...",
 			"qrCodeBottom": "Edge cho di động",
 			"holdToSpeedUp": "Nhấn và giữ để tua nhanh",
-			"holdToSpeedUpTooltip": "Nhấn và giữ video để tạm thời tăng tốc"
+			"holdToSpeedUpTooltip": "Nhấn và giữ video để tạm thời tăng tốc",
+			"longPressThreshold": "Thời lượng nhấn giữ",
+			"longPressThresholdTooltip": "Thời gian giữ phím trước khi kích hoạt phím tắt nhấn giữ"
 		},
 		"editor": {
 			"header": "Chỉnh sửa phím tắt",
@@ -325,6 +327,8 @@
 			},
 			"pressAndHold": "Nhấn và giữ",
 			"pressAndHoldTooltip": "Nếu được bật, phím phải được giữ trong khi điều chỉnh giá trị tương tác",
+			"longPress": "Nhấn giữ",
+			"longPressTooltip": "Chỉ kích hoạt khi giữ phím lâu hơn",
 			"keyPickerInput": "Nhấp để thay đổi",
 			"keyPickerInputTooltip": "Nhấn phím tắt mới"
 		},

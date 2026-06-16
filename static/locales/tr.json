@@ -278,7 +278,9 @@
 			"qrCodeTop": "Kullanmak için tarayın...",
 			"qrCodeBottom": "Mobil için Edge",
 			"holdToSpeedUp": "Hızlandırmak için basılı tutun",
-			"holdToSpeedUpTooltip": "Videoları geçici olarak hızlandırmak için basılı tutun"
+			"holdToSpeedUpTooltip": "Videoları geçici olarak hızlandırmak için basılı tutun",
+			"longPressThreshold": "Uzun basma süresi",
+			"longPressThresholdTooltip": "Bir tuşu uzun basma kısayollarını tetiklemeden önce ne kadar süre basılı tutmak gerektiği"
 		},
 		"editor": {
 			"header": "Kısayol Düzenleyici",
@@ -326,6 +328,8 @@
 			},
 			"pressAndHold": "Basılı tut",
 			"pressAndHoldTooltip": "Etkinleştirilirse, değeri etkileşimli olarak ayarlarken tuş basılı tutulmalıdır",
+			"longPress": "Uzun basma",
+			"longPressTooltip": "Yalnızca tuş daha uzun süre basılı tutulduğunda tetikle",
 			"keyPickerInput": "Değiştirmek için tıkla",
 			"keyPickerInputTooltip": "Yeni kısayola bas"
 		},

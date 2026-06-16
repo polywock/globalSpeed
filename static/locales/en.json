@@ -281,7 +281,9 @@
 			"qrCodeTop": "Scan to use on...",
 			"qrCodeBottom": "Edge for Mobile",
 			"holdToSpeedUp": "Press and hold to fast forward",
-			"holdToSpeedUpTooltip": "Press and hold videos to temporarily speed up"
+			"holdToSpeedUpTooltip": "Press and hold videos to temporarily speed up",
+			"longPressThreshold": "Long press duration",
+			"longPressThresholdTooltip": "How long to hold a key before it triggers long press shortcuts"
 		},
 		"editor": {
 			"header": "Shortcut Editor",
@@ -329,6 +331,8 @@
 			},
 			"pressAndHold": "Press and hold",
 			"pressAndHoldTooltip": "If enabled, the key must be held down while interactively adjusting the value",
+			"longPress": "Long press",
+			"longPressTooltip": "Only trigger when the key is held down for a longer duration",
 			"keyPickerInput": "Click to change",
 			"keyPickerInputTooltip": "Press new shortcut"
 		},

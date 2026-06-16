@@ -1,23 +1,39 @@
+export class CallbackSet<E> {
+	private cbs: Set<(e: E) => void> = new Set()
+	add = (cb: (e: E) => void, signal?: AbortSignal) => {
+		if (signal?.aborted) return
+		this.cbs.add(cb)
+		signal?.addEventListener("abort", () => this.delete(cb), { once: true })
+	}
+	delete = (cb: (e: E) => void) => {
+		this.cbs.delete(cb)
+	}
+	forEach = (fn: (cb: (e: E) => void) => void) => {
+		this.cbs.forEach(fn)
+	}
+}
+
 export class EventsListener {
-	keyDownCbs: Set<(e: KeyboardEvent) => void> = new Set()
-	keyUpCbs: Set<(e: KeyboardEvent) => void> = new Set()
+	keyDownCbs = new CallbackSet<KeyboardEvent>()
+	keyUpCbs = new CallbackSet<KeyboardEvent>()
 
-	pointerDownCbs: Set<(e: PointerEvent) => void> = new Set()
-	pointerUpCbs: Set<(e: PointerEvent) => void> = new Set()
-	pointerMoveCbs: Set<(e: PointerEvent) => void> = new Set()
+	pointerDownCbs = new CallbackSet<PointerEvent>()
+	pointerUpCbs = new CallbackSet<PointerEvent>()
+	pointerMoveCbs = new CallbackSet<PointerEvent>()
 
-	mouseDownCbs: Set<(e: MouseEvent) => void> = new Set()
-	mouseUpCbs: Set<(e: MouseEvent) => void> = new Set()
-	mouseMoveCbs: Set<(e: MouseEvent) => void> = new Set()
-	clickCbs: Set<(e: MouseEvent) => void> = new Set()
-	dblClickCbs: Set<(e: MouseEvent) => void> = new Set()
+	mouseDownCbs = new CallbackSet<MouseEvent>()
+	mouseUpCbs = new CallbackSet<MouseEvent>()
+	mouseMoveCbs = new CallbackSet<MouseEvent>()
+	clickCbs = new CallbackSet<MouseEvent>()
+	dblClickCbs = new CallbackSet<MouseEvent>()
 
-	touchStartCbs: Set<(e: TouchEvent) => void> = new Set()
-	touchEndCbs: Set<(e: TouchEvent) => void> = new Set()
-	touchMoveCbs: Set<(e: TouchEvent) => void> = new Set()
-	contextMenuCbs: Set<(e: MouseEvent) => void> = new Set()
-	fsCbs: Set<(e: Event) => void> = new Set()
-	visibilityCbs: Set<(e: Event) => void> = new Set()
+	touchStartCbs = new CallbackSet<TouchEvent>()
+	touchEndCbs = new CallbackSet<TouchEvent>()
+	touchMoveCbs = new CallbackSet<TouchEvent>()
+	contextMenuCbs = new CallbackSet<MouseEvent>()
+	fsCbs = new CallbackSet<Event>()
+	visibilityCbs = new CallbackSet<Event>()
+	blurCbs = new CallbackSet<Event>()
 
 	constructor() {
 		this.update()
@@ -44,6 +60,9 @@ export class EventsListener {
 		window.addEventListener("fullscreenchange", this.handleFullscreen, true)
 		window.addEventListener("webkitfullscreenchange", this.handleFullscreen, true)
 		window.addEventListener("visibilitychange", this.handleVisibilityChange, true)
+
+		// Non capturing
+		window.addEventListener("blur", this.handleBlur)
 
 		// Need for brave.
 		window.addEventListener("webkitvisibilitychange", this.handleVisibilityChange, true)
@@ -126,6 +145,11 @@ export class EventsListener {
 	}
 	handleVisibilityChange = (e: Event) => {
 		this.visibilityCbs.forEach((cb) => {
+			cb(e)
+		})
+	}
+	handleBlur = (e: Event) => {
+		this.blurCbs.forEach((cb) => {
 			cb(e)
 		})
 	}

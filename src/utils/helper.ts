@@ -1,3 +1,5 @@
+import { produce as produceImmer } from "immer"
+
 type AnyDict = { [key: string]: any }
 
 export function clamp(min: number, max: number, value: number) {
@@ -522,6 +524,7 @@ export function walkGetKey(obj: any, keys: string[]): any {
 }
 
 export function produce<T>(base: T, recipe: (draft: T) => void): T {
+	return produceImmer(base, recipe)
 	const clone = structuredClone(base)
 	recipe(clone)
 	return clone

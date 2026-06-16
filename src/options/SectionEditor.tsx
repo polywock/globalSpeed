@@ -121,6 +121,7 @@ function KeybindSection(props: {
 						}}
 					>
 						<KeybindControl
+							listType={listKey}
 							virtualInput={view.virtualInput}
 							isLast={i === keybinds.length - 1}
 							listRef={listRef}

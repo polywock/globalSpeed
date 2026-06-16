@@ -277,7 +277,9 @@
 			"qrCodeTop": "Imbas untuk digunakan di...",
 			"qrCodeBottom": "Edge untuk peranti mudah alih",
 			"holdToSpeedUp": "Tekan dan tahan untuk percepat",
-			"holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara"
+			"holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara",
+			"longPressThreshold": "Tempoh tekan lama",
+			"longPressThresholdTooltip": "Berapa lama menahan kekunci sebelum ia mencetuskan pintasan tekan lama"
 		},
 		"editor": {
 			"header": "Penyunting Pintasan",
@@ -325,6 +327,8 @@
 			},
 			"pressAndHold": "Tekan dan tahan",
 			"pressAndHoldTooltip": "Jika diaktifkan, kekunci mesti ditekan dan ditahan semasa melaraskan nilai secara interaktif",
+			"longPress": "Tekan lama",
+			"longPressTooltip": "Hanya cetus apabila kekunci ditahan lebih lama",
 			"keyPickerInput": "Klik untuk tukar",
 			"keyPickerInputTooltip": "Tekan pintasan baharu"
 		},
