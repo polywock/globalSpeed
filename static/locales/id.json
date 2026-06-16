@@ -229,7 +229,10 @@
 		"flags": {
 			"header": "Opsi",
 			"language": "Bahasa",
-			"darkTheme": "Tema gelap",
+			"darkTheme": "Tema",
+			"themeLight": "Terang",
+			"themeDark": "Gelap",
+			"themeSystem": "Sistem",
 			"showBadge": "Tampilkan badge",
 			"showBadgeTooltip": "Badge adalah teks pada ikon ekstensi",
 			"showMediaView": "Tampilkan daftar media",

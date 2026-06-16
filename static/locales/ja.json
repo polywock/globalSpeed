@@ -230,7 +230,10 @@
 		"flags": {
 			"header": "オプション",
 			"language": "言語",
-			"darkTheme": "ダークテーマ",
+			"darkTheme": "テーマ",
+			"themeLight": "ライト",
+			"themeDark": "ダーク",
+			"themeSystem": "システム",
 			"showBadge": "バッジを表示",
 			"showBadgeTooltip": "バッジは拡張機能のアイコン上のテキストです",
 			"showMediaView": "メディアリストを表示",

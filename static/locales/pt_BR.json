@@ -230,7 +230,10 @@
 		"flags": {
 			"header": "Opções",
 			"language": "Idioma",
-			"darkTheme": "Tema escuro",
+			"darkTheme": "Tema",
+			"themeLight": "Claro",
+			"themeDark": "Escuro",
+			"themeSystem": "Sistema",
 			"showBadge": "Mostrar distintivo",
 			"showBadgeTooltip": "O distintivo é o texto no ícone da extensão",
 			"showMediaView": "Mostrar lista de mídia",
