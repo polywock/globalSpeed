@@ -400,7 +400,7 @@ export async function restoreConfig(config: State, clearBase = true) {
 	// Base clear all session and global values.
 	const newItems = clearBase
 		? Object.fromEntries(
-				(await getKeysByPrefix(PREFIX_SETS.G)).map((v) => {
+				(await getKeysByPrefix(PREFIX_SETS.G)).map((v): [string, any] => {
 					return [v, null]
 				}),
 			)

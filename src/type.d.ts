@@ -23,4 +23,6 @@ declare module "*.css?raw" {
 	export default content
 }
 
+declare module "*.css" {}
+
 type RecordAny = Record<string, any>

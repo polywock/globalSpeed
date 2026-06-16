@@ -17,7 +17,7 @@ export function compareFrame(a: TabInfo, b: TabInfo) {
 
 export function tabToTabInfo(tab: chrome.tabs.Tab): TabInfo {
 	if (!tab) return
-	return { tabId: tab.id, frameId: 0, windowId: tab.windowId }
+	return { tabId: tab.id, frameId: 0, windowId: tab.windowId, url: tab.url }
 }
 
 export function requestTabInfo(): Promise<TabInfo> {

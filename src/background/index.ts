@@ -110,8 +110,10 @@ async function processNewTab(tab: chrome.tabs.Tab, view?: StateView, ignorePrevi
 !isFirefox() &&
 	!isMobile() &&
 	chrome.commands?.onCommand.addListener(async (command: string, tab: chrome.tabs.Tab) => {
-		const isGlobal = !tab
-		const view = await fetchView({ enabled: true, superDisable: true, browserKeybinds: true, keybindsUrlCondition: true, latestViaShortcut: true })
+		const view = await fetchView(
+			{ enabled: true, superDisable: true, browserKeybinds: true, keybindsUrlCondition: true, latestViaShortcut: true },
+			tab?.id,
+		)
 		if (view.superDisable) return
 
 		let keybinds: Keybind[] = view.browserKeybinds || []
@@ -123,7 +125,6 @@ async function processNewTab(tab: chrome.tabs.Tab, view?: StateView, ignorePrevi
 		let matches = findMatchingBrowserKeybinds(keybinds, command)
 
 		if (!matches.length) return
-
 		let tabInfo = tab ? tabToTabInfo(tab) : await getLatestActiveTabInfo()
 
 		const url = tabInfo?.url || ""
