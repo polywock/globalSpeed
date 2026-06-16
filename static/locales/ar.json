@@ -281,7 +281,9 @@
 			"qrCodeTop": "امسح للاستخدام على...",
 			"qrCodeBottom": "إيدج للجوال",
 			"holdToSpeedUp": "اضغط مع الاستمرار للتقديم السريع",
-			"holdToSpeedUpTooltip": "اضغط مطولاً على الفيديو لتسريعه مؤقتًا"
+			"holdToSpeedUpTooltip": "اضغط مطولاً على الفيديو لتسريعه مؤقتًا",
+			"longPressThreshold": "مدة الضغط المطول",
+			"longPressThresholdTooltip": "مدة الضغط على المفتاح قبل تفعيل اختصارات الضغط المطول"
 		},
 		"editor": {
 			"header": "محرر الاختصارات",
@@ -329,6 +331,8 @@
 			},
 			"pressAndHold": "الضغط والاستمرار",
 			"pressAndHoldTooltip": "إذا تم تمكينه، يجب الضغط على المفتاح أثناء ضبط القيمة بشكل تفاعلي",
+			"longPress": "الضغط المطول",
+			"longPressTooltip": "يُفعَّل فقط عند الضغط باستمرار على المفتاح لمدة أطول",
 			"keyPickerInput": "انقر للتغيير",
 			"keyPickerInputTooltip": "اضغط الاختصار الجديد"
 		},

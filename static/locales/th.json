@@ -280,7 +280,9 @@
 			"qrCodeTop": "สแกนเพื่อใช้งานบน...",
 			"qrCodeBottom": "Edge สำหรับมือถือ",
 			"holdToSpeedUp": "กดค้างเพื่อกรอไปข้างหน้า",
-			"holdToSpeedUpTooltip": "กดค้างที่วิดีโอเพื่อเพิ่มความเร็วชั่วคราว"
+			"holdToSpeedUpTooltip": "กดค้างที่วิดีโอเพื่อเพิ่มความเร็วชั่วคราว",
+			"longPressThreshold": "ระยะเวลากดค้าง",
+			"longPressThresholdTooltip": "ระยะเวลาที่ต้องกดปุ่มค้างไว้ก่อนที่จะเรียกใช้ทางลัดแบบกดค้าง"
 		},
 		"editor": {
 			"header": "ตัวแก้ไขคีย์ลัด",
@@ -328,6 +330,8 @@
 			},
 			"pressAndHold": "กดค้าง",
 			"pressAndHoldTooltip": "หากเปิดใช้งาน ต้องกดแป้นค้างขณะปรับค่าแบบโต้ตอบ",
+			"longPress": "กดค้าง",
+			"longPressTooltip": "ทริกเกอร์เมื่อกดปุ่มค้างไว้นานขึ้นเท่านั้น",
 			"keyPickerInput": "คลิกเพื่อเปลี่ยน",
 			"keyPickerInputTooltip": "กดคีย์ลัดใหม่"
 		},

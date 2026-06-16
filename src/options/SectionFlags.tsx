@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { GoX } from "react-icons/go"
 import { TfiMoreAlt } from "react-icons/tfi"
 import { GearIcon } from "@/comps/GearIcon"
@@ -9,7 +9,7 @@ import { SliderMicro } from "@/comps/SliderMicro"
 import { Toggle } from "@/comps/Toggle"
 import { Tooltip } from "@/comps/Tooltip"
 import { getDefaultURLCondition } from "@/defaults"
-import { getDefaultSpeedSlider } from "@/defaults/constants"
+import { DEFAULT_LONG_PRESS_THRESHOLD, getDefaultSpeedSlider } from "@/defaults/constants"
 import { Context, CONTEXT_KEYS, InitialContext, StateView } from "@/types"
 import { clamp, isMobile, produce } from "@/utils/helper"
 import { fetchView } from "@/utils/state"
@@ -51,8 +51,12 @@ export function SectionFlags(props: {}) {
 		virtualInput: true,
 		circleWidget: true,
 		holdToSpeed: true,
+		longPressThreshold: true,
+		pageKeybinds: true,
 	})
 	const [viewAlt] = useStateView({ indicatorInit: true, hideIndicator: true })
+	const hasLongPressKey = useMemo(() => (view?.pageKeybinds || []).some((kb) => kb.longPress), [view?.pageKeybinds])
+
 	if (!view || !viewAlt) return <div></div>
 
 	const defaultSlider = getDefaultSpeedSlider()
@@ -91,6 +95,7 @@ export function SectionFlags(props: {}) {
 						{gvar.gsm.options.flags._languageTooltip && <RegularTooltip title={gvar.gsm.options.flags._languageTooltip} align="right" />}
 					</div>
 					<select
+						aria-label={gvar.gsm.options.flags.language}
 						value={view.language || "detect"}
 						onChange={(e) => {
 							setView({ language: e.target.value })
@@ -128,6 +133,7 @@ export function SectionFlags(props: {}) {
 							<RegularTooltip title={gvar.gsm.options.flags.grantPermissionTooltip} align="right" />
 						</div>
 						<Toggle
+							aria-label={gvar.gsm.options.flags.grantPermission}
 							value={has}
 							onChange={(e) => {
 								chrome.permissions[has ? "remove" : "request"]({ origins: ["https://*/*", "http://*/*"] }).then((v) => {
@@ -147,6 +153,7 @@ export function SectionFlags(props: {}) {
 								<RegularTooltip title={gvar.gsm.options.flags.showBadgeTooltip} align="right" />
 							</div>
 							<Toggle
+								aria-label={gvar.gsm.options.flags.showBadge}
 								value={!view.hideBadge}
 								onChange={(e) => {
 									setView({ hideBadge: !view.hideBadge })
@@ -162,6 +169,7 @@ export function SectionFlags(props: {}) {
 							</div>
 							<div className="fieldValue">
 								<Toggle
+									aria-label={gvar.gsm.options.flags.showIndicator}
 									value={!viewAlt.hideIndicator}
 									onChange={async (e) => {
 										const view = await fetchView({ pageKeybinds: true, browserKeybinds: true, menuKeybinds: true })
@@ -195,6 +203,7 @@ export function SectionFlags(props: {}) {
 						<div className="field">
 							<span>{gvar.gsm.options.flags.showMediaView}</span>
 							<Toggle
+								aria-label={gvar.gsm.options.flags.showMediaView}
 								value={!view.hideMediaView}
 								onChange={(e) => {
 									setView({ hideMediaView: !view.hideMediaView })
@@ -214,6 +223,7 @@ export function SectionFlags(props: {}) {
 						<RegularTooltip title={gvar.gsm.options.flags.pinByDefaultTooltip} align="right" />
 					</div>
 					<Toggle
+						aria-label={gvar.gsm.options.flags.pinByDefault}
 						value={!!view.pinByDefault}
 						onChange={(e) => {
 							setView({ pinByDefault: !view.pinByDefault })
@@ -229,6 +239,7 @@ export function SectionFlags(props: {}) {
 							{<RegularTooltip title={gvar.gsm.options.flags.initialStateTooltip} align="right" />}
 						</div>
 						<select
+							aria-label={gvar.gsm.options.flags.initialState}
 							value={view.initialContext ?? InitialContext.PREVIOUS}
 							onChange={async (e) => {
 								const partial = { initialContext: parseInt(e.target.value) } as Partial<StateView>
@@ -255,6 +266,7 @@ export function SectionFlags(props: {}) {
 					</div>
 					<div className="fieldValue">
 						<Toggle
+							aria-label={gvar.gsm.options.flags.ghostMode}
 							value={!!view.ghostMode}
 							onChange={(e) => {
 								setView({ ghostMode: !view.ghostMode })
@@ -277,6 +289,7 @@ export function SectionFlags(props: {}) {
 						<RegularTooltip title={gvar.gsm.command.speedChangesPitchTooltip} align="right" />
 					</div>
 					<Toggle
+						aria-label={gvar.gsm.command.speedChangesPitch}
 						value={!!view.freePitch}
 						onChange={(e) => {
 							setView({ freePitch: !view.freePitch })
@@ -304,6 +317,7 @@ export function SectionFlags(props: {}) {
 							/>
 							<Tooltip title={gvar.gsm.token.delete}>
 								<button
+									aria-label={gvar.gsm.token.delete}
 									className="icon"
 									onClick={() => {
 										setView({ speedSlider: null })
@@ -314,7 +328,11 @@ export function SectionFlags(props: {}) {
 							</Tooltip>
 						</div>
 					) : (
-						<Toggle value={!!view.speedSlider} onChange={(v) => setView({ speedSlider: view.speedSlider ? null : getDefaultSpeedSlider() })} />
+						<Toggle
+							aria-label={gvar.gsm.options.flags.speedSlider}
+							value={!!view.speedSlider}
+							onChange={(v) => setView({ speedSlider: view.speedSlider ? null : getDefaultSpeedSlider() })}
+						/>
 					)}
 				</div>
 
@@ -329,6 +347,7 @@ export function SectionFlags(props: {}) {
 						<div className="control">
 							<NumericInput noNull={true} min={0.1} max={20} value={view.holdToSpeed} onChange={(v) => setView({ holdToSpeed: v })} />
 							<button
+								aria-label={gvar.gsm.token.delete}
 								className="icon"
 								onClick={() => {
 									setView({ holdToSpeed: null })
@@ -338,18 +357,38 @@ export function SectionFlags(props: {}) {
 							</button>
 						</div>
 					) : (
-						<Toggle value={false} onChange={() => setView({ holdToSpeed: 2 })} />
+						<Toggle aria-label={gvar.gsm.options.flags.holdToSpeedUp} value={false} onChange={() => setView({ holdToSpeed: 2 })} />
 					)}
 				</div>
 
 				{!showMore ? (
 					<Tooltip title={gvar.gsm.token.more}>
-						<button className="showMoreTooltip" onClick={() => setShowMore(true)}>
+						<button aria-label={gvar.gsm.token.more} className="showMoreTooltip" onClick={() => setShowMore(true)}>
 							<TfiMoreAlt />
 						</button>
 					</Tooltip>
 				) : (
 					<>
+						{/* Long-press threshold */}
+						{!isMobile() && hasLongPressKey && (
+							<div className="field">
+								<div className="labelWithTooltip">
+									<span>{gvar.gsm.options.flags.longPressThreshold}</span>
+									<RegularTooltip title={gvar.gsm.options.flags.longPressThresholdTooltip} align="right" />
+								</div>
+
+								<div className="control">
+									<NumericInput
+										noNull={true}
+										min={100}
+										max={3000}
+										value={view.longPressThreshold ?? DEFAULT_LONG_PRESS_THRESHOLD}
+										onChange={(v) => setView({ longPressThreshold: v })}
+									/>
+								</div>
+							</div>
+						)}
+
 						{!isMobile() && (
 							<>
 								{/* Font size */}
@@ -375,6 +414,7 @@ export function SectionFlags(props: {}) {
 										<RegularTooltip title={gvar.gsm.options.flags.keyboardInputTooltip} align="right" />
 									</div>
 									<select
+										aria-label={gvar.gsm.options.flags.keyboardInput}
 										value={view.virtualInput ? "v" : "q"}
 										onChange={async (e) => {
 											setView({ virtualInput: e.target.value === "v" })
@@ -413,6 +453,7 @@ function CircleWidget(props: { active?: boolean; setView: SetView; setShowWidget
 			</div>
 			<div className="fieldValue">
 				<Toggle
+					aria-label={gvar.gsm.options.flags.widget.option}
 					value={!!props.active}
 					onChange={(e) => {
 						props.setView({ circleWidget: !props.active })

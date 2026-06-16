@@ -279,7 +279,9 @@
 			"qrCodeTop": "Pindai untuk digunakan di...",
 			"qrCodeBottom": "Edge untuk seluler",
 			"holdToSpeedUp": "Tekan dan tahan untuk mempercepat",
-			"holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara"
+			"holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara",
+			"longPressThreshold": "Durasi tekan lama",
+			"longPressThresholdTooltip": "Berapa lama tombol ditekan sebelum memicu pintasan tekan lama"
 		},
 		"editor": {
 			"header": "Editor Pintasan",
@@ -327,6 +329,8 @@
 			},
 			"pressAndHold": "Tekan dan tahan",
 			"pressAndHoldTooltip": "Jika diaktifkan, tombol harus ditekan dan ditahan saat menyesuaikan nilai secara interaktif",
+			"longPress": "Tekan lama",
+			"longPressTooltip": "Hanya picu saat tombol ditahan lebih lama",
 			"keyPickerInput": "Klik untuk mengubah",
 			"keyPickerInputTooltip": "Tekan pintasan baru"
 		},

@@ -27,6 +27,7 @@ export function IndicatorModal(props: Props) {
 					<span>{gvar.gsm.token.position}</span>
 					<div>
 						<select
+							aria-label={gvar.gsm.token.position}
 							style={{ marginRight: "10px" }}
 							value={init?.position ?? defaultInit.position}
 							onChange={(e) => {
@@ -64,6 +65,7 @@ export function IndicatorModal(props: Props) {
 					<div className="colorControl">
 						<input
 							type="color"
+							aria-label={gvar.gsm.token.color}
 							value={init?.backgroundColor || defaultInit.backgroundColor}
 							onChange={(e) => {
 								const indicatorInit = produce(init ?? {}, (d) => {
@@ -76,6 +78,7 @@ export function IndicatorModal(props: Props) {
 						/>
 						<input
 							type="color"
+							aria-label={gvar.gsm.token.color}
 							value={init?.textColor || defaultInit.textColor}
 							onChange={(e) => {
 								const indicatorInit = produce(init ?? {}, (d) => {
@@ -171,6 +174,7 @@ export function IndicatorModal(props: Props) {
 					<span>{gvar.gsm.token.animation}</span>
 					<div>
 						<select
+							aria-label={gvar.gsm.token.animation}
 							style={{ marginRight: "10px" }}
 							value={init?.animation || 1}
 							onChange={(e) => {

@@ -38,8 +38,8 @@ export async function clearClosed() {
 	const tabIds = new Set(tabs.map((t) => t.id))
 	const clearKeys: string[] = []
 	for (let key in data) {
-		if (!key.startsWith("m:scope:")) return
-		if (tabIds.has(data[key]?.tabInfo.tabId)) return
+		if (!key.startsWith("m:scope:")) continue
+		if (tabIds.has(data[key]?.tabInfo.tabId)) continue
 		clearKeys.push(key)
 	}
 	chrome.storage.session.remove(clearKeys)
@@ -114,5 +114,17 @@ export async function getAutoMedia(tabInfo: TabInfo, videoOnly?: boolean) {
 		}
 	})
 
+	// Liveness check on in the background.
+	// Stale while approach
+	if (highest) void cleanupStaleScope(highest.info)
+
 	return highest?.info
+}
+
+async function cleanupStaleScope(info: FlatMediaInfo) {
+	const status = await checkContentScript(info.tabInfo.tabId, info.tabInfo.frameId)
+	// true = alive (keep), false = frozen (keep), null/undefined = discarded or dead frame (evict).
+	if (status == null) {
+		chrome.storage.session.remove(`m:scope:${info.tabInfo.tabId}:${info.tabInfo.frameId}`)
+	}
 }

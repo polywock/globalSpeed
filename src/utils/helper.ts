@@ -1,3 +1,5 @@
+import { produce as produceImmer } from "immer"
+
 type AnyDict = { [key: string]: any }
 
 export function clamp(min: number, max: number, value: number) {
@@ -38,11 +40,6 @@ export function roundTo(value: number, nearest: number): number {
 	return round(Math.round(value / nearest) * nearest, 6)
 }
 
-export function ceil(value: number, precision: number): number {
-	const scalar = 10 ** precision
-	return round(Math.ceil(value * scalar) / scalar, 8)
-}
-
 export function randomNumber(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min)) + min
 }
@@ -51,50 +48,51 @@ export function randomId() {
 	return Math.ceil(Math.random() * 1e10).toString()
 }
 
-let isFirefoxResult: boolean
-export function isFirefox() {
-	isFirefoxResult = isFirefoxResult ?? navigator.userAgent.includes("Firefox/")
-	return isFirefoxResult
-}
+export const isFirefox = (() => {
+	let cached: boolean | undefined
+	return () => {
+		return (cached ??= navigator.userAgent.includes("Firefox/"))
+	}
+})()
 
-let firefoxVersionResult: number = undefined
-export function getFirefoxVersion() {
-	if (firefoxVersionResult !== undefined) return firefoxVersionResult
-	firefoxVersionResult = null
-	const firefoxInfo = navigator.userAgent.split(" ").find((v) => v.includes("Firefox/"))
-	if (firefoxInfo) {
-		const version = parseInt(firefoxInfo.slice(8))
-		if (version > 1) {
-			firefoxVersionResult = version
+export const getFirefoxVersion = (() => {
+	let cached: number | null | undefined
+	return () => {
+		if (cached !== undefined) return cached
+		const firefoxInfo = navigator.userAgent.split(" ").find((v) => v.includes("Firefox/"))
+		if (firefoxInfo) {
+			const version = parseInt(firefoxInfo.slice(8))
+			if (version > 1) return (cached = version)
 		}
+		return (cached = null)
 	}
-	return firefoxVersionResult
-}
+})()
 
-let isEdgeResult: boolean
-export function isEdge() {
-	isEdgeResult = isEdgeResult ?? navigator.userAgent.includes("Edg")
-	return isEdgeResult
-}
-
-let isMacResult: boolean
-export function isMac() {
-	isMacResult = isMacResult ?? navigator.userAgent.includes("Mac OS")
-	return isMacResult
-}
-
-let isMobileResult: boolean
-export function isMobile() {
-	if (isMobileResult != null) return isMobileResult
-	let data = (navigator as any).userAgentData
-	if (data) {
-		isMobileResult = data.mobile
-		return isMobileResult
+export const isEdge = (() => {
+	let cached: boolean | undefined
+	return () => {
+		return (cached ??= navigator.userAgent.includes("Edg"))
 	}
-	isMobileResult = /Mobi|Android|iPhone|iTabletPad/i.test(navigator.userAgent)
+})()
 
-	return isMobileResult
-}
+export const isMac = (() => {
+	let cached: boolean | undefined
+	return () => {
+		return (cached ??= navigator.userAgent.includes("Mac OS"))
+	}
+})()
+
+export const isMobile = (() => {
+	let cached: boolean | undefined
+	return () => {
+		if (cached !== undefined) return cached
+		let data = (navigator as any).userAgentData
+		if (data) {
+			return (cached ??= data.mobile)
+		}
+		return (cached ??= /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent))
+	}
+})()
 
 export function isFirefoxMobile() {
 	return isFirefox() && isMobile()
@@ -146,18 +144,6 @@ export function formatDuration(secs: number, includePositive?: boolean) {
 	}
 }
 
-export function formatDurationMinimal(secs: number) {
-	if (secs < 60) return round(secs, 2)
-	return formatDuration(secs)
-}
-
-export function formatFreq(value: number) {
-	if (value >= 1000) {
-		return `${round(value / 1000, 1)}kHz`
-	}
-	return `${Math.round(value)}hz`
-}
-
 export function moveItem<T>(list: T[], test: ((v: T) => boolean) | number, to: "D" | "U" | number) {
 	let idx = typeof test === "number" ? test : list.findIndex(test)
 	let item = list[idx]
@@ -179,16 +165,6 @@ export function lerp(lb: number, rb: number, normal: number) {
 
 export function inverseLerp(lb: number, rb: number, value: number) {
 	return (value - lb) / (rb - lb)
-}
-
-export function freqToLinear(freq: number) {
-	return Math.log2(freq / 440)
-}
-
-const chromatic = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"]
-
-export function linearToChromatic(linear: number): string {
-	return chromatic[(Math.round(linear * 12) + 12 * 1000) % 12]
 }
 
 export function areYouSure() {
@@ -239,12 +215,6 @@ export function domRectGetOffset(rect: DOMRect, xOffset = 10, yOffset = 10, topL
 	return { x: rect.x + rect.width + xOffset, y: rect.y - rect.height - yOffset }
 }
 
-export function speak(text: string) {
-	let utter = new SpeechSynthesisUtterance(text)
-	utter.lang = "en"
-	speechSynthesis.speak(utter)
-}
-
 export function assertType<T>(value: any): asserts value is T {}
 
 /** Very limited comparison */
@@ -273,25 +243,8 @@ export function timeout(ms: number) {
 	})
 }
 
-export function pickObject(obj: AnyDict, keys: string[]) {
-	let newObj = {} as AnyDict
-	for (let key of keys) {
-		if (Object.hasOwn(obj, key)) {
-			newObj[key] = obj[key]
-		}
-	}
-	return newObj
-}
-
 export function listToDict<V>(arr: string[], val: V): { [key: string]: V } {
 	return Object.fromEntries(arr.map((k) => [k, val]))
-}
-
-export function removeFromArray<V>(arr: V[], val: V) {
-	const idx = arr.indexOf(val)
-	if (idx >= 0) {
-		arr.splice(idx, 1)
-	}
 }
 
 export function findRemoveFromArray<V>(arr: V[], test: (v: V) => boolean) {
@@ -570,19 +523,8 @@ export function walkGetKey(obj: any, keys: string[]): any {
 	return current ?? null
 }
 
-export function interpolateMatrices(lhs: number[], rhs: number[], normal: number) {
-	lhs = lhs || []
-	rhs = rhs || []
-	if (lhs.length !== rhs.length) throw "Incompatible matrices"
-	let out: number[] = []
-	for (let i = 0; i < lhs.length; i++) {
-		let l = lhs[i]
-		let r = rhs[i]
-		out.push(lerp(l, r, normal))
-	}
-	return out
-}
 export function produce<T>(base: T, recipe: (draft: T) => void): T {
+	return produceImmer(base, recipe)
 	const clone = structuredClone(base)
 	recipe(clone)
 	return clone

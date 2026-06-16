@@ -281,7 +281,9 @@
 			"qrCodeTop": "스캔하여 사용해 보세요...",
 			"qrCodeBottom": "모바일용 Edge",
 			"holdToSpeedUp": "길게 눌러 빨리 감기",
-			"holdToSpeedUpTooltip": "영상을 길게 누르면 일시적으로 속도가 빨라집니다"
+			"holdToSpeedUpTooltip": "영상을 길게 누르면 일시적으로 속도가 빨라집니다",
+			"longPressThreshold": "길게 누르기 지속 시간",
+			"longPressThresholdTooltip": "길게 누르기 단축키가 실행되기 전 키를 누르고 있을 시간"
 		},
 		"editor": {
 			"header": "단축키 편집기",
@@ -329,6 +331,8 @@
 			},
 			"pressAndHold": "길게 누르기",
 			"pressAndHoldTooltip": "활성화된 경우 값을 인터랙티브하게 조정하는 동안 키를 누르고 있어야 합니다",
+			"longPress": "길게 누르기",
+			"longPressTooltip": "키를 더 오래 누르고 있을 때만 실행",
 			"keyPickerInput": "클릭하여 변경",
 			"keyPickerInputTooltip": "새 바로가기 키를 누르세요"
 		},

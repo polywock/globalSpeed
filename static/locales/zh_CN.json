@@ -282,7 +282,9 @@
 			"qrCodeTop": "扫码使用",
 			"qrCodeBottom": "Edge 手机版",
 			"holdToSpeedUp": "按住快进",
-			"holdToSpeedUpTooltip": "按住视频可临时加速播放"
+			"holdToSpeedUpTooltip": "按住视频可临时加速播放",
+			"longPressThreshold": "长按时长",
+			"longPressThresholdTooltip": "触发长按快捷键前需按住按键的时长"
 		},
 		"editor": {
 			"header": "快捷键编辑器",
@@ -330,6 +332,8 @@
 			},
 			"pressAndHold": "按住",
 			"pressAndHoldTooltip": "如果启用，则在交互调整值时必须按住键",
+			"longPress": "长按",
+			"longPressTooltip": "仅在按键按住较长时间时触发",
 			"keyPickerInput": "点击更改",
 			"keyPickerInputTooltip": "按下新快捷键"
 		},

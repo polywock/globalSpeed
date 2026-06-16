@@ -3,6 +3,8 @@ import { type CinemaInit } from "@/types"
 export const MIN_SPEED_CHROMIUM = 0.07
 export const MAX_SPEED_CHROMIUM = 16
 
+export const DEFAULT_LONG_PRESS_THRESHOLD = 500
+
 export function getDefaultSpeedPresets() {
 	return [0.25, 0.5, 0.75, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 16]
 }

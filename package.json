@@ -21,6 +21,7 @@
 		"prodFf": "export NODE_ENV=production && npm run commonFf && cd buildFf/unpacked && zip -r '../global-speed-firefox.zip' .",
 		"prodFff": "npm run prodFf && rm -rf zed && mkdir -p zed/unpacked && cp -r src static staticCh staticFf tools .babelrc package-lock.json package.json postcss.config.js tsconfig.json webpack.config.js zed/unpacked && cp firefox-build.md zed/unpacked/README.md && (cd zed/unpacked && zip -r ../packed.zip .) && mv zed/packed.zip buildFf/source.zip && rm -rf zed",
 		"adhere": "node tools/processLocale.js && node tools/generateGsmType.js",
+		"rename": "node tools/processLocale.js --rename && node tools/generateGsmType.js",
 		"release": "node tools/release.js",
 		"format": "prettier --check '**/*.{js,ts,tsx,json,css}'",
 		"format:fix": "prettier --write '**/*.{js,ts,tsx,json,css}'"

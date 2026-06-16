@@ -1,9 +1,10 @@
 import { getEmptyUrlConditions } from "@/defaults"
-import { AdjustMode, URLCondition, URLConditionPart } from "@/types"
+import { DEFAULT_LONG_PRESS_THRESHOLD } from "@/defaults/constants"
+import { AdjustMode, Keybind, KeybindMatch, URLCondition, URLConditionPart } from "@/types"
 import { getPracticalRuntimeUrl } from "@/utils/helper"
 import { getLeaf } from "@/utils/nativeUtils"
-import { findMatchingPageKeybinds, getActiveParts, hasActiveParts, testURL, testURLWithPart } from "../../utils/configUtils"
-import { extractHotkey } from "../../utils/keys"
+import { getActiveParts, hasActiveParts, testURL, testURLWithPart } from "../../utils/configUtils"
+import { compareHotkeys, extractHotkey, Hotkey } from "../../utils/keys"
 import { SubscribeView } from "../../utils/state"
 import { FxSync } from "./FxSync"
 import { Circle } from "./utils/Circle"
@@ -25,10 +26,12 @@ const ghostModeStatic = [
 ].some((site) => (location.hostname || "").includes(site))
 
 export class ConfigSync {
+	ac = new AbortController()
 	released = false
 	blockKeyUp = false
-	justRanTemporarySpeed = false
+	fastForwardHeld: FastForwardHeld | undefined = undefined
 	lastTrigger = 0
+	heldKeys: Map<string, LongPressState> = new Map()
 	fxSync: FxSync
 	urlConditionsClient = new SubscribeView(
 		{ keybindsUrlCondition: true },
@@ -51,6 +54,7 @@ export class ConfigSync {
 			circleWidget: true,
 			circleInit: true,
 			holdToSpeed: true,
+			longPressThreshold: true,
 		},
 		gvar.tabInfo.tabId,
 		true,
@@ -72,13 +76,17 @@ export class ConfigSync {
 	)
 	ignoreList = new Set<string>()
 	init = () => {
-		gvar.os.eListen.keyDownCbs.add(this.handleKeyDown)
-		gvar.os.eListen.keyUpCbs.add(this.handleKeyUp)
+		gvar.os.eListen.keyDownCbs.add(this.handleKeyDown, this.ac.signal)
+		gvar.os.eListen.keyUpCbs.add(this.handleKeyUp, this.ac.signal)
+		gvar.os.eListen.visibilityCbs.add(() => document.hidden && this.handleBlur(), this.ac.signal)
+		gvar.os.eListen.blurCbs.add(this.handleBlur, this.ac.signal)
 		this.handleSpeedChange()
 	}
 	release = () => {
 		if (this.released) return
+		this.ac.abort()
 		this.released = true
+		this.handleBlur()
 		this.urlConditionsClient?.release()
 		delete this.urlConditionsClient
 		this.client?.release()
@@ -87,8 +95,14 @@ export class ConfigSync {
 		delete this.speedClient
 		this.fxSync?.release()
 		delete this.fxSync
-		gvar.os.eListen.keyDownCbs.delete(this.handleKeyDown)
-		gvar.os.eListen.keyUpCbs.delete(this.handleKeyUp)
+	}
+	handleBlur = () => {
+		this.heldKeys.forEach((state) => clearTimeout(state.timerId))
+		this.heldKeys.clear()
+		if (this.fastForwardHeld) {
+			this.fastForwardHeld = undefined
+			chrome.runtime.sendMessage({ type: "RELEASED_TEMPORARY_SPEED" })
+		}
 	}
 	urlConditions: URLCondition
 	urlConditionsMode: "Off" | "On" | "Runtime" = "Off"
@@ -209,9 +223,15 @@ export class ConfigSync {
 			e.preventDefault()
 		}
 
-		if (this.justRanTemporarySpeed) {
-			console.log(e.code, e.key, e.shiftKey)
-			this.justRanTemporarySpeed = false
+		const heldState = this.heldKeys.get(e.code)
+		if (heldState) {
+			clearTimeout(heldState.timerId)
+			this.heldKeys.delete(e.code)
+		}
+
+		// Release fast forward on key up
+		if (this.fastForwardHeld && (this.fastForwardHeld.code === e.code || !this.fastForwardHeld.code)) {
+			this.fastForwardHeld = undefined
 			chrome.runtime.sendMessage({ type: "RELEASED_TEMPORARY_SPEED" })
 		}
 	}
@@ -226,7 +246,6 @@ export class ConfigSync {
 		let keybinds = this.client.view.pageKeybinds
 		if (!enabled) {
 			keybinds = (keybinds || []).filter((kb) => kb.command === "state" && kb.enabled && (this.client.view.latestViaShortcut || kb.alwaysOn))
-
 			if (!keybinds.length) return
 		}
 
@@ -247,9 +266,11 @@ export class ConfigSync {
 
 		if (this.checkUrlRuntime() === "Off") return
 
+		// Get triggered keybinds
 		const eventHotkey = extractHotkey(e, true, true)
 		let matches = findMatchingPageKeybinds(keybinds, eventHotkey)
 
+		// Filter by any URL conditions
 		matches = matches.filter((match) => {
 			if (match.kb.condition && hasActiveParts(match.kb.condition)) {
 				return testURL(getPracticalRuntimeUrl(), match.kb.condition, true)
@@ -257,29 +278,76 @@ export class ConfigSync {
 			return true
 		})
 
-		if (matches.some((v) => v.kb.greedy)) {
+		// If greedy, stop propagation.
+		const greedy = matches.some((v) => v.kb.greedy)
+		if (greedy) {
 			this.blockKeyUp = true
 			e.preventDefault()
 			e.stopImmediatePropagation()
 		}
 
-		matches = matches.filter(
-			(match) => !(match.kb.adjustMode === AdjustMode.ITC || match.kb.adjustMode === AdjustMode.ITC_REL) || !this.ignoreList.has(match.kb.id),
-		)
+		// Split matches by press type
+		const shortMatches = matches.filter((m) => !m.kb.longPress)
+		const longMatches = matches.filter((m) => m.kb.longPress)
 
-		if (matches.length) {
-			const now = Date.now()
-			if (now - this.lastTrigger > 50) {
-				this.lastTrigger = now
-				matches
-					.filter((match) => match.kb.adjustMode === AdjustMode.ITC || match.kb.adjustMode === AdjustMode.ITC_REL)
-					.forEach((v) => this.ignoreList.add(v.kb.id))
-				chrome.runtime.sendMessage({ type: "TRIGGER_KEYBINDS", ids: matches.map((match) => ({ id: match.kb.id, alt: match.alt })) })
+		// If no long press matches, use normal behavior
+		if (!longMatches.length) {
+			this.triggerMatches(shortMatches, e)
+			return
+		}
 
-				if (matches.some((match) => match.kb.command === "temporarySpeed")) {
-					this.justRanTemporarySpeed = true
-				}
+		// If any long press keybinds present, require an anchor .code
+		const heldKeyId = eventHotkey.code
+		if (!heldKeyId) return
+
+		let held = this.heldKeys.get(heldKeyId)
+		if (!held) {
+			// If first time pressing it, note
+			held = {
+				longMatches: longMatches,
 			}
+			held.timerId = window.setTimeout(() => {
+				// Trigger long matches after timeout
+				this.triggerMatches(longMatches)
+				held.reached = true
+			}, this.client?.view?.longPressThreshold ?? DEFAULT_LONG_PRESS_THRESHOLD)
+
+			this.heldKeys.set(heldKeyId, held)
+
+			// Trigger short matches first time only
+			if (shortMatches.length) {
+				this.triggerMatches(shortMatches, e)
+				return
+			}
+		} else {
+			// If already held down for enough time, trigger long matches repeatedly
+			if (held.reached) {
+				this.triggerMatches(longMatches, e)
+			}
+		}
+	}
+
+	triggerMatches = (matches: KeybindMatch[], e?: KeyboardEvent) => {
+		// Avoid repeat keybinds in ignoredList
+		matches = matches.filter((match) => !this.ignoreList.has(match.kb.id))
+		if (!matches.length) return
+
+		// A minimum interval between shortcuts
+		const now = Date.now()
+		if (now - this.lastTrigger <= 50) return
+		this.lastTrigger = now
+
+		// Add certain keybinds to ignore list to avoid repeat triggering
+		matches
+			.filter((match) => match.kb.adjustMode === AdjustMode.ITC || match.kb.adjustMode === AdjustMode.ITC_REL)
+			.forEach((v) => this.ignoreList.add(v.kb.id))
+
+		// Trigger the keybinds
+		chrome.runtime.sendMessage({ type: "TRIGGER_KEYBINDS", ids: matches.map((match) => ({ id: match.kb.id, alt: match.alt })) })
+
+		// Also track
+		if (matches.some((match) => match.kb.command === "temporarySpeed")) {
+			this.fastForwardHeld = { code: e?.code }
 		}
 	}
 }
@@ -300,4 +368,24 @@ function safeGetOrigin(url: string) {
 	try {
 		return new URL(url).origin
 	} catch (err) {}
+}
+
+function findMatchingPageKeybinds(kbs: Keybind[], key?: Hotkey): KeybindMatch[] {
+	return kbs
+		.filter((kb) => kb.enabled)
+		.map((kb) => {
+			if (kb.key && compareHotkeys(kb.key, key)) return { kb }
+			if (kb.allowAlt && kb.adjustMode === AdjustMode.CYCLE && compareHotkeys(kb.keyAlt, key)) return { kb, alt: true }
+		})
+		.filter((v) => v)
+}
+
+type FastForwardHeld = {
+	code: string
+}
+
+type LongPressState = {
+	longMatches: KeybindMatch[]
+	timerId?: ReturnType<typeof setTimeout>
+	reached?: boolean
 }

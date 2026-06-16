@@ -21,6 +21,8 @@ async function main() {
 		ensurePunctuation()
 	} else if (argv[2] === "--build") {
 		build()
+	} else if (argv[2] === "--rename") {
+		await handleRename()
 	} else {
 		if (!env.OPENAI_API_KEY) {
 			console.error("No OpenAI key provided as environmental variable.")
@@ -34,6 +36,111 @@ async function main() {
 }
 
 let cachedKeyContext = {}
+
+async function handleRename() {
+	let rootLocales = join("static", "locales")
+	let englishLocale = join(rootLocales, "en.json")
+	const englishJson = JSON.parse(await readFile(englishLocale))
+	const englishLeaves = getLeaves(englishJson)
+
+	// Group leaves by their parent path (group)
+	const groupMap = new Map()
+	for (let leaf of englishLeaves) {
+		const parentPath = leaf.path.slice(0, -1).join(".")
+		if (!groupMap.has(parentPath)) {
+			groupMap.set(parentPath, { keys: new Set(), leaves: [] })
+		}
+		groupMap.get(parentPath).keys.add(leaf.key)
+		groupMap.get(parentPath).leaves.push(leaf)
+	}
+
+	// For each locale, find renames by comparing to English
+	const renames = new Map() // Maps locale -> oldKey -> newKey
+
+	for (let lang of ALL_LANGUAGES) {
+		const path = join(rootLocales, `${lang}.json`)
+		const json = JSON.parse(await readFile(path), { encoding: "utf8" })
+		const leaves = getLeaves(json)
+
+		for (let [groupPath, groupInfo] of groupMap) {
+			const englishKeys = groupInfo.keys
+			const localeKeys = new Set()
+			const localeLeavesByKey = new Map()
+
+			for (let leaf of leaves) {
+				const leafParentPath = leaf.path.slice(0, -1).join(".")
+				if (leafParentPath === groupPath) {
+					localeKeys.add(leaf.key)
+					localeLeavesByKey.set(leaf.key, leaf)
+				}
+			}
+
+			// Find removed and added keys, ignoring underscore-prefixed keys
+			const removedKeys = [...localeKeys].filter((k) => !englishKeys.has(k) && !k.startsWith("_"))
+			const addedKeys = [...englishKeys].filter((k) => !localeKeys.has(k) && !k.startsWith("_"))
+
+			// If exactly one removed and one added in same group, it's a rename
+			if (removedKeys.length === 1 && addedKeys.length === 1) {
+				const oldKey = removedKeys[0]
+				const newKey = addedKeys[0]
+				if (!renames.has(lang)) {
+					renames.set(lang, new Map())
+				}
+				renames.get(lang).set(oldKey, newKey)
+			}
+		}
+	}
+
+	// Display detected renames
+	if (renames.size === 0) {
+		console.log("No renames detected.")
+		return
+	}
+
+	let renameCount = 0
+	for (let [lang, langRenames] of renames) {
+		for (let [oldKey, newKey] of langRenames) {
+			console.log(`(${lang}) Rename: ${oldKey} -> ${newKey}`)
+			renameCount++
+		}
+	}
+
+	const proceed = await prompt(`Apply ${renameCount} rename(s)? (y/n) > `)
+	if (proceed.toLowerCase() !== "y") {
+		console.log("Cancelled.")
+		return
+	}
+
+	// Apply renames to all locales
+	for (let lang of ALL_LANGUAGES) {
+		const path = join(rootLocales, `${lang}.json`)
+		const json = JSON.parse(await readFile(path), { encoding: "utf8" })
+		const langRenames = renames.get(lang)
+
+		if (langRenames) {
+			for (let [oldKey, newKey] of langRenames) {
+				// Find the value by traversing all leaves
+				const leaves = getLeaves(json)
+				for (let leaf of leaves) {
+					if (leaf.key === oldKey) {
+						const parentPath = leaf.path.slice(0, -1)
+						const value = getNestedValue(json, leaf.path)
+						setNestedValue(json, [...parentPath, newKey], value)
+						setNestedValue(json, leaf.path, undefined)
+						console.log(`(${lang}) Renamed ${oldKey} -> ${newKey}`)
+						break
+					}
+				}
+			}
+
+			await writeFile(path, JSON.stringify(json, null, "\t") + "\n", {
+				encoding: "utf8",
+			})
+		}
+	}
+
+	console.log("Renames completed.")
+}
 
 async function adhereEnglish() {
 	let rootLocales = join("static", "locales")

@@ -280,7 +280,9 @@
 			"qrCodeTop": "Zeskanuj, aby użyć na...",
 			"qrCodeBottom": "Edge na urządzenia mobilne",
 			"holdToSpeedUp": "Naciśnij i przytrzymaj, aby przyspieszyć",
-			"holdToSpeedUpTooltip": "Naciśnij i przytrzymaj wideo, aby tymczasowo przyspieszyć"
+			"holdToSpeedUpTooltip": "Naciśnij i przytrzymaj wideo, aby tymczasowo przyspieszyć",
+			"longPressThreshold": "Czas długiego naciśnięcia",
+			"longPressThresholdTooltip": "Jak długo przytrzymać klawisz, zanim uruchomi skróty długiego naciśnięcia"
 		},
 		"editor": {
 			"header": "Edytor skrótów",
@@ -328,6 +330,8 @@
 			},
 			"pressAndHold": "Naciśnij i przytrzymaj",
 			"pressAndHoldTooltip": "Jeśli włączone, klawisz musi być przytrzymany podczas interaktywnego dostosowywania wartości",
+			"longPress": "Długie naciśnięcie",
+			"longPressTooltip": "Uruchamiaj tylko po dłuższym przytrzymaniu klawisza",
 			"keyPickerInput": "Kliknij, aby zmienić",
 			"keyPickerInputTooltip": "Naciśnij nowy skrót"
 		},

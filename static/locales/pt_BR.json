@@ -280,7 +280,9 @@
 			"qrCodeTop": "Escaneie para usar no...",
 			"qrCodeBottom": "Edge para celular",
 			"holdToSpeedUp": "Pressione e segure para avançar rapidamente",
-			"holdToSpeedUpTooltip": "Pressione e segure vídeos para acelerar temporariamente"
+			"holdToSpeedUpTooltip": "Pressione e segure vídeos para acelerar temporariamente",
+			"longPressThreshold": "Duração do toque longo",
+			"longPressThresholdTooltip": "Por quanto tempo manter uma tecla pressionada antes de acionar atalhos de toque longo"
 		},
 		"editor": {
 			"header": "Editor de Atalhos",
@@ -328,6 +330,8 @@
 			},
 			"pressAndHold": "Pressionar e segurar",
 			"pressAndHoldTooltip": "Se ativado, a tecla deve ser mantida pressionada enquanto ajusta o valor interativamente",
+			"longPress": "Toque longo",
+			"longPressTooltip": "Só acione quando a tecla for mantida pressionada por mais tempo",
 			"keyPickerInput": "Clique para alterar",
 			"keyPickerInputTooltip": "Pressione o novo atalho"
 		},

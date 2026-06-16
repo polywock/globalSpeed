@@ -158,6 +158,7 @@ export function Rule(props: RuleProps) {
 			<Tooltip title={rule.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
 				<input
 					type="checkbox"
+					aria-label={gvar.gsm.token.on}
 					checked={!!rule.enabled}
 					onChange={(e) => {
 						onChange(

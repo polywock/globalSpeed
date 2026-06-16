@@ -280,7 +280,9 @@
 			"qrCodeTop": "Zum Verwenden auf ... scanne",
 			"qrCodeBottom": "Edge für Mobilgeräte",
 			"holdToSpeedUp": "Zum Vorspulen gedrückt halten",
-			"holdToSpeedUpTooltip": "Gedrückt halten, um Videos vorübergehend zu beschleunigen"
+			"holdToSpeedUpTooltip": "Gedrückt halten, um Videos vorübergehend zu beschleunigen",
+			"longPressThreshold": "Dauer für langes Drücken",
+			"longPressThresholdTooltip": "Wie lange eine Taste gehalten werden muss, bevor Langdruck-Kurzbefehle ausgelöst werden"
 		},
 		"editor": {
 			"header": "Tastenkombinationen-Editor",
@@ -328,6 +330,8 @@
 			},
 			"pressAndHold": "Drücken und halten",
 			"pressAndHoldTooltip": "Wenn aktiviert, muss die Taste gedrückt gehalten werden, während der Wert interaktiv angepasst wird",
+			"longPress": "Langes Drücken",
+			"longPressTooltip": "Nur auslösen, wenn die Taste länger gedrückt gehalten wird",
 			"keyPickerInput": "Klicken zum Ändern",
 			"keyPickerInputTooltip": "Neue Tastenkombination drücken"
 		},

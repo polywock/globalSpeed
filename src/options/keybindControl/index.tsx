@@ -11,7 +11,7 @@ import { NumericInput } from "../../comps/NumericInput"
 import { ThrottledTextInput } from "../../comps/ThrottledTextInput"
 import { getDefaultURLCondition } from "../../defaults"
 import { commandInfos } from "../../defaults/commands"
-import { AdjustMode, Keybind, StateOption, Trigger } from "../../types"
+import { AdjustMode, Keybind, KeybindType, StateOption, Trigger } from "../../types"
 import { requestCreateTab } from "../../utils/browserUtils"
 import { domRectGetOffset, feedbackText, isFirefox, isMobile } from "../../utils/helper"
 import { KebabList, KebabListProps } from "../KebabList"
@@ -29,6 +29,7 @@ export type KeybindControlProps = {
 	virtualInput?: boolean
 	listRef: RefObject<HTMLElement>
 	isLast?: boolean
+	listType: KeybindType
 }
 
 export const KeybindControl = (props: KeybindControlProps) => {
@@ -86,12 +87,20 @@ export const KeybindControl = (props: KeybindControlProps) => {
 			label: gvar.gsm.options.flags.showIndicator,
 			checked: props.hideIndicator ? value.invertIndicator : !value.invertIndicator,
 		})
-	;(value.trigger || 0) === 0 &&
+
+	if (props.listType === "pageKeybinds") {
+		kebabList.push({
+			name: "longPress",
+			checked: !!value.longPress,
+			label: makeLabelWithTooltip(gvar.gsm.options.editor.longPress, gvar.gsm.options.editor.longPressTooltip, "left"),
+		})
+
 		kebabList.push({
 			name: "blockEvents",
 			checked: !!value.greedy,
 			label: makeLabelWithTooltip(gvar.gsm.token.blockEvents, gvar.gsm.token.blockEventsTooltip, "left"),
 		})
+	}
 
 	props.isLast ||
 		kebabList.push({
@@ -172,6 +181,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
 			<Tooltip title={value.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
 				<input
 					type="checkbox"
+					aria-label={gvar.gsm.token.on}
 					checked={!!value.enabled}
 					onChange={(e) => {
 						props.onChange(
@@ -318,6 +328,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
 			{/* State input  */}
 			{command.valueType === "state" && (
 				<select
+					aria-label={gvar.gsm.token.on}
 					value={value.valueState}
 					onChange={(e) => {
 						props.onChange(
@@ -359,6 +370,14 @@ export const KeybindControl = (props: KeybindControlProps) => {
 							produce(value, (d) => {
 								d.greedy = !d.greedy
 								if (d.greedy == null) delete d.greedy
+							}),
+						)
+					} else if (name === "longPress") {
+						props.onChange(
+							value.id,
+							produce(value, (d) => {
+								d.longPress = !d.longPress
+								if (!d.longPress) delete d.longPress
 							}),
 						)
 					} else if (name === "autoPause") {
@@ -414,6 +433,7 @@ export const TriggerValues = (props: Props) => {
 			{value.trigger === Trigger.BROWSER && (
 				<div className="globalPicker">
 					<select
+						aria-label={gvar.gsm.token.assign}
 						value={value[keyForGlobal] || "commandA"}
 						onChange={(e) => {
 							props.onChange(
@@ -435,6 +455,7 @@ export const TriggerValues = (props: Props) => {
 					</select>
 					<Tooltip title={gvar.gsm.token.assign}>
 						<button
+							aria-label={gvar.gsm.token.assign}
 							className="icon"
 							onClick={() => {
 								requestCreateTab(

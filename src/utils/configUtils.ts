@@ -17,16 +17,12 @@ import {
 	type URLCondition,
 	type URLConditionPart,
 } from "../types"
+import { sendToFrame } from "./browserUtils"
 import { clamp, isFirefox, round } from "./helper"
-import { compareHotkeys, Hotkey } from "./keys"
 import { fetchView, pushView } from "./state"
 
 export function conformSpeed(speed: number, rounding = 2) {
 	return clamp(0.07, 16, round(speed, rounding))
-}
-
-export function formatSpeedOld(speed: number) {
-	return speed.toFixed(2)
 }
 
 export function formatSpeed(speed: number, snip = false) {
@@ -92,7 +88,12 @@ export function sendMediaEvent(event: MediaEvent, key: string, tabId: number, fr
 		// realizeMediaEvent(key, event)
 	} else {
 	}
-	chrome.tabs.sendMessage(tabId, { type: "APPLY_MEDIA_EVENT", event, key }, frameId == null ? undefined : { frameId })
+	const msg = { type: "APPLY_MEDIA_EVENT", event, key } as Messages
+	if (frameId == null) {
+		chrome.tabs.sendMessage(tabId, msg)
+		return
+	}
+	void sendToFrame(tabId, frameId, msg)
 }
 
 export function sendMessageToConfigSync(msg: any, tabId: number, frameId?: number) {
@@ -144,16 +145,6 @@ export function isSeekSmall(kb: Keybind, ref?: ReferenceValues) {
 		if ((kb.duration || Duration.SECS) === Duration.SECS) return Math.abs(val) < 0.5
 		if (kb.duration === Duration.FRAMES) return Math.abs(val) < 14
 	}
-}
-
-export function findMatchingPageKeybinds(kbs: Keybind[], key?: Hotkey): KeybindMatch[] {
-	return kbs
-		.filter((kb) => kb.enabled)
-		.map((kb) => {
-			if (kb.key && compareHotkeys(kb.key, key)) return { kb }
-			if (kb.allowAlt && kb.adjustMode === AdjustMode.CYCLE && compareHotkeys(kb.keyAlt, key)) return { kb, alt: true }
-		})
-		.filter((v) => v)
 }
 
 export function findMatchingBrowserKeybinds(kbs: Keybind[], global?: string): KeybindMatch[] {

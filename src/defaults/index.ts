@@ -30,11 +30,6 @@ export const SHORTCUT_ALLOWED_WEBSITES: WebsiteInfo[] = [
 	{ v: "https://www.bbc.com/video" },
 ]
 
-export function turnWebsiteInfoIntoString(info: WebsiteInfo) {
-	if (info.contains) return `contains_${info.v}`
-	return `starts_${info.v}`
-}
-
 export function generateUrlPart(origin: string): URLConditionPart {
 	return {
 		id: randomId(),

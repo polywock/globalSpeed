@@ -20,7 +20,7 @@ import {
 	StateViewSelector,
 	Trigger,
 } from "../../types"
-import { checkContentScript, TabInfo } from "../../utils/browserUtils"
+import { checkContentScript, sendToFrame, TabInfo } from "../../utils/browserUtils"
 import { intoFxFlags, isSeekSmall, sendMediaEvent, sendMessageToConfigSync, triggerToKey } from "../../utils/configUtils"
 import { clamp, createWindowWithSafeBounds, formatDuration, isFirefox, round, timeout, wraparound } from "../../utils/helper"
 import { fetchView, pushView, PushViewInit } from "../../utils/state"
@@ -953,16 +953,14 @@ function showIndicator(opts: IndicatorShowOpts, tabId: number, showAlt?: boolean
 
 let tempSpeedTimeoutId: number
 let mediaSped: FlatMediaInfo
+
+function sendTemporarySpeed(media: FlatMediaInfo, factor?: number) {
+	const payload = (factor == null ? { type: "SET_TEMPORARY_SPEED" } : { type: "SET_TEMPORARY_SPEED", factor }) as Messages
+	void sendToFrame(media.tabInfo.tabId, media.tabInfo.frameId, payload)
+}
+
 function activateTemporarySpeed(media: FlatMediaInfo, factor: number, kbType?: KeybindType) {
-	console.log("SPEEDING")
-	chrome.tabs.sendMessage(
-		media.tabInfo.tabId,
-		{
-			type: "SET_TEMPORARY_SPEED",
-			factor,
-		} as Messages,
-		{ frameId: media.tabInfo.frameId },
-	)
+	sendTemporarySpeed(media, factor)
 	if (mediaSped && mediaSped.key !== media?.key) {
 		releaseTemporarySpeed(mediaSped)
 	}
@@ -979,15 +977,8 @@ function activateTemporarySpeed(media: FlatMediaInfo, factor: number, kbType?: K
 }
 
 export function releaseTemporarySpeed(media?: FlatMediaInfo) {
-	console.log("RELEASING")
 	media = media || mediaSped
 	if (!media) return
-	chrome.tabs.sendMessage(
-		media.tabInfo.tabId,
-		{
-			type: "SET_TEMPORARY_SPEED",
-		} as Messages,
-		{ frameId: media.tabInfo.frameId },
-	)
+	sendTemporarySpeed(media)
 	mediaSped = null
 }

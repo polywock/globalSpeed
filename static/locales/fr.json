@@ -280,7 +280,9 @@
 			"qrCodeTop": "Scannez pour utiliser sur...",
 			"qrCodeBottom": "Edge pour mobile",
 			"holdToSpeedUp": "Appuyez et maintenez pour accélérer",
-			"holdToSpeedUpTooltip": "Appuyez longuement sur une vidéo pour accélérer temporairement"
+			"holdToSpeedUpTooltip": "Appuyez longuement sur une vidéo pour accélérer temporairement",
+			"longPressThreshold": "Durée d'appui long",
+			"longPressThresholdTooltip": "Combien de temps maintenir une touche avant qu'elle ne déclenche les raccourcis d'appui long"
 		},
 		"editor": {
 			"header": "Éditeur de raccourcis",
@@ -328,6 +330,8 @@
 			},
 			"pressAndHold": "Appuyer et maintenir",
 			"pressAndHoldTooltip": "Si activé, la touche doit être maintenue enfoncée pendant que la valeur est ajustée de manière interactive",
+			"longPress": "Appui long",
+			"longPressTooltip": "Ne déclencher que lorsque la touche est maintenue enfoncée plus longtemps",
 			"keyPickerInput": "Cliquer pour modifier",
 			"keyPickerInputTooltip": "Appuyez sur le nouveau raccourci"
 		},
