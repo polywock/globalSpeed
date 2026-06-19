@@ -281,7 +281,9 @@
 			"holdToSpeedUp": "Mantén presionado para adelantar",
 			"holdToSpeedUpTooltip": "Mantén presionado el video para acelerar temporalmente",
 			"longPressThreshold": "Duración de pulsación larga",
-			"longPressThresholdTooltip": "Cuánto tiempo mantener una tecla pulsada antes de que active los atajos de pulsación larga"
+			"longPressThresholdTooltip": "El límite entre los atajos normales y de pulsación larga, en segundos",
+			"doubleTapThreshold": "Duración de doble toque",
+			"doubleTapThresholdTooltip": "Intervalo de doble toque en segundos. El segundo toque debe ocurrir dentro de este tiempo"
 		},
 		"editor": {
 			"header": "Editor de atajos",
@@ -331,6 +333,10 @@
 			"pressAndHoldTooltip": "Si está habilitado, la tecla debe mantenerse presionada mientras se ajusta el valor de manera interactiva",
 			"longPress": "Pulsación larga",
 			"longPressTooltip": "Activar solo cuando la tecla se mantenga pulsada durante más tiempo",
+			"doubleTap": "Doble pulsación",
+			"doubleTapTooltip": "Activar solo cuando la tecla se pulse dos veces seguidas rápidamente",
+			"noRepeat": "Sin repetir",
+			"noRepeatTooltip": "El atajo solo se ejecutará una vez al mantener presionada una tecla",
 			"keyPickerInput": "Haz clic para cambiar",
 			"keyPickerInputTooltip": "Pulsa el nuevo atajo"
 		},

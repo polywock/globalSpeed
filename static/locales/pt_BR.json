@@ -282,7 +282,9 @@
 			"holdToSpeedUp": "Pressione e segure para avançar rapidamente",
 			"holdToSpeedUpTooltip": "Pressione e segure vídeos para acelerar temporariamente",
 			"longPressThreshold": "Duração do toque longo",
-			"longPressThresholdTooltip": "Por quanto tempo manter uma tecla pressionada antes de acionar atalhos de toque longo"
+			"longPressThresholdTooltip": "O limite entre atalhos de toque normal e toque longo, em segundos",
+			"doubleTapThreshold": "Duração do toque duplo",
+			"doubleTapThresholdTooltip": "Janela do toque duplo em segundos. O segundo toque deve ocorrer dentro desse tempo"
 		},
 		"editor": {
 			"header": "Editor de Atalhos",
@@ -332,6 +334,10 @@
 			"pressAndHoldTooltip": "Se ativado, a tecla deve ser mantida pressionada enquanto ajusta o valor interativamente",
 			"longPress": "Toque longo",
 			"longPressTooltip": "Só acione quando a tecla for mantida pressionada por mais tempo",
+			"doubleTap": "Toque duplo",
+			"doubleTapTooltip": "Acionar apenas quando a tecla for pressionada duas vezes em rápida sucessão",
+			"noRepeat": "Sem repetição",
+			"noRepeatTooltip": "O atalho será executado apenas uma vez ao manter uma tecla pressionada",
 			"keyPickerInput": "Clique para alterar",
 			"keyPickerInputTooltip": "Pressione o novo atalho"
 		},

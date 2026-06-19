@@ -281,8 +281,10 @@
 			"qrCodeBottom": "Edge cho di động",
 			"holdToSpeedUp": "Nhấn và giữ để tua nhanh",
 			"holdToSpeedUpTooltip": "Nhấn và giữ video để tạm thời tăng tốc",
-			"longPressThreshold": "Thời lượng nhấn giữ",
-			"longPressThresholdTooltip": "Thời gian giữ phím trước khi kích hoạt phím tắt nhấn giữ"
+			"longPressThreshold": "Thời gian nhấn giữ",
+			"longPressThresholdTooltip": "Ngưỡng phân biệt giữa phím tắt thường và nhấn giữ, tính bằng giây",
+			"doubleTapThreshold": "Thời gian chạm đúp",
+			"doubleTapThresholdTooltip": "Khoảng thời gian chạm đúp tính bằng giây. Lần chạm thứ hai phải diễn ra trong thời gian này"
 		},
 		"editor": {
 			"header": "Chỉnh sửa phím tắt",
@@ -332,6 +334,10 @@
 			"pressAndHoldTooltip": "Nếu được bật, phím phải được giữ trong khi điều chỉnh giá trị tương tác",
 			"longPress": "Nhấn giữ",
 			"longPressTooltip": "Chỉ kích hoạt khi giữ phím lâu hơn",
+			"doubleTap": "Nhấn đúp",
+			"doubleTapTooltip": "Chỉ kích hoạt khi phím được nhấn hai lần liên tiếp nhanh chóng",
+			"noRepeat": "Không lặp lại",
+			"noRepeatTooltip": "Phím tắt sẽ chỉ chạy một lần khi giữ phím",
 			"keyPickerInput": "Nhấp để thay đổi",
 			"keyPickerInputTooltip": "Nhấn phím tắt mới"
 		},

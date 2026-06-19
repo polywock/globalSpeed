@@ -282,7 +282,9 @@
 			"holdToSpeedUp": "Zum Vorspulen gedrückt halten",
 			"holdToSpeedUpTooltip": "Gedrückt halten, um Videos vorübergehend zu beschleunigen",
 			"longPressThreshold": "Dauer für langes Drücken",
-			"longPressThresholdTooltip": "Wie lange eine Taste gehalten werden muss, bevor Langdruck-Kurzbefehle ausgelöst werden"
+			"longPressThresholdTooltip": "Die Grenze zwischen normalen und Langdruck-Kurzbefehlen, in Sekunden",
+			"doubleTapThreshold": "Doppeltipp-Dauer",
+			"doubleTapThresholdTooltip": "Zeitfenster für Doppeltipp in Sekunden. Der zweite Tipp muss innerhalb dieser Zeit erfolgen"
 		},
 		"editor": {
 			"header": "Tastenkombinationen-Editor",
@@ -332,6 +334,10 @@
 			"pressAndHoldTooltip": "Wenn aktiviert, muss die Taste gedrückt gehalten werden, während der Wert interaktiv angepasst wird",
 			"longPress": "Langes Drücken",
 			"longPressTooltip": "Nur auslösen, wenn die Taste länger gedrückt gehalten wird",
+			"doubleTap": "Doppelt tippen",
+			"doubleTapTooltip": "Nur auslösen, wenn die Taste zweimal schnell hintereinander gedrückt wird",
+			"noRepeat": "Keine Wiederholung",
+			"noRepeatTooltip": "Tastenkürzel wird beim Gedrückthalten einer Taste nur einmal ausgeführt",
 			"keyPickerInput": "Klicken zum Ändern",
 			"keyPickerInputTooltip": "Neue Tastenkombination drücken"
 		},

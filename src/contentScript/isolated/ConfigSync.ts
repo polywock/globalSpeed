@@ -1,10 +1,10 @@
 import { getEmptyUrlConditions } from "@/defaults"
-import { DEFAULT_LONG_PRESS_THRESHOLD } from "@/defaults/constants"
+import { DEFAULT_DOUBLE_TAP_THRESHOLD, DEFAULT_LONG_PRESS_THRESHOLD } from "@/defaults/constants"
 import { AdjustMode, Keybind, KeybindMatch, URLCondition, URLConditionPart } from "@/types"
 import { getPracticalRuntimeUrl } from "@/utils/helper"
 import { getLeaf } from "@/utils/nativeUtils"
 import { getActiveParts, hasActiveParts, testURL, testURLWithPart } from "../../utils/configUtils"
-import { compareHotkeys, extractHotkey, Hotkey } from "../../utils/keys"
+import { compareHotkeys, extractHotkey, FullHotkey, Hotkey } from "../../utils/keys"
 import { SubscribeView } from "../../utils/state"
 import { FxSync } from "./FxSync"
 import { Circle } from "./utils/Circle"
@@ -31,7 +31,8 @@ export class ConfigSync {
 	blockKeyUp = false
 	fastForwardHeld: FastForwardHeld | undefined = undefined
 	lastTrigger = 0
-	heldKeys: Map<string, LongPressState> = new Map()
+	longHeld: Map<string, LongPressHeld> = new Map()
+	doubleTaps: Map<string, DoubleTapState> = new Map()
 	fxSync: FxSync
 	urlConditionsClient = new SubscribeView(
 		{ keybindsUrlCondition: true },
@@ -55,6 +56,7 @@ export class ConfigSync {
 			circleInit: true,
 			holdToSpeed: true,
 			longPressThreshold: true,
+			doubleTapThreshold: true,
 		},
 		gvar.tabInfo.tabId,
 		true,
@@ -97,8 +99,10 @@ export class ConfigSync {
 		delete this.fxSync
 	}
 	handleBlur = () => {
-		this.heldKeys.forEach((state) => clearTimeout(state.timerId))
-		this.heldKeys.clear()
+		this.longHeld.forEach((state) => window.clearTimeout(state.timerId))
+		this.longHeld.clear()
+		this.doubleTaps.forEach((state) => window.clearTimeout(state.timerId))
+		this.doubleTaps.clear()
 		if (this.fastForwardHeld) {
 			this.fastForwardHeld = undefined
 			chrome.runtime.sendMessage({ type: "RELEASED_TEMPORARY_SPEED" })
@@ -223,10 +227,24 @@ export class ConfigSync {
 			e.preventDefault()
 		}
 
-		const heldState = this.heldKeys.get(e.code)
-		if (heldState) {
-			clearTimeout(heldState.timerId)
-			this.heldKeys.delete(e.code)
+		const longHeld = this.longHeld.get(e.code)
+		if (longHeld) {
+			clearTimeout(longHeld.timerId)
+			// Trigger short matches if long press threshold never reached
+			if (!longHeld.reached && longHeld.shortMatches.length) {
+				this.triggerMatches(longHeld.shortMatches, e)
+			}
+			this.longHeld.delete(e.code)
+		}
+
+		// Clear any taps
+		const tap = this.doubleTaps.get(e.code)
+		if (tap) {
+			tap.released = true
+
+			if (tap.doubleTapped || tap.singleTapped) {
+				this.doubleTaps.delete(e.code)
+			}
 		}
 
 		// Release fast forward on key up
@@ -286,39 +304,44 @@ export class ConfigSync {
 			e.stopImmediatePropagation()
 		}
 
-		// Split matches by press type
+		// If any long matches, branch off
 		const shortMatches = matches.filter((m) => !m.kb.longPress)
 		const longMatches = matches.filter((m) => m.kb.longPress)
 
-		// If no long press matches, use normal behavior
-		if (!longMatches.length) {
-			this.triggerMatches(shortMatches, e)
+		if (longMatches.length) {
+			this.handleKeyDownLongPress(e, eventHotkey, shortMatches, longMatches)
 			return
 		}
 
-		// If any long press keybinds present, require an anchor .code
-		const heldKeyId = eventHotkey.code
-		if (!heldKeyId) return
+		// If any double tap matches, branch off
+		const singleMatches = matches.filter((m) => !m.kb.doubleTap)
+		const doubleMatches = matches.filter((m) => m.kb.doubleTap)
+		if (doubleMatches.length) {
+			this.handleKeyDownDoubleTaps(e, eventHotkey, singleMatches, doubleMatches)
+			return
+		}
 
-		let held = this.heldKeys.get(heldKeyId)
+		// Default behavior
+		this.triggerMatches(matches, e)
+	}
+	handleKeyDownLongPress(e: KeyboardEvent, eventHotkey: FullHotkey, shortMatches: KeybindMatch[], longMatches: KeybindMatch[]) {
+		const keyId = eventHotkey.code
+		if (!keyId) return
+
+		let held = this.longHeld.get(keyId)
 		if (!held) {
 			// If first time pressing it, note
 			held = {
-				longMatches: longMatches,
+				shortMatches,
+				longMatches,
 			}
 			held.timerId = window.setTimeout(() => {
 				// Trigger long matches after timeout
-				this.triggerMatches(longMatches)
+				this.triggerMatches(longMatches, e)
 				held.reached = true
 			}, this.client?.view?.longPressThreshold ?? DEFAULT_LONG_PRESS_THRESHOLD)
 
-			this.heldKeys.set(heldKeyId, held)
-
-			// Trigger short matches first time only
-			if (shortMatches.length) {
-				this.triggerMatches(shortMatches, e)
-				return
-			}
+			this.longHeld.set(keyId, held)
 		} else {
 			// If already held down for enough time, trigger long matches repeatedly
 			if (held.reached) {
@@ -326,10 +349,44 @@ export class ConfigSync {
 			}
 		}
 	}
+	handleKeyDownDoubleTaps(e: KeyboardEvent, eventHotkey: FullHotkey, singleMatches: KeybindMatch[], doubleMatches: KeybindMatch[]) {
+		const keyId = eventHotkey.code
+		if (!keyId) return
+
+		let tap = this.doubleTaps.get(keyId)
+
+		if (!tap) {
+			// Store references
+			tap = { singleMatches }
+			tap.timerId = window.setTimeout(() => {
+				this.triggerMatches(tap.singleMatches || [], e)
+				tap.singleTapped = true
+				if (tap.released) {
+					this.doubleTaps.delete(keyId)
+				}
+			}, this.client?.view?.doubleTapThreshold ?? DEFAULT_DOUBLE_TAP_THRESHOLD)
+			this.doubleTaps.set(keyId, tap)
+		} else {
+			// Update so it's not stale for timeout handler
+			tap.singleMatches = singleMatches
+			tap.released = false
+
+			if (tap.singleTapped) {
+				this.triggerMatches(singleMatches || [], e)
+			} else if (tap.doubleTapped) {
+				this.triggerMatches(doubleMatches || [], e)
+			} else if (!e.repeat) {
+				this.triggerMatches(doubleMatches || [], e)
+				tap.doubleTapped = true
+				clearTimeout(tap.timerId)
+			}
+		}
+	}
 
 	triggerMatches = (matches: KeybindMatch[], e?: KeyboardEvent) => {
-		// Avoid repeat keybinds in ignoredList
-		matches = matches.filter((match) => !this.ignoreList.has(match.kb.id))
+		// Avoid repeat keybinds in ignoredList, and noRepeat keybinds on key auto-repeat
+		const isRepeat = !!e?.repeat
+		matches = matches.filter((match) => !this.ignoreList.has(match.kb.id) && !(isRepeat && match.kb.noRepeat))
 		if (!matches.length) return
 
 		// A minimum interval between shortcuts
@@ -384,8 +441,17 @@ type FastForwardHeld = {
 	code: string
 }
 
-type LongPressState = {
+type LongPressHeld = {
+	shortMatches: KeybindMatch[]
 	longMatches: KeybindMatch[]
 	timerId?: ReturnType<typeof setTimeout>
 	reached?: boolean
+}
+
+type DoubleTapState = {
+	singleMatches: KeybindMatch[]
+	timerId?: ReturnType<typeof setTimeout>
+	doubleTapped?: boolean
+	singleTapped?: boolean
+	released?: boolean
 }

@@ -283,7 +283,9 @@
 			"holdToSpeedUp": "Hızlandırmak için basılı tutun",
 			"holdToSpeedUpTooltip": "Videoları geçici olarak hızlandırmak için basılı tutun",
 			"longPressThreshold": "Uzun basma süresi",
-			"longPressThresholdTooltip": "Bir tuşu uzun basma kısayollarını tetiklemeden önce ne kadar süre basılı tutmak gerektiği"
+			"longPressThresholdTooltip": "Normal ve uzun basma kısayolları arasındaki eşik, saniye cinsinden",
+			"doubleTapThreshold": "Çift dokunma süresi",
+			"doubleTapThresholdTooltip": "Saniye cinsinden çift dokunma aralığı. İkinci dokunuş bu süre içinde olmalıdır"
 		},
 		"editor": {
 			"header": "Kısayol Düzenleyici",
@@ -333,6 +335,10 @@
 			"pressAndHoldTooltip": "Etkinleştirilirse, değeri etkileşimli olarak ayarlarken tuş basılı tutulmalıdır",
 			"longPress": "Uzun basma",
 			"longPressTooltip": "Yalnızca tuş daha uzun süre basılı tutulduğunda tetikle",
+			"doubleTap": "Çift dokunma",
+			"doubleTapTooltip": "Yalnızca tuşa art arda iki kez hızlıca basıldığında tetikle",
+			"noRepeat": "Tekrar yok",
+			"noRepeatTooltip": "Kısayol, tuş basılı tutulurken yalnızca bir kez çalışır",
 			"keyPickerInput": "Değiştirmek için tıkla",
 			"keyPickerInputTooltip": "Yeni kısayola bas"
 		},

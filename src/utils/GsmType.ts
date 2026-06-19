@@ -285,7 +285,9 @@ export type Gsm = {
       holdToSpeedUp: string,
       holdToSpeedUpTooltip: string,
       longPressThreshold: string,
-      longPressThresholdTooltip: string
+      longPressThresholdTooltip: string,
+      doubleTapThreshold: string,
+      doubleTapThresholdTooltip: string
     },
     editor: {
       header: string,
@@ -335,6 +337,10 @@ export type Gsm = {
       pressAndHoldTooltip: string,
       longPress: string,
       longPressTooltip: string,
+      doubleTap: string,
+      doubleTapTooltip: string,
+      noRepeat: string,
+      noRepeatTooltip: string,
       keyPickerInput: string,
       keyPickerInputTooltip: string
     },

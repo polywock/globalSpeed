@@ -282,7 +282,9 @@
 			"holdToSpeedUp": "Tekan dan tahan untuk percepat",
 			"holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara",
 			"longPressThreshold": "Tempoh tekan lama",
-			"longPressThresholdTooltip": "Berapa lama menahan kekunci sebelum ia mencetuskan pintasan tekan lama"
+			"longPressThresholdTooltip": "Had masa antara pintasan biasa dan tekan lama, dalam saat",
+			"doubleTapThreshold": "Tempoh ketik dua kali",
+			"doubleTapThresholdTooltip": "Jeda ketik dua kali dalam saat. Ketikan kedua mesti berlaku dalam tempoh ini"
 		},
 		"editor": {
 			"header": "Penyunting Pintasan",
@@ -332,6 +334,10 @@
 			"pressAndHoldTooltip": "Jika diaktifkan, kekunci mesti ditekan dan ditahan semasa melaraskan nilai secara interaktif",
 			"longPress": "Tekan lama",
 			"longPressTooltip": "Hanya cetus apabila kekunci ditahan lebih lama",
+			"doubleTap": "Ketik dua kali",
+			"doubleTapTooltip": "Hanya cetus apabila kekunci ditekan dua kali berturut-turut dengan cepat",
+			"noRepeat": "Tiada ulangan",
+			"noRepeatTooltip": "Pintasan hanya akan berjalan sekali semasa menekan kekunci",
 			"keyPickerInput": "Klik untuk tukar",
 			"keyPickerInputTooltip": "Tekan pintasan baharu"
 		},

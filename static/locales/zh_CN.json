@@ -284,7 +284,9 @@
 			"holdToSpeedUp": "按住快进",
 			"holdToSpeedUpTooltip": "按住视频可临时加速播放",
 			"longPressThreshold": "长按时长",
-			"longPressThresholdTooltip": "触发长按快捷键前需按住按键的时长"
+			"longPressThresholdTooltip": "普通快捷键与长按快捷键的分界时间（秒）",
+			"doubleTapThreshold": "双击时长",
+			"doubleTapThresholdTooltip": "双击时间窗口（秒）。第二次点击必须在此时间内完成"
 		},
 		"editor": {
 			"header": "快捷键编辑器",
@@ -334,6 +336,10 @@
 			"pressAndHoldTooltip": "如果启用，则在交互调整值时必须按住键",
 			"longPress": "长按",
 			"longPressTooltip": "仅在按键按住较长时间时触发",
+			"doubleTap": "双击",
+			"doubleTapTooltip": "仅当按键被快速连续按两次时触发",
+			"noRepeat": "不重复",
+			"noRepeatTooltip": "按住按键时，快捷键只会执行一次",
 			"keyPickerInput": "点击更改",
 			"keyPickerInputTooltip": "按下新快捷键"
 		},

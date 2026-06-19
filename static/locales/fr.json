@@ -282,7 +282,9 @@
 			"holdToSpeedUp": "Appuyez et maintenez pour accélérer",
 			"holdToSpeedUpTooltip": "Appuyez longuement sur une vidéo pour accélérer temporairement",
 			"longPressThreshold": "Durée d'appui long",
-			"longPressThresholdTooltip": "Combien de temps maintenir une touche avant qu'elle ne déclenche les raccourcis d'appui long"
+			"longPressThresholdTooltip": "La limite entre les raccourcis d'appui normal et d'appui long, en secondes",
+			"doubleTapThreshold": "Durée du double appui",
+			"doubleTapThresholdTooltip": "Intervalle du double appui en secondes. Le second appui doit avoir lieu dans ce délai"
 		},
 		"editor": {
 			"header": "Éditeur de raccourcis",
@@ -332,6 +334,10 @@
 			"pressAndHoldTooltip": "Si activé, la touche doit être maintenue enfoncée pendant que la valeur est ajustée de manière interactive",
 			"longPress": "Appui long",
 			"longPressTooltip": "Ne déclencher que lorsque la touche est maintenue enfoncée plus longtemps",
+			"doubleTap": "Double appui",
+			"doubleTapTooltip": "Ne déclencher que si la touche est enfoncée deux fois rapidement",
+			"noRepeat": "Pas de répétition",
+			"noRepeatTooltip": "Le raccourci ne s’exécutera qu’une seule fois en maintenant une touche enfoncée",
 			"keyPickerInput": "Cliquer pour modifier",
 			"keyPickerInputTooltip": "Appuyez sur le nouveau raccourci"
 		},

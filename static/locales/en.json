@@ -286,7 +286,9 @@
 			"holdToSpeedUp": "Press and hold to fast forward",
 			"holdToSpeedUpTooltip": "Press and hold videos to temporarily speed up",
 			"longPressThreshold": "Long press duration",
-			"longPressThresholdTooltip": "How long to hold a key before it triggers long press shortcuts"
+			"longPressThresholdTooltip": "The cutoff between regular and long-press shortcuts, in seconds",
+			"doubleTapThreshold": "Double tap duration",
+			"doubleTapThresholdTooltip": "Double-tap window in seconds. The second tap must land within this time"
 		},
 		"editor": {
 			"header": "Shortcut Editor",
@@ -336,6 +338,10 @@
 			"pressAndHoldTooltip": "If enabled, the key must be held down while interactively adjusting the value",
 			"longPress": "Long press",
 			"longPressTooltip": "Only trigger when the key is held down for a longer duration",
+			"doubleTap": "Double tap",
+			"doubleTapTooltip": "Only trigger when the key is tapped twice in quick succession",
+			"noRepeat": "No repeat",
+			"noRepeatTooltip": "Shortcut will only run once while holding down a key",
 			"keyPickerInput": "Click to change",
 			"keyPickerInputTooltip": "Press new shortcut"
 		},

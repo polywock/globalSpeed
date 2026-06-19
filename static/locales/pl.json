@@ -282,7 +282,9 @@
 			"holdToSpeedUp": "Naciśnij i przytrzymaj, aby przyspieszyć",
 			"holdToSpeedUpTooltip": "Naciśnij i przytrzymaj wideo, aby tymczasowo przyspieszyć",
 			"longPressThreshold": "Czas długiego naciśnięcia",
-			"longPressThresholdTooltip": "Jak długo przytrzymać klawisz, zanim uruchomi skróty długiego naciśnięcia"
+			"longPressThresholdTooltip": "Próg między zwykłymi a długimi naciśnięciami, w sekundach",
+			"doubleTapThreshold": "Czas podwójnego stuknięcia",
+			"doubleTapThresholdTooltip": "Okno podwójnego stuknięcia w sekundach. Drugie stuknięcie musi nastąpić w tym czasie"
 		},
 		"editor": {
 			"header": "Edytor skrótów",
@@ -332,6 +334,10 @@
 			"pressAndHoldTooltip": "Jeśli włączone, klawisz musi być przytrzymany podczas interaktywnego dostosowywania wartości",
 			"longPress": "Długie naciśnięcie",
 			"longPressTooltip": "Uruchamiaj tylko po dłuższym przytrzymaniu klawisza",
+			"doubleTap": "Podwójne naciśnięcie",
+			"doubleTapTooltip": "Uruchamiaj tylko po dwukrotnym naciśnięciu klawisza w krótkim odstępie czasu",
+			"noRepeat": "Bez powtarzania",
+			"noRepeatTooltip": "Skrót uruchomi się tylko raz podczas przytrzymania klawisza",
 			"keyPickerInput": "Kliknij, aby zmienić",
 			"keyPickerInputTooltip": "Naciśnij nowy skrót"
 		},

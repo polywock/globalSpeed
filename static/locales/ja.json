@@ -282,7 +282,9 @@
 			"holdToSpeedUp": "押し続けて早送り",
 			"holdToSpeedUpTooltip": "動画を長押しすると一時的に再生速度が上がります",
 			"longPressThreshold": "長押し時間",
-			"longPressThresholdTooltip": "長押しショートカットが作動するまでのキー長押し時間"
+			"longPressThresholdTooltip": "通常のショートカットと長押しショートカットのしきい値（秒）",
+			"doubleTapThreshold": "ダブルタップ時間",
+			"doubleTapThresholdTooltip": "ダブルタップの判定時間（秒）。2回目のタップはこの時間内に行う必要があります"
 		},
 		"editor": {
 			"header": "ショートカットエディター",
@@ -332,6 +334,10 @@
 			"pressAndHoldTooltip": "有効にすると、キーを押し続けている間に値をインタラクティブに調整する必要があります",
 			"longPress": "長押し",
 			"longPressTooltip": "キーを長めに押し続けた場合のみ作動",
+			"doubleTap": "ダブルタップ",
+			"doubleTapTooltip": "キーが短時間に2回連続で押された場合のみ実行",
+			"noRepeat": "繰り返しなし",
+			"noRepeatTooltip": "キーを押し続けている間、ショートカットは1回だけ実行されます",
 			"keyPickerInput": "クリックして変更",
 			"keyPickerInputTooltip": "新しいショートカットを押す"
 		},

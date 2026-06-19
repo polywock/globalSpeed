@@ -93,6 +93,7 @@ export type State = {
 	circleInit?: CircleInit
 	holdToSpeed?: number
 	longPressThreshold?: number
+	doubleTapThreshold?: number
 	sawEnableShortcutOverlayCount?: number
 } & Context
 
@@ -316,6 +317,8 @@ export type Keybind = {
 	oncePerUp?: boolean
 	alwaysOn?: boolean
 	longPress?: boolean
+	doubleTap?: boolean
+	noRepeat?: boolean
 	cinemaInit?: CinemaInit
 }
 

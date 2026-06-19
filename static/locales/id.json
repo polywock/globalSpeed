@@ -281,7 +281,9 @@
 			"holdToSpeedUp": "Tekan dan tahan untuk mempercepat",
 			"holdToSpeedUpTooltip": "Tekan dan tahan video untuk mempercepat sementara",
 			"longPressThreshold": "Durasi tekan lama",
-			"longPressThresholdTooltip": "Berapa lama tombol ditekan sebelum memicu pintasan tekan lama"
+			"longPressThresholdTooltip": "Batas antara pintasan tekan biasa dan tekan lama, dalam detik",
+			"doubleTapThreshold": "Durasi ketuk ganda",
+			"doubleTapThresholdTooltip": "Jeda ketuk ganda dalam detik. Ketukan kedua harus terjadi dalam waktu ini"
 		},
 		"editor": {
 			"header": "Editor Pintasan",
@@ -331,6 +333,10 @@
 			"pressAndHoldTooltip": "Jika diaktifkan, tombol harus ditekan dan ditahan saat menyesuaikan nilai secara interaktif",
 			"longPress": "Tekan lama",
 			"longPressTooltip": "Hanya picu saat tombol ditahan lebih lama",
+			"doubleTap": "Ketuk dua kali",
+			"doubleTapTooltip": "Hanya aktif saat tombol ditekan dua kali secara berurutan dengan cepat",
+			"noRepeat": "Tidak berulang",
+			"noRepeatTooltip": "Shortcut hanya akan berjalan sekali saat menahan tombol",
 			"keyPickerInput": "Klik untuk mengubah",
 			"keyPickerInputTooltip": "Tekan pintasan baru"
 		},

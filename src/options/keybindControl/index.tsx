@@ -96,9 +96,21 @@ export const KeybindControl = (props: KeybindControlProps) => {
 		})
 
 		kebabList.push({
+			name: "doubleTap",
+			checked: !!value.doubleTap,
+			label: makeLabelWithTooltip(gvar.gsm.options.editor.doubleTap, gvar.gsm.options.editor.doubleTapTooltip, "left"),
+		})
+
+		kebabList.push({
 			name: "blockEvents",
 			checked: !!value.greedy,
 			label: makeLabelWithTooltip(gvar.gsm.token.blockEvents, gvar.gsm.token.blockEventsTooltip, "left"),
+		})
+
+		kebabList.push({
+			name: "noRepeat",
+			checked: !!value.noRepeat,
+			label: makeLabelWithTooltip(gvar.gsm.options.editor.noRepeat, gvar.gsm.options.editor.noRepeatTooltip, "left"),
 		})
 	}
 
@@ -377,7 +389,31 @@ export const KeybindControl = (props: KeybindControlProps) => {
 							value.id,
 							produce(value, (d) => {
 								d.longPress = !d.longPress
-								if (!d.longPress) delete d.longPress
+								if (d.longPress) {
+									delete d.doubleTap
+								} else {
+									delete d.longPress
+								}
+							}),
+						)
+					} else if (name === "doubleTap") {
+						props.onChange(
+							value.id,
+							produce(value, (d) => {
+								d.doubleTap = !d.doubleTap
+								if (d.doubleTap) {
+									delete d.longPress
+								} else {
+									delete d.doubleTap
+								}
+							}),
+						)
+					} else if (name === "noRepeat") {
+						props.onChange(
+							value.id,
+							produce(value, (d) => {
+								d.noRepeat = !d.noRepeat
+								if (!d.noRepeat) delete d.noRepeat
 							}),
 						)
 					} else if (name === "autoPause") {

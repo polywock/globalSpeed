@@ -281,8 +281,10 @@
 			"qrCodeBottom": "Edge per dispositivi mobili",
 			"holdToSpeedUp": "Tieni premuto per avanzare velocemente",
 			"holdToSpeedUpTooltip": "Tieni premuto sui video per accelerare temporaneamente",
-			"longPressThreshold": "Durata pressione prolungata",
-			"longPressThresholdTooltip": "Quanto a lungo tenere premuto un tasto prima che attivi le scorciatoie con pressione prolungata"
+			"longPressThreshold": "Durata pressione lunga",
+			"longPressThresholdTooltip": "La soglia tra le scorciatoie normali e quelle a pressione lunga, in secondi",
+			"doubleTapThreshold": "Durata doppio tocco",
+			"doubleTapThresholdTooltip": "Intervallo del doppio tocco in secondi. Il secondo tocco deve avvenire entro questo tempo"
 		},
 		"editor": {
 			"header": "Modifica Scorciatoie",
@@ -332,6 +334,10 @@
 			"pressAndHoldTooltip": "Se abilitato, il tasto deve essere tenuto premuto durante la regolazione interattiva del valore",
 			"longPress": "Pressione prolungata",
 			"longPressTooltip": "Attiva solo quando il tasto viene tenuto premuto più a lungo",
+			"doubleTap": "Doppio tocco",
+			"doubleTapTooltip": "Attiva solo quando il tasto viene premuto due volte in rapida successione",
+			"noRepeat": "Nessuna ripetizione",
+			"noRepeatTooltip": "La scorciatoia verrà eseguita solo una volta tenendo premuto un tasto",
 			"keyPickerInput": "Clicca per modificare",
 			"keyPickerInputTooltip": "Premi la nuova scorciatoia"
 		},

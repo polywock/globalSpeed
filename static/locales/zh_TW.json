@@ -282,8 +282,10 @@
 			"qrCodeBottom": "Edge 手機版",
 			"holdToSpeedUp": "長按以快轉",
 			"holdToSpeedUpTooltip": "按住影片可暫時加速播放",
-			"longPressThreshold": "長按持續時間",
-			"longPressThresholdTooltip": "按住按鍵多久後才會觸發長按快捷鍵"
+			"longPressThreshold": "長按時間",
+			"longPressThresholdTooltip": "一般與長按快捷鍵的區分時間（秒）",
+			"doubleTapThreshold": "雙擊時間",
+			"doubleTapThresholdTooltip": "雙擊間隔時間（秒）。第二次點擊必須在此時間內完成"
 		},
 		"editor": {
 			"header": "快捷鍵編輯器",
@@ -333,6 +335,10 @@
 			"pressAndHoldTooltip": "啟用時，互動調整數值時必須按住按鍵",
 			"longPress": "長按",
 			"longPressTooltip": "僅在按鍵按住較長時間時才觸發",
+			"doubleTap": "雙擊",
+			"doubleTapTooltip": "僅在按鍵於短時間內連按兩次時觸發",
+			"noRepeat": "不重複",
+			"noRepeatTooltip": "按住按鍵時，捷徑只會執行一次",
 			"keyPickerInput": "點擊以更改",
 			"keyPickerInputTooltip": "按下新的快捷鍵"
 		},
