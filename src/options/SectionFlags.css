@@ -59,6 +59,13 @@
 			}
 		}
 
+		.withReset {
+			display: grid;
+			grid-template-columns: max-content max-content;
+			column-gap: 5px;
+			align-items: center;
+		}
+
 		& > .fieldValue {
 			position: relative;
 			line-height: 0;

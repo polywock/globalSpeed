@@ -102,15 +102,15 @@ export const KeybindControl = (props: KeybindControlProps) => {
 		})
 
 		kebabList.push({
-			name: "blockEvents",
-			checked: !!value.greedy,
-			label: makeLabelWithTooltip(gvar.gsm.token.blockEvents, gvar.gsm.token.blockEventsTooltip, "left"),
-		})
-
-		kebabList.push({
 			name: "noRepeat",
 			checked: !!value.noRepeat,
 			label: makeLabelWithTooltip(gvar.gsm.options.editor.noRepeat, gvar.gsm.options.editor.noRepeatTooltip, "left"),
+		})
+
+		kebabList.push({
+			name: "blockEvents",
+			checked: !!value.greedy,
+			label: makeLabelWithTooltip(gvar.gsm.token.blockEvents, gvar.gsm.token.blockEventsTooltip, "left"),
 		})
 	}
 

@@ -21,6 +21,7 @@ import { SpeedPresetModal } from "./SpeedPresetModal"
 import { URLModal } from "./URLModal"
 import { WidgetModal } from "./WidgetModal"
 import "./SectionFlags.css"
+import { Reset } from "@/comps/Reset"
 
 export function SectionFlags(props: {}) {
 	const [showIndicatorModal, setShowIndicatorModal] = useState(false)
@@ -379,13 +380,19 @@ export function SectionFlags(props: {}) {
 									<RegularTooltip title={gvar.gsm.options.flags.longPressThresholdTooltip} align="right" />
 								</div>
 
-								<div className="control">
+								<div className="withReset">
 									<NumericInput
 										noNull={true}
 										min={0.1}
 										max={3}
 										value={(view.longPressThreshold ?? DEFAULT_LONG_PRESS_THRESHOLD) / 1000}
 										onChange={(v) => setView({ longPressThreshold: Math.round(v * 1000) })}
+									/>
+									<Reset
+										active={view.longPressThreshold != undefined}
+										onClick={() => {
+											setView({ longPressThreshold: null })
+										}}
 									/>
 								</div>
 							</div>
@@ -398,13 +405,19 @@ export function SectionFlags(props: {}) {
 									<RegularTooltip title={gvar.gsm.options.flags.doubleTapThresholdTooltip} align="right" />
 								</div>
 
-								<div className="control">
+								<div className="withReset">
 									<NumericInput
 										noNull={true}
 										min={0.06}
 										max={3}
 										value={(view.doubleTapThreshold ?? DEFAULT_DOUBLE_TAP_THRESHOLD) / 1000}
 										onChange={(v) => setView({ doubleTapThreshold: Math.round(v * 1000) })}
+									/>
+									<Reset
+										active={view.doubleTapThreshold != undefined}
+										onClick={() => {
+											setView({ doubleTapThreshold: null })
+										}}
 									/>
 								</div>
 							</div>
