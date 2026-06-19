@@ -343,6 +343,10 @@ export class ConfigSync {
 
 			this.longHeld.set(keyId, held)
 		} else {
+			// Update references
+			held.longMatches = longMatches
+			held.shortMatches = shortMatches
+
 			// If already held down for enough time, trigger long matches repeatedly
 			if (held.reached) {
 				this.triggerMatches(longMatches, e)
