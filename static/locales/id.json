@@ -236,6 +236,8 @@
 			"showBadge": "Tampilkan badge",
 			"showBadgeTooltip": "Badge adalah teks pada ikon ekstensi",
 			"showMediaView": "Tampilkan daftar media",
+			"autoPlay": "Auto play",
+			"autoPlayTooltip": "Automatically resume playback when a new video loads, e.g. when a site jumps to the next video but leaves it paused",
 			"showIndicator": "Tampilkan indikator",
 			"showIndicatorTooltip": "Indikator adalah umpan balik visual saat menggunakan pintasan",
 			"ghostMode": "Mode hantu",

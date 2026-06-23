@@ -241,6 +241,8 @@
 			"showBadge": "Show badge",
 			"showBadgeTooltip": "The badge is the text on the extension icon",
 			"showMediaView": "Show media list",
+			"autoPlay": "Auto play",
+			"autoPlayTooltip": "Automatically resume playback when a new video loads, e.g. when a site jumps to the next video but leaves it paused",
 			"showIndicator": "Show indicator",
 			"showIndicatorTooltip": "The indicator is visual feedback when using shortcuts",
 			"ghostMode": "Ghost mode",

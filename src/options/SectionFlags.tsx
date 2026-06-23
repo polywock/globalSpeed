@@ -51,6 +51,7 @@ export function SectionFlags(props: {}) {
 		speedSlider: true,
 		virtualInput: true,
 		circleWidget: true,
+		autoPlay: true,
 		holdToSpeed: true,
 		longPressThreshold: true,
 		doubleTapThreshold: true,
@@ -218,6 +219,21 @@ export function SectionFlags(props: {}) {
 
 				{/* Circle widget */}
 				<CircleWidget setView={setView} active={view.circleWidget} setShowWidgetModal={setShowWidgetModal} />
+
+				{/* Auto play */}
+				<div className="field marginTop">
+					<div className="labelWithTooltip">
+						<span>{gvar.gsm.options.flags.autoPlay}</span>
+						<RegularTooltip title={gvar.gsm.options.flags.autoPlayTooltip} align="right" />
+					</div>
+					<Toggle
+						aria-label={gvar.gsm.options.flags.autoPlay}
+						value={!!view.autoPlay}
+						onChange={(e) => {
+							setView({ autoPlay: !view.autoPlay })
+						}}
+					/>
+				</div>
 
 				{/* Pin by default */}
 				<div className="field marginTop">

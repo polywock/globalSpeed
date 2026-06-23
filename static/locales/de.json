@@ -237,6 +237,8 @@
 			"showBadge": "Abzeichen anzeigen",
 			"showBadgeTooltip": "Das Abzeichen ist der Text auf dem Erweiterungssymbol",
 			"showMediaView": "Medienliste anzeigen",
+			"autoPlay": "Auto play",
+			"autoPlayTooltip": "Automatically resume playback when a new video loads, e.g. when a site jumps to the next video but leaves it paused",
 			"showIndicator": "Indikator anzeigen",
 			"showIndicatorTooltip": "Der Indikator ist visuelles Feedback beim Verwenden von Tastenkombinationen",
 			"ghostMode": "Geistermodus",

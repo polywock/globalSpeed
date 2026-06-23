@@ -237,6 +237,8 @@
 			"showBadge": "Pokaż odznakę",
 			"showBadgeTooltip": "Odznaka to tekst na ikonie rozszerzenia",
 			"showMediaView": "Pokaż listę multimediów",
+			"autoPlay": "Auto play",
+			"autoPlayTooltip": "Automatically resume playback when a new video loads, e.g. when a site jumps to the next video but leaves it paused",
 			"showIndicator": "Pokaż wskaźnik",
 			"showIndicatorTooltip": "Wskaźnik to wizualna informacja zwrotna podczas używania skrótów",
 			"ghostMode": "Tryb ducha",
