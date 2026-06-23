@@ -236,6 +236,8 @@
 			"showBadge": "Mostrar distintivo",
 			"showBadgeTooltip": "El distintivo es el texto en el icono de la extensión",
 			"showMediaView": "Mostrar lista de medios",
+			"autoPlay": "Auto play",
+			"autoPlayTooltip": "Automatically resume playback when a new video loads, e.g. when a site jumps to the next video but leaves it paused",
 			"showIndicator": "Mostrar indicador",
 			"showIndicatorTooltip": "El indicador es una retroalimentación visual al usar atajos",
 			"ghostMode": "Modo fantasma",

@@ -238,6 +238,8 @@
 			"showBadge": "Rozet göster",
 			"showBadgeTooltip": "Rozet, uzantı simgesi üzerindeki metindir",
 			"showMediaView": "Medya listesini göster",
+			"autoPlay": "Auto play",
+			"autoPlayTooltip": "Automatically resume playback when a new video loads, e.g. when a site jumps to the next video but leaves it paused",
 			"showIndicator": "Göstergeyi göster",
 			"showIndicatorTooltip": "Gösterge, kısayollar kullanılırken görsel geri bildirimdir",
 			"ghostMode": "Hayalet modu",

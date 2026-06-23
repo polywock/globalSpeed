@@ -237,6 +237,8 @@
 			"showBadge": "Показати значок",
 			"showBadgeTooltip": "Значок — це текст на іконці розширення",
 			"showMediaView": "Показати список медіа",
+			"autoPlay": "Auto play",
+			"autoPlayTooltip": "Automatically resume playback when a new video loads, e.g. when a site jumps to the next video but leaves it paused",
 			"showIndicator": "Показати індикатор",
 			"showIndicatorTooltip": "Індикатор — це візуальний зворотний зв'язок при використанні гарячих клавіш",
 			"ghostMode": "Режим привида",

@@ -91,6 +91,7 @@ export type State = {
 	hideGrant?: boolean
 	circleWidget?: boolean
 	circleInit?: CircleInit
+	autoPlay?: boolean
 	holdToSpeed?: number
 	longPressThreshold?: number
 	doubleTapThreshold?: number

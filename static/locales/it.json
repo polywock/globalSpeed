@@ -237,6 +237,8 @@
 			"showBadge": "Mostra distintivo",
 			"showBadgeTooltip": "Il distintivo è il testo sull'icona dell'estensione",
 			"showMediaView": "Mostra elenco dei media",
+			"autoPlay": "Auto play",
+			"autoPlayTooltip": "Automatically resume playback when a new video loads, e.g. when a site jumps to the next video but leaves it paused",
 			"showIndicator": "Mostra indicatore",
 			"showIndicatorTooltip": "L'indicatore è un feedback visivo quando si usano le scorciatoie",
 			"ghostMode": "Ghost mode",

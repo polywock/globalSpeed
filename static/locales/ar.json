@@ -238,6 +238,8 @@
 			"showBadge": "عرض الشارة",
 			"showBadgeTooltip": "الشارة هي النص الموجود على أيقونة الإضافة",
 			"showMediaView": "عرض قائمة الوسائط",
+			"autoPlay": "Auto play",
+			"autoPlayTooltip": "Automatically resume playback when a new video loads, e.g. when a site jumps to the next video but leaves it paused",
 			"showIndicator": "عرض المؤشر",
 			"showIndicatorTooltip": "المؤشر هو ردود الفعل البصرية عند استخدام الاختصارات",
 			"ghostMode": "وضع الشبح",

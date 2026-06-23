@@ -240,6 +240,8 @@ export type Gsm = {
       showBadge: string,
       showBadgeTooltip: string,
       showMediaView: string,
+      autoPlay: string,
+      autoPlayTooltip: string,
       showIndicator: string,
       showIndicatorTooltip: string,
       ghostMode: string,

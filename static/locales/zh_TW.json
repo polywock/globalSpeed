@@ -238,6 +238,8 @@
 			"showBadge": "顯示標記",
 			"showBadgeTooltip": "標記是擴充功能圖示上的文字",
 			"showMediaView": "顯示媒體清單",
+			"autoPlay": "自動播放",
+			"autoPlayTooltip": "當新影片載入時自動恢復播放，例如網站跳轉到下一個影片但停在暫停狀態時",
 			"showIndicator": "顯示指示器",
 			"showIndicatorTooltip": "指示器是使用快捷鍵時的視覺回饋",
 			"ghostMode": "幽靈模式",

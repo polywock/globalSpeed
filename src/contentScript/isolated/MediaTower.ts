@@ -3,6 +3,7 @@ import { getShadow } from "@/utils/nativeUtils"
 import { conformSpeed } from "../../utils/configUtils"
 import { assertType, between, randomId } from "../../utils/helper"
 import { IterableWeakSet } from "@/utils/IterableWeakSet"
+import { SubscribeView } from "../../utils/state"
 import { applyMediaEvent, MediaEvent } from "./utils/applyMediaEvent"
 import { generateScopeState } from "./utils/genMediaInfo"
 
@@ -16,6 +17,8 @@ export class MediaTower {
 	forceSpeedCallbacks: Set<() => void> = new Set()
 	observer: IntersectionObserver
 	trackFps = true
+	autoPlay = false
+	autoPlayClient: SubscribeView
 	previousTimeUpdate: TimeUpdateInfo
 
 	constructor() {
@@ -24,6 +27,17 @@ export class MediaTower {
 		gvar.os.detectOpen.cbs.add(this.handleDetectOpen)
 		window.addEventListener("beforeunload", this.handleUnload, { capture: true })
 		window.addEventListener("blur", this.handleBlur, { capture: true, passive: true })
+
+		// Persistent subscription so auto-play works regardless of tab visibility.
+		this.autoPlayClient = new SubscribeView(
+			{ autoPlay: true, superDisable: true },
+			0,
+			true,
+			(view) => {
+				this.autoPlay = !!(view.autoPlay && !view.superDisable)
+			},
+			300,
+		)
 	}
 	private handleDetectOpen = () => {
 		this.observer?.disconnect()
@@ -171,6 +185,10 @@ export class MediaTower {
 		this.processMedia(elem)
 		this.sendUpdate()
 
+		if (e.type === "loadedmetadata") {
+			this.tryAutoPlay(elem)
+		}
+
 		if (e.type === "ratechange") {
 			gvar.ghostMode && e.stopImmediatePropagation()
 			delete (e.target as HTMLMediaElement).gsFpsCount
@@ -190,6 +208,13 @@ export class MediaTower {
 		}
 	}
 	private handleMediaEventDeb = debounce(this.handleMediaEvent, 5000, { leading: true, trailing: true, maxWait: 5000 })
+	private tryAutoPlay = (elem: HTMLMediaElement) => {
+		if (!this.autoPlay || !elem?.paused) return
+		// Skip tiny clips (sound effects, etc.); only auto-resume real media.
+		if (elem.duration && elem.duration < 1) return
+		// Browser may reject without a prior user gesture; ignore quietly.
+		elem.play?.()?.catch(() => {})
+	}
 	sendUpdate = () => {
 		if (!chrome.runtime?.id) return gvar.os.handleOrphan()
 		if (!gvar.tabInfo) return

@@ -237,6 +237,8 @@
 			"showBadge": "Hiển thị huy hiệu",
 			"showBadgeTooltip": "Huy hiệu là văn bản trên biểu tượng mở rộng",
 			"showMediaView": "Hiển thị danh sách phương tiện",
+			"autoPlay": "Auto play",
+			"autoPlayTooltip": "Automatically resume playback when a new video loads, e.g. when a site jumps to the next video but leaves it paused",
 			"showIndicator": "Hiển thị chỉ báo",
 			"showIndicatorTooltip": "Chỉ báo là phản hồi trực quan khi sử dụng phím tắt",
 			"ghostMode": "Chế độ ghost",

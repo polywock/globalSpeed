@@ -239,6 +239,8 @@
 			"showBadge": "显示徽章",
 			"showBadgeTooltip": "徽章是扩展图标上的文字",
 			"showMediaView": "显示媒体列表",
+			"autoPlay": "自动播放",
+			"autoPlayTooltip": "当新视频加载时自动恢复播放，例如网站跳转到下一个视频但停在暂停状态时",
 			"showIndicator": "显示指示器",
 			"showIndicatorTooltip": "指示器是使用快捷键时的视觉反馈",
 			"ghostMode": "幽灵模式",

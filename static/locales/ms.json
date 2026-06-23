@@ -237,6 +237,8 @@
 			"showBadge": "Tunjukkan lencana",
 			"showBadgeTooltip": "Lencana adalah teks pada ikon sambungan",
 			"showMediaView": "Tunjukkan senarai media",
+			"autoPlay": "Auto play",
+			"autoPlayTooltip": "Automatically resume playback when a new video loads, e.g. when a site jumps to the next video but leaves it paused",
 			"showIndicator": "Tunjukkan penunjuk",
 			"showIndicatorTooltip": "Penunjuk adalah maklum balas visual semasa menggunakan pintasan",
 			"ghostMode": "Mod hantu",

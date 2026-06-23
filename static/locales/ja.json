@@ -237,6 +237,8 @@
 			"showBadge": "バッジを表示",
 			"showBadgeTooltip": "バッジは拡張機能のアイコン上のテキストです",
 			"showMediaView": "メディアリストを表示",
+			"autoPlay": "Auto play",
+			"autoPlayTooltip": "Automatically resume playback when a new video loads, e.g. when a site jumps to the next video but leaves it paused",
 			"showIndicator": "インジケーターを表示",
 			"showIndicatorTooltip": "インジケーターはショートカットを使用した時の視覚的フィードバックです",
 			"ghostMode": "ゴーストモード",
