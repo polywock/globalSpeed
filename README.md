@@ -16,6 +16,14 @@ Universal speed control for video and audio.
 - Rewind/forward, frame-by-frame analysis, volume up/down and more
 - Support for multiple trigger modes, including context menu and global shortcuts; control background music or PiP videos while using another app
 
+### Auto Play
+
+- Optional **Auto play** toggle in Settings (under flags)
+- Automatically resumes playback when a new video loads — handy for sites that jump to the next video but leave it paused
+- Works regardless of tab visibility; subject to the browser's autoplay policy (a video with sound may still be blocked in a tab you've never interacted with)
+
+> _This is a fork addition not present in the upstream extension._
+
 ### Filters & Effects
 
 - Netflix movie too dark? Brighten it and dial in the contrast
