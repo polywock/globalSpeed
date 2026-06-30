@@ -66,7 +66,7 @@ export class Circle extends Popover {
 
 		if (!this.init.hideIndicator) {
 			this.indicator = new Indicator(true)
-			this.indicator.setInit(init.indicatorInit)
+			this.indicator.setInit(this.init.indicatorInit)
 		}
 
 		this.circle.className = "circle"
