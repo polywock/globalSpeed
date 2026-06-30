@@ -64,7 +64,7 @@ export class Circle extends Popover {
 		let spread = (this.size / 18) * shadowScalar
 		let blur = spread * 2
 
-		if (!init.hideIndicator) {
+		if (!this.init.hideIndicator) {
 			this.indicator = new Indicator(true)
 			this.indicator.setInit(init.indicatorInit)
 		}
