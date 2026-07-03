@@ -13,7 +13,7 @@ const HAS_REQUEST_PIP = !!HTMLVideoElement.prototype.requestPictureInPicture
 
 export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 	const { info, pinned } = props
-	const { tabId, frameId } = info.tabInfo
+	const { tabId, frameId, windowId } = info.tabInfo
 
 	let parts: string[] = [info.displayDomain || formatDomain(info.domain)]
 
@@ -42,7 +42,11 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 					<Tooltip title={gvar.gsm.token.jumpToTab}>
 						<button
 							className="jump"
-							onClick={() => {
+							onClick={async () => {
+								const tabInfo = await chrome.tabs.get(tabId)
+								if (tabInfo.windowId !== windowId) {
+									chrome.windows.update(tabInfo.windowId, { focused: true })
+								}
 								chrome.tabs.update(tabId, { active: true })
 							}}
 						>
