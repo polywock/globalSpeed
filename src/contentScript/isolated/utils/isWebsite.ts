@@ -16,9 +16,9 @@ if (location.hostname === "www.netflix.com") {
 	IS_YOUTUBE = true
 } else if (location.hostname === "vimeo.com") {
 	IS_VIMEO = true
-} else if (location.hostname.endsWith("reddit.com")) {
+} else if (location.hostname === "reddit.com" || location.hostname.endsWith(".reddit.com")) {
 	IS_REDDIT = true
-} else if (location.hostname.endsWith("facebook.com")) {
+} else if (location.hostname === "facebook.com" || location.hostname.endsWith(".facebook.com")) {
 	IS_FACEBOOK = true
 }
 

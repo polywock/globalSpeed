@@ -95,6 +95,10 @@ export type State = {
 	longPressThreshold?: number
 	doubleTapThreshold?: number
 	sawEnableShortcutOverlayCount?: number
+	// Will use this to self-promo other projects
+	selfPromoCountR?: number
+	selfPromoFirstR?: number
+	selfPromoHideTsR?: number
 } & Context
 
 export type StoredKey = `${"t" | "r"}:${number}:${keyof Context | "isPinned"}` | `${"g" | "x"}:${keyof State}`

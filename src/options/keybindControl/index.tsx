@@ -497,7 +497,7 @@ export const TriggerValues = (props: Props) => {
 								requestCreateTab(
 									isFirefox()
 										? `https://support.mozilla.org/kb/manage-extension-shortcuts-firefox`
-										: `chrome://extensions/shortcuts/#:~:text=${encodeURIComponent(`Command ${(value[keyForGlobal] || "commandA").slice(7)}`)}`,
+										: `chrome://extensions/shortcuts#:~:text=${encodeURIComponent(`Command ${(value[keyForGlobal] || "commandA").slice(7)}`)}`,
 								)
 							}}
 						>
