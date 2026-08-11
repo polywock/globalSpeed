@@ -1,3 +1,5 @@
+import { gvar } from "@/globalVar"
+
 declare global {
 	interface GlobalVar {
 		sess: Session

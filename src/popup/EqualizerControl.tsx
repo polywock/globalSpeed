@@ -3,16 +3,17 @@ import { useMemo } from "react"
 import { FaPowerOff } from "react-icons/fa"
 import { Tooltip } from "@/comps/Tooltip"
 import { EQ_PRESETS } from "@/defaults/eqPresets"
-import { produce, round } from "@/utils/helper"
+import { gvar } from "@/globalVar"
+import { cn, produce, round } from "@/utils/helper"
 import { Reset } from "../comps/Reset"
 import { SliderMicro } from "../comps/SliderMicro"
 import { getDefaultEq } from "../defaults"
 import { AudioFx } from "../types"
-import "./EqualizerControl.css"
 
 type EqualizerControlProps = {
 	value: AudioFx["eq"]
 	onChange: (newEq: AudioFx["eq"]) => void
+	className?: string
 }
 
 export function EqualizerControl(props: EqualizerControlProps) {
@@ -22,11 +23,12 @@ export function EqualizerControl(props: EqualizerControlProps) {
 	const isEmpty = useMemo(() => equal(eq || getDefaultEq(), getDefaultEq()), [eq])
 
 	return (
-		<div className="EqualizerControl audioTab">
-			<div className="header">
-				<div className={eq.enabled ? "active" : "muted"}>
+		<div className={cn("EqualizerControl mt-[15px] rounded-lg border border-solid border-border-x p-[10px] select-none", props.className)}>
+			<div className="header mb-[10px] grid grid-cols-[max-content_1fr_max-content] items-center gap-x-[5px] text-[1.2em]">
+				<div className={eq.enabled ? "active text-tertiary" : "muted text-muted-foreground"}>
 					<Tooltip title={eq.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
 						<FaPowerOff
+							className="cursor-pointer"
 							size="1.21rem"
 							onClick={() => {
 								props.onChange(
@@ -39,9 +41,10 @@ export function EqualizerControl(props: EqualizerControlProps) {
 					</Tooltip>
 				</div>
 				<div className="name">{gvar.gsm.audio.equalizer}</div>
-				<div className="reset">
+				<div className="reset justify-self-end">
 					<Reset
 						active={!isEmpty}
+						className="cursor-pointer"
 						onClick={() => {
 							props.onChange(getDefaultEq())
 						}}
@@ -50,8 +53,9 @@ export function EqualizerControl(props: EqualizerControlProps) {
 			</div>
 
 			{/* Band count */}
-			<div className="preset">
+			<div className="preset mb-[10px] grid w-full grid-cols-[max-content_1fr] gap-x-[5px]">
 				<select
+					className="w-full"
 					value={eq.values.length.toString()}
 					onChange={(e) => {
 						const bandCount = parseInt(e.target.value)
@@ -71,6 +75,7 @@ export function EqualizerControl(props: EqualizerControlProps) {
 
 				{/* Presets */}
 				<select
+					className="w-full"
 					value={eq.name || ""}
 					onChange={(e) => {
 						if (e.target.value === "") {
@@ -111,7 +116,7 @@ export function EqualizerControl(props: EqualizerControlProps) {
 						sliderMin={0}
 						sliderMax={3}
 						default={1}
-						pass={{ style: { marginBottom: "10px" } }}
+						pass={{ className: "mb-[10px]" }}
 						onChange={(newValue) => {
 							props.onChange(
 								produce(eq, (d) => {

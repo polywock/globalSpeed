@@ -1,3 +1,5 @@
+import { gvar } from "@/globalVar"
+
 export class VisibleSync {
 	timeoutId: number
 	constructor(private cb?: (...args: any[]) => void) {

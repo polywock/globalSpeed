@@ -1,4 +1,5 @@
 import debounce from "lodash.debounce"
+import { gvar } from "@/globalVar"
 import { AnyDict, AUDIO_CONTEXT_KEYS } from "@/types"
 import { fetchView } from "@/utils/state"
 

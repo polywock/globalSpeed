@@ -1,3 +1,4 @@
+import { gvar } from "@/globalVar"
 import { AudioFx, StateView } from "../types"
 import { MessageCallback } from "../utils/browserUtils"
 import { clamp, round } from "../utils/helper"

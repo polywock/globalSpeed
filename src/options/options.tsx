@@ -1,18 +1,19 @@
 import { createRoot, Root } from "react-dom/client"
 import type { Indicator } from "@/contentScript/isolated/utils/Indicator"
+import { gvar } from "@/globalVar"
 import { useThemeSync } from "@/hooks/useThemeSync"
+import "@/main.css"
 import { requestTabInfo } from "@/utils/browserUtils"
 import { handleFreshState } from "@/utils/configUtils"
 import { loadGsm } from "@/utils/gsm"
 import { Gsm } from "@/utils/GsmType"
 import { isMac, isMobile } from "@/utils/helper"
+import { SubscribeView } from "@/utils/state"
 import { ErrorFallback } from "../comps/ErrorFallback"
 import { SectionEditor } from "./SectionEditor"
 import { SectionFlags } from "./SectionFlags"
 import { SectionHelp } from "./SectionHelp"
 import { SectionRules } from "./SectionRules"
-import "./options.css"
-import { SubscribeView } from "@/utils/state"
 
 declare global {
 	interface Window {
@@ -30,7 +31,7 @@ declare global {
 const Options = (props: { gsm: Gsm }) => {
 	useThemeSync()
 	return (
-		<div id="App">
+		<div id="App" className="mt-[40px] w-[950px]">
 			<SectionFlags />
 			<SectionEditor />
 			{!(isMac() && isMobile()) && <SectionRules />}

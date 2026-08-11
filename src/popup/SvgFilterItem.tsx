@@ -2,12 +2,13 @@ import { useState } from "react"
 import { FaPowerOff } from "react-icons/fa"
 import { GoArrowDown, GoArrowUp, GoX } from "react-icons/go"
 import { SliderPlus } from "@/comps/SliderPlus"
+import { ToggleButton } from "@/comps/ToggleButton"
 import { Tooltip } from "@/comps/Tooltip"
 import { SVG_COLOR_MATRIX_PRESETS, SVG_MOSAIC_PRESETS, SVG_RGB_PRESETS, SVG_SPECIAL_PRESETS, svgFilterInfos } from "@/defaults/filters"
 import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
+import { gvar } from "@/globalVar"
 import { SvgFilter } from "@/types"
-import { moveItem, produce } from "@/utils/helper"
-import "./SvgFilterItem.css"
+import { cn, moveItem, produce } from "@/utils/helper"
 
 const MOSAIC_DEFAULT = svgFilterInfos["mosaic"].generate()
 const NOISE_DEFAULT = svgFilterInfos["noise"].generate()
@@ -24,9 +25,9 @@ export function SvgFilterItem(props: {
 	const [currentPreset, setCurrentPreset] = useState("")
 
 	return (
-		<div className="SvgFilter">
-			<div className="header">
-				<div className={filter.enabled ? "active" : "muted"}>
+		<div className="SvgFilter mt-[15px] rounded-lg border border-solid border-border-x p-[10px]">
+			<div className="mb-[5px] grid grid-cols-[max-content_1fr_max-content_max-content_max-content] items-center gap-x-[5px] text-[1.2em]">
+				<div className={cn("hover:opacity-90", filter.enabled ? "text-tertiary" : "text-muted-foreground")}>
 					<Tooltip title={filter.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
 						<FaPowerOff
 							size="1.21rem"
@@ -86,7 +87,7 @@ export function SvgFilterItem(props: {
 				</Tooltip>
 			</div>
 			{presetInfo && (
-				<div className="presets">
+				<div className="mt-[7px] grid grid-cols-[max-content_1fr] items-center gap-x-[5px]">
 					<div>{gvar.gsm.filter.otherFilters.presets}</div>
 					<select
 						value={currentPreset}
@@ -105,11 +106,11 @@ export function SvgFilterItem(props: {
 					</select>
 				</div>
 			)}
-			<div className="core">
+			<div className="mt-[7px]">
 				{filter.type === "custom" && (
 					<textarea
 						rows={5}
-						style={{ width: "100%" }}
+						className="w-full"
 						onChange={(e) => {
 							onChange(
 								produce(filter, (v) => {
@@ -510,8 +511,8 @@ export function SvgFilterItem(props: {
 							}}
 						/>
 
-						<div style={{ marginTop: "10px" }}>
-							<span style={{ marginRight: "10px" }}>{gvar.gsm.token.mode}</span>
+						<div className="mt-[10px]">
+							<span className="mr-[10px]">{gvar.gsm.token.mode}</span>
 							<select
 								value={filter.noise.mode}
 								onChange={(e) => {
@@ -537,9 +538,9 @@ export function SvgFilterItem(props: {
 function AspectLockButton(props: { active: boolean; onClick: () => void }) {
 	return (
 		<Tooltip title={gvar.gsm.token.aspectLock}>
-			<button onClick={props.onClick} style={{ padding: "0px 5px", marginLeft: "10px" }} className={`toggle ${props.active ? "active" : ""}`}>
+			<ToggleButton active={props.active} onClick={props.onClick} className="ml-[10px] px-[5px] py-0">
 				:
-			</button>
+			</ToggleButton>
 		</Tooltip>
 	)
 }

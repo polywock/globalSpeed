@@ -1,5 +1,4 @@
 import { RefObject } from "react"
-import "./List.css"
 
 type ListProps = {
 	children: React.ReactNode
@@ -9,7 +8,11 @@ type ListProps = {
 
 export function List(props: ListProps) {
 	return (
-		<div className="List" ref={props.listRef} onPointerDown={(e) => handlePointerDown(props.listRef, props.spacingChange, e)}>
+		<div
+			className="List cursor-ns-resize select-none [interpolate-size:allow-keywords]"
+			ref={props.listRef}
+			onPointerDown={(e) => handlePointerDown(props.listRef, props.spacingChange, e)}
+		>
 			{props.children}
 		</div>
 	)

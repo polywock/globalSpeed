@@ -119,7 +119,6 @@ export type IndicatorInit = {
 	static?: boolean
 	position?: "TL" | "TR" | "BL" | "BR" | "C"
 	animation?: 1 | 2 | 3 | 4 | 5
-	showShadow?: boolean
 	key?: string
 }
 

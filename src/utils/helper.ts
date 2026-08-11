@@ -1,4 +1,11 @@
+import { clsx, type ClassValue } from "clsx"
 import { produce as produceImmer } from "immer"
+import { twMerge } from "tailwind-merge"
+import { gvar } from "@/globalVar"
+
+export function cn(...inputs: ClassValue[]) {
+	return twMerge(clsx(inputs))
+}
 
 type AnyDict = { [key: string]: any }
 
@@ -171,6 +178,9 @@ export function areYouSure() {
 	return confirm(gvar.gsm.options.help.areYouSure)
 }
 
+/** Appended straight to document.body, so it carries its own styling rather than inheriting any. */
+const FEEDBACK_CLASS = "FeedbackText fixed z-[99999999999] rounded-lg bg-popover p-[10px] whitespace-break-spaces text-popover-foreground"
+
 export function feedbackText(text: string, pos?: { x?: number; y?: number }, decay?: number) {
 	const div = document.createElement("div")
 	if ((window as any).feedbackDiv) {
@@ -178,7 +188,7 @@ export function feedbackText(text: string, pos?: { x?: number; y?: number }, dec
 	}
 	;(window as any).feedbackDiv = div
 	div.textContent = text
-	div.classList.add("FeedbackText")
+	div.className = FEEDBACK_CLASS
 	div.style.left = `${pos?.x || 0}px`
 	div.style.top = `${pos?.y || 0}px`
 

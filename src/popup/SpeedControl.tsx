@@ -2,12 +2,17 @@ import { CSSProperties } from "react"
 import { BsMusicNoteList } from "react-icons/bs"
 import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight } from "react-icons/fa"
 import { NumericInput } from "@/comps/NumericInput"
+import { SliderInput } from "@/comps/Slider"
 import { Tooltip } from "@/comps/Tooltip"
 import { getDefaultSpeedPresets } from "@/defaults/constants"
-import { clamp, isMobile } from "@/utils/helper"
+import { gvar } from "@/globalVar"
+import { clamp, cn, isMobile } from "@/utils/helper"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "../defaults/constants"
 import { useStateView } from "../hooks/useStateView"
-import "./SpeedControl.css"
+
+/** Step buttons and the speed input take a scaled down version of the preset padding. */
+const STEP_BUTTON = "px-0 py-[calc(var(--padding)*0.75)] text-[0.75em]"
+const STEP_INPUT = "text-[0.9em] [&>input]:px-0 [&>input]:py-[calc(var(--padding)*0.75)]"
 
 type SpeedControlProps = {
 	onChange: (newSpeed: number) => any
@@ -47,13 +52,16 @@ export function SpeedControl(props: SpeedControlProps) {
 	if (isMobile()) padding = Math.max(padding, 10)
 
 	return (
-		<div className="SpeedControl" style={{ "--padding": `${padding}px` } as CSSProperties}>
+		<div className="SpeedControl bg-background text-[1.1em] select-none" style={{ "--padding": `${padding}px` } as CSSProperties}>
 			{/* Presets */}
-			<div className="options">
+			<div className="grid grid-cols-3 justify-items-center gap-[3px]">
 				{presets.map((v, i) => (
 					<button
 						key={i}
-						className={props.speed === v ? "selected" : ""}
+						className={cn(
+							"w-3/4 border-0 px-0 py-(--padding) transition-[transform,background-color,color] duration-170 ease-[cubic-bezier(0,0,0.1,1)]",
+							props.speed === v ? "scale-120 rounded-sm bg-tertiary text-tertiary-foreground" : "focus:outline-1 focus:outline-ring",
+						)}
 						onClick={() => props.onChange(v)}
 						onContextMenu={(e) => {
 							e.preventDefault()
@@ -66,20 +74,21 @@ export function SpeedControl(props: SpeedControlProps) {
 
 			{/* Controls */}
 			<div
-				className="NumericControl"
+				className="mt-[15px] grid grid-cols-[50fr_50fr_64fr_50fr_50fr] gap-x-[5px]"
 				onWheel={(e) => {
 					if (e.deltaMode !== WheelEvent.DOM_DELTA_PIXEL) return
 					const speedDelta = (e.deltaY / 1080) * -0.15
 					props.onChange(clamp(MIN_SPEED_CHROMIUM, MAX_SPEED_CHROMIUM, props.speed + speedDelta))
 				}}
 			>
-				<button onClick={() => handleAddDelta(-largeStep)}>
+				<button className={STEP_BUTTON} onClick={() => handleAddDelta(-largeStep)}>
 					<FaAngleDoubleLeft size={"1.14rem"} />
 				</button>
-				<button onClick={() => handleAddDelta(-smallStep)}>
+				<button className={STEP_BUTTON} onClick={() => handleAddDelta(-smallStep)}>
 					<FaAngleLeft size={"1.14rem"} />
 				</button>
 				<NumericInput
+					className={STEP_INPUT}
 					rounding={2}
 					noNull={true}
 					min={MIN_SPEED_CHROMIUM}
@@ -89,30 +98,29 @@ export function SpeedControl(props: SpeedControlProps) {
 						props.onChange(v)
 					}}
 				/>
-				<button onClick={() => handleAddDelta(smallStep)}>
+				<button className={STEP_BUTTON} onClick={() => handleAddDelta(smallStep)}>
 					<FaAngleRight size={"1.14rem"} />
 				</button>
-				<button onMouseDown={() => {}} onClick={() => handleAddDelta(largeStep)}>
+				<button className={STEP_BUTTON} onMouseDown={() => {}} onClick={() => handleAddDelta(largeStep)}>
 					<FaAngleDoubleRight size={"1.14rem"} />
 				</button>
 			</div>
 
 			{/* Slider */}
 			{!!view.speedSlider && (
-				<div className="slider">
+				<div className="mt-[15px] grid grid-cols-[max-content_1fr] items-center gap-x-[5px]">
 					<Tooltip title={gvar.gsm.command.speedChangesPitch}>
 						<BsMusicNoteList
 							title={gvar.gsm.command.speedChangesPitch}
 							size={"1.2rem"}
-							className={`${view.freePitch ? "active" : ""}`}
+							className={view.freePitch ? "text-tertiary opacity-100" : "text-secondary-foreground opacity-50"}
 							onClick={(e: React.MouseEvent<SVGElement>) => {
 								setView({ freePitch: !view.freePitch })
 							}}
 						/>
 					</Tooltip>
-					<input
+					<SliderInput
 						step={0.01}
-						type="range"
 						min={speedSliderMin}
 						max={speedSliderMax}
 						value={props.speed}

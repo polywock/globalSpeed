@@ -3,12 +3,13 @@ import { Reset } from "@/comps/Reset"
 import { SliderMicro } from "@/comps/SliderMicro"
 import { getDefaultCinemaInit } from "@/defaults/constants"
 import { getDefaultCinemaFilter } from "@/defaults/filters"
+import { gvar } from "@/globalVar"
 import { Filters } from "@/popup/Filters"
 import { CinemaMode, Keybind } from "@/types"
 import { produce } from "@/utils/helper"
-import { ModalBase } from "../comps/ModalBase"
+import { ModalBase, ModalContent } from "../comps/ModalBase"
 import { useStateView } from "../hooks/useStateView"
-import "./CinemaModal.css"
+import { OptionField } from "./OptionField"
 
 type Props = {
 	value: Keybind
@@ -28,11 +29,11 @@ export function CinemaModal(props: Props) {
 
 	return (
 		<ModalBase keepOnWheel={true} onClose={props.onClose}>
-			<div className="CinemaModal ModalMain">
+			<ModalContent className="mt-[20px] w-[600px] [--field-name-width:200px]">
 				{/* Mode */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.token.mode}</span>
-					<div className="fieldValue">
+					<div className="relative leading-0">
 						<select
 							value={mode}
 							onChange={(e) => {
@@ -50,13 +51,13 @@ export function CinemaModal(props: Props) {
 							<option value={CinemaMode.CUSTOM_FILTER.toString()}>{gvar.gsm.token.modeCustomFilter}</option>
 						</select>
 					</div>
-				</div>
+				</OptionField>
 
 				{/* Color */}
 				{mode === CinemaMode.CUSTOM_COLOR && (
-					<div className="field">
+					<OptionField>
 						<span>{gvar.gsm.token.color}</span>
-						<div className="fieldValue mxmx">
+						<div className="relative grid grid-cols-[max-content_max-content] items-center gap-x-[5px] leading-0">
 							<input
 								type="color"
 								value={init.color ?? defaultInit.color}
@@ -83,14 +84,14 @@ export function CinemaModal(props: Props) {
 								active={(kb.cinemaInit?.color || defaultInit.color) !== defaultInit.color}
 							/>
 						</div>
-					</div>
+					</OptionField>
 				)}
 
 				{/* Opacity */}
 				{mode !== CinemaMode.CUSTOM_FILTER && (
-					<div className="field">
+					<OptionField>
 						<span>{mode === CinemaMode.STANDARD ? gvar.gsm.token.darkness : gvar.gsm.filter.opacity}</span>
-						<div className="fieldValue">
+						<div className="relative leading-0">
 							<SliderMicro
 								value={init.colorAlpha ?? defaultInit.colorAlpha}
 								onChange={(v) => {
@@ -108,14 +109,15 @@ export function CinemaModal(props: Props) {
 								sliderStep={1}
 							/>
 						</div>
-					</div>
+					</OptionField>
 				)}
 
 				{/* Rounding */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.token.rounding}</span>
-					<div className="fieldValue">
+					<div className="relative leading-0">
 						<NumericInput
+							className="inline-block w-[60px]"
 							value={init.rounding}
 							onChange={(v) => {
 								props.onChange(
@@ -130,11 +132,11 @@ export function CinemaModal(props: Props) {
 							placeholder={`${init.rounding ?? defaultInit.rounding}`}
 						/>
 					</div>
-				</div>
+				</OptionField>
 
 				{/* Filters */}
 				{mode === CinemaMode.CUSTOM_FILTER && (
-					<div className="filters">
+					<div className="my-[30px] max-w-[300px] border-y border-solid border-border-x py-[20px]">
 						<Filters
 							filters={init.filter || defaultCinemaFilter}
 							onChange={(filter) => {
@@ -164,7 +166,7 @@ export function CinemaModal(props: Props) {
 				>
 					{gvar.gsm.token.reset}
 				</button>
-			</div>
+			</ModalContent>
 		</ModalBase>
 	)
 }

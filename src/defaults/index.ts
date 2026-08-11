@@ -158,5 +158,4 @@ export const INDICATOR_CIRCLE_INIT: IndicatorInit = {
 	position: "C",
 	rounding: 3,
 	scaling: 1.2,
-	showShadow: true,
 }

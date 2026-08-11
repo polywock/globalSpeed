@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import { gvar } from "@/globalVar"
 import { getSelectedParts, requestSyncContextMenu } from "@/utils/configUtils"
 import { produce } from "@/utils/helper"
 import { getDefaultURLCondition } from "../defaults"
@@ -11,9 +12,9 @@ import { DevWarning, DevWarningType, useDevWarningType } from "./DevWarning"
 import { KeybindControl } from "./keybindControl"
 import { List } from "./List"
 import { ListItem } from "./ListItem"
-import { URLModal } from "./URLModal"
-import "./SectionEditor.css"
+import { OptionsSection } from "./OptionsSection"
 import { ShortcutWarning } from "./ShortcutWarning"
+import { URLModal } from "./URLModal"
 
 export function SectionEditor(props: {}) {
 	const [view, setView] = useStateView({
@@ -91,9 +92,9 @@ function KeybindSection(props: {
 	const hasJs = keybinds.some((kb) => kb.enabled && kb.command === "runCode")
 
 	return (
-		<div className="section SectionEditor">
+		<OptionsSection className="SectionEditor">
 			<h2>{getSectionTitle(listKey)}</h2>
-			{!!getSectionSubheader(listKey) && <div className="subHeader">{getSectionSubheader(listKey)}</div>}
+			{!!getSectionSubheader(listKey) && <div className="mt-[-10px] mb-[10px] text-[1.2em] italic opacity-50">{getSectionSubheader(listKey)}</div>}
 			{listKey === "pageKeybinds" && <ShortcutWarning isBlockMode={(view.keybindsUrlCondition || getDefaultURLCondition(true)).block} />}
 			{devWarningType ? <DevWarning warningType={hasJs ? devWarningType : DevWarningType.NONE} /> : null}
 			{listKey === "browserKeybinds" && <CommandWarning keybinds={view[listKey] || []} />}
@@ -137,7 +138,7 @@ function KeybindSection(props: {
 				))}
 			</List>
 			<SectionControls listKey={listKey} view={view} setView={setView} showUrlConditions={showUrlConditions} />
-		</div>
+		</OptionsSection>
 	)
 }
 
@@ -234,7 +235,7 @@ function SectionControls(props: { listKey: KeybindType; view: StateView; setView
 	const urlRuleCount = view.keybindsUrlCondition ? getSelectedParts(view.keybindsUrlCondition).length : 0
 
 	return (
-		<div className="sectionControls">
+		<div className="mt-[20px] grid grid-cols-[repeat(3,max-content)_1fr] items-stretch [justify-items:right] gap-x-[10px]">
 			{/* Primary select */}
 			<select
 				aria-label={gvar.gsm.token.create}

@@ -2,11 +2,12 @@ import { CSSProperties } from "react"
 import { SegmentedButtons } from "@/comps/SegmentedButtons"
 import { SliderMicro } from "@/comps/SliderMicro"
 import { getDefaultSpeedPresets } from "@/defaults/constants"
+import { gvar } from "@/globalVar"
 import { clamp, produce } from "@/utils/helper"
-import { ModalBase } from "../comps/ModalBase"
+import { ModalBase, ModalContent } from "../comps/ModalBase"
 import { NumericInput } from "../comps/NumericInput"
 import { useStateView } from "../hooks/useStateView"
-import "./SpeedPresetModal.css"
+import { OptionField } from "./OptionField"
 
 type Props = {
 	onClose: () => void
@@ -40,9 +41,9 @@ export function SpeedPresetModal(props: Props) {
 
 	return (
 		<ModalBase keepOnWheel={true} onClose={props.onClose}>
-			<div className="SpeedPresetModal ModalMain">
+			<ModalContent className="mt-[20px] w-[400px] [--field-name-width:150px]">
 				{/* Row selection */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.token.rows}</span>
 					<SegmentedButtons
 						numbers={[1, 2, 3, 4]}
@@ -51,10 +52,10 @@ export function SpeedPresetModal(props: Props) {
 							setView({ speedPresetRows: v })
 						}}
 					/>
-				</div>
+				</OptionField>
 
 				{/* Size slider */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.token.size}</span>
 					<SliderMicro
 						value={view.speedPresetPadding ?? 0}
@@ -66,10 +67,10 @@ export function SpeedPresetModal(props: Props) {
 						sliderMax={10}
 						sliderStep={0.1}
 					/>
-				</div>
+				</OptionField>
 
 				{/* Small step */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.token.smallStep}</span>
 					<NumericInput
 						className="wide"
@@ -79,10 +80,10 @@ export function SpeedPresetModal(props: Props) {
 						noNull={false}
 						placeholder={"0.01"}
 					/>
-				</div>
+				</OptionField>
 
 				{/* Large step */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.token.largeStep}</span>
 					<NumericInput
 						className="wide"
@@ -92,11 +93,11 @@ export function SpeedPresetModal(props: Props) {
 						noNull={false}
 						placeholder={"0.1"}
 					/>
-				</div>
+				</OptionField>
 
 				{/* Table */}
 				<div
-					className="presetControl"
+					className="mt-[20px] mb-[15px] ml-[20px] grid grid-cols-[repeat(3,max-content)] gap-[10px] text-[0.95em]"
 					style={
 						{
 							"--padding": `${5 + (view.speedPresetPadding ?? 0)}px`,
@@ -105,7 +106,15 @@ export function SpeedPresetModal(props: Props) {
 				>
 					{/* Cell inputs */}
 					{presets.slice(0, clamp(1, 4, view.speedPresetRows ?? 4) * 3).map((v, i) => (
-						<NumericInput className="preset" key={i} value={v} onChange={(t) => handlePresetChange(i, t)} min={0.07} max={16} noNull={true} />
+						<NumericInput
+							className="preset w-[60px] [&>input]:px-0 [&>input]:py-[var(--padding)]"
+							key={i}
+							value={v}
+							onChange={(t) => handlePresetChange(i, t)}
+							min={0.07}
+							max={16}
+							noNull={true}
+						/>
 					))}
 				</div>
 
@@ -114,11 +123,11 @@ export function SpeedPresetModal(props: Props) {
 					onClick={(e) => {
 						setView({ speedPresetPadding: null, speedPresetRows: null, speedPresets: null, speedSmallStep: null, speedBigStep: null })
 					}}
-					className="reset"
+					className="reset text-[1.14rem]"
 				>
 					{gvar.gsm.token.reset}
 				</button>
-			</div>
+			</ModalContent>
 		</ModalBase>
 	)
 }

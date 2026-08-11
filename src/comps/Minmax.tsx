@@ -1,6 +1,6 @@
+import { gvar } from "@/globalVar"
 import { NumericInput } from "./NumericInput"
 import { Tooltip } from "./Tooltip"
-import "./Minmax.css"
 
 type MinmaxProps = {
 	onChange: (min: number, max: number) => void
@@ -15,7 +15,7 @@ type MinmaxProps = {
 
 export function Minmax(props: MinmaxProps) {
 	return (
-		<div className="Minmax">
+		<div className="Minmax grid grid-cols-[1fr_1fr] gap-x-[5px]">
 			<Tooltip title={gvar.gsm.token.min}>
 				<NumericInput
 					value={props.min}

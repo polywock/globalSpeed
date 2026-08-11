@@ -1,3 +1,4 @@
+import { gvar } from "@/globalVar"
 import { getStoredSalt, hashWithStoredSalt } from "@/utils/hash"
 import { IS_SMART } from "./isWebsite"
 

@@ -1,5 +1,6 @@
 import { svgFilterIsValid } from "@/defaults/filters"
 import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
+import { gvar } from "@/globalVar"
 import type { MediaEvent } from "../contentScript/isolated/utils/applyMediaEvent"
 import { filterInfos } from "../defaults/filters"
 import {

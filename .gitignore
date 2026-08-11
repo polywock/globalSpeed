@@ -7,3 +7,7 @@ z.md
 .DS_Store
 **/*.env
 private/
+.agents/
+.claude/
+tools/localeTools/*
+AGENTS.md

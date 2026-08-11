@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
+import { gvar } from "@/globalVar"
 import { checkContentScript } from "@/utils/browserUtils"
 import { flattenMediaInfos, MediaData, MediaPath, MediaScope } from "../contentScript/isolated/utils/genMediaInfo"
 

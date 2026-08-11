@@ -9,12 +9,12 @@ export function FxPanel(props: FxPanelProps) {
 	const [enabledView] = useStateView({ enabled: true })
 	const [view, setView] = useStateView({ backdropFx: true, elementFx: true })
 
-	if (!view || !enabledView) return <div className="panel unloaded"></div>
+	if (!view || !enabledView) return <div className="min-h-[40px] p-[8px]" />
 
 	return (
 		<FxControl
 			live={true}
-			className="panel"
+			className="min-h-[40px] p-[8px]"
 			_elementFx={view.elementFx}
 			_backdropFx={view.backdropFx}
 			enabled={enabledView.enabled}

@@ -1,4 +1,5 @@
 import { getDefaultFx } from "@/defaults"
+import { gvar } from "@/globalVar"
 import { AnyDict, CONTEXT_KEYS, State, URLRule, URLStrictness } from "@/types"
 import { canUserScript } from "@/utils/browserUtils"
 import { hasActiveParts, testURL } from "@/utils/configUtils"

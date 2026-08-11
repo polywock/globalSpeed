@@ -1,14 +1,7 @@
 import { useEffect } from "react"
+import { gvar } from "@/globalVar"
 import { isMobile } from "@/utils/helper"
 import { useStateView } from "../hooks/useStateView"
-
-function applyDarkTheme(isDark: boolean) {
-	if (isDark) {
-		document.documentElement.classList.add("darkTheme")
-	} else {
-		document.documentElement.classList.remove("darkTheme")
-	}
-}
 
 const systemIsDark = window.matchMedia("(prefers-color-scheme: dark)").matches
 

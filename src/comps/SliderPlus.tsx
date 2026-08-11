@@ -1,9 +1,8 @@
 import { ReactNode } from "react"
+import { clamp, cn } from "@/utils/helper"
 import { NumericInput } from "../comps/NumericInput"
-import { clamp } from "../utils/helper"
 import { Reset } from "./Reset"
 import { Slider } from "./Slider"
-import "./SliderPlus.css"
 
 type SliderPlusProps = {
 	label: ReactNode
@@ -16,6 +15,7 @@ type SliderPlusProps = {
 	default: number
 	onChange?: (newValue: number) => void
 	noReset?: boolean
+	className?: string
 }
 
 export function SliderPlus(props: SliderPlusProps) {
@@ -26,9 +26,9 @@ export function SliderPlus(props: SliderPlusProps) {
 	const activated = props.default !== props.value
 
 	return (
-		<div className={`SliderPlus ${activated ? "highlight" : ""}`}>
-			<div className="header">
-				<span>{props.label}</span>
+		<div className={cn("SliderPlus bg-background", activated && "highlight", props.className)}>
+			<div className="header mb-[2px] grid grid-cols-[1fr_60px_max-content] items-center gap-x-[5px]">
+				<span className={cn("self-center", activated ? "font-semibold text-tertiary" : "font-normal text-foreground")}>{props.label}</span>
 				<NumericInput noNull={true} min={props.min} max={props.max} value={props.value} onChange={handleValueChange} />
 				{props.noReset ? <div /> : <Reset active={activated} onClick={() => handleValueChange(props.default)} />}
 			</div>

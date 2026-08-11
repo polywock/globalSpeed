@@ -1,3 +1,4 @@
+import { gvar } from "@/globalVar"
 import { insertStyle } from "@/utils/nativeUtils"
 import { IS_NATIVE, IS_YOUTUBE } from "./isWebsite"
 

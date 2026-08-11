@@ -1,9 +1,10 @@
 {
 	"name": "globalspeed",
 	"version": "1.0.0",
+	"type": "module",
 	"browserslist": [
 		"chrome >= 116",
-		"firefox >= 125"
+		"firefox >= 128"
 	],
 	"sideEffects": [
 		"./src/background/utils/*.ts",
@@ -13,27 +14,22 @@
 		"notFirefox/background/capture"
 	],
 	"scripts": {
-		"common": "  rm -rf build   &&              webpack --config webpack.config.js && cp -r static/. staticCh/. build/unpacked                               &&              node tools/processLocale.js --build && find build   -name '.DS_Store' -type f -delete",
-		"commonFf": "rm -rf buildFf && FIREFOX=true webpack --config webpack.config.js && cp -r static/. staticFf/. buildFf/unpacked && node tools/replaceCtx.js && FIREFOX=true node tools/processLocale.js --build && find buildFf -name '.DS_Store' -type f -delete",
+		"common": "node tools/viteBuild.js && node tools/localeTools/index.cjs build && find build -name '.DS_Store' -type f -delete",
+		"commonFf": "FIREFOX=true node tools/viteBuild.js && node tools/replaceCtx.js && FIREFOX=true node tools/localeTools/index.cjs build && find buildFf -name '.DS_Store' -type f -delete",
 		"dev": "   export NODE_ENV=development && npm run common",
 		"devFf": " export NODE_ENV=development && npm run commonFf",
 		"prod": "  export NODE_ENV=production && npm run common   && cd build/unpacked   && zip -r '../global-speed-chromium.zip' .",
 		"prodFf": "export NODE_ENV=production && npm run commonFf && cd buildFf/unpacked && zip -r '../global-speed-firefox.zip' .",
-		"prodFff": "npm run prodFf && rm -rf zed && mkdir -p zed/unpacked && cp -r src static staticCh staticFf tools .babelrc package-lock.json package.json postcss.config.js tsconfig.json webpack.config.js zed/unpacked && cp firefox-build.md zed/unpacked/README.md && (cd zed/unpacked && zip -r ../packed.zip .) && mv zed/packed.zip buildFf/source.zip && rm -rf zed",
-		"adhere": "node tools/processLocale.js && node tools/generateGsmType.js",
-		"rename": "node tools/processLocale.js --rename && node tools/generateGsmType.js",
+		"prodFff": "npm run prodFf && rm -rf zed && mkdir -p zed/unpacked && cp -r src static staticCh staticFf tools package-lock.json package.json tsconfig.json vite.config.js zed/unpacked && cp firefox-build.md zed/unpacked/README.md && (cd zed/unpacked && zip -r ../packed.zip .) && mv zed/packed.zip buildFf/source.zip && rm -rf zed",
+		"gsm": "node tools/localeTools/index.cjs types",
+		"locale": "node tools/localeTools/index.cjs",
 		"release": "node tools/release.js",
 		"format": "prettier --check '**/*.{js,ts,tsx,json,css}'",
 		"format:fix": "prettier --write '**/*.{js,ts,tsx,json,css}'"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.29.7",
-		"@babel/plugin-transform-runtime": "^7.29.7",
-		"@babel/preset-env": "^7.29.7",
-		"@babel/preset-react": "^7.29.7",
-		"@babel/preset-typescript": "^7.29.7",
-		"@babel/runtime": "^7.29.7",
 		"@ianvs/prettier-plugin-sort-imports": "^4.7.1",
+		"@tailwindcss/vite": "^4.3.3",
 		"@types/audioworklet": "^0.0.92",
 		"@types/chrome": "^0.1.43",
 		"@types/lodash": "^4.17.24",
@@ -41,18 +37,12 @@
 		"@types/node": "^25.9.3",
 		"@types/react": "^19.2.17",
 		"@types/react-dom": "^19.2.3",
-		"autoprefixer": "^10.5.0",
-		"babel-loader": "^10.1.1",
-		"css-loader": "^7.1.4",
 		"openai": "^6.42.0",
-		"postcss": "^8.5.15",
-		"postcss-loader": "^8.2.1",
-		"postcss-nested": "^7.0.2",
 		"prettier": "^3.8.4",
-		"style-loader": "^4.0.0",
+		"prettier-plugin-tailwindcss": "^0.8.1",
+		"tailwindcss": "^4.3.3",
 		"typescript": "^6.0.3",
-		"webpack": "^5.107.2",
-		"webpack-cli": "^7.0.3",
+		"vite": "^8.2.1",
 		"zod": "^4.4.3"
 	},
 	"dependencies": {
@@ -64,6 +54,7 @@
 		"react-dom": "^19.2.7",
 		"react-error-boundary": "^6.1.2",
 		"react-icons": "^5.6.0",
-		"soundtouchjs": "^0.1.27"
+		"soundtouchjs": "^0.1.27",
+		"tailwind-merge": "^3.6.0"
 	}
 }

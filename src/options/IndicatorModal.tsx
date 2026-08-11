@@ -1,11 +1,12 @@
 import { Reset } from "@/comps/Reset"
 import { SliderMicro } from "@/comps/SliderMicro"
 import { Indicator } from "@/contentScript/isolated/utils/Indicator"
+import { gvar } from "@/globalVar"
 import { produce, randomId } from "@/utils/helper"
-import { ModalBase } from "../comps/ModalBase"
+import { ModalBase, ModalContent } from "../comps/ModalBase"
 import { INDICATOR_CIRCLE_INIT, INDICATOR_INIT } from "../defaults"
 import { IndicatorInit } from "../types"
-import "./IndicatorModal.css"
+import { OptionField } from "./OptionField"
 
 type Props = {
 	indicator: IndicatorInit
@@ -21,9 +22,9 @@ export function IndicatorModal(props: Props) {
 
 	return (
 		<ModalBase keepOnWheel={true} onClose={props.onClose}>
-			<div className="IndicatorModal ModalMain">
+			<ModalContent className="mt-[20px] w-[550px]">
 				{/* Position */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.token.position}</span>
 					<div>
 						<select
@@ -57,12 +58,12 @@ export function IndicatorModal(props: Props) {
 							active={(init?.position || defaultInit.position) !== defaultInit.position}
 						/>
 					</div>
-				</div>
+				</OptionField>
 
 				{/* Color */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.token.color}</span>
-					<div className="colorControl">
+					<div className="grid grid-cols-[repeat(3,max-content)] items-center gap-[10px]">
 						<input
 							type="color"
 							aria-label={gvar.gsm.token.color}
@@ -105,10 +106,10 @@ export function IndicatorModal(props: Props) {
 							}
 						/>
 					</div>
-				</div>
+				</OptionField>
 
 				{/* Size */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.token.size}</span>
 					<SliderMicro
 						value={init?.scaling ?? defaultInit.scaling}
@@ -125,10 +126,10 @@ export function IndicatorModal(props: Props) {
 						sliderMax={1.5}
 						sliderStep={0.01}
 					/>
-				</div>
+				</OptionField>
 
 				{/* Rounding */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.token.rounding}</span>
 					<SliderMicro
 						value={init?.rounding ?? defaultInit.rounding}
@@ -145,11 +146,11 @@ export function IndicatorModal(props: Props) {
 						sliderMax={4}
 						sliderStep={0.01}
 					/>
-				</div>
+				</OptionField>
 
 				{/* Offset */}
 				{(init?.position || defaultInit.position) !== "C" && (
-					<div className="field">
+					<OptionField>
 						<span>{gvar.gsm.token.offset}</span>
 						<SliderMicro
 							value={init?.offset ?? defaultInit.offset}
@@ -166,11 +167,11 @@ export function IndicatorModal(props: Props) {
 							sliderMax={4}
 							sliderStep={0.01}
 						/>
-					</div>
+					</OptionField>
 				)}
 
 				{/* Animation */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.token.animation}</span>
 					<div>
 						<select
@@ -204,12 +205,12 @@ export function IndicatorModal(props: Props) {
 							active={(init?.animation || 1) !== 1}
 						/>
 					</div>
-				</div>
+				</OptionField>
 
 				{/* Duration */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.token.duration}</span>
-					<div className="col" style={{ gridColumnGap: "10px" }}>
+					<div className="grid auto-cols-max grid-flow-col gap-x-[10px]">
 						<SliderMicro
 							value={init?.duration ?? defaultInit.duration}
 							onChange={(v) => {
@@ -226,18 +227,18 @@ export function IndicatorModal(props: Props) {
 							pass={{ onMouseUp: (v) => showIndicator(init, props.forCircle, true) }}
 						/>
 					</div>
-				</div>
+				</OptionField>
 
 				{/* Reset */}
 				<button
 					onClick={(e) => {
 						onChange(null)
 					}}
-					className="reset"
+					className="reset text-[1.14rem]"
 				>
 					{gvar.gsm.token.reset}
 				</button>
-			</div>
+			</ModalContent>
 		</ModalBase>
 	)
 }

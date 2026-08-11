@@ -1,8 +1,9 @@
 import { useState } from "react"
+import { gvar } from "@/globalVar"
+import { cn, isMobile } from "@/utils/helper"
 import { GearIcon } from "./GearIcon"
 import { ModalBase } from "./ModalBase"
 import { ThrottledTextInput } from "./ThrottledTextInput"
-import "./ModalText.css"
 
 type ModalTextProps = {
 	value: string
@@ -18,7 +19,6 @@ export function ModalText(props: ModalTextProps) {
 			<GearIcon tooltip={gvar.gsm.token.edit} onClick={(e) => setModal(!modal)} />
 			{modal && (
 				<ModalBase
-					passClass="ModalText"
 					keepOnWheel={true}
 					onClose={() => {
 						setModal(false)
@@ -26,6 +26,9 @@ export function ModalText(props: ModalTextProps) {
 				>
 					<ThrottledTextInput
 						textArea={true}
+						passTextArea={{
+							className: cn("h-[75vh] w-[50vw] rounded-2xl p-[20px]", isMobile() && "h-3/4 w-1/2"),
+						}}
 						value={props.value}
 						onChange={(v) => {
 							props.onChange(v)

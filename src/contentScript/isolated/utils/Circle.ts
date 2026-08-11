@@ -1,11 +1,12 @@
 import debounce from "lodash.debounce"
+import { gvar } from "@/globalVar"
 import { CircleInit } from "@/types"
 import { conformSpeed, formatSpeed } from "@/utils/configUtils"
 import { between, clamp, extractClient, formatDuration, inverseLerp, isFirefoxMobile, isMac, isMobile, lerp, roundTo } from "@/utils/helper"
 import { insertStyle } from "@/utils/nativeUtils"
 import { fetchView, pushView } from "@/utils/state"
 import { seekTo, setPause } from "./applyMediaEvent"
-import styles from "./Circle.css?raw"
+import styles from "./Circle.css?inline"
 import { Indicator } from "./Indicator"
 import { Popover } from "./Popover"
 

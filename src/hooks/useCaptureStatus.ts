@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { gvar } from "@/globalVar"
 import { MessageCallback } from "../utils/browserUtils"
 
 declare global {

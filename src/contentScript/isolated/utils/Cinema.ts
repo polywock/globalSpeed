@@ -4,7 +4,7 @@ import { CinemaInit, CinemaMode } from "@/types"
 import { formatFilters } from "@/utils/configUtils"
 import { clamp } from "@/utils/helper"
 import { insertStyle } from "@/utils/nativeUtils"
-import styles from "./Cinema.css?raw"
+import styles from "./Cinema.css?inline"
 import { Popover } from "./Popover"
 
 const BLEED = 1

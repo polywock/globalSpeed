@@ -1,10 +1,10 @@
 // /// <reference types="@types/node" />
 
-const { execSync } = require("child_process")
-const fs = require("fs")
-const path = require("path")
+import { execSync } from "node:child_process"
+import fs from "node:fs"
+import path from "node:path"
 
-const ROOT = path.resolve(__dirname, "..")
+const ROOT = path.resolve(import.meta.dirname, "..")
 const MANIFEST_PATH = path.join(ROOT, "staticCh", "manifest.json")
 const CHROMIUM_ZIP = path.join(ROOT, "build", "global-speed-chromium.zip")
 const FIREFOX_ZIP = path.join(ROOT, "buildFf", "global-speed-firefox.zip")

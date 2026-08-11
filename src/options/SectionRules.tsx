@@ -1,8 +1,10 @@
 import { RefObject, useRef, useState } from "react"
 import { GearIcon } from "@/comps/GearIcon"
 import { Tooltip } from "@/comps/Tooltip"
+import { gvar } from "@/globalVar"
 import { getSelectedParts } from "@/utils/configUtils"
-import { produce } from "@/utils/helper"
+import { cn, isFirefox, isMobile, moveItem, produce, randomId } from "@/utils/helper"
+import { makeMenuLabelWithTooltip } from "../comps/Menu"
 import { ModalBase } from "../comps/ModalBase"
 import { ModalText } from "../comps/ModalText"
 import { NumericInput } from "../comps/NumericInput"
@@ -10,14 +12,12 @@ import { getDefaultFx, getDefaultURLCondition, getDefaultURLRule } from "../defa
 import { useStateView } from "../hooks/useStateView"
 import { FxControl } from "../popup/FxControl"
 import { URLRule, URLStrictness } from "../types"
-import { isFirefox, moveItem, randomId } from "../utils/helper"
 import { DevWarning } from "./DevWarning"
 import { KebabList, KebabListProps } from "./KebabList"
-import { makeLabelWithTooltip } from "./keybindControl/NameArea"
 import { List } from "./List"
 import { ListItem } from "./ListItem"
+import { OptionsSection } from "./OptionsSection"
 import { URLModal } from "./URLModal"
-import "./SectionRules.css"
 
 export function SectionRules(props: {}) {
 	const [view, setView] = useStateView({ rules: true })
@@ -72,7 +72,7 @@ export function SectionRules(props: {}) {
 	}
 
 	return (
-		<div className="section SectionRules">
+		<OptionsSection>
 			<h2>{gvar.gsm.options.rules.header}</h2>
 			{isFirefox() ? null : <DevWarning forUrlRules={true} hasJs={rules?.some((r) => r.enabled && r.type === "JS")} />}
 			<List listRef={listRef} spacingChange={handleSpacingChange}>
@@ -97,10 +97,10 @@ export function SectionRules(props: {}) {
 					</ListItem>
 				))}
 			</List>
-			<button className="create" onClick={(e) => handleChange(getDefaultURLRule())}>
+			<button className="mt-[30px] block" onClick={(e) => handleChange(getDefaultURLRule())}>
 				{gvar.gsm.token.create}
 			</button>
-		</div>
+		</OptionsSection>
 	)
 }
 
@@ -120,7 +120,7 @@ export function Rule(props: RuleProps) {
 		{ name: "label", label: gvar.gsm.options.editor.addLabel, close: true },
 		{
 			name: "titleRestrict",
-			label: makeLabelWithTooltip(
+			label: makeMenuLabelWithTooltip(
 				rule.titleRestrict ? gvar.gsm.options.rules.clearTitleKeywords : gvar.gsm.options.rules.setTitleKeywords,
 				gvar.gsm.options.rules.pageTitleTooltip,
 				"left",
@@ -140,7 +140,7 @@ export function Rule(props: RuleProps) {
 	if (rule.type !== "JS") {
 		list.push({
 			name: "strictness",
-			label: makeLabelWithTooltip(gvar.gsm.options.rules.strictness, gvar.gsm.options.rules.strictnessTooltip, "left"),
+			label: makeMenuLabelWithTooltip(gvar.gsm.options.rules.strictness, gvar.gsm.options.rules.strictnessTooltip, "left"),
 			preLabel: `${rule.strictness ?? URLStrictness.DIFFERENT_HOST}`,
 		})
 	}
@@ -153,7 +153,7 @@ export function Rule(props: RuleProps) {
 		})
 
 	return (
-		<div className="Rule">
+		<div className="grid grid-cols-[max-content_600px_1fr_repeat(2,max-content)] items-center gap-x-[10px]">
 			{/* Status */}
 			<Tooltip title={rule.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
 				<input
@@ -173,7 +173,7 @@ export function Rule(props: RuleProps) {
 			{/* URL conditions entry */}
 			<Tooltip title={gvar.gsm.options.rules.conditions}>
 				<button
-					className="show"
+					className="rounded-lg"
 					onClick={(e) => {
 						setShow(!show)
 					}}
@@ -221,10 +221,11 @@ export function Rule(props: RuleProps) {
 				<option value="JS">{gvar.gsm.command.runCode}</option>
 			</select>
 
-			<div className="left">
+			<div className="grid auto-cols-max grid-flow-col items-center [justify-content:left] gap-x-[10px]">
 				{/* Speed input  */}
 				{rule.type == "SPEED" && (
 					<NumericInput
+						className="w-[60px]"
 						noNull={true}
 						min={1 / 16}
 						max={16}
@@ -315,11 +316,12 @@ function FxRuleControl(props: FxRuleControlProps) {
 	overrideFx.elementFx = overrideFx.elementFx || getDefaultFx()
 
 	return (
-		<div className="FxControlButton">
+		<div>
 			<GearIcon onClick={(e) => setOpen(!open)} />
 			{open && (
 				<ModalBase keepOnWheel={true} onClose={() => setOpen(false)}>
 					<FxControl
+						className={cn("max-h-[80vh] w-[300px] max-w-[400px] overflow-y-scroll p-[8px]", isMobile() && "max-h-[80%]")}
 						enabled={true}
 						_elementFx={overrideFx.elementFx}
 						_backdropFx={overrideFx.backdropFx}

@@ -1,10 +1,11 @@
 import { cellIcon, cloneIcon, crossIcon, paintRollerIcon } from "@/defaults/icons"
+import { gvar } from "@/globalVar"
 import { FilterEntry, SvgFilter } from "@/types"
 import { formatFilters } from "@/utils/configUtils"
 import { createElement as m } from "@/utils/helper"
 import { calculateStyle } from "../isolated/FxSync"
 import { ScalableDiv } from "./ScalableDiv"
-import styles from "./styles.css?raw"
+import styles from "./styles.css?inline"
 
 declare global {
 	interface GlobalVar {

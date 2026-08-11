@@ -5,11 +5,13 @@ import { IoEllipsisVertical } from "react-icons/io5"
 import { MdWarning } from "react-icons/md"
 import { GearIcon } from "@/comps/GearIcon"
 import { RegularTooltip } from "@/comps/RegularTooltip"
-import { Tooltip, TooltipProps } from "@/comps/Tooltip"
+import { ToggleButton } from "@/comps/ToggleButton"
+import { Tooltip } from "@/comps/Tooltip"
+import { gvar } from "@/globalVar"
 import { isSeekSmall } from "@/utils/configUtils"
 import { produce, replaceArgs } from "@/utils/helper"
 import { KeybindControlProps } from "."
-import { MenuProps } from "../../comps/Menu"
+import { makeMenuLabelWithTooltip, MenuProps } from "../../comps/Menu"
 import { filterInfos, FilterName, filterTargets } from "../../defaults/filters"
 import { AdjustMode, Command, Duration, Keybind, ReferenceValues, TargetFx, Trigger } from "../../types"
 import { assertType, createWindowWithSafeBounds, getPopupSize, isMobile } from "../../utils/helper"
@@ -113,27 +115,27 @@ export function NameArea(props: NameAreaProps) {
 		kebabList.push({
 			name: "alwaysOn",
 			checked: value.alwaysOn,
-			label: makeLabelWithTooltip(gvar.gsm.command.alwaysOn, gvar.gsm.command.alwaysOnTooltip),
+			label: makeMenuLabelWithTooltip(gvar.gsm.command.alwaysOn, gvar.gsm.command.alwaysOnTooltip),
 		})
 	if (value.command === "loop" || value.command === "skip")
 		kebabList.push({
 			name: "ignoreNavigate",
 			checked: !value.ignoreNavigate,
-			label: makeLabelWithTooltip(
+			label: makeMenuLabelWithTooltip(
 				gvar.gsm.command.autoBreak,
 				value.command === "loop" ? gvar.gsm.command.autoBreakTooltip : gvar.gsm.command.autoBreakTooltipAlt,
 			),
 		})
 
 	return (
-		<div className="command">
-			{/* Label */}
-			<span className="label">{label}</span>
+		<div className="command flex flex-wrap items-center gap-x-[10px] gap-y-[5px]">
+			{/* Label. Enlarged first letter, except when the locale is right-to-left. */}
+			<span className="label [:root:not(.rtl)_&]:first-letter:text-[1.2em]">{label}</span>
 
 			{/* Capture shortcut warning */}
 			{tabCaptureHint && (
 				<Tooltip title={replaceArgs(gvar.gsm.warnings.captureRequired, [`(${gvar.gsm.command.afxCapture})`])} allowClick>
-					<span className="warningTooltip">
+					<span className="-ml-[5px] text-tertiary">
 						<MdWarning size="1.35rem" />
 					</span>
 				</Tooltip>
@@ -143,7 +145,7 @@ export function NameArea(props: NameAreaProps) {
 			{command.valueType === "adjustMode" && (
 				<Tooltip title={gvar.gsm.options.editor.adjustModes[value.adjustMode || AdjustMode.SET]}>
 					<button
-						className="adjustMode"
+						className="adjustMode border-border-x p-[3px] text-[0.8em]"
 						onClick={(e) => {
 							props.onChange(
 								value.id,
@@ -175,16 +177,16 @@ export function NameArea(props: NameAreaProps) {
 			)}
 
 			{/* Tooltip */}
-			{tooltip && <RegularTooltip align="top" title={tooltip} />}
+			{tooltip && <RegularTooltip align="top" title={tooltip} className="-ml-[5px]" />}
 
 			{value.command === "cinema" && <Cinema value={value} onChange={props.onChange} />}
 
 			{/* Fullscreen: native */}
 			{value.command === "fullscreen" && (
 				<>
-					<button
-						style={{ marginLeft: "10px", padding: "2px 5px" }}
-						className={`toggle ${value.direct ? "active" : ""}`}
+					<ToggleButton
+						active={value.direct}
+						className="px-[5px] py-[2px]"
 						onClick={(e) => {
 							props.onChange(
 								value.id,
@@ -195,7 +197,7 @@ export function NameArea(props: NameAreaProps) {
 						}}
 					>
 						{gvar.gsm.command.nativeTooltip}
-					</button>
+					</ToggleButton>
 				</>
 			)}
 
@@ -208,6 +210,7 @@ export function NameArea(props: NameAreaProps) {
 			{/* Kebab menu  */}
 			{!!kebabList.length && (
 				<KebabList
+					buttonClassName="-ml-[5px]"
 					list={kebabList}
 					onSelect={(name) => {
 						for (let handler of kebabListHandlers) {
@@ -260,7 +263,7 @@ function ensureSeekList(
 				{
 					name: "wraparound",
 					checked: value.wraparound,
-					label: makeLabelWithTooltip(gvar.gsm.options.editor.wraparound, gvar.gsm.options.editor.wraparoundTooltip),
+					label: makeMenuLabelWithTooltip(gvar.gsm.options.editor.wraparound, gvar.gsm.options.editor.wraparoundTooltip),
 				},
 				{ name: "showNetDuration", checked: !!value.showNetDuration, label: gvar.gsm.command.showNet },
 			)
@@ -269,7 +272,7 @@ function ensureSeekList(
 			list.push({
 				name: "itcWraparound",
 				checked: value.itcWraparound,
-				label: makeLabelWithTooltip(gvar.gsm.options.editor.wraparound, gvar.gsm.options.editor.wraparoundTooltip),
+				label: makeMenuLabelWithTooltip(gvar.gsm.options.editor.wraparound, gvar.gsm.options.editor.wraparoundTooltip),
 			})
 	}
 }
@@ -284,13 +287,13 @@ function ensureItcList(
 
 	list.push({
 		name: "seekOnce",
-		label: makeLabelWithTooltip(gvar.gsm.options.editor.liveScrubbing, gvar.gsm.options.editor.liveScrubbingTooltip),
+		label: makeMenuLabelWithTooltip(gvar.gsm.options.editor.liveScrubbing, gvar.gsm.options.editor.liveScrubbingTooltip),
 		checked: !value.seekOnce,
 	})
 	if ((value.trigger || Trigger.PAGE) === Trigger.PAGE) {
 		list.push({
 			name: "noHold",
-			label: makeLabelWithTooltip(gvar.gsm.options.editor.pressAndHold, gvar.gsm.options.editor.pressAndHoldTooltip),
+			label: makeMenuLabelWithTooltip(gvar.gsm.options.editor.pressAndHold, gvar.gsm.options.editor.pressAndHoldTooltip),
 			checked: !value.noHold,
 		})
 	}
@@ -306,13 +309,13 @@ function ensureCycleList(
 		name: "allowAlt",
 		close: true,
 		checked: value.allowAlt,
-		label: makeLabelWithTooltip(gvar.gsm.options.editor.reversible, gvar.gsm.options.editor.reversibleTooltip),
+		label: makeMenuLabelWithTooltip(gvar.gsm.options.editor.reversible, gvar.gsm.options.editor.reversibleTooltip),
 	})
 	value.allowAlt &&
 		list.push({
 			name: "cycleNoWrap",
 			checked: !value.cycleNoWrap,
-			label: makeLabelWithTooltip(gvar.gsm.options.editor.wraparound, gvar.gsm.options.editor.wraparoundTooltip),
+			label: makeMenuLabelWithTooltip(gvar.gsm.options.editor.wraparound, gvar.gsm.options.editor.wraparoundTooltip),
 		})
 }
 
@@ -327,7 +330,7 @@ function ensureSpeedList(
 	list.push({
 		name: "skipToggleSpeed",
 		checked: !value.skipToggleSpeed,
-		label: makeLabelWithTooltip(gvar.gsm.command.toggleSpeed, gvar.gsm.command.toggleSpeedTooltip),
+		label: makeMenuLabelWithTooltip(gvar.gsm.command.toggleSpeed, gvar.gsm.command.toggleSpeedTooltip),
 	})
 
 	handlers.push((name: string) => {
@@ -336,15 +339,6 @@ function ensureSpeedList(
 			return true
 		}
 	})
-}
-
-export function makeLabelWithTooltip(name: string, tooltip: string, align: TooltipProps["align"] = "right") {
-	return (
-		<>
-			{name}
-			<RegularTooltip offset={30} align={align} title={tooltip} />
-		</>
-	)
 }
 
 type FilterSelectProps = {
@@ -358,7 +352,7 @@ function FilterSelect(props: FilterSelectProps) {
 	const { value, command, onChange } = props
 	if (command.withFilterTarget || command.withFilterOption) {
 		return (
-			<div className="support">
+			<div className="support flex items-center gap-x-[4px]">
 				{command.withFilterTarget && (
 					<select
 						value={value.filterTarget}
@@ -493,7 +487,7 @@ function Cinema(props: { value: Keybind; onChange: (id: string, v: Keybind) => v
 	return (
 		<>
 			<Tooltip title={gvar.gsm.token.more}>
-				<button className="icon kebab" onClick={() => setShow(true)}>
+				<button className="icon" onClick={() => setShow(true)}>
 					<IoEllipsisVertical style={{ pointerEvents: "none" }} title="..." size="1.3em" />
 				</button>
 			</Tooltip>

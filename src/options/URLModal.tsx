@@ -1,13 +1,13 @@
 import { GoX } from "react-icons/go"
 import { Tooltip } from "@/comps/Tooltip"
+import { gvar } from "@/globalVar"
 import { extractURLPartValueKey, getActiveParts, getSelectedParts } from "@/utils/configUtils"
 import { produce } from "@/utils/helper"
-import { ModalBase } from "../comps/ModalBase"
+import { ModalBase, ModalContent } from "../comps/ModalBase"
 import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { getDefaultURLConditionPart } from "../defaults"
 import { URLCondition, URLConditionPart } from "../types"
 import { findRemoveFromArray } from "../utils/helper"
-import "./URLModal.css"
 
 type Props = {
 	onClose: () => void
@@ -46,11 +46,11 @@ export function URLModal(props: Props) {
 
 	return (
 		<ModalBase keepOnWheel={true} onClose={props.onClose}>
-			<div className="URLModal ModalMain">
+			<ModalContent className="[scrollbar-width:thin] [scrollbar-color:var(--muted)_var(--background)]">
 				{/* Header */}
-				<div className="header">
+				<div className="mb-[10px] grid grid-cols-[1fr_max-content]">
 					{/* Label */}
-					<div>{gvar.gsm.options.rules.conditions}</div>
+					<div className="text-[1.3em]">{gvar.gsm.options.rules.conditions}</div>
 
 					{/* Match mode */}
 					<select
@@ -69,17 +69,19 @@ export function URLModal(props: Props) {
 				</div>
 
 				{/* Subheader */}
-				{subheader && <div className="subHeader">{`${subheader}${isNeutral ? "" : ":"}`}</div>}
+				{subheader && (
+					<div className="mt-[-10px] mb-[15px] translate-x-[-2px] text-[1.1em] italic opacity-50">{`${subheader}${isNeutral ? "" : ":"}`}</div>
+				)}
 
 				{/* Parts  */}
-				<div className="parts">
+				<div className="mb-[20px]">
 					{parts.map((part) => (
 						<ULRConditionPart key={part.id} onChange={onChange} onRemove={onRemove} part={part} />
 					))}
 				</div>
 
 				{/* Controls */}
-				<div className="controls">
+				<div className="grid grid-cols-[max-content_max-content] gap-x-[10px]">
 					{/* Create */}
 					<button
 						onClick={(e) => {
@@ -96,7 +98,7 @@ export function URLModal(props: Props) {
 					{/* Reset */}
 					{parts.length ? <button onClick={props.onReset}>{gvar.gsm.token.reset}</button> : <div></div>}
 				</div>
-			</div>
+			</ModalContent>
 		</ModalBase>
 	)
 }
@@ -106,7 +108,7 @@ function ULRConditionPart(props: { part: URLConditionPart; onChange: (part: URLC
 	const valueKey = extractURLPartValueKey(part)
 
 	return (
-		<div key={part.id}>
+		<div className="mb-[15px] grid grid-cols-[max-content_max-content_1fr_max-content] items-center gap-x-[10px]" key={part.id}>
 			{/* Status */}
 			<Tooltip title={part.disabled ? gvar.gsm.token.on : gvar.gsm.token.off}>
 				<input
@@ -153,7 +155,7 @@ function ULRConditionPart(props: { part: URLConditionPart; onChange: (part: URLC
 			{/* Delete */}
 			<Tooltip title={gvar.gsm.token.delete}>
 				<button
-					className="close icon"
+					className="icon"
 					onClick={() => {
 						onRemove(part)
 					}}

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
+import { gvar } from "@/globalVar"
 import { StateView, StateViewSelector } from "../types"
 import { SubscribeView } from "../utils/state"
 

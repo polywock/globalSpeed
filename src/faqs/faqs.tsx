@@ -1,15 +1,17 @@
-import { ReactElement, useState } from "react"
+import { ReactElement, ReactNode, useState } from "react"
 import { createRoot } from "react-dom/client"
 import { FaMousePointer, FaPowerOff } from "react-icons/fa"
 import { IoEllipsisVertical } from "react-icons/io5"
 import { Pin, Zap } from "@/comps/svgs"
+import "@/main.css"
 import { requestCreateTab } from "../utils/browserUtils"
-import { isFirefox } from "../utils/helper"
-import "./faqs.css"
+import { cn, isFirefox } from "../utils/helper"
+
+const LIST_CLASS = "[&>li]:mb-[10px] [&>li:last-child]:mb-0"
 
 function Faqs(props: {}) {
 	return (
-		<div className="Faqs">
+		<div>
 			<Group label="privacy">
 				<Item
 					q={"Do you collect any data?"}
@@ -61,7 +63,7 @@ function Faqs(props: {}) {
 							a={
 								<div>
 									Yes, but you'll need to enable it in the addon manager page, which can be accessed by going to the following URL.{" "}
-									<code>about:addons</code>.
+									<InlineCode>about:addons</InlineCode>.
 								</div>
 							}
 						/>
@@ -123,12 +125,12 @@ function Faqs(props: {}) {
 				<Item
 					q={"How do I block hotkeys on some sites? "}
 					a={
-						<ul>
+						<ul className={cn("list-none", LIST_CLASS)}>
 							<li>
-								In this example, I'll block hotkeys for <code>geforcenow.com</code>, a game streaming website.
+								In this example, I'll block hotkeys for <InlineCode>geforcenow.com</InlineCode>, a game streaming website.
 							</li>
 							<li>
-								1. Go to <code>geforcenow.com</code>.
+								1. Go to <InlineCode>geforcenow.com</InlineCode>.
 							</li>
 							<li>2. Open Global Speed's popup .</li>
 							<li>
@@ -136,7 +138,7 @@ function Faqs(props: {}) {
 								<IoEllipsisVertical style={{ verticalAlign: "middle" }} size="1.2em" /> to show more options.
 							</li>
 							<li>
-								4. It should show an option to disable shortcuts for <code>geforcenow.com</code>.
+								4. It should show an option to disable shortcuts for <InlineCode>geforcenow.com</InlineCode>.
 							</li>
 						</ul>
 					}
@@ -145,7 +147,7 @@ function Faqs(props: {}) {
 					q={"I can't type because the Global Speed hotkeys are being triggered."}
 					a={
 						<>
-							<ol>
+							<ol className={LIST_CLASS}>
 								<li>
 									Suspend Global Speed using the <FaPowerOff color={"#02a"} size="1.21rem" /> button.
 								</li>
@@ -162,7 +164,7 @@ function Faqs(props: {}) {
 					a={
 						<div>
 							Global Speed uses a QWERTY input by default. If using a non-QWERTY keyboard, you change the keyboard input type to virtual in the
-							options page. The option is hidden under the 3 dots. <code>[...]</code>
+							options page. The option is hidden under the 3 dots. <InlineCode>[...]</InlineCode>
 						</div>
 					}
 				/>
@@ -171,7 +173,7 @@ function Faqs(props: {}) {
 					a={
 						<div>
 							Global Speed uses a QWERTY input by default, which causes issues with some virtual keyboards. You can try changing the keyboard
-							input type to virtual in the options page. The option is hidden under the 3 dots. <code>[...]</code>
+							input type to virtual in the options page. The option is hidden under the 3 dots. <InlineCode>[...]</InlineCode>
 						</div>
 					}
 				/>
@@ -215,7 +217,7 @@ function Faqs(props: {}) {
 								once. Otherwise, Global Speed won't know which element is the video player container.
 							</p>
 							<div>
-								<code className="yellow">Note:</code> the fullscreen hotkey is buggy on some websites.
+								<InlineCode highlighted>Note:</InlineCode> the fullscreen hotkey is buggy on some websites.
 							</div>
 						</div>
 					}
@@ -233,7 +235,7 @@ function Faqs(props: {}) {
 							No, it's also compatible for desktop. It's very useful if you want to change speed or seek through the video while using only a
 							mouse.
 							<div>
-								<code className="yellow">Tip:</code> When using with a mouse, set the circle's size to be smaller.
+								<InlineCode highlighted>Tip:</InlineCode> When using with a mouse, set the circle's size to be smaller.
 							</div>
 						</div>
 					}
@@ -244,8 +246,9 @@ function Faqs(props: {}) {
 					q={"How do I group menu shortcuts? "}
 					a={
 						<div>
-							You can organize by changing the menu label to <code>group :: name</code>. For example, to group a menu shortcut called{" "}
-							<code>pitch</code> under a group called <code>audio</code>, you will format it like so: <code>audio :: pitch</code>{" "}
+							You can organize by changing the menu label to <InlineCode>group :: name</InlineCode>. For example, to group a menu shortcut
+							called <InlineCode>pitch</InlineCode> under a group called <InlineCode>audio</InlineCode>, you will format it like so:{" "}
+							<InlineCode>audio :: pitch</InlineCode>{" "}
 						</div>
 					}
 				/>
@@ -291,24 +294,28 @@ function Faqs(props: {}) {
 
 function Group(props: { label: string; children: ReactElement[] | ReactElement }) {
 	return (
-		<div className="Group">
-			<h2>{props.label}</h2>
-			<div className="items">{props.children}</div>
-		</div>
+		<section className="mb-[30px] w-[800px] bg-white p-[20px]">
+			<h2 className="mt-0">{props.label}</h2>
+			{props.children}
+		</section>
 	)
 }
 
-function Item(props: { q: string | ReactElement; a: ReactElement; marginTop?: boolean }) {
+function Item(props: { q: string | ReactElement; a: ReactElement }) {
 	const [hidden, setHidden] = useState(true)
 	return (
-		<div className={`Item ${props.marginTop ? "marginTop" : ""}`}>
-			<div className="header" onClick={() => setHidden(!hidden)}>
-				<button>{hidden ? "+" : "-"}</button>
+		<div className="mb-[10px]">
+			<div className="grid grid-cols-[max-content_1fr] items-center gap-x-[10px] p-[5px] text-[1.3em]" onClick={() => setHidden(!hidden)}>
+				<button className="min-w-[30px]">{hidden ? "+" : "-"}</button>
 				<div>{props.q}</div>
 			</div>
 			{!hidden && props.a}
 		</div>
 	)
+}
+
+function InlineCode(props: { children: ReactNode; highlighted?: boolean }) {
+	return <code className={cn("bg-[#eee]", props.highlighted && "bg-[#ff0] font-bold")}>{props.children}</code>
 }
 
 const root = createRoot(document.querySelector("#root"))

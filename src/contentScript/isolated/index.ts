@@ -1,3 +1,4 @@
+import { gvar } from "@/globalVar"
 import type { TabInfo } from "../../utils/browserUtils"
 import { Overseer } from "./Overseer"
 import { IS_REDDIT } from "./utils/isWebsite"

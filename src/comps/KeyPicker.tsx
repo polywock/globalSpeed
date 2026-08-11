@@ -1,7 +1,7 @@
 import { KeyboardEvent, useState } from "react"
+import { gvar } from "@/globalVar"
 import { extractHotkey, formatHotkey, Hotkey } from "../utils/keys"
 import { Tooltip } from "./Tooltip"
-import "./KeyPicker.css"
 
 type KeyPickerProps = {
 	onChange: (key: Hotkey) => void
@@ -48,7 +48,7 @@ export const KeyPicker = (props: KeyPickerProps) => {
 					enterState && setEnterState(false)
 					props.onChange?.(null)
 				}}
-				className="KeyPicker"
+				className="KeyPicker cursor-pointer rounded-[var(--radius)] border border-solid border-border-x bg-background py-[5px] text-center text-foreground select-none focus:outline focus:outline-1 focus:outline-ring"
 			>
 				{enterState ? "..." : formatHotkey(props.value)}
 			</div>

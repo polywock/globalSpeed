@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { ComponentPropsWithRef, useMemo } from "react"
 import { FaGithub, FaPowerOff, FaVolumeUp } from "react-icons/fa"
 import { FaCircleDot } from "react-icons/fa6"
 import { GoArrowLeft } from "react-icons/go"
@@ -6,21 +6,44 @@ import { IoIosInformationCircle } from "react-icons/io"
 import { releaseTabCapture } from "@/background/utils/tabCapture"
 import { Gear, Pin, Zap } from "@/comps/svgs"
 import { Tooltip } from "@/comps/Tooltip"
+import { gvar } from "@/globalVar"
 import { KebabList, KebabListProps } from "@/options/KebabList"
 import { AnyDict, ORL_CONTEXT_KEYS, StateView } from "@/types"
-import { feedbackText, isMobile, produce, replaceArgs } from "@/utils/helper"
+import { cn, feedbackText, isMobile, produce, replaceArgs } from "@/utils/helper"
 import { pushView } from "@/utils/state"
 import { getDefaultFx, getDefaultURLCondition, getDefaultURLConditionPart } from "../defaults"
 import { useCaptureStatus } from "../hooks/useCaptureStatus"
 import { SetView, useStateView } from "../hooks/useStateView"
 import { checkFilterDeviation, checkFilterDeviationOrActiveSvg, getActiveParts, requestSyncContextMenu, testURLWithPart } from "../utils/configUtils"
-import "./Header.css"
 
 const SUPPORTS_TAB_CAPTURE = !!(chrome.tabCapture?.capture && chrome.offscreen?.createDocument)
 
 type HeaderProps = {
 	panel: number
 	setPanel: (newPanel: number) => void
+}
+
+type HeaderActionProps = ComponentPropsWithRef<"div"> & {
+	active?: boolean
+	beat?: boolean
+	muted?: boolean
+	unpadded?: boolean
+}
+
+function HeaderAction({ active, beat, className, muted, unpadded, ...props }: HeaderActionProps) {
+	return (
+		<div
+			{...props}
+			className={cn(
+				"cursor-pointer border-0 px-[5px] text-secondary-foreground hover:opacity-90 focus:outline-none [&>svg]:align-baseline",
+				active && "text-tertiary",
+				muted && "text-muted-foreground",
+				active && beat && "animate-[beat_1s_ease-in_infinite]",
+				unpadded && "px-0",
+				className,
+			)}
+		/>
+	)
 }
 
 export function Header(props: HeaderProps) {
@@ -62,11 +85,12 @@ export function Header(props: HeaderProps) {
 	}
 
 	return (
-		<div className="Header">
+		<div className="Header grid grid-cols-[repeat(3,max-content)_1fr_repeat(5,max-content)] items-center [justify-items:right] border-b border-solid border-border-x bg-background px-[5px] pt-[3px]">
 			{/* Status */}
 			<Tooltip title={view.enabled ? gvar.gsm.token.off : gvar.gsm.token.on} align="bottom">
-				<div
-					className={view.enabled ? "active" : "muted"}
+				<HeaderAction
+					active={view.enabled}
+					muted={!view.enabled}
 					onClick={() => {
 						setView({ enabled: !view.enabled, latestViaShortcut: false })
 					}}
@@ -77,20 +101,21 @@ export function Header(props: HeaderProps) {
 					}}
 				>
 					<FaPowerOff size="1.21rem" />
-				</div>
+				</HeaderAction>
 			</Tooltip>
 
 			{/* Pin */}
 			<Tooltip title={gvar.gsm.header.pinTooltip} align="bottom">
-				<div className={`pin ${view.isPinned ? "active" : "muted"}`} onClick={() => clearPin()} onContextMenu={(e) => clearPin(e)}>
+				<HeaderAction active={view.isPinned} muted={!view.isPinned} onClick={() => clearPin()} onContextMenu={(e) => clearPin(e)}>
 					<Pin size="1.42rem" />
-				</div>
+				</HeaderAction>
 			</Tooltip>
 
 			{/* Kebab list */}
 			{kebabInfo?.list.length > 0 ? (
-				<div className="kebab">
+				<HeaderAction className="relative mt-[-3px] ml-[-5px] pl-[2px] leading-0">
 					<KebabList
+						buttonClassName="mt-[-3px] pl-[2px] leading-0"
 						centered={true}
 						tooltipAlign="bottom"
 						list={kebabInfo.list}
@@ -102,57 +127,57 @@ export function Header(props: HeaderProps) {
 						}}
 					/>
 					{kebabInfo.showAlert && (
-						<div className="alert">
+						<div className="pointer-events-none absolute top-[-6px] right-[-5px] text-tertiary">
 							<IoIosInformationCircle size={"1.2em"} />
 						</div>
 					)}
-				</div>
+				</HeaderAction>
 			) : (
-				<div className="noPadding" />
+				<HeaderAction unpadded />
 			)}
 
 			{/* Circle gesture */}
-			{props.panel === 0 && isMobile() ? <CircleIcon active={view.circleWidget} onClick={() => {}} /> : <div className="noPadding" />}
+			{props.panel === 0 && isMobile() ? <CircleIcon active={view.circleWidget} onClick={() => {}} /> : <HeaderAction unpadded />}
 
 			{/* Audio FX */}
-			{props.panel === 0 && SUPPORTS_TAB_CAPTURE ? <AudioIcon onClick={() => props.setPanel(2)} /> : <div className="noPadding" />}
+			{props.panel === 0 && SUPPORTS_TAB_CAPTURE ? <AudioIcon onClick={() => props.setPanel(2)} /> : <HeaderAction unpadded />}
 
 			{/* FX */}
-			{props.panel === 0 ? <FxIcon enabled={view?.enabled} onClick={() => props.setPanel(1)} /> : <div className="noPadding" />}
+			{props.panel === 0 ? <FxIcon enabled={view?.enabled} onClick={() => props.setPanel(1)} /> : <HeaderAction unpadded />}
 
 			{/* Back button */}
 			{props.panel !== 0 ? (
 				<Tooltip title={gvar.gsm.token.back} align="bottom">
-					<div onClick={(e) => props.setPanel(0)}>
+					<HeaderAction onClick={(e) => props.setPanel(0)}>
 						<GoArrowLeft size="1.42rem" />
-					</div>
+					</HeaderAction>
 				</Tooltip>
 			) : (
-				<div className="noPadding" />
+				<HeaderAction unpadded />
 			)}
 
 			{/* Options page */}
 			<Tooltip title={gvar.gsm.header.settingsPage} align="bottom">
-				<div
+				<HeaderAction
 					onClick={async (e) => {
 						chrome.tabs.create({ url: chrome.runtime.getURL("options.html") })
 						window.close()
 					}}
 				>
 					<Gear size="1.42rem" />
-				</div>
+				</HeaderAction>
 			</Tooltip>
 
 			{/* Github */}
 			<Tooltip title={gvar.gsm.header.github} align="bottom">
-				<div
+				<HeaderAction
 					onClick={(e) => {
 						chrome.tabs.create({ url: "https://github.com/polywock/globalSpeed" })
 						window.close()
 					}}
 				>
 					<FaGithub size="1.28rem" />
-				</div>
+				</HeaderAction>
 			</Tooltip>
 		</div>
 	)
@@ -184,8 +209,9 @@ export function FxIcon(props: FxIconProps) {
 
 	return (
 		<Tooltip title={gvar.gsm.header.videoEffects} align="bottom">
-			<div
-				className={`beat ${fxActive ? "active" : ""}`}
+			<HeaderAction
+				active={fxActive}
+				beat
 				onClick={(e) => props.onClick()}
 				onContextMenu={(e) => {
 					e.preventDefault()
@@ -193,7 +219,7 @@ export function FxIcon(props: FxIconProps) {
 				}}
 			>
 				<Zap size="1.42rem" />
-			</div>
+			</HeaderAction>
 		</Tooltip>
 	)
 }
@@ -206,8 +232,9 @@ export function AudioIcon(props: AudioIconProps) {
 	const status = useCaptureStatus()
 	return (
 		<Tooltip title={gvar.gsm.header.audioEffects} align="bottom">
-			<div
-				className={`beat ${status ? "active" : ""}`}
+			<HeaderAction
+				active={!!status}
+				beat
 				onClick={props.onClick}
 				onContextMenu={(e) => {
 					e.preventDefault()
@@ -223,7 +250,7 @@ export function AudioIcon(props: AudioIconProps) {
 				}}
 			>
 				<FaVolumeUp size="1.2rem" />
-			</div>
+			</HeaderAction>
 		</Tooltip>
 	)
 }
@@ -235,8 +262,9 @@ type CircleIconProps = {
 
 export function CircleIcon(props: CircleIconProps) {
 	return (
-		<div
-			className={`beat ${props.active ? "active" : ""}`}
+		<HeaderAction
+			active={props.active}
+			beat
 			onContextMenu={(e) => {
 				e.preventDefault()
 				pushView({
@@ -257,7 +285,7 @@ export function CircleIcon(props: CircleIconProps) {
 			}}
 		>
 			<FaCircleDot size="1.02rem" />
-		</div>
+		</HeaderAction>
 	)
 }
 
@@ -345,7 +373,7 @@ async function showOverlayForKebab(sawCount: number) {
 
 	const b = option.getBoundingClientRect()
 	const outline = document.createElement("div")
-	outline.classList.add("kebabOverlayOutline")
+	outline.className = "pointer-events-none fixed z-[999999999999] border-4 border-solid border-tertiary"
 	outline.style.left = `${b.x - 5}px`
 	outline.style.top = `${b.y - 5}px`
 	outline.style.width = `${b.width + 10}px`
@@ -353,7 +381,7 @@ async function showOverlayForKebab(sawCount: number) {
 
 	const pb = option.parentElement.getBoundingClientRect()
 	const message = document.createElement("div")
-	message.classList.add("kebabOverlayMessage")
+	message.className = "pointer-events-none fixed z-[999999999999] w-full bg-secondary p-[10px] text-center text-[0.9em] font-bold text-tertiary"
 	message.textContent = gvar.gsm.options.popup.enableShortcutsMessage
 	message.style.top = `${pb.y + pb.height + 15}px`
 

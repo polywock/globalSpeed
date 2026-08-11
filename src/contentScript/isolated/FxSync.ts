@@ -1,6 +1,7 @@
 import { getDefaultFx } from "@/defaults"
 import { svgFilterIsValid } from "@/defaults/filters"
 import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
+import { gvar } from "@/globalVar"
 import { createSVGElement, randomId } from "@/utils/helper"
 import { StateView, SvgFilter } from "../../types"
 import { formatFilters, hasActiveSvgFilters } from "../../utils/configUtils"

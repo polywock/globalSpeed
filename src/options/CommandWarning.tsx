@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react"
-import { FaLink } from "react-icons/fa"
-import { MdWarning } from "react-icons/md"
+import { gvar } from "@/globalVar"
 import { Keybind } from "../types"
 import { requestCreateTab } from "../utils/browserUtils"
-import "./CommandWarning.css"
+import { WarningBanner } from "./WarningBanner"
 
 type Props = {
 	keybinds: Keybind[]
@@ -36,13 +35,13 @@ export function CommandWarning(props: Props) {
 	if (!show) return null
 
 	return (
-		<div className="CommandWarning">
-			<MdWarning size={"1.15rem"} />
-			<span>{gvar.gsm.warnings.unusedGlobal}</span>
-			<button onClick={() => requestCreateTab(`chrome://extensions/shortcuts#:~:text=${encodeURIComponent("Global Speed")}`)}>
-				<FaLink size={"1.21rem"} />
-				<span>{gvar.gsm.token.openPage}</span>
-			</button>
-		</div>
+		<WarningBanner
+			action={{
+				label: gvar.gsm.token.openPage,
+				onClick: () => requestCreateTab(`chrome://extensions/shortcuts#:~:text=${encodeURIComponent("Global Speed")}`),
+			}}
+		>
+			{gvar.gsm.warnings.unusedGlobal}
+		</WarningBanner>
 	)
 }

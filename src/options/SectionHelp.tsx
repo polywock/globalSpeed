@@ -3,27 +3,28 @@ import { MdContentCopy, MdContentPaste } from "react-icons/md"
 import { migrateSchema } from "@/background/utils/migrateSchema"
 import { Tooltip } from "@/comps/Tooltip"
 import { getDefaultState } from "@/defaults"
+import { gvar } from "@/globalVar"
 import { State } from "../types"
 import { requestCreateTab } from "../utils/browserUtils"
 import { areYouSure, isFirefox, isMobile } from "../utils/helper"
 import { dumpConfig, fetchView, pushView, restoreConfig } from "../utils/state"
-import "./SectionHelp.css"
+import { OptionsSection } from "./OptionsSection"
 
 export function SectionHelp(props: {}) {
 	return (
-		<div className="section SectionHelp">
+		<OptionsSection className="SectionHelp">
 			{/* Header */}
 			<h2 onClick={handleSecretMenu}>{gvar.gsm.options.help.header}</h2>
 
 			{/* Issue prompt */}
-			<div className="card">
+			<div className="mb-[30px] inline-block rounded-lg border border-solid border-border-x bg-card p-[10px] text-[1.1em] leading-[2] text-card-foreground opacity-65 hover:opacity-100">
 				{gvar.gsm.options.help.issuePrompt} <a href="https://github.com/polywock/globalSpeed/issues">{gvar.gsm.options.help.issueDirective}</a>
 			</div>
 
-			<div className="controls">
+			<div className="grid grid-cols-[max-content_max-content_1fr] justify-items-end gap-x-[10px]">
 				{/* Reset  */}
 				<button
-					className="large"
+					className="p-[7px] text-[1.2em] uppercase"
 					onClick={async (e) => {
 						if (!areYouSure()) return
 
@@ -40,20 +41,20 @@ export function SectionHelp(props: {}) {
 				{!isMobile() && (
 					<>
 						<button
-							className="large"
+							className="p-[7px] text-[1.2em] uppercase"
 							onClick={(e) => {
 								requestCreateTab(chrome.runtime.getURL("./faqs.html"))
 							}}
 						>
 							{"FAQ"}
 						</button>
-						<div className="right">
+						<div className="grid grid-cols-[repeat(4,max-content)] gap-x-[5px]">
 							<ExportImport />
 						</div>
 					</>
 				)}
 			</div>
-		</div>
+		</OptionsSection>
 	)
 }
 
@@ -111,7 +112,7 @@ function ExportImport(props: {}) {
 		<>
 			<Tooltip title={gvar.gsm.options.help.exportTooltip}>
 				<button
-					className="large"
+					className="p-[7px] text-[1.2em]"
 					onClick={async () => {
 						downloadState(await dumpConfig())
 					}}
@@ -121,19 +122,19 @@ function ExportImport(props: {}) {
 			</Tooltip>
 			<Tooltip title={showWasCopied ? gvar.gsm.options.help.copied : gvar.gsm.options.help.copy}>
 				<button
-					className="large"
+					className="p-[7px] text-[1.2em]"
 					onClick={async (e) => {
 						await navigator.clipboard.writeText(JSON.stringify(await dumpConfig()))
 						setShowWasCopied(true)
 						setTimeout(() => setShowWasCopied(false), 1000)
 					}}
 				>
-					<MdContentCopy style={{ pointerEvents: "none" }} />
+					<MdContentCopy className="pointer-events-none" />
 				</button>
 			</Tooltip>
 			<Tooltip title={gvar.gsm.options.help.importTooltip}>
 				<button
-					className="large"
+					className="ml-[15px] p-[7px] text-[1.2em]"
 					onClick={(e) => {
 						ref.current.input.click()
 					}}
@@ -143,7 +144,7 @@ function ExportImport(props: {}) {
 			</Tooltip>
 			<Tooltip title={gvar.gsm.options.help.paste}>
 				<button
-					className="large"
+					className="p-[7px] text-[1.2em]"
 					onClick={async (e) => {
 						if (isFirefox()) {
 							if (!(await chrome.permissions.request({ permissions: ["clipboardRead", "clipboardWrite"] }))) return

@@ -1,4 +1,5 @@
 import debounce from "lodash.debounce"
+import { gvar } from "@/globalVar"
 import { formatSpeedForBadge } from "@/utils/configUtils"
 import { isMobile } from "@/utils/helper"
 import { fetchView } from "@/utils/state"

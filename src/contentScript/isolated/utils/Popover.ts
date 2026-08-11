@@ -1,5 +1,6 @@
+import { gvar } from "@/globalVar"
 import { getLeaf, insertStyle } from "@/utils/nativeUtils"
-import styles from "./Popover.css?raw"
+import styles from "./Popover.css?inline"
 
 export class Popover {
 	_jump: JumpDiv

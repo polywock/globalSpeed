@@ -1,14 +1,12 @@
-import { ReactElement, useEffect, useRef } from "react"
+import { ComponentPropsWithoutRef, ReactElement, useEffect, useRef } from "react"
 import { createPortal } from "react-dom"
-import { isMobile } from "@/utils/helper"
-import "./ModalBase.css"
+import { cn, isMobile } from "@/utils/helper"
 
 type Props = {
 	children: ReactElement
 	onClose: () => void
-	color?: string
 	keepOnWheel?: boolean
-	passClass?: string
+	className?: string
 }
 
 export function ModalBase(props: Props) {
@@ -51,17 +49,33 @@ export function ModalBase(props: Props) {
 
 	return createPortal(
 		<div
-			{...(props.color ? { style: { backgroundColor: props.color } } : {})}
 			ref={ref}
 			onPointerDownCapture={(e) => {
 				if (e.target === ref.current) {
 					props.onClose()
 				}
 			}}
-			className={`ModalBase ${props.passClass || ""} ${isMobile() ? "isMobile" : ""}`}
+			className={cn(
+				"ModalBase fixed top-0 left-0 z-[9999999999] grid h-screen w-screen items-center justify-center bg-black/45",
+				props.className,
+				isMobile() && "isMobile",
+			)}
 		>
 			{props.children}
 		</div>,
 		document.body,
+	)
+}
+
+export function ModalContent({ className, ...props }: ComponentPropsWithoutRef<"div">) {
+	return (
+		<div
+			{...props}
+			className={cn(
+				"max-h-[90vh] w-[700px] max-w-[90vw] overflow-y-auto rounded-lg bg-card p-[20px] text-card-foreground",
+				isMobile() && "max-h-[90%] max-w-[90%]",
+				className,
+			)}
+		/>
 	)
 }

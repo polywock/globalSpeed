@@ -1,3 +1,4 @@
+import { gvar } from "@/globalVar"
 import type { FilterEntry, ItcInit, SvgFilter } from "@/types"
 import { MessageCallback } from "@/utils/browserUtils"
 import { getLeaf } from "@/utils/nativeUtils"
@@ -57,7 +58,7 @@ export class MessageTower {
 			if (msg.showAlt) {
 				if (!gvar.os.indicatorAlt) {
 					gvar.os.indicatorAlt = new Indicator()
-					gvar.os.indicatorAlt.setInit({ position: "C", rounding: 3, scaling: 1.3, showShadow: true })
+					gvar.os.indicatorAlt.setInit({ position: "C", rounding: 3, scaling: 1.3 })
 				}
 				gvar.os.indicatorAlt.show(msg.opts)
 			} else {

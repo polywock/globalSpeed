@@ -1,6 +1,17 @@
 import { FaCheck } from "react-icons/fa"
+import { cn } from "@/utils/helper"
 import { ModalBase } from "./ModalBase"
-import "./Menu.css"
+import { RegularTooltip } from "./RegularTooltip"
+import { TooltipProps } from "./Tooltip"
+
+export function makeMenuLabelWithTooltip(name: string, tooltip: string, align: TooltipProps["align"] = "right") {
+	return (
+		<>
+			{name}
+			<RegularTooltip className="ml-[10px] border-inherit bg-inherit text-inherit" offset={30} align={align} title={tooltip} />
+		</>
+	)
+}
 
 export type MenuProps = {
 	position: { x?: number; y?: number; aligned?: boolean; centered?: boolean }
@@ -13,15 +24,14 @@ export type MenuProps = {
 export const Menu = (props: MenuProps) => {
 	let centered = props.position.centered
 	return (
-		<ModalBase color={"transparent"} onClose={props.onClose}>
+		<ModalBase className="bg-transparent" onClose={props.onClose}>
 			<div
 				ref={props.menuRef}
-				style={
-					centered
-						? { maxWidth: "90vw", justifySelf: "center", fontSize: "0.9em", top: "2em" }
-						: { left: `${props.position.x}px`, top: `${props.position.y}px` }
-				}
-				className="Menu"
+				style={centered ? undefined : { left: `${props.position.x}px`, top: `${props.position.y}px` }}
+				className={cn(
+					"Menu fixed z-[99999999] rounded-[var(--radius)] border-2 border-solid border-border-x bg-popover text-popover-foreground select-none",
+					centered && "top-[2em] max-w-[90vw] justify-self-center text-[0.9em]",
+				)}
 			>
 				{props.items.map((v) => {
 					const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -30,7 +40,14 @@ export const Menu = (props: MenuProps) => {
 					}
 
 					return (
-						<div key={v.name} onClick={handleClick} className={v.className}>
+						<div
+							key={v.name}
+							onClick={handleClick}
+							className={cn(
+								"grid cursor-pointer grid-cols-[20px_auto] border-b border-solid border-border-x py-[5px] pr-[20px] pl-[10px] leading-[1.5] opacity-[.85] hover:opacity-100",
+								v.className,
+							)}
+						>
 							<span>{v.checked === true ? <FaCheck /> : <div>{v.preLabel ?? ""}</div>}</span>
 							<span>{v.label ?? v.name}</span>
 						</div>

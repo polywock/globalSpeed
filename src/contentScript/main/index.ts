@@ -71,6 +71,7 @@ function ensureSoundcloud() {
 }
 
 function ensureBaidu() {
+	return
 	if (!location.hostname.includes("pan.baidu.com")) return
 	let ua = navigator.userAgent
 

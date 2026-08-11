@@ -1,7 +1,7 @@
-import { FaPlus } from "react-icons/fa"
+import { LuPlus } from "react-icons/lu"
+import { gvar } from "@/globalVar"
 import { produce } from "@/utils/helper"
 import { NumericInput } from "./NumericInput"
-import "./CycleInput.css"
 import { Tooltip } from "./Tooltip"
 
 type CycleInputProps = {
@@ -14,12 +14,12 @@ type CycleInputProps = {
 
 export function CycleInput(props: CycleInputProps) {
 	return (
-		<div className="CycleInput">
-			<div className="values">
+		<div className="CycleInput group">
+			<div className="values grid grid-cols-[repeat(4,max-content)] items-center gap-[7px]">
 				{
 					<>
 						{props.values.map((value, i) => (
-							<div key={i} className="value">
+							<div key={i} className="value relative w-[44px]">
 								{/* Value */}
 								<NumericInput
 									value={value}
@@ -39,7 +39,7 @@ export function CycleInput(props: CycleInputProps) {
 								{props.values.length > 0 && (
 									<Tooltip title={gvar.gsm.token.delete}>
 										<div
-											className="close"
+											className="absolute top-[-5px] right-[-5px] h-[11px] w-[11px] rounded-full border border-solid border-destructive bg-destructive-bg opacity-0 group-hover:opacity-90 hover:opacity-100"
 											onClick={(e) => {
 												props.onChange(
 													produce(props.values, (d) => {
@@ -57,6 +57,7 @@ export function CycleInput(props: CycleInputProps) {
 						<div>
 							<Tooltip title={gvar.gsm.token.create}>
 								<button
+									className="text-[0.7rem]"
 									onClick={(e) => {
 										props.onChange(
 											produce(props.values, (d) => {
@@ -65,7 +66,7 @@ export function CycleInput(props: CycleInputProps) {
 										)
 									}}
 								>
-									<FaPlus />
+									<LuPlus />
 								</button>
 							</Tooltip>
 						</div>

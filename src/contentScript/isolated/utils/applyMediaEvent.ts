@@ -1,3 +1,4 @@
+import { gvar } from "@/globalVar"
 import { setSession } from "@/utils/browserUtils"
 import { hashWithStoredSalt } from "@/utils/hash"
 import { HAS_PIP_API } from "@/utils/supports"
@@ -252,18 +253,26 @@ class SetPlaybackRate {
 
 		const time = Math.ceil(Date.now() / RATE_LIMIT_PERIOD) * RATE_LIMIT_PERIOD
 		if (elem.gsRateCounter?.["time"] === time) {
+			// keep counting past the limit, else the reset would hand out a fresh budget within the same period.
 			if (++elem.gsRateCounter["count"] > RATE_LIMIT) {
-				elem.gsRateViolations = elem.gsRateViolations ?? 0
-				if (++elem.gsRateViolations >= RATE_LIMIT_MAX_VIOLATIONS) {
-					elem.gsRateBanned = true
+				// only the first offense of a period counts as a violation.
+				if (elem.gsRateCounter["count"] === RATE_LIMIT + 1) {
+					elem.gsRateViolations = elem.gsRateViolations ?? 0
+					if (++elem.gsRateViolations >= RATE_LIMIT_MAX_VIOLATIONS) {
+						elem.gsRateBanned = true
+					}
 				}
-				delete elem.gsRateCounter
 				return true
 			}
 		} else {
 			elem.gsRateCounter = { time, count: 1 }
 		}
 		return false
+	}
+	static reset(elem: HTMLMediaElement) {
+		delete elem.gsRateCounter
+		delete elem.gsRateViolations
+		delete elem.gsRateBanned
 	}
 	static _set(elem: HTMLMediaElement, value: number, freePitch?: boolean) {
 		if (SetPlaybackRate.checkLimited(elem)) return
@@ -285,6 +294,10 @@ class SetPlaybackRate {
 		elem.webkitPreservesPitch = !freePitch
 	}
 	static set = SetPlaybackRate._set
+}
+
+export function resetRateLimit(elem: HTMLMediaElement) {
+	SetPlaybackRate.reset(elem)
 }
 
 async function applyFullscreen(elem: HTMLVideoElement, native: boolean) {

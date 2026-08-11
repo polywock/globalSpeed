@@ -1,27 +1,34 @@
-import { useEffect, useMemo, useState } from "react"
+import { ComponentPropsWithoutRef, useEffect, useMemo, useState } from "react"
 import { GoX } from "react-icons/go"
 import { TfiMoreAlt } from "react-icons/tfi"
 import { GearIcon } from "@/comps/GearIcon"
 import { Minmax } from "@/comps/Minmax"
 import { NumericInput } from "@/comps/NumericInput"
 import { RegularTooltip } from "@/comps/RegularTooltip"
+import { Reset } from "@/comps/Reset"
 import { SliderMicro } from "@/comps/SliderMicro"
 import { Toggle } from "@/comps/Toggle"
 import { Tooltip } from "@/comps/Tooltip"
 import { getDefaultURLCondition } from "@/defaults"
 import { DEFAULT_DOUBLE_TAP_THRESHOLD, DEFAULT_LONG_PRESS_THRESHOLD, getDefaultSpeedSlider } from "@/defaults/constants"
+import { gvar } from "@/globalVar"
 import { Context, CONTEXT_KEYS, InitialContext, StateView } from "@/types"
-import { clamp, isMobile, produce } from "@/utils/helper"
+import { clamp, cn, isMobile, produce } from "@/utils/helper"
 import { fetchView } from "@/utils/state"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "../defaults/constants"
 import { SetView, useStateView } from "../hooks/useStateView"
 import { LOCALE_MAP } from "../utils/gsm"
 import { IndicatorModal } from "./IndicatorModal"
+import { OptionField } from "./OptionField"
+import { OptionFieldLabel } from "./OptionFieldLabel"
+import { OptionsSection } from "./OptionsSection"
 import { SpeedPresetModal } from "./SpeedPresetModal"
 import { URLModal } from "./URLModal"
 import { WidgetModal } from "./WidgetModal"
-import "./SectionFlags.css"
-import { Reset } from "@/comps/Reset"
+
+function FloatingFieldValue({ className, ...props }: ComponentPropsWithoutRef<"div">) {
+	return <div {...props} className={cn("relative leading-0", className)} />
+}
 
 export function SectionFlags(props: {}) {
 	const [showIndicatorModal, setShowIndicatorModal] = useState(false)
@@ -65,7 +72,7 @@ export function SectionFlags(props: {}) {
 	const defaultSlider = getDefaultSpeedSlider()
 
 	return (
-		<div className="section SectionFlags">
+		<OptionsSection>
 			{showIndicatorModal && (
 				<IndicatorModal
 					indicator={viewAlt.indicatorInit}
@@ -89,14 +96,14 @@ export function SectionFlags(props: {}) {
 			{showPresetModal && <SpeedPresetModal onClose={() => setShowPresetModal(null)} />}
 			{showWidgetModal && <WidgetModal onClose={() => setShowWidgetModal(null)} />}
 			<h2>{gvar.gsm.options.flags.header}</h2>
-			<div className="fields">
+			<div className="mt-[20px]">
 				{/* Language */}
-				<div className="field">
-					<div className="labelWithTooltip">
+				<OptionField>
+					<OptionFieldLabel>
 						<span>{gvar.gsm.options.flags.language}</span>
 
 						{gvar.gsm.options.flags._languageTooltip && <RegularTooltip title={gvar.gsm.options.flags._languageTooltip} align="right" />}
-					</div>
+					</OptionFieldLabel>
 					<select
 						aria-label={gvar.gsm.options.flags.language}
 						value={view.language || "detect"}
@@ -110,10 +117,10 @@ export function SectionFlags(props: {}) {
 							</option>
 						))}
 					</select>
-				</div>
+				</OptionField>
 
 				{/* Dark theme */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.options.flags.theme}</span>
 					<select
 						value={view.darkTheme == null ? "system" : view.darkTheme ? "dark" : "light"}
@@ -126,15 +133,15 @@ export function SectionFlags(props: {}) {
 						<option value="light">{gvar.gsm.options.flags.themeLight}</option>
 						<option value="dark">{gvar.gsm.options.flags.themeDark}</option>
 					</select>
-				</div>
+				</OptionField>
 
 				{/* Permission */}
 				{!has && (
-					<div className="field">
-						<div className="labelWithTooltip">
+					<OptionField>
+						<OptionFieldLabel>
 							<span>{gvar.gsm.options.flags.grantPermission}</span>
 							<RegularTooltip title={gvar.gsm.options.flags.grantPermissionTooltip} align="right" />
-						</div>
+						</OptionFieldLabel>
 						<Toggle
 							aria-label={gvar.gsm.options.flags.grantPermission}
 							value={has}
@@ -144,17 +151,17 @@ export function SectionFlags(props: {}) {
 								})
 							}}
 						/>
-					</div>
+					</OptionField>
 				)}
 
 				{!isMobile() && (
 					<>
 						{/* Show badge */}
-						<div className="field marginTop">
-							<div className="labelWithTooltip">
+						<OptionField className="mt-[30px]">
+							<OptionFieldLabel>
 								<span>{gvar.gsm.options.flags.showBadge}</span>
 								<RegularTooltip title={gvar.gsm.options.flags.showBadgeTooltip} align="right" />
-							</div>
+							</OptionFieldLabel>
 							<Toggle
 								aria-label={gvar.gsm.options.flags.showBadge}
 								value={!view.hideBadge}
@@ -162,15 +169,15 @@ export function SectionFlags(props: {}) {
 									setView({ hideBadge: !view.hideBadge })
 								}}
 							/>
-						</div>
+						</OptionField>
 
 						{/* Show indicator */}
-						<div className="field indentFloat">
-							<div className="labelWithTooltip">
+						<OptionField>
+							<OptionFieldLabel>
 								<span>{gvar.gsm.options.flags.showIndicator}</span>
 								<RegularTooltip title={gvar.gsm.options.flags.showIndicatorTooltip} align="right" />
-							</div>
-							<div className="fieldValue">
+							</OptionFieldLabel>
+							<FloatingFieldValue>
 								<Toggle
 									aria-label={gvar.gsm.options.flags.showIndicator}
 									value={!viewAlt.hideIndicator}
@@ -192,18 +199,14 @@ export function SectionFlags(props: {}) {
 										setView(updated)
 									}}
 								/>
-								<div className="float">
-									{viewAlt.hideIndicator ? null : (
-										<>
-											<GearIcon onClick={() => setShowIndicatorModal(true)} />
-										</>
-									)}
+								<div className="absolute top-[-4px] left-[50px]">
+									{viewAlt.hideIndicator ? null : <GearIcon className="text-foreground" onClick={() => setShowIndicatorModal(true)} />}
 								</div>
-							</div>
-						</div>
+							</FloatingFieldValue>
+						</OptionField>
 
 						{/* Show media view */}
-						<div className="field">
+						<OptionField>
 							<span>{gvar.gsm.options.flags.showMediaView}</span>
 							<Toggle
 								aria-label={gvar.gsm.options.flags.showMediaView}
@@ -212,7 +215,7 @@ export function SectionFlags(props: {}) {
 									setView({ hideMediaView: !view.hideMediaView })
 								}}
 							/>
-						</div>
+						</OptionField>
 					</>
 				)}
 
@@ -220,11 +223,11 @@ export function SectionFlags(props: {}) {
 				<CircleWidget setView={setView} active={view.circleWidget} setShowWidgetModal={setShowWidgetModal} />
 
 				{/* Pin by default */}
-				<div className="field marginTop">
-					<div className="labelWithTooltip">
+				<OptionField className="mt-[30px]">
+					<OptionFieldLabel>
 						<span>{gvar.gsm.options.flags.pinByDefault}</span>
 						<RegularTooltip title={gvar.gsm.options.flags.pinByDefaultTooltip} align="right" />
-					</div>
+					</OptionFieldLabel>
 					<Toggle
 						aria-label={gvar.gsm.options.flags.pinByDefault}
 						value={!!view.pinByDefault}
@@ -232,15 +235,15 @@ export function SectionFlags(props: {}) {
 							setView({ pinByDefault: !view.pinByDefault })
 						}}
 					/>
-				</div>
+				</OptionField>
 
 				{/* Initial state */}
 				{!!view.pinByDefault && (
-					<div className="field indent">
-						<div className="labelWithTooltip">
+					<OptionField>
+						<OptionFieldLabel className="ml-[20px]">
 							<span>{gvar.gsm.options.flags.initialState}</span>
 							{<RegularTooltip title={gvar.gsm.options.flags.initialStateTooltip} align="right" />}
-						</div>
+						</OptionFieldLabel>
 						<select
 							aria-label={gvar.gsm.options.flags.initialState}
 							value={view.initialContext ?? InitialContext.PREVIOUS}
@@ -258,16 +261,16 @@ export function SectionFlags(props: {}) {
 							<option value={InitialContext.NEW}>{gvar.gsm.options.flags.newContext}</option>
 							<option value={InitialContext.CUSTOM}>{gvar.gsm.options.flags.customContext}</option>
 						</select>
-					</div>
+					</OptionField>
 				)}
 
 				{/* Ghost mode */}
-				<div className="field indentFloat">
-					<div className="labelWithTooltip">
+				<OptionField>
+					<OptionFieldLabel>
 						<span>{gvar.gsm.options.flags.ghostMode}</span>
 						<RegularTooltip title={gvar.gsm.options.flags.ghostModeTooltip} align="right" />
-					</div>
-					<div className="fieldValue">
+					</OptionFieldLabel>
+					<FloatingFieldValue>
 						<Toggle
 							aria-label={gvar.gsm.options.flags.ghostMode}
 							value={!!view.ghostMode}
@@ -275,22 +278,18 @@ export function SectionFlags(props: {}) {
 								setView({ ghostMode: !view.ghostMode })
 							}}
 						/>
-						<div className="float">
-							{!view.ghostMode ? null : (
-								<>
-									<GearIcon onClick={(e) => setShowGhostModal(true)} />
-								</>
-							)}
+						<div className="absolute top-[-4px] left-[50px]">
+							{!view.ghostMode ? null : <GearIcon className="text-foreground" onClick={(e) => setShowGhostModal(true)} />}
 						</div>
-					</div>
-				</div>
+					</FloatingFieldValue>
+				</OptionField>
 
 				{/* Speed changes pitch */}
-				<div className="field marginTop">
-					<div className="labelWithTooltip">
+				<OptionField className="mt-[30px]">
+					<OptionFieldLabel>
 						<span>{gvar.gsm.command.speedChangesPitch}</span>
 						<RegularTooltip title={gvar.gsm.command.speedChangesPitchTooltip} align="right" />
-					</div>
+					</OptionFieldLabel>
 					<Toggle
 						aria-label={gvar.gsm.command.speedChangesPitch}
 						value={!!view.freePitch}
@@ -298,13 +297,13 @@ export function SectionFlags(props: {}) {
 							setView({ freePitch: !view.freePitch })
 						}}
 					/>
-				</div>
+				</OptionField>
 
 				{/* Speed slider  */}
-				<div className="field speedSlider">
+				<OptionField className="mb-[10px]">
 					<span>{gvar.gsm.options.flags.speedSlider}</span>
 					{view.speedSlider ? (
-						<div className="control">
+						<div className="grid grid-cols-[8rem_max-content] gap-x-[5px]">
 							<Minmax
 								realMin={MIN_SPEED_CHROMIUM}
 								realMax={MAX_SPEED_CHROMIUM}
@@ -337,17 +336,17 @@ export function SectionFlags(props: {}) {
 							onChange={(v) => setView({ speedSlider: view.speedSlider ? null : getDefaultSpeedSlider() })}
 						/>
 					)}
-				</div>
+				</OptionField>
 
 				{/* Hold to speed  */}
-				<div className="field holdToSpeed">
-					<div className="labelWithTooltip">
+				<OptionField className="mb-[30px]">
+					<OptionFieldLabel>
 						<span>{gvar.gsm.options.flags.holdToSpeedUp}</span>
 						<RegularTooltip title={gvar.gsm.options.flags.holdToSpeedUpTooltip} align="right" />
-					</div>
+					</OptionFieldLabel>
 
 					{view.holdToSpeed ? (
-						<div className="control">
+						<div className="grid grid-cols-[4rem_max-content] gap-x-[5px]">
 							<NumericInput noNull={true} min={0.1} max={20} value={view.holdToSpeed} onChange={(v) => setView({ holdToSpeed: v })} />
 							<button
 								aria-label={gvar.gsm.token.delete}
@@ -362,11 +361,11 @@ export function SectionFlags(props: {}) {
 					) : (
 						<Toggle aria-label={gvar.gsm.options.flags.holdToSpeedUp} value={false} onChange={() => setView({ holdToSpeed: 2 })} />
 					)}
-				</div>
+				</OptionField>
 
 				{!showMore ? (
 					<Tooltip title={gvar.gsm.token.more}>
-						<button aria-label={gvar.gsm.token.more} className="showMoreTooltip" onClick={() => setShowMore(true)}>
+						<button aria-label={gvar.gsm.token.more} className="mt-[20px]" onClick={() => setShowMore(true)}>
 							<TfiMoreAlt />
 						</button>
 					</Tooltip>
@@ -374,13 +373,13 @@ export function SectionFlags(props: {}) {
 					<>
 						{/* Long-press threshold */}
 						{!isMobile() && hasLongPressKey && (
-							<div className="field">
-								<div className="labelWithTooltip">
+							<OptionField>
+								<OptionFieldLabel>
 									<span>{gvar.gsm.options.flags.longPressThreshold}</span>
 									<RegularTooltip title={gvar.gsm.options.flags.longPressThresholdTooltip} align="right" />
-								</div>
+								</OptionFieldLabel>
 
-								<div className="withReset">
+								<div className="grid grid-cols-[max-content_max-content] items-center gap-x-[5px]">
 									<NumericInput
 										noNull={true}
 										min={0.1}
@@ -395,17 +394,17 @@ export function SectionFlags(props: {}) {
 										}}
 									/>
 								</div>
-							</div>
+							</OptionField>
 						)}
 
 						{!isMobile() && hasDoubleTap && (
-							<div className="field">
-								<div className="labelWithTooltip">
+							<OptionField>
+								<OptionFieldLabel>
 									<span>{gvar.gsm.options.flags.doubleTapThreshold}</span>
 									<RegularTooltip title={gvar.gsm.options.flags.doubleTapThresholdTooltip} align="right" />
-								</div>
+								</OptionFieldLabel>
 
-								<div className="withReset">
+								<div className="grid grid-cols-[max-content_max-content] items-center gap-x-[5px]">
 									<NumericInput
 										noNull={true}
 										min={0.06}
@@ -420,13 +419,13 @@ export function SectionFlags(props: {}) {
 										}}
 									/>
 								</div>
-							</div>
+							</OptionField>
 						)}
 
 						{!isMobile() && (
 							<>
 								{/* Font size */}
-								<div className="field marginDoubleTop">
+								<OptionField>
 									<span>{gvar.gsm.options.flags.textSize}</span>
 									<SliderMicro
 										value={view.fontSize ?? 1.0}
@@ -439,14 +438,14 @@ export function SectionFlags(props: {}) {
 										sliderMax={1.1}
 										sliderStep={0.01}
 									/>
-								</div>
+								</OptionField>
 
 								{/* Keyboard input */}
-								<div className="field">
-									<div className="labelWithTooltip">
+								<OptionField>
+									<OptionFieldLabel>
 										<span>{gvar.gsm.options.flags.keyboardInput}</span>
 										<RegularTooltip title={gvar.gsm.options.flags.keyboardInputTooltip} align="right" />
-									</div>
+									</OptionFieldLabel>
 									<select
 										aria-label={gvar.gsm.options.flags.keyboardInput}
 										value={view.virtualInput ? "v" : "q"}
@@ -457,26 +456,26 @@ export function SectionFlags(props: {}) {
 										<option value="q">{gvar.gsm.options.flags.qwerty}</option>
 										<option value="v">{gvar.gsm.options.flags.virtual}</option>
 									</select>
-								</div>
+								</OptionField>
 							</>
 						)}
 
 						{/* Speed presets */}
-						<div className="field">
+						<OptionField>
 							<span>{gvar.gsm.options.flags.speedPresets}</span>
-							<GearIcon onClick={(e) => setShowPresetModal(true)} />
-						</div>
+							<GearIcon className="text-foreground" onClick={(e) => setShowPresetModal(true)} />
+						</OptionField>
 					</>
 				)}
 			</div>
-		</div>
+		</OptionsSection>
 	)
 }
 
 function CircleWidget(props: { active?: boolean; setView: SetView; setShowWidgetModal: (v: boolean) => void }) {
 	return (
-		<div className="field indentFloat">
-			<div className="labelWithTooltip">
+		<OptionField>
+			<OptionFieldLabel>
 				<span>{gvar.gsm.options.flags.widget.option}</span>
 				<RegularTooltip
 					title={gvar.gsm.options.flags.widget.optionTooltip.concat(
@@ -484,8 +483,8 @@ function CircleWidget(props: { active?: boolean; setView: SetView; setShowWidget
 					)}
 					align="right"
 				/>
-			</div>
-			<div className="fieldValue">
+			</OptionFieldLabel>
+			<FloatingFieldValue>
 				<Toggle
 					aria-label={gvar.gsm.options.flags.widget.option}
 					value={!!props.active}
@@ -493,8 +492,10 @@ function CircleWidget(props: { active?: boolean; setView: SetView; setShowWidget
 						props.setView({ circleWidget: !props.active })
 					}}
 				/>
-				<div className="float">{!!props.active && <GearIcon onClick={(e) => props.setShowWidgetModal(true)} />}</div>
-			</div>
-		</div>
+				<div className="absolute top-[-4px] left-[50px]">
+					{!!props.active && <GearIcon className="text-foreground" onClick={(e) => props.setShowWidgetModal(true)} />}
+				</div>
+			</FloatingFieldValue>
+		</OptionField>
 	)
 }

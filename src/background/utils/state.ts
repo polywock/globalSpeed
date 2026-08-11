@@ -1,3 +1,4 @@
+import { gvar } from "@/globalVar"
 import { AnyDict } from "@/types"
 import { randomId } from "@/utils/helper"
 

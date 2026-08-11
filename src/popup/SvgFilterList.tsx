@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { svgFilterGenerate, svgFilterInfos, svgFilterIsValid } from "@/defaults/filters"
 import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
+import { gvar } from "@/globalVar"
 import { SvgFilter } from "@/types"
 import { produce } from "@/utils/helper"
 import { SvgFilterItem } from "./SvgFilterItem"
-import "./SvgFilterList.css"
 
 const filterTypes = Object.keys(svgFilterInfos)
 filterTypes.splice(
@@ -16,9 +16,9 @@ export function SvgFilterList(props: { svgFilters: SvgFilter[]; onChange: (newSv
 	const [command, setCommand] = useState("rgb")
 
 	return (
-		<div className="SvgFilterList">
-			<div className="header">{gvar.gsm.filter.otherFilters.header}</div>
-			<div className="list">
+		<div className="SvgFilterList mt-[15px] border-t border-solid border-border-x">
+			<div className="mt-[6px] text-center text-[0.9em] opacity-50">{gvar.gsm.filter.otherFilters.header}</div>
+			<div>
 				{props.svgFilters.map((f) => (
 					<SvgFilterItem
 						key={f.id}
@@ -40,7 +40,7 @@ export function SvgFilterList(props: { svgFilters: SvgFilter[]; onChange: (newSv
 					/>
 				))}
 			</div>
-			<div className="controls">
+			<div className="mt-[10px] flex gap-x-[10px]">
 				<select
 					value={command}
 					onChange={(e) => {

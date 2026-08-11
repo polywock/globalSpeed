@@ -1,17 +1,20 @@
 import { TiDelete } from "react-icons/ti"
 import { Tooltip } from "@/comps/Tooltip"
+import { gvar } from "@/globalVar"
 import { useStateView } from "@/hooks/useStateView"
-import { isEdge, isMobile } from "@/utils/helper"
+import { cn, isEdge, isMobile } from "@/utils/helper"
 import { pushView } from "@/utils/state"
-import "./QrPromo.css"
 
 const ALWAYS_SHOW = false
 
+// Disabled for now. SelfPromo handles the bottom border while this is off.
+const DISABLED = true
+
 let wasHidden = false
 
-export function QrPromo(props: {}) {
+export function QrPromo() {
 	const [view, setView] = useStateView({ qrCodeHide: true, speedChangeCounter: true, qrCodeSeenCounter: true })
-	if (!view || wasHidden) return null
+	if (DISABLED || !view || wasHidden) return null
 
 	if (!ALWAYS_SHOW && (view.qrCodeHide || !validUserAgent() || (view.speedChangeCounter || 0) < 20 || view.qrCodeSeenCounter > 60)) {
 		wasHidden = true
@@ -21,12 +24,18 @@ export function QrPromo(props: {}) {
 	!ALWAYS_SHOW && indicateSeen(view.qrCodeSeenCounter)
 
 	return (
-		<div className="QrPromo">
+		<div
+			className={cn(
+				"grid grid-cols-[1fr_max-content_max-content] items-center gap-x-[7px] pt-[20px] pb-[10px] pl-[10px] select-none",
+				"dark:hidden",
+			)}
+		>
 			<div>
-				<div className="top">{gvar.gsm.options.flags.qrCodeTop}</div>
-				<div className="bottom">{gvar.gsm.options.flags.qrCodeBottom}</div>
+				<div className="text-[14px]">{gvar.gsm.options.flags.qrCodeTop}</div>
+				<div className="text-[18px] font-bold text-chart-5">{gvar.gsm.options.flags.qrCodeBottom}</div>
 			</div>
 			<img
+				className="cursor-pointer"
 				onClick={() => {
 					chrome.tabs.create({ url: "https://edgemobileapp.microsoft.com?adjustId=1mhapodf_1mwtc6ik" })
 				}}
@@ -37,7 +46,7 @@ export function QrPromo(props: {}) {
 					onClick={() => {
 						setView({ qrCodeHide: true })
 					}}
-					className="icon"
+					className="icon leading-0"
 				>
 					<TiDelete size="30px" />
 				</button>

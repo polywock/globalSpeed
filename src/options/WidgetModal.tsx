@@ -1,16 +1,18 @@
+import { useState } from "react"
 import { GoX } from "react-icons/go"
+import { GearIcon } from "@/comps/GearIcon"
 import { NumericInput } from "@/comps/NumericInput"
 import { RegularTooltip } from "@/comps/RegularTooltip"
 import { SliderMicro } from "@/comps/SliderMicro"
 import { Toggle } from "@/comps/Toggle"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "@/defaults/constants"
+import { gvar } from "@/globalVar"
 import { produce, randomId } from "@/utils/helper"
-import { ModalBase } from "../comps/ModalBase"
+import { ModalBase, ModalContent } from "../comps/ModalBase"
 import { useStateView } from "../hooks/useStateView"
-import "./WidgetModal.css"
-import { useState } from "react"
-import { GearIcon } from "@/comps/GearIcon"
 import { IndicatorModal } from "./IndicatorModal"
+import { OptionField } from "./OptionField"
+import { OptionFieldLabel } from "./OptionFieldLabel"
 
 type Props = {
 	onClose: () => void
@@ -24,7 +26,7 @@ export function WidgetModal(props: Props) {
 
 	return (
 		<ModalBase keepOnWheel={true} onClose={props.onClose}>
-			<div className="WidgetModal ModalMain">
+			<ModalContent className="mt-[20px] w-[600px]">
 				{showIndicatorModal && (
 					<IndicatorModal
 						forCircle={true}
@@ -42,7 +44,7 @@ export function WidgetModal(props: Props) {
 				)}
 
 				{/* Size */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.token.size}</span>
 					<SliderMicro
 						value={init.circleSize ?? 45}
@@ -59,10 +61,10 @@ export function WidgetModal(props: Props) {
 						sliderMax={140}
 						sliderStep={1}
 					/>
-				</div>
+				</OptionField>
 
 				{/* Opacity */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.filter.opacity}</span>
 					<SliderMicro
 						value={init.opacity ?? 0.5}
@@ -79,10 +81,10 @@ export function WidgetModal(props: Props) {
 						sliderMax={0.6}
 						sliderStep={0.01}
 					/>
-				</div>
+				</OptionField>
 
 				{/* Auto hide */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.options.flags.widget.autoHide}</span>
 					<Toggle
 						value={!init.autoHideDisabled}
@@ -95,14 +97,14 @@ export function WidgetModal(props: Props) {
 							})
 						}}
 					/>
-				</div>
+				</OptionField>
 
 				{/* Fullscreen only */}
-				<div className="field">
-					<div className="labelWithTooltip">
+				<OptionField>
+					<OptionFieldLabel>
 						<span>{gvar.gsm.options.flags.widget.fullscreenOnly}</span>
-						<RegularTooltip title={gvar.gsm.options.flags.widget.fullscreenOnlyTooltip} align="right" />
-					</div>
+						<RegularTooltip className="ml-[7px]" title={gvar.gsm.options.flags.widget.fullscreenOnlyTooltip} align="right" />
+					</OptionFieldLabel>
 					<Toggle
 						value={init.fullscreenOnly}
 						onChange={(e) => {
@@ -114,12 +116,12 @@ export function WidgetModal(props: Props) {
 							})
 						}}
 					/>
-				</div>
+				</OptionField>
 
 				{/* Show indicator */}
-				<div className="field indentFloat">
+				<OptionField>
 					<span>{gvar.gsm.options.flags.showIndicator}</span>
-					<div className="fieldValue">
+					<div className="relative leading-0">
 						<Toggle
 							value={!init.hideIndicator}
 							onChange={async (e) => {
@@ -131,7 +133,7 @@ export function WidgetModal(props: Props) {
 								})
 							}}
 						/>
-						<div className="float">
+						<div className="absolute top-[-4px] left-[50px]">
 							{init.hideIndicator ? null : (
 								<>
 									<GearIcon onClick={() => setShowIndicatorModal(true)} />
@@ -139,10 +141,10 @@ export function WidgetModal(props: Props) {
 							)}
 						</div>
 					</div>
-				</div>
+				</OptionField>
 
 				{/* Press action */}
-				<div className="field">
+				<OptionField>
 					<span>{gvar.gsm.options.flags.widget.pressAction}</span>
 					<select
 						value={init.mainAction || "SPEED"}
@@ -160,13 +162,14 @@ export function WidgetModal(props: Props) {
 						<option value="SKIP_FORWARDS">{gvar.gsm.options.flags.widget.skipForward}</option>
 						<option value="SKIP_BACKWARDS">{gvar.gsm.options.flags.widget.skipBackward}</option>
 					</select>
-				</div>
+				</OptionField>
 
 				{/* Speed  */}
 				{(init.mainAction || "SPEED") === "SPEED" && (
-					<div className="field">
+					<OptionField>
 						<span>{gvar.gsm.command.speed}</span>
 						<NumericInput
+							className="w-[50px]"
 							rounding={2}
 							noNull={true}
 							min={MIN_SPEED_CHROMIUM}
@@ -181,18 +184,19 @@ export function WidgetModal(props: Props) {
 								})
 							}}
 						/>
-					</div>
+					</OptionField>
 				)}
 
 				{/* Fixed Seek Step */}
-				<div className="field">
-					<div className="labelWithTooltip">
+				<OptionField>
+					<OptionFieldLabel>
 						<span>{gvar.gsm.options.flags.widget.fixedSeekStep}</span>
-						<RegularTooltip title={gvar.gsm.options.flags.widget.fixedSeekStepTooltip} align="right" />
-					</div>
+						<RegularTooltip className="ml-[7px]" title={gvar.gsm.options.flags.widget.fixedSeekStepTooltip} align="right" />
+					</OptionFieldLabel>
 					{init.fixedSeekStep ? (
-						<div className="control">
+						<div className="flex gap-x-[10px]">
 							<NumericInput
+								className="w-[50px]"
 								rounding={2}
 								noNull={true}
 								min={1}
@@ -233,17 +237,18 @@ export function WidgetModal(props: Props) {
 							}
 						/>
 					)}
-				</div>
+				</OptionField>
 
 				{/* Fixed Speed Step */}
-				<div className="field">
-					<div className="labelWithTooltip">
+				<OptionField>
+					<OptionFieldLabel>
 						<span>{gvar.gsm.options.flags.widget.fixedSpeedStep}</span>
-						<RegularTooltip title={gvar.gsm.options.flags.widget.fixedSpeedStepTooltip} align="right" />
-					</div>
+						<RegularTooltip className="ml-[7px]" title={gvar.gsm.options.flags.widget.fixedSpeedStepTooltip} align="right" />
+					</OptionFieldLabel>
 					{init.fixedSpeedStep ? (
-						<div className="control">
+						<div className="flex gap-x-[10px]">
 							<NumericInput
+								className="w-[50px]"
 								rounding={2}
 								noNull={true}
 								min={0.01}
@@ -285,7 +290,7 @@ export function WidgetModal(props: Props) {
 							}
 						/>
 					)}
-				</div>
+				</OptionField>
 
 				{/* Reset */}
 				<button
@@ -296,7 +301,7 @@ export function WidgetModal(props: Props) {
 				>
 					{gvar.gsm.token.reset}
 				</button>
-			</div>
+			</ModalContent>
 		</ModalBase>
 	)
 }

@@ -3,15 +3,17 @@ import { FaArrowsAltH, FaMusic, FaVolumeUp } from "react-icons/fa"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { MdAccessTime } from "react-icons/md"
 import { initTabCapture, releaseTabCapture } from "@/background/utils/tabCapture"
+import { TabButton } from "@/comps/TabButton"
+import { ToggleButton } from "@/comps/ToggleButton"
 import { Tooltip } from "@/comps/Tooltip"
-import { produce } from "@/utils/helper"
+import { gvar } from "@/globalVar"
+import { cn, produce } from "@/utils/helper"
 import { SliderPlus } from "../comps/SliderPlus"
 import { getDefaultAudioFx } from "../defaults"
 import { useCaptureStatus } from "../hooks/useCaptureStatus"
 import { useStateView } from "../hooks/useStateView"
 import { EqualizerControl } from "./EqualizerControl"
 import { ReverseButton } from "./ReverseButton"
-import "./AudioPanel.css"
 
 export function AudioPanel(props: {}) {
 	const [view, setView] = useStateView({ audioFx: true, audioFxAlt: true, monoOutput: true, audioPan: true })
@@ -19,7 +21,7 @@ export function AudioPanel(props: {}) {
 	let [rightTab, setRightTab] = useState(false)
 	const status = useCaptureStatus()
 
-	if (!view) return <div className="panel unloaded"></div>
+	if (!view) return <div className="min-h-[40px] p-[8px]" />
 
 	if (!view.audioFxAlt) {
 		rightTab = false
@@ -36,23 +38,26 @@ export function AudioPanel(props: {}) {
 	}
 
 	return (
-		<div className="AudioPanel panel">
+		<div className="min-h-[40px] bg-background p-[8px] text-[0.928rem]">
 			{/* Capture button */}
-			<button
-				className={`colored toggle capture ${status ? "active" : ""}`}
+			<ToggleButton
+				active={status}
+				colored
+				className="mt-[10px] mb-[10px] w-full border-[3px] p-[5px] text-[1.3em]"
 				onClick={(e) => {
 					env.viaButton = true
 					status ? releaseTabCapture(gvar.tabInfo.tabId) : initTabCapture(gvar.tabInfo.tabId)
 				}}
 			>
 				{status ? gvar.gsm.audio.releaseTab : gvar.gsm.command.afxCapture}
-			</button>
+			</ToggleButton>
 
-			<div className="mainControls">
+			<div className="mb-[10px] grid grid-cols-[1fr_max-content_1fr] gap-x-[4px]">
 				{/* Split */}
 				<Tooltip title={gvar.gsm.audio.splitTooltip}>
-					<button
-						className={`toggle ${view.audioFxAlt ? "active" : ""}`}
+					<ToggleButton
+						active={!!view.audioFxAlt}
+						className="w-full border-2"
 						onClick={() => {
 							setView(
 								produce(view, (d) => {
@@ -62,13 +67,16 @@ export function AudioPanel(props: {}) {
 						}}
 					>
 						{gvar.gsm.audio.split}
-					</button>
+					</ToggleButton>
 				</Tooltip>
 
 				{/* Reset */}
 				<Tooltip title={gvar.gsm.token.reset}>
 					<button
-						className={`toggle reset ${view.audioFx || view.audioFxAlt || status ? "active" : ""}`}
+						className={cn(
+							"reset toggle w-full rounded-[5px] border-2 text-foreground/50 opacity-70",
+							(view.audioFx || view.audioFxAlt || status) && "active enabled:border-border-xx enabled:text-foreground enabled:opacity-100",
+						)}
 						onClick={() => {
 							releaseTabCapture(gvar.tabInfo.tabId)
 							setView(
@@ -86,8 +94,9 @@ export function AudioPanel(props: {}) {
 
 				{/* Mono */}
 				<Tooltip title={gvar.gsm.command.afxMonoTooltip}>
-					<button
-						className={`toggle ${view.monoOutput ? "active" : ""}`}
+					<ToggleButton
+						active={view.monoOutput}
+						className="w-full border-2"
 						onClick={() => {
 							setView(
 								produce(view, (d) => {
@@ -98,29 +107,29 @@ export function AudioPanel(props: {}) {
 						}}
 					>
 						{gvar.gsm.command.afxMono}
-					</button>
+					</ToggleButton>
 				</Tooltip>
 			</div>
 
 			{/* Split tabs */}
 			{!!view.audioFxAlt && (
-				<div className="tabs">
-					<button
-						className={!rightTab ? "open" : ""}
+				<div className="mb-[10px] grid grid-cols-2">
+					<TabButton
+						open={!rightTab}
 						onClick={(e) => {
 							setRightTab(false)
 						}}
 					>
 						{gvar.gsm.token.left}
-					</button>
-					<button
-						className={rightTab ? "open" : ""}
+					</TabButton>
+					<TabButton
+						open={rightTab}
 						onClick={(e) => {
 							setRightTab(true)
 						}}
 					>
 						{gvar.gsm.token.right}
-					</button>
+					</TabButton>
 				</div>
 			)}
 
@@ -129,11 +138,11 @@ export function AudioPanel(props: {}) {
 				label={
 					<div>
 						<FaMusic size="1.21rem" />
-						<span style={{ marginLeft: "10px" }}>{gvar.gsm.command.afxPitch}</span>
+						<span className="ml-[10px]">{gvar.gsm.command.afxPitch}</span>
 						<Tooltip title={gvar.gsm.audio.pitchHdTooltip}>
-							<button
-								style={{ marginLeft: "10px" }}
-								className={`micro toggle ${starAudioFx.jungleMode ? "" : "active"}`}
+							<ToggleButton
+								active={!starAudioFx.jungleMode}
+								className="ml-[10px] px-[5px] py-0 text-[0.9em]"
 								onClick={(e) => {
 									setView(
 										produce(view, (d) => {
@@ -143,10 +152,11 @@ export function AudioPanel(props: {}) {
 								}}
 							>
 								HD
-							</button>
+							</ToggleButton>
 						</Tooltip>
 					</div>
 				}
+				className="mb-[20px]"
 				value={starAudioFx.pitch ?? 1}
 				sliderMin={-6}
 				sliderMax={6}
@@ -169,9 +179,10 @@ export function AudioPanel(props: {}) {
 				label={
 					<div>
 						<FaVolumeUp size="1.21rem" />
-						<span style={{ marginLeft: "10px" }}>{gvar.gsm.command.afxGain}</span>
+						<span className="ml-[10px]">{gvar.gsm.command.afxGain}</span>
 					</div>
 				}
+				className="mb-[20px]"
 				value={starAudioFx.volume ?? 1}
 				sliderMin={0}
 				sliderMax={3}
@@ -192,9 +203,10 @@ export function AudioPanel(props: {}) {
 				label={
 					<div>
 						<FaArrowsAltH size="1.21rem" />
-						<span style={{ marginLeft: "10px" }}>{gvar.gsm.command.afxPan}</span>
+						<span className="ml-[10px]">{gvar.gsm.command.afxPan}</span>
 					</div>
 				}
+				className="mb-[20px]"
 				value={view.audioPan ?? 0}
 				sliderMin={-1}
 				sliderMax={1}
@@ -215,11 +227,11 @@ export function AudioPanel(props: {}) {
 				label={
 					<div>
 						<MdAccessTime size="1.42rem" />
-						<span style={{ marginLeft: "10px" }}>{gvar.gsm.command.afxDelay}</span>
+						<span className="ml-[10px]">{gvar.gsm.command.afxDelay}</span>
 						<Tooltip title={gvar.gsm.token.mergeBoth}>
-							<button
-								style={{ marginLeft: "10px" }}
-								className={`micro toggle ${starAudioFx.delayMerge ? "active" : ""}`}
+							<ToggleButton
+								active={starAudioFx.delayMerge}
+								className="ml-[10px] px-[5px] py-0 text-[0.9em]"
 								onClick={(e) => {
 									setView(
 										produce(view, (d) => {
@@ -229,10 +241,11 @@ export function AudioPanel(props: {}) {
 								}}
 							>
 								+
-							</button>
+							</ToggleButton>
 						</Tooltip>
 					</div>
 				}
+				className="mb-[20px]"
 				value={starAudioFx.delay ?? 0}
 				sliderMin={0}
 				sliderMax={5}
@@ -250,10 +263,11 @@ export function AudioPanel(props: {}) {
 			/>
 
 			{/* Reverse */}
-			{<ReverseButton onActivate={ensureCaptured} />}
+			<ReverseButton className="mb-[10px]" onActivate={ensureCaptured} />
 
 			{/* EQ */}
 			<EqualizerControl
+				className="mb-[10px]"
 				value={starAudioFx.eq}
 				onChange={(newValue) => {
 					setView(

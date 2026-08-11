@@ -1,6 +1,5 @@
 import { cloneElement, useEffect, useRef } from "react"
 import { clamp } from "@/utils/helper"
-import "./Tooltip.css"
 
 const DEFAULT_TIMEOUT = 15_000
 const DEFAULT_OFFSET = 8
@@ -33,8 +32,12 @@ export type TooltipProps = {
 	maxHmr?: number
 }
 
+/** Lives directly on document.body, so it carries its own styling rather than inheriting any. */
+const POPUP_CLASS =
+	"TooltipPopup fixed z-[9999999999999] block select-none rounded-lg border border-solid border-background/50 bg-popover p-[10px] text-[1rem] leading-[normal] wrap-break-word whitespace-break-spaces text-popover-foreground opacity-85 pointer-events-none"
+
 let popup = document.createElement("div")
-popup.classList.add("TooltipPopup")
+popup.className = POPUP_CLASS
 
 export function Tooltip(props: TooltipProps) {
 	const env = useRef({} as Env).current

@@ -1,9 +1,10 @@
 import debounce from "lodash.debounce"
+import { gvar } from "@/globalVar"
+import { IterableWeakSet } from "@/utils/IterableWeakSet"
 import { getShadow } from "@/utils/nativeUtils"
 import { conformSpeed } from "../../utils/configUtils"
 import { assertType, between, randomId } from "../../utils/helper"
-import { IterableWeakSet } from "@/utils/IterableWeakSet"
-import { applyMediaEvent, MediaEvent } from "./utils/applyMediaEvent"
+import { applyMediaEvent, MediaEvent, resetRateLimit } from "./utils/applyMediaEvent"
 import { generateScopeState } from "./utils/genMediaInfo"
 
 const EVENTS_LAST_PLAYED = new Set(["pause", "playing", "timeupdate"])
@@ -179,6 +180,7 @@ export class MediaTower {
 		} else if (e.type === "emptied") {
 			delete elem.gsMarks
 			delete elem.gsNameless
+			resetRateLimit(elem)
 		} else if (e.type === "pause" || e.type === "playing") {
 			this.handleInterrupt(e)
 		}

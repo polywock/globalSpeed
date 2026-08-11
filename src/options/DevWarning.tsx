@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
-import { FaLink } from "react-icons/fa"
-import { MdWarning } from "react-icons/md"
+import { gvar } from "@/globalVar"
 import { canPotentiallyUserScriptExecute, canUserScript, requestCreateTab } from "../utils/browserUtils"
+import { WarningBanner } from "./WarningBanner"
 
 export enum DevWarningType {
 	NONE = 0,
@@ -61,18 +61,20 @@ export function DevWarning(props: Props) {
 	if (!show) return null
 
 	return (
-		<div className="CommandWarning">
-			<MdWarning size={"1.15rem"} />
-			{show === DevWarningType.ENABLE_USERSCRIPTS && <span>{gvar.gsm.warnings[`${props.forUrlRules ? "jsWarningRules" : "jsWarning"}`]}</span>}
-			{show === DevWarningType.NO_SUPPORT && <span>{gvar.gsm.warnings.jsUpdate}</span>}
-			{show === DevWarningType.ENABLE_USERSCRIPTS && (
-				<button
-					onClick={() => requestCreateTab(`chrome://extensions/?id=${chrome.runtime.id}#:~:text=${encodeURIComponent("Allow User Scripts")}`)}
-				>
-					<FaLink size={"1.21rem"} />
-					<span>{gvar.gsm.token.openPage}</span>
-				</button>
-			)}
-		</div>
+		<WarningBanner
+			action={
+				show === DevWarningType.ENABLE_USERSCRIPTS
+					? {
+							label: gvar.gsm.token.openPage,
+							onClick: () =>
+								requestCreateTab(`chrome://extensions/?id=${chrome.runtime.id}#:~:text=${encodeURIComponent("Allow User Scripts")}`),
+						}
+					: undefined
+			}
+		>
+			{show === DevWarningType.ENABLE_USERSCRIPTS
+				? gvar.gsm.warnings[props.forUrlRules ? "jsWarningRules" : "jsWarning"]
+				: gvar.gsm.warnings.jsUpdate}
+		</WarningBanner>
 	)
 }

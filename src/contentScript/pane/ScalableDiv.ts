@@ -1,3 +1,5 @@
+import { gvar } from "@/globalVar"
+
 const HOT_ZONE = 20
 const MIN_WIDTH = 60
 const MIN_HEIGHT = 60

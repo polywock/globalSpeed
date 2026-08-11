@@ -1,0 +1,347 @@
+@import "tailwindcss" source(none);
+
+/* Pages build with root=static/, so auto-detection would scan static/ and miss every class in
+   src/. source(none) also keeps static/locales out — its "!context" keys ("!blur", "!static")
+   would otherwise compile into real important-modifier utilities. */
+@source "../src/**/*.{ts,tsx}";
+
+/* Replaces the stock prefers-color-scheme `dark:`. useThemeSync already resolves the "system"
+   setting down to this class on <html>, so the class is the sole source of truth. `:is()` rather
+   than the usual `:where()` so the variant keeps the (0,2,0) specificity of the `[.darkTheme_&]:`
+   selectors it replaces, instead of dropping to (0,1,0) and tying with the utility it overrides. */
+@custom-variant dark (&:is(.darkTheme, .darkTheme *));
+
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-tertiary: var(--tertiary);
+	--color-tertiary-foreground: var(--tertiary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-bg: var(--destructive-bg);
+	--color-border: var(--border);
+	--color-border-x: var(--border-x);
+	--color-border-xx: var(--border-xx);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--color-chart-1: var(--chart-1);
+	--color-chart-2: var(--chart-2);
+	--color-chart-3: var(--chart-3);
+	--color-chart-4: var(--chart-4);
+	--color-chart-5: var(--chart-5);
+	--color-sidebar: var(--sidebar);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-ring: var(--sidebar-ring);
+
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 2px);
+	--radius-2xl: calc(var(--radius) + 4px);
+}
+
+/* Strips a button back to a bare icon. A utility rather than a base rule, so that
+   utilities set alongside it override it instead of needing `!`. */
+@utility icon {
+	color: var(--secondary-foreground);
+	padding: 0;
+	background-color: inherit;
+	border: none;
+
+	&:focus {
+		outline: 1px solid var(--ring);
+		border: none;
+	}
+}
+
+/* Design tokens and the document-level defaults they feed. Deliberately unlayered: anything in
+   @layer base can be outranked by unlayered author CSS, and these have to be the last word on
+   the page. The element resets below stay in @layer base so utilities still override them. */
+:root {
+	--font-lang-scalar: 1;
+	--font-size-scalar: 1;
+	--radius: 0.5rem;
+	--radius-2xl: calc(var(--radius) + 4px);
+	--radius-xl: calc(var(--radius) + 2px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-sm: calc(var(--radius) - 4px);
+
+	--font-size: calc(14px * var(--font-lang-scalar) * var(--font-size-scalar));
+	font-size: var(--font-size);
+
+	--background: #f8fbff;
+	--foreground: oklch(22.359% 0.03316 265.722);
+	--card: #ffffff;
+	--card-foreground: oklch(22.359% 0.03316 265.722);
+	--popover: #1d2533;
+	--popover-foreground: oklch(96.386% 0.01706 267.821);
+	--primary: #1546c8;
+	--primary-foreground: #ffffff;
+	--secondary: #e4e9f1;
+	--secondary-foreground: #4b5c79;
+	--tertiary: #295cda;
+	--tertiary-foreground: #ffffff;
+	--muted: lightgray;
+	--muted-foreground: #7a879e;
+	--accent: #1f2f4a1a;
+	--accent-foreground: oklch(22.359% 0.03316 265.722);
+	--destructive-bg: #fde8e8;
+	--destructive: #7a1b21;
+	--border: oklch(0 0 0 / 10%);
+	--border-x: oklch(0 0 0 / 20%);
+	--border-xx: oklch(0 0 0 / 50%);
+	--input: oklch(0 0 0 / 15%);
+	--ring: #2f65f6;
+	--chart-1: #295cda;
+	--chart-2: #8b5cf6;
+	--chart-3: #0ea5e9;
+	--chart-4: #d97706;
+	--chart-5: #135a2e;
+	--sidebar: #ffffff;
+	--sidebar-foreground: oklch(22.359% 0.03316 265.722);
+	--sidebar-primary: #1546c8;
+	--sidebar-primary-foreground: #ffffff;
+	--sidebar-accent: #1f2f4a1a;
+	--sidebar-accent-foreground: oklch(22.359% 0.03316 265.722);
+	--sidebar-border: oklch(0 0 0 / 10%);
+	--sidebar-ring: #2f65f6;
+}
+
+:root.darkTheme {
+	--background: #1d2533;
+	--foreground: oklch(96.386% 0.01706 267.821);
+	--card: #171d28;
+	--card-foreground: oklch(96.386% 0.01706 267.821);
+	--popover: #f8fbff;
+	--popover-foreground: oklch(22.359% 0.03316 265.722);
+	--primary: #c5d7ff;
+	--primary-foreground: #000000;
+	--secondary: #293348;
+	--secondary-foreground: #b6c2d8;
+	--tertiary: #8db6ff;
+	--tertiary-foreground: #000000;
+	--muted: #0f141d;
+	--muted-foreground: #8895ad;
+	--accent: #ffffff14;
+	--accent-foreground: oklch(96.386% 0.01706 267.821);
+	--destructive-bg: #5a2b2e;
+	--destructive: #ffd9da;
+	--border: oklch(1 0 0 / 10%);
+	--border-x: oklch(1 0 0 / 20%);
+	--border-xx: oklch(1 0 0 / 50%);
+	--input: oklch(1 0 0 / 15%);
+	--ring: #a8c8ff;
+	--chart-1: #8db6ff;
+	--chart-2: #c4a7ff;
+	--chart-3: #7dd3fc;
+	--chart-4: #fbbf24;
+	--chart-5: #8de0ad;
+	--sidebar: #171d28;
+	--sidebar-foreground: oklch(96.386% 0.01706 267.821);
+	--sidebar-primary: #c5d7ff;
+	--sidebar-primary-foreground: #000000;
+	--sidebar-accent: #ffffff14;
+	--sidebar-accent-foreground: oklch(96.386% 0.01706 267.821);
+	--sidebar-border: oklch(1 0 0 / 10%);
+	--sidebar-ring: #a8c8ff;
+}
+
+body {
+	font-family: "Segoe UI", "Avenir", system-ui, Courier, monospace;
+	font-size: var(--font-size);
+	background-color: var(--muted);
+	color: var(--foreground);
+}
+
+@layer base {
+	/* Preflight strips all UA typography. These re-establish it for the elements the app
+	   actually uses (options section headers, the FAQ page, the error fallback). */
+	h2 {
+		font-size: 1.5em;
+		font-weight: bold;
+		margin-block: 0.83em;
+	}
+
+	p {
+		margin-block: 1em;
+	}
+
+	ol,
+	ul {
+		list-style: revert;
+		margin-block: 1em;
+		padding-inline-start: 40px;
+	}
+
+	button,
+	input,
+	select,
+	textarea {
+		font: inherit;
+		letter-spacing: inherit;
+		word-spacing: inherit;
+		border-radius: var(--radius);
+
+		&:focus {
+			outline: 1px solid var(--ring);
+		}
+	}
+
+	select {
+		background-color: var(--background);
+		color: var(--foreground);
+		border: 1px solid var(--input);
+		padding: 3px 5px;
+		cursor: pointer;
+	}
+
+	button,
+	input[type="text"],
+	textarea {
+		background-color: var(--background);
+		color: var(--foreground);
+		border: 1px solid var(--input);
+		padding: 5px;
+
+		&:focus {
+			border-color: var(--ring);
+			border-style: solid;
+			outline: none;
+		}
+
+		&.error {
+			background-color: var(--destructive-bg);
+			color: var(--destructive);
+			border-color: var(--destructive);
+		}
+	}
+
+	input[type="text"] {
+		min-width: 0;
+		width: 100%;
+
+		&.error {
+			background-color: var(--destructive-bg);
+		}
+
+		&:disabled {
+			opacity: 0.7;
+			pointer-events: none;
+		}
+	}
+
+	button {
+		cursor: pointer;
+
+		&:disabled {
+			opacity: 0.5;
+		}
+	}
+
+	a,
+	a:visited {
+		color: var(--primary);
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	/* Preflight makes svg a block, which would break the inline react-icons used throughout. */
+	svg {
+		display: inline;
+		vertical-align: middle;
+		pointer-events: bounding-box;
+	}
+
+	* > svg {
+		opacity: 0.8;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
+	code {
+		padding: 2px 5px;
+		border: 1px solid currentColor;
+	}
+
+	input[type="checkbox"] {
+		width: 1.07rem;
+		height: 1.07rem;
+	}
+
+	input[type="color"] {
+		background-color: var(--background);
+		border: none;
+		width: 3.5rem;
+		height: 2.14rem;
+		border-radius: var(--radius);
+	}
+}
+
+/* Per-document chrome for the three extension pages, keyed off the class each one sets on its
+   <body>. Left unlayered so it outranks the `body` rule in @layer base, the way the utilities
+   these replaced used to. Each page's own content is styled from its components. */
+
+.popup-page {
+	width: 300px;
+	min-width: 300px;
+	background-color: var(--background);
+}
+
+/* isMobile() marks <html>, so the popup can drop its fixed width and fill the viewport. */
+.mobile .popup-page {
+	width: auto;
+}
+
+.options-page #root {
+	scrollbar-color: var(--muted) var(--background);
+	scrollbar-width: thin;
+}
+
+/* Past this width the options page stops filling the window and centres its single column. */
+@media (min-width: 1000px) {
+	.options-page #root {
+		display: grid;
+		justify-content: center;
+	}
+}
+
+/* Inherits the base body font stack and size; only the layout and paper-grey ground differ. */
+.faqs-page {
+	display: grid;
+	justify-content: center;
+	background-color: #ddd;
+	padding: 20px;
+}
+
+@keyframes beat {
+	0% {
+		transform: scale(1);
+	}
+	90% {
+		transform: scale(0.8);
+	}
+	95% {
+		transform: scale(1.1);
+	}
+}

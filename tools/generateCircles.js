@@ -1,7 +1,8 @@
-const { access, constants, rm, mkdir, writeFile } = require("fs").promises
+import { access, constants, mkdir, rm, writeFile } from "node:fs/promises"
 // /// <reference types="@types/node" />
 
-const { join } = require("path")
+import { join } from "node:path"
+
 const CIRCLES_PATH = "static/circles/"
 
 async function main() {

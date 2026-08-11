@@ -1,3 +1,4 @@
+import { gvar } from "@/globalVar"
 import "./utils/session"
 import "./utils/state"
 import "./badge"

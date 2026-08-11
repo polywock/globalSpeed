@@ -1,3 +1,5 @@
+import { gvar } from "@/globalVar"
+
 export type FullHotkey = {
 	code?: string
 	altKey?: boolean

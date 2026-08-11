@@ -3,8 +3,10 @@ import { useMemo, useState } from "react"
 import { FaExchangeAlt, FaPowerOff } from "react-icons/fa"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { RegularTooltip } from "@/comps/RegularTooltip"
+import { TabButton } from "@/comps/TabButton"
 import { Tooltip } from "@/comps/Tooltip"
-import { isMobile, produce } from "@/utils/helper"
+import { gvar } from "@/globalVar"
+import { cn, isFirefox, isMobile, produce } from "@/utils/helper"
 import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { getDefaultFx } from "../defaults"
 import { Fx } from "../types"
@@ -12,7 +14,6 @@ import { checkFilterDeviation, checkFilterDeviationOrActiveSvg, sendMessageToCon
 import { Filters } from "./Filters"
 import { Origin } from "./Origin"
 import { SvgFilterList } from "./SvgFilterList"
-import "./FxControl.css"
 
 type FxControlProps = {
 	live?: boolean
@@ -51,32 +52,36 @@ export function FxControl(props: FxControlProps) {
 	const isEmpty = useMemo(() => (rawFx == null ? true : equal(rawFx, getDefaultFx())), [rawFx])
 
 	return (
-		<div className={`FxControl ${props.className || ""}`}>
+		<div
+			className={cn("FxControl bg-background text-[1rem] select-none [&>*]:mb-[10px]", props.live && isFirefox() && "mr-[20px]", props.className)}
+		>
 			{/* Target tabs */}
-			<div className="tabs">
-				<button
-					className={`${!backdropTab ? "open" : ""} ${active.elemFilter || active.elemTransform ? "active" : ""}`}
+			<div className="grid grid-cols-2">
+				<TabButton
+					open={!backdropTab}
+					active={active.elemFilter || active.elemTransform}
 					onClick={(e) => {
 						setBackdropTab(false)
 					}}
 				>
 					{gvar.gsm.token.video}
-				</button>
-				<button
-					className={`${backdropTab ? "open" : ""} ${active.backdropFilter || active.backdropTransform ? "active" : ""}`}
+				</TabButton>
+				<TabButton
+					open={backdropTab}
+					active={active.backdropFilter || active.backdropTransform}
 					onClick={(e) => {
 						setBackdropTab(true)
 					}}
 				>
 					{gvar.gsm.token.page}
-				</button>
+				</TabButton>
 			</div>
 
-			<div className="controls">
+			<div className="grid grid-cols-3 gap-x-[10px]">
 				{/* Status */}
 				<Tooltip align="bottom" title={fx.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
 					<button
-						className={fx.enabled ? "active" : "muted"}
+						className={fx.enabled ? "text-tertiary" : "text-muted-foreground"}
 						onClick={(e) => {
 							setCurrent(
 								produce(fx, (d) => {
@@ -92,6 +97,7 @@ export function FxControl(props: FxControlProps) {
 				{/* Swap */}
 				<Tooltip align="bottom" title={gvar.gsm.filter.swap}>
 					<button
+						className="text-secondary-foreground"
 						onClick={(e) => {
 							props.handleChange(backdropFx, elementFx)
 						}}
@@ -103,7 +109,7 @@ export function FxControl(props: FxControlProps) {
 				{/* Reset */}
 				<Tooltip align="bottom" title={gvar.gsm.token.reset}>
 					<button
-						className={isEmpty ? "" : "active levelup"}
+						className={cn("text-secondary-foreground", !isEmpty && "text-tertiary outline outline-tertiary [&>svg]:scale-[1.15]")}
 						onClick={(e) => {
 							setCurrent(null)
 						}}
@@ -115,7 +121,7 @@ export function FxControl(props: FxControlProps) {
 
 			{/* Selector */}
 			{!backdropTab && (
-				<div className="selector">
+				<div className="grid gap-y-[5px]">
 					<span>
 						{gvar.gsm.token.selector} <RegularTooltip align={"right"} title={gvar.gsm.token.selectorTooltip} />
 					</span>
@@ -134,23 +140,25 @@ export function FxControl(props: FxControlProps) {
 			)}
 
 			{/* Type tabs */}
-			<div className="tabs sm">
-				<button
-					className={`${!transformTab ? "open" : ""} ${(backdropTab ? active.backdropFilter : active.elemFilter) ? "active" : ""}`}
+			<div className="grid grid-cols-2 text-[0.95em] leading-[0.95] opacity-70">
+				<TabButton
+					open={!transformTab}
+					active={backdropTab ? active.backdropFilter : active.elemFilter}
 					onClick={(e) => {
 						setTransformTab(false)
 					}}
 				>
 					{gvar.gsm.token.filters}
-				</button>
-				<button
-					className={`${transformTab ? "open" : ""} ${(backdropTab ? active.backdropTransform : active.elemTransform) ? "active" : ""}`}
+				</TabButton>
+				<TabButton
+					open={transformTab}
+					active={backdropTab ? active.backdropTransform : active.elemTransform}
 					onClick={(e) => {
 						setTransformTab(true)
 					}}
 				>
 					{gvar.gsm.token.transforms}
-				</button>
+				</TabButton>
 			</div>
 
 			{/* Pivot */}
@@ -171,7 +179,7 @@ export function FxControl(props: FxControlProps) {
 
 			{/* Into pane */}
 			{!isMobile() && props.live && !transformTab && gvar.tabInfo.url?.startsWith("http") && (
-				<div className="buttons">
+				<div className="grid grid-cols-2 gap-x-[10px]">
 					<Tooltip title={gvar.gsm.token.intoPaneTooltip}>
 						<button
 							className="intoPane"

@@ -1,5 +1,5 @@
 import { ChangeEvent, RefObject, useEffect, useState } from "react"
-import { round } from "../utils/helper"
+import { cn, round } from "../utils/helper"
 import { FloatTooltip } from "./FloatTooltip"
 
 const NUMERIC_REGEX = /^-?(?=[\d\.])\d*(\.\d+)?$/
@@ -70,14 +70,14 @@ export const NumericInput = (props: NumericInputProps) => {
 	}
 
 	return (
-		<div ref={props.ref} className={`NumericInput ${props.className || ""}`} style={{ position: "relative" }}>
+		<div ref={props.ref} className={cn("NumericInput relative", props.className)}>
 			<input
 				disabled={props.disabled ?? false}
 				onBlur={(e) => {
 					setProblem(null)
 					setGhostValue(props.value == null ? "" : `${round(props.value, props.rounding ?? 4)}`)
 				}}
-				className={problem ? "error" : ""}
+				className={cn("text-center", problem && "error")}
 				placeholder={props.placeholder}
 				type="text"
 				onChange={handleOnChange}

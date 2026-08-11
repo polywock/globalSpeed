@@ -1,3 +1,4 @@
+import { gvar } from "@/globalVar"
 import { requestTabInfo } from "@/utils/browserUtils"
 import { timeout } from "@/utils/helper"
 import { fetchView } from "@/utils/state"

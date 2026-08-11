@@ -1,4 +1,5 @@
 import { IndicatorShowOpts } from "@/contentScript/isolated/utils/Indicator"
+import { gvar } from "@/globalVar"
 import { hashWithStoredSalt } from "@/utils/hash"
 import { produce } from "@/utils/helper"
 import type { MediaEvent, MediaEventCinema } from "../../contentScript/isolated/utils/applyMediaEvent"

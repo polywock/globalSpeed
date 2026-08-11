@@ -18,7 +18,7 @@ declare namespace chrome.tabCapture {
 	export function getMediaStreamId(options: GetMediaStreamOptions): Promise<string>
 }
 
-declare module "*.css?raw" {
+declare module "*.css?inline" {
 	const content: string
 	export default content
 }

@@ -1,4 +1,4 @@
-import "./Toggle.css"
+import { cn } from "@/utils/helper"
 
 type ToggleProps = {
 	value: boolean
@@ -21,7 +21,10 @@ export function Toggle(props: ToggleProps) {
 			onClick={(e) => {
 				props.onChange(!props.value)
 			}}
-			className={`Toggle ${props.value ? "active" : ""}`}
+			className={cn(
+				"Toggle inline-block w-[40px] cursor-pointer rounded-[var(--radius)] border-[1.5px] border-solid border-input leading-[0] select-none after:pointer-events-none after:box-border after:inline-block after:h-[14px] after:w-[18px] after:rounded-[inherit] after:border after:border-solid after:border-input after:bg-background after:transition-transform after:duration-[50ms] after:ease-linear after:content-['']",
+				props.value ? "active bg-tertiary after:translate-x-[20px]" : "bg-input after:translate-x-0",
+			)}
 		/>
 	)
 }

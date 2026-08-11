@@ -1,9 +1,10 @@
 import { crossIcon, resetIcon } from "@/defaults/icons"
+import { gvar } from "@/globalVar"
 import { ItcInit } from "@/types"
 import { between, clamp, extractClient, inverseLerp, lerp, createElement as m } from "@/utils/helper"
 import { insertStyle } from "@/utils/nativeUtils"
 import { requestApplyMediaEvent } from "./applyMediaEvent"
-import styles from "./Interactive.css?raw"
+import styles from "./Interactive.css?inline"
 import { Popover } from "./Popover"
 
 const SLIDER_WIDTH = 100

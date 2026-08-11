@@ -1,5 +1,6 @@
 import type { DebouncedFunc } from "lodash"
 import debounce from "lodash.debounce"
+import { gvar } from "@/globalVar"
 import {
 	AnyDict,
 	Context,

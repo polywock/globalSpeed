@@ -1,3 +1,4 @@
+import { gvar } from "@/globalVar"
 import { between } from "@/utils/helper"
 import { SubscribeView } from "@/utils/state"
 

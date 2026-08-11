@@ -1,4 +1,5 @@
 import debounce from "lodash.debounce"
+import { gvar } from "@/globalVar"
 import { requestGsm } from "@/utils/gsm"
 import { areYouSure, assertType, clamp, createElement as m, randomNumber, replaceArgs } from "@/utils/helper"
 import {
@@ -14,8 +15,8 @@ import {
 	questionIcon,
 } from "../../defaults/icons"
 import { Popover } from "../isolated/utils/Popover"
-import styles from "./styles.css?raw"
-import pageStyles from "./stylesAux.css?raw"
+import styles from "./styles.css?inline"
+import pageStyles from "./stylesAux.css?inline"
 
 const ERASER_MIN = 5
 const ERASER_MAX = 200

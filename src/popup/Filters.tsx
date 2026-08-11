@@ -1,11 +1,11 @@
 import { useState } from "react"
-import { produce } from "@/utils/helper"
+import { ToggleButton } from "@/comps/ToggleButton"
+import { gvar } from "@/globalVar"
+import { cn, moveItem, produce } from "@/utils/helper"
 import { Move } from "../comps/Move"
 import { SliderPlus } from "../comps/SliderPlus"
 import { filterInfos } from "../defaults/filters"
 import { FilterEntry } from "../types"
-import { moveItem } from "../utils/helper"
-import "./Filters.css"
 
 type FiltersProps = {
 	filters: FilterEntry[]
@@ -17,7 +17,7 @@ export function Filters(props: FiltersProps) {
 	const [syncScale, setSyncScale] = useState(false)
 
 	return (
-		<div className={`Filters ${props.className || ""}`}>
+		<div className={cn("Filters", props.className)}>
 			{props.filters.map((entry) => (
 				<Filter
 					key={entry.name}
@@ -64,20 +64,16 @@ export function Filter(props: FilterProps) {
 	const ref = filterInfos[entry.name].ref
 
 	return (
-		<div className="Filter">
+		<div className="Filter mb-[15px] grid grid-cols-[max-content_1fr] items-start gap-x-[5px] last:mb-0 [&>.Move]:gap-y-[5px]">
 			<Move onMove={(down) => props.onMove(down)} />
 			<SliderPlus
 				label={
 					<>
 						{gvar.gsm.filter[entry.name]}
 						{!props.syncChange ? null : (
-							<button
-								onClick={() => props.syncChange()}
-								style={{ padding: "0px 5px", marginLeft: "10px" }}
-								className={`toggle ${props.syncValue ? "active" : ""}`}
-							>
+							<ToggleButton active={props.syncValue} onClick={() => props.syncChange()} style={{ padding: "0px 5px", marginLeft: "10px" }}>
 								:
-							</button>
+							</ToggleButton>
 						)}
 					</>
 				}

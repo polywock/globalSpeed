@@ -1,5 +1,6 @@
 import { getEmptyUrlConditions } from "@/defaults"
 import { DEFAULT_DOUBLE_TAP_THRESHOLD, DEFAULT_LONG_PRESS_THRESHOLD } from "@/defaults/constants"
+import { gvar } from "@/globalVar"
 import { AdjustMode, Keybind, KeybindMatch, URLCondition, URLConditionPart } from "@/types"
 import { getPracticalRuntimeUrl } from "@/utils/helper"
 import { getLeaf } from "@/utils/nativeUtils"

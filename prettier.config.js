@@ -9,7 +9,8 @@ const config = {
 	quoteProps: "as-needed",
 	bracketSpacing: true,
 	arrowParens: "always",
-	plugins: ["@ianvs/prettier-plugin-sort-imports"],
+	plugins: ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
+	tailwindStylesheet: "./src/main.css",
 	importOrder: ["<BUILTIN_MODULES>", "<THIRD_PARTY_MODULES>", "^@/(.*)$", "^firefox/(.*)$", "^notFirefox/(.*)$", "^[./].*(?<!\\.css)$", "\\.css$"],
 }
 

@@ -1,5 +1,5 @@
+import { cn } from "@/utils/helper"
 import { Tooltip, TooltipProps } from "./Tooltip"
-import "./RegularTooltip.css"
 
 export function RegularTooltip(props: {
 	label?: string
@@ -7,10 +7,17 @@ export function RegularTooltip(props: {
 	title: string
 	align?: TooltipProps["align"]
 	styles?: React.CSSProperties
+	className?: string
 }) {
 	return (
 		<Tooltip title={props.title} align={props.align || "top"} offset={props.offset} allowClick>
-			<span className="RegularTooltip" style={props.styles}>
+			<span
+				className={cn(
+					"RegularTooltip cursor-pointer rounded-lg border border-solid border-border-x bg-card px-[4px] text-card-foreground opacity-75 select-none [&:hover]:opacity-100",
+					props.className,
+				)}
+				style={props.styles}
+			>
 				{props.label || "?"}
 			</span>
 		</Tooltip>

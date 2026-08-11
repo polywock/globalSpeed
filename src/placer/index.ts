@@ -1,3 +1,5 @@
+import { gvar } from "@/globalVar"
+import "@/main.css"
 import { Rect } from "../types"
 import { loadGsm } from "../utils/gsm"
 import "./styles.css"

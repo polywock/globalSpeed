@@ -1,9 +1,8 @@
 import { ReactNode } from "react"
+import { clamp, cn } from "@/utils/helper"
 import { NumericInput } from "../comps/NumericInput"
-import { clamp } from "../utils/helper"
 import { Reset } from "./Reset"
 import { Slider } from "./Slider"
-import "./SliderMicro.css"
 
 type SliderMicroProps = {
 	label?: ReactNode
@@ -20,18 +19,33 @@ type SliderMicroProps = {
 }
 
 export function SliderMicro(props: SliderMicroProps) {
+	const { className, ...pass } = props.pass ?? {}
 	const handleValueChange = (value: number) => {
 		props.onChange(clamp(props.min, props.max, value))
 	}
 
 	const activated = props.default !== props.value
+	const gridColumns = props.label
+		? props.withInput
+			? "grid-cols-[80px_1fr_60px_max-content]"
+			: "grid-cols-[80px_1fr_max-content]"
+		: props.withInput
+			? "grid-cols-[1fr_60px_max-content]"
+			: "grid-cols-[1fr_max-content]"
 
 	return (
 		<div
-			{...(props.pass ?? {})}
-			className={`SliderMicro ${props.label ? "withLabel" : ""} ${props.withInput ? "withInput" : ""} ${activated ? "highlight" : ""}`}
+			{...pass}
+			className={cn(
+				"SliderMicro mb-[2px] grid items-center gap-x-[5px] bg-background",
+				gridColumns,
+				props.label && "withLabel",
+				props.withInput && "withInput",
+				activated && "highlight",
+				className,
+			)}
 		>
-			{props.label != null && <span>{props.label}</span>}
+			{props.label != null && <span className={activated ? "font-semibold text-tertiary" : "font-normal text-foreground"}>{props.label}</span>}
 			<Slider
 				step={props.sliderStep ?? 0.01}
 				min={props.sliderMin}

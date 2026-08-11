@@ -2,7 +2,7 @@ import { INDICATOR_CIRCLE_INIT, INDICATOR_INIT } from "@/defaults"
 import { createOverlayIcons } from "@/defaults/icons"
 import { IndicatorInit } from "@/types"
 import { insertStyle } from "@/utils/nativeUtils"
-import styles from "./Indicator.css?raw"
+import styles from "./Indicator.css?inline"
 import { Popover } from "./Popover"
 
 const BASE_FONT_SIZE = 30
@@ -33,7 +33,7 @@ export class Indicator extends Popover {
 		this.main.removeAttribute("style")
 		this.main.style.backgroundColor = init.backgroundColor || defaultInit.backgroundColor
 		this.main.style.color = init.textColor || defaultInit.textColor
-		if (init.showShadow) this.main.style.boxShadow = `1px 1px 35px 3px #ffffff88`
+		this.main.style.border = `${3 * this.scaling}px solid color-mix(in oklab, ${init.textColor || defaultInit.textColor} 50%, transparent)`
 
 		this.animation = init.animation || 1
 		this.duration = init.duration ?? 1
