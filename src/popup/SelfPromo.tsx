@@ -23,7 +23,7 @@ export function SelfPromo() {
 				}}
 			>
 				<div className="text-[15px] opacity-75">Love geography?</div>
-				<div className="text-[16px] font-bold text-[#5a70a7] dark:text-[#c4c4c4] transition-colors duration-100 ease-linear group-[&:hover]:text-tertiary">
+				<div className="text-[16px] font-bold text-[#5a70a7] dark:text-[#c4c4c4] transition-colors duration-100 ease-linear group-[&:hover]:opacity-50">
 					Join r/GuessThePlace
 				</div>
 			</div>
