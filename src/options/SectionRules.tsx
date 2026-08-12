@@ -3,7 +3,7 @@ import { GearIcon } from "@/comps/GearIcon"
 import { Tooltip } from "@/comps/Tooltip"
 import { gvar } from "@/globalVar"
 import { getSelectedParts } from "@/utils/configUtils"
-import { cn, isFirefox, isMobile, moveItem, produce, randomId } from "@/utils/helper"
+import { cn, isFirefox, moveItem, produce, randomId } from "@/utils/helper"
 import { makeMenuLabelWithTooltip } from "../comps/Menu"
 import { ModalBase } from "../comps/ModalBase"
 import { ModalText } from "../comps/ModalText"
@@ -97,7 +97,7 @@ export function SectionRules(props: {}) {
 					</ListItem>
 				))}
 			</List>
-			<button className="mt-[30px] block" onClick={(e) => handleChange(getDefaultURLRule())}>
+			<button className="mt-7.5 block button-control" onClick={(e) => handleChange(getDefaultURLRule())}>
 				{gvar.gsm.token.create}
 			</button>
 		</OptionsSection>
@@ -153,7 +153,7 @@ export function Rule(props: RuleProps) {
 		})
 
 	return (
-		<div className="grid grid-cols-[max-content_600px_1fr_repeat(2,max-content)] items-center gap-x-[10px]">
+		<div className="grid grid-cols-[max-content_600px_1fr_repeat(2,max-content)] items-center gap-x-2.5">
 			{/* Status */}
 			<Tooltip title={rule.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
 				<input
@@ -173,7 +173,7 @@ export function Rule(props: RuleProps) {
 			{/* URL conditions entry */}
 			<Tooltip title={gvar.gsm.options.rules.conditions}>
 				<button
-					className="rounded-lg"
+					className="button-control rounded-lg"
 					onClick={(e) => {
 						setShow(!show)
 					}}
@@ -221,11 +221,11 @@ export function Rule(props: RuleProps) {
 				<option value="JS">{gvar.gsm.command.runCode}</option>
 			</select>
 
-			<div className="grid auto-cols-max grid-flow-col items-center [justify-content:left] gap-x-[10px]">
+			<div className="grid auto-cols-max grid-flow-col items-center justify-start gap-x-2.5">
 				{/* Speed input  */}
 				{rule.type == "SPEED" && (
 					<NumericInput
-						className="w-[60px]"
+						className="w-15"
 						noNull={true}
 						min={1 / 16}
 						max={16}
@@ -321,7 +321,7 @@ function FxRuleControl(props: FxRuleControlProps) {
 			{open && (
 				<ModalBase keepOnWheel={true} onClose={() => setOpen(false)}>
 					<FxControl
-						className={cn("max-h-[80vh] w-[300px] max-w-[400px] overflow-y-scroll p-[8px]", isMobile() && "max-h-[80%]")}
+						className="max-h-[80vh] w-[300px] max-w-[400px] overflow-y-scroll p-2 mobile:max-h-[80%]"
 						enabled={true}
 						_elementFx={overrideFx.elementFx}
 						_backdropFx={overrideFx.backdropFx}

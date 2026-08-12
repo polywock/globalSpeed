@@ -26,8 +26,8 @@ export function SliderPlus(props: SliderPlusProps) {
 	const activated = props.default !== props.value
 
 	return (
-		<div className={cn("SliderPlus bg-background", activated && "highlight", props.className)}>
-			<div className="header mb-[2px] grid grid-cols-[1fr_60px_max-content] items-center gap-x-[5px]">
+		<div className={cn("bg-background", props.className)}>
+			<div className="mb-0.5 grid grid-cols-[1fr_60px_max-content] items-center gap-x-1.25">
 				<span className={cn("self-center", activated ? "font-semibold text-tertiary" : "font-normal text-foreground")}>{props.label}</span>
 				<NumericInput noNull={true} min={props.min} max={props.max} value={props.value} onChange={handleValueChange} />
 				{props.noReset ? <div /> : <Reset active={activated} onClick={() => handleValueChange(props.default)} />}

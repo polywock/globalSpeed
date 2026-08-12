@@ -26,7 +26,7 @@ export function WidgetModal(props: Props) {
 
 	return (
 		<ModalBase keepOnWheel={true} onClose={props.onClose}>
-			<ModalContent className="mt-[20px] w-[600px]">
+			<ModalContent size="lg">
 				{showIndicatorModal && (
 					<IndicatorModal
 						forCircle={true}
@@ -103,7 +103,7 @@ export function WidgetModal(props: Props) {
 				<OptionField>
 					<OptionFieldLabel>
 						<span>{gvar.gsm.options.flags.widget.fullscreenOnly}</span>
-						<RegularTooltip className="ml-[7px]" title={gvar.gsm.options.flags.widget.fullscreenOnlyTooltip} align="right" />
+						<RegularTooltip className="ml-1.75" title={gvar.gsm.options.flags.widget.fullscreenOnlyTooltip} align="right" />
 					</OptionFieldLabel>
 					<Toggle
 						value={init.fullscreenOnly}
@@ -133,7 +133,7 @@ export function WidgetModal(props: Props) {
 								})
 							}}
 						/>
-						<div className="absolute top-[-4px] left-[50px]">
+						<div className="field-gear">
 							{init.hideIndicator ? null : (
 								<>
 									<GearIcon onClick={() => setShowIndicatorModal(true)} />
@@ -169,7 +169,7 @@ export function WidgetModal(props: Props) {
 					<OptionField>
 						<span>{gvar.gsm.command.speed}</span>
 						<NumericInput
-							className="w-[50px]"
+							className="w-12.5"
 							rounding={2}
 							noNull={true}
 							min={MIN_SPEED_CHROMIUM}
@@ -191,12 +191,12 @@ export function WidgetModal(props: Props) {
 				<OptionField>
 					<OptionFieldLabel>
 						<span>{gvar.gsm.options.flags.widget.fixedSeekStep}</span>
-						<RegularTooltip className="ml-[7px]" title={gvar.gsm.options.flags.widget.fixedSeekStepTooltip} align="right" />
+						<RegularTooltip className="ml-1.75" title={gvar.gsm.options.flags.widget.fixedSeekStepTooltip} align="right" />
 					</OptionFieldLabel>
 					{init.fixedSeekStep ? (
-						<div className="flex gap-x-[10px]">
+						<div className="flex gap-x-2.5">
 							<NumericInput
-								className="w-[50px]"
+								className="w-12.5"
 								rounding={2}
 								noNull={true}
 								min={1}
@@ -211,7 +211,7 @@ export function WidgetModal(props: Props) {
 								}}
 							/>
 							<button
-								className="icon"
+								className="icon-button"
 								onClick={() => {
 									setView({
 										circleInit: produce(init, (d) => {
@@ -243,12 +243,12 @@ export function WidgetModal(props: Props) {
 				<OptionField>
 					<OptionFieldLabel>
 						<span>{gvar.gsm.options.flags.widget.fixedSpeedStep}</span>
-						<RegularTooltip className="ml-[7px]" title={gvar.gsm.options.flags.widget.fixedSpeedStepTooltip} align="right" />
+						<RegularTooltip className="ml-1.75" title={gvar.gsm.options.flags.widget.fixedSpeedStepTooltip} align="right" />
 					</OptionFieldLabel>
 					{init.fixedSpeedStep ? (
-						<div className="flex gap-x-[10px]">
+						<div className="flex gap-x-2.5">
 							<NumericInput
-								className="w-[50px]"
+								className="w-12.5"
 								rounding={2}
 								noNull={true}
 								min={0.01}
@@ -264,7 +264,7 @@ export function WidgetModal(props: Props) {
 								}}
 							/>
 							<button
-								className="icon"
+								className="icon-button"
 								onClick={() => {
 									setView({
 										circleInit: produce(init, (d) => {
@@ -294,10 +294,10 @@ export function WidgetModal(props: Props) {
 
 				{/* Reset */}
 				<button
+					className="button-control"
 					onClick={(e) => {
 						setView({ circleInit: null })
 					}}
-					className="reset"
 				>
 					{gvar.gsm.token.reset}
 				</button>

@@ -8,14 +8,14 @@ type OriginProps = {
 
 export function Origin(props: OriginProps) {
 	return (
-		<div className="Origin grid grid-cols-[repeat(3,max-content)] justify-around gap-y-[15px]">
+		<div className="grid grid-cols-[repeat(3,max-content)] justify-around gap-y-3.75">
 			{Y_OPTIONS.map((y) => X_OPTIONS.map((x) => [x, y]))
 				.flat(1)
 				.map(([x, y]) => (
 					<div
 						className={cn(
-							"h-[15px] w-[30px] border border-solid border-border-x bg-background focus:outline focus:outline-1 focus:outline-ring",
-							x === props.x && y === props.y && "active bg-border-x",
+							"h-3.75 w-7.5 border border-border-x bg-background focus:outline focus:outline-1 focus:outline-ring",
+							x === props.x && y === props.y && "bg-border-x",
 						)}
 						key={`${x}:${y}`}
 						tabIndex={0}

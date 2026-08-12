@@ -55,11 +55,7 @@ export function ModalBase(props: Props) {
 					props.onClose()
 				}
 			}}
-			className={cn(
-				"ModalBase fixed top-0 left-0 z-[9999999999] grid h-screen w-screen items-center justify-center bg-black/45",
-				props.className,
-				isMobile() && "isMobile",
-			)}
+			className={cn("fixed top-0 left-0 z-overlay grid h-screen w-screen items-center justify-center bg-black/45", props.className)}
 		>
 			{props.children}
 		</div>,
@@ -67,13 +63,20 @@ export function ModalBase(props: Props) {
 	)
 }
 
-export function ModalContent({ className, ...props }: ComponentPropsWithoutRef<"div">) {
+type ModalContentProps = ComponentPropsWithoutRef<"div"> & {
+	size?: "sm" | "md" | "lg"
+}
+
+export function ModalContent({ className, size, ...props }: ModalContentProps) {
 	return (
 		<div
 			{...props}
 			className={cn(
-				"max-h-[90vh] w-[700px] max-w-[90vw] overflow-y-auto rounded-lg bg-card p-[20px] text-card-foreground",
-				isMobile() && "max-h-[90%] max-w-[90%]",
+				"relative z-modal max-h-[90vh] w-[700px] max-w-[90vw] overflow-y-auto rounded-lg bg-card p-5 text-card-foreground mobile:max-h-[90%] mobile:max-w-[90%]",
+				size && "mt-5",
+				size === "sm" && "w-[400px]",
+				size === "md" && "w-[550px]",
+				size === "lg" && "w-[600px]",
 				className,
 			)}
 		/>

@@ -2,8 +2,6 @@ import { RefObject, useEffect, useRef } from "react"
 import { VscGripper } from "react-icons/vsc"
 import { cn } from "@/utils/helper"
 
-const DRAGGING_CLASSES = ["dragging", "**:cursor-ns-resize!"]
-
 type MoveDragProps = {
 	onMove: (newIndex: number) => void
 	itemRef: RefObject<HTMLElement>
@@ -26,7 +24,7 @@ export function MoveDrag(props: MoveDragProps) {
 			if (!env.focused) return
 			env.props.setFocus(false)
 			env.focused = null
-			document.documentElement.classList.remove(...DRAGGING_CLASSES)
+			document.documentElement.removeAttribute("data-dragging")
 		}
 
 		const handlePointerMove = (e: PointerEvent) => {
@@ -74,15 +72,12 @@ export function MoveDrag(props: MoveDragProps) {
 	const handlePointerDown = () => {
 		if (!props.itemRef.current || !props.listRef.current) return
 		props.setFocus(true)
-		document.documentElement.classList.add(...DRAGGING_CLASSES)
+		document.documentElement.toggleAttribute("data-dragging", true)
 		env.focused = props.itemRef.current
 	}
 
 	return (
-		<button
-			onPointerDown={handlePointerDown}
-			className={cn("relative cursor-ns-resize border-0 bg-inherit p-0 text-secondary-foreground focus:outline-none", props.className)}
-		>
+		<button onPointerDown={handlePointerDown} className={cn("relative icon-button cursor-ns-resize focus:outline-none", props.className)}>
 			<VscGripper size="1.42rem" />
 		</button>
 	)

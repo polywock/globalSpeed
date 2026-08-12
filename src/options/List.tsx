@@ -9,7 +9,7 @@ type ListProps = {
 export function List(props: ListProps) {
 	return (
 		<div
-			className="List cursor-ns-resize select-none [interpolate-size:allow-keywords]"
+			className="cursor-ns-resize select-none [interpolate-size:allow-keywords]"
 			ref={props.listRef}
 			onPointerDown={(e) => handlePointerDown(props.listRef, props.spacingChange, e)}
 		>
@@ -26,14 +26,14 @@ function handlePointerDown(
 	if (
 		!(
 			e.target === listRef.current ||
-			(e.target as HTMLElement).classList.contains("ListItemLabel") ||
-			(e.target as HTMLElement).classList.contains("ListItemSub")
+			(e.target as HTMLElement).dataset.slot === "list-item-label" ||
+			(e.target as HTMLElement).dataset.slot === "list-item-sub"
 		)
 	)
 		return
 
 	const y = e.clientY
-	const children = [...(listRef.current as HTMLDivElement).getElementsByClassName("ListItemCore")]
+	const children = [...(listRef.current as HTMLDivElement).querySelectorAll<HTMLElement>("[data-slot='list-item-core']")]
 
 	let index = -1
 	for (let child of children) {

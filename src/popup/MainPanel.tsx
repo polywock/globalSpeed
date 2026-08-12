@@ -8,10 +8,10 @@ import { SpeedControl } from "./SpeedControl"
 
 export function MainPanel(props: {}) {
 	const [view, setView] = useStateView({ speed: true, hideMediaView: true, enabled: true, speedChangeCounter: true })
-	if (!view) return <div className="min-h-[40px] p-[8px]" />
+	if (!view) return <div className="popup-panel" />
 
 	return (
-		<div className="min-h-[40px] p-[8px]">
+		<div className="popup-panel">
 			<SpeedControl
 				speed={view.speed}
 				onChange={(v) => {
@@ -36,7 +36,7 @@ export function MediaViews(props: {}) {
 	if (!watchInfo?.infos?.length) return
 
 	return (
-		<div className="pl-[5px] select-none">
+		<div className="pl-1.25 select-none">
 			{watchInfo.infos.map((info) => (
 				<MediaView key={info.key} info={info} pinned={info.key === watchInfo.pinned?.key} />
 			))}

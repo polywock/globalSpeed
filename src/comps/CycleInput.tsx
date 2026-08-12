@@ -14,12 +14,12 @@ type CycleInputProps = {
 
 export function CycleInput(props: CycleInputProps) {
 	return (
-		<div className="CycleInput group">
-			<div className="values grid grid-cols-[repeat(4,max-content)] items-center gap-[7px]">
+		<div className="group">
+			<div className="grid grid-cols-[repeat(4,max-content)] items-center gap-1.75">
 				{
 					<>
 						{props.values.map((value, i) => (
-							<div key={i} className="value relative w-[44px]">
+							<div key={i} className="value relative w-11">
 								{/* Value */}
 								<NumericInput
 									value={value}
@@ -39,7 +39,7 @@ export function CycleInput(props: CycleInputProps) {
 								{props.values.length > 0 && (
 									<Tooltip title={gvar.gsm.token.delete}>
 										<div
-											className="absolute top-[-5px] right-[-5px] h-[11px] w-[11px] rounded-full border border-solid border-destructive bg-destructive-bg opacity-0 group-hover:opacity-90 hover:opacity-100"
+											className="absolute -top-1.25 -right-1.25 h-2.75 w-2.75 rounded-full border border-destructive bg-destructive-bg opacity-0 group-hover:opacity-90 hover:opacity-100"
 											onClick={(e) => {
 												props.onChange(
 													produce(props.values, (d) => {
@@ -57,7 +57,7 @@ export function CycleInput(props: CycleInputProps) {
 						<div>
 							<Tooltip title={gvar.gsm.token.create}>
 								<button
-									className="text-[0.7rem]"
+									className="button-control text-4xs"
 									onClick={(e) => {
 										props.onChange(
 											produce(props.values, (d) => {

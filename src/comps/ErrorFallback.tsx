@@ -19,22 +19,22 @@ function Fallback({ error, resetErrorBoundary }: FallbackProps) {
 	}
 
 	return (
-		<div className="ErrorFallback mt-15 border-[3px] border-solid border-destructive bg-background p-[10px] text-[1.1em]">
+		<div className="mt-15 border-[3px] border-destructive bg-background p-2.5 text-lg">
 			<div>An error occurred.</div>
 			<ol>
-				<li className="mb-[15px] last:mb-0">
+				<li className="mb-3.75 last:mb-0">
 					Try refreshing this page.{" "}
-					<button className="mt-[5px] block" onClick={handleRefresh}>
+					<button className="mt-1.25 block button-control" onClick={handleRefresh}>
 						refresh
 					</button>
 				</li>
-				<li className="mb-[15px] last:mb-0">
+				<li className="mb-3.75 last:mb-0">
 					If that didn't work, click this button to reset the settings.{" "}
-					<button className="mt-[5px] block" onClick={handleReset}>
+					<button className="mt-1.25 block button-control" onClick={handleReset}>
 						reset
 					</button>
 				</li>
-				<li className="mb-[15px] last:mb-0">As a final resort, try reinstalling the extension.</li>
+				<li className="mb-3.75 last:mb-0">As a final resort, try reinstalling the extension.</li>
 			</ol>
 		</div>
 	)

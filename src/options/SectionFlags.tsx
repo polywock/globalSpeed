@@ -96,7 +96,7 @@ export function SectionFlags(props: {}) {
 			{showPresetModal && <SpeedPresetModal onClose={() => setShowPresetModal(null)} />}
 			{showWidgetModal && <WidgetModal onClose={() => setShowWidgetModal(null)} />}
 			<h2>{gvar.gsm.options.flags.header}</h2>
-			<div className="mt-[20px]">
+			<div className="mt-5">
 				{/* Language */}
 				<OptionField>
 					<OptionFieldLabel>
@@ -157,7 +157,7 @@ export function SectionFlags(props: {}) {
 				{!isMobile() && (
 					<>
 						{/* Show badge */}
-						<OptionField className="mt-[30px]">
+						<OptionField className="mt-7.5">
 							<OptionFieldLabel>
 								<span>{gvar.gsm.options.flags.showBadge}</span>
 								<RegularTooltip title={gvar.gsm.options.flags.showBadgeTooltip} align="right" />
@@ -199,7 +199,7 @@ export function SectionFlags(props: {}) {
 										setView(updated)
 									}}
 								/>
-								<div className="absolute top-[-4px] left-[50px]">
+								<div className="field-gear">
 									{viewAlt.hideIndicator ? null : <GearIcon className="text-foreground" onClick={() => setShowIndicatorModal(true)} />}
 								</div>
 							</FloatingFieldValue>
@@ -223,7 +223,7 @@ export function SectionFlags(props: {}) {
 				<CircleWidget setView={setView} active={view.circleWidget} setShowWidgetModal={setShowWidgetModal} />
 
 				{/* Pin by default */}
-				<OptionField className="mt-[30px]">
+				<OptionField className="mt-7.5">
 					<OptionFieldLabel>
 						<span>{gvar.gsm.options.flags.pinByDefault}</span>
 						<RegularTooltip title={gvar.gsm.options.flags.pinByDefaultTooltip} align="right" />
@@ -240,7 +240,7 @@ export function SectionFlags(props: {}) {
 				{/* Initial state */}
 				{!!view.pinByDefault && (
 					<OptionField>
-						<OptionFieldLabel className="ml-[20px]">
+						<OptionFieldLabel className="ml-5">
 							<span>{gvar.gsm.options.flags.initialState}</span>
 							{<RegularTooltip title={gvar.gsm.options.flags.initialStateTooltip} align="right" />}
 						</OptionFieldLabel>
@@ -278,14 +278,14 @@ export function SectionFlags(props: {}) {
 								setView({ ghostMode: !view.ghostMode })
 							}}
 						/>
-						<div className="absolute top-[-4px] left-[50px]">
+						<div className="field-gear">
 							{!view.ghostMode ? null : <GearIcon className="text-foreground" onClick={(e) => setShowGhostModal(true)} />}
 						</div>
 					</FloatingFieldValue>
 				</OptionField>
 
 				{/* Speed changes pitch */}
-				<OptionField className="mt-[30px]">
+				<OptionField className="mt-7.5">
 					<OptionFieldLabel>
 						<span>{gvar.gsm.command.speedChangesPitch}</span>
 						<RegularTooltip title={gvar.gsm.command.speedChangesPitchTooltip} align="right" />
@@ -300,10 +300,10 @@ export function SectionFlags(props: {}) {
 				</OptionField>
 
 				{/* Speed slider  */}
-				<OptionField className="mb-[10px]">
+				<OptionField className="mb-2.5">
 					<span>{gvar.gsm.options.flags.speedSlider}</span>
 					{view.speedSlider ? (
-						<div className="grid grid-cols-[8rem_max-content] gap-x-[5px]">
+						<div className="grid grid-cols-[8rem_max-content] gap-x-1.25">
 							<Minmax
 								realMin={MIN_SPEED_CHROMIUM}
 								realMax={MAX_SPEED_CHROMIUM}
@@ -320,7 +320,7 @@ export function SectionFlags(props: {}) {
 							<Tooltip title={gvar.gsm.token.delete}>
 								<button
 									aria-label={gvar.gsm.token.delete}
-									className="icon"
+									className="icon-button"
 									onClick={() => {
 										setView({ speedSlider: null })
 									}}
@@ -339,18 +339,18 @@ export function SectionFlags(props: {}) {
 				</OptionField>
 
 				{/* Hold to speed  */}
-				<OptionField className="mb-[30px]">
+				<OptionField className="mb-7.5">
 					<OptionFieldLabel>
 						<span>{gvar.gsm.options.flags.holdToSpeedUp}</span>
 						<RegularTooltip title={gvar.gsm.options.flags.holdToSpeedUpTooltip} align="right" />
 					</OptionFieldLabel>
 
 					{view.holdToSpeed ? (
-						<div className="grid grid-cols-[4rem_max-content] gap-x-[5px]">
+						<div className="grid grid-cols-[4rem_max-content] gap-x-1.25">
 							<NumericInput noNull={true} min={0.1} max={20} value={view.holdToSpeed} onChange={(v) => setView({ holdToSpeed: v })} />
 							<button
 								aria-label={gvar.gsm.token.delete}
-								className="icon"
+								className="icon-button"
 								onClick={() => {
 									setView({ holdToSpeed: null })
 								}}
@@ -365,7 +365,7 @@ export function SectionFlags(props: {}) {
 
 				{!showMore ? (
 					<Tooltip title={gvar.gsm.token.more}>
-						<button aria-label={gvar.gsm.token.more} className="mt-[20px]" onClick={() => setShowMore(true)}>
+						<button aria-label={gvar.gsm.token.more} className="mt-5 button-control" onClick={() => setShowMore(true)}>
 							<TfiMoreAlt />
 						</button>
 					</Tooltip>
@@ -379,7 +379,7 @@ export function SectionFlags(props: {}) {
 									<RegularTooltip title={gvar.gsm.options.flags.longPressThresholdTooltip} align="right" />
 								</OptionFieldLabel>
 
-								<div className="grid grid-cols-[max-content_max-content] items-center gap-x-[5px]">
+								<div className="grid grid-cols-[max-content_max-content] items-center gap-x-1.25">
 									<NumericInput
 										noNull={true}
 										min={0.1}
@@ -404,7 +404,7 @@ export function SectionFlags(props: {}) {
 									<RegularTooltip title={gvar.gsm.options.flags.doubleTapThresholdTooltip} align="right" />
 								</OptionFieldLabel>
 
-								<div className="grid grid-cols-[max-content_max-content] items-center gap-x-[5px]">
+								<div className="grid grid-cols-[max-content_max-content] items-center gap-x-1.25">
 									<NumericInput
 										noNull={true}
 										min={0.06}
@@ -492,7 +492,7 @@ function CircleWidget(props: { active?: boolean; setView: SetView; setShowWidget
 						props.setView({ circleWidget: !props.active })
 					}}
 				/>
-				<div className="absolute top-[-4px] left-[50px]">
+				<div className="field-gear">
 					{!!props.active && <GearIcon className="text-foreground" onClick={(e) => props.setShowWidgetModal(true)} />}
 				</div>
 			</FloatingFieldValue>

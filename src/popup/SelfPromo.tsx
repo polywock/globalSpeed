@@ -10,20 +10,20 @@ export function SelfPromo() {
 
 	if (!shouldShow(view.selfPromoCountR, view.selfPromoHideTsR)) {
 		wasHidden = true
-		document.documentElement.classList.add("noBottomBorderMediaItem")
+		document.documentElement.toggleAttribute("data-media-item-no-bottom-border", true)
 		return null
 	}
 
 	return (
-		<div className="grid grid-cols-[1fr_max-content] items-center gap-x-[5px] pt-[15px] pb-[10px] pl-[10px] select-none">
+		<div className="grid grid-cols-[1fr_max-content] items-center gap-x-1.25 pt-3.75 pb-2.5 pl-2.5 select-none">
 			<div
 				className="group cursor-pointer"
 				onClick={() => {
 					chrome.tabs.create({ url: "https://www.reddit.com/r/GuessThePlace/" })
 				}}
 			>
-				<div className="text-[15px] opacity-75">Love geography?</div>
-				<div className="text-[16px] font-bold text-[#5a70a7] dark:text-[#c4c4c4] transition-colors duration-100 ease-linear group-[&:hover]:opacity-50">
+				<div className="text-promo-md opacity-75">Love geography?</div>
+				<div className="text-promo-lg font-bold text-promo transition-opacity duration-100 ease-linear group-hover:opacity-50">
 					Join r/GuessThePlace
 				</div>
 			</div>
@@ -31,7 +31,7 @@ export function SelfPromo() {
 				onClick={() => {
 					setView({ selfPromoHideTsR: Date.now() })
 				}}
-				className="icon leading-0"
+				className="icon-button leading-0"
 			>
 				<TiDelete size="30px" />
 			</button>

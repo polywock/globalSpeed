@@ -70,7 +70,7 @@ export const NumericInput = (props: NumericInputProps) => {
 	}
 
 	return (
-		<div ref={props.ref} className={cn("NumericInput relative", props.className)}>
+		<div ref={props.ref} className={cn("relative", props.className)}>
 			<input
 				disabled={props.disabled ?? false}
 				onBlur={(e) => {

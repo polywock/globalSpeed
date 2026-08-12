@@ -1,5 +1,3 @@
-import { cn } from "@/utils/helper"
-
 type ToggleProps = {
 	value: boolean
 	onChange: (newValue: boolean) => void
@@ -21,10 +19,7 @@ export function Toggle(props: ToggleProps) {
 			onClick={(e) => {
 				props.onChange(!props.value)
 			}}
-			className={cn(
-				"Toggle inline-block w-[40px] cursor-pointer rounded-[var(--radius)] border-[1.5px] border-solid border-input leading-[0] select-none after:pointer-events-none after:box-border after:inline-block after:h-[14px] after:w-[18px] after:rounded-[inherit] after:border after:border-solid after:border-input after:bg-background after:transition-transform after:duration-[50ms] after:ease-linear after:content-['']",
-				props.value ? "active bg-tertiary after:translate-x-[20px]" : "bg-input after:translate-x-0",
-			)}
+			className="inline-block w-10 cursor-pointer rounded-lg border-[1.5px] border-input bg-input leading-0 select-none after:pointer-events-none after:box-border after:inline-block after:h-3.5 after:w-4.5 after:translate-x-0 after:rounded-[inherit] after:border after:border-input after:bg-background after:transition-transform after:duration-[50ms] after:ease-linear after:content-[''] aria-checked:bg-tertiary aria-checked:after:translate-x-5"
 		/>
 	)
 }

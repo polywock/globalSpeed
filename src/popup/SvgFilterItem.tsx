@@ -25,8 +25,8 @@ export function SvgFilterItem(props: {
 	const [currentPreset, setCurrentPreset] = useState("")
 
 	return (
-		<div className="SvgFilter mt-[15px] rounded-lg border border-solid border-border-x p-[10px]">
-			<div className="mb-[5px] grid grid-cols-[max-content_1fr_max-content_max-content_max-content] items-center gap-x-[5px] text-[1.2em]">
+		<div className="mt-3.75 rounded-lg border border-border-x p-2.5">
+			<div className="mb-1.25 grid grid-cols-[max-content_1fr_max-content_max-content_max-content] items-center gap-x-1.25 text-xl">
 				<div className={cn("hover:opacity-90", filter.enabled ? "text-tertiary" : "text-muted-foreground")}>
 					<Tooltip title={filter.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
 						<FaPowerOff
@@ -44,7 +44,7 @@ export function SvgFilterItem(props: {
 				{(gvar.gsm.filter.otherFilters as any)[filter.type]}
 				<Tooltip title={gvar.gsm.token.moveUp}>
 					<button
-						className="icon"
+						className="icon-button"
 						onClick={() => {
 							listOnChange(
 								produce(list, (d) => {
@@ -58,7 +58,7 @@ export function SvgFilterItem(props: {
 				</Tooltip>
 				<Tooltip title={gvar.gsm.token.moveUp}>
 					<button
-						className="icon"
+						className="icon-button"
 						onClick={() => {
 							listOnChange(
 								produce(list, (d) => {
@@ -71,7 +71,7 @@ export function SvgFilterItem(props: {
 					</button>
 				</Tooltip>
 				<Tooltip title={gvar.gsm.token.delete}>
-					<button className="icon">
+					<button className="icon-button">
 						<GoX
 							size="1.6rem"
 							onClick={() => {
@@ -87,7 +87,7 @@ export function SvgFilterItem(props: {
 				</Tooltip>
 			</div>
 			{presetInfo && (
-				<div className="mt-[7px] grid grid-cols-[max-content_1fr] items-center gap-x-[5px]">
+				<div className="mt-1.75 grid grid-cols-[max-content_1fr] items-center gap-x-1.25">
 					<div>{gvar.gsm.filter.otherFilters.presets}</div>
 					<select
 						value={currentPreset}
@@ -106,7 +106,7 @@ export function SvgFilterItem(props: {
 					</select>
 				</div>
 			)}
-			<div className="mt-[7px]">
+			<div className="mt-1.75">
 				{filter.type === "custom" && (
 					<textarea
 						rows={5}
@@ -511,8 +511,8 @@ export function SvgFilterItem(props: {
 							}}
 						/>
 
-						<div className="mt-[10px]">
-							<span className="mr-[10px]">{gvar.gsm.token.mode}</span>
+						<div className="mt-2.5">
+							<span className="mr-2.5">{gvar.gsm.token.mode}</span>
 							<select
 								value={filter.noise.mode}
 								onChange={(e) => {
@@ -538,7 +538,7 @@ export function SvgFilterItem(props: {
 function AspectLockButton(props: { active: boolean; onClick: () => void }) {
 	return (
 		<Tooltip title={gvar.gsm.token.aspectLock}>
-			<ToggleButton active={props.active} onClick={props.onClick} className="ml-[10px] px-[5px] py-0">
+			<ToggleButton active={props.active} onClick={props.onClick} className="ml-2.5 px-1.25 py-0">
 				:
 			</ToggleButton>
 		</Tooltip>

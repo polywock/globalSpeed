@@ -29,7 +29,7 @@ export function CinemaModal(props: Props) {
 
 	return (
 		<ModalBase keepOnWheel={true} onClose={props.onClose}>
-			<ModalContent className="mt-[20px] w-[600px] [--field-name-width:200px]">
+			<ModalContent size="lg" className="[--field-name-width:200px]">
 				{/* Mode */}
 				<OptionField>
 					<span>{gvar.gsm.token.mode}</span>
@@ -57,7 +57,7 @@ export function CinemaModal(props: Props) {
 				{mode === CinemaMode.CUSTOM_COLOR && (
 					<OptionField>
 						<span>{gvar.gsm.token.color}</span>
-						<div className="relative grid grid-cols-[max-content_max-content] items-center gap-x-[5px] leading-0">
+						<div className="relative grid grid-cols-[max-content_max-content] items-center gap-x-1.25 leading-0">
 							<input
 								type="color"
 								value={init.color ?? defaultInit.color}
@@ -117,7 +117,7 @@ export function CinemaModal(props: Props) {
 					<span>{gvar.gsm.token.rounding}</span>
 					<div className="relative leading-0">
 						<NumericInput
-							className="inline-block w-[60px]"
+							className="inline-block w-15"
 							value={init.rounding}
 							onChange={(v) => {
 								props.onChange(
@@ -136,7 +136,7 @@ export function CinemaModal(props: Props) {
 
 				{/* Filters */}
 				{mode === CinemaMode.CUSTOM_FILTER && (
-					<div className="my-[30px] max-w-[300px] border-y border-solid border-border-x py-[20px]">
+					<div className="my-7.5 max-w-[300px] border-y border-border-x py-5">
 						<Filters
 							filters={init.filter || defaultCinemaFilter}
 							onChange={(filter) => {
@@ -154,6 +154,7 @@ export function CinemaModal(props: Props) {
 
 				{/* Reset */}
 				<button
+					className="button-control"
 					onClick={(e) => {
 						props.onChange(
 							kb.id,
@@ -162,7 +163,6 @@ export function CinemaModal(props: Props) {
 							}),
 						)
 					}}
-					className="reset"
 				>
 					{gvar.gsm.token.reset}
 				</button>

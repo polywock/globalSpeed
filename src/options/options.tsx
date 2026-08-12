@@ -31,7 +31,7 @@ declare global {
 const Options = (props: { gsm: Gsm }) => {
 	useThemeSync()
 	return (
-		<div id="App" className="mt-[40px] w-[950px]">
+		<div id="App" className="mt-10 w-[950px]">
 			<SectionFlags />
 			<SectionEditor />
 			{!(isMac() && isMobile()) && <SectionRules />}

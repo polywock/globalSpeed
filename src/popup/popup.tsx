@@ -35,7 +35,7 @@ export function App(props: {}) {
 
 	return view.superDisable ? (
 		<div
-			className="cursor-pointer bg-background p-[10px] text-secondary-foreground"
+			className="cursor-pointer bg-background p-2.5 text-secondary-foreground"
 			onClick={() => {
 				setView({ superDisable: false, enabled: true })
 			}}

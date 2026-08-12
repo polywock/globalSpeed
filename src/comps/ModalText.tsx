@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { gvar } from "@/globalVar"
-import { cn, isMobile } from "@/utils/helper"
 import { GearIcon } from "./GearIcon"
 import { ModalBase } from "./ModalBase"
 import { ThrottledTextInput } from "./ThrottledTextInput"
@@ -27,7 +26,7 @@ export function ModalText(props: ModalTextProps) {
 					<ThrottledTextInput
 						textArea={true}
 						passTextArea={{
-							className: cn("h-[75vh] w-[50vw] rounded-2xl p-[20px]", isMobile() && "h-3/4 w-1/2"),
+							className: "h-[75vh] w-[50vw] rounded-2xl p-5 mobile:h-3/4 mobile:w-1/2",
 						}}
 						value={props.value}
 						onChange={(v) => {

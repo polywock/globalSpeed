@@ -23,9 +23,9 @@ export function EqualizerControl(props: EqualizerControlProps) {
 	const isEmpty = useMemo(() => equal(eq || getDefaultEq(), getDefaultEq()), [eq])
 
 	return (
-		<div className={cn("EqualizerControl mt-[15px] rounded-lg border border-solid border-border-x p-[10px] select-none", props.className)}>
-			<div className="header mb-[10px] grid grid-cols-[max-content_1fr_max-content] items-center gap-x-[5px] text-[1.2em]">
-				<div className={eq.enabled ? "active text-tertiary" : "muted text-muted-foreground"}>
+		<div className={cn("mt-3.75 rounded-lg border border-border-x p-2.5 select-none", props.className)}>
+			<div className="mb-2.5 grid grid-cols-[max-content_1fr_max-content] items-center gap-x-1.25 text-xl">
+				<div className={eq.enabled ? "text-tertiary" : "text-muted-foreground"}>
 					<Tooltip title={eq.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
 						<FaPowerOff
 							className="cursor-pointer"
@@ -40,8 +40,8 @@ export function EqualizerControl(props: EqualizerControlProps) {
 						/>
 					</Tooltip>
 				</div>
-				<div className="name">{gvar.gsm.audio.equalizer}</div>
-				<div className="reset justify-self-end">
+				<div>{gvar.gsm.audio.equalizer}</div>
+				<div className="justify-self-end">
 					<Reset
 						active={!isEmpty}
 						className="cursor-pointer"
@@ -53,7 +53,7 @@ export function EqualizerControl(props: EqualizerControlProps) {
 			</div>
 
 			{/* Band count */}
-			<div className="preset mb-[10px] grid w-full grid-cols-[max-content_1fr] gap-x-[5px]">
+			<div className="mb-2.5 grid w-full grid-cols-[max-content_1fr] gap-x-1.25">
 				<select
 					className="w-full"
 					value={eq.values.length.toString()}
@@ -106,7 +106,7 @@ export function EqualizerControl(props: EqualizerControlProps) {
 				</select>
 			</div>
 
-			<div className="values">
+			<div>
 				{/* Power */}
 				<div>
 					<SliderMicro
@@ -116,7 +116,7 @@ export function EqualizerControl(props: EqualizerControlProps) {
 						sliderMin={0}
 						sliderMax={3}
 						default={1}
-						pass={{ className: "mb-[10px]" }}
+						pass={{ className: "mb-2.5" }}
 						onChange={(newValue) => {
 							props.onChange(
 								produce(eq, (d) => {

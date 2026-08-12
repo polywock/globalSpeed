@@ -46,11 +46,11 @@ export function URLModal(props: Props) {
 
 	return (
 		<ModalBase keepOnWheel={true} onClose={props.onClose}>
-			<ModalContent className="[scrollbar-width:thin] [scrollbar-color:var(--muted)_var(--background)]">
+			<ModalContent className="thin-scrollbar">
 				{/* Header */}
-				<div className="mb-[10px] grid grid-cols-[1fr_max-content]">
+				<div className="mb-2.5 grid grid-cols-[1fr_max-content]">
 					{/* Label */}
-					<div className="text-[1.3em]">{gvar.gsm.options.rules.conditions}</div>
+					<div className="text-2xl">{gvar.gsm.options.rules.conditions}</div>
 
 					{/* Match mode */}
 					<select
@@ -69,21 +69,20 @@ export function URLModal(props: Props) {
 				</div>
 
 				{/* Subheader */}
-				{subheader && (
-					<div className="mt-[-10px] mb-[15px] translate-x-[-2px] text-[1.1em] italic opacity-50">{`${subheader}${isNeutral ? "" : ":"}`}</div>
-				)}
+				{subheader && <div className="-mt-2.5 mb-3.75 -translate-x-0.5 text-lg italic opacity-50">{`${subheader}${isNeutral ? "" : ":"}`}</div>}
 
 				{/* Parts  */}
-				<div className="mb-[20px]">
+				<div className="mb-5">
 					{parts.map((part) => (
 						<ULRConditionPart key={part.id} onChange={onChange} onRemove={onRemove} part={part} />
 					))}
 				</div>
 
 				{/* Controls */}
-				<div className="grid grid-cols-[max-content_max-content] gap-x-[10px]">
+				<div className="grid grid-cols-[max-content_max-content] gap-x-2.5">
 					{/* Create */}
 					<button
+						className="button-control"
 						onClick={(e) => {
 							props.onChange(
 								produce(value, (d) => {
@@ -96,7 +95,13 @@ export function URLModal(props: Props) {
 					</button>
 
 					{/* Reset */}
-					{parts.length ? <button onClick={props.onReset}>{gvar.gsm.token.reset}</button> : <div></div>}
+					{parts.length ? (
+						<button className="button-control" onClick={props.onReset}>
+							{gvar.gsm.token.reset}
+						</button>
+					) : (
+						<div></div>
+					)}
 				</div>
 			</ModalContent>
 		</ModalBase>
@@ -108,7 +113,7 @@ function ULRConditionPart(props: { part: URLConditionPart; onChange: (part: URLC
 	const valueKey = extractURLPartValueKey(part)
 
 	return (
-		<div className="mb-[15px] grid grid-cols-[max-content_max-content_1fr_max-content] items-center gap-x-[10px]" key={part.id}>
+		<div className="mb-3.75 grid grid-cols-[max-content_max-content_1fr_max-content] items-center gap-x-2.5" key={part.id}>
 			{/* Status */}
 			<Tooltip title={part.disabled ? gvar.gsm.token.on : gvar.gsm.token.off}>
 				<input
@@ -155,7 +160,7 @@ function ULRConditionPart(props: { part: URLConditionPart; onChange: (part: URLC
 			{/* Delete */}
 			<Tooltip title={gvar.gsm.token.delete}>
 				<button
-					className="icon"
+					className="icon-button"
 					onClick={() => {
 						onRemove(part)
 					}}

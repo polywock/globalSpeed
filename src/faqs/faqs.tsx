@@ -7,7 +7,7 @@ import "@/main.css"
 import { requestCreateTab } from "../utils/browserUtils"
 import { cn, isFirefox } from "../utils/helper"
 
-const LIST_CLASS = "[&>li]:mb-[10px] [&>li:last-child]:mb-0"
+const LIST_CLASS = "[&>li]:mb-2.5 [&>li:last-child]:mb-0"
 
 function Faqs(props: {}) {
 	return (
@@ -135,7 +135,7 @@ function Faqs(props: {}) {
 							<li>2. Open Global Speed's popup .</li>
 							<li>
 								3. Near the power-off button <FaPowerOff color={"#02a"} size="1.21rem" />, click on the three-dot menu
-								<IoEllipsisVertical style={{ verticalAlign: "middle" }} size="1.2em" /> to show more options.
+								<IoEllipsisVertical className="align-middle" size="1.2em" /> to show more options.
 							</li>
 							<li>
 								4. It should show an option to disable shortcuts for <InlineCode>geforcenow.com</InlineCode>.
@@ -294,7 +294,7 @@ function Faqs(props: {}) {
 
 function Group(props: { label: string; children: ReactElement[] | ReactElement }) {
 	return (
-		<section className="mb-[30px] w-[800px] bg-white p-[20px]">
+		<section className="mb-7.5 w-[800px] bg-white p-5">
 			<h2 className="mt-0">{props.label}</h2>
 			{props.children}
 		</section>
@@ -304,9 +304,9 @@ function Group(props: { label: string; children: ReactElement[] | ReactElement }
 function Item(props: { q: string | ReactElement; a: ReactElement }) {
 	const [hidden, setHidden] = useState(true)
 	return (
-		<div className="mb-[10px]">
-			<div className="grid grid-cols-[max-content_1fr] items-center gap-x-[10px] p-[5px] text-[1.3em]" onClick={() => setHidden(!hidden)}>
-				<button className="min-w-[30px]">{hidden ? "+" : "-"}</button>
+		<div className="mb-2.5">
+			<div className="grid grid-cols-[max-content_1fr] items-center gap-x-2.5 p-1.25 text-2xl" onClick={() => setHidden(!hidden)}>
+				<button className="min-w-7.5 button-control">{hidden ? "+" : "-"}</button>
 				<div>{props.q}</div>
 			</div>
 			{!hidden && props.a}

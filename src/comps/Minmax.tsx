@@ -15,7 +15,7 @@ type MinmaxProps = {
 
 export function Minmax(props: MinmaxProps) {
 	return (
-		<div className="Minmax grid grid-cols-[1fr_1fr] gap-x-[5px]">
+		<div className="grid grid-cols-[1fr_1fr] gap-x-1.25">
 			<Tooltip title={gvar.gsm.token.min}>
 				<NumericInput
 					value={props.min}

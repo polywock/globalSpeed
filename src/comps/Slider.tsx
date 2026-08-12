@@ -3,24 +3,8 @@ import { useCallback, useEffect, useMemo, useState, type ComponentProps, type CS
 import { gvar } from "@/globalVar"
 import { clamp, cn, inverseLerp, lerp } from "../utils/helper"
 
-const TRACK_CLASSES =
-	"[&::-webkit-slider-runnable-track]:h-(--slider-track-height) [&::-webkit-slider-runnable-track]:w-full [&::-webkit-slider-runnable-track]:cursor-pointer [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:border-none [&::-webkit-slider-runnable-track]:bg-[linear-gradient(to_right,var(--slider-fill-color)_0%,var(--slider-fill-color)_var(--slider-progress),var(--slider-track-color)_var(--slider-progress),var(--slider-track-color)_100%)] [&::-moz-range-track]:h-(--slider-track-height) [&::-moz-range-track]:w-full [&::-moz-range-track]:cursor-pointer [&::-moz-range-track]:rounded-full [&::-moz-range-track]:border-none [&::-moz-range-track]:bg-(--slider-track-color) [&::-moz-range-progress]:h-(--slider-track-height) [&::-moz-range-progress]:rounded-full [&::-moz-range-progress]:border-none [&::-moz-range-progress]:bg-(--slider-fill-color)"
-
-const THUMB_CLASSES =
-	"[&::-webkit-slider-thumb]:mt-[calc((var(--slider-track-height)-var(--slider-thumb-size))*0.5)] [&::-webkit-slider-thumb]:box-border [&::-webkit-slider-thumb]:size-(--slider-thumb-size) [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-solid [&::-webkit-slider-thumb]:border-[var(--slider-thumb-border)] [&::-webkit-slider-thumb]:bg-(--slider-thumb-color) [&::-webkit-slider-thumb]:shadow-[0_1px_2px_color-mix(in_oklab,black_40%,transparent)] [&::-moz-range-thumb]:box-border [&::-moz-range-thumb]:size-(--slider-thumb-size) [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-solid [&::-moz-range-thumb]:border-[var(--slider-thumb-border)] [&::-moz-range-thumb]:bg-(--slider-thumb-color) [&::-moz-range-thumb]:shadow-[0_1px_2px_color-mix(in_oklab,black_40%,transparent)]"
-
-const FOCUS_CLASSES =
-	"focus-visible:outline-none [&:focus-visible::-webkit-slider-thumb]:shadow-[0_0_0_3px_var(--border),0_1px_2px_color-mix(in_oklab,black_40%,transparent)] [&:focus-visible::-moz-range-thumb]:shadow-[0_0_0_3px_var(--border),0_1px_2px_color-mix(in_oklab,black_40%,transparent)]"
-
-const SLIDER_CLASS = cn(
-	"w-full cursor-pointer appearance-none bg-transparent [--slider-track-height:6px] [--slider-thumb-size:16px] [--slider-fill-color:var(--primary)] [--slider-track-color:var(--input)] [--slider-thumb-color:var(--slider-fill-color)] [--slider-thumb-border:transparent] [--slider-progress:0%]",
-	TRACK_CLASSES,
-	THUMB_CLASSES,
-	FOCUS_CLASSES,
-)
-
 export function SliderInput({ className, ...props }: Omit<ComponentProps<"input">, "type">) {
-	return <input {...props} className={cn(SLIDER_CLASS, className)} type="range" />
+	return <input {...props} className={cn("slider", className)} type="range" />
 }
 
 type SliderProps = {

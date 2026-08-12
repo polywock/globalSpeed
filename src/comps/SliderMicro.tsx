@@ -36,12 +36,12 @@ export function SliderMicro(props: SliderMicroProps) {
 	return (
 		<div
 			{...pass}
+			data-slot="slider-micro"
 			className={cn(
-				"SliderMicro mb-[2px] grid items-center gap-x-[5px] bg-background",
+				"mb-0.5 grid items-center gap-x-1.25 bg-background",
 				gridColumns,
 				props.label && "withLabel",
 				props.withInput && "withInput",
-				activated && "highlight",
 				className,
 			)}
 		>

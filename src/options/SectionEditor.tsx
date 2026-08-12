@@ -92,9 +92,9 @@ function KeybindSection(props: {
 	const hasJs = keybinds.some((kb) => kb.enabled && kb.command === "runCode")
 
 	return (
-		<OptionsSection className="SectionEditor">
+		<OptionsSection>
 			<h2>{getSectionTitle(listKey)}</h2>
-			{!!getSectionSubheader(listKey) && <div className="mt-[-10px] mb-[10px] text-[1.2em] italic opacity-50">{getSectionSubheader(listKey)}</div>}
+			{!!getSectionSubheader(listKey) && <div className="-mt-2.5 mb-2.5 text-xl italic opacity-50">{getSectionSubheader(listKey)}</div>}
 			{listKey === "pageKeybinds" && <ShortcutWarning isBlockMode={(view.keybindsUrlCondition || getDefaultURLCondition(true)).block} />}
 			{devWarningType ? <DevWarning warningType={hasJs ? devWarningType : DevWarningType.NONE} /> : null}
 			{listKey === "browserKeybinds" && <CommandWarning keybinds={view[listKey] || []} />}
@@ -235,7 +235,7 @@ function SectionControls(props: { listKey: KeybindType; view: StateView; setView
 	const urlRuleCount = view.keybindsUrlCondition ? getSelectedParts(view.keybindsUrlCondition).length : 0
 
 	return (
-		<div className="mt-[20px] grid grid-cols-[repeat(3,max-content)_1fr] items-stretch [justify-items:right] gap-x-[10px]">
+		<div className="mt-5 grid grid-cols-[repeat(3,max-content)_1fr] items-stretch justify-items-end gap-x-2.5">
 			{/* Primary select */}
 			<select
 				aria-label={gvar.gsm.token.create}
@@ -255,6 +255,7 @@ function SectionControls(props: { listKey: KeybindType; view: StateView; setView
 
 			{/* Create */}
 			<button
+				className="button-control"
 				onClick={(e) => {
 					const newKb = commandInfos[commandOption as CommandName].generate()
 					if (trigger !== Trigger.PAGE) newKb.trigger = trigger
@@ -268,6 +269,7 @@ function SectionControls(props: { listKey: KeybindType; view: StateView; setView
 
 			{/* Reset */}
 			<button
+				className="button-control"
 				onClick={(e) => {
 					if (!areYouSure()) return
 					const updates: Partial<StateView> = {
@@ -282,7 +284,7 @@ function SectionControls(props: { listKey: KeybindType; view: StateView; setView
 			{/* URL conditions */}
 			{showUrlConditions && view[listKey]?.length > 0 && (
 				<>
-					<button onClick={() => setShow(!show)}>{`${gvar.gsm.options.rules.conditions}: ${urlRuleCount}`}</button>
+					<button className="button-control" onClick={() => setShow(!show)}>{`${gvar.gsm.options.rules.conditions}: ${urlRuleCount}`}</button>
 
 					{show && (
 						<URLModal

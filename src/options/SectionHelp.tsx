@@ -12,19 +12,19 @@ import { OptionsSection } from "./OptionsSection"
 
 export function SectionHelp(props: {}) {
 	return (
-		<OptionsSection className="SectionHelp">
+		<OptionsSection>
 			{/* Header */}
 			<h2 onClick={handleSecretMenu}>{gvar.gsm.options.help.header}</h2>
 
 			{/* Issue prompt */}
-			<div className="mb-[30px] inline-block rounded-lg border border-solid border-border-x bg-card p-[10px] text-[1.1em] leading-[2] text-card-foreground opacity-65 hover:opacity-100">
+			<div className="mb-7.5 inline-block rounded-lg border border-border-x bg-card p-2.5 text-lg leading-[2] text-card-foreground opacity-65 hover:opacity-100">
 				{gvar.gsm.options.help.issuePrompt} <a href="https://github.com/polywock/globalSpeed/issues">{gvar.gsm.options.help.issueDirective}</a>
 			</div>
 
-			<div className="grid grid-cols-[max-content_max-content_1fr] justify-items-end gap-x-[10px]">
+			<div className="grid grid-cols-[max-content_max-content_1fr] justify-items-end gap-x-2.5">
 				{/* Reset  */}
 				<button
-					className="p-[7px] text-[1.2em] uppercase"
+					className="button-control help-action uppercase"
 					onClick={async (e) => {
 						if (!areYouSure()) return
 
@@ -41,14 +41,14 @@ export function SectionHelp(props: {}) {
 				{!isMobile() && (
 					<>
 						<button
-							className="p-[7px] text-[1.2em] uppercase"
+							className="button-control help-action uppercase"
 							onClick={(e) => {
 								requestCreateTab(chrome.runtime.getURL("./faqs.html"))
 							}}
 						>
 							{"FAQ"}
 						</button>
-						<div className="grid grid-cols-[repeat(4,max-content)] gap-x-[5px]">
+						<div className="grid grid-cols-[repeat(4,max-content)] gap-x-1.25">
 							<ExportImport />
 						</div>
 					</>
@@ -112,7 +112,7 @@ function ExportImport(props: {}) {
 		<>
 			<Tooltip title={gvar.gsm.options.help.exportTooltip}>
 				<button
-					className="p-[7px] text-[1.2em]"
+					className="button-control help-action"
 					onClick={async () => {
 						downloadState(await dumpConfig())
 					}}
@@ -122,7 +122,7 @@ function ExportImport(props: {}) {
 			</Tooltip>
 			<Tooltip title={showWasCopied ? gvar.gsm.options.help.copied : gvar.gsm.options.help.copy}>
 				<button
-					className="p-[7px] text-[1.2em]"
+					className="button-control help-action"
 					onClick={async (e) => {
 						await navigator.clipboard.writeText(JSON.stringify(await dumpConfig()))
 						setShowWasCopied(true)
@@ -134,7 +134,7 @@ function ExportImport(props: {}) {
 			</Tooltip>
 			<Tooltip title={gvar.gsm.options.help.importTooltip}>
 				<button
-					className="ml-[15px] p-[7px] text-[1.2em]"
+					className="ml-3.75 button-control help-action"
 					onClick={(e) => {
 						ref.current.input.click()
 					}}
@@ -144,7 +144,7 @@ function ExportImport(props: {}) {
 			</Tooltip>
 			<Tooltip title={gvar.gsm.options.help.paste}>
 				<button
-					className="p-[7px] text-[1.2em]"
+					className="button-control help-action"
 					onClick={async (e) => {
 						if (isFirefox()) {
 							if (!(await chrome.permissions.request({ permissions: ["clipboardRead", "clipboardWrite"] }))) return

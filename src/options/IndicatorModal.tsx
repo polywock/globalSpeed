@@ -22,14 +22,14 @@ export function IndicatorModal(props: Props) {
 
 	return (
 		<ModalBase keepOnWheel={true} onClose={props.onClose}>
-			<ModalContent className="mt-[20px] w-[550px]">
+			<ModalContent size="md">
 				{/* Position */}
 				<OptionField>
 					<span>{gvar.gsm.token.position}</span>
 					<div>
 						<select
 							aria-label={gvar.gsm.token.position}
-							style={{ marginRight: "10px" }}
+							className="mr-2.5"
 							value={init?.position ?? defaultInit.position}
 							onChange={(e) => {
 								const indicatorInit = produce(init ?? {}, (d) => {
@@ -63,7 +63,7 @@ export function IndicatorModal(props: Props) {
 				{/* Color */}
 				<OptionField>
 					<span>{gvar.gsm.token.color}</span>
-					<div className="grid grid-cols-[repeat(3,max-content)] items-center gap-[10px]">
+					<div className="grid grid-cols-[repeat(3,max-content)] items-center gap-2.5">
 						<input
 							type="color"
 							aria-label={gvar.gsm.token.color}
@@ -176,7 +176,7 @@ export function IndicatorModal(props: Props) {
 					<div>
 						<select
 							aria-label={gvar.gsm.token.animation}
-							style={{ marginRight: "10px" }}
+							className="mr-2.5"
 							value={init?.animation || 1}
 							onChange={(e) => {
 								const indicatorInit = produce(init ?? {}, (d) => {
@@ -210,7 +210,7 @@ export function IndicatorModal(props: Props) {
 				{/* Duration */}
 				<OptionField>
 					<span>{gvar.gsm.token.duration}</span>
-					<div className="grid auto-cols-max grid-flow-col gap-x-[10px]">
+					<div className="grid auto-cols-max grid-flow-col gap-x-2.5">
 						<SliderMicro
 							value={init?.duration ?? defaultInit.duration}
 							onChange={(v) => {
@@ -234,7 +234,7 @@ export function IndicatorModal(props: Props) {
 					onClick={(e) => {
 						onChange(null)
 					}}
-					className="reset text-[1.14rem]"
+					className="button-control text-control"
 				>
 					{gvar.gsm.token.reset}
 				</button>

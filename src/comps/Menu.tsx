@@ -8,7 +8,7 @@ export function makeMenuLabelWithTooltip(name: string, tooltip: string, align: T
 	return (
 		<>
 			{name}
-			<RegularTooltip className="ml-[10px] border-inherit bg-inherit text-inherit" offset={30} align={align} title={tooltip} />
+			<RegularTooltip className="ml-2.5 border-inherit bg-inherit text-inherit" offset={30} align={align} title={tooltip} />
 		</>
 	)
 }
@@ -29,8 +29,8 @@ export const Menu = (props: MenuProps) => {
 				ref={props.menuRef}
 				style={centered ? undefined : { left: `${props.position.x}px`, top: `${props.position.y}px` }}
 				className={cn(
-					"Menu fixed z-[99999999] rounded-[var(--radius)] border-2 border-solid border-border-x bg-popover text-popover-foreground select-none",
-					centered && "top-[2em] max-w-[90vw] justify-self-center text-[0.9em]",
+					"fixed z-menu rounded-lg border-2 border-border-x bg-popover text-popover-foreground select-none",
+					centered && "top-[2em] max-w-[90vw] justify-self-center text-sm",
 				)}
 			>
 				{props.items.map((v) => {
@@ -44,7 +44,7 @@ export const Menu = (props: MenuProps) => {
 							key={v.name}
 							onClick={handleClick}
 							className={cn(
-								"grid cursor-pointer grid-cols-[20px_auto] border-b border-solid border-border-x py-[5px] pr-[20px] pl-[10px] leading-[1.5] opacity-[.85] hover:opacity-100",
+								"grid cursor-pointer grid-cols-[20px_auto] border-b border-border-x py-1.25 pr-5 pl-2.5 leading-[1.5] opacity-85 hover:opacity-100",
 								v.className,
 							)}
 						>

@@ -128,14 +128,14 @@ export function NameArea(props: NameAreaProps) {
 		})
 
 	return (
-		<div className="command flex flex-wrap items-center gap-x-[10px] gap-y-[5px]">
+		<div className="command flex flex-wrap items-center gap-x-2.5 gap-y-1.25">
 			{/* Label. Enlarged first letter, except when the locale is right-to-left. */}
-			<span className="label [:root:not(.rtl)_&]:first-letter:text-[1.2em]">{label}</span>
+			<span className="not-rtl:first-letter:text-xl">{label}</span>
 
 			{/* Capture shortcut warning */}
 			{tabCaptureHint && (
 				<Tooltip title={replaceArgs(gvar.gsm.warnings.captureRequired, [`(${gvar.gsm.command.afxCapture})`])} allowClick>
-					<span className="-ml-[5px] text-tertiary">
+					<span className="-ml-1.25 text-tertiary">
 						<MdWarning size="1.35rem" />
 					</span>
 				</Tooltip>
@@ -145,7 +145,7 @@ export function NameArea(props: NameAreaProps) {
 			{command.valueType === "adjustMode" && (
 				<Tooltip title={gvar.gsm.options.editor.adjustModes[value.adjustMode || AdjustMode.SET]}>
 					<button
-						className="adjustMode border-border-x p-[3px] text-[0.8em]"
+						className="adjustMode button-control border-border-x p-0.75 text-2xs"
 						onClick={(e) => {
 							props.onChange(
 								value.id,
@@ -177,7 +177,7 @@ export function NameArea(props: NameAreaProps) {
 			)}
 
 			{/* Tooltip */}
-			{tooltip && <RegularTooltip align="top" title={tooltip} className="-ml-[5px]" />}
+			{tooltip && <RegularTooltip align="top" title={tooltip} className="-ml-1.25" />}
 
 			{value.command === "cinema" && <Cinema value={value} onChange={props.onChange} />}
 
@@ -186,7 +186,7 @@ export function NameArea(props: NameAreaProps) {
 				<>
 					<ToggleButton
 						active={value.direct}
-						className="px-[5px] py-[2px]"
+						className="px-1.25 py-0.5"
 						onClick={(e) => {
 							props.onChange(
 								value.id,
@@ -210,7 +210,7 @@ export function NameArea(props: NameAreaProps) {
 			{/* Kebab menu  */}
 			{!!kebabList.length && (
 				<KebabList
-					buttonClassName="-ml-[5px]"
+					buttonClassName="-ml-1.25"
 					list={kebabList}
 					onSelect={(name) => {
 						for (let handler of kebabListHandlers) {
@@ -352,7 +352,7 @@ function FilterSelect(props: FilterSelectProps) {
 	const { value, command, onChange } = props
 	if (command.withFilterTarget || command.withFilterOption) {
 		return (
-			<div className="support flex items-center gap-x-[4px]">
+			<div className="flex items-center gap-x-1">
 				{command.withFilterTarget && (
 					<select
 						value={value.filterTarget}
@@ -487,8 +487,8 @@ function Cinema(props: { value: Keybind; onChange: (id: string, v: Keybind) => v
 	return (
 		<>
 			<Tooltip title={gvar.gsm.token.more}>
-				<button className="icon" onClick={() => setShow(true)}>
-					<IoEllipsisVertical style={{ pointerEvents: "none" }} title="..." size="1.3em" />
+				<button className="icon-button" onClick={() => setShow(true)}>
+					<IoEllipsisVertical className="pointer-events-none" title="..." size="1.3em" />
 				</button>
 			</Tooltip>
 			{show && <CinemaModal value={props.value} onChange={props.onChange} onClose={() => setShow(false)} />}

@@ -16,8 +16,8 @@ export function SvgFilterList(props: { svgFilters: SvgFilter[]; onChange: (newSv
 	const [command, setCommand] = useState("rgb")
 
 	return (
-		<div className="SvgFilterList mt-[15px] border-t border-solid border-border-x">
-			<div className="mt-[6px] text-center text-[0.9em] opacity-50">{gvar.gsm.filter.otherFilters.header}</div>
+		<div className="mt-3.75 border-t border-border-x">
+			<div className="mt-1.5 text-center text-sm opacity-50">{gvar.gsm.filter.otherFilters.header}</div>
 			<div>
 				{props.svgFilters.map((f) => (
 					<SvgFilterItem
@@ -40,7 +40,7 @@ export function SvgFilterList(props: { svgFilters: SvgFilter[]; onChange: (newSv
 					/>
 				))}
 			</div>
-			<div className="mt-[10px] flex gap-x-[10px]">
+			<div className="mt-2.5 flex gap-x-2.5">
 				<select
 					value={command}
 					onChange={(e) => {
@@ -52,6 +52,7 @@ export function SvgFilterList(props: { svgFilters: SvgFilter[]; onChange: (newSv
 					))}
 				</select>
 				<button
+					className="button-control"
 					onClick={(e) => {
 						props.onChange(
 							produce(props.svgFilters, (dArr) => {

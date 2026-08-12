@@ -128,12 +128,12 @@ export const KeybindControl = (props: KeybindControlProps) => {
 	}
 
 	return (
-		<div className="KeybindControl grid grid-cols-[max-content_minmax(200px,1.5fr)_175px_200px_max-content] items-center gap-x-[10px] [&_select]:[text-align-last:center]">
+		<div className="grid grid-cols-[max-content_minmax(200px,1.5fr)_175px_200px_max-content] items-center gap-x-2.5 [&_select]:[text-align-last:center]">
 			{/* Url condition bubble */}
 			{value.condition && getSelectedParts(value.condition).length ? (
 				<Tooltip title={gvar.gsm.options.rules.conditions}>
 					<div
-						className="urlBubble absolute top-[-5px] right-[-5px] rounded-[10px] bg-destructive px-[5px] text-primary-foreground"
+						className="absolute -top-1.25 -right-1.25 rounded-bubble bg-destructive px-1.25 text-primary-foreground"
 						onClick={() => setShow(!show)}
 						onContextMenu={(e) => {
 							if (value.condition) {
@@ -209,7 +209,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
 			{/* Name area */}
 			<NameArea command={command} onChange={props.onChange} value={value} hasSpecial={hasSpecial} reference={ref} />
 
-			<div className="triggerValues grid gap-y-[10px]">
+			<div className="grid gap-y-2.5">
 				<TriggerValues value={value} onChange={props.onChange} virtualInput={props.virtualInput} />
 				{value.allowAlt && adjustMode === AdjustMode.CYCLE && (
 					<TriggerValues value={value} onChange={props.onChange} virtualInput={props.virtualInput} isAlt={true} />
@@ -246,7 +246,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
 
 			{/* Duration with numeric iput  */}
 			{showNumericControl && command.withDuration && (
-				<div className="grid grid-cols-[1fr_max-content] gap-x-[5px]">
+				<div className="grid grid-cols-[1fr_max-content] gap-x-1.25">
 					<NumericInput
 						placeholder={defaultValue?.toString() ?? null}
 						min={min}
@@ -467,7 +467,7 @@ export const TriggerValues = (props: Props) => {
 		<>
 			{/* Global key picker */}
 			{value.trigger === Trigger.BROWSER && (
-				<div className="globalPicker grid grid-cols-[1fr_max-content] items-center gap-x-[7px]">
+				<div className="grid grid-cols-[1fr_max-content] items-center gap-x-1.75">
 					<select
 						aria-label={gvar.gsm.token.assign}
 						value={value[keyForGlobal] || "commandA"}
@@ -492,7 +492,7 @@ export const TriggerValues = (props: Props) => {
 					<Tooltip title={gvar.gsm.token.assign}>
 						<button
 							aria-label={gvar.gsm.token.assign}
-							className="-translate-y-[2px] icon text-foreground"
+							className="-translate-y-0.5 icon-button text-foreground"
 							onClick={() => {
 								requestCreateTab(
 									isFirefox()

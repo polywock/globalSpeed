@@ -41,7 +41,7 @@ export function SpeedPresetModal(props: Props) {
 
 	return (
 		<ModalBase keepOnWheel={true} onClose={props.onClose}>
-			<ModalContent className="mt-[20px] w-[400px] [--field-name-width:150px]">
+			<ModalContent size="sm" className="[--field-name-width:150px]">
 				{/* Row selection */}
 				<OptionField>
 					<span>{gvar.gsm.token.rows}</span>
@@ -73,7 +73,6 @@ export function SpeedPresetModal(props: Props) {
 				<OptionField>
 					<span>{gvar.gsm.token.smallStep}</span>
 					<NumericInput
-						className="wide"
 						value={view.speedSmallStep || 0.01}
 						onChange={(t) => handleStepChange(t, false)}
 						min={0.001}
@@ -86,7 +85,6 @@ export function SpeedPresetModal(props: Props) {
 				<OptionField>
 					<span>{gvar.gsm.token.largeStep}</span>
 					<NumericInput
-						className="wide"
 						value={view.speedBigStep || 0.1}
 						onChange={(t) => handleStepChange(t, true)}
 						min={0.001}
@@ -97,7 +95,7 @@ export function SpeedPresetModal(props: Props) {
 
 				{/* Table */}
 				<div
-					className="mt-[20px] mb-[15px] ml-[20px] grid grid-cols-[repeat(3,max-content)] gap-[10px] text-[0.95em]"
+					className="mt-5 mb-3.75 ml-5 grid grid-cols-[repeat(3,max-content)] gap-2.5 text-md"
 					style={
 						{
 							"--padding": `${5 + (view.speedPresetPadding ?? 0)}px`,
@@ -107,7 +105,7 @@ export function SpeedPresetModal(props: Props) {
 					{/* Cell inputs */}
 					{presets.slice(0, clamp(1, 4, view.speedPresetRows ?? 4) * 3).map((v, i) => (
 						<NumericInput
-							className="preset w-[60px] [&>input]:px-0 [&>input]:py-[var(--padding)]"
+							className="w-15 [&>input]:px-0 [&>input]:py-[var(--padding)]"
 							key={i}
 							value={v}
 							onChange={(t) => handlePresetChange(i, t)}
@@ -123,7 +121,7 @@ export function SpeedPresetModal(props: Props) {
 					onClick={(e) => {
 						setView({ speedPresetPadding: null, speedPresetRows: null, speedPresets: null, speedSmallStep: null, speedBigStep: null })
 					}}
-					className="reset text-[1.14rem]"
+					className="button-control text-control"
 				>
 					{gvar.gsm.token.reset}
 				</button>

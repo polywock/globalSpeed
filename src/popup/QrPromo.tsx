@@ -18,21 +18,16 @@ export function QrPromo() {
 
 	if (!ALWAYS_SHOW && (view.qrCodeHide || !validUserAgent() || (view.speedChangeCounter || 0) < 20 || view.qrCodeSeenCounter > 60)) {
 		wasHidden = true
-		document.documentElement.classList.add("noBottomBorderMediaItem")
+		document.documentElement.toggleAttribute("data-media-item-no-bottom-border", true)
 		return null
 	}
 	!ALWAYS_SHOW && indicateSeen(view.qrCodeSeenCounter)
 
 	return (
-		<div
-			className={cn(
-				"grid grid-cols-[1fr_max-content_max-content] items-center gap-x-[7px] pt-[20px] pb-[10px] pl-[10px] select-none",
-				"dark:hidden",
-			)}
-		>
+		<div className={cn("grid grid-cols-[1fr_max-content_max-content] items-center gap-x-1.75 pt-5 pb-2.5 pl-2.5 select-none", "dark:hidden")}>
 			<div>
-				<div className="text-[14px]">{gvar.gsm.options.flags.qrCodeTop}</div>
-				<div className="text-[18px] font-bold text-chart-5">{gvar.gsm.options.flags.qrCodeBottom}</div>
+				<div className="text-promo-sm">{gvar.gsm.options.flags.qrCodeTop}</div>
+				<div className="text-promo-xl font-bold text-success">{gvar.gsm.options.flags.qrCodeBottom}</div>
 			</div>
 			<img
 				className="cursor-pointer"
@@ -46,7 +41,7 @@ export function QrPromo() {
 					onClick={() => {
 						setView({ qrCodeHide: true })
 					}}
-					className="icon leading-0"
+					className="icon-button leading-0"
 				>
 					<TiDelete size="30px" />
 				</button>

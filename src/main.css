@@ -5,13 +5,40 @@
    would otherwise compile into real important-modifier utilities. */
 @source "../src/**/*.{ts,tsx}";
 
-/* Replaces the stock prefers-color-scheme `dark:`. useThemeSync already resolves the "system"
-   setting down to this class on <html>, so the class is the sole source of truth. `:is()` rather
-   than the usual `:where()` so the variant keeps the (0,2,0) specificity of the `[.darkTheme_&]:`
-   selectors it replaces, instead of dropping to (0,1,0) and tying with the utility it overrides. */
-@custom-variant dark (&:is(.darkTheme, .darkTheme *));
+/* useThemeSync resolves the "system" setting to this root class. The zero-specificity wrapper
+   keeps dark utilities in Tailwind's normal utilities-win cascade. */
+@custom-variant dark (&:where(.darkTheme, .darkTheme *));
+@custom-variant mobile (&:is(.mobile, .mobile *));
+@custom-variant rtl (&:is(.rtl, .rtl *));
+@custom-variant dragging (&:is([data-dragging], [data-dragging] *));
 
 @theme inline {
+	/* The legacy UI uses fixed pixel spacing while the root font size is user-scalable.
+	   A fixed base keeps spacing stable: 1.25 = 5px, 2.5 = 10px, and 5 = 20px. */
+	--spacing: 4px;
+
+	/* Type remains relative to the inherited, user-scaled font size unless a legacy
+	   control deliberately used rem or px. */
+	--text-*: initial;
+	--text-4xs: 0.7rem;
+	--text-3xs: 0.75em;
+	--text-2xs: 0.8em;
+	--text-xs: 0.85em;
+	--text-sm: 0.9em;
+	--text-md: 0.95em;
+	--text-base: 1em;
+	--text-root: 1rem;
+	--text-lg: 1.1em;
+	--text-xl: 1.2em;
+	--text-2xl: 1.3em;
+	--text-ui: 0.928rem;
+	--text-header: 0.8rem;
+	--text-control: 1.14rem;
+	--text-promo-sm: 14px;
+	--text-promo-md: 15px;
+	--text-promo-lg: 16px;
+	--text-promo-xl: 18px;
+
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
 	--color-card: var(--card);
@@ -27,60 +54,208 @@
 	--color-muted: var(--muted);
 	--color-muted-foreground: var(--muted-foreground);
 	--color-accent: var(--accent);
-	--color-accent-foreground: var(--accent-foreground);
 	--color-destructive: var(--destructive);
 	--color-destructive-bg: var(--destructive-bg);
+	--color-success: var(--success);
+	--color-promo: var(--promo);
 	--color-border: var(--border);
 	--color-border-x: var(--border-x);
 	--color-border-xx: var(--border-xx);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
-	--color-chart-1: var(--chart-1);
-	--color-chart-2: var(--chart-2);
-	--color-chart-3: var(--chart-3);
-	--color-chart-4: var(--chart-4);
-	--color-chart-5: var(--chart-5);
-	--color-sidebar: var(--sidebar);
-	--color-sidebar-foreground: var(--sidebar-foreground);
-	--color-sidebar-primary: var(--sidebar-primary);
-	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-	--color-sidebar-accent: var(--sidebar-accent);
-	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-	--color-sidebar-border: var(--sidebar-border);
-	--color-sidebar-ring: var(--sidebar-ring);
-
 	--radius-sm: calc(var(--radius) - 4px);
-	--radius-md: calc(var(--radius) - 2px);
 	--radius-lg: var(--radius);
-	--radius-xl: calc(var(--radius) + 2px);
 	--radius-2xl: calc(var(--radius) + 4px);
+	--radius-control: 5px;
+	--radius-bubble: 10px;
+
+	--z-index-overlay: 100;
+	--z-index-menu: 200;
+	--z-index-modal: 300;
+	--z-index-tooltip: 400;
+	--z-index-debug: 500;
 }
 
-/* Strips a button back to a bare icon. A utility rather than a base rule, so that
-   utilities set alongside it override it instead of needing `!`. */
-@utility icon {
+@utility button-control {
+	font: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
+	color: var(--foreground);
+	padding: 5px;
+	cursor: pointer;
+	background-color: var(--background);
+	border: 1px solid var(--input);
+	border-radius: var(--radius);
+
+	&:focus {
+		border-color: var(--ring);
+		outline: none;
+	}
+
+	&:disabled {
+		opacity: 0.5;
+	}
+
+	& > svg {
+		opacity: 0.8;
+	}
+
+	&:hover > svg {
+		opacity: 1;
+	}
+}
+
+/* A complete icon-button variant, rather than a reset layered over button-control. */
+@utility icon-button {
+	font: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
 	color: var(--secondary-foreground);
 	padding: 0;
+	cursor: pointer;
 	background-color: inherit;
 	border: none;
+	border-radius: var(--radius);
 
 	&:focus {
 		outline: 1px solid var(--ring);
 		border: none;
 	}
+
+	&:disabled {
+		opacity: 0.5;
+	}
+
+	& > svg {
+		opacity: 0.8;
+	}
+
+	&:hover > svg {
+		opacity: 1;
+	}
 }
 
-/* Design tokens and the document-level defaults they feed. Deliberately unlayered: anything in
-   @layer base can be outranked by unlayered author CSS, and these have to be the last word on
-   the page. The element resets below stay in @layer base so utilities still override them. */
+@utility icon-owner {
+	& > svg {
+		opacity: 0.8;
+	}
+
+	&:hover > svg {
+		opacity: 1;
+	}
+}
+
+@utility thin-scrollbar {
+	scrollbar-color: var(--muted) var(--background);
+	scrollbar-width: thin;
+}
+
+@utility popup-panel {
+	min-height: 40px;
+	padding: 8px;
+}
+
+@utility field-gear {
+	position: absolute;
+	top: -4px;
+	left: 50px;
+}
+
+@utility help-action {
+	padding: 7px;
+	font-size: var(--text-xl);
+}
+
+@utility slider {
+	width: 100%;
+	cursor: pointer;
+	appearance: none;
+	background-color: transparent;
+	--slider-track-height: 6px;
+	--slider-thumb-size: 16px;
+	--slider-fill-color: var(--primary);
+	--slider-track-color: var(--input);
+	--slider-thumb-color: var(--slider-fill-color);
+	--slider-thumb-border: transparent;
+	--slider-progress: 0%;
+
+	&::-webkit-slider-runnable-track {
+		height: var(--slider-track-height);
+		width: 100%;
+		cursor: pointer;
+		border: none;
+		border-radius: 9999px;
+		background: linear-gradient(
+			to right,
+			var(--slider-fill-color) 0%,
+			var(--slider-fill-color) var(--slider-progress),
+			var(--slider-track-color) var(--slider-progress),
+			var(--slider-track-color) 100%
+		);
+	}
+
+	&::-moz-range-track {
+		height: var(--slider-track-height);
+		width: 100%;
+		cursor: pointer;
+		border: none;
+		border-radius: 9999px;
+		background: var(--slider-track-color);
+	}
+
+	&::-moz-range-progress {
+		height: var(--slider-track-height);
+		border: none;
+		border-radius: 9999px;
+		background: var(--slider-fill-color);
+	}
+
+	&::-webkit-slider-thumb {
+		box-sizing: border-box;
+		width: var(--slider-thumb-size);
+		height: var(--slider-thumb-size);
+		margin-top: calc((var(--slider-track-height) - var(--slider-thumb-size)) * 0.5);
+		cursor: pointer;
+		appearance: none;
+		border: 1px solid var(--slider-thumb-border);
+		border-radius: 9999px;
+		background: var(--slider-thumb-color);
+		box-shadow: 0 1px 2px color-mix(in oklab, black 40%, transparent);
+	}
+
+	&::-moz-range-thumb {
+		box-sizing: border-box;
+		width: var(--slider-thumb-size);
+		height: var(--slider-thumb-size);
+		cursor: pointer;
+		border: 1px solid var(--slider-thumb-border);
+		border-radius: 9999px;
+		background: var(--slider-thumb-color);
+		box-shadow: 0 1px 2px color-mix(in oklab, black 40%, transparent);
+	}
+
+	&:focus-visible {
+		outline: none;
+	}
+
+	&:focus-visible::-webkit-slider-thumb {
+		box-shadow:
+			0 0 0 3px var(--border),
+			0 1px 2px color-mix(in oklab, black 40%, transparent);
+	}
+
+	&:focus-visible::-moz-range-thumb {
+		box-shadow:
+			0 0 0 3px var(--border),
+			0 1px 2px color-mix(in oklab, black 40%, transparent);
+	}
+}
+
+/* Design tokens stay unlayered; element defaults live in base so utilities override them. */
 :root {
 	--font-lang-scalar: 1;
 	--font-size-scalar: 1;
 	--radius: 0.5rem;
-	--radius-2xl: calc(var(--radius) + 4px);
-	--radius-xl: calc(var(--radius) + 2px);
-	--radius-md: calc(var(--radius) - 2px);
-	--radius-sm: calc(var(--radius) - 4px);
 
 	--font-size: calc(14px * var(--font-lang-scalar) * var(--font-size-scalar));
 	font-size: var(--font-size);
@@ -100,27 +275,15 @@
 	--muted: lightgray;
 	--muted-foreground: #7a879e;
 	--accent: #1f2f4a1a;
-	--accent-foreground: oklch(22.359% 0.03316 265.722);
 	--destructive-bg: #fde8e8;
 	--destructive: #7a1b21;
+	--success: #135a2e;
+	--promo: #5a70a7;
 	--border: oklch(0 0 0 / 10%);
 	--border-x: oklch(0 0 0 / 20%);
 	--border-xx: oklch(0 0 0 / 50%);
 	--input: oklch(0 0 0 / 15%);
 	--ring: #2f65f6;
-	--chart-1: #295cda;
-	--chart-2: #8b5cf6;
-	--chart-3: #0ea5e9;
-	--chart-4: #d97706;
-	--chart-5: #135a2e;
-	--sidebar: #ffffff;
-	--sidebar-foreground: oklch(22.359% 0.03316 265.722);
-	--sidebar-primary: #1546c8;
-	--sidebar-primary-foreground: #ffffff;
-	--sidebar-accent: #1f2f4a1a;
-	--sidebar-accent-foreground: oklch(22.359% 0.03316 265.722);
-	--sidebar-border: oklch(0 0 0 / 10%);
-	--sidebar-ring: #2f65f6;
 }
 
 :root.darkTheme {
@@ -139,27 +302,15 @@
 	--muted: #0f141d;
 	--muted-foreground: #8895ad;
 	--accent: #ffffff14;
-	--accent-foreground: oklch(96.386% 0.01706 267.821);
 	--destructive-bg: #5a2b2e;
 	--destructive: #ffd9da;
+	--success: #8de0ad;
+	--promo: #c4c4c4;
 	--border: oklch(1 0 0 / 10%);
 	--border-x: oklch(1 0 0 / 20%);
 	--border-xx: oklch(1 0 0 / 50%);
 	--input: oklch(1 0 0 / 15%);
 	--ring: #a8c8ff;
-	--chart-1: #8db6ff;
-	--chart-2: #c4a7ff;
-	--chart-3: #7dd3fc;
-	--chart-4: #fbbf24;
-	--chart-5: #8de0ad;
-	--sidebar: #171d28;
-	--sidebar-foreground: oklch(96.386% 0.01706 267.821);
-	--sidebar-primary: #c5d7ff;
-	--sidebar-primary-foreground: #000000;
-	--sidebar-accent: #ffffff14;
-	--sidebar-accent-foreground: oklch(96.386% 0.01706 267.821);
-	--sidebar-border: oklch(1 0 0 / 10%);
-	--sidebar-ring: #a8c8ff;
 }
 
 body {
@@ -167,6 +318,10 @@ body {
 	font-size: var(--font-size);
 	background-color: var(--muted);
 	color: var(--foreground);
+}
+
+:root[data-dragging] * {
+	cursor: ns-resize !important;
 }
 
 @layer base {
@@ -189,7 +344,6 @@ body {
 		padding-inline-start: 40px;
 	}
 
-	button,
 	input,
 	select,
 	textarea {
@@ -211,7 +365,6 @@ body {
 		cursor: pointer;
 	}
 
-	button,
 	input[type="text"],
 	textarea {
 		background-color: var(--background);
@@ -246,14 +399,6 @@ body {
 		}
 	}
 
-	button {
-		cursor: pointer;
-
-		&:disabled {
-			opacity: 0.5;
-		}
-	}
-
 	a,
 	a:visited {
 		color: var(--primary);
@@ -269,14 +414,6 @@ body {
 		display: inline;
 		vertical-align: middle;
 		pointer-events: bounding-box;
-	}
-
-	* > svg {
-		opacity: 0.8;
-
-		&:hover {
-			opacity: 1;
-		}
 	}
 
 	code {
@@ -314,8 +451,7 @@ body {
 }
 
 .options-page #root {
-	scrollbar-color: var(--muted) var(--background);
-	scrollbar-width: thin;
+	@apply thin-scrollbar;
 }
 
 /* Past this width the options page stops filling the window and centres its single column. */

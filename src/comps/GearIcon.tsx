@@ -11,7 +11,7 @@ export function GearIcon(props: {
 }) {
 	return (
 		<Tooltip title={props.tooltip || gvar.gsm.token.customize} align={props.align || "top"}>
-			<button aria-label={props.tooltip || gvar.gsm.token.customize} className={cn("icon", props.className)} onClick={props.onClick}>
+			<button aria-label={props.tooltip || gvar.gsm.token.customize} className={cn("icon-button", props.className)} onClick={props.onClick}>
 				<Gear size="1.57rem" />
 			</button>
 		</Tooltip>

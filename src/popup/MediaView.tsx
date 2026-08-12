@@ -11,7 +11,7 @@ import { sendMediaEvent } from "../utils/configUtils"
 import { clamp, cn, feedbackText, formatDomain, formatDuration } from "../utils/helper"
 
 const HAS_REQUEST_PIP = !!HTMLVideoElement.prototype.requestPictureInPicture
-const CONTROL_BUTTON_CLASS = "icon p-[5px] first:-ml-[5px] hover:bg-accent"
+const CONTROL_BUTTON_CLASS = "icon-button p-1.25 first:-ml-1.25 hover:bg-accent"
 
 export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 	const { info, pinned } = props
@@ -24,9 +24,9 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 	const differentTab = gvar.tabInfo && gvar.tabInfo.tabId !== tabId
 
 	return (
-		<div className="border-t border-border-x px-[5px] py-[10px] first:mt-[16px] last:border-b last:[.noBottomBorderMediaItem_&]:border-b-0">
+		<div className="border-t border-border-x px-1.25 py-2.5 first:mt-4 last:border-b last:[:root[data-media-item-no-bottom-border]_&]:border-b-0">
 			{/* Header */}
-			<div className="mb-[2px] [overflow-wrap:anywhere]">
+			<div className="mb-0.5 [overflow-wrap:anywhere]">
 				<span
 					onClick={async (e) => {
 						let probe = await chrome.tabs.sendMessage(info.tabInfo.tabId, { type: "MEDIA_PROBE", key: info.key, formatted: true } as Messages, {
@@ -35,7 +35,7 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 						if (!probe) return
 						feedbackText(probe.formatted, { y: (e.target as HTMLDivElement).getBoundingClientRect().top - 50 }, 1000 * 30)
 					}}
-					className="text-[0.85em] opacity-55 hover:underline hover:opacity-100"
+					className="text-xs opacity-55 hover:underline hover:opacity-100"
 					title={info.domain}
 				>
 					{parts.join(info.shadowMode == null ? " - " : ` • `)}
@@ -43,7 +43,7 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 				{differentTab && (
 					<Tooltip title={gvar.gsm.token.jumpToTab}>
 						<button
-							className="ml-[5px] -translate-y-[2px] scale-120 rounded-[5px] border-0 px-[5px] py-0 opacity-70 hover:bg-accent hover:opacity-100 [&>svg]:opacity-100"
+							className="ml-1.25 -translate-y-0.5 scale-120 icon-button rounded-control px-1.25 py-0 opacity-70 hover:bg-accent hover:opacity-100"
 							onClick={async () => {
 								const tabInfo = await chrome.tabs.get(tabId)
 								if (tabInfo.windowId !== windowId) {
@@ -64,7 +64,7 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 			</div>
 
 			{/* Controls */}
-			<div className="grid grid-cols-[repeat(4,max-content)_1fr_repeat(3,max-content)] items-center gap-x-[5px]" key={info.key}>
+			<div className="grid grid-cols-[repeat(4,max-content)_1fr_repeat(3,max-content)] items-center gap-x-1.25" key={info.key}>
 				{/* Seek back */}
 				<button
 					className={CONTROL_BUTTON_CLASS}
