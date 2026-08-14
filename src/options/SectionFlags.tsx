@@ -12,6 +12,7 @@ import { Tooltip } from "@/comps/Tooltip"
 import { getDefaultURLCondition } from "@/defaults"
 import { DEFAULT_DOUBLE_TAP_THRESHOLD, DEFAULT_LONG_PRESS_THRESHOLD, getDefaultSpeedSlider } from "@/defaults/constants"
 import { gvar } from "@/globalVar"
+import { systemIsDark } from "@/hooks/useThemeSync"
 import { Context, CONTEXT_KEYS, InitialContext, StateView } from "@/types"
 import { clamp, cn, isMobile, produce } from "@/utils/helper"
 import { fetchView } from "@/utils/state"
@@ -121,18 +122,29 @@ export function SectionFlags(props: {}) {
 
 				{/* Dark theme */}
 				<OptionField>
-					<span>{gvar.gsm.options.flags.theme}</span>
-					<select
-						value={view.darkTheme == null ? "system" : view.darkTheme ? "dark" : "light"}
-						onChange={(e) => {
-							const val = e.target.value
-							setView({ darkTheme: val === "system" ? null : val === "dark" ? true : false })
-						}}
-					>
-						<option value="system">{"Auto"}</option>
-						<option value="light">{gvar.gsm.options.flags.themeLight}</option>
-						<option value="dark">{gvar.gsm.options.flags.themeDark}</option>
-					</select>
+					<span>{gvar.gsm.options.flags.darkTheme}</span>
+					<div className="grid grid-cols-[max-content_max-content] items-center gap-x-1.25">
+						<Toggle
+							aria-label={gvar.gsm.options.flags.darkTheme}
+							value={view.darkTheme ?? systemIsDark}
+							onChange={(v) => {
+								setView({ darkTheme: v })
+							}}
+						/>
+						{view.darkTheme != null && (
+							<Tooltip title={gvar.gsm.options.flags.darkThemeSystem}>
+								<button
+									aria-label={gvar.gsm.options.flags.darkThemeSystem}
+									className="icon-button"
+									onClick={() => {
+										setView({ darkTheme: null })
+									}}
+								>
+									<GoX size="1.6rem" />
+								</button>
+							</Tooltip>
+						)}
+					</div>
 				</OptionField>
 
 				{/* Permission */}
@@ -226,7 +238,7 @@ export function SectionFlags(props: {}) {
 				<OptionField className="mt-7.5">
 					<OptionFieldLabel>
 						<span>{gvar.gsm.options.flags.pinByDefault}</span>
-						<RegularTooltip title={gvar.gsm.options.flags.pinByDefaultTooltip} align="right" />
+						<RegularTooltip title={`${gvar.gsm.options.flags.pinByDefaultTooltip} - ${gvar.gsm.header.pinTooltip}`} align="right" />
 					</OptionFieldLabel>
 					<Toggle
 						aria-label={gvar.gsm.options.flags.pinByDefault}
@@ -237,15 +249,15 @@ export function SectionFlags(props: {}) {
 					/>
 				</OptionField>
 
-				{/* Initial state */}
+				{/* Initial context */}
 				{!!view.pinByDefault && (
 					<OptionField>
 						<OptionFieldLabel className="ml-5">
-							<span>{gvar.gsm.options.flags.initialState}</span>
-							{<RegularTooltip title={gvar.gsm.options.flags.initialStateTooltip} align="right" />}
+							<span>{gvar.gsm.options.flags.initialContext}</span>
+							{<RegularTooltip title={gvar.gsm.options.flags.initialContextTooltip} align="right" />}
 						</OptionFieldLabel>
 						<select
-							aria-label={gvar.gsm.options.flags.initialState}
+							aria-label={gvar.gsm.options.flags.initialContext}
 							value={view.initialContext ?? InitialContext.PREVIOUS}
 							onChange={async (e) => {
 								const partial = { initialContext: parseInt(e.target.value) } as Partial<StateView>
@@ -364,9 +376,9 @@ export function SectionFlags(props: {}) {
 				</OptionField>
 
 				{!showMore ? (
-					<Tooltip title={gvar.gsm.token.more}>
-						<button aria-label={gvar.gsm.token.more} className="mt-5 button-control" onClick={() => setShowMore(true)}>
-							<TfiMoreAlt />
+					<Tooltip title={gvar.gsm.token.showMore}>
+						<button aria-label={gvar.gsm.token.showMore} className=" button-control p-3 py-2" onClick={() => setShowMore(true)}>
+							{gvar.gsm.token.showMore}
 						</button>
 					</Tooltip>
 				) : (

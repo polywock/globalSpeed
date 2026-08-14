@@ -278,7 +278,7 @@
 	--destructive-bg: #fde8e8;
 	--destructive: #7a1b21;
 	--success: #135a2e;
-	--promo: #5a70a7;
+	--promo: #767676;
 	--border: oklch(0 0 0 / 10%);
 	--border-x: oklch(0 0 0 / 20%);
 	--border-xx: oklch(0 0 0 / 50%);
@@ -314,7 +314,7 @@
 }
 
 body {
-	font-family: "Segoe UI", "Avenir", system-ui, Courier, monospace;
+	font-family: "Montserrat Variable", "Segoe UI", "Avenir", system-ui, Courier, monospace;
 	font-size: var(--font-size);
 	background-color: var(--muted);
 	color: var(--foreground);

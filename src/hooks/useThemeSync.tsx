@@ -3,7 +3,7 @@ import { gvar } from "@/globalVar"
 import { isMobile } from "@/utils/helper"
 import { useStateView } from "../hooks/useStateView"
 
-const systemIsDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+export const systemIsDark = window.matchMedia("(prefers-color-scheme: dark)").matches
 
 export function useThemeSync() {
 	const [view] = useStateView({ darkTheme: true, fontSize: true })

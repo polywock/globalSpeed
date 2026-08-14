@@ -12,7 +12,7 @@ export function ShortcutWarning(props: { isBlockMode: boolean }) {
 				className="cursor-pointer border-0 border-b-2 border-foreground/50 transition-opacity duration-150 hover:opacity-65"
 				onClick={() => setShowModal(true)}
 			>
-				{gvar.gsm.options.editor.shortcutWarningLearn}
+				{gvar.gsm.options.editor[props.isBlockMode ? "shortcutWarningLearnBlock" : "shortcutWarningLearnAllow"]}
 			</span>
 			{showModal && (
 				<ModalBase onClose={() => setShowModal(false)}>

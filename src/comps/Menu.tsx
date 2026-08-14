@@ -8,7 +8,7 @@ export function makeMenuLabelWithTooltip(name: string, tooltip: string, align: T
 	return (
 		<>
 			{name}
-			<RegularTooltip className="ml-2.5 border-inherit bg-inherit text-inherit" offset={30} align={align} title={tooltip} />
+			<RegularTooltip className="ml-2.5 bg-background/15 border-background/20 text-inherit" offset={30} align={align} title={tooltip} />
 		</>
 	)
 }

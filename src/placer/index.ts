@@ -2,6 +2,7 @@ import { gvar } from "@/globalVar"
 import "@/main.css"
 import { Rect } from "../types"
 import { loadGsm } from "../utils/gsm"
+import "@fontsource-variable/montserrat/wght.css"
 import "./styles.css"
 
 let id = new URL(location.href).searchParams.get("id")

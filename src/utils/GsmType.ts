@@ -165,8 +165,8 @@ export type Gsm = {
 		percent: string
 		/** Frames */
 		frames: string
-		/** More */
-		more: string
+		/** Show more */
+		showMore: string
 		/** Assign */
 		assign: string
 		/** None */
@@ -441,14 +441,10 @@ export type Gsm = {
 			/** Language */
 			language: string
 			_languageTooltip?: string
-			/** Theme */
-			theme: string
-			/** Light */
-			themeLight: string
-			/** Dark */
-			themeDark: string
-			/** System */
-			themeSystem: string
+			/** Dark theme */
+			darkTheme: string
+			/** Use system theme */
+			darkThemeSystem: string
 			/** Show badge */
 			showBadge: string
 			/** The badge is the text on the extension icon */
@@ -467,10 +463,10 @@ export type Gsm = {
 			pinByDefault: string
 			/** New tabs will automatically be pinned */
 			pinByDefaultTooltip: string
-			/** Initial state */
-			initialState: string
+			/** Initial context */
+			initialContext: string
 			/** The starting context for newly pinned tabs */
-			initialStateTooltip: string
+			initialContextTooltip: string
 			/** Global context */
 			globalContext: string
 			/** Previous tab's context */
@@ -561,8 +557,10 @@ export type Gsm = {
 			shortcutWarningAllow: string
 			/** By default, shortcuts are enabled on most websites. */
 			shortcutWarningBlock: string
-			/** Learn to toggle shortcuts for a website. */
-			shortcutWarningLearn: string
+			/** Learn to enable shortcuts for a website. */
+			shortcutWarningLearnAllow: string
+			/** Learn to disable shortcuts for a website. */
+			shortcutWarningLearnBlock: string
 			/** Browser Shortcuts */
 			browserShortcuts: string
 			/** Can be used to control videos while using another app */

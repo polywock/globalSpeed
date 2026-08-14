@@ -17,6 +17,7 @@ import { FxPanel } from "./FxPanel"
 import { Header } from "./Header"
 import { MainPanel } from "./MainPanel"
 import { OrlHeader } from "./OrlHeader"
+import "@fontsource-variable/montserrat/wght.css"
 
 declare global {
 	interface GlobalVar {

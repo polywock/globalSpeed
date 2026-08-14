@@ -1,4 +1,7 @@
+import { FaRegQuestionCircle } from "react-icons/fa"
+import { LuMessageCircleQuestion, LuTrophy } from "react-icons/lu"
 import { TiDelete } from "react-icons/ti"
+import { Tooltip } from "@/comps/Tooltip"
 import { gvar } from "@/globalVar"
 import { useStateView } from "@/hooks/useStateView"
 
@@ -14,29 +17,7 @@ export function SelfPromo() {
 		return null
 	}
 
-	return (
-		<div className="grid grid-cols-[1fr_max-content] items-center gap-x-1.25 pt-3.75 pb-2.5 pl-2.5 select-none">
-			<div
-				className="group cursor-pointer"
-				onClick={() => {
-					chrome.tabs.create({ url: "https://www.reddit.com/r/GuessThePlace/" })
-				}}
-			>
-				<div className="text-promo-md opacity-75">Love geography?</div>
-				<div className="text-promo-lg font-bold text-promo transition-opacity duration-100 ease-linear group-hover:opacity-50">
-					Join r/GuessThePlace
-				</div>
-			</div>
-			<button
-				onClick={() => {
-					setView({ selfPromoHideTsR: Date.now() })
-				}}
-				className="icon-button leading-0"
-			>
-				<TiDelete size="30px" />
-			</button>
-		</div>
-	)
+	return <div className="grid grid-cols-[1fr_max-content] items-center gap-x-1.25 p-2.5 select-none"></div>
 }
 
 /** English only, since the promo text isn't localized. Dismissing hides it for a week. */

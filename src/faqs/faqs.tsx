@@ -6,6 +6,7 @@ import { Pin, Zap } from "@/comps/svgs"
 import "@/main.css"
 import { requestCreateTab } from "../utils/browserUtils"
 import { cn, isFirefox } from "../utils/helper"
+import "@fontsource-variable/montserrat/wght.css"
 
 const LIST_CLASS = "[&>li]:mb-2.5 [&>li:last-child]:mb-0"
 

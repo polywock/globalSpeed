@@ -51,7 +51,7 @@ export function KebabList(props: KebabListProps) {
 	return (
 		<>
 			{props.title}
-			<Tooltip title={props.title || gvar.gsm.token.more} align={props.tooltipAlign || "top"}>
+			<Tooltip title={props.title || gvar.gsm.token.showMore} align={props.tooltipAlign || "top"}>
 				{/* First child of Tooltip must not have a ref. */}
 				<button className={cn("icon-button", props.buttonClassName)} onClick={onContext}>
 					<div ref={buttonRef}>

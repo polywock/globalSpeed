@@ -14,6 +14,7 @@ import { SectionEditor } from "./SectionEditor"
 import { SectionFlags } from "./SectionFlags"
 import { SectionHelp } from "./SectionHelp"
 import { SectionRules } from "./SectionRules"
+import "@fontsource-variable/montserrat/wght.css"
 
 declare global {
 	interface Window {

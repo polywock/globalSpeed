@@ -486,7 +486,7 @@ function Cinema(props: { value: Keybind; onChange: (id: string, v: Keybind) => v
 
 	return (
 		<>
-			<Tooltip title={gvar.gsm.token.more}>
+			<Tooltip title={gvar.gsm.token.showMore}>
 				<button className="icon-button" onClick={() => setShow(true)}>
 					<IoEllipsisVertical className="pointer-events-none" title="..." size="1.3em" />
 				</button>
