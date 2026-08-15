@@ -23,9 +23,9 @@ export function EqualizerControl(props: EqualizerControlProps) {
 	const isEmpty = useMemo(() => equal(eq || getDefaultEq(), getDefaultEq()), [eq])
 
 	return (
-		<div className={cn("mt-3.75 rounded-lg border border-border-x p-2.5 select-none", props.className)}>
+		<div className={cn("mt-3.75 rounded-lg border border-border p-2.5 select-none", props.className)}>
 			<div className="mb-2.5 grid grid-cols-[max-content_1fr_max-content] items-center gap-x-1.25 text-xl">
-				<div className={eq.enabled ? "text-tertiary" : "text-muted-foreground"}>
+				<div className={eq.enabled ? "text-primary" : "text-muted-foreground"}>
 					<Tooltip title={eq.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
 						<FaPowerOff
 							className="cursor-pointer"

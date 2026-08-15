@@ -16,7 +16,7 @@ export function SvgFilterList(props: { svgFilters: SvgFilter[]; onChange: (newSv
 	const [command, setCommand] = useState("rgb")
 
 	return (
-		<div className="mt-3.75 border-t border-border-x">
+		<div className="mt-3.75 border-t border-border">
 			<div className="mt-1.5 text-center text-sm opacity-50">{gvar.gsm.filter.otherFilters.header}</div>
 			<div>
 				{props.svgFilters.map((f) => (

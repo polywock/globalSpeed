@@ -25,9 +25,9 @@ export function SvgFilterItem(props: {
 	const [currentPreset, setCurrentPreset] = useState("")
 
 	return (
-		<div className="mt-3.75 rounded-lg border border-border-x p-2.5">
+		<div className="mt-3.75 rounded-lg border border-border p-2.5">
 			<div className="mb-1.25 grid grid-cols-[max-content_1fr_max-content_max-content_max-content] items-center gap-x-1.25 text-xl">
-				<div className={cn("hover:opacity-90", filter.enabled ? "text-tertiary" : "text-muted-foreground")}>
+				<div className={cn("hover:opacity-90", filter.enabled ? "text-primary" : "text-muted-foreground")}>
 					<Tooltip title={filter.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
 						<FaPowerOff
 							size="1.21rem"

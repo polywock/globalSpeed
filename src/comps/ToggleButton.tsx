@@ -15,10 +15,10 @@ export function ToggleButton({ active = false, activeAppearance = true, tone, cl
 			aria-pressed={active}
 			className={cn(
 				"button-control rounded-control text-foreground/50 opacity-70",
-				activeAppearance && "aria-pressed:enabled:border-border-xx aria-pressed:enabled:text-foreground aria-pressed:enabled:opacity-100",
-				tone === "accent" && "aria-pressed:enabled:border-ring aria-pressed:enabled:text-ring",
+				activeAppearance && "aria-pressed:enabled:border-border-strong aria-pressed:enabled:text-foreground aria-pressed:enabled:opacity-100",
+				tone === "accent" && "aria-pressed:enabled:border-primary aria-pressed:enabled:text-primary",
 				tone === "success" && "aria-pressed:border-success aria-pressed:bg-success/20 aria-pressed:text-success",
-				tone === "destructive" && "aria-pressed:border-destructive aria-pressed:bg-destructive-bg aria-pressed:text-destructive",
+				tone === "destructive" && "aria-pressed:border-destructive aria-pressed:bg-destructive/12 aria-pressed:text-destructive",
 				className,
 			)}
 		/>

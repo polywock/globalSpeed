@@ -24,7 +24,7 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 	const differentTab = gvar.tabInfo && gvar.tabInfo.tabId !== tabId
 
 	return (
-		<div className="border-t border-border-x px-1.25 py-2.5 first:mt-4 last:border-b last:[:root[data-media-item-no-bottom-border]_&]:border-b-0">
+		<div className="border-t border-border px-1.25 py-2.5 first:mt-4 last:border-b last:[:root[data-media-item-no-bottom-border]_&]:border-b-0">
 			{/* Header */}
 			<div className="mb-0.5 [overflow-wrap:anywhere]">
 				<span
@@ -142,7 +142,7 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 				) : (
 					<Tooltip title={gvar.gsm.command.PiP}>
 						<button
-							className={cn(CONTROL_BUTTON_CLASS, "opacity-75", info.pipMode && "text-tertiary opacity-100")}
+							className={cn(CONTROL_BUTTON_CLASS, "opacity-75", info.pipMode && "text-primary opacity-100")}
 							onClick={(e) => {
 								const event: MediaEvent = e.shiftKey ? { type: "FULLSCREEN", direct: true } : { type: "PIP" }
 								sendMediaEvent(event, info.key, tabId, frameId)
@@ -157,7 +157,7 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 				<Tooltip title={gvar.gsm.warnings.selectTooltip}>
 					<button
 						// title={gvar.gsm.warnings.selectTooltip}
-						className={cn(CONTROL_BUTTON_CLASS, "opacity-75", pinned && "text-tertiary opacity-100")}
+						className={cn(CONTROL_BUTTON_CLASS, "opacity-75", pinned && "text-primary opacity-100")}
 						onClick={(e) => {
 							chrome.storage.session.set({
 								[`m:pin`]: pinned

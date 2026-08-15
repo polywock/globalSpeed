@@ -1,7 +1,6 @@
 {
 	":appName": "Global Speed: التحكم في سرعة الفيديو",
 	":appDesc": "تحكم شامل في سرعة تشغيل الفيديو والصوت.",
-	"_rtl": true,
 	"audio": {
 		"releaseTab": "تحرير الصوت",
 		"split": "تقسيم",

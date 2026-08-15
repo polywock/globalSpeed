@@ -39,7 +39,7 @@ export function CycleInput(props: CycleInputProps) {
 								{props.values.length > 0 && (
 									<Tooltip title={gvar.gsm.token.delete}>
 										<div
-											className="absolute -top-1.25 -right-1.25 h-2.75 w-2.75 rounded-full border border-destructive bg-destructive-bg opacity-0 group-hover:opacity-90 hover:opacity-100"
+											className="absolute -top-1.25 -right-1.25 h-2.75 w-2.75 rounded-full border border-destructive bg-destructive/12 opacity-0 group-hover:opacity-90 hover:opacity-100"
 											onClick={(e) => {
 												props.onChange(
 													produce(props.values, (d) => {

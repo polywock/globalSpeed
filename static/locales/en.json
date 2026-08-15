@@ -5,7 +5,6 @@
 	"!:appDesc": "Chrome Web Store listing description; keep under ~132 chars",
 	"_scale": 1,
 	"_lang": "en",
-	"_rtl": false,
 	"_shortcut_screenshot": true,
 	"audio": {
 		"releaseTab": "Release audio",

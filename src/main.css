@@ -9,7 +9,6 @@
    keeps dark utilities in Tailwind's normal utilities-win cascade. */
 @custom-variant dark (&:where(.darkTheme, .darkTheme *));
 @custom-variant mobile (&:is(.mobile, .mobile *));
-@custom-variant rtl (&:is(.rtl, .rtl *));
 @custom-variant dragging (&:is([data-dragging], [data-dragging] *));
 
 @theme inline {
@@ -39,33 +38,38 @@
 	--text-promo-lg: 16px;
 	--text-promo-xl: 18px;
 
+	/* --ground is the page ground behind --background; shadcn has no token for it. Everything
+	   else follows shadcn's roles so its components drop in without a translation layer. */
+	--color-ground: var(--ground);
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
 	--color-card: var(--card);
 	--color-card-foreground: var(--card-foreground);
 	--color-popover: var(--popover);
 	--color-popover-foreground: var(--popover-foreground);
+	--color-tooltip: var(--tooltip);
+	--color-tooltip-foreground: var(--tooltip-foreground);
 	--color-primary: var(--primary);
 	--color-primary-foreground: var(--primary-foreground);
 	--color-secondary: var(--secondary);
 	--color-secondary-foreground: var(--secondary-foreground);
-	--color-tertiary: var(--tertiary);
-	--color-tertiary-foreground: var(--tertiary-foreground);
 	--color-muted: var(--muted);
 	--color-muted-foreground: var(--muted-foreground);
 	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
 	--color-destructive: var(--destructive);
-	--color-destructive-bg: var(--destructive-bg);
+	--color-destructive-foreground: var(--destructive-foreground);
 	--color-success: var(--success);
-	--color-promo: var(--promo);
 	--color-border: var(--border);
-	--color-border-x: var(--border-x);
-	--color-border-xx: var(--border-xx);
+	--color-border-subtle: var(--border-subtle);
+	--color-border-strong: var(--border-strong);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
+	--color-scroll: var(--scroll);
 	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
 	--radius-lg: var(--radius);
-	--radius-2xl: calc(var(--radius) + 4px);
+	--radius-xl: calc(var(--radius) + 4px);
 	--radius-control: 5px;
 	--radius-bubble: 10px;
 
@@ -145,9 +149,8 @@
 	}
 }
 
-@utility thin-scrollbar {
-	scrollbar-color: var(--muted) var(--background);
-	scrollbar-width: thin;
+@utility standard-scroll {
+	@apply scrollbar-thin scrollbar-thumb-foreground/30 scrollbar-track-background dark:scrollbar-thumb-foreground/20;
 }
 
 @utility popup-panel {
@@ -260,63 +263,67 @@
 	--font-size: calc(14px * var(--font-lang-scalar) * var(--font-size-scalar));
 	font-size: var(--font-size);
 
+	--ground: lightgray;
 	--background: #f8fbff;
 	--foreground: oklch(22.359% 0.03316 265.722);
 	--card: #ffffff;
-	--card-foreground: oklch(22.359% 0.03316 265.722);
-	--popover: #1d2533;
-	--popover-foreground: oklch(96.386% 0.01706 267.821);
-	--primary: #1546c8;
+	--card-foreground: var(--foreground);
+	--popover: #ffffff;
+	--popover-foreground: var(--foreground);
+	--tooltip: #1d2533;
+	--tooltip-foreground: oklch(96.386% 0.01706 267.821);
+	--primary: #295cda;
 	--primary-foreground: #ffffff;
 	--secondary: #e4e9f1;
 	--secondary-foreground: #4b5c79;
-	--tertiary: #295cda;
-	--tertiary-foreground: #ffffff;
-	--muted: lightgray;
+	--muted: #e4e9f1;
 	--muted-foreground: #7a879e;
 	--accent: #1f2f4a1a;
-	--destructive-bg: #fde8e8;
-	--destructive: #7a1b21;
+	--accent-foreground: var(--foreground);
+	--destructive: #b3261e;
+	--destructive-foreground: #ffffff;
 	--success: #135a2e;
-	--promo: #767676;
-	--border: oklch(0 0 0 / 10%);
-	--border-x: oklch(0 0 0 / 20%);
-	--border-xx: oklch(0 0 0 / 50%);
+	--border: oklch(0 0 0 / 20%);
+	--border-subtle: oklch(0 0 0 / 10%);
+	--border-strong: oklch(0 0 0 / 50%);
 	--input: oklch(0 0 0 / 15%);
 	--ring: #2f65f6;
+	--scroll: var(--ground);
 }
 
 :root.darkTheme {
+	--ground: #0f141d;
 	--background: #1d2533;
 	--foreground: oklch(96.386% 0.01706 267.821);
-	--card: #171d28;
-	--card-foreground: oklch(96.386% 0.01706 267.821);
-	--popover: #f8fbff;
-	--popover-foreground: oklch(22.359% 0.03316 265.722);
-	--primary: #c5d7ff;
+	--card: #232c3d;
+	--card-foreground: var(--foreground);
+	--popover: #232c3d;
+	--popover-foreground: var(--foreground);
+	--tooltip: #f8fbff;
+	--tooltip-foreground: oklch(22.359% 0.03316 265.722);
+	--primary: #8db6ff;
 	--primary-foreground: #000000;
 	--secondary: #293348;
 	--secondary-foreground: #b6c2d8;
-	--tertiary: #8db6ff;
-	--tertiary-foreground: #000000;
-	--muted: #0f141d;
+	--muted: #293348;
 	--muted-foreground: #8895ad;
 	--accent: #ffffff14;
-	--destructive-bg: #5a2b2e;
-	--destructive: #ffd9da;
+	--accent-foreground: var(--foreground);
+	--destructive: #f0656a;
+	--destructive-foreground: #ffffff;
 	--success: #8de0ad;
-	--promo: #c4c4c4;
-	--border: oklch(1 0 0 / 10%);
-	--border-x: oklch(1 0 0 / 20%);
-	--border-xx: oklch(1 0 0 / 50%);
+	--border: oklch(1 0 0 / 20%);
+	--border-subtle: oklch(1 0 0 / 10%);
+	--border-strong: oklch(1 0 0 / 50%);
 	--input: oklch(1 0 0 / 15%);
 	--ring: #a8c8ff;
+	--scroll: var(--secondary);
 }
 
 body {
 	font-family: "Montserrat Variable", "Segoe UI", "Avenir", system-ui, Courier, monospace;
 	font-size: var(--font-size);
-	background-color: var(--muted);
+	background-color: var(--ground);
 	color: var(--foreground);
 }
 
@@ -379,7 +386,7 @@ body {
 		}
 
 		&.error {
-			background-color: var(--destructive-bg);
+			background-color: color-mix(in oklab, var(--destructive) 12%, var(--background));
 			color: var(--destructive);
 			border-color: var(--destructive);
 		}
@@ -390,7 +397,7 @@ body {
 		width: 100%;
 
 		&.error {
-			background-color: var(--destructive-bg);
+			background-color: color-mix(in oklab, var(--destructive) 12%, var(--background));
 		}
 
 		&:disabled {
@@ -450,8 +457,8 @@ body {
 	width: auto;
 }
 
-.options-page #root {
-	@apply thin-scrollbar;
+:root {
+	@apply standard-scroll;
 }
 
 /* Past this width the options page stops filling the window and centres its single column. */

@@ -56,7 +56,6 @@ Promise.all([loadGsm(), requestTabInfo(), handleFreshState()]).then(([gsm, tabIn
 function loadReact(gsm: Gsm) {
 	gvar.gsm = gsm
 	document.documentElement.lang = gsm._lang
-	document.documentElement.classList[gsm._rtl ? "add" : "remove"]("rtl")
 
 	window.root.render(
 		<ErrorFallback>

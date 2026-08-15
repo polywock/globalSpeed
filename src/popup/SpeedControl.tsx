@@ -1,9 +1,10 @@
 import { CSSProperties } from "react"
 import { BsMusicNoteList } from "react-icons/bs"
-import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight } from "react-icons/fa"
+import { LuChevronLeft, LuChevronRight, LuChevronsLeft, LuChevronsRight } from "react-icons/lu"
 import { NumericInput } from "@/comps/NumericInput"
 import { SliderInput } from "@/comps/Slider"
 import { Tooltip } from "@/comps/Tooltip"
+import { Button } from "@/comps/ui/button"
 import { getDefaultSpeedPresets } from "@/defaults/constants"
 import { gvar } from "@/globalVar"
 import { clamp, cn, isMobile } from "@/utils/helper"
@@ -11,7 +12,6 @@ import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "../defaults/constants"
 import { useStateView } from "../hooks/useStateView"
 
 /** Step buttons and the speed input take a scaled down version of the preset padding. */
-const STEP_BUTTON = "button-control px-0 py-[calc(var(--padding)*0.75)] text-3xs"
 const STEP_INPUT = "text-sm [&>input]:px-0 [&>input]:py-[calc(var(--padding)*0.75)]"
 
 type SpeedControlProps = {
@@ -60,7 +60,7 @@ export function SpeedControl(props: SpeedControlProps) {
 						key={i}
 						className={cn(
 							"w-3/4 button-control border-0 px-0 py-(--padding) transition-[transform,background-color,color] duration-170 ease-[cubic-bezier(0,0,0.1,1)]",
-							props.speed === v ? "scale-120 rounded-sm bg-tertiary text-tertiary-foreground" : "focus:outline-1 focus:outline-ring",
+							props.speed === v ? "scale-120 rounded-sm bg-primary text-primary-foreground" : "focus:outline-1 focus:outline-ring",
 						)}
 						onClick={() => props.onChange(v)}
 						onContextMenu={(e) => {
@@ -74,21 +74,22 @@ export function SpeedControl(props: SpeedControlProps) {
 
 			{/* Controls */}
 			<div
-				className="mt-3.75 grid grid-cols-[50fr_50fr_64fr_50fr_50fr] gap-x-1.25"
+				className="mt-3.75 grid grid-cols-[50fr_50fr_64fr_50fr_50fr]  gap-x-1.25"
 				onWheel={(e) => {
 					if (e.deltaMode !== WheelEvent.DOM_DELTA_PIXEL) return
 					const speedDelta = (e.deltaY / 1080) * -0.15
 					props.onChange(clamp(MIN_SPEED_CHROMIUM, MAX_SPEED_CHROMIUM, props.speed + speedDelta))
 				}}
 			>
-				<button className={STEP_BUTTON} onClick={() => handleAddDelta(-largeStep)}>
-					<FaAngleDoubleLeft size={"1.14rem"} />
-				</button>
-				<button className={STEP_BUTTON} onClick={() => handleAddDelta(-smallStep)}>
-					<FaAngleLeft size={"1.14rem"} />
-				</button>
+				<Button variant="outline" className="rounded-sm px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(-largeStep)}>
+					<LuChevronsLeft className="size-5" />
+				</Button>
+				<Button variant="outline" className="rounded-sm px-0 py-[calc(var(--padding)*0.75)] " onClick={() => handleAddDelta(-smallStep)}>
+					<LuChevronLeft className="size-5" />
+				</Button>
 				<NumericInput
 					className={STEP_INPUT}
+					inputClassName="font-semibold rounded-sm h-full dark:border-input dark:bg-input/15 dark:hover:bg-input/30"
 					rounding={2}
 					noNull={true}
 					min={MIN_SPEED_CHROMIUM}
@@ -98,12 +99,13 @@ export function SpeedControl(props: SpeedControlProps) {
 						props.onChange(v)
 					}}
 				/>
-				<button className={STEP_BUTTON} onClick={() => handleAddDelta(smallStep)}>
-					<FaAngleRight size={"1.14rem"} />
-				</button>
-				<button className={STEP_BUTTON} onMouseDown={() => {}} onClick={() => handleAddDelta(largeStep)}>
-					<FaAngleDoubleRight size={"1.14rem"} />
-				</button>
+				<Button variant="outline" className="rounded-sm px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(smallStep)}>
+					{/* <FaAngleRight size={"1.14rem"} /> */}
+					<LuChevronRight className="size-5" />
+				</Button>
+				<Button variant="outline" className="rounded-sm px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(largeStep)}>
+					<LuChevronsRight className="size-5" />
+				</Button>
 			</div>
 
 			{/* Slider */}
@@ -113,7 +115,7 @@ export function SpeedControl(props: SpeedControlProps) {
 						<BsMusicNoteList
 							title={gvar.gsm.command.speedChangesPitch}
 							size={"1.2rem"}
-							className={view.freePitch ? "text-tertiary opacity-100" : "text-secondary-foreground opacity-50"}
+							className={view.freePitch ? "text-primary opacity-100" : "text-secondary-foreground opacity-50"}
 							onClick={(e: React.MouseEvent<SVGElement>) => {
 								setView({ freePitch: !view.freePitch })
 							}}

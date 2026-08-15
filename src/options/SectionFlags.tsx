@@ -376,11 +376,9 @@ export function SectionFlags(props: {}) {
 				</OptionField>
 
 				{!showMore ? (
-					<Tooltip title={gvar.gsm.token.showMore}>
-						<button aria-label={gvar.gsm.token.showMore} className=" button-control p-3 py-2" onClick={() => setShowMore(true)}>
-							{gvar.gsm.token.showMore}
-						</button>
-					</Tooltip>
+					<button aria-label={gvar.gsm.token.showMore} className=" button-control p-3 py-2" onClick={() => setShowMore(true)}>
+						{gvar.gsm.token.showMore}
+					</button>
 				) : (
 					<>
 						{/* Long-press threshold */}

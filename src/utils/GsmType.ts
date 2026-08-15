@@ -4,7 +4,6 @@ export type Gsm = {
 	_scale?: number
 	/** en */
 	_lang?: string
-	_rtl?: boolean
 	_shortcut_screenshot?: boolean
 	audio: {
 		/** Release audio */

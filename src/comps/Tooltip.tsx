@@ -34,7 +34,7 @@ export type TooltipProps = {
 
 /** Lives directly on document.body, so it carries its own styling rather than inheriting any. */
 const POPUP_CLASS =
-	"TooltipPopup fixed z-tooltip block select-none rounded-lg border border-background/50 bg-popover p-2.5 text-root leading-[normal] wrap-break-word whitespace-break-spaces text-popover-foreground opacity-85 pointer-events-none"
+	"TooltipPopup fixed z-tooltip block select-none rounded-lg border border-background/50 bg-tooltip p-2.5 text-root leading-[normal] wrap-break-word whitespace-break-spaces text-tooltip-foreground opacity-85 pointer-events-none"
 
 let popup = document.createElement("div")
 popup.className = POPUP_CLASS

@@ -15,6 +15,7 @@ type NumericInputProps = {
 	rounding?: number
 	disabled?: boolean
 	className?: string
+	inputClassName?: string
 	ref?: RefObject<any>
 }
 
@@ -77,7 +78,7 @@ export const NumericInput = (props: NumericInputProps) => {
 					setProblem(null)
 					setGhostValue(props.value == null ? "" : `${round(props.value, props.rounding ?? 4)}`)
 				}}
-				className={cn("text-center", problem && "error")}
+				className={cn("text-center", props.inputClassName, problem && "error")}
 				placeholder={props.placeholder}
 				type="text"
 				onChange={handleOnChange}

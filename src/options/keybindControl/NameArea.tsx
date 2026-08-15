@@ -129,13 +129,13 @@ export function NameArea(props: NameAreaProps) {
 
 	return (
 		<div className="command flex flex-wrap items-center gap-x-2.5 gap-y-1.25">
-			{/* Label. Enlarged first letter, except when the locale is right-to-left. */}
-			<span className="not-rtl:first-letter:text-xl">{label}</span>
+			{/* Label. Enlarged first letter. */}
+			<span className="first-letter:text-xl">{label}</span>
 
 			{/* Capture shortcut warning */}
 			{tabCaptureHint && (
 				<Tooltip title={replaceArgs(gvar.gsm.warnings.captureRequired, [`(${gvar.gsm.command.afxCapture})`])} allowClick>
-					<span className="-ml-1.25 text-tertiary">
+					<span className="-ml-1.25 text-primary">
 						<MdWarning size="1.35rem" />
 					</span>
 				</Tooltip>
@@ -145,7 +145,7 @@ export function NameArea(props: NameAreaProps) {
 			{command.valueType === "adjustMode" && (
 				<Tooltip title={gvar.gsm.options.editor.adjustModes[value.adjustMode || AdjustMode.SET]}>
 					<button
-						className="adjustMode button-control border-border-x p-0.75 text-2xs"
+						className="adjustMode button-control border-border p-0.75 text-2xs"
 						onClick={(e) => {
 							props.onChange(
 								value.id,

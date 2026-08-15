@@ -13,7 +13,7 @@ export function RegularTooltip(props: {
 		<Tooltip title={props.title} align={props.align || "top"} offset={props.offset} allowClick>
 			<span
 				className={cn(
-					"cursor-pointer rounded-lg border border-border-x bg-card px-1 text-card-foreground opacity-75 select-none hover:opacity-100",
+					"cursor-pointer rounded-lg border border-border bg-card px-1 text-card-foreground opacity-75 select-none hover:opacity-100",
 					props.className,
 				)}
 				style={props.styles}

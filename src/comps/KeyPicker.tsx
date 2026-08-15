@@ -48,7 +48,7 @@ export const KeyPicker = (props: KeyPickerProps) => {
 					enterState && setEnterState(false)
 					props.onChange?.(null)
 				}}
-				className="cursor-pointer rounded-lg border border-border-x bg-background py-1.25 text-center text-foreground select-none focus:outline focus:outline-1 focus:outline-ring"
+				className="cursor-pointer rounded-lg border border-border bg-background py-1.25 text-center text-foreground select-none focus:outline focus:outline-1 focus:outline-ring"
 			>
 				{enterState ? "..." : formatHotkey(props.value)}
 			</div>

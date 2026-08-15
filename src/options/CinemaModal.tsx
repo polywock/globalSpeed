@@ -136,7 +136,7 @@ export function CinemaModal(props: Props) {
 
 				{/* Filters */}
 				{mode === CinemaMode.CUSTOM_FILTER && (
-					<div className="my-7.5 max-w-[300px] border-y border-border-x py-5">
+					<div className="my-7.5 max-w-[300px] border-y border-border py-5">
 						<Filters
 							filters={init.filter || defaultCinemaFilter}
 							onChange={(filter) => {

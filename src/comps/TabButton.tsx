@@ -15,8 +15,8 @@ export function TabButton({ open = false, active = false, className, ...props }:
 			role="tab"
 			aria-selected={open}
 			className={cn(
-				"button-control rounded-t-control rounded-b-none border border-t-2 border-border-x bg-secondary opacity-80 focus:outline-1 focus:outline-ring aria-selected:border-b-transparent aria-selected:bg-background aria-selected:opacity-100",
-				active && "border-t-tertiary",
+				"button-control rounded-t-control rounded-b-none border border-t-2 border-border bg-secondary opacity-80 focus:outline-1 focus:outline-ring aria-selected:border-b-transparent aria-selected:bg-background aria-selected:opacity-100",
+				active && "border-t-primary",
 				className,
 			)}
 		/>

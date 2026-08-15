@@ -14,8 +14,8 @@ export function Origin(props: OriginProps) {
 				.map(([x, y]) => (
 					<div
 						className={cn(
-							"h-3.75 w-7.5 border border-border-x bg-background focus:outline focus:outline-1 focus:outline-ring",
-							x === props.x && y === props.y && "bg-border-x",
+							"h-3.75 w-7.5 border border-border bg-background focus:outline focus:outline-1 focus:outline-ring",
+							x === props.x && y === props.y && "bg-border",
 						)}
 						key={`${x}:${y}`}
 						tabIndex={0}

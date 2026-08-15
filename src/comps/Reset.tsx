@@ -16,7 +16,7 @@ export function Reset(props: ResetProps) {
 				size={"1.07rem"}
 				className={cn(
 					"box-content rounded-lg border p-0.5 select-none",
-					props.active ? "visible border-tertiary text-tertiary" : "invisible border-secondary-foreground text-secondary-foreground",
+					props.active ? "visible border-primary text-primary" : "invisible border-secondary-foreground text-secondary-foreground",
 					props.className,
 				)}
 				onClick={() => props.active && props.onClick()}

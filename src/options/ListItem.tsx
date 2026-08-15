@@ -35,7 +35,7 @@ export function ListItem(props: ListItemProps) {
 			{props.label && (
 				<div data-slot="list-item-label" className="cursor-ns-resize select-none" onClick={props.onClearLabel}>
 					<Tooltip title={gvar.gsm.token.delete}>
-						<span className="inline-block cursor-auto rounded-sm border border-border-x bg-secondary px-2 py-1 text-md select-auto [&:hover>svg]:w-auto [&:hover>svg]:pl-1.25">
+						<span className="inline-block cursor-auto rounded-sm border border-border bg-secondary px-2 py-1 text-md select-auto [&:hover>svg]:w-auto [&:hover>svg]:pl-1.25">
 							{props.label}
 							<GoX className="inline-block w-0 overflow-hidden align-middle text-2xl transition-[width,padding] duration-150 ease-out [interpolate-size:allow-keywords]" />
 						</span>
@@ -58,7 +58,7 @@ export function ListItem(props: ListItemProps) {
 					</button>
 				</Tooltip>
 			</div>
-			<div data-slot="list-item-sub" className="border-0 border-b border-border-x pb-3.75"></div>
+			<div data-slot="list-item-sub" className="border-0 border-b border-border pb-3.75"></div>
 		</div>
 	)
 }

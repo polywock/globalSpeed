@@ -46,7 +46,7 @@ export function URLModal(props: Props) {
 
 	return (
 		<ModalBase keepOnWheel={true} onClose={props.onClose}>
-			<ModalContent className="thin-scrollbar">
+			<ModalContent className="standard-scroll">
 				{/* Header */}
 				<div className="mb-2.5 grid grid-cols-[1fr_max-content]">
 					{/* Label */}

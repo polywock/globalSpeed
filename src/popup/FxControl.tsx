@@ -79,7 +79,7 @@ export function FxControl(props: FxControlProps) {
 				{/* Status */}
 				<Tooltip align="bottom" title={fx.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
 					<button
-						className={cn("button-control", fx.enabled ? "text-tertiary" : "text-muted-foreground")}
+						className={cn("button-control", fx.enabled ? "text-primary" : "text-muted-foreground")}
 						onClick={(e) => {
 							setCurrent(
 								produce(fx, (d) => {
@@ -107,7 +107,7 @@ export function FxControl(props: FxControlProps) {
 				{/* Reset */}
 				<Tooltip align="bottom" title={gvar.gsm.token.reset}>
 					<button
-						className={cn("button-control text-secondary-foreground", !isEmpty && "text-tertiary outline outline-tertiary [&>svg]:scale-115")}
+						className={cn("button-control text-secondary-foreground", !isEmpty && "text-primary outline outline-primary [&>svg]:scale-115")}
 						onClick={(e) => {
 							setCurrent(null)
 						}}

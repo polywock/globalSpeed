@@ -36,7 +36,7 @@ function HeaderAction({ active, beat, className, muted, unpadded, ...props }: He
 			{...props}
 			className={cn(
 				"cursor-pointer px-1.25 text-secondary-foreground icon-owner hover:opacity-90 [&>svg]:align-baseline",
-				active && "text-tertiary",
+				active && "text-primary",
 				muted && "text-muted-foreground",
 				active && beat && "animate-[beat_1s_ease-in_infinite]",
 				unpadded && "px-0",
@@ -85,7 +85,7 @@ export function Header(props: HeaderProps) {
 	}
 
 	return (
-		<div className="grid grid-cols-[repeat(3,max-content)_1fr_repeat(5,max-content)] items-center justify-items-end border-b border-border-x bg-background px-1.25 pt-0.75">
+		<div className="grid grid-cols-[repeat(3,max-content)_1fr_repeat(5,max-content)] items-center justify-items-end border-b border-border bg-background px-1.25 pt-0.75">
 			{/* Status */}
 			<Tooltip title={view.enabled ? gvar.gsm.token.off : gvar.gsm.token.on} align="bottom">
 				<HeaderAction
@@ -127,7 +127,7 @@ export function Header(props: HeaderProps) {
 						}}
 					/>
 					{kebabInfo.showAlert && (
-						<div className="pointer-events-none absolute -top-1.5 -right-1.25 text-tertiary">
+						<div className="pointer-events-none absolute -top-1.5 -right-1.25 text-primary">
 							<IoIosInformationCircle size={"1.2em"} />
 						</div>
 					)}
@@ -374,7 +374,7 @@ async function showOverlayForKebab(sawCount: number) {
 	const b = option.getBoundingClientRect()
 	// This overlay is detached from React, so keep its complete scanned utility set here.
 	const outline = document.createElement("div")
-	outline.className = "pointer-events-none fixed z-debug border-4 border-tertiary"
+	outline.className = "pointer-events-none fixed z-debug border-4 border-primary"
 	outline.style.left = `${b.x - 5}px`
 	outline.style.top = `${b.y - 5}px`
 	outline.style.width = `${b.width + 10}px`
@@ -382,7 +382,7 @@ async function showOverlayForKebab(sawCount: number) {
 
 	const pb = option.parentElement.getBoundingClientRect()
 	const message = document.createElement("div")
-	message.className = "pointer-events-none fixed z-debug w-full bg-secondary p-2.5 text-center text-sm font-bold text-tertiary"
+	message.className = "pointer-events-none fixed z-debug w-full bg-secondary p-2.5 text-center text-sm font-bold text-primary"
 	message.textContent = gvar.gsm.options.popup.enableShortcutsMessage
 	message.style.top = `${pb.y + pb.height + 15}px`
 

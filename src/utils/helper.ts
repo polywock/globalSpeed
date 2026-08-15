@@ -179,7 +179,7 @@ export function areYouSure() {
 }
 
 /** Appended straight to document.body, so it carries its own styling rather than inheriting any. */
-const FEEDBACK_CLASS = "FeedbackText fixed z-[99999999999] rounded-lg bg-popover p-[10px] whitespace-break-spaces text-popover-foreground"
+const FEEDBACK_CLASS = "FeedbackText fixed z-[99999999999] rounded-lg bg-tooltip p-[10px] whitespace-break-spaces text-tooltip-foreground"
 
 export function feedbackText(text: string, pos?: { x?: number; y?: number }, decay?: number) {
 	const div = document.createElement("div")

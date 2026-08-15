@@ -45,7 +45,7 @@ export function SliderMicro(props: SliderMicroProps) {
 				className,
 			)}
 		>
-			{props.label != null && <span className={activated ? "font-semibold text-tertiary" : "font-normal text-foreground"}>{props.label}</span>}
+			{props.label != null && <span className={activated ? "font-semibold text-primary" : "font-normal text-foreground"}>{props.label}</span>}
 			<Slider
 				step={props.sliderStep ?? 0.01}
 				min={props.sliderMin}

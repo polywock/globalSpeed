@@ -17,7 +17,7 @@ export function SectionHelp(props: {}) {
 			<h2 onClick={handleSecretMenu}>{gvar.gsm.options.help.header}</h2>
 
 			{/* Issue prompt */}
-			<div className="mb-7.5 inline-block rounded-lg border border-border-x bg-card p-2.5 text-lg leading-[2] text-card-foreground opacity-65 hover:opacity-100">
+			<div className="mb-7.5 inline-block rounded-lg border border-border bg-card p-2.5 text-lg leading-[2] text-card-foreground opacity-65 hover:opacity-100">
 				{gvar.gsm.options.help.issuePrompt} <a href="https://github.com/polywock/globalSpeed/issues">{gvar.gsm.options.help.issueDirective}</a>
 			</div>
 

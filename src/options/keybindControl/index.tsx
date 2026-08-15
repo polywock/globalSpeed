@@ -133,7 +133,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
 			{value.condition && getSelectedParts(value.condition).length ? (
 				<Tooltip title={gvar.gsm.options.rules.conditions}>
 					<div
-						className="absolute -top-1.25 -right-1.25 rounded-bubble bg-destructive px-1.25 text-primary-foreground"
+						className="absolute -top-1.25 -right-1.25 rounded-bubble bg-destructive px-1.25 text-destructive-foreground"
 						onClick={() => setShow(!show)}
 						onContextMenu={(e) => {
 							if (value.condition) {

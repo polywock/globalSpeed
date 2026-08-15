@@ -26,7 +26,7 @@ export function ModalText(props: ModalTextProps) {
 					<ThrottledTextInput
 						textArea={true}
 						passTextArea={{
-							className: "h-[75vh] w-[50vw] rounded-2xl p-5 mobile:h-3/4 mobile:w-1/2",
+							className: "h-[75vh] w-[50vw] rounded-xl p-5 mobile:h-3/4 mobile:w-1/2",
 						}}
 						value={props.value}
 						onChange={(v) => {

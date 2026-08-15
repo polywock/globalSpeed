@@ -14,7 +14,7 @@ type WarningBannerProps = {
 
 export function WarningBanner({ children, className, action }: WarningBannerProps) {
 	return (
-		<div className={cn("mb-2.5 flex items-center rounded-sm border border-destructive bg-destructive-bg p-[0.6rem] text-destructive", className)}>
+		<div className={cn("mb-2.5 flex items-center rounded-sm border border-destructive bg-destructive/12 p-[0.6rem] text-destructive", className)}>
 			<MdWarning className="mr-1.25" size="1.15rem" />
 			<span>{children}</span>
 			{action && (
