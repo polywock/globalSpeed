@@ -98,6 +98,7 @@ export function SpeedControl(props: SpeedControlProps) {
 					onChange={(v) => {
 						props.onChange(v)
 					}}
+					displayFixed={1}
 				/>
 				<Button variant="outline" className="rounded-sm px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(smallStep)}>
 					{/* <FaAngleRight size={"1.14rem"} /> */}

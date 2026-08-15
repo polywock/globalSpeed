@@ -37,13 +37,7 @@ export function SliderMicro(props: SliderMicroProps) {
 		<div
 			{...pass}
 			data-slot="slider-micro"
-			className={cn(
-				"mb-0.5 grid items-center gap-x-1.25 bg-background",
-				gridColumns,
-				props.label && "withLabel",
-				props.withInput && "withInput",
-				className,
-			)}
+			className={cn("mb-0.5 grid items-center gap-x-1.25", gridColumns, props.label && "withLabel", props.withInput && "withInput", className)}
 		>
 			{props.label != null && <span className={activated ? "font-semibold text-primary" : "font-normal text-foreground"}>{props.label}</span>}
 			<Slider

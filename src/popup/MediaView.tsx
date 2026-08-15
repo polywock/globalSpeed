@@ -1,6 +1,7 @@
 import { type CSSProperties } from "react"
-import { FaBackward, FaForward, FaMousePointer, FaPause, FaPlay, FaVolumeDown, FaVolumeMute, FaVolumeUp } from "react-icons/fa"
+import { FaBackward, FaForward, FaMousePointer, FaPause, FaPlay } from "react-icons/fa"
 import { GrRevert } from "react-icons/gr"
+import { IoMdVolumeHigh, IoMdVolumeLow, IoMdVolumeOff } from "react-icons/io"
 import { MdPictureInPictureAlt } from "react-icons/md"
 import { SliderInput } from "@/comps/Slider"
 import { Tooltip } from "@/comps/Tooltip"
@@ -26,7 +27,7 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 	return (
 		<div className="border-t border-border px-1.25 py-2.5 first:mt-4 last:border-b last:[:root[data-media-item-no-bottom-border]_&]:border-b-0">
 			{/* Header */}
-			<div className="mb-0.5 [overflow-wrap:anywhere]">
+			<div className="mb-0.5 wrap-anywhere">
 				<span
 					onClick={async (e) => {
 						let probe = await chrome.tabs.sendMessage(info.tabInfo.tabId, { type: "MEDIA_PROBE", key: info.key, formatted: true } as Messages, {
@@ -67,13 +68,14 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 			<div className="grid grid-cols-[repeat(4,max-content)_1fr_repeat(3,max-content)] items-center gap-x-1.25" key={info.key}>
 				{/* Seek back */}
 				<button
-					className={CONTROL_BUTTON_CLASS}
+					className={cn(CONTROL_BUTTON_CLASS)}
 					onClick={(e) => {
 						const event: MediaEvent = { type: "SEEK", value: -5, relative: true }
 						sendMediaEvent(event, info.key, tabId, frameId)
 					}}
 				>
-					<FaBackward size={"1.07rem"} />
+					{/* <FaStepBackward className="size-4" /> */}
+					<FaBackward className="size-3.5 opacity-75" />
 				</button>
 
 				{/* Pause */}
@@ -84,18 +86,19 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 						sendMediaEvent(event, info.key, tabId, frameId)
 					}}
 				>
-					{info.paused ? <FaPlay size={"1.14rem"} /> : <FaPause size={"1.14rem"} />}
+					{info.paused ? <FaPlay className="size-4.75" /> : <FaPause className="size-4.75" />}
 				</button>
 
 				{/* Seek forwards */}
 				<button
-					className={CONTROL_BUTTON_CLASS}
+					className={cn(CONTROL_BUTTON_CLASS)}
 					onClick={(e) => {
 						const event: MediaEvent = { type: "SEEK", value: 5, relative: true }
 						sendMediaEvent(event, info.key, tabId, frameId)
 					}}
 				>
-					<FaForward size={"1.07rem"} />
+					{/* <FaStepForward className="size-4" /> */}
+					<FaForward className="size-3.5" />
 				</button>
 
 				{/* Volume */}
@@ -107,18 +110,18 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 				) : (
 					<>
 						<button
-							className={CONTROL_BUTTON_CLASS}
+							className={cn(CONTROL_BUTTON_CLASS, "opacity-85 hover:opacity-100")}
 							onClick={(e) => {
 								const event: MediaEvent = { type: "MUTE", state: "toggle" }
 								sendMediaEvent(event, info.key, tabId, frameId)
 							}}
 						>
 							{info.muted ? (
-								<FaVolumeMute size={"1.14rem"} />
+								<IoMdVolumeOff className="size-5" />
 							) : info.volume > 0.5 ? (
-								<FaVolumeUp size={"1.14rem"} />
+								<IoMdVolumeHigh className="size-5" />
 							) : (
-								<FaVolumeDown size={"1.14rem"} />
+								<IoMdVolumeLow className="size-5" />
 							)}
 						</button>
 						<SliderInput
@@ -148,7 +151,8 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 								sendMediaEvent(event, info.key, tabId, frameId)
 							}}
 						>
-							<MdPictureInPictureAlt size={"1.285rem"} />
+							<MdPictureInPictureAlt className="size-4" />
+							{/* <LuPictureInPicture2 className="size-4" /> */}
 						</button>
 					</Tooltip>
 				)}
@@ -169,7 +173,8 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 							})
 						}}
 					>
-						<FaMousePointer size={"1.285rem"} />
+						<FaMousePointer className="size-4" />
+						{/* <LuMousePointer className="size-4" /> */}
 					</button>
 				</Tooltip>
 			</div>

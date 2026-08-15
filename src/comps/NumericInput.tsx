@@ -13,6 +13,7 @@ type NumericInputProps = {
 	min?: number
 	max?: number
 	rounding?: number
+	displayFixed?: number
 	disabled?: boolean
 	className?: string
 	inputClassName?: string
@@ -23,6 +24,14 @@ export const NumericInput = (props: NumericInputProps) => {
 	const [ghostValue, setGhostValue] = useState("")
 	const [problem, setProblem] = useState(null as string)
 
+	const formatValue = (value: number) => {
+		if (value == null) return ""
+		const rounded = round(value, props.rounding ?? 4)
+		if (props.displayFixed == null) return `${rounded}`
+		const decimals = (`${rounded}`.split(".")[1] ?? "").length
+		return rounded.toFixed(Math.max(decimals, props.displayFixed))
+	}
+
 	useEffect(() => {
 		setProblem(null)
 		if (props.value == null) {
@@ -30,7 +39,7 @@ export const NumericInput = (props: NumericInputProps) => {
 		} else {
 			let parsedGhostValue = parseFloat(ghostValue)
 			if (parsedGhostValue !== props.value) {
-				setGhostValue(`${round(props.value, props.rounding ?? 4)}`)
+				setGhostValue(formatValue(props.value))
 			}
 		}
 	}, [props.value])
@@ -76,7 +85,7 @@ export const NumericInput = (props: NumericInputProps) => {
 				disabled={props.disabled ?? false}
 				onBlur={(e) => {
 					setProblem(null)
-					setGhostValue(props.value == null ? "" : `${round(props.value, props.rounding ?? 4)}`)
+					setGhostValue(formatValue(props.value))
 				}}
 				className={cn("text-center", props.inputClassName, problem && "error")}
 				placeholder={props.placeholder}
