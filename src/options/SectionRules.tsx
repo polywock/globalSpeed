@@ -1,5 +1,6 @@
 import { RefObject, useRef, useState } from "react"
 import { GearIcon } from "@/comps/GearIcon"
+import { Select } from "@/comps/Select"
 import { Tooltip } from "@/comps/Tooltip"
 import { gvar } from "@/globalVar"
 import { getSelectedParts } from "@/utils/configUtils"
@@ -204,22 +205,23 @@ export function Rule(props: RuleProps) {
 			) : null}
 
 			{/* Rule type */}
-			<select
+			<Select
 				value={rule.type}
-				onChange={(e) => {
+				onChanged={(newValue) => {
 					onChange(
 						produce(rule, (d) => {
-							d.type = e.target.value as any
+							d.type = newValue as any
 						}),
 					)
 				}}
-			>
-				<option value="ON">{gvar.gsm.token.on}</option>
-				<option value="OFF">{gvar.gsm.token.off}</option>
-				<option value="SPEED">{gvar.gsm.command.speed}</option>
-				<option value="FX">{gvar.gsm.command.fxFilter}</option>
-				<option value="JS">{gvar.gsm.command.runCode}</option>
-			</select>
+				options={[
+					{ key: "ON", value: gvar.gsm.token.on },
+					{ key: "OFF", value: gvar.gsm.token.off },
+					{ key: "SPEED", value: gvar.gsm.command.speed },
+					{ key: "FX", value: gvar.gsm.command.fxFilter },
+					{ key: "JS", value: gvar.gsm.command.runCode },
+				]}
+			/>
 
 			<div className="grid auto-cols-max grid-flow-col items-center justify-start gap-x-2.5">
 				{/* Speed input  */}

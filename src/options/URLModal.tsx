@@ -1,4 +1,5 @@
 import { GoX } from "react-icons/go"
+import { Select } from "@/comps/Select"
 import { Tooltip } from "@/comps/Tooltip"
 import { gvar } from "@/globalVar"
 import { extractURLPartValueKey, getActiveParts, getSelectedParts } from "@/utils/configUtils"
@@ -53,19 +54,20 @@ export function URLModal(props: Props) {
 					<div className="text-2xl">{gvar.gsm.options.rules.conditions}</div>
 
 					{/* Match mode */}
-					<select
+					<Select
 						value={value.block ? "BLOCK" : "ALLOW"}
-						onChange={(e) => {
+						onChanged={(newValue) => {
 							props.onChange(
 								produce(value, (d) => {
-									d.block = e.target.value === "BLOCK"
+									d.block = newValue === "BLOCK"
 								}),
 							)
 						}}
-					>
-						<option value="ALLOW">{gvar.gsm.options.rules.allowlist}</option>
-						<option value="BLOCK">{gvar.gsm.options.rules.blocklist}</option>
-					</select>
+						options={[
+							{ key: "ALLOW", value: gvar.gsm.options.rules.allowlist },
+							{ key: "BLOCK", value: gvar.gsm.options.rules.blocklist },
+						]}
+					/>
 				</div>
 
 				{/* Subheader */}
@@ -130,20 +132,21 @@ function ULRConditionPart(props: { part: URLConditionPart; onChange: (part: URLC
 			</Tooltip>
 
 			{/* Match type */}
-			<select
+			<Select
 				value={part.type}
-				onChange={(e) => {
+				onChanged={(newValue) => {
 					onChange(
 						produce(part, (d) => {
-							d.type = e.target.value as any
+							d.type = newValue as any
 						}),
 					)
 				}}
-			>
-				<option value={"STARTS_WITH"}>{gvar.gsm.options.rules.startsWith}</option>
-				<option value={"CONTAINS"}>{gvar.gsm.options.rules.contains}</option>
-				<option value={"REGEX"}>{gvar.gsm.options.rules.regex}</option>
-			</select>
+				options={[
+					{ key: "STARTS_WITH", value: gvar.gsm.options.rules.startsWith },
+					{ key: "CONTAINS", value: gvar.gsm.options.rules.contains },
+					{ key: "REGEX", value: gvar.gsm.options.rules.regex },
+				]}
+			/>
 
 			{/* Terms */}
 			<ThrottledTextInput

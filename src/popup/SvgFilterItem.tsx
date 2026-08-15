@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { FaPowerOff } from "react-icons/fa"
 import { GoArrowDown, GoArrowUp, GoX } from "react-icons/go"
+import { Select } from "@/comps/Select"
 import { SliderPlus } from "@/comps/SliderPlus"
 import { ToggleButton } from "@/comps/ToggleButton"
 import { Tooltip } from "@/comps/Tooltip"
@@ -89,21 +90,15 @@ export function SvgFilterItem(props: {
 			{presetInfo && (
 				<div className="mt-1.75 grid grid-cols-[max-content_1fr] items-center gap-x-1.25">
 					<div>{gvar.gsm.filter.otherFilters.presets}</div>
-					<select
-						value={currentPreset}
-						onChange={(e) => {
-							setCurrentPreset(e.target.value || null)
-							const preset = presetInfo.options.find((o) => o.id === e.target.value)
+					<Select
+						value={currentPreset ?? ""}
+						onChanged={(newValue) => {
+							setCurrentPreset(newValue || null)
+							const preset = presetInfo.options.find((o) => o.id === newValue)
 							preset && presetInfo.handler(filter, onChange, preset)
 						}}
-					>
-						<option value={""}>{"---"}</option>
-						{presetInfo.options.map((opt) => (
-							<option key={opt.id} value={opt.id}>
-								{opt.id}
-							</option>
-						))}
-					</select>
+						options={[{ key: "", value: "---" }, ...presetInfo.options.map((opt) => ({ key: opt.id, value: opt.id }))]}
+					/>
 				</div>
 			)}
 			<div className="mt-1.75">
@@ -513,20 +508,21 @@ export function SvgFilterItem(props: {
 
 						<div className="mt-2.5">
 							<span className="mr-2.5">{gvar.gsm.token.mode}</span>
-							<select
+							<Select
 								value={filter.noise.mode}
-								onChange={(e) => {
+								onChanged={(newValue) => {
 									onChange(
 										produce(filter, (v) => {
-											v.noise.mode = e.target.value
+											v.noise.mode = newValue
 										}),
 									)
 								}}
-							>
-								<option value="hard-light">{gvar.gsm.filter.otherFilters.hardLight}</option>
-								<option value="multiply">{gvar.gsm.filter.otherFilters.multiply}</option>
-								<option value="color-burn">{gvar.gsm.filter.otherFilters.colorBurn}</option>
-							</select>
+								options={[
+									{ key: "hard-light", value: gvar.gsm.filter.otherFilters.hardLight },
+									{ key: "multiply", value: gvar.gsm.filter.otherFilters.multiply },
+									{ key: "color-burn", value: gvar.gsm.filter.otherFilters.colorBurn },
+								]}
+							/>
 						</div>
 					</>
 				)}

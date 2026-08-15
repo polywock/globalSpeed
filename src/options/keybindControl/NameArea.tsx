@@ -12,6 +12,7 @@ import { isSeekSmall } from "@/utils/configUtils"
 import { produce, replaceArgs } from "@/utils/helper"
 import { KeybindControlProps } from "."
 import { makeMenuLabelWithTooltip, MenuProps } from "../../comps/Menu"
+import { Select } from "../../comps/Select"
 import { filterInfos, FilterName, filterTargets } from "../../defaults/filters"
 import { AdjustMode, Command, Duration, Keybind, ReferenceValues, TargetFx, Trigger } from "../../types"
 import { assertType, createWindowWithSafeBounds, getPopupSize, isMobile } from "../../utils/helper"
@@ -354,48 +355,37 @@ function FilterSelect(props: FilterSelectProps) {
 		return (
 			<div className="flex items-center gap-x-1">
 				{command.withFilterTarget && (
-					<select
+					<Select
 						value={value.filterTarget}
-						onChange={(e) => {
+						onChanged={(newValue) => {
 							onChange(
 								value.id,
 								produce(value, (d) => {
-									d.filterTarget = e.target.value as TargetFx
+									d.filterTarget = newValue as TargetFx
 								}),
 							)
 						}}
-					>
-						{filterTargets.map((v) => {
-							return (
-								<option key={v} value={v}>
-									{(gvar.gsm.token as any)[v === "backdrop" ? "page" : v === "element" ? "video" : "both"]}
-								</option>
-							)
-						})}
-					</select>
+						options={filterTargets.map((v) => ({
+							key: v,
+							value: (gvar.gsm.token as any)[v === "backdrop" ? "page" : v === "element" ? "video" : "both"],
+						}))}
+					/>
 				)}
 				{command.withFilterOption && (
-					<select
+					<Select
 						value={value.filterOption}
-						onChange={(e) => {
+						onChanged={(newValue) => {
 							props.onChange(
 								value.id,
 								produce(value, (d) => {
 									saveToMem(value, props.adjustMode)
-									d.filterOption = e.target.value as FilterName
+									d.filterOption = newValue as FilterName
 									restoreFromMem(d, props.adjustMode, true)
 								}),
 							)
 						}}
-					>
-						{Object.entries(filterInfos).map(([k, v]) => {
-							return (
-								<option key={k} value={k}>
-									{gvar.gsm.filter[k as FilterName] || ""}
-								</option>
-							)
-						})}
-					</select>
+						options={Object.keys(filterInfos).map((k) => ({ key: k, value: gvar.gsm.filter[k as FilterName] || "" }))}
+					/>
 				)}
 			</div>
 		)
@@ -413,13 +403,13 @@ function UrlMode(props: UrlModeProps) {
 	return (
 		<>
 			{value.command === "openUrl" && (
-				<select
+				<Select
 					value={value.valueUrlMode || "fgTab"}
-					onChange={(e) => {
+					onChanged={(newValue) => {
 						onChange(
 							value.id,
 							produce(value, (d) => {
-								d.valueUrlMode = e.target.value as any
+								d.valueUrlMode = newValue as any
 								if (d.valueUrlMode === "fgTab") delete d.valueUrlMode
 								let isPopup = d.valueUrlMode === "newPopup"
 								if (isPopup || d.valueUrlMode === "newWindow") {
@@ -428,13 +418,14 @@ function UrlMode(props: UrlModeProps) {
 							}),
 						)
 					}}
-				>
-					<option value="fgTab">{gvar.gsm.options.editor.openModes.foregroundTab}</option>
-					<option value="bgTab">{gvar.gsm.options.editor.openModes.backgroundTab}</option>
-					<option value="sameTab">{gvar.gsm.options.editor.openModes.sameTab}</option>
-					<option value="newWindow">{gvar.gsm.options.editor.openModes.newWindow}</option>
-					<option value="newPopup">{gvar.gsm.options.editor.openModes.newPopup}</option>
-				</select>
+					options={[
+						{ key: "fgTab", value: gvar.gsm.options.editor.openModes.foregroundTab },
+						{ key: "bgTab", value: gvar.gsm.options.editor.openModes.backgroundTab },
+						{ key: "sameTab", value: gvar.gsm.options.editor.openModes.sameTab },
+						{ key: "newWindow", value: gvar.gsm.options.editor.openModes.newWindow },
+						{ key: "newPopup", value: gvar.gsm.options.editor.openModes.newPopup },
+					]}
+				/>
 			)}
 		</>
 	)
@@ -456,15 +447,15 @@ export function DurationSelect(props: DurationSelectProps) {
 
 	return (
 		<>
-			<select
-				value={value.duration || Duration.SECS}
-				onChange={(e) => {
+			<Select
+				value={`${value.duration || Duration.SECS}`}
+				onChanged={(newValue) => {
 					onChange(
 						value.id,
 						produce(value, (d) => {
 							saveToMem(value, props.adjustMode)
 
-							d.duration = parseInt(e.target.value)
+							d.duration = parseInt(newValue)
 							if (d.duration === Duration.SECS) {
 								delete d.duration
 							}
@@ -472,11 +463,12 @@ export function DurationSelect(props: DurationSelectProps) {
 						}),
 					)
 				}}
-			>
-				<option value={Duration.SECS}>{gvar.gsm.token.seconds}</option>
-				<option value={Duration.PERCENT}>{gvar.gsm.token.percent}</option>
-				<option value={Duration.FRAMES}>{gvar.gsm.token.frames}</option>
-			</select>
+				options={[
+					{ key: `${Duration.SECS}`, value: gvar.gsm.token.seconds },
+					{ key: `${Duration.PERCENT}`, value: gvar.gsm.token.percent },
+					{ key: `${Duration.FRAMES}`, value: gvar.gsm.token.frames },
+				]}
+			/>
 		</>
 	)
 }

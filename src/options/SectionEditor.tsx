@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import { Select, SelectOption } from "@/comps/Select"
 import { gvar } from "@/globalVar"
 import { getSelectedParts, requestSyncContextMenu } from "@/utils/configUtils"
 import { produce } from "@/utils/helper"
@@ -202,13 +203,12 @@ function onMove(setView: SetView, view: StateView, listKey: KeybindType, id: str
 	if (listKey === "menuKeybinds") requestSyncContextMenu()
 }
 
-type CommandOption = { value: string; label: string; disabled?: boolean }
-const cachedOptions: Partial<Record<KeybindType, CommandOption[]>> = {}
+const cachedOptions: Partial<Record<KeybindType, SelectOption[]>> = {}
 
-function getOptions(listKey: KeybindType): CommandOption[] {
+function getOptions(listKey: KeybindType): SelectOption[] {
 	if (cachedOptions[listKey]) return cachedOptions[listKey]
 
-	const result: CommandOption[] = []
+	const result: SelectOption[] = []
 	let previousGroup: CommandGroup | undefined
 	let hasItems = false
 	availableCommandNames.forEach((command) => {
@@ -217,9 +217,9 @@ function getOptions(listKey: KeybindType): CommandOption[] {
 		if (listKey === "pageKeybinds" && info.prohibitAsPage) return
 		if (listKey === "menuKeybinds" && info.prohibitAsMenu) return
 		if (hasItems && previousGroup !== info.group) {
-			result.push({ label: "------", value: `${command}_group`, disabled: true })
+			result.push({ value: "------", key: `${command}_group`, disabled: true })
 		}
-		result.push({ label: (gvar.gsm.command as any)[command], value: command })
+		result.push({ value: (gvar.gsm.command as any)[command], key: command })
 		previousGroup = info.group
 		hasItems = true
 	})
@@ -237,21 +237,14 @@ function SectionControls(props: { listKey: KeybindType; view: StateView; setView
 	return (
 		<div className="mt-5 grid grid-cols-[repeat(3,max-content)_1fr] items-stretch justify-items-end gap-x-2.5">
 			{/* Primary select */}
-			<select
+			<Select
 				aria-label={gvar.gsm.token.create}
 				value={commandOption}
-				onChange={(e) => {
-					setCommandOption(e.target.value)
+				onChanged={(newValue) => {
+					setCommandOption(newValue)
 				}}
-			>
-				{getOptions(listKey).map((v) => {
-					return (
-						<option key={v.value} disabled={v.disabled} value={v.value}>
-							{v.label}
-						</option>
-					)
-				})}
-			</select>
+				options={getOptions(listKey)}
+			/>
 
 			{/* Create */}
 			<button

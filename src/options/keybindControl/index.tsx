@@ -10,6 +10,7 @@ import { KeyPicker } from "../../comps/KeyPicker"
 import { makeMenuLabelWithTooltip } from "../../comps/Menu"
 import { ModalText } from "../../comps/ModalText"
 import { NumericInput } from "../../comps/NumericInput"
+import { Select } from "../../comps/Select"
 import { ThrottledTextInput } from "../../comps/ThrottledTextInput"
 import { getDefaultURLCondition } from "../../defaults"
 import { commandInfos } from "../../defaults/commands"
@@ -338,27 +339,20 @@ export const KeybindControl = (props: KeybindControlProps) => {
 
 			{/* State input  */}
 			{command.valueType === "state" && (
-				<select
+				<Select
 					className="text-center"
 					aria-label={gvar.gsm.token.on}
 					value={value.valueState}
-					onChange={(e) => {
+					onChanged={(newValue) => {
 						props.onChange(
 							value.id,
 							produce(value, (d) => {
-								d.valueState = e.target.value as StateOption
+								d.valueState = newValue as StateOption
 							}),
 						)
 					}}
-				>
-					{(["on", "off", "toggle"] as StateOption[]).map((v) => {
-						return (
-							<option key={v} value={v}>
-								{gvar.gsm.token[v] || ""}
-							</option>
-						)
-					})}
-				</select>
+					options={(["on", "off", "toggle"] as StateOption[]).map((v) => ({ key: v, value: gvar.gsm.token[v] || "" }))}
+				/>
 			)}
 
 			{/* No input */}
@@ -468,27 +462,19 @@ export const TriggerValues = (props: Props) => {
 			{/* Global key picker */}
 			{value.trigger === Trigger.BROWSER && (
 				<div className="grid grid-cols-[1fr_max-content] items-center gap-x-1.75">
-					<select
+					<Select
 						aria-label={gvar.gsm.token.assign}
 						value={value[keyForGlobal] || "commandA"}
-						onChange={(e) => {
+						onChanged={(newValue) => {
 							props.onChange(
 								value.id,
 								produce(value, (d) => {
-									d[keyForGlobal] = e.target.value
+									d[keyForGlobal] = newValue
 								}),
 							)
 						}}
-					>
-						{"ABCDEFGHIJKLMNOPQRS"
-							.split("")
-							.map((v) => [`command${v}`, `command ${v}`])
-							.map((v) => (
-								<option key={v[0]} value={v[0]}>
-									{v[1]}
-								</option>
-							))}
-					</select>
+						options={"ABCDEFGHIJKLMNOPQRS".split("").map((v) => ({ key: `command${v}`, value: `command ${v}` }))}
+					/>
 					<Tooltip title={gvar.gsm.token.assign}>
 						<button
 							aria-label={gvar.gsm.token.assign}

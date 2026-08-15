@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Select } from "@/comps/Select"
 import { svgFilterGenerate, svgFilterInfos, svgFilterIsValid } from "@/defaults/filters"
 import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
 import { gvar } from "@/globalVar"
@@ -41,16 +42,13 @@ export function SvgFilterList(props: { svgFilters: SvgFilter[]; onChange: (newSv
 				))}
 			</div>
 			<div className="mt-2.5 flex gap-x-2.5">
-				<select
+				<Select
 					value={command}
-					onChange={(e) => {
-						setCommand(e.target.value)
+					onChanged={(newValue) => {
+						setCommand(newValue)
 					}}
-				>
-					{filterTypes.map((t) => (
-						<option value={t}>{(gvar.gsm.filter.otherFilters as any)[t]}</option>
-					))}
-				</select>
+					options={filterTypes.map((t) => ({ key: t, value: (gvar.gsm.filter.otherFilters as any)[t] }))}
+				/>
 				<button
 					className="button-control"
 					onClick={(e) => {

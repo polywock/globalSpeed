@@ -1,4 +1,5 @@
 import { Reset } from "@/comps/Reset"
+import { Select } from "@/comps/Select"
 import { SliderMicro } from "@/comps/SliderMicro"
 import { Indicator } from "@/contentScript/isolated/utils/Indicator"
 import { gvar } from "@/globalVar"
@@ -27,25 +28,26 @@ export function IndicatorModal(props: Props) {
 				<OptionField>
 					<span>{gvar.gsm.token.position}</span>
 					<div>
-						<select
+						<Select
 							aria-label={gvar.gsm.token.position}
 							className="mr-2.5"
 							value={init?.position ?? defaultInit.position}
-							onChange={(e) => {
+							onChanged={(newValue) => {
 								const indicatorInit = produce(init ?? {}, (d) => {
-									d.position = e.target.value as any
+									d.position = newValue as any
 									d.key = randomId()
 								})
 								showIndicator(indicatorInit, props.forCircle)
 								onChange(indicatorInit)
 							}}
-						>
-							<option value="TL">{gvar.gsm.token.topLeft}</option>
-							<option value="TR">{gvar.gsm.token.topRight}</option>
-							<option value="BL">{gvar.gsm.token.bottomLeft}</option>
-							<option value="BR">{gvar.gsm.token.bottomRight}</option>
-							<option value="C">{gvar.gsm.token.center}</option>
-						</select>
+							options={[
+								{ key: "TL", value: gvar.gsm.token.topLeft },
+								{ key: "TR", value: gvar.gsm.token.topRight },
+								{ key: "BL", value: gvar.gsm.token.bottomLeft },
+								{ key: "BR", value: gvar.gsm.token.bottomRight },
+								{ key: "C", value: gvar.gsm.token.center },
+							]}
+						/>
 						<Reset
 							onClick={() => {
 								const indicatorInit = produce(init ?? {}, (d) => {
@@ -174,25 +176,26 @@ export function IndicatorModal(props: Props) {
 				<OptionField>
 					<span>{gvar.gsm.token.animation}</span>
 					<div>
-						<select
+						<Select
 							aria-label={gvar.gsm.token.animation}
 							className="mr-2.5"
-							value={init?.animation || 1}
-							onChange={(e) => {
+							value={`${init?.animation || 1}`}
+							onChanged={(newValue) => {
 								const indicatorInit = produce(init ?? {}, (d) => {
-									d.animation = parseInt(e.target.value) as any
+									d.animation = parseInt(newValue) as any
 									d.key = randomId()
 								})
 								showIndicator(indicatorInit, props.forCircle, true)
 								onChange(indicatorInit)
 							}}
-						>
-							<option value="1">{gvar.gsm.token.default}</option>
-							<option value="2">{gvar.gsm.token.static}</option>
-							<option value="3">{gvar.gsm.token.shrink}</option>
-							<option value="4">{gvar.gsm.token.implode}</option>
-							<option value="5">{gvar.gsm.token.rotate}</option>
-						</select>
+							options={[
+								{ key: "1", value: gvar.gsm.token.default },
+								{ key: "2", value: gvar.gsm.token.static },
+								{ key: "3", value: gvar.gsm.token.shrink },
+								{ key: "4", value: gvar.gsm.token.implode },
+								{ key: "5", value: gvar.gsm.token.rotate },
+							]}
+						/>
 						<Reset
 							onClick={() => {
 								const indicatorInit = produce(init ?? {}, (d) => {

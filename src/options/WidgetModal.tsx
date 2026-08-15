@@ -3,6 +3,7 @@ import { GoX } from "react-icons/go"
 import { GearIcon } from "@/comps/GearIcon"
 import { NumericInput } from "@/comps/NumericInput"
 import { RegularTooltip } from "@/comps/RegularTooltip"
+import { Select } from "@/comps/Select"
 import { SliderMicro } from "@/comps/SliderMicro"
 import { Toggle } from "@/comps/Toggle"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "@/defaults/constants"
@@ -146,22 +147,23 @@ export function WidgetModal(props: Props) {
 				{/* Press action */}
 				<OptionField>
 					<span>{gvar.gsm.options.flags.widget.pressAction}</span>
-					<select
+					<Select
 						value={init.mainAction || "SPEED"}
-						onChange={(e) => {
+						onChanged={(newValue) => {
 							setView({
 								circleInit: produce(init, (d) => {
-									d.mainAction = e.target.value as any
+									d.mainAction = newValue as any
 									d.key = randomId()
 								}),
 							})
 						}}
-					>
-						<option value="SPEED">{gvar.gsm.command.toggleSpeed}</option>
-						<option value="PAUSE">{gvar.gsm.options.flags.widget.togglePause}</option>
-						<option value="SKIP_FORWARDS">{gvar.gsm.options.flags.widget.skipForward}</option>
-						<option value="SKIP_BACKWARDS">{gvar.gsm.options.flags.widget.skipBackward}</option>
-					</select>
+						options={[
+							{ key: "SPEED", value: gvar.gsm.command.toggleSpeed },
+							{ key: "PAUSE", value: gvar.gsm.options.flags.widget.togglePause },
+							{ key: "SKIP_FORWARDS", value: gvar.gsm.options.flags.widget.skipForward },
+							{ key: "SKIP_BACKWARDS", value: gvar.gsm.options.flags.widget.skipBackward },
+						]}
+					/>
 				</OptionField>
 
 				{/* Speed  */}

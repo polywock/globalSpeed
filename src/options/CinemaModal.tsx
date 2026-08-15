@@ -1,5 +1,6 @@
 import { NumericInput } from "@/comps/NumericInput"
 import { Reset } from "@/comps/Reset"
+import { Select } from "@/comps/Select"
 import { SliderMicro } from "@/comps/SliderMicro"
 import { getDefaultCinemaInit } from "@/defaults/constants"
 import { getDefaultCinemaFilter } from "@/defaults/filters"
@@ -34,22 +35,23 @@ export function CinemaModal(props: Props) {
 				<OptionField>
 					<span>{gvar.gsm.token.mode}</span>
 					<div className="relative leading-0">
-						<select
-							value={mode}
-							onChange={(e) => {
+						<Select
+							value={`${mode}`}
+							onChanged={(newValue) => {
 								props.onChange(
 									kb.id,
 									produce(kb, (kb) => {
 										if (!kb.cinemaInit) kb.cinemaInit = structuredClone(defaultInit)
-										kb.cinemaInit.mode = parseInt(e.target.value)
+										kb.cinemaInit.mode = parseInt(newValue)
 									}),
 								)
 							}}
-						>
-							<option value={CinemaMode.STANDARD.toString()}>{gvar.gsm.token.modeStandard}</option>
-							<option value={CinemaMode.CUSTOM_COLOR.toString()}>{gvar.gsm.token.modeCustomColor}</option>
-							<option value={CinemaMode.CUSTOM_FILTER.toString()}>{gvar.gsm.token.modeCustomFilter}</option>
-						</select>
+							options={[
+								{ key: CinemaMode.STANDARD.toString(), value: gvar.gsm.token.modeStandard },
+								{ key: CinemaMode.CUSTOM_COLOR.toString(), value: gvar.gsm.token.modeCustomColor },
+								{ key: CinemaMode.CUSTOM_FILTER.toString(), value: gvar.gsm.token.modeCustomFilter },
+							]}
+						/>
 					</div>
 				</OptionField>
 

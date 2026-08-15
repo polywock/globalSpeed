@@ -1,6 +1,7 @@
 import equal from "fast-deep-equal"
 import { useMemo } from "react"
 import { FaPowerOff } from "react-icons/fa"
+import { Select } from "@/comps/Select"
 import { Tooltip } from "@/comps/Tooltip"
 import { EQ_PRESETS } from "@/defaults/eqPresets"
 import { gvar } from "@/globalVar"
@@ -54,11 +55,11 @@ export function EqualizerControl(props: EqualizerControlProps) {
 
 			{/* Band count */}
 			<div className="mb-2.5 grid w-full grid-cols-[max-content_1fr] gap-x-1.25">
-				<select
+				<Select
 					className="w-full"
 					value={eq.values.length.toString()}
-					onChange={(e) => {
-						const bandCount = parseInt(e.target.value)
+					onChanged={(newValue) => {
+						const bandCount = parseInt(newValue)
 						if (bandCount === eq.values.length) return
 						props.onChange(
 							produce(eq, (d) => {
@@ -67,18 +68,19 @@ export function EqualizerControl(props: EqualizerControlProps) {
 							}),
 						)
 					}}
-				>
-					<option value="10">10</option>
-					<option value="20">20</option>
-					<option value="30">30</option>
-				</select>
+					options={[
+						{ key: "10", value: "10" },
+						{ key: "20", value: "20" },
+						{ key: "30", value: "30" },
+					]}
+				/>
 
 				{/* Presets */}
-				<select
+				<Select
 					className="w-full"
 					value={eq.name || ""}
-					onChange={(e) => {
-						if (e.target.value === "") {
+					onChanged={(newValue) => {
+						if (newValue === "") {
 							props.onChange(
 								produce(eq, (d) => {
 									delete d.name
@@ -86,7 +88,7 @@ export function EqualizerControl(props: EqualizerControlProps) {
 							)
 							return
 						}
-						const target = presets?.find((v) => v.name === e.target.value)
+						const target = presets?.find((v) => v.name === newValue)
 						if (!target) return
 						props.onChange(
 							produce(eq, (d) => {
@@ -96,14 +98,8 @@ export function EqualizerControl(props: EqualizerControlProps) {
 							}),
 						)
 					}}
-				>
-					<option value="">{"---"}</option>
-					{(presets ?? []).map((v) => (
-						<option key={v.name} value={v.name}>
-							{v.name}
-						</option>
-					))}
-				</select>
+					options={[{ key: "", value: "---" }, ...(presets ?? []).map((v) => ({ key: v.name, value: v.name }))]}
+				/>
 			</div>
 
 			<div>
