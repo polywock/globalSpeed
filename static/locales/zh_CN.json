@@ -33,7 +33,7 @@
 	},
 	"header": {
 		"powerTooltip": "切换状态",
-		"pinTooltip": "固定的标签页使用独立上下文，而非全局上下文",
+		"pinTooltip": "固定的标签页保留独立设置，而非共享全局上下文",
 		"audioEffects": "音频效果",
 		"videoEffects": "视频效果",
 		"settingsPage": "设置",
@@ -241,8 +241,7 @@
 			"showIndicatorTooltip": "指示器是使用快捷键时的视觉反馈",
 			"ghostMode": "幽灵模式",
 			"ghostModeTooltip": "防止网站检测播放速度的变化。启用后，默认对所有网站生效。某些网站可能会因此出现问题。可使用齿轮图标限制仅对特定网站生效。",
-			"pinByDefault": "默认固定",
-			"pinByDefaultTooltip": "新标签页将自动固定",
+			"pinByDefault": "固定新标签页",
 			"initialContext": "初始上下文",
 			"initialContextTooltip": "新固定标签页的起始上下文",
 			"globalContext": "全局上下文",
@@ -261,7 +260,7 @@
 			"speedPresets": "速度预设",
 			"widget": {
 				"option": "显示圆形小部件",
-				"optionTooltip": "（实验性）视频可见时将显示圆形小部件。\n - 向左/右拖动以跳转视频进度。\n - 向上/下拖动以调整播放速度。",
+				"optionTooltip": "视频可见时将显示圆形小部件。\n - 向左/右拖动以跳转视频进度。\n - 向上/下拖动以调整播放速度。",
 				"movementMobile": "\n - 按住圆圈几秒钟以移动或删除它。",
 				"movementDesktop": "\n - 使用右键拖动圆圈以移动或删除它。",
 				"headerTooltip": "启用圆形小部件",

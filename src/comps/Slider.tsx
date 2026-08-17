@@ -4,7 +4,7 @@ import { gvar } from "@/globalVar"
 import { clamp, cn, inverseLerp, lerp } from "../utils/helper"
 
 export function SliderInput({ className, ...props }: Omit<ComponentProps<"input">, "type">) {
-	return <input {...props} className={cn("slider grayscale-100", className)} type="range" />
+	return <input {...props} className={cn("slider grayscale-75", className)} type="range" />
 }
 
 type SliderProps = {

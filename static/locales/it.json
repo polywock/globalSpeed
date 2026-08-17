@@ -31,7 +31,7 @@
 	},
 	"header": {
 		"powerTooltip": "Attiva/disattiva stato",
-		"pinTooltip": "Le schede fissate usano il proprio contesto anziché quello globale",
+		"pinTooltip": "Le schede fissate mantengono le proprie impostazioni anziché condividere il contesto globale",
 		"audioEffects": "Effetti audio",
 		"videoEffects": "Effetti video",
 		"settingsPage": "Impostazioni",
@@ -239,8 +239,7 @@
 			"showIndicatorTooltip": "L'indicatore è un feedback visivo quando si usano le scorciatoie",
 			"ghostMode": "Ghost mode",
 			"ghostModeTooltip": "Impedisce ai siti web di rilevare le modifiche alla velocità di riproduzione. Quando è abilitato, si applica a tutti i siti web per impostazione predefinita. Questo potrebbe causare problemi su alcuni siti. Usa l'icona dell'ingranaggio per limitarlo a siti specifici.",
-			"pinByDefault": "Fissa automaticamente",
-			"pinByDefaultTooltip": "Le nuove schede saranno fissate automaticamente",
+			"pinByDefault": "Fissa le nuove schede",
 			"initialContext": "Contesto iniziale",
 			"initialContextTooltip": "Il contesto di partenza per le schede appena fissate",
 			"globalContext": "Contesto globale",
@@ -259,7 +258,7 @@
 			"speedPresets": "Velocità predefinite",
 			"widget": {
 				"option": "Mostra il widget circolare",
-				"optionTooltip": "(Sperimentale) Verrà visualizzato un widget circolare mentre i video sono visibili.\n - Trascina a sinistra/destra per scorrere il video.\n - Trascina su/giù per regolare la velocità di riproduzione.",
+				"optionTooltip": "Verrà visualizzato un widget circolare mentre i video sono visibili.\n - Trascina a sinistra/destra per scorrere il video.\n - Trascina su/giù per regolare la velocità di riproduzione.",
 				"movementMobile": "\n - Premi il cerchio per alcuni secondi per spostarlo o eliminarlo.",
 				"movementDesktop": "\n - Con il tasto destro del mouse, trascina il cerchio per spostarlo o eliminarlo.",
 				"headerTooltip": "Widget circolare abilitato",

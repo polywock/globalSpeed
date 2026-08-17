@@ -16,6 +16,7 @@ import { isFirefox, isMobile } from "@/utils/helper"
 import { dumpConfig, fetchView, getKeysByPrefix, PREFIX_SETS, pushView, restoreConfig } from "@/utils/state"
 import { clearClosed } from "./utils/getAutoMedia"
 import { ProcessKeybinds, releaseTemporarySpeed, setValue, type SetValueInit } from "./utils/processKeybinds"
+import { handlePromo } from "./utils/promo"
 
 declare global {
 	interface GlobalVar {
@@ -302,3 +303,5 @@ gvar.es.addWatcher([], async (changes) => {
 		chrome.tabs.sendMessage(tab.id, { type: "BG_SPEED_OVERRIDE", value } as Messages)
 	})
 })
+
+gvar.es.onStateReady(handlePromo)

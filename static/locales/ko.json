@@ -32,7 +32,7 @@
 	},
 	"header": {
 		"powerTooltip": "상태 전환",
-		"pinTooltip": "고정된 탭은 전역 컨텍스트 대신 자체 컨텍스트를 사용합니다",
+		"pinTooltip": "고정된 탭은 전역 컨텍스트를 공유하지 않고 자체 설정을 유지합니다",
 		"audioEffects": "오디오 효과",
 		"videoEffects": "비디오 효과",
 		"settingsPage": "설정",
@@ -240,8 +240,7 @@
 			"showIndicatorTooltip": "인디케이터는 단축키 사용 시 시각적 피드백입니다",
 			"ghostMode": "고스트 모드",
 			"ghostModeTooltip": "웹사이트가 재생 속도 변경을 감지하지 못하도록 합니다. 활성화되면 기본적으로 모든 웹사이트에 적용됩니다. 일부 사이트에서 문제가 발생할 수 있습니다. 특정 웹사이트에만 적용하려면 톱니바퀴 아이콘을 사용하세요",
-			"pinByDefault": "기본 고정 탭",
-			"pinByDefaultTooltip": "새 탭은 자동으로 고정됩니다",
+			"pinByDefault": "새 탭 고정",
 			"initialContext": "초기 컨텍스트",
 			"initialContextTooltip": "새로 고정된 탭의 시작 컨텍스트",
 			"globalContext": "전역 컨텍스트",
@@ -260,7 +259,7 @@
 			"speedPresets": "속도 사전 설정",
 			"widget": {
 				"option": "원형 위젯 표시",
-				"optionTooltip": "(실험적인 기능) 동영상이 표시되는 동안 원형 위젯이 표시됩니다.\n - 동영상을 탐색하려면 왼쪽/오른쪽으로 드래그하세요.\n - 재생 속도를 조절하려면 위/아래로 드래그하세요.",
+				"optionTooltip": "동영상이 표시되는 동안 원형 위젯이 표시됩니다.\n - 동영상을 탐색하려면 왼쪽/오른쪽으로 드래그하세요.\n - 재생 속도를 조절하려면 위/아래로 드래그하세요.",
 				"movementMobile": "\n - 원을 몇 초 동안 눌러 이동하거나 삭제하세요.",
 				"movementDesktop": "\n - 오른쪽 마우스 버튼을 사용하여 원을 드래그하여 이동하거나 삭제하세요.",
 				"headerTooltip": "원형 위젯을 활성화했습니다",

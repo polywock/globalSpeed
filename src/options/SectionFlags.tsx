@@ -223,7 +223,7 @@ export function SectionFlags(props: {}) {
 				<OptionField className="mt-7.5">
 					<OptionFieldLabel>
 						<span>{gvar.gsm.options.flags.pinByDefault}</span>
-						<RegularTooltip title={`${gvar.gsm.options.flags.pinByDefaultTooltip} - ${gvar.gsm.header.pinTooltip}`} align="right" />
+						<RegularTooltip title={gvar.gsm.header.pinTooltip} align="right" />
 					</OptionFieldLabel>
 					<Toggle
 						aria-label={gvar.gsm.options.flags.pinByDefault}

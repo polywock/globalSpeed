@@ -32,7 +32,7 @@
 	},
 	"header": {
 		"powerTooltip": "Alternar estado",
-		"pinTooltip": "Abas fixadas usam seu próprio contexto em vez do contexto global",
+		"pinTooltip": "Abas fixadas mantêm suas próprias configurações em vez de compartilhar o contexto global",
 		"audioEffects": "Efeitos de áudio",
 		"videoEffects": "Efeitos de vídeo",
 		"settingsPage": "Configurações",
@@ -239,8 +239,7 @@
 			"showIndicatorTooltip": "O indicador é um feedback visual ao usar atalhos",
 			"ghostMode": "Modo fantasma",
 			"ghostModeTooltip": "Impede que os sites detectem alterações na velocidade de reprodução. Quando ativado, é aplicado a todos os sites por padrão. Isso pode causar problemas em alguns sites. Use o ícone de engrenagem para limitá-lo a sites específicos.",
-			"pinByDefault": "Fixar por padrão",
-			"pinByDefaultTooltip": "Novas guias serão automaticamente fixadas",
+			"pinByDefault": "Fixar novas abas",
 			"initialContext": "Contexto inicial",
 			"initialContextTooltip": "O contexto inicial para abas recém-fixadas",
 			"globalContext": "Contexto global",
@@ -259,7 +258,7 @@
 			"speedPresets": "Predefinições de velocidade",
 			"widget": {
 				"option": "Mostrar widget circular",
-				"optionTooltip": "(Experimental) Um widget circular será mostrado enquanto os vídeos estiverem visíveis.\n - Arraste para a esquerda/direita para avançar ou retroceder no vídeo.\n - Arraste para cima/baixo para ajustar a taxa de reprodução.",
+				"optionTooltip": "Um widget circular será mostrado enquanto os vídeos estiverem visíveis.\n - Arraste para a esquerda/direita para avançar ou retroceder no vídeo.\n - Arraste para cima/baixo para ajustar a taxa de reprodução.",
 				"movementMobile": "\n - Pressione o círculo por alguns segundos para movê-lo ou excluí-lo.",
 				"movementDesktop": "\n - Com o botão direito do mouse, arraste o círculo para movê-lo ou excluí-lo.",
 				"headerTooltip": "Widget circular ativado",

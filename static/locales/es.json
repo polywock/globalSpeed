@@ -31,7 +31,7 @@
 	},
 	"header": {
 		"powerTooltip": "Alternar estado",
-		"pinTooltip": "Las pestañas fijadas usan su propio contexto en lugar del contexto global",
+		"pinTooltip": "Las pestañas fijadas conservan su propia configuración en lugar de compartir el contexto global",
 		"audioEffects": "Efectos de audio",
 		"videoEffects": "Efectos de video",
 		"settingsPage": "Configuración",
@@ -238,8 +238,7 @@
 			"showIndicatorTooltip": "El indicador es una retroalimentación visual al usar atajos",
 			"ghostMode": "Modo fantasma",
 			"ghostModeTooltip": "Impide que los sitios web detecten cambios en la velocidad de reproducción. Cuando está activado, se aplica a todos los sitios web por defecto. Esto puede causar problemas en algunos sitios. Usa el ícono de engranaje para limitarlo a sitios web específicos.",
-			"pinByDefault": "Pin automático",
-			"pinByDefaultTooltip": "Las nuevas pestañas se fijarán automáticamente",
+			"pinByDefault": "Fijar pestañas nuevas",
 			"initialContext": "Contexto inicial",
 			"initialContextTooltip": "El contexto inicial para pestañas recién fijadas",
 			"globalContext": "Contexto global",
@@ -258,7 +257,7 @@
 			"speedPresets": "Preajustes de velocidad",
 			"widget": {
 				"option": "Mostrar widget circular",
-				"optionTooltip": "(Experimental) Se mostrará un widget circular mientras los videos estén visibles.\n - Arrastra a la izquierda/derecha para avanzar/retroceder en el video.\n - Arrastra hacia arriba/abajo para ajustar la velocidad de reproducción.",
+				"optionTooltip": "Se mostrará un widget circular mientras los videos estén visibles.\n - Arrastra a la izquierda/derecha para avanzar/retroceder en el video.\n - Arrastra hacia arriba/abajo para ajustar la velocidad de reproducción.",
 				"movementMobile": "\n - Presiona el círculo durante unos segundos para moverlo o eliminarlo.",
 				"movementDesktop": "\n - Con el botón derecho del ratón, arrastra el círculo para moverlo o eliminarlo.",
 				"headerTooltip": "Widget circular habilitado",

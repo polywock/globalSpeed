@@ -31,7 +31,7 @@
 	},
 	"header": {
 		"powerTooltip": "Status umschalten",
-		"pinTooltip": "Angepinnte Tabs verwenden ihren eigenen Kontext anstelle des globalen Kontexts",
+		"pinTooltip": "Angepinnte Tabs behalten ihre eigenen Einstellungen, statt den globalen Kontext zu teilen",
 		"audioEffects": "Audioeffekte",
 		"videoEffects": "Videoeffekte",
 		"settingsPage": "Einstellungen",
@@ -239,8 +239,7 @@
 			"showIndicatorTooltip": "Der Indikator ist visuelles Feedback beim Verwenden von Tastenkombinationen",
 			"ghostMode": "Geistermodus",
 			"ghostModeTooltip": "Verhindert, dass Websites Änderungen der Wiedergabegeschwindigkeit erkennen. Wenn aktiviert, gilt dies standardmäßig für alle Websites. Dies kann auf einigen Websites zu Problemen führen. Verwende das Zahnradsymbol, um es auf bestimmte Websites zu beschränken.",
-			"pinByDefault": "Standardmäßig anheften",
-			"pinByDefaultTooltip": "Neue Tabs werden automatisch angeheftet",
+			"pinByDefault": "Neue Tabs anheften",
 			"initialContext": "Anfangskontext",
 			"initialContextTooltip": "Der Startkontext für neu angeheftete Tabs",
 			"globalContext": "Globaler Kontext",
@@ -259,7 +258,7 @@
 			"speedPresets": "Geschwindigkeitsvoreinstellungen",
 			"widget": {
 				"option": "Kreis-Widget anzeigen",
-				"optionTooltip": "(Experimentell) Ein Kreis-Widget wird angezeigt, während Videos sichtbar sind.\n - Ziehe nach links/rechts, um durch das Video zu suchen.\n - Ziehe nach oben/unten, um die Wiedergabegeschwindigkeit anzupassen.",
+				"optionTooltip": "Ein Kreis-Widget wird angezeigt, während Videos sichtbar sind.\n - Ziehe nach links/rechts, um durch das Video zu suchen.\n - Ziehe nach oben/unten, um die Wiedergabegeschwindigkeit anzupassen.",
 				"movementMobile": "\n - Drücke den Kreis für einige Sekunden, um ihn zu bewegen oder zu löschen.",
 				"movementDesktop": "\n - Mit der rechten Maustaste, ziehe den Kreis, um ihn zu bewegen oder zu löschen.",
 				"headerTooltip": "Aktiviertes Kreis-Widget",

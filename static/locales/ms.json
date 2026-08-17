@@ -31,7 +31,7 @@
 	},
 	"header": {
 		"powerTooltip": "Hidupkan/matikan",
-		"pinTooltip": "Tab yang disematkan menggunakan konteks sendiri, bukan konteks global",
+		"pinTooltip": "Tab yang disematkan mengekalkan tetapannya sendiri, bukan berkongsi konteks global",
 		"audioEffects": "Kesan audio",
 		"videoEffects": "Kesan video",
 		"settingsPage": "Tetapan",
@@ -239,8 +239,7 @@
 			"showIndicatorTooltip": "Penunjuk adalah maklum balas visual semasa menggunakan pintasan",
 			"ghostMode": "Mod hantu",
 			"ghostModeTooltip": "Menghalang laman web daripada mengesan perubahan kelajuan main balik. Apabila diaktifkan, ia digunakan untuk semua laman web secara lalai. Ini mungkin menyebabkan masalah pada sesetengah laman web. Gunakan ikon gear untuk mengehadkannya kepada laman web tertentu.",
-			"pinByDefault": "Sematkan secara lalai",
-			"pinByDefaultTooltip": "Tab baru secara automatik akan disematkan",
+			"pinByDefault": "Sematkan tab baharu",
 			"initialContext": "Konteks awal",
 			"initialContextTooltip": "Konteks permulaan untuk tab yang baru disemat",
 			"globalContext": "Konteks global",
@@ -259,7 +258,7 @@
 			"speedPresets": "Pratetap kelajuan",
 			"widget": {
 				"option": "Tunjukkan widget bulatan",
-				"optionTooltip": "(Eksperimen) Widget bulat akan ditunjukkan semasa video kelihatan.\n - Seret kiri/kanan untuk cari melalui video.\n - Seret atas/bawah untuk melaraskan kadar main semula.",
+				"optionTooltip": "Widget bulat akan ditunjukkan semasa video kelihatan.\n - Seret kiri/kanan untuk cari melalui video.\n - Seret atas/bawah untuk melaraskan kadar main semula.",
 				"movementMobile": "\n - Tekan bulatan selama beberapa saat untuk menggerakkan atau memadamkannya.",
 				"movementDesktop": "\n - Dengan butang tetikus kanan, seret bulatan untuk menggerakkan atau memadamkannya.",
 				"headerTooltip": "Dayakan widget bulat",

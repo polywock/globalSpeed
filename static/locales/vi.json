@@ -31,7 +31,7 @@
 	},
 	"header": {
 		"powerTooltip": "Bật/tắt",
-		"pinTooltip": "Các thẻ đã ghim dùng ngữ cảnh riêng thay vì ngữ cảnh toàn cầu",
+		"pinTooltip": "Các thẻ đã ghim giữ cài đặt riêng thay vì dùng chung ngữ cảnh toàn cầu",
 		"audioEffects": "Hiệu ứng âm thanh",
 		"videoEffects": "Hiệu ứng video",
 		"settingsPage": "Cài đặt",
@@ -239,8 +239,7 @@
 			"showIndicatorTooltip": "Chỉ báo là phản hồi trực quan khi sử dụng phím tắt",
 			"ghostMode": "Chế độ ghost",
 			"ghostModeTooltip": "Ngăn các trang web phát hiện thay đổi tốc độ phát lại. Khi được bật, tính năng này sẽ áp dụng cho tất cả các trang web theo mặc định. Điều này có thể gây ra sự cố trên một số trang. Sử dụng biểu tượng bánh răng để giới hạn cho các trang web cụ thể.",
-			"pinByDefault": "Ghim theo mặc định",
-			"pinByDefaultTooltip": "Các tab mới sẽ tự động được ghim",
+			"pinByDefault": "Ghim thẻ mới",
 			"initialContext": "Ngữ cảnh ban đầu",
 			"initialContextTooltip": "Ngữ cảnh khởi đầu cho các tab mới được ghim",
 			"globalContext": "Ngữ cảnh toàn cầu",
@@ -259,7 +258,7 @@
 			"speedPresets": "Cài đặt trước tốc độ",
 			"widget": {
 				"option": "Hiển thị tiện ích vòng tròn",
-				"optionTooltip": "(Thử nghiệm) Một widget hình tròn sẽ được hiển thị khi video hiển thị.\n - Kéo trái/phải để tua video.\n - Kéo lên/xuống để điều chỉnh tốc độ phát.",
+				"optionTooltip": "Một widget hình tròn sẽ được hiển thị khi video hiển thị.\n - Kéo trái/phải để tua video.\n - Kéo lên/xuống để điều chỉnh tốc độ phát.",
 				"movementMobile": "\n - Nhấn vào hình tròn trong vài giây để di chuyển hoặc xóa nó.",
 				"movementDesktop": "\n - Nhấn chuột phải và kéo hình tròn để di chuyển hoặc xóa nó.",
 				"headerTooltip": "Đã bật widget hình tròn",

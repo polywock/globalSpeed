@@ -32,7 +32,7 @@
 	},
 	"header": {
 		"powerTooltip": "Durumu değiştir",
-		"pinTooltip": "Sabitlenen sekmeler global bağlam yerine kendi bağlamlarını kullanır",
+		"pinTooltip": "Sabitlenen sekmeler global bağlamı paylaşmak yerine kendi ayarlarını korur",
 		"audioEffects": "Ses efektleri",
 		"videoEffects": "Video efektleri",
 		"settingsPage": "Ayarlar",
@@ -240,8 +240,7 @@
 			"showIndicatorTooltip": "Gösterge, kısayollar kullanılırken görsel geri bildirimdir",
 			"ghostMode": "Hayalet modu",
 			"ghostModeTooltip": "Web sitelerinin oynatma hızı değişikliklerini algılamasını engeller. Etkinleştirildiğinde, varsayılan olarak tüm web siteleri için geçerlidir. Bazı sitelerde sorunlara neden olabilir. Belirli sitelerle sınırlandırmak için dişli simgesini kullanın.",
-			"pinByDefault": "Varsayılan olarak sabitle",
-			"pinByDefaultTooltip": "Yeni sekmeler otomatik olarak sabitlenir",
+			"pinByDefault": "Yeni sekmeleri sabitle",
 			"initialContext": "Başlangıç bağlamı",
 			"initialContextTooltip": "Yeni sabitlenen sekmelerin başlangıç bağlamı",
 			"globalContext": "Global bağlam",
@@ -260,7 +259,7 @@
 			"speedPresets": "Hız ön ayarları",
 			"widget": {
 				"option": "Daire widget'ını göster",
-				"optionTooltip": "(Deneysel) Videolar görünürken bir daire widget'ı gösterilecektir.\n - Videoyu ileri/geri almak için sola/sağa sürükleyin.\n - Oynatma hızını ayarlamak için yukarı/aşağı sürükleyin.",
+				"optionTooltip": "Videolar görünürken bir daire widget'ı gösterilecektir.\n - Videoyu ileri/geri almak için sola/sağa sürükleyin.\n - Oynatma hızını ayarlamak için yukarı/aşağı sürükleyin.",
 				"movementMobile": "\n - Hareket ettirmek veya silmek için daireye birkaç saniye basılı tutun.",
 				"movementDesktop": "\n - Sağ fare düğmesi ile daireyi sürükleyerek hareket ettirin veya silin.",
 				"headerTooltip": "Daire widget'ı etkinleştirildi",

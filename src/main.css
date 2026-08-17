@@ -12,10 +12,6 @@
 @custom-variant dragging (&:is([data-dragging], [data-dragging] *));
 
 @theme inline {
-	/* The legacy UI uses fixed pixel spacing while the root font size is user-scalable.
-	   A fixed base keeps spacing stable: 1.25 = 5px, 2.5 = 10px, and 5 = 20px. */
-	--spacing: 4px;
-
 	/* Type remains relative to the inherited, user-scaled font size unless a legacy
 	   control deliberately used rem or px. */
 	--text-*: initial;
@@ -72,7 +68,6 @@
 	--radius-xl: calc(var(--radius) + 4px);
 	--radius-control: 5px;
 	--radius-bubble: 10px;
-
 	--z-index-overlay: 100;
 	--z-index-menu: 200;
 	--z-index-modal: 300;
@@ -258,7 +253,7 @@
 :root {
 	--font-lang-scalar: 1;
 	--font-size-scalar: 1;
-	--radius: 0.5rem;
+	--radius: 0.3rem;
 
 	--font-size: calc(14px * var(--font-lang-scalar) * var(--font-size-scalar));
 	font-size: var(--font-size);

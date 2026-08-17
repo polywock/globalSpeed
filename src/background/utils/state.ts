@@ -14,6 +14,8 @@ type WatcherInit = [watchKeys: (string | RegExp | RegExp["test"])[], callback: (
 export class EntireState {
 	watchers: WatcherInit[] = []
 	private rawMap?: AnyDict
+	loadRawMapPromise: Promise<void> | undefined = undefined
+	stateReadyCbs: Set<() => void> = new Set()
 	processedChangeIds: Set<string> = new Set()
 	released = false
 
@@ -21,12 +23,36 @@ export class EntireState {
 		chrome.storage.local.onChanged.addListener(this.handleChange)
 	}
 	init = async () => {
-		if (!this.rawMap) {
-			await gvar.installPromise
-			this.rawMap = await chrome.storage.local.get()
-		}
-
+		if (!this.rawMap) await this.ensureRawMapLoaded()
 		if (!this.rawMap) throw Error("Raw map could not be loaded")
+	}
+	ensureRawMapLoaded = async () => {
+		if (!this.loadRawMapPromise) {
+			this.loadRawMapPromise = (async () => {
+				await gvar.installPromise
+				this.rawMap = await chrome.storage.local.get()
+				this.flushStateReadyCbs()
+			})().catch((err) => {
+				this.loadRawMapPromise = undefined
+				throw err
+			})
+		}
+		await this.loadRawMapPromise
+	}
+	/** Runs cb once the raw map is loaded, immediately if it already is. */
+	onStateReady = (cb: () => void) => {
+		this.rawMap ? cb() : this.stateReadyCbs.add(cb)
+	}
+	flushStateReadyCbs = () => {
+		const cbs = this.stateReadyCbs
+		this.stateReadyCbs = new Set()
+		for (let cb of cbs) {
+			try {
+				cb()
+			} catch (err) {
+				console.error(err)
+			}
+		}
 	}
 	addWatcher = (watchKeys: WatcherInit[0], cb: WatcherInit[1]) => {
 		this.watchers.push([watchKeys, cb])

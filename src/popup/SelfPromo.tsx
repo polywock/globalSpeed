@@ -1,29 +1,59 @@
+import { useMemo } from "react"
 import { FaRegQuestionCircle } from "react-icons/fa"
-import { LuMessageCircleQuestion, LuTrophy } from "react-icons/lu"
-import { TiDelete } from "react-icons/ti"
 import { Tooltip } from "@/comps/Tooltip"
 import { gvar } from "@/globalVar"
 import { useStateView } from "@/hooks/useStateView"
+import { SelfPromoConfig } from "@/types"
+import { meetsPromoConditions, pickPromoEntry } from "@/utils/promoUtils"
 
 let wasHidden = false
 
 export function SelfPromo() {
-	const [view, setView] = useStateView({ selfPromoCountR: true, selfPromoHideTsR: true })
+	const [view] = useStateView({ selfPromoCountR: true, selfPromoHideTsR: true, selfPromoData: true })
 	if (!view || wasHidden) return null
 
 	if (!shouldShow(view.selfPromoCountR, view.selfPromoHideTsR)) {
 		wasHidden = true
-		document.documentElement.toggleAttribute("data-media-item-no-bottom-border", true)
 		return null
 	}
 
-	return <div className="grid grid-cols-[1fr_max-content] items-center gap-x-1.25 p-2.5 select-none"></div>
+	return <PromoContent config={view.selfPromoData?.config} />
+}
+
+function PromoContent({ config }: { config?: SelfPromoConfig }) {
+	const entry = useMemo(() => pickPromoEntry(config), [])
+	if (!entry) return null
+
+	return (
+		<div className="ml-1.25 grid grid-cols-[1fr_max-content] items-center gap-x-1.5 border-t border-border py-2.5 pb-1 select-none">
+			<div
+				className="group cursor-pointer"
+				onClick={() => {
+					chrome.tabs.create({ url: entry.link })
+				}}
+			>
+				{/* Primary */}
+				<span className="text-promo-md italic opacity-70">{entry.primary}</span>
+
+				{entry.style === "NEWLINE" ? (
+					/* Secondary newline */
+					<div className="text-promo -mt-[2px] text-promo-lg font-semibold italic opacity-70 transition-opacity duration-100 ease-linear group-hover:opacity-50">
+						{entry.secondary}
+					</div>
+				) : (
+					/* Secondary inline */
+					<span className="text-promo-md font-semibold italic opacity-70 group-hover:underline"> {entry.secondary}</span>
+				)}
+			</div>
+			<Tooltip title={entry.tooltip}>
+				<FaRegQuestionCircle className="size-5 opacity-50 group-hover:opacity-90" />
+			</Tooltip>
+		</div>
+	)
 }
 
 /** English only, since the promo text isn't localized. Dismissing hides it for a week. */
-const WEEK = 7 * 24 * 36e5
 function shouldShow(count: number, hideTs: number) {
 	if (gvar.gsm._lang !== "en") return false
-	if ((count || 0) <= 50) return false
-	return Date.now() - (hideTs || 0) > WEEK
+	return meetsPromoConditions(count, hideTs)
 }

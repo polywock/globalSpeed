@@ -22,7 +22,7 @@ export function Select({
 	return (
 		<select
 			{...rest}
-			className={cn("text-center", className)}
+			className={className}
 			value={value}
 			onChange={(e) => {
 				onChanged(e.target.value)

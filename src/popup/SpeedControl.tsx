@@ -60,7 +60,7 @@ export function SpeedControl(props: SpeedControlProps) {
 						key={i}
 						className={cn(
 							"w-3/4 button-control border-0 px-0 py-(--padding) transition-[transform,background-color,color] duration-170 ease-[cubic-bezier(0,0,0.1,1)]",
-							props.speed === v ? "scale-120 rounded-sm bg-primary text-primary-foreground" : "focus:outline-1 focus:outline-ring",
+							props.speed === v ? "scale-120 rounded-md bg-primary text-primary-foreground" : "focus:outline-1 focus:outline-ring",
 						)}
 						onClick={() => props.onChange(v)}
 						onContextMenu={(e) => {
@@ -74,22 +74,22 @@ export function SpeedControl(props: SpeedControlProps) {
 
 			{/* Controls */}
 			<div
-				className="mt-3.75 grid grid-cols-[50fr_50fr_64fr_50fr_50fr]  gap-x-1.25"
+				className="mt-3.75 grid grid-cols-[50fr_50fr_64fr_50fr_50fr] gap-x-1.25"
 				onWheel={(e) => {
 					if (e.deltaMode !== WheelEvent.DOM_DELTA_PIXEL) return
 					const speedDelta = (e.deltaY / 1080) * -0.15
 					props.onChange(clamp(MIN_SPEED_CHROMIUM, MAX_SPEED_CHROMIUM, props.speed + speedDelta))
 				}}
 			>
-				<Button variant="outline" className="rounded-sm px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(-largeStep)}>
+				<Button variant="outline" className="rounded-lg px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(-largeStep)}>
 					<LuChevronsLeft className="size-5" />
 				</Button>
-				<Button variant="outline" className="rounded-sm px-0 py-[calc(var(--padding)*0.75)] " onClick={() => handleAddDelta(-smallStep)}>
+				<Button variant="outline" className="rounded-lg px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(-smallStep)}>
 					<LuChevronLeft className="size-5" />
 				</Button>
 				<NumericInput
 					className={STEP_INPUT}
-					inputClassName="font-semibold rounded-sm h-full dark:border-input dark:bg-input/15 dark:hover:bg-input/30"
+					inputClassName="font-semibold rounded-lg h-full dark:border-input dark:bg-input/15 dark:hover:bg-input/30"
 					rounding={2}
 					noNull={true}
 					min={MIN_SPEED_CHROMIUM}
@@ -100,11 +100,11 @@ export function SpeedControl(props: SpeedControlProps) {
 					}}
 					displayFixed={1}
 				/>
-				<Button variant="outline" className="rounded-sm px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(smallStep)}>
+				<Button variant="outline" className="rounded-lg px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(smallStep)}>
 					{/* <FaAngleRight size={"1.14rem"} /> */}
 					<LuChevronRight className="size-5" />
 				</Button>
-				<Button variant="outline" className="rounded-sm px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(largeStep)}>
+				<Button variant="outline" className="rounded-lg px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(largeStep)}>
 					<LuChevronsRight className="size-5" />
 				</Button>
 			</div>

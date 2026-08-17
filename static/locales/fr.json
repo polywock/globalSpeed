@@ -31,7 +31,7 @@
 	},
 	"header": {
 		"powerTooltip": "Basculer l’état",
-		"pinTooltip": "Les onglets épinglés utilisent leur propre contexte au lieu du contexte global",
+		"pinTooltip": "Les onglets épinglés conservent leurs propres paramètres au lieu de partager le contexte global",
 		"audioEffects": "Effets audio",
 		"videoEffects": "Effets vidéo",
 		"settingsPage": "Paramètres",
@@ -239,8 +239,7 @@
 			"showIndicatorTooltip": "L'indicateur est un retour visuel lors de l'utilisation des raccourcis",
 			"ghostMode": "Mode fantôme",
 			"ghostModeTooltip": "Empêche les sites web de détecter les modifications de vitesse de lecture. Lorsqu'elle est activée, cette option s'applique à tous les sites par défaut. Cela peut provoquer des problèmes sur certains sites. Utilisez l'icône en forme d'engrenage pour la limiter à des sites spécifiques.",
-			"pinByDefault": "Épinglage automatique",
-			"pinByDefaultTooltip": "Les nouveaux onglets seront automatiquement épinglés",
+			"pinByDefault": "Épingler les nouveaux onglets",
 			"initialContext": "Contexte initial",
 			"initialContextTooltip": "Le contexte de départ pour les onglets nouvellement épinglés",
 			"globalContext": "Contexte global",
@@ -259,7 +258,7 @@
 			"speedPresets": "Préréglages de vitesse",
 			"widget": {
 				"option": "Afficher le widget cercle",
-				"optionTooltip": "(Expérimental) Un widget circulaire s'affichera tant que les vidéos seront visibles :\n - Faites glisser à gauche/droite pour avancer/reculer dans la vidéo.\n - Faites glisser vers le haut/bas pour ajuster la vitesse de lecture.",
+				"optionTooltip": "Un widget circulaire s'affichera tant que les vidéos seront visibles :\n - Faites glisser à gauche/droite pour avancer/reculer dans la vidéo.\n - Faites glisser vers le haut/bas pour ajuster la vitesse de lecture.",
 				"movementMobile": "\n - Appuyez sur le cercle pendant quelques secondes pour le déplacer ou le supprimer.",
 				"movementDesktop": "\n - Faites glisser le cercle avec le bouton droit de la souris pour le déplacer ou le supprimer.",
 				"headerTooltip": "Widget circulaire activé",

@@ -2,7 +2,6 @@ import { useMediaWatch } from "../hooks/useMediaWatch"
 import { useStateView } from "../hooks/useStateView"
 import { conformSpeed } from "../utils/configUtils"
 import { MediaView } from "./MediaView"
-import { QrPromo } from "./QrPromo"
 import { SelfPromo } from "./SelfPromo"
 import { SpeedControl } from "./SpeedControl"
 
@@ -24,7 +23,6 @@ export function MainPanel(props: {}) {
 				}}
 			/>
 			{view.hideMediaView ? null : <MediaViews />}
-			{<QrPromo />}
 			{<SelfPromo />}
 		</div>
 	)

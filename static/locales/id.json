@@ -31,7 +31,7 @@
 	},
 	"header": {
 		"powerTooltip": "Alihkan status",
-		"pinTooltip": "Tab yang disematkan menggunakan konteksnya sendiri, bukan konteks global",
+		"pinTooltip": "Tab yang disematkan menyimpan setelannya sendiri, bukan berbagi konteks global",
 		"audioEffects": "Efek audio",
 		"videoEffects": "Efek video",
 		"settingsPage": "Setelan",
@@ -238,8 +238,7 @@
 			"showIndicatorTooltip": "Indikator adalah umpan balik visual saat menggunakan pintasan",
 			"ghostMode": "Mode hantu",
 			"ghostModeTooltip": "Mencegah situs web mendeteksi perubahan kecepatan pemutaran. Saat diaktifkan, ini berlaku untuk semua situs web secara default. Ini mungkin menyebabkan masalah pada beberapa situs. Gunakan ikon roda gigi untuk membatasinya ke situs-situs tertentu.",
-			"pinByDefault": "Sematkan secara default",
-			"pinByDefaultTooltip": "Tab baru akan otomatis disematkan",
+			"pinByDefault": "Sematkan tab baru",
 			"initialContext": "Konteks awal",
 			"initialContextTooltip": "Konteks awal untuk tab yang baru disematkan",
 			"globalContext": "Konteks global",
@@ -258,7 +257,7 @@
 			"speedPresets": "Preset kecepatan",
 			"widget": {
 				"option": "Tampilkan widget lingkaran",
-				"optionTooltip": "(Eksperimental) Widget lingkaran akan ditampilkan saat video terlihat.\n - Seret kiri/kanan untuk mencari melalui video.\n - Seret atas/bawah untuk menyesuaikan kecepatan pemutaran.",
+				"optionTooltip": "Widget lingkaran akan ditampilkan saat video terlihat.\n - Seret kiri/kanan untuk mencari melalui video.\n - Seret atas/bawah untuk menyesuaikan kecepatan pemutaran.",
 				"movementMobile": "\n - Tekan lingkaran selama beberapa detik untuk memindahkan atau menghapusnya.",
 				"movementDesktop": "\n - Dengan tombol mouse kanan, seret lingkaran untuk memindahkan atau menghapusnya.",
 				"headerTooltip": "Widget lingkaran diaktifkan",

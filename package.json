@@ -24,6 +24,7 @@
 		"gsm": "node tools/localeTools/index.cjs types",
 		"locale": "node tools/localeTools/index.cjs",
 		"release": "node tools/release.js",
+		"lint": "tsc --noEmit",
 		"format": "prettier --check '**/*.{js,ts,tsx,json,css}'",
 		"format:fix": "prettier --write '**/*.{js,ts,tsx,json,css}'"
 	},

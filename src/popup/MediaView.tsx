@@ -25,7 +25,7 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 	const differentTab = gvar.tabInfo && gvar.tabInfo.tabId !== tabId
 
 	return (
-		<div className="border-t border-border px-1.25 py-2.5 first:mt-4 last:border-b last:[:root[data-media-item-no-bottom-border]_&]:border-b-0">
+		<div className="border-t border-border px-1.25 py-2.5 first:mt-4">
 			{/* Header */}
 			<div className="mb-0.5 wrap-anywhere">
 				<span

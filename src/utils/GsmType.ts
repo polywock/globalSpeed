@@ -58,7 +58,7 @@ export type Gsm = {
 	header: {
 		/** Toggle state */
 		powerTooltip: string
-		/** Pinned tabs use their own context instead of the global context */
+		/** Pinned tabs keep their own settings instead of sharing the global context */
 		pinTooltip: string
 		/** Audio effects */
 		audioEffects: string
@@ -458,10 +458,8 @@ export type Gsm = {
 			ghostMode: string
 			/** Prevents websites from detecting playback speed changes. When enabled, it applies to all websites by default. This may cause issues on some sites. Use the gear icon to limit it to specific websites. */
 			ghostModeTooltip: string
-			/** Pin by default */
+			/** Pin new tabs */
 			pinByDefault: string
-			/** New tabs will automatically be pinned */
-			pinByDefaultTooltip: string
 			/** Initial context */
 			initialContext: string
 			/** The starting context for newly pinned tabs */
@@ -497,7 +495,7 @@ export type Gsm = {
 			widget: {
 				/** Show circle widget */
 				option: string
-				/** (Experimental) A circle widget will be shown while videos are visible. - Drag left/right to seek through video. - Drag up/down to adjust playback rate. */
+				/** A circle widget will be shown while videos are visible. - Drag left/right to seek through video. - Drag up/down to adjust playback rate. */
 				optionTooltip: string
 				/** - Press circle for a few seconds to to move or delete it. */
 				movementMobile: string
