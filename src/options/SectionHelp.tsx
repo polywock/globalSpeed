@@ -78,10 +78,30 @@ function handleSecretMenu(e: MouseEvent) {
 					pushView({ override: { ignorePiP: !view.ignorePiP } })
 				}
 			})
+		} else if (command === "promos") {
+			primePromos()
 		} else {
 			alert("Invalid command.")
 		}
 	}
+}
+
+/** Passes every promo gate, drops the cached config, then refetches it. */
+async function primePromos() {
+	if (gvar.gsm._lang !== "en") {
+		return
+	}
+
+	await pushView({
+		override: {
+			selfPromoCountR: 999,
+			selfPromoFirstR: Date.now() - 30 * 24 * 36e5,
+			selfPromoHideTsR: 0,
+			selfPromoData: null,
+		},
+	})
+
+	await chrome.runtime.sendMessage({ type: "HANDLE_PROMO" } as Messages)
 }
 
 function ExportImport(props: {}) {

@@ -1,17 +1,24 @@
 import { AnyDict, SelfPromoConfig, SelfPromoEntry, SelfPromoGroup, SelfPromoPick, SelfPromoStyle } from "@/types"
 
-/** Pages, not jsDelivr: jsDelivr pins @main URLs for 12h, so promos couldn't be pulled quickly. */
-export const PROMO_URL = "https://polywock.github.io/gs-promos/config.json"
-/** Refetch at most this often. */
-export const PROMO_MAX_AGE = 3 * 36e5
-/** Reddit visits before the promo is considered. */
-const MIN_COUNT = 50
-/** Dismissing hides it for 2 week(s). */
-const WEEK = 14 * 24 * 36e5
+const DAY = 24 * 36e5
 
-export function meetsPromoConditions(count: number, hideTs: number) {
+export const PROMO_URL = "https://polywock.github.io/gs-promos/config.json"
+export const PROMO_MAX_AGE = 3 * DAY
+export const PROMO_EXPIRE_AGE = 7 * DAY
+
+const MIN_COUNT = 50
+const MIN_AGE = 7 * DAY
+const HIDE_FOR = 14 * DAY
+
+export function meetsPromoConditions(count: number, firstTs: number, hideTs: number) {
 	if ((count || 0) <= MIN_COUNT) return false
-	return Date.now() - (hideTs || 0) > WEEK
+	// No timestamp means the first visit hasn't been recorded yet, so it can't be old enough.
+	if (!firstTs || Date.now() - firstTs < MIN_AGE) return false
+	return Date.now() - (hideTs || 0) > HIDE_FOR
+}
+
+export function isPromoFresh(updated: number) {
+	return !!updated && Date.now() - updated < PROMO_EXPIRE_AGE
 }
 
 const isFr = (v: any) => v == null || (typeof v === "number" && v >= 0)

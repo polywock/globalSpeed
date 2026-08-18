@@ -101,6 +101,7 @@ export type State = {
 	selfPromoHideTsR?: number
 	selfPromoData?: {
 		fetched: number
+		updated?: number
 		config: SelfPromoConfig
 	}
 } & Context

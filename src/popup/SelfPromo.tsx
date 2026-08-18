@@ -4,20 +4,25 @@ import { Tooltip } from "@/comps/Tooltip"
 import { gvar } from "@/globalVar"
 import { useStateView } from "@/hooks/useStateView"
 import { SelfPromoConfig } from "@/types"
-import { meetsPromoConditions, pickPromoEntry } from "@/utils/promoUtils"
+import { isPromoFresh, meetsPromoConditions, pickPromoEntry } from "@/utils/promoUtils"
 
 let wasHidden = false
 
 export function SelfPromo() {
-	const [view] = useStateView({ selfPromoCountR: true, selfPromoHideTsR: true, selfPromoData: true })
+	const [view] = useStateView({ selfPromoCountR: true, selfPromoFirstR: true, selfPromoHideTsR: true, selfPromoData: true })
 	if (!view || wasHidden) return null
 
-	if (!shouldShow(view.selfPromoCountR, view.selfPromoHideTsR)) {
+	if (!shouldShow(view.selfPromoCountR, view.selfPromoFirstR, view.selfPromoHideTsR)) {
 		wasHidden = true
 		return null
 	}
 
-	return <PromoContent config={view.selfPromoData?.config} />
+	if (!isPromoFresh(view.selfPromoData?.updated)) {
+		wasHidden = true
+		return null
+	}
+
+	return <PromoContent config={view.selfPromoData.config} />
 }
 
 function PromoContent({ config }: { config?: SelfPromoConfig }) {
@@ -25,7 +30,7 @@ function PromoContent({ config }: { config?: SelfPromoConfig }) {
 	if (!entry) return null
 
 	return (
-		<div className="ml-1.25 grid grid-cols-[1fr_max-content] items-center gap-x-1.5 border-t border-border py-2.5 pb-1 select-none">
+		<div className="mx-1.25 grid grid-cols-[1fr_max-content] items-center gap-x-1.5 border-t border-border py-2.5 pb-1 select-none">
 			<div
 				className="group cursor-pointer"
 				onClick={() => {
@@ -53,7 +58,7 @@ function PromoContent({ config }: { config?: SelfPromoConfig }) {
 }
 
 /** English only, since the promo text isn't localized. Dismissing hides it for a week. */
-function shouldShow(count: number, hideTs: number) {
+function shouldShow(count: number, firstTs: number, hideTs: number) {
 	if (gvar.gsm._lang !== "en") return false
-	return meetsPromoConditions(count, hideTs)
+	return meetsPromoConditions(count, firstTs, hideTs)
 }

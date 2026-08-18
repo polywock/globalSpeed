@@ -171,6 +171,7 @@ declare global {
 		syncContextMenus: { type: "SYNC_CONTEXT_MENUS"; direct?: boolean }
 		sendMediaEventTo: { type: "SEND_MEDIA_EVENT_TO"; tabId: number; frameId?: number; event: MediaEvent; key: string }
 		setValue: { type: "SET_STATEFUL"; init: SetValueInit }
+		handlePromo: { type: "HANDLE_PROMO" }
 	}
 }
 
@@ -221,6 +222,9 @@ chrome.runtime.onMessage.addListener((msg: Messages, sender, reply) => {
 			new ProcessKeybinds(matches, { tabId: sender.tab.id, frameId: sender.frameId, windowId: sender.tab.windowId }, "pageKeybinds")
 		})
 		reply(true)
+	} else if (msg.type === "HANDLE_PROMO") {
+		handlePromo().finally(() => reply(true))
+		return true
 	} else if (msg.type === "RELEASED_TEMPORARY_SPEED") {
 		releaseTemporarySpeed()
 	} else if (msg.type === "SET_SESSION") {
