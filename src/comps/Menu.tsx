@@ -24,7 +24,7 @@ export type MenuProps = {
 export const Menu = (props: MenuProps) => {
 	let centered = props.position.centered
 	return (
-		<ModalBase className="bg-transparent" onClose={props.onClose}>
+		<ModalBase className="bg-transparent backdrop-brightness-60" onClose={props.onClose}>
 			<div
 				ref={props.menuRef}
 				style={centered ? undefined : { left: `${props.position.x}px`, top: `${props.position.y}px` }}

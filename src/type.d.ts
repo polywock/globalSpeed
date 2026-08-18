@@ -25,4 +25,10 @@ declare module "*.css?inline" {
 
 declare module "*.css" {}
 
+// Built main.js source, inlined by the Firefox mainLoader build. See vite.config.js.
+declare module "virtual:main-code" {
+	const content: string
+	export default content
+}
+
 type RecordAny = Record<string, any>

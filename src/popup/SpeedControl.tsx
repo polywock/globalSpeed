@@ -52,7 +52,7 @@ export function SpeedControl(props: SpeedControlProps) {
 	if (isMobile()) padding = Math.max(padding, 10)
 
 	return (
-		<div className="bg-background text-lg select-none" style={{ "--padding": `${padding}px` } as CSSProperties}>
+		<div className="SpeedControl bg-background text-lg select-none" style={{ "--padding": `${padding}px` } as CSSProperties}>
 			{/* Presets */}
 			<div className="grid grid-cols-3 justify-items-center gap-0.75">
 				{presets.map((v, i) => (

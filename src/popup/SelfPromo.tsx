@@ -30,7 +30,9 @@ function PromoContent({ config }: { config?: SelfPromoConfig }) {
 	if (!entry) return null
 
 	return (
-		<div className="mx-1.25 grid grid-cols-[1fr_max-content] items-center gap-x-1.5 border-t border-border py-2.5 pb-1 select-none">
+		<div
+			className={`mx-1.25 grid grid-cols-[1fr_max-content] items-center gap-x-1.5 border-t border-border py-2.5 pb-1 select-none [.SpeedControl+&]:mt-5`}
+		>
 			<div
 				className="group cursor-pointer"
 				onClick={() => {

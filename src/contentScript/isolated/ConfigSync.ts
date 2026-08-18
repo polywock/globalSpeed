@@ -26,6 +26,17 @@ const ghostModeStatic = [
 	"mooc1.chaoxing.com",
 ].some((site) => (location.hostname || "").includes(site))
 
+const supressShortcuts = (() => {
+	try {
+		if (location.origin.endsWith("devvit.net")) {
+			return true
+		} else if (location.origin.endsWith("playables.usercontent.goog")) {
+			return true
+		}
+	} catch {}
+	return false
+})()
+
 export class ConfigSync {
 	ac = new AbortController()
 	released = false
@@ -113,6 +124,10 @@ export class ConfigSync {
 	urlConditionsMode: "Off" | "On" | "Runtime" = "Off"
 	urlConditionsNonStatic: URLConditionPart[] = []
 	handleChangeUrlConditionsList = () => {
+		if (supressShortcuts) {
+			this.urlConditionsMode = "Off"
+			return
+		}
 		this.urlConditions = this.urlConditionsClient.view.keybindsUrlCondition || getEmptyUrlConditions(true)
 		const enabledParts = getActiveParts(this.urlConditions)
 		const runtimeUrl = getPracticalRuntimeUrl()

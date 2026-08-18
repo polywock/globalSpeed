@@ -15,7 +15,7 @@
 	],
 	"scripts": {
 		"common": "node tools/viteBuild.js && node tools/localeTools/index.cjs build && find build -name '.DS_Store' -type f -delete",
-		"commonFf": "FIREFOX=true node tools/viteBuild.js && node tools/replaceCtx.js && FIREFOX=true node tools/localeTools/index.cjs build && find buildFf -name '.DS_Store' -type f -delete",
+		"commonFf": "FIREFOX=true node tools/viteBuild.js && FIREFOX=true node tools/localeTools/index.cjs build && find buildFf -name '.DS_Store' -type f -delete",
 		"dev": "   export NODE_ENV=development && npm run common",
 		"devFf": " export NODE_ENV=development && npm run commonFf",
 		"prod": "  export NODE_ENV=production && npm run common   && cd build/unpacked   && zip -r '../global-speed-chromium.zip' .",

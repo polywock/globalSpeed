@@ -166,6 +166,23 @@ export function SectionFlags(props: {}) {
 					</OptionField>
 				)}
 
+				{/* Show badge */}
+				{!isMobile() && (
+					<OptionField>
+						<OptionFieldLabel>
+							<span>{gvar.gsm.options.flags.showBadge}</span>
+							<RegularTooltip title={gvar.gsm.options.flags.showBadgeTooltip} align="right" />
+						</OptionFieldLabel>
+						<Toggle
+							aria-label={gvar.gsm.options.flags.showBadge}
+							value={!view.hideBadge}
+							onChange={(e) => {
+								setView({ hideBadge: !view.hideBadge })
+							}}
+						/>
+					</OptionField>
+				)}
+
 				{/* Show indicator */}
 				{!isMobile() && (
 					<OptionField>
@@ -455,23 +472,6 @@ export function SectionFlags(props: {}) {
 									/>
 								</OptionField>
 							</>
-						)}
-
-						{/* Show badge */}
-						{!isMobile() && (
-							<OptionField>
-								<OptionFieldLabel>
-									<span>{gvar.gsm.options.flags.showBadge}</span>
-									<RegularTooltip title={gvar.gsm.options.flags.showBadgeTooltip} align="right" />
-								</OptionFieldLabel>
-								<Toggle
-									aria-label={gvar.gsm.options.flags.showBadge}
-									value={!view.hideBadge}
-									onChange={(e) => {
-										setView({ hideBadge: !view.hideBadge })
-									}}
-								/>
-							</OptionField>
 						)}
 
 						{/* Speed presets */}

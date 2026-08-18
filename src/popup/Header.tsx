@@ -374,7 +374,7 @@ async function showOverlayForKebab(sawCount: number) {
 	const b = option.getBoundingClientRect()
 	// This overlay is detached from React, so keep its complete scanned utility set here.
 	const outline = document.createElement("div")
-	outline.className = "pointer-events-none fixed z-debug border-4 border-primary"
+	outline.className = "animate-pulse rounded-xl pointer-events-none fixed z-debug border-4 border-primary"
 	outline.style.left = `${b.x - 5}px`
 	outline.style.top = `${b.y - 5}px`
 	outline.style.width = `${b.width + 10}px`
@@ -382,9 +382,12 @@ async function showOverlayForKebab(sawCount: number) {
 
 	const pb = option.parentElement.getBoundingClientRect()
 	const message = document.createElement("div")
-	message.className = "pointer-events-none fixed z-debug w-full bg-secondary p-2.5 text-center text-sm font-bold text-primary"
+	message.className =
+		"pointer-events-none fixed z-debug w-[min(300px,95vw)] bg-background p-2.5 text-center text-sm font-semibold text-foreground border-2 border-border-strong rounded-lg"
 	message.textContent = gvar.gsm.options.popup.enableShortcutsMessage
 	message.style.top = `${pb.y + pb.height + 15}px`
+	message.style.left = "50%"
+	message.style.transform = "translateX(-50%)"
 
 	document.body.appendChild(outline)
 	document.body.appendChild(message)

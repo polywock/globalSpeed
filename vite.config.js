@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs"
 import { resolve } from "node:path"
 import tailwindcss from "@tailwindcss/vite"
 
@@ -36,6 +37,26 @@ function browserModules(firefox) {
 	}
 }
 
+// The Firefox loader inlines the whole main content script as a string, since it must
+// run in the page world at document_start. Serving it as a virtual module lets Rollup
+// emit the string literal itself, correctly escaped whatever quoting the minifier picks.
+function mainCode(outDir) {
+	const virtualId = "virtual:main-code"
+	const resolvedId = `\0${virtualId}`
+
+	return {
+		name: "main-code",
+		resolveId(id) {
+			if (id === virtualId) return resolvedId
+		},
+		load(id) {
+			if (id !== resolvedId) return
+			// Relies on viteBuild.js building `main` before `mainLoader`.
+			return `export default ${JSON.stringify(readFileSync(resolve(outDir, "main.js"), "utf8"))}`
+		},
+	}
+}
+
 function sharedConfig({ firefox, outDir, production }) {
 	return {
 		base: "./",
@@ -48,6 +69,13 @@ function sharedConfig({ firefox, outDir, production }) {
 		},
 		esbuild: {
 			target: firefox ? "firefox125" : "chrome116",
+		},
+		// lodash.debounce's UMD root detection falls back to Function("return this")
+		// when it finds neither `global` nor a `self` whose Object matches its own.
+		// Firefox content scripts see an Xray-wrapped `self`, so it hit that fallback
+		// and tripped the extension CSP. Webpack used to provide this shim for free.
+		define: {
+			global: "globalThis",
 		},
 		build: {
 			target: firefox ? "firefox125" : "chrome116",
@@ -89,6 +117,7 @@ function scriptConfig({ name, firefox, outDir, production }) {
 	return {
 		...config,
 		root: projectRoot,
+		plugins: name === "mainLoader" ? [...config.plugins, mainCode(outDir)] : config.plugins,
 		build: {
 			...config.build,
 			cssCodeSplit: false,
