@@ -170,26 +170,26 @@ export function SectionFlags(props: {}) {
 
 					{/* Local file and incognito access */}
 					<LocalFilesField />
-				</div>
 
-				{/* Permission */}
-				{!has && (
-					<OptionField>
-						<OptionFieldLabel>
-							<span>{gvar.gsm.options.flags.grantPermission}</span>
-							<RegularTooltip title={gvar.gsm.options.flags.grantPermissionTooltip} align="right" />
-						</OptionFieldLabel>
-						<Toggle
-							aria-label={gvar.gsm.options.flags.grantPermission}
-							value={has}
-							onChange={(e) => {
-								chrome.permissions[has ? "remove" : "request"]({ origins: ["https://*/*", "http://*/*"] }).then((v) => {
-									setHas(has ? !v : v)
-								})
-							}}
-						/>
-					</OptionField>
-				)}
+					{/* Permission */}
+					{!has && (
+						<OptionField>
+							<OptionFieldLabel>
+								<span>{gvar.gsm.options.flags.grantPermission}</span>
+								<RegularTooltip title={gvar.gsm.options.flags.grantPermissionTooltip} align="right" />
+							</OptionFieldLabel>
+							<Toggle
+								aria-label={gvar.gsm.options.flags.grantPermission}
+								value={has}
+								onChange={(e) => {
+									chrome.permissions[has ? "remove" : "request"]({ origins: ["https://*/*", "http://*/*"] }).then((v) => {
+										setHas(has ? !v : v)
+									})
+								}}
+							/>
+						</OptionField>
+					)}
+				</div>
 
 				{/* Show badge */}
 				{!isMobile() && (

@@ -256,17 +256,58 @@ export function findRemoveFromArray<V>(arr: V[], test: (v: V) => boolean) {
 	}
 }
 
+/** Note: the markup is sanitized, so style/href/src attributes on it are dropped. Set those on the returned element instead. */
 export function createElement(v: string) {
-	let div = document.createElement("div")
-	div.innerHTML = v
-	return div.children[0]
+	const parsed = new DOMParser().parseFromString(v, "text/html")
+	// Markup starting with a head-only tag (<title>, <meta>, ...) is hoisted out of the body.
+	const element = parsed.body.firstElementChild ?? parsed.head.firstElementChild
+	if (!element) throw new Error("Expected markup to contain an element")
+	return sanitizeParsedElement(element)
 }
 
+/** Note: the markup is sanitized, so style/href attributes and <use>/<image> nodes on it are dropped. */
 export function createSVGElement(v: string) {
-	const SVG_NS = "http://www.w3.org/2000/svg"
-	const container = document.createElementNS(SVG_NS, "svg")
-	container.innerHTML = v.trim()
-	return container.firstElementChild as SVGElement
+	// Parsed as HTML rather than XML on purpose. The HTML parser switches to foreign content
+	// inside <svg>, so it still applies the SVG attribute case fix-ups (stdDeviation, tableValues,
+	// xlink:href, ...) while staying lenient about hand-written filter markup: unclosed primitives,
+	// bare "&", and undeclared prefixes would all be fatal under image/svg+xml.
+	const parsed = new DOMParser().parseFromString(`<svg xmlns="http://www.w3.org/2000/svg">${v.trim()}</svg>`, "text/html")
+	const element = parsed.body.firstElementChild?.firstElementChild
+	if (!element) throw new Error("Invalid SVG markup")
+	return sanitizeParsedElement(element) as unknown as SVGElement
+}
+
+const BLOCKED_MARKUP_ELEMENTS = new Set(["script", "style", "iframe", "object", "embed", "link", "meta", "foreignobject", "image", "use"])
+const BLOCKED_MARKUP_ATTRIBUTES = new Set(["href", "src", "srcdoc", "style", "formaction"])
+
+/**
+ * Markup parsed by the helpers is inert initially, but its handlers and external
+ * references would become active after it is adopted into the live document.
+ */
+function sanitizeParsedElement<T extends Element>(root: T): T {
+	if (BLOCKED_MARKUP_ELEMENTS.has(root.localName.toLowerCase())) throw new Error(`Unsafe markup element: ${root.localName}`)
+
+	const elements = [root, ...root.querySelectorAll("*")]
+	for (const element of elements) {
+		if (BLOCKED_MARKUP_ELEMENTS.has(element.localName.toLowerCase())) {
+			element.remove()
+			continue
+		}
+
+		for (const attribute of [...element.attributes]) {
+			const name = attribute.localName.toLowerCase()
+			if (name.startsWith("on")) {
+				element.removeAttributeNode(attribute)
+				continue
+			}
+			if (!BLOCKED_MARKUP_ATTRIBUTES.has(name)) continue
+			// Same-document references (<feImage href="#id">, gradient inheritance, ...) can't reach
+			// the network or run script, so they stay; every other URL-bearing value is dropped.
+			if (name === "href" && attribute.value.trim().startsWith("#")) continue
+			element.removeAttributeNode(attribute)
+		}
+	}
+	return root
 }
 
 export function getPopupSize() {

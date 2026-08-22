@@ -122,9 +122,14 @@ export function calculateStyle(enabled: boolean, selector: string, filters: stri
 					let id = `svg_${randomId()}`
 					const text = typeInfo.format(f)
 					if (!text) return
-					let filterElement = createSVGElement(text)
-					filterElement.id = id
-					return { filterElement, id }
+					try {
+						let filterElement = createSVGElement(text)
+						filterElement.id = id
+						return { filterElement, id }
+					} catch {
+						// Custom filters are hand-written, so skip the unparseable one and keep the rest.
+						return
+					}
 				})
 				.filter((info) => info)
 
@@ -143,11 +148,13 @@ export function calculateStyle(enabled: boolean, selector: string, filters: stri
 
 	const styleString = `:is(${selector}, #proooof > #essi > #onal) {${statements.join(";")}}`
 	const styleTemplate = document.createElement("style")
-	styleTemplate.innerHTML = styleString
+	styleTemplate.textContent = styleString
 
 	let svg: SVGElement
 	if (filterElements?.length) {
-		svg = createSVGElement(`<svg width="0" height="0" style="position:fixed;left:-9999px;top:-9999px" aria-hidden="true"></svg>`)
+		svg = createSVGElement(`<svg width="0" height="0" aria-hidden="true"></svg>`)
+		// Set here rather than in the markup above: createSVGElement strips style attributes.
+		svg.style.cssText = "position:fixed;left:-9999px;top:-9999px"
 		filterElements.forEach((filterElem) => {
 			svg.appendChild(filterElem)
 		})

@@ -15,7 +15,7 @@ export function getLeaf(document: DocumentOrShadowRoot, key: keyof DocumentOrSha
 
 export function insertStyle(styles: string, root: Element | ShadowRoot) {
 	let style = document.createElement("style")
-	style.innerHTML = styles
+	style.textContent = styles
 	root.appendChild(style)
 	return style
 }

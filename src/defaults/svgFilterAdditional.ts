@@ -87,7 +87,7 @@ export const SVG_FILTER_ADDITIONAL: {
 	},
 	blur: {
 		format: (filter) => {
-			return formatSvgFilter(`<feGaussianBlur stdDeviation="${filter.blur.x} ${filter.blur.y}"/ >`)
+			return formatSvgFilter(`<feGaussianBlur stdDeviation="${filter.blur.x} ${filter.blur.y}"/>`)
 		},
 		isValid: (filter) => {
 			return filter.blur.x > 0 || filter.blur.y > 0

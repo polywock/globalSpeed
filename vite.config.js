@@ -73,11 +73,32 @@ function stripLodashEval() {
 	}
 }
 
+// React DOM ships the implementation of dangerouslySetInnerHTML even though this
+// extension never uses that API. Firefox therefore reports two unreachable dynamic
+// innerHTML assignments in the shared UI chunk. Disable the API in Firefox bundles
+// so those assignments cannot be reached (or flagged) now or in future code.
+function disableReactUnsafeHtml(firefox) {
+	return {
+		name: "disable-react-unsafe-html",
+		enforce: "pre",
+		transform(code, id) {
+			if (!firefox || !id.includes("react-dom") || !code.includes(".innerHTML =")) return
+			return {
+				code: code.replace(
+					/\b(?:domElement|parent)\.innerHTML = (?:key|html);/g,
+					'throw Error("dangerouslySetInnerHTML is disabled in this extension");',
+				),
+				map: null,
+			}
+		},
+	}
+}
+
 function sharedConfig({ firefox, outDir, production }) {
 	return {
 		base: "./",
 		publicDir: false,
-		plugins: [browserModules(firefox), stripLodashEval(), tailwindcss()],
+		plugins: [browserModules(firefox), stripLodashEval(), disableReactUnsafeHtml(firefox), tailwindcss()],
 		resolve: {
 			alias: {
 				"@": srcRoot,
