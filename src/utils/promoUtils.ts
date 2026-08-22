@@ -1,4 +1,5 @@
 import { AnyDict, SelfPromoConfig, SelfPromoEntry, SelfPromoGroup, SelfPromoPick, SelfPromoStyle } from "@/types"
+import { IS_FIREFOX_BUILD } from "./buildFlags"
 
 const DAY = 24 * 36e5
 
@@ -11,6 +12,7 @@ const MIN_AGE = 7 * DAY
 const HIDE_FOR = 14 * DAY
 
 export function meetsPromoConditions(count: number, firstTs: number, hideTs: number) {
+	if (IS_FIREFOX_BUILD) return false
 	if ((count || 0) <= MIN_COUNT) return false
 	// No timestamp means the first visit hasn't been recorded yet, so it can't be old enough.
 	if (!firstTs || Date.now() - firstTs < MIN_AGE) return false
