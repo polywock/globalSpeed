@@ -31,11 +31,9 @@
 		"deletePreset": "Delete preset",
 		"!deletePreset": "Tooltip on the button in the popup audio-effects panel that deletes the currently selected equalizer preset, built-in ones included",
 		"presetName": "Preset name",
-		"!presetName": "Placeholder text of the input where the user types a name for the equalizer preset they are saving",
+		"!presetName": "Message of the window.prompt asking the user to name the equalizer preset they are saving, in the popup audio-effects panel",
 		"resetPresets": "Reset presets",
-		"!resetPresets": "Last entry in the equalizer preset dropdown in the popup audio-effects panel. Discards the user's saved presets and restores any built-in ones they deleted.",
-		"resetPresetsConfirm": "Reset all presets?",
-		"!resetPresetsConfirm": "Inline confirmation prompt shown after picking Reset presets, before the user's saved equalizer presets are discarded. Keep it short, the popup is 300px wide."
+		"!resetPresets": "Last entry in the equalizer preset dropdown in the popup audio-effects panel. Discards the user's saved presets and restores any built-in ones they deleted."
 	},
 	"warnings": {
 		"unusedGlobal": "Release unused global shortcut keys",

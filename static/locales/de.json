@@ -15,8 +15,7 @@
 		"savePreset": "Voreinstellung speichern",
 		"deletePreset": "Voreinstellung löschen",
 		"presetName": "Name der Voreinstellung",
-		"resetPresets": "Voreinstellungen zurücksetzen",
-		"resetPresetsConfirm": "Alle Voreinstellungen zurücksetzen?"
+		"resetPresets": "Voreinstellungen zurücksetzen"
 	},
 	"warnings": {
 		"unusedGlobal": "Freigabe nicht genutzter globaler Tastenkombinationen",

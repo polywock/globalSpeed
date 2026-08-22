@@ -15,8 +15,7 @@
 		"savePreset": "Salva preimpostazione",
 		"deletePreset": "Elimina preimpostazione",
 		"presetName": "Nome preimpostazione",
-		"resetPresets": "Ripristina preimpostazioni",
-		"resetPresetsConfirm": "Ripristinare tutte le preimpostazioni?"
+		"resetPresets": "Ripristina preimpostazioni"
 	},
 	"warnings": {
 		"unusedGlobal": "Rilascia i tasti di scelta rapida globali non utilizzati",

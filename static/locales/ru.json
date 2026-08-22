@@ -15,8 +15,7 @@
 		"savePreset": "Сохранить пресет",
 		"deletePreset": "Удалить пресет",
 		"presetName": "Название пресета",
-		"resetPresets": "Сбросить пресеты",
-		"resetPresetsConfirm": "Сбросить все пресеты?"
+		"resetPresets": "Сбросить пресеты"
 	},
 	"warnings": {
 		"unusedGlobal": "Освободите неиспользуемые глобальные клавиши быстрого доступа",

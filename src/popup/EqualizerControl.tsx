@@ -1,13 +1,13 @@
 import equal from "fast-deep-equal"
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import { FaPowerOff } from "react-icons/fa"
-import { LuCheck, LuSave, LuTrash, LuX } from "react-icons/lu"
+import { LuSave, LuTrash } from "react-icons/lu"
 import { Select } from "@/comps/Select"
 import { Tooltip } from "@/comps/Tooltip"
 import { Button } from "@/comps/ui/button"
 import { eqPresetKey, getEqPresets, isBuiltInEqPreset, normalizeEqPresetOverlay } from "@/defaults/eqPresets"
 import { gvar } from "@/globalVar"
-import { cn, produce, round } from "@/utils/helper"
+import { areYouSure, cn, produce, round } from "@/utils/helper"
 import { Reset } from "../comps/Reset"
 import { SliderMicro } from "../comps/SliderMicro"
 import { getDefaultEq } from "../defaults"
@@ -27,8 +27,6 @@ export function EqualizerControl(props: EqualizerControlProps) {
 	const eq = props.value
 	const bandCount = eq.values.length
 	const [presetView, setPresetView] = useStateView({ eqPresetOverlay: true })
-	const [naming, setNaming] = useState(null as string)
-	const [confirmReset, setConfirmReset] = useState(false)
 
 	const overlay = presetView?.eqPresetOverlay
 	const presets = useMemo(() => getEqPresets(bandCount, overlay), [overlay, bandCount])
@@ -57,12 +55,10 @@ export function EqualizerControl(props: EqualizerControlProps) {
 				d.name = name
 			}),
 		)
-		setNaming(null)
 	}
 
 	const resetPresets = () => {
 		setPresetView({ eqPresetOverlay: null })
-		setConfirmReset(false)
 		// A built-in the user had deleted comes back under its own name, so only their own selection is stale.
 		if (eq.name && !isBuiltInEqPreset(bandCount, eq.name)) {
 			props.onChange(
@@ -129,8 +125,6 @@ export function EqualizerControl(props: EqualizerControlProps) {
 					onChanged={(newValue) => {
 						const newBandCount = parseInt(newValue)
 						if (newBandCount === bandCount) return
-						setNaming(null)
-						setConfirmReset(false)
 						props.onChange(
 							produce(eq, (d) => {
 								d.values = Array(newBandCount).fill(0)
@@ -150,9 +144,10 @@ export function EqualizerControl(props: EqualizerControlProps) {
 					className="w-full"
 					value={selected}
 					onChanged={(newValue) => {
-						setNaming(null)
-						setConfirmReset(newValue === RESET_KEY)
-						if (newValue === RESET_KEY) return
+						if (newValue === RESET_KEY) {
+							if (areYouSure()) resetPresets()
+							return
+						}
 						if (newValue === "") {
 							props.onChange(
 								produce(eq, (d) => {
@@ -193,8 +188,7 @@ export function EqualizerControl(props: EqualizerControlProps) {
 							aria-label={gvar.gsm.audio.savePreset}
 							className="text-secondary-foreground"
 							onClick={() => {
-								setConfirmReset(false)
-								setNaming(naming == null ? "" : null)
+								savePreset(window.prompt(gvar.gsm.audio.presetName) ?? "")
 							}}
 						>
 							<LuSave className="size-4" />
@@ -202,42 +196,6 @@ export function EqualizerControl(props: EqualizerControlProps) {
 					</Tooltip>
 				)}
 			</div>
-
-			{/* Confirm before discarding every preset change, since a stray arrow key reaches the dropdown entry */}
-			{confirmReset && (
-				<div className="mb-2.5 grid w-full grid-cols-[1fr_max-content_max-content] items-center gap-x-1.25">
-					<span className="text-md">{gvar.gsm.audio.resetPresetsConfirm}</span>
-					<Button size="control" className="text-secondary-foreground" onClick={resetPresets}>
-						<LuCheck className="size-4" />
-					</Button>
-					<Button size="control" className="text-secondary-foreground" onClick={() => setConfirmReset(false)}>
-						<LuX className="size-4" />
-					</Button>
-				</div>
-			)}
-
-			{/* Name the preset being saved */}
-			{naming != null && !selected && (
-				<div className="mb-2.5 grid w-full grid-cols-[1fr_max-content_max-content] items-center gap-x-1.25">
-					<input
-						autoFocus={true}
-						type="text"
-						placeholder={gvar.gsm.audio.presetName}
-						value={naming}
-						onChange={(e) => setNaming(e.target.value)}
-						onKeyDown={(e) => {
-							if (e.key === "Enter") savePreset(naming)
-							if (e.key === "Escape") setNaming(null)
-						}}
-					/>
-					<Button size="control" disabled={!naming.trim()} className="text-secondary-foreground" onClick={() => savePreset(naming)}>
-						<LuCheck className="size-4" />
-					</Button>
-					<Button size="control" className="text-secondary-foreground" onClick={() => setNaming(null)}>
-						<LuX className="size-4" />
-					</Button>
-				</div>
-			)}
 
 			<div>
 				{/* Power */}

@@ -15,8 +15,7 @@
 		"savePreset": "프리셋 저장",
 		"deletePreset": "프리셋 삭제",
 		"presetName": "프리셋 이름",
-		"resetPresets": "프리셋 초기화",
-		"resetPresetsConfirm": "모든 프리셋을 초기화할까요?"
+		"resetPresets": "프리셋 초기화"
 	},
 	"warnings": {
 		"unusedGlobal": "사용되지 않는 글로벌 단축키를 해제하세요",

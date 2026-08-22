@@ -33,8 +33,6 @@ export type Gsm = {
 		presetName: string
 		/** Reset presets */
 		resetPresets: string
-		/** Reset all presets? */
-		resetPresetsConfirm: string
 	}
 	warnings: {
 		/** Release unused global shortcut keys */

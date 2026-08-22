@@ -16,8 +16,7 @@
 		"savePreset": "Ön ayarı kaydet",
 		"deletePreset": "Ön ayarı sil",
 		"presetName": "Ön ayar adı",
-		"resetPresets": "Ön ayarları sıfırla",
-		"resetPresetsConfirm": "Tüm ön ayarlar sıfırlansın mı?"
+		"resetPresets": "Ön ayarları sıfırla"
 	},
 	"warnings": {
 		"unusedGlobal": "Kullanılmayan genel kısayol tuşlarını kaldırın",

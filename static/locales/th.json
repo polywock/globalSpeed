@@ -14,8 +14,7 @@
 		"savePreset": "บันทึกพรีเซ็ต",
 		"deletePreset": "ลบพรีเซ็ต",
 		"presetName": "ชื่อพรีเซ็ต",
-		"resetPresets": "รีเซ็ตพรีเซ็ต",
-		"resetPresetsConfirm": "รีเซ็ตพรีเซ็ตทั้งหมดหรือไม่"
+		"resetPresets": "รีเซ็ตพรีเซ็ต"
 	},
 	"warnings": {
 		"unusedGlobal": "ปล่อยคีย์ลัดส่วนกลางที่ไม่ได้ใช้งาน",

@@ -15,8 +15,7 @@
 		"savePreset": "Lưu cài đặt trước",
 		"deletePreset": "Xóa cài đặt trước",
 		"presetName": "Tên cài đặt trước",
-		"resetPresets": "Đặt lại cài đặt trước",
-		"resetPresetsConfirm": "Đặt lại tất cả cài đặt trước?"
+		"resetPresets": "Đặt lại cài đặt trước"
 	},
 	"warnings": {
 		"unusedGlobal": "Giải phóng các phím tắt toàn cầu không được sử dụng",

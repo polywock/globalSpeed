@@ -15,8 +15,7 @@
 		"savePreset": "Enregistrer le préréglage",
 		"deletePreset": "Supprimer le préréglage",
 		"presetName": "Nom du préréglage",
-		"resetPresets": "Réinitialiser les préréglages",
-		"resetPresetsConfirm": "Réinitialiser tous les préréglages ?"
+		"resetPresets": "Réinitialiser les préréglages"
 	},
 	"warnings": {
 		"unusedGlobal": "Libérez les raccourcis globaux inutilisés",

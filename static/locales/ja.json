@@ -15,8 +15,7 @@
 		"savePreset": "プリセットを保存",
 		"deletePreset": "プリセットを削除",
 		"presetName": "プリセット名",
-		"resetPresets": "プリセットをリセット",
-		"resetPresetsConfirm": "すべてのプリセットをリセットしますか？"
+		"resetPresets": "プリセットをリセット"
 	},
 	"warnings": {
 		"unusedGlobal": "使用されていないグローバルショートカットキーを解放してください",

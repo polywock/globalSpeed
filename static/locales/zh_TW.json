@@ -15,8 +15,7 @@
 		"savePreset": "儲存預設",
 		"deletePreset": "刪除預設",
 		"presetName": "預設名稱",
-		"resetPresets": "重設預設",
-		"resetPresetsConfirm": "重設所有預設？"
+		"resetPresets": "重設預設"
 	},
 	"warnings": {
 		"unusedGlobal": "釋出未使用的全域快捷鍵",

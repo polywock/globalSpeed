@@ -15,8 +15,7 @@
 		"savePreset": "Zapisz ustawienie wstępne",
 		"deletePreset": "Usuń ustawienie wstępne",
 		"presetName": "Nazwa ustawienia wstępnego",
-		"resetPresets": "Zresetuj ustawienia wstępne",
-		"resetPresetsConfirm": "Zresetować wszystkie ustawienia wstępne?"
+		"resetPresets": "Zresetuj ustawienia wstępne"
 	},
 	"warnings": {
 		"unusedGlobal": "Zwolnij nieużywane globalne skróty klawiszowe",

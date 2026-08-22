@@ -15,8 +15,7 @@
 		"savePreset": "Simpan preset",
 		"deletePreset": "Hapus preset",
 		"presetName": "Nama preset",
-		"resetPresets": "Setel ulang preset",
-		"resetPresetsConfirm": "Setel ulang semua preset?"
+		"resetPresets": "Setel ulang preset"
 	},
 	"warnings": {
 		"unusedGlobal": "Lepaskan tombol pintasan global yang tidak digunakan",

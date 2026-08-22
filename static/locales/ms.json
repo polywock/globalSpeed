@@ -15,8 +15,7 @@
 		"savePreset": "Simpan pratetap",
 		"deletePreset": "Padam pratetap",
 		"presetName": "Nama pratetap",
-		"resetPresets": "Set semula pratetap",
-		"resetPresetsConfirm": "Set semula semua pratetap?"
+		"resetPresets": "Set semula pratetap"
 	},
 	"warnings": {
 		"unusedGlobal": "Lepaskan kekunci pintasan global yang tidak digunakan",
