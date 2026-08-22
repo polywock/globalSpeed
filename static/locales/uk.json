@@ -11,7 +11,12 @@
 		"equalizer": "Еквалайзер",
 		"pitchHdTooltip": "Краща якість",
 		"recording": "Запис",
-		"playing": "Відтворення"
+		"playing": "Відтворення",
+		"savePreset": "Зберегти пресет",
+		"deletePreset": "Видалити пресет",
+		"presetName": "Назва пресета",
+		"resetPresets": "Скинути пресети",
+		"resetPresetsConfirm": "Скинути всі пресети?"
 	},
 	"warnings": {
 		"unusedGlobal": "Звільніть невикористані глобальні клавіші швидкого доступу",

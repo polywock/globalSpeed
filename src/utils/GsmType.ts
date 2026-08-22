@@ -25,6 +25,16 @@ export type Gsm = {
 		recording: string
 		/** Playing */
 		playing: string
+		/** Save preset */
+		savePreset: string
+		/** Delete preset */
+		deletePreset: string
+		/** Preset name */
+		presetName: string
+		/** Reset presets */
+		resetPresets: string
+		/** Reset all presets? */
+		resetPresetsConfirm: string
 	}
 	warnings: {
 		/** Release unused global shortcut keys */

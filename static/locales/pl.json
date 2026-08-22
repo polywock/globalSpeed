@@ -11,7 +11,12 @@
 		"equalizer": "Korektor dźwięku",
 		"pitchHdTooltip": "Lepsza jakość",
 		"recording": "Nagrywanie",
-		"playing": "Odtwarzanie"
+		"playing": "Odtwarzanie",
+		"savePreset": "Zapisz ustawienie wstępne",
+		"deletePreset": "Usuń ustawienie wstępne",
+		"presetName": "Nazwa ustawienia wstępnego",
+		"resetPresets": "Zresetuj ustawienia wstępne",
+		"resetPresetsConfirm": "Zresetować wszystkie ustawienia wstępne?"
 	},
 	"warnings": {
 		"unusedGlobal": "Zwolnij nieużywane globalne skróty klawiszowe",

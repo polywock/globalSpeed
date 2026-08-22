@@ -1,4 +1,6 @@
-const EQ_10_PRESETS: readonly { name: string; values: number[] }[] = [
+import { EqPreset, EqPresetOverlay } from "../types"
+
+const EQ_10_PRESETS: readonly EqPreset[] = [
 	{ name: "1965", values: [-6, -17.2, -6, 0, -3.6, 9.2, 1.2, 9.2, 3.6, -5.2] },
 	{ name: "1965 - Part 2", values: [-18, -14.4, 0, 0, -3.6, 9.2, 1.2, 9.2, 3.6, -5.2] },
 	{ name: "Lo-Fidelity", values: [-15.1, -9.4, 0, 2.3, -2, 4.3, 4.3, -2.3, -4.6, -8.9] },
@@ -13,7 +15,7 @@ const EQ_10_PRESETS: readonly { name: string; values: number[] }[] = [
 	{ name: "Vocal Presence - Cut", values: [0, 0, 0, 0, 0, 0, -6.5, 0, 0, 0] },
 ]
 
-const EQ_20_PRESETS: readonly { name: string; values: number[] }[] = [
+const EQ_20_PRESETS: readonly EqPreset[] = [
 	{ name: "20 Band Classic V", values: [5, 6, 3.54, 0.59, -0.48, -2.5, -5, -7, -8, -8, -7, -5, -3, -2.5, -1, 2, 3, 4, 5, 4.02] },
 	{ name: "Bowed String", values: [0, 0, -1.2, -1.6, -2.4, -2.8, -1.6, -1.6, -1.6, 0, 0, 0, 0, 0, 2.4, 3.6, 5.6, 0, 0, 0] },
 	{ name: "Bright and Punchy", values: [-3, 3, 6, 4.5, 3, 1.5, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 4, 4, 4] },
@@ -33,7 +35,7 @@ const EQ_20_PRESETS: readonly { name: string; values: number[] }[] = [
 	{ name: "Vocal Magic (breath)", values: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1, -0.1, -0.5, 2, 2.5, 1] },
 ]
 
-const EQ_30_PRESETS: readonly { name: string; values: number[] }[] = [
+const EQ_30_PRESETS: readonly EqPreset[] = [
 	{
 		name: "Bass - Increased Clarity",
 		values: [
@@ -119,8 +121,34 @@ const EQ_30_PRESETS: readonly { name: string; values: number[] }[] = [
 	},
 ]
 
-export const EQ_PRESETS = {
+export const EQ_PRESETS: Record<string, readonly EqPreset[]> = {
 	"10": EQ_10_PRESETS,
 	"20": EQ_20_PRESETS,
 	"30": EQ_30_PRESETS,
+}
+
+/** Presets are only interchangeable within a band count, so deletions are tracked per band count too. */
+export function eqPresetKey(bandCount: number, name: string) {
+	return `${bandCount}:${name}`
+}
+
+export function isBuiltInEqPreset(bandCount: number, name: string) {
+	return (EQ_PRESETS[bandCount.toString()] ?? []).some((v) => v.name === name)
+}
+
+/** The built-in presets for a band count with the user's overlay applied. */
+export function getEqPresets(bandCount: number, overlay?: EqPresetOverlay): EqPreset[] {
+	const added = (overlay?.added ?? []).filter((v) => v.values.length === bandCount)
+	const addedNames = new Set(added.map((v) => v.name))
+	const removed = new Set(overlay?.removed ?? [])
+	const builtIn = EQ_PRESETS[bandCount.toString()] ?? []
+	return [...added, ...builtIn.filter((v) => !addedNames.has(v.name) && !removed.has(eqPresetKey(bandCount, v.name)))]
+}
+
+/** Drops the empty halves so an overlay the user has undone stops being stored at all. */
+export function normalizeEqPresetOverlay(overlay: EqPresetOverlay): EqPresetOverlay {
+	const added = overlay.added?.length ? overlay.added : undefined
+	const removed = overlay.removed?.length ? overlay.removed : undefined
+	if (!added && !removed) return null
+	return { ...(added && { added }), ...(removed && { removed }) }
 }

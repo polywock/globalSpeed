@@ -12,7 +12,12 @@
 		"equalizer": "Ekolayzır",
 		"pitchHdTooltip": "Daha iyi kalite",
 		"recording": "Kaydediliyor",
-		"playing": "Çalıyor"
+		"playing": "Çalıyor",
+		"savePreset": "Ön ayarı kaydet",
+		"deletePreset": "Ön ayarı sil",
+		"presetName": "Ön ayar adı",
+		"resetPresets": "Ön ayarları sıfırla",
+		"resetPresetsConfirm": "Tüm ön ayarlar sıfırlansın mı?"
 	},
 	"warnings": {
 		"unusedGlobal": "Kullanılmayan genel kısayol tuşlarını kaldırın",

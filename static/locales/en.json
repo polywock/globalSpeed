@@ -25,7 +25,17 @@
 		"recording": "Recording",
 		"!recording": "Status shown while the popup is recording tab audio for reverse playback",
 		"playing": "Playing",
-		"!playing": "Status shown while the popup is playing recorded tab audio in reverse"
+		"!playing": "Status shown while the popup is playing recorded tab audio in reverse",
+		"savePreset": "Save preset",
+		"!savePreset": "Tooltip on the button in the popup audio-effects panel that saves the current equalizer curve as a named preset. Replaced by the delete button once a preset is selected.",
+		"deletePreset": "Delete preset",
+		"!deletePreset": "Tooltip on the button in the popup audio-effects panel that deletes the currently selected equalizer preset, built-in ones included",
+		"presetName": "Preset name",
+		"!presetName": "Placeholder text of the input where the user types a name for the equalizer preset they are saving",
+		"resetPresets": "Reset presets",
+		"!resetPresets": "Last entry in the equalizer preset dropdown in the popup audio-effects panel. Discards the user's saved presets and restores any built-in ones they deleted.",
+		"resetPresetsConfirm": "Reset all presets?",
+		"!resetPresetsConfirm": "Inline confirmation prompt shown after picking Reset presets, before the user's saved equalizer presets are discarded. Keep it short, the popup is 300px wide."
 	},
 	"warnings": {
 		"unusedGlobal": "Release unused global shortcut keys",

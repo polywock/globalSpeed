@@ -11,7 +11,12 @@
 		"equalizer": "Égaliseur",
 		"pitchHdTooltip": "Meilleure qualité",
 		"recording": "Enregistrement",
-		"playing": "Lecture"
+		"playing": "Lecture",
+		"savePreset": "Enregistrer le préréglage",
+		"deletePreset": "Supprimer le préréglage",
+		"presetName": "Nom du préréglage",
+		"resetPresets": "Réinitialiser les préréglages",
+		"resetPresetsConfirm": "Réinitialiser tous les préréglages ?"
 	},
 	"warnings": {
 		"unusedGlobal": "Libérez les raccourcis globaux inutilisés",

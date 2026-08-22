@@ -10,7 +10,12 @@
 		"equalizer": "المعادل",
 		"pitchHdTooltip": "جودة أفضل",
 		"recording": "جارٍ التسجيل",
-		"playing": "جارٍ التشغيل"
+		"playing": "جارٍ التشغيل",
+		"savePreset": "حفظ الإعداد المسبق",
+		"deletePreset": "حذف الإعداد المسبق",
+		"presetName": "اسم الإعداد المسبق",
+		"resetPresets": "إعادة تعيين الإعدادات المسبقة",
+		"resetPresetsConfirm": "إعادة تعيين كل الإعدادات المسبقة؟"
 	},
 	"warnings": {
 		"unusedGlobal": "تحرير مفاتيح الاختصارات العامة غير المستخدمة",

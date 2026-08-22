@@ -78,6 +78,7 @@ export type State = {
 	firstUse?: number
 	clickedRating?: number
 	speedPresets?: number[]
+	eqPresetOverlay?: EqPresetOverlay
 	speedPresetRows?: number
 	speedPresetPadding?: number
 	speedSmallStep?: number
@@ -192,6 +193,19 @@ export const REVERSE_ORL_GROUP = Object.fromEntries(ORL_CONTEXT_KEYS.map((k) => 
 
 export const AUDIO_CONTEXT_KEYS = ["enabled", "monoOutput", "audioFx", "audioFxAlt", "audioPan"] as (keyof Context)[]
 export const AUDIO_CONTEXT_KEYS_SET = new Set(AUDIO_CONTEXT_KEYS)
+
+export type EqPreset = {
+	name: string
+	values: number[]
+}
+
+/** Diff laid over the built-in equalizer presets, so both kinds can be added to and deleted. */
+export type EqPresetOverlay = {
+	/** Presets the user saved. Wins over a built-in of the same name. */
+	added?: EqPreset[]
+	/** Built-ins the user deleted, as `<bandCount>:<name>`. */
+	removed?: string[]
+}
 
 export type AudioFx = {
 	pitch: number

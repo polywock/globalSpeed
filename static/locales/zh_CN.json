@@ -12,7 +12,12 @@
 		"equalizer": "均衡器",
 		"pitchHdTooltip": "更佳质量",
 		"recording": "录音中",
-		"playing": "播放中"
+		"playing": "播放中",
+		"savePreset": "保存预设",
+		"deletePreset": "删除预设",
+		"presetName": "预设名称",
+		"resetPresets": "重置预设",
+		"resetPresetsConfirm": "重置所有预设？"
 	},
 	"warnings": {
 		"unusedGlobal": "释放未使用的全局快捷键",

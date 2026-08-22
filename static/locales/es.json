@@ -11,7 +11,12 @@
 		"equalizer": "Ecualizador",
 		"pitchHdTooltip": "Mejor calidad",
 		"recording": "Grabando",
-		"playing": "Reproduciendo"
+		"playing": "Reproduciendo",
+		"savePreset": "Guardar preajuste",
+		"deletePreset": "Eliminar preajuste",
+		"presetName": "Nombre del preajuste",
+		"resetPresets": "Restablecer preajustes",
+		"resetPresetsConfirm": "¿Restablecer todos los preajustes?"
 	},
 	"warnings": {
 		"unusedGlobal": "Libera las teclas de acceso rápido globales no utilizadas",

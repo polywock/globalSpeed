@@ -11,7 +11,12 @@
 		"equalizer": "Эквалайзер",
 		"pitchHdTooltip": "Лучшее качество",
 		"recording": "Запись",
-		"playing": "Воспроизведение"
+		"playing": "Воспроизведение",
+		"savePreset": "Сохранить пресет",
+		"deletePreset": "Удалить пресет",
+		"presetName": "Название пресета",
+		"resetPresets": "Сбросить пресеты",
+		"resetPresetsConfirm": "Сбросить все пресеты?"
 	},
 	"warnings": {
 		"unusedGlobal": "Освободите неиспользуемые глобальные клавиши быстрого доступа",
