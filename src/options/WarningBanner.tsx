@@ -1,6 +1,7 @@
 import { ReactNode } from "react"
 import { FaLink } from "react-icons/fa"
 import { MdWarning } from "react-icons/md"
+import { Button } from "@/comps/ui/button"
 import { cn } from "@/utils/helper"
 
 type WarningBannerProps = {
@@ -14,17 +15,14 @@ type WarningBannerProps = {
 
 export function WarningBanner({ children, className, action }: WarningBannerProps) {
 	return (
-		<div className={cn("mb-2.5 flex items-center rounded-sm border border-destructive bg-destructive/12 p-[0.6rem] text-destructive", className)}>
+		<div className={cn("mb-2.5 flex items-center rounded-lg border border-destructive bg-destructive/12 p-[0.6rem] text-destructive", className)}>
 			<MdWarning className="mr-1.25" size="1.15rem" />
 			<span>{children}</span>
 			{action && (
-				<button
-					className="ml-2.5 button-control rounded-bubble border border-destructive bg-inherit px-2 py-1 text-inherit"
-					onClick={action.onClick}
-				>
-					<FaLink size="1.21rem" />
+				<Button variant="destructive" className="ml-2.5" onClick={action.onClick}>
+					<FaLink className="size-4" />
 					<span className="ml-1.25">{action.label}</span>
-				</button>
+				</Button>
 			)}
 		</div>
 	)

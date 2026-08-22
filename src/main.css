@@ -26,9 +26,6 @@
 	--text-lg: 1.1em;
 	--text-xl: 1.2em;
 	--text-2xl: 1.3em;
-	--text-ui: 0.928rem;
-	--text-header: 0.8rem;
-	--text-control: 1.14rem;
 	--text-promo-sm: 14px;
 	--text-promo-md: 15px;
 	--text-promo-lg: 16px;
@@ -66,8 +63,6 @@
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-lg: var(--radius);
 	--radius-xl: calc(var(--radius) + 4px);
-	--radius-control: 5px;
-	--radius-bubble: 10px;
 	--z-index-overlay: 100;
 	--z-index-menu: 200;
 	--z-index-modal: 300;
@@ -75,36 +70,7 @@
 	--z-index-debug: 500;
 }
 
-@utility button-control {
-	font: inherit;
-	letter-spacing: inherit;
-	word-spacing: inherit;
-	color: var(--foreground);
-	padding: 5px;
-	cursor: pointer;
-	background-color: var(--background);
-	border: 1px solid var(--input);
-	border-radius: var(--radius);
-
-	&:focus {
-		border-color: var(--ring);
-		outline: none;
-	}
-
-	&:disabled {
-		opacity: 0.5;
-	}
-
-	& > svg {
-		opacity: 0.8;
-	}
-
-	&:hover > svg {
-		opacity: 1;
-	}
-}
-
-/* A complete icon-button variant, rather than a reset layered over button-control. */
+/* A complete icon-button variant for the drag handle, which intentionally stays native. */
 @utility icon-button {
 	font: inherit;
 	letter-spacing: inherit;
@@ -157,11 +123,6 @@
 	position: absolute;
 	top: -4px;
 	left: 50px;
-}
-
-@utility help-action {
-	padding: 7px;
-	font-size: var(--text-xl);
 }
 
 @utility slider {

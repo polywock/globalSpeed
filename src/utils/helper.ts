@@ -2,12 +2,11 @@ import { clsx, type ClassValue } from "clsx"
 import { produce as produceImmer } from "immer"
 import { twMerge } from "tailwind-merge"
 import { gvar } from "@/globalVar"
+import { IS_FIREFOX_BUILD } from "./buildFlags"
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
 }
-
-type AnyDict = { [key: string]: any }
 
 export function clamp(min: number, max: number, value: number) {
 	let clamped = value
@@ -55,13 +54,6 @@ export function randomId() {
 	return Math.ceil(Math.random() * 1e10).toString()
 }
 
-export const isFirefox = (() => {
-	let cached: boolean | undefined
-	return () => {
-		return (cached ??= navigator.userAgent.includes("Firefox/"))
-	}
-})()
-
 export const getFirefoxVersion = (() => {
 	let cached: number | null | undefined
 	return () => {
@@ -102,7 +94,7 @@ export const isMobile = (() => {
 })()
 
 export function isFirefoxMobile() {
-	return isFirefox() && isMobile()
+	return IS_FIREFOX_BUILD && isMobile()
 }
 
 export function chunkByPredicate<T>(arr: T[], predicate: (v: T) => boolean) {

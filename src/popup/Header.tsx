@@ -3,7 +3,7 @@ import { FaGithub, FaPowerOff, FaVolumeUp } from "react-icons/fa"
 import { FaCircleDot } from "react-icons/fa6"
 import { GoArrowLeft } from "react-icons/go"
 import { IoIosInformationCircle } from "react-icons/io"
-import { releaseTabCapture } from "@/background/utils/tabCapture"
+import { releaseTabCapture, SUPPORTS_TAB_CAPTURE } from "@/background/utils/tabCapture"
 import { Gear, Pin, Zap } from "@/comps/svgs"
 import { Tooltip } from "@/comps/Tooltip"
 import { gvar } from "@/globalVar"
@@ -15,8 +15,6 @@ import { getDefaultFx, getDefaultURLCondition, getDefaultURLConditionPart } from
 import { useCaptureStatus } from "../hooks/useCaptureStatus"
 import { SetView, useStateView } from "../hooks/useStateView"
 import { checkFilterDeviation, checkFilterDeviationOrActiveSvg, getActiveParts, requestSyncContextMenu, testURLWithPart } from "../utils/configUtils"
-
-const SUPPORTS_TAB_CAPTURE = !!(chrome.tabCapture?.capture && chrome.offscreen?.createDocument)
 
 type HeaderProps = {
 	panel: number

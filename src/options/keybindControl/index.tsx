@@ -2,6 +2,7 @@ import { RefObject, useState } from "react"
 import { FaRegEdit } from "react-icons/fa"
 import { Minmax } from "@/comps/Minmax"
 import { Tooltip } from "@/comps/Tooltip"
+import { Button } from "@/comps/ui/button"
 import { gvar } from "@/globalVar"
 import { getSelectedParts, requestSyncContextMenu } from "@/utils/configUtils"
 import { produce } from "@/utils/helper"
@@ -16,7 +17,8 @@ import { getDefaultURLCondition } from "../../defaults"
 import { commandInfos } from "../../defaults/commands"
 import { AdjustMode, Keybind, KeybindType, StateOption, Trigger } from "../../types"
 import { requestCreateTab } from "../../utils/browserUtils"
-import { domRectGetOffset, feedbackText, isFirefox, isMobile } from "../../utils/helper"
+import { IS_FIREFOX_BUILD } from "../../utils/buildFlags"
+import { domRectGetOffset, feedbackText } from "../../utils/helper"
 import { KebabList, KebabListProps } from "../KebabList"
 import { URLModal } from "../URLModal"
 import { DurationSelect, NameArea } from "./NameArea"
@@ -59,14 +61,16 @@ export const KeybindControl = (props: KeybindControlProps) => {
 		sliderMin = ref.sliderMin
 		sliderMax = ref.sliderMax
 
-		if (adjustMode === AdjustMode.ADD || value.adjustMode === AdjustMode.ITC_REL) {
+		if (adjustMode === AdjustMode.ADD) {
 			min = null
 			max = null
-			defaultValue = adjustMode === AdjustMode.ADD ? ref.step : ref.itcStep
+			defaultValue = ref.step
 		}
 
 		if (adjustMode === AdjustMode.ITC) {
 			showRange = true
+			sliderMin = ref.itcMin ?? sliderMin
+			sliderMax = ref.itcMax ?? sliderMax
 		} else if (adjustMode !== AdjustMode.CYCLE) {
 			showNumericControl = true
 		}
@@ -134,7 +138,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
 			{value.condition && getSelectedParts(value.condition).length ? (
 				<Tooltip title={gvar.gsm.options.rules.conditions}>
 					<div
-						className="absolute -top-1.25 -right-1.25 rounded-bubble bg-destructive px-1.25 text-destructive-foreground"
+						className="absolute -top-1.25 -right-3 flex h-5.5 min-w-5.5 items-center justify-center rounded-full bg-destructive px-1.5 text-sm text-destructive-foreground"
 						onClick={() => setShow(!show)}
 						onContextMenu={(e) => {
 							if (value.condition) {
@@ -476,19 +480,21 @@ export const TriggerValues = (props: Props) => {
 						options={"ABCDEFGHIJKLMNOPQRS".split("").map((v) => ({ key: `command${v}`, value: `command ${v}` }))}
 					/>
 					<Tooltip title={gvar.gsm.token.assign}>
-						<button
+						<Button
+							variant="icon"
+							size="icon-auto"
 							aria-label={gvar.gsm.token.assign}
-							className="-translate-y-0.5 icon-button text-foreground"
+							className="-translate-y-0.5 text-foreground"
 							onClick={() => {
 								requestCreateTab(
-									isFirefox()
+									IS_FIREFOX_BUILD
 										? `https://support.mozilla.org/kb/manage-extension-shortcuts-firefox`
 										: `chrome://extensions/shortcuts#:~:text=${encodeURIComponent(`Command ${(value[keyForGlobal] || "commandA").slice(7)}`)}`,
 								)
 							}}
 						>
 							<FaRegEdit className="scale-120" />
-						</button>
+						</Button>
 					</Tooltip>
 				</div>
 			)}

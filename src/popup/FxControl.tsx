@@ -5,8 +5,11 @@ import { GiAnticlockwiseRotation } from "react-icons/gi"
 import { RegularTooltip } from "@/comps/RegularTooltip"
 import { TabButton } from "@/comps/TabButton"
 import { Tooltip } from "@/comps/Tooltip"
+import { Button } from "@/comps/ui/button"
 import { gvar } from "@/globalVar"
-import { cn, isFirefox, isMobile, produce } from "@/utils/helper"
+import { usePageReachable } from "@/hooks/usePageReachable"
+import { IS_FIREFOX_BUILD } from "@/utils/buildFlags"
+import { cn, isMobile, produce } from "@/utils/helper"
 import { ThrottledTextInput } from "../comps/ThrottledTextInput"
 import { getDefaultFx } from "../defaults"
 import { Fx } from "../types"
@@ -27,6 +30,7 @@ type FxControlProps = {
 export function FxControl(props: FxControlProps) {
 	const [backdropTab, setBackdropTab] = useState(false)
 	const [transformTab, setTransformTab] = useState(false)
+	const pageReachable = usePageReachable()
 
 	const elementFx = props._elementFx || getDefaultFx()
 	const backdropFx = props._backdropFx || getDefaultFx()
@@ -52,7 +56,7 @@ export function FxControl(props: FxControlProps) {
 	const isEmpty = useMemo(() => (rawFx == null ? true : equal(rawFx, getDefaultFx())), [rawFx])
 
 	return (
-		<div className={cn("bg-background text-root select-none [&>*]:mb-2.5", props.live && isFirefox() && "mr-5", props.className)}>
+		<div className={cn("bg-background text-root select-none [&>*]:mb-2.5", props.live && IS_FIREFOX_BUILD && "mr-5", props.className)}>
 			{/* Target tabs */}
 			<div className="grid grid-cols-2">
 				<TabButton
@@ -78,8 +82,9 @@ export function FxControl(props: FxControlProps) {
 			<div className="grid grid-cols-3 gap-x-2.5">
 				{/* Status */}
 				<Tooltip align="bottom" title={fx.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
-					<button
-						className={cn("button-control", fx.enabled ? "text-primary" : "text-muted-foreground")}
+					<Button
+						size="control"
+						className={cn("py-2", fx.enabled ? "text-primary" : "text-muted-foreground")}
 						onClick={(e) => {
 							setCurrent(
 								produce(fx, (d) => {
@@ -89,31 +94,33 @@ export function FxControl(props: FxControlProps) {
 						}}
 					>
 						<FaPowerOff size={"1.07rem"} />
-					</button>
+					</Button>
 				</Tooltip>
 
 				{/* Swap */}
 				<Tooltip align="bottom" title={gvar.gsm.filter.swap}>
-					<button
-						className="button-control text-secondary-foreground"
+					<Button
+						size="control"
+						className="py-2 text-secondary-foreground"
 						onClick={(e) => {
 							props.handleChange(backdropFx, elementFx)
 						}}
 					>
 						<FaExchangeAlt size={"1.07rem"} />
-					</button>
+					</Button>
 				</Tooltip>
 
 				{/* Reset */}
 				<Tooltip align="bottom" title={gvar.gsm.token.reset}>
-					<button
-						className={cn("button-control text-secondary-foreground", !isEmpty && "text-primary outline outline-primary [&>svg]:scale-115")}
+					<Button
+						size="control"
+						className={cn("py-2 text-secondary-foreground", !isEmpty && "text-primary outline outline-primary [&>svg]:scale-115")}
 						onClick={(e) => {
 							setCurrent(null)
 						}}
 					>
 						<GiAnticlockwiseRotation size={"1.07rem"} />
-					</button>
+					</Button>
 				</Tooltip>
 			</div>
 
@@ -138,7 +145,7 @@ export function FxControl(props: FxControlProps) {
 			)}
 
 			{/* Type tabs */}
-			<div className="grid grid-cols-2 text-md leading-[0.95] opacity-70">
+			<div className="grid grid-cols-2 text-md opacity-70">
 				<TabButton
 					open={!transformTab}
 					active={backdropTab ? active.backdropFilter : active.elemFilter}
@@ -179,8 +186,8 @@ export function FxControl(props: FxControlProps) {
 			{!isMobile() && props.live && !transformTab && gvar.tabInfo.url?.startsWith("http") && (
 				<div className="grid grid-cols-2 gap-x-2.5">
 					<Tooltip title={gvar.gsm.token.intoPaneTooltip}>
-						<button
-							className="button-control"
+						<Button
+							size="control"
 							disabled={!fx.enabled || !(backdropTab ? active.backdropFilter : active.elemFilter)}
 							onClick={(e) => {
 								if (!checkFilterDeviationOrActiveSvg(fx.filters, fx.svgFilters)) return
@@ -198,21 +205,22 @@ export function FxControl(props: FxControlProps) {
 							}}
 						>
 							{gvar.gsm.token.intoPane}
-						</button>
+						</Button>
 					</Tooltip>
-					<button
-						className="button-control"
+					<Button
+						size="control"
 						onClick={(e) => {
 							chrome.scripting.executeScript({ target: { tabId: gvar.tabInfo.tabId, allFrames: false }, files: ["pageDraw.js"] })
 						}}
 					>
 						{gvar.gsm.command.drawPage}
-					</button>
+					</Button>
 				</div>
 			)}
 
 			{/* Filters */}
 			<Filters
+				insertTarget={props.live && pageReachable ? (backdropTab ? "backdrop" : "element") : undefined}
 				filters={transformTab ? fx.transforms : fx.filters}
 				onChange={(newFilters) => {
 					setCurrent(

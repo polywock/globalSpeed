@@ -2,9 +2,11 @@ import { RefObject, useRef, useState } from "react"
 import { GearIcon } from "@/comps/GearIcon"
 import { Select } from "@/comps/Select"
 import { Tooltip } from "@/comps/Tooltip"
+import { Button } from "@/comps/ui/button"
 import { gvar } from "@/globalVar"
+import { IS_FIREFOX_BUILD } from "@/utils/buildFlags"
 import { getSelectedParts } from "@/utils/configUtils"
-import { isFirefox, moveItem, produce, randomId } from "@/utils/helper"
+import { moveItem, produce, randomId } from "@/utils/helper"
 import { makeMenuLabelWithTooltip } from "../comps/Menu"
 import { ModalBase } from "../comps/ModalBase"
 import { ModalText } from "../comps/ModalText"
@@ -75,7 +77,7 @@ export function SectionRules(props: {}) {
 	return (
 		<OptionsSection>
 			<h2>{gvar.gsm.options.rules.header}</h2>
-			{isFirefox() ? null : <DevWarning forUrlRules={true} hasJs={rules?.some((r) => r.enabled && r.type === "JS")} />}
+			{IS_FIREFOX_BUILD ? null : <DevWarning forUrlRules={true} hasJs={rules?.some((r) => r.enabled && r.type === "JS")} />}
 			<List listRef={listRef} spacingChange={handleSpacingChange}>
 				{rules.map((rule, i) => (
 					<ListItem
@@ -98,9 +100,9 @@ export function SectionRules(props: {}) {
 					</ListItem>
 				))}
 			</List>
-			<button className="mt-7.5 block button-control" onClick={(e) => handleChange(getDefaultURLRule())}>
+			<Button className="mt-7.5 block" onClick={(e) => handleChange(getDefaultURLRule())}>
 				{gvar.gsm.token.create}
-			</button>
+			</Button>
 		</OptionsSection>
 	)
 }
@@ -173,12 +175,11 @@ export function Rule(props: RuleProps) {
 
 			{/* URL conditions entry */}
 			<Tooltip title={gvar.gsm.options.rules.conditions}>
-				<button
-					className="button-control rounded-lg"
+				<Button
 					onClick={(e) => {
 						setShow(!show)
 					}}
-				>{`— ${rule.condition ? getSelectedParts(rule.condition).length : 0} —`}</button>
+				>{`— ${rule.condition ? getSelectedParts(rule.condition).length : 0} —`}</Button>
 			</Tooltip>
 
 			{/* URL conditions modal */}

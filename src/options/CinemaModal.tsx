@@ -2,6 +2,7 @@ import { NumericInput } from "@/comps/NumericInput"
 import { Reset } from "@/comps/Reset"
 import { Select } from "@/comps/Select"
 import { SliderMicro } from "@/comps/SliderMicro"
+import { Button } from "@/comps/ui/button"
 import { getDefaultCinemaInit } from "@/defaults/constants"
 import { getDefaultCinemaFilter } from "@/defaults/filters"
 import { gvar } from "@/globalVar"
@@ -22,7 +23,7 @@ const defaultInit = getDefaultCinemaInit()
 const defaultCinemaFilter = getDefaultCinemaFilter()
 
 export function CinemaModal(props: Props) {
-	const [view, setView] = useStateView({ circleInit: true })
+	const [view] = useStateView({ circleInit: true })
 	if (!view) return null
 	let kb = props.value as Keybind
 	let init = kb.cinemaInit || defaultInit
@@ -155,8 +156,7 @@ export function CinemaModal(props: Props) {
 				)}
 
 				{/* Reset */}
-				<button
-					className="button-control"
+				<Button
 					onClick={(e) => {
 						props.onChange(
 							kb.id,
@@ -167,7 +167,7 @@ export function CinemaModal(props: Props) {
 					}}
 				>
 					{gvar.gsm.token.reset}
-				</button>
+				</Button>
 			</ModalContent>
 		</ModalBase>
 	)

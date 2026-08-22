@@ -3,9 +3,11 @@ import { createRoot } from "react-dom/client"
 import { FaMousePointer, FaPowerOff } from "react-icons/fa"
 import { IoEllipsisVertical } from "react-icons/io5"
 import { Pin, Zap } from "@/comps/svgs"
+import { Button } from "@/comps/ui/button"
 import "@/main.css"
 import { requestCreateTab } from "../utils/browserUtils"
-import { cn, isFirefox } from "../utils/helper"
+import { IS_FIREFOX_BUILD } from "../utils/buildFlags"
+import { cn } from "../utils/helper"
 import "@fontsource-variable/montserrat/wght.css"
 
 const LIST_CLASS = "[&>li]:mb-2.5 [&>li:last-child]:mb-0"
@@ -34,7 +36,7 @@ function Faqs(props: {}) {
 				/>
 			</Group>
 			<Group label="general">
-				{!isFirefox() && (
+				{!IS_FIREFOX_BUILD && (
 					<>
 						<Item
 							q={"Can I use it with local files or in incognito mode? "}
@@ -57,7 +59,7 @@ function Faqs(props: {}) {
 						/>
 					</>
 				)}
-				{isFirefox() && (
+				{IS_FIREFOX_BUILD && (
 					<>
 						<Item
 							q={"Can I use it in private mode? "}
@@ -193,7 +195,7 @@ function Faqs(props: {}) {
 					q={"How do I control background music/video while using another tab? "}
 					a={<div>Select the video/audio you want to control using the {<FaMousePointer size={"1.428rem"} color={"#02a"} />} button.</div>}
 				/>
-				{!isFirefox() && (
+				{!IS_FIREFOX_BUILD && (
 					<Item
 						q={"How do I control background music or PiP videos while using another program? "}
 						a={
@@ -254,7 +256,7 @@ function Faqs(props: {}) {
 					}
 				/>
 			</Group>
-			{!isFirefox() && (
+			{!IS_FIREFOX_BUILD && (
 				<>
 					<Group label="audio effects">
 						<Item
@@ -307,7 +309,7 @@ function Item(props: { q: string | ReactElement; a: ReactElement }) {
 	return (
 		<div className="mb-2.5">
 			<div className="grid grid-cols-[max-content_1fr] items-center gap-x-2.5 p-1.25 text-2xl" onClick={() => setHidden(!hidden)}>
-				<button className="min-w-7.5 button-control">{hidden ? "+" : "-"}</button>
+				<Button className="min-w-7.5">{hidden ? "+" : "-"}</Button>
 				<div>{props.q}</div>
 			</div>
 			{!hidden && props.a}

@@ -1,4 +1,3 @@
-import { getDefaultFx } from "@/defaults"
 import { produce } from "@/utils/helper"
 import { useStateView } from "../hooks/useStateView"
 import { FxControl } from "./FxControl"

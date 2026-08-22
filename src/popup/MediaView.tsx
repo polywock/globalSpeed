@@ -5,6 +5,7 @@ import { IoMdVolumeHigh, IoMdVolumeLow, IoMdVolumeOff } from "react-icons/io"
 import { MdPictureInPictureAlt } from "react-icons/md"
 import { SliderInput } from "@/comps/Slider"
 import { Tooltip } from "@/comps/Tooltip"
+import { Button } from "@/comps/ui/button"
 import { gvar } from "@/globalVar"
 import type { MediaEvent } from "../contentScript/isolated/utils/applyMediaEvent"
 import { FlatMediaInfo, MediaPath } from "../contentScript/isolated/utils/genMediaInfo"
@@ -12,7 +13,7 @@ import { sendMediaEvent } from "../utils/configUtils"
 import { clamp, cn, feedbackText, formatDomain, formatDuration } from "../utils/helper"
 
 const HAS_REQUEST_PIP = !!HTMLVideoElement.prototype.requestPictureInPicture
-const CONTROL_BUTTON_CLASS = "icon-button p-1.25 first:-ml-1.25 hover:bg-accent"
+const CONTROL_BUTTON_CLASS = "p-1.25 first:-ml-1.25 hover:bg-accent"
 
 export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 	const { info, pinned } = props
@@ -28,35 +29,43 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 		<div className="border-t border-border px-1.25 py-2.5 first:mt-4">
 			{/* Header */}
 			<div className="mb-0.5 wrap-anywhere">
-				<span
-					onClick={async (e) => {
-						let probe = await chrome.tabs.sendMessage(info.tabInfo.tabId, { type: "MEDIA_PROBE", key: info.key, formatted: true } as Messages, {
-							frameId: info.tabInfo.frameId || 0,
-						})
-						if (!probe) return
-						feedbackText(probe.formatted, { y: (e.target as HTMLDivElement).getBoundingClientRect().top - 50 }, 1000 * 30)
-					}}
-					className="text-xs opacity-55 hover:underline hover:opacity-100"
-					title={info.domain}
-				>
-					{parts.join(info.shadowMode == null ? " - " : ` • `)}
-				</span>
-				{differentTab && (
-					<Tooltip title={gvar.gsm.token.jumpToTab}>
-						<button
-							className="ml-1.25 -translate-y-0.5 scale-120 icon-button rounded-control px-1.25 py-0 opacity-70 hover:bg-accent hover:opacity-100"
-							onClick={async () => {
-								const tabInfo = await chrome.tabs.get(tabId)
-								if (tabInfo.windowId !== windowId) {
-									chrome.windows.update(tabInfo.windowId, { focused: true })
-								}
-								chrome.tabs.update(tabId, { active: true })
-							}}
-						>
-							<GrRevert />
-						</button>
-					</Tooltip>
-				)}
+				<div className="flex items-center">
+					<span
+						onClick={async (e) => {
+							let probe = await chrome.tabs.sendMessage(
+								info.tabInfo.tabId,
+								{ type: "MEDIA_PROBE", key: info.key, formatted: true } as Messages,
+								{
+									frameId: info.tabInfo.frameId || 0,
+								},
+							)
+							if (!probe) return
+							feedbackText(probe.formatted, { y: (e.target as HTMLDivElement).getBoundingClientRect().top - 50 }, 1000 * 30)
+						}}
+						className="text-xs opacity-55 hover:underline hover:opacity-100"
+						title={info.domain}
+					>
+						{parts.join(info.shadowMode == null ? " - " : ` • `)}
+					</span>
+					{differentTab && (
+						<Tooltip title={gvar.gsm.token.jumpToTab}>
+							<Button
+								variant="icon"
+								size="icon-auto"
+								className="ml-1.25 -translate-y-0.5 scale-120 rounded-lg px-1.25 py-0 opacity-70 hover:bg-accent hover:opacity-100"
+								onClick={async () => {
+									const tabInfo = await chrome.tabs.get(tabId)
+									if (tabInfo.windowId !== windowId) {
+										chrome.windows.update(tabInfo.windowId, { focused: true })
+									}
+									chrome.tabs.update(tabId, { active: true })
+								}}
+							>
+								<GrRevert />
+							</Button>
+						</Tooltip>
+					)}
+				</div>
 				{info.displayTitle && (
 					<div className="overflow-hidden text-ellipsis whitespace-nowrap" title={info.title}>
 						{info.displayTitle}
@@ -67,7 +76,9 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 			{/* Controls */}
 			<div className="grid grid-cols-[repeat(4,max-content)_1fr_repeat(3,max-content)] items-center gap-x-1.25" key={info.key}>
 				{/* Seek back */}
-				<button
+				<Button
+					variant="icon"
+					size="icon-auto"
 					className={cn(CONTROL_BUTTON_CLASS)}
 					onClick={(e) => {
 						const event: MediaEvent = { type: "SEEK", value: -5, relative: true }
@@ -76,10 +87,12 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 				>
 					{/* <FaStepBackward className="size-4" /> */}
 					<FaBackward className="size-3.5 opacity-75" />
-				</button>
+				</Button>
 
 				{/* Pause */}
-				<button
+				<Button
+					variant="icon"
+					size="icon-auto"
 					className={CONTROL_BUTTON_CLASS}
 					onClick={(e) => {
 						const event: MediaEvent = { type: "PAUSE", state: "toggle" }
@@ -87,10 +100,12 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 					}}
 				>
 					{info.paused ? <FaPlay className="size-4.75" /> : <FaPause className="size-4.75" />}
-				</button>
+				</Button>
 
 				{/* Seek forwards */}
-				<button
+				<Button
+					variant="icon"
+					size="icon-auto"
 					className={cn(CONTROL_BUTTON_CLASS)}
 					onClick={(e) => {
 						const event: MediaEvent = { type: "SEEK", value: 5, relative: true }
@@ -99,7 +114,7 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 				>
 					{/* <FaStepForward className="size-4" /> */}
 					<FaForward className="size-3.5" />
-				</button>
+				</Button>
 
 				{/* Volume */}
 				{!info.hasAudioTrack ? (
@@ -109,7 +124,9 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 					</>
 				) : (
 					<>
-						<button
+						<Button
+							variant="icon"
+							size="icon-auto"
 							className={cn(CONTROL_BUTTON_CLASS, "opacity-85 hover:opacity-100")}
 							onClick={(e) => {
 								const event: MediaEvent = { type: "MUTE", state: "toggle" }
@@ -123,7 +140,7 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 							) : (
 								<IoMdVolumeLow className="size-5" />
 							)}
-						</button>
+						</Button>
 						<SliderInput
 							className="min-w-0"
 							style={{ "--slider-progress": `${clamp(0, 1, info.volume) * 100}%` } as CSSProperties}
@@ -144,22 +161,26 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 					<div />
 				) : (
 					<Tooltip title={gvar.gsm.command.PiP}>
-						<button
+						<Button
+							variant="icon"
+							size="icon-auto"
 							className={cn(CONTROL_BUTTON_CLASS, "opacity-75", info.pipMode && "text-primary opacity-100")}
 							onClick={(e) => {
 								const event: MediaEvent = e.shiftKey ? { type: "FULLSCREEN", direct: true } : { type: "PIP" }
 								sendMediaEvent(event, info.key, tabId, frameId)
 							}}
 						>
-							<MdPictureInPictureAlt className="size-4" />
+							<MdPictureInPictureAlt className="size-5" />
 							{/* <LuPictureInPicture2 className="size-4" /> */}
-						</button>
+						</Button>
 					</Tooltip>
 				)}
 
 				{/* Select */}
 				<Tooltip title={gvar.gsm.warnings.selectTooltip}>
-					<button
+					<Button
+						variant="icon"
+						size="icon-auto"
 						// title={gvar.gsm.warnings.selectTooltip}
 						className={cn(CONTROL_BUTTON_CLASS, "opacity-75", pinned && "text-primary opacity-100")}
 						onClick={(e) => {
@@ -173,9 +194,8 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 							})
 						}}
 					>
-						<FaMousePointer className="size-4" />
-						{/* <LuMousePointer className="size-4" /> */}
-					</button>
+						<FaMousePointer className="size-5" />
+					</Button>
 				</Tooltip>
 			</div>
 		</div>

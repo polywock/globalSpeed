@@ -1,15 +1,20 @@
 import { useState } from "react"
-import { ToggleButton } from "@/comps/ToggleButton"
+import { LuLink2, LuLink2Off } from "react-icons/lu"
+import { Tooltip } from "@/comps/Tooltip"
+import { Button } from "@/comps/ui/button"
 import { gvar } from "@/globalVar"
 import { moveItem, produce } from "@/utils/helper"
 import { Move } from "../comps/Move"
 import { SliderPlus } from "../comps/SliderPlus"
 import { filterInfos } from "../defaults/filters"
-import { FilterEntry } from "../types"
+import { FilterEntry, TargetFx } from "../types"
+import { InsertItcButton } from "./InsertItcButton"
 
 type FiltersProps = {
 	filters: FilterEntry[]
 	onChange: (newValue: FilterEntry[]) => void
+	/** Omitted when the page can't take a slider, which hides the button. */
+	insertTarget?: TargetFx
 	className?: string
 }
 
@@ -45,6 +50,7 @@ export function Filters(props: FiltersProps) {
 					}}
 					syncChange={entry.name.startsWith("scale") ? () => setSyncScale(!syncScale) : null}
 					syncValue={syncScale}
+					insertTarget={props.insertTarget}
 				/>
 			))}
 		</div>
@@ -55,6 +61,7 @@ type FilterProps = {
 	entry: FilterEntry
 	onChange: (newValue: FilterEntry) => void
 	onMove: (down: boolean) => void
+	insertTarget?: TargetFx
 	syncChange?: () => void
 	syncValue?: boolean
 }
@@ -68,14 +75,32 @@ export function Filter(props: FilterProps) {
 			<Move onMove={(down) => props.onMove(down)} />
 			<SliderPlus
 				label={
-					<>
+					<span>
 						{gvar.gsm.filter[entry.name]}
 						{!props.syncChange ? null : (
-							<ToggleButton active={props.syncValue} onClick={() => props.syncChange()} className="ml-2.5 px-1.25 py-0">
-								:
-							</ToggleButton>
+							<>
+								{" "}
+								<Tooltip title={gvar.gsm.token.aspectLock}>
+									<Button
+										size="control"
+										variant="ghost"
+										aria-pressed={props.syncValue}
+										aria-label={gvar.gsm.token.aspectLock}
+										className="px-0 py-0 align-middle text-secondary-foreground"
+										onClick={() => props.syncChange()}
+									>
+										{props.syncValue ? <LuLink2 className="size-5" /> : <LuLink2Off className="size-5" />}
+									</Button>
+								</Tooltip>
+							</>
 						)}
-					</>
+						{!props.insertTarget ? null : (
+							<>
+								{" "}
+								<InsertItcButton command="fxFilter" filterOption={entry.name} filterTarget={props.insertTarget} />
+							</>
+						)}
+					</span>
 				}
 				value={entry.value ?? ref.default}
 				sliderMin={ref.sliderMin}

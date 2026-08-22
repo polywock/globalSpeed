@@ -1,6 +1,7 @@
 import { Reset } from "@/comps/Reset"
 import { Select } from "@/comps/Select"
 import { SliderMicro } from "@/comps/SliderMicro"
+import { Button } from "@/comps/ui/button"
 import { Indicator } from "@/contentScript/isolated/utils/Indicator"
 import { gvar } from "@/globalVar"
 import { produce, randomId } from "@/utils/helper"
@@ -108,6 +109,26 @@ export function IndicatorModal(props: Props) {
 							}
 						/>
 					</div>
+				</OptionField>
+
+				{/* Outline width */}
+				<OptionField>
+					<span>{gvar.gsm.token.outlineWidth}</span>
+					<SliderMicro
+						value={init?.outlineWidth ?? defaultInit.outlineWidth ?? 1}
+						onChange={(v) => {
+							const indicatorInit = produce(init ?? {}, (d) => {
+								d.outlineWidth = v
+								d.key = randomId()
+							})
+							showIndicator(indicatorInit, props.forCircle)
+							onChange(indicatorInit)
+						}}
+						default={defaultInit.outlineWidth ?? 1}
+						sliderMin={0}
+						sliderMax={2}
+						sliderStep={0.01}
+					/>
 				</OptionField>
 
 				{/* Size */}
@@ -233,14 +254,14 @@ export function IndicatorModal(props: Props) {
 				</OptionField>
 
 				{/* Reset */}
-				<button
+				<Button
+					size="lg"
 					onClick={(e) => {
 						onChange(null)
 					}}
-					className="button-control text-control"
 				>
 					{gvar.gsm.token.reset}
-				</button>
+				</Button>
 			</ModalContent>
 		</ModalBase>
 	)

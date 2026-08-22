@@ -1,7 +1,8 @@
 import { availableCommandNames } from "@/defaults/commands"
 import { getDefaultState } from "../../defaults"
 import { AdjustMode, Context, Duration, Keybind, State, Trigger, URLCondition, URLConditionPart, URLRule } from "../../types"
-import { isFirefox, randomId } from "../../utils/helper"
+import { IS_FIREFOX_BUILD } from "../../utils/buildFlags"
+import { randomId } from "../../utils/helper"
 
 export function migrateSchema(state?: State) {
 	const initialVersion = state?.version
@@ -39,11 +40,15 @@ export function migrateSchema(state?: State) {
 		state = thirteenToFourteen(state)
 	}
 
+	if (state.version === 14) {
+		state = fourteenToFifteen(state)
+	}
+
 	if (!(state?.version === defaultState.version)) {
 		return defaultState
 	}
 
-	if (isFirefox()) {
+	if (IS_FIREFOX_BUILD) {
 		state = migrateForFirefox(state)
 	} else {
 		state = migrateForChrome(state)
@@ -107,7 +112,8 @@ function tenToEleven(state: State) {
 	}
 
 	const migrateURLCondition = (c: URLCondition, rule?: URLRule, kb?: Keybind) => {
-		if (rule && !isFirefox()) (c as any).parts = rule.type === "JS" ? (c as any).parts.filter((p: any) => p.type !== "REGEX") : (c as any).parts
+		if (rule && !IS_FIREFOX_BUILD)
+			(c as any).parts = rule.type === "JS" ? (c as any).parts.filter((p: any) => p.type !== "REGEX") : (c as any).parts
 		;(c as any).parts.forEach((p: URLConditionPart) => {
 			p.valueContains = p.type === "CONTAINS" ? (p as any).value : String.raw`example.com`
 			p.valueStartsWith = p.type === "STARTS_WITH" ? (p as any).value : String.raw`https://example.com`
@@ -182,7 +188,7 @@ function tenToEleven(state: State) {
 		// Migrate seek
 		if (kb.command === "seek") {
 			if ((kb as any).valueBool) kb.relativeToSpeed = true
-			if ((kb as any).valueBool2) kb.fastSeek = true
+			if ((kb as any).valueBool2) (kb as any).fastSeek = true
 			if ((kb as any).valueBool3) kb.autoPause = true
 
 			kb.adjustMode = AdjustMode.ADD
@@ -206,7 +212,7 @@ function tenToEleven(state: State) {
 
 		// Migrate seekMark
 		else if (kb.command === "seekMark") {
-			if ((kb as any).valueBool2) kb.fastSeek = true
+			if ((kb as any).valueBool2) (kb as any).fastSeek = true
 			delete (kb as any).valueBool2
 		}
 		// Migrate fullscreen
@@ -301,6 +307,36 @@ function thirteenToFourteen(state: State) {
 			state.menuKeybinds.push(kb)
 		}
 	})
+	return state
+}
+
+/**
+ * ITC_REL is gone, and seek/volume no longer have an interactive mode. Shortcuts on a
+ * mode that no longer exists are dropped rather than reinterpreted, since any stand-in
+ * would do something other than what the user set up. The language picker also lost its
+ * Auto option, whose key was "detect" — language is unset now.
+ */
+function fourteenToFifteen(state: State) {
+	state.version = 15
+	if ((state.language as string) === "detect") delete state.language
+
+	// Old AdjustMode values, kept as literals so this stays self contained.
+	const ITC = 4
+	const ITC_REL = 5
+
+	const listKeys = ["pageKeybinds", "browserKeybinds", "menuKeybinds"] as const
+	listKeys.forEach((listKey) => {
+		state[listKey] = (state[listKey] || []).filter((kb: any) => {
+			if (kb.adjustMode === ITC_REL) return false
+			if (kb.adjustMode === ITC && (kb.command === "seek" || kb.command === "volume")) return false
+			return true
+		})
+
+		state[listKey].forEach((kb: any) => {
+			;(delete kb.itcWraparound, delete kb.seekOnce, delete kb.noHold, delete kb.pauseWhileScrubbing, delete kb.fastSeek)
+		})
+	})
+
 	return state
 }
 

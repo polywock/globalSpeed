@@ -1,5 +1,6 @@
 import { type ComponentPropsWithRef } from "react"
 import { cn } from "@/utils/helper"
+import { Button } from "./ui/button"
 
 type TabButtonProps = ComponentPropsWithRef<"button"> & {
 	/** The currently selected tab. */
@@ -10,12 +11,13 @@ type TabButtonProps = ComponentPropsWithRef<"button"> & {
 
 export function TabButton({ open = false, active = false, className, ...props }: TabButtonProps) {
 	return (
-		<button
+		<Button
 			{...props}
+			size="control"
 			role="tab"
 			aria-selected={open}
 			className={cn(
-				"button-control rounded-t-control rounded-b-none border border-t-2 border-border bg-secondary opacity-80 focus:outline-1 focus:outline-ring aria-selected:border-b-transparent aria-selected:bg-background aria-selected:opacity-100",
+				"rounded-t-control rounded-b-none border-t-2 bg-secondary opacity-80 active:translate-y-0 aria-selected:border-b-transparent aria-selected:bg-background aria-selected:opacity-100",
 				active && "border-t-primary",
 				className,
 			)}

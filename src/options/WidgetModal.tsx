@@ -6,6 +6,7 @@ import { RegularTooltip } from "@/comps/RegularTooltip"
 import { Select } from "@/comps/Select"
 import { SliderMicro } from "@/comps/SliderMicro"
 import { Toggle } from "@/comps/Toggle"
+import { Button } from "@/comps/ui/button"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "@/defaults/constants"
 import { gvar } from "@/globalVar"
 import { produce, randomId } from "@/utils/helper"
@@ -212,8 +213,9 @@ export function WidgetModal(props: Props) {
 									})
 								}}
 							/>
-							<button
-								className="icon-button"
+							<Button
+								variant="icon"
+								size="icon-auto"
 								onClick={() => {
 									setView({
 										circleInit: produce(init, (d) => {
@@ -224,7 +226,7 @@ export function WidgetModal(props: Props) {
 								}}
 							>
 								<GoX size="1.6rem" />
-							</button>
+							</Button>
 						</div>
 					) : (
 						<Toggle
@@ -265,8 +267,9 @@ export function WidgetModal(props: Props) {
 									})
 								}}
 							/>
-							<button
-								className="icon-button"
+							<Button
+								variant="icon"
+								size="icon-auto"
 								onClick={() => {
 									setView({
 										circleInit: produce(init, (d) => {
@@ -277,7 +280,7 @@ export function WidgetModal(props: Props) {
 								}}
 							>
 								<GoX size="1.6rem" />
-							</button>
+							</Button>
 						</div>
 					) : (
 						<Toggle
@@ -295,14 +298,15 @@ export function WidgetModal(props: Props) {
 				</OptionField>
 
 				{/* Reset */}
-				<button
-					className="button-control"
+
+				<Button
+					size="lg"
 					onClick={(e) => {
 						setView({ circleInit: null })
 					}}
 				>
 					{gvar.gsm.token.reset}
-				</button>
+				</Button>
 			</ModalContent>
 		</ModalBase>
 	)

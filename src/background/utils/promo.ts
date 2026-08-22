@@ -24,7 +24,7 @@ export async function handlePromo() {
 }
 
 function isEnglish(language: string) {
-	if (language && language !== "detect") return language === "en"
+	if (language) return language === "en"
 	const nav = (navigator.language || "").toLowerCase()
 	return nav === "en" || nav.startsWith("en-")
 }

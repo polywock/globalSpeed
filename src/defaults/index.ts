@@ -42,7 +42,7 @@ export function generateUrlPart(origin: string): URLConditionPart {
 
 export function getDefaultState(): State {
 	let state = {
-		version: 14,
+		version: 15,
 		freshState: true,
 		firstUse: Date.now(),
 		pageKeybinds: getDefaultPageKeybinds(),
@@ -147,6 +147,7 @@ export const INDICATOR_INIT: IndicatorInit = {
 	position: "TL",
 	backgroundColor: "#000000",
 	textColor: "#ffffff",
+	outlineWidth: 1,
 	scaling: 1,
 	rounding: 4,
 	duration: 1,

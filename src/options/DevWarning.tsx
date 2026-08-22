@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { gvar } from "@/globalVar"
-import { canPotentiallyUserScriptExecute, canUserScript, requestCreateTab } from "../utils/browserUtils"
+import { requestCreateTab } from "../utils/browserUtils"
+import { canPotentiallyUserScriptExecute, canUserScript } from "../utils/userScriptSupport"
 import { WarningBanner } from "./WarningBanner"
 
 export enum DevWarningType {
@@ -67,7 +68,7 @@ export function DevWarning(props: Props) {
 					? {
 							label: gvar.gsm.token.openPage,
 							onClick: () =>
-								requestCreateTab(`chrome://extensions/?id=${chrome.runtime.id}#:~:text=${encodeURIComponent("Allow User Scripts")}`),
+								requestCreateTab(`chrome://extensions/?id=${chrome.runtime.id}#:~:text=${encodeURIComponent("allow user scripts")}`),
 						}
 					: undefined
 			}

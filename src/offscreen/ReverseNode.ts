@@ -21,7 +21,7 @@ export class ReverseNode extends AudioWorkletNode {
 	playingCb: (tabId: number) => void
 	ended = false
 	constructor(
-		private ctx: AudioContext,
+		ctx: AudioContext,
 		private tabId: number,
 		maxDuration = 300,
 	) {

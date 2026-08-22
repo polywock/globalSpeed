@@ -1,6 +1,7 @@
 import { GoX } from "react-icons/go"
 import { Select } from "@/comps/Select"
 import { Tooltip } from "@/comps/Tooltip"
+import { Button } from "@/comps/ui/button"
 import { gvar } from "@/globalVar"
 import { extractURLPartValueKey, getActiveParts, getSelectedParts } from "@/utils/configUtils"
 import { produce } from "@/utils/helper"
@@ -83,8 +84,7 @@ export function URLModal(props: Props) {
 				{/* Controls */}
 				<div className="grid grid-cols-[max-content_max-content] gap-x-2.5">
 					{/* Create */}
-					<button
-						className="button-control"
+					<Button
 						onClick={(e) => {
 							props.onChange(
 								produce(value, (d) => {
@@ -94,16 +94,10 @@ export function URLModal(props: Props) {
 						}}
 					>
 						{gvar.gsm.token.create}
-					</button>
+					</Button>
 
 					{/* Reset */}
-					{parts.length ? (
-						<button className="button-control" onClick={props.onReset}>
-							{gvar.gsm.token.reset}
-						</button>
-					) : (
-						<div></div>
-					)}
+					{parts.length ? <Button onClick={props.onReset}>{gvar.gsm.token.reset}</Button> : <div></div>}
 				</div>
 			</ModalContent>
 		</ModalBase>
@@ -162,14 +156,15 @@ function ULRConditionPart(props: { part: URLConditionPart; onChange: (part: URLC
 
 			{/* Delete */}
 			<Tooltip title={gvar.gsm.token.delete}>
-				<button
-					className="icon-button"
+				<Button
+					variant="icon"
+					size="icon-auto"
 					onClick={() => {
 						onRemove(part)
 					}}
 				>
 					<GoX size="1.6rem" />
-				</button>
+				</Button>
 			</Tooltip>
 		</div>
 	)

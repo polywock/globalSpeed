@@ -1,6 +1,7 @@
 import { CSSProperties } from "react"
 import { SegmentedButtons } from "@/comps/SegmentedButtons"
 import { SliderMicro } from "@/comps/SliderMicro"
+import { Button } from "@/comps/ui/button"
 import { getDefaultSpeedPresets } from "@/defaults/constants"
 import { gvar } from "@/globalVar"
 import { clamp, produce } from "@/utils/helper"
@@ -117,14 +118,14 @@ export function SpeedPresetModal(props: Props) {
 				</div>
 
 				{/* Reset */}
-				<button
+				<Button
+					size="lg"
 					onClick={(e) => {
 						setView({ speedPresetPadding: null, speedPresetRows: null, speedPresets: null, speedSmallStep: null, speedBigStep: null })
 					}}
-					className="button-control text-control"
 				>
 					{gvar.gsm.token.reset}
-				</button>
+				</Button>
 			</ModalContent>
 		</ModalBase>
 	)

@@ -12,7 +12,7 @@ export function OrlHeader(props: OrlHeaderProps) {
 
 	return (
 		<div
-			className="grid grid-cols-[1fr_max-content_max-content] items-center gap-x-1.75 border-0 border-b border-border-subtle bg-secondary px-2.5 py-1.25 text-header [font-weight:bolder] text-foreground select-none"
+			className="grid grid-cols-[1fr_max-content_max-content] items-center gap-x-1.75 border-0 border-b border-border-subtle bg-secondary px-2.5 py-1.25 text-2xs [font-weight:bolder] text-foreground select-none"
 			onClick={(e) => {
 				setView({ minimizeOrlBanner: m ? null : true })
 			}}

@@ -128,6 +128,10 @@ export class ConfigSync {
 			this.urlConditionsMode = "Off"
 			return
 		}
+		if (location.protocol === "file:") {
+			this.urlConditionsMode = "On"
+			return
+		}
 		this.urlConditions = this.urlConditionsClient.view.keybindsUrlCondition || getEmptyUrlConditions(true)
 		const enabledParts = getActiveParts(this.urlConditions)
 		const runtimeUrl = getPracticalRuntimeUrl()
@@ -415,9 +419,7 @@ export class ConfigSync {
 		this.lastTrigger = now
 
 		// Add certain keybinds to ignore list to avoid repeat triggering
-		matches
-			.filter((match) => match.kb.adjustMode === AdjustMode.ITC || match.kb.adjustMode === AdjustMode.ITC_REL)
-			.forEach((v) => this.ignoreList.add(v.kb.id))
+		matches.filter((match) => match.kb.adjustMode === AdjustMode.ITC).forEach((v) => this.ignoreList.add(v.kb.id))
 
 		// Trigger the keybinds
 		chrome.runtime.sendMessage({ type: "TRIGGER_KEYBINDS", ids: matches.map((match) => ({ id: match.kb.id, alt: match.alt })) })

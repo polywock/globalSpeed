@@ -1,9 +1,9 @@
 import { getDefaultFx } from "@/defaults"
 import { gvar } from "@/globalVar"
 import { AnyDict, CONTEXT_KEYS, State, URLRule, URLStrictness } from "@/types"
-import { canUserScript } from "@/utils/browserUtils"
 import { hasActiveParts, testURL } from "@/utils/configUtils"
-import { isFirefox, isMac, isMobile, listToDict, timeout } from "@/utils/helper"
+import { isMac, isMobile, listToDict, timeout } from "@/utils/helper"
+import { runUserJs } from "./utils/runUserJs"
 
 type UrlRuleBehavior = [
 	URLRule["type"][],
@@ -35,23 +35,8 @@ const RULE_BEHAVIORS: UrlRuleBehavior[] = [
 		["JS"],
 		async (isFake, t, r, o, d) => {
 			if (isFake) return
-			if (isFirefox()) {
-				await timeout(500)
-				chrome.tabs.sendMessage(d.tabId, { type: "RUN_JS", value: r.overrideJs }, { frameId: 0 })
-			} else if (canUserScript()) {
-				await timeout(500)
-				try {
-					chrome.userScripts.execute({
-						injectImmediately: true,
-						js: [{ code: r.overrideJs }],
-						world: "MAIN",
-						target: {
-							tabId: d.tabId,
-							frameIds: [0],
-						},
-					})
-				} catch {}
-			}
+			await timeout(500)
+			runUserJs(d.tabId, r.overrideJs)
 		},
 	],
 ]

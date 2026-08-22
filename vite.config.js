@@ -11,6 +11,7 @@ const scriptEntries = {
 	main: "contentScript/main/index.ts",
 	pageDraw: "contentScript/pageDraw/index.ts",
 	pane: "contentScript/pane/index.ts",
+	itcPanel: "contentScript/itcPanel/index.ts",
 	"sound-touch-processor": "offscreen/SoundTouchProcessor.ts",
 	"reverse-sound-processor": "offscreen/ReverseProcessor.ts",
 	mainLoader: "contentScript/main/loader.ts",
@@ -57,11 +58,26 @@ function mainCode(outDir) {
 	}
 }
 
+// addons-linter flags any textual `Function(...)` as eval, and lodash.debounce ships a
+// UMD root fallback that never runs here (see the `global` define below) but still lands
+// in the bundle. Rewrite it at the source so the string never reaches the output.
+function stripLodashEval() {
+	return {
+		name: "strip-lodash-eval",
+		enforce: "pre",
+		transform(code, id) {
+			if (!id.includes("lodash.debounce")) return
+			if (!code.includes("Function('return this')()")) return
+			return { code: code.replaceAll("Function('return this')()", "globalThis"), map: null }
+		},
+	}
+}
+
 function sharedConfig({ firefox, outDir, production }) {
 	return {
 		base: "./",
 		publicDir: false,
-		plugins: [browserModules(firefox), tailwindcss()],
+		plugins: [browserModules(firefox), stripLodashEval(), tailwindcss()],
 		resolve: {
 			alias: {
 				"@": srcRoot,

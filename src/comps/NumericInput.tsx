@@ -1,4 +1,5 @@
 import { ChangeEvent, RefObject, useEffect, useState } from "react"
+import { gvar } from "@/globalVar"
 import { cn, round } from "../utils/helper"
 import { FloatTooltip } from "./FloatTooltip"
 
@@ -75,7 +76,7 @@ export const NumericInput = (props: NumericInputProps) => {
 			}
 			setProblem(null)
 		} else {
-			setProblem(`NaN`)
+			setProblem(gvar.gsm.token.invalidNumber)
 		}
 	}
 

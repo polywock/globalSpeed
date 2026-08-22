@@ -1,0 +1,158 @@
+:is(div:popover-open, div.popoverOpenYah) {
+	background-color: transparent;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100vw;
+	height: 100vh;
+	border: none;
+	margin: 0;
+	padding: 0;
+	pointer-events: none;
+	overflow: hidden;
+
+	.panel {
+		position: fixed;
+		left: 0;
+		top: 0;
+		box-sizing: border-box;
+		width: 300px;
+		padding: 8px 10px 10px 10px;
+		border-radius: 8px;
+		background-color: #000000e6;
+		border: 2px solid #aaa;
+		color: white;
+		font-family: sans-serif;
+		font-size: 14px;
+		line-height: 1;
+		pointer-events: all;
+		user-select: none;
+		touch-action: none;
+		opacity: 0.9;
+		transition: opacity 150ms ease-out;
+		cursor: grab;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
+	.panel.moving {
+		cursor: grabbing;
+	}
+
+	/* Every row carries one so the titles line up; the whole panel is draggable regardless. */
+	.grip {
+		display: flex;
+		opacity: 0.5;
+		font-size: 15px;
+	}
+
+	.row + .row {
+		margin-top: 9px;
+		padding-top: 9px;
+		border-top: 1px solid #ffffff26;
+	}
+
+	.rowHeader {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		padding-bottom: 9px;
+	}
+
+	.title {
+		flex: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		opacity: 0.75;
+	}
+
+	/* Click it to type an exact value. */
+	.value {
+		width: auto;
+		height: auto;
+		padding: 2px 4px;
+		font-variant-numeric: tabular-nums;
+		font-weight: bold;
+		opacity: 0.9;
+	}
+
+	button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-sizing: border-box;
+		width: 18px;
+		height: 18px;
+		padding: 0;
+		margin: 0;
+		border: none;
+		border-radius: 4px;
+		background-color: transparent;
+		color: white;
+		font-size: 14px;
+		opacity: 0.55;
+		cursor: pointer;
+
+		&:hover {
+			opacity: 1;
+			background-color: #ffffff33;
+		}
+	}
+
+	.menu {
+		max-height: 168px;
+		overflow-y: auto;
+		margin-top: 8px;
+		border-radius: 4px;
+		background-color: #ffffff14;
+	}
+
+	.menuItem {
+		width: 100%;
+		height: auto;
+		justify-content: flex-start;
+		padding: 6px 8px;
+		border-radius: 0;
+		font-size: 13px;
+		opacity: 0.8;
+	}
+
+	.track {
+		position: relative;
+		height: 16px;
+		cursor: pointer;
+		touch-action: none;
+	}
+
+	.rail,
+	.fill {
+		position: absolute;
+		top: 6px;
+		left: 0;
+		height: 4px;
+		border-radius: 2px;
+	}
+
+	.rail {
+		width: 100%;
+		background-color: #ffffff40;
+	}
+
+	.fill {
+		background-color: #ffffffcc;
+	}
+
+	.thumb {
+		position: absolute;
+		top: 2px;
+		width: 12px;
+		height: 12px;
+		margin-left: -6px;
+		border-radius: 50%;
+		background-color: white;
+		box-shadow: 0px 0px 4px 1px #00000088;
+	}
+}

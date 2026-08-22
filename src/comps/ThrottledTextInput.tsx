@@ -1,5 +1,5 @@
 import debounce from "lodash.debounce"
-import { DetailedHTMLProps, InputHTMLAttributes, TextareaHTMLAttributes, useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { assertType } from "@/utils/helper"
 
 type ThrottledTextInputProps = {

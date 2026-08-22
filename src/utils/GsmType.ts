@@ -5,6 +5,7 @@ export type Gsm = {
 	/** en */
 	_lang?: string
 	_shortcut_screenshot?: boolean
+	_upperFirst?: boolean
 	audio: {
 		/** Release audio */
 		releaseTab: string
@@ -40,24 +41,14 @@ export type Gsm = {
 		jsWarning: string
 		/** Enable 'Allow User Scripts' to use javascript URL rules */
 		jsWarningRules: string
-		/** Enable developer mode to use javascript shortcuts */
-		jsWarningEdge: string
-		/** Enable developer mode to use javascript URL rules */
-		jsWarningRulesEdge: string
 	}
 	menuLabels: {
-		/** Invert page */
-		invertPage: string
-		/** Grayscale page */
-		grayscalePage: string
 		/** Video brightness */
 		videoBrightness: string
 		/** Video contrast */
 		videoContrast: string
 	}
 	header: {
-		/** Toggle state */
-		powerTooltip: string
 		/** Pinned tabs keep their own settings instead of sharing the global context */
 		pinTooltip: string
 		/** Audio effects */
@@ -74,6 +65,8 @@ export type Gsm = {
 		create: string
 		/** Reset */
 		reset: string
+		/** Reset everything */
+		resetEverything: string
 		/** Duplicate */
 		duplicate: string
 		/** Back */
@@ -82,7 +75,7 @@ export type Gsm = {
 		delete: string
 		/** Aspect lock */
 		aspectLock: string
-		/** Merge both */
+		/** Hear both the original and the delayed audio */
 		mergeBoth: string
 		/** Min */
 		min: string
@@ -108,8 +101,6 @@ export type Gsm = {
 		intoPane: string
 		/** Turn filters into a floating, draggable window */
 		intoPaneTooltip: string
-		/** Warning */
-		warning: string
 		/** Filters */
 		filters: string
 		/** Transforms */
@@ -120,6 +111,8 @@ export type Gsm = {
 		blockEventsTooltip: string
 		/** Color */
 		color: string
+		/** Outline width */
+		outlineWidth: string
 		/** Size */
 		size: string
 		/** Rounding */
@@ -132,14 +125,24 @@ export type Gsm = {
 		position: string
 		/** Center */
 		center: string
+		/** Anchor */
+		anchor: string
 		/** Top left */
 		topLeft: string
 		/** Top right */
 		topRight: string
+		/** Top center */
+		topCenter: string
+		/** Center left */
+		centerLeft: string
+		/** Center right */
+		centerRight: string
 		/** Bottom left */
 		bottomLeft: string
 		/** Bottom right */
 		bottomRight: string
+		/** Bottom center */
+		bottomCenter: string
 		/** Animation */
 		animation: string
 		/** Default */
@@ -176,8 +179,6 @@ export type Gsm = {
 		customize: string
 		/** Allow shortcuts on $1 */
 		allowShortcuts: string
-		/** Allow on $1 */
-		allowOn: string
 		/** Mode */
 		mode: string
 		/** Darkness */
@@ -196,8 +197,6 @@ export type Gsm = {
 		smallStep: string
 		/** Large step */
 		largeStep: string
-		/** Move down */
-		moveDown: string
 		/** Move up */
 		moveUp: string
 		/** Jump to tab */
@@ -216,8 +215,6 @@ export type Gsm = {
 			/** Height */
 			height: string
 		}
-		/** Interactive window sizing */
-		windowSize: string
 		/** Adjust this window's size and location and press Apply */
 		windowPrompt: string
 		/** Apply */
@@ -402,10 +399,6 @@ export type Gsm = {
 		showNet: string
 		/** Draw on page */
 		drawPage: string
-		/** Fast seek */
-		fastSeek: string
-		/** Faster but less accurate */
-		fastSeekTooltip: string
 		/** Show media info */
 		mediaInfo: string
 		/** Into popup */
@@ -416,8 +409,6 @@ export type Gsm = {
 		cinema: string
 		/** Darken the background of the video. To exit out, press on the background or use shortcut again. */
 		cinemaTooltip: string
-		/** Presets... */
-		presets: string
 		/** Fast forward */
 		temporarySpeed: string
 		/** Press and hold to speed up videos */
@@ -439,6 +430,8 @@ export type Gsm = {
 			header: string
 			/** Language */
 			language: string
+			/** Use system language */
+			languageSystem: string
 			_languageTooltip?: string
 			/** Dark theme */
 			darkTheme: string
@@ -458,6 +451,14 @@ export type Gsm = {
 			ghostMode: string
 			/** Prevents websites from detecting playback speed changes. When enabled, it applies to all websites by default. This may cause issues on some sites. Use the gear icon to limit it to specific websites. */
 			ghostModeTooltip: string
+			/** Enable for local files */
+			localFiles: string
+			/** Lets the extension work on local files opened in the browser, such as video files on your device. Clicking opens the browser extension page, where file access can be allowed. */
+			localFilesTooltip: string
+			/** Enable for incognito */
+			incognito: string
+			/** Lets the extension work in incognito windows. Clicking opens the browser extension page, where incognito access can be allowed. */
+			incognitoTooltip: string
 			/** Pin new tabs */
 			pinByDefault: string
 			/** Initial context */
@@ -544,10 +545,6 @@ export type Gsm = {
 			doubleTapThresholdTooltip: string
 		}
 		editor: {
-			/** Shortcut Editor */
-			header: string
-			/** Keyboard Shortcuts */
-			headerMobile: string
 			/** Page Shortcuts */
 			pageShortcuts: string
 			/** By default, shortcuts are disabled on most websites. */
@@ -566,24 +563,8 @@ export type Gsm = {
 			menuShortcuts: string
 			/** These shortcuts are shown when you right click on a page */
 			menuShortcutsSub: string
-			/** Global shortcuts are useful when you want to control video or audio while using another program */
-			toggleModeTooltip: string
 			/** Menu label */
 			menuLabel: string
-			/** Multiple trigger modes are supported */
-			triggerMode: string
-			/** Local shortcuts (default): Flexible shortcut keys. Global shortcuts: Useful when you want to control video or audio while using another application. Context menu: Ideal for seldomly used commands. Right click on the page to trigger them. */
-			triggerModeTooltip: string
-			/** Local shortcuts (default): Flexible shortcut keys. Context menu: Ideal for seldomly used commands. Right click on the page to trigger them. */
-			triggerModeTooltipFf: string
-			triggerModes: {
-				/** Local shortcuts */
-				"0": string
-				/** Global shortcuts */
-				"1": string
-				/** Context menu */
-				"2": string
-			}
 			/** Spacing */
 			spacing: string
 			/** Reversible */
@@ -596,12 +577,6 @@ export type Gsm = {
 			wraparoundTooltip: string
 			/** Add label */
 			addLabel: string
-			/** Live scrubbing */
-			liveScrubbing: string
-			/** Continously preview changes while moving cursor */
-			liveScrubbingTooltip: string
-			/** Pause while scrubbing */
-			pauseWhileScrubbing: string
 			adjustModes: {
 				/** Set to value */
 				"1": string
@@ -609,10 +584,8 @@ export type Gsm = {
 				"2": string
 				/** Cycle between list of values */
 				"3": string
-				/** Interactively set to value */
+				/** Add a slider to the page */
 				"4": string
-				/** Interactively adjust by value */
-				"5": string
 			}
 			openModes: {
 				/** Foreground tab */
@@ -626,10 +599,6 @@ export type Gsm = {
 				/** Current tab */
 				sameTab: string
 			}
-			/** Press and hold */
-			pressAndHold: string
-			/** If enabled, the key must be held down while interactively adjusting the value */
-			pressAndHoldTooltip: string
 			/** Long press */
 			longPress: string
 			/** Only trigger when the key is held down for a longer duration */
@@ -753,5 +722,19 @@ export type Gsm = {
 		clearBackground: string
 		/** Some useful shortcuts 1. Erase with right mouse button. 2. Draw lines with shift click. 3. Toggle between $1 and $2 mode using Caps Lock 4. To adjust eraser size: hold down the middle mouse button and drag left or right. 5. To adjust brush size: hold down the middle mouse button and drag up or down. 6. Right click on a color for more options. */
 		tips: string
+	}
+	errorFallback: {
+		/** Something went wrong. */
+		title: string
+		/** Refresh this page and try again. */
+		refreshInstruction: string
+		/** Refresh page */
+		refreshAction: string
+		/** If the issue continues, reset all extension settings to their defaults. */
+		resetInstruction: string
+		/** Reset settings */
+		resetAction: string
+		/** As a last resort, reinstall the extension. */
+		reinstallInstruction: string
 	}
 }

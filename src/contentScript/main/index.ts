@@ -1,4 +1,5 @@
-import { isFirefox, randomId } from "../../utils/helper"
+import { IS_FIREFOX_BUILD } from "../../utils/buildFlags"
+import { randomId } from "../../utils/helper"
 import { native } from "./utils/nativeCodes"
 import { seekNetflix } from "./utils/seekNetflix"
 
@@ -14,7 +15,7 @@ let client: StratumClient
 let ghostMode: GhostMode
 
 function main() {
-	if (isFirefox()) {
+	if (IS_FIREFOX_BUILD) {
 		if (window.loadedGsCtx) return
 		window.loadedGsCtx = true
 

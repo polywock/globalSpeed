@@ -2,6 +2,7 @@ import { useRef, useState } from "react"
 import { GoX } from "react-icons/go"
 import { MoveDrag } from "@/comps/MoveDrag"
 import { Tooltip } from "@/comps/Tooltip"
+import { Button } from "@/comps/ui/button"
 import { gvar } from "@/globalVar"
 import { cn } from "@/utils/helper"
 
@@ -53,9 +54,9 @@ export function ListItem(props: ListItemProps) {
 
 				{/* Delete */}
 				<Tooltip title={gvar.gsm.token.delete}>
-					<button aria-label={gvar.gsm.token.delete} className="icon-button" onClick={(e) => props.onRemove()}>
+					<Button variant="icon" size="icon-auto" aria-label={gvar.gsm.token.delete} onClick={(e) => props.onRemove()}>
 						<GoX size="1.6rem" />
-					</button>
+					</Button>
 				</Tooltip>
 			</div>
 			<div data-slot="list-item-sub" className="border-0 border-b border-border pb-3.75"></div>

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Select } from "@/comps/Select"
+import { Button } from "@/comps/ui/button"
 import { svgFilterGenerate, svgFilterInfos, svgFilterIsValid } from "@/defaults/filters"
 import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
 import { gvar } from "@/globalVar"
@@ -49,8 +50,7 @@ export function SvgFilterList(props: { svgFilters: SvgFilter[]; onChange: (newSv
 					}}
 					options={filterTypes.map((t) => ({ key: t, value: (gvar.gsm.filter.otherFilters as any)[t] }))}
 				/>
-				<button
-					className="button-control"
+				<Button
 					onClick={(e) => {
 						props.onChange(
 							produce(props.svgFilters, (dArr) => {
@@ -63,7 +63,7 @@ export function SvgFilterList(props: { svgFilters: SvgFilter[]; onChange: (newSv
 					}}
 				>
 					{gvar.gsm.token.create}
-				</button>
+				</Button>
 			</div>
 		</div>
 	)

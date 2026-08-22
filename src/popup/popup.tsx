@@ -2,6 +2,7 @@ import { useState } from "react"
 import { createRoot } from "react-dom/client"
 import { FaPowerOff } from "react-icons/fa"
 import { gvar } from "@/globalVar"
+import { PageReachableProvider } from "@/hooks/usePageReachable"
 import { useThemeSync } from "@/hooks/useThemeSync"
 import { StateView } from "@/types"
 import { handleFreshState } from "@/utils/configUtils"
@@ -76,7 +77,9 @@ Promise.all([
 	const root = createRoot(document.querySelector("#root"))
 	root.render(
 		<ErrorFallback>
-			<App />
+			<PageReachableProvider>
+				<App />
+			</PageReachableProvider>
 		</ErrorFallback>,
 	)
 	chrome.storage.session?.setAccessLevel?.({ accessLevel: chrome.storage.AccessLevel.TRUSTED_AND_UNTRUSTED_CONTEXTS })

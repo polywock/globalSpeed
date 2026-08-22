@@ -56,11 +56,12 @@ export function SpeedControl(props: SpeedControlProps) {
 			{/* Presets */}
 			<div className="grid grid-cols-3 justify-items-center gap-0.75">
 				{presets.map((v, i) => (
-					<button
+					<Button
 						key={i}
+						variant={props.speed === v ? "primary" : "ghost"}
 						className={cn(
-							"w-3/4 button-control border-0 px-0 py-(--padding) transition-[transform,background-color,color] duration-170 ease-[cubic-bezier(0,0,0.1,1)]",
-							props.speed === v ? "scale-120 rounded-md bg-primary text-primary-foreground" : "focus:outline-1 focus:outline-ring",
+							"w-3/4 border-0 px-0 py-(--padding) transition-[transform,background-color,color] duration-170 ease-[cubic-bezier(0,0,0.1,1)]",
+							props.speed === v ? "scale-120 rounded-md" : "focus:outline-1 focus:outline-ring",
 						)}
 						onClick={() => props.onChange(v)}
 						onContextMenu={(e) => {
@@ -68,7 +69,7 @@ export function SpeedControl(props: SpeedControlProps) {
 						}}
 					>
 						{v.toFixed(2)}
-					</button>
+					</Button>
 				))}
 			</div>
 
@@ -81,10 +82,10 @@ export function SpeedControl(props: SpeedControlProps) {
 					props.onChange(clamp(MIN_SPEED_CHROMIUM, MAX_SPEED_CHROMIUM, props.speed + speedDelta))
 				}}
 			>
-				<Button variant="outline" className="rounded-lg px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(-largeStep)}>
+				<Button className="px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(-largeStep)}>
 					<LuChevronsLeft className="size-5" />
 				</Button>
-				<Button variant="outline" className="rounded-lg px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(-smallStep)}>
+				<Button className="px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(-smallStep)}>
 					<LuChevronLeft className="size-5" />
 				</Button>
 				<NumericInput
@@ -100,11 +101,11 @@ export function SpeedControl(props: SpeedControlProps) {
 					}}
 					displayFixed={1}
 				/>
-				<Button variant="outline" className="rounded-lg px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(smallStep)}>
+				<Button className="px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(smallStep)}>
 					{/* <FaAngleRight size={"1.14rem"} /> */}
 					<LuChevronRight className="size-5" />
 				</Button>
-				<Button variant="outline" className="rounded-lg px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(largeStep)}>
+				<Button className="px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(largeStep)}>
 					<LuChevronsRight className="size-5" />
 				</Button>
 			</div>

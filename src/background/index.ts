@@ -9,13 +9,14 @@ import { MediaEvent } from "@/contentScript/isolated/utils/applyMediaEvent"
 import { getDefaultContext, getDefaultState } from "@/defaults"
 import { AnyDict, Context, CONTEXT_KEYS, InitialContext, Keybind, KeybindMatch, KeybindMatchId, State, StateView, URLRule } from "@/types"
 import { getLatestActiveTabInfo, tabToTabInfo } from "@/utils/browserUtils"
+import { IS_FIREFOX_BUILD } from "@/utils/buildFlags"
 import { findMatchingBrowserKeybinds, findMatchingMenuKeybinds, hasActiveParts, testURL } from "@/utils/configUtils"
 import { syncContextMenu, syncContextMenuDeb } from "@/utils/contextMenus"
 import { loadGsm } from "@/utils/gsm"
-import { isFirefox, isMobile } from "@/utils/helper"
+import { isMobile } from "@/utils/helper"
 import { dumpConfig, fetchView, getKeysByPrefix, PREFIX_SETS, pushView, restoreConfig } from "@/utils/state"
 import { clearClosed } from "./utils/getAutoMedia"
-import { ProcessKeybinds, releaseTemporarySpeed, setValue, type SetValueInit } from "./utils/processKeybinds"
+import { buildItcInit, ProcessKeybinds, releaseTemporarySpeed, setValue, type SetValueInit } from "./utils/processKeybinds"
 import { handlePromo } from "./utils/promo"
 
 declare global {
@@ -55,7 +56,7 @@ gvar.sess.safeCbs.add(async () => {
 	keys = [...keys, ...(await getKeysByPrefix(PREFIX_SETS.SESSION, items))]
 	if (keys.length) await chrome.storage.local.remove(keys)
 
-	isFirefox() || ensureContentScripts()
+	IS_FIREFOX_BUILD || ensureContentScripts()
 	chrome.storage.session?.setAccessLevel?.({ accessLevel: chrome.storage.AccessLevel.TRUSTED_AND_UNTRUSTED_CONTEXTS })
 })
 
@@ -109,7 +110,7 @@ async function processNewTab(tab: chrome.tabs.Tab, view?: StateView, ignorePrevi
 	pushView({ override: { ...newContext, isPinned: true }, tabId: tab.id })
 }
 
-!isFirefox() &&
+!IS_FIREFOX_BUILD &&
 	!isMobile() &&
 	chrome.commands?.onCommand.addListener(async (command: string, tab: chrome.tabs.Tab) => {
 		const view = await fetchView(
@@ -163,6 +164,7 @@ declare global {
 		triggerKeybinds: { type: "TRIGGER_KEYBINDS"; ids: KeybindMatchId[] }
 		releasedTemporarySpeed: { type: "RELEASED_TEMPORARY_SPEED" }
 		requestPane: { type: "REQUEST_PANE" }
+		requestItcPanel: { type: "REQUEST_ITC_PANEL" }
 		setSession: { type: "SET_SESSION"; override: AnyDict }
 		getSession: { type: "GET_SESSION"; keys: any }
 		setLocal: { type: "SET_LOCAL"; override: AnyDict }
@@ -171,6 +173,7 @@ declare global {
 		syncContextMenus: { type: "SYNC_CONTEXT_MENUS"; direct?: boolean }
 		sendMediaEventTo: { type: "SEND_MEDIA_EVENT_TO"; tabId: number; frameId?: number; event: MediaEvent; key: string }
 		setValue: { type: "SET_STATEFUL"; init: SetValueInit }
+		requestItcInit: { type: "REQUEST_ITC_INIT"; kb: Keybind }
 		handlePromo: { type: "HANDLE_PROMO" }
 	}
 }
@@ -208,6 +211,11 @@ chrome.runtime.onMessage.addListener((msg: Messages, sender, reply) => {
 		reply(true)
 	} else if (msg.type === "REQUEST_PANE") {
 		chrome.scripting.executeScript({ target: { tabId: sender.tab.id }, files: ["pane.js"], injectImmediately: true }).finally(() => reply(true))
+		return true
+	} else if (msg.type === "REQUEST_ITC_PANEL") {
+		chrome.scripting
+			.executeScript({ target: { tabId: sender.tab.id, frameIds: [sender.frameId || 0] }, files: ["itcPanel.js"], injectImmediately: true })
+			.finally(() => reply(true))
 		return true
 	} else if (msg.type === "TRIGGER_KEYBINDS") {
 		fetchView({ pageKeybinds: true }).then(({ pageKeybinds }) => {
@@ -259,6 +267,10 @@ chrome.runtime.onMessage.addListener((msg: Messages, sender, reply) => {
 	} else if (msg.type === "SET_STATEFUL") {
 		reply(true)
 		setValue(msg.init)
+	} else if (msg.type === "REQUEST_ITC_INIT") {
+		// A panel row switching to a related command needs that command's reference values.
+		buildItcInit(msg.kb).then(reply, () => reply(null))
+		return true
 	} else if (msg.type === "REQUEST_TOP_FRAME_URL") {
 		chrome.tabs.sendMessage(sender.tab.id, { type: "REQUEST_TOP_FRAME_URL" }, { frameId: 0 }, (resp) => {
 			chrome.tabs.sendMessage(

@@ -27,7 +27,7 @@ export async function readLocaleFile(locale: string): Promise<Gsm> {
 	return json
 }
 
-function getValidLocale(overrideLang?: string) {
+export function getValidLocale(overrideLang?: string) {
 	if (overrideLang && AVAILABLE_LOCALES.has(overrideLang)) return overrideLang
 	const languages: Set<string> = new Set()
 	for (let lang of navigator.languages.map((l) => l.replace("-", "_"))) {
@@ -44,17 +44,16 @@ export const LOCALE_MAP: {
 		title: string
 	}
 } = {
-	detect: { display: "Auto", title: "" },
 	ar: { display: "عربي", title: "Arabic" },
 	de: { display: "Deutsch", title: "German" },
 	en: { display: "English", title: "English" },
 	es: { display: "Español", title: "Spanish" },
 	fr: { display: "Français", title: "French" },
-	id: { display: "Bahasa Indonesia", title: "Indonesian" },
+	id: { display: "Indonesia", title: "Indonesian" },
 	it: { display: "Italiano", title: "Italian" },
 	ja: { display: "日本語", title: "Japanese" },
 	ko: { display: "한국어", title: "Korean" },
-	ms: { display: "Bahasa Melayu", title: "Malay" },
+	ms: { display: "Melayu", title: "Malay" },
 	pl: { display: "Polski", title: "Polish" },
 	pt_BR: { display: "Português", title: "Portuguese" },
 	ru: { display: "Русский", title: "Russian" },

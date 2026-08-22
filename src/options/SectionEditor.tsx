@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { Select, SelectOption } from "@/comps/Select"
+import { Button } from "@/comps/ui/button"
 import { gvar } from "@/globalVar"
 import { getSelectedParts, requestSyncContextMenu } from "@/utils/configUtils"
 import { produce } from "@/utils/helper"
@@ -7,7 +8,8 @@ import { getDefaultURLCondition } from "../defaults"
 import { availableCommandNames, commandInfos, CommandName, getDefaultMenuKeybinds, getDefaultPageKeybinds } from "../defaults/commands"
 import { SetView, useStateView } from "../hooks/useStateView"
 import { CommandGroup, Keybind, KeybindType, StateView, Trigger } from "../types"
-import { areYouSure, isFirefox, isMobile, moveItem, randomId, walkGetKey } from "../utils/helper"
+import { IS_FIREFOX_BUILD } from "../utils/buildFlags"
+import { areYouSure, isMobile, moveItem, randomId, walkGetKey } from "../utils/helper"
 import { CommandWarning } from "./CommandWarning"
 import { DevWarning, DevWarningType, useDevWarningType } from "./DevWarning"
 import { KeybindControl } from "./keybindControl"
@@ -41,7 +43,7 @@ export function SectionEditor(props: {}) {
 		<>
 			<KeybindSection listKey="pageKeybinds" view={view} setView={setView} showUrlConditions devWarningType={devWarningType} />
 
-			{isFirefox() || isMobile() ? null : (
+			{IS_FIREFOX_BUILD || isMobile() ? null : (
 				<KeybindSection listKey="browserKeybinds" view={view} setView={setView} showUrlConditions devWarningType={devWarningType} />
 			)}
 
@@ -247,8 +249,7 @@ function SectionControls(props: { listKey: KeybindType; view: StateView; setView
 			/>
 
 			{/* Create */}
-			<button
-				className="button-control"
+			<Button
 				onClick={(e) => {
 					const newKb = commandInfos[commandOption as CommandName].generate()
 					if (trigger !== Trigger.PAGE) newKb.trigger = trigger
@@ -258,11 +259,10 @@ function SectionControls(props: { listKey: KeybindType; view: StateView; setView
 				}}
 			>
 				{gvar.gsm.token.create}
-			</button>
+			</Button>
 
 			{/* Reset */}
-			<button
-				className="button-control"
+			<Button
 				onClick={(e) => {
 					if (!areYouSure()) return
 					const updates: Partial<StateView> = {
@@ -272,12 +272,12 @@ function SectionControls(props: { listKey: KeybindType; view: StateView; setView
 				}}
 			>
 				{gvar.gsm.token.reset}
-			</button>
+			</Button>
 
 			{/* URL conditions */}
 			{showUrlConditions && view[listKey]?.length > 0 && (
 				<>
-					<button className="button-control" onClick={() => setShow(!show)}>{`${gvar.gsm.options.rules.conditions}: ${urlRuleCount}`}</button>
+					<Button onClick={() => setShow(!show)}>{`${gvar.gsm.options.rules.conditions}: ${urlRuleCount}`}</Button>
 
 					{show && (
 						<URLModal

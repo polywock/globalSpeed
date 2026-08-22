@@ -10,17 +10,12 @@ import { IS_AMAZON, IS_BILIBILI, IS_NATIVE, IS_NETFLIX, IS_SMART, IS_SPECIAL_SEE
 export function getMediaProbe(media: HTMLMediaElement, includeFormatted?: boolean): MediaProbe {
 	if (!media) return
 	return {
-		currentTime: media.currentTime,
-		paused: media.paused,
-		duration: media.duration,
-		volume: media.volume,
-		fps: media.tagName === "VIDEO" ? getFps(media as HTMLVideoElement) : null,
 		formatted: includeFormatted ? getMediaInfo(media) : null,
 		fullyLooped: media.loop,
 	}
 }
 
-export function seek(elem: HTMLMediaElement, value: number, relative: boolean, fast?: boolean, autoPause?: boolean, wraparound?: boolean) {
+export function seek(elem: HTMLMediaElement, value: number, relative: boolean, autoPause?: boolean, wraparound?: boolean) {
 	let newTime = value
 
 	if (relative) {
@@ -48,15 +43,10 @@ export function seek(elem: HTMLMediaElement, value: number, relative: boolean, f
 		}
 	}
 
-	seekTo(elem, newTime, fast, autoPause)
+	seekTo(elem, newTime, autoPause)
 }
 
-export function seekTo(elem: HTMLMediaElement, value: number, fast?: boolean, autoPause?: boolean) {
-	// fast seek is not precise for small changes.
-	if (fast && (value < 10 || Math.abs(elem.currentTime - value) < 3)) {
-		fast = false
-	}
-
+export function seekTo(elem: HTMLMediaElement, value: number, autoPause?: boolean) {
 	const paused = elem.paused
 	autoPause && elem.pause()
 
@@ -108,12 +98,12 @@ async function persistMark(elem: HTMLMediaElement, key: string) {
 	setSession(override)
 }
 
-export function seekMark(elem: HTMLMediaElement, key: string | number, fast?: boolean) {
+export function seekMark(elem: HTMLMediaElement, key: string | number) {
 	const markTime = typeof key === "number" ? key : elem.gsMarks?.[key]
 	if (markTime == null) {
 		setMark(elem, key as string)
 	} else {
-		seekTo(elem, markTime, fast)
+		seekTo(elem, markTime)
 	}
 }
 
@@ -404,7 +394,7 @@ export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
 	if (e.type === "PLAYBACK_RATE") {
 		SetPlaybackRate.set(elem, e.value, e.freePitch)
 	} else if (e.type === "SEEK") {
-		seek(elem, e.value, e.relative, e.fast, e.autoPause, e.wraparound)
+		seek(elem, e.value, e.relative, e.autoPause, e.wraparound)
 	} else if (e.type === "PAUSE") {
 		setPause(elem, e.state)
 	} else if (e.type === "MUTE") {
@@ -423,7 +413,7 @@ export function applyMediaEvent(elem: HTMLMediaElement, e: MediaEvent) {
 			setMark(elem, e.key)
 		}
 	} else if (e.type === "SEEK_MARK") {
-		seekMark(elem, e.key, e.fast)
+		seekMark(elem, e.key)
 	} else if (e.type === "TOGGLE_LOOP") {
 		toggleLoop(elem, e.key, e.skipMode, e.indicator, e.ignoreNavigate)
 	} else if (e.type === "PIP") {
@@ -461,12 +451,12 @@ export function requestApplyMediaEvent(tabId: number, frameId: number, key: stri
 }
 
 export type MediaEventPlaybackRate = { type: "PLAYBACK_RATE"; value: number; freePitch: boolean }
-export type MediaEventSeek = { type: "SEEK"; value: number; relative?: boolean; fast?: boolean; autoPause?: boolean; wraparound?: boolean }
+export type MediaEventSeek = { type: "SEEK"; value: number; relative?: boolean; autoPause?: boolean; wraparound?: boolean }
 export type MediaEventPause = { type: "PAUSE"; state: StateOption }
 export type MediaEventMute = { type: "MUTE"; state: StateOption }
 export type MediaEventSetVolume = { type: "SET_VOLUME"; value: number; relative: boolean }
 export type MediaEventSetMark = { type: "SET_MARK"; key: string }
-export type MediaEventSeekMark = { type: "SEEK_MARK"; key: string | number; fast: boolean }
+export type MediaEventSeekMark = { type: "SEEK_MARK"; key: string | number }
 export type MediaEventToggleLoop = { type: "TOGGLE_LOOP"; key: string; skipMode?: boolean; indicator?: boolean; ignoreNavigate?: boolean }
 export type MediaEventLoopEntire = { type: "LOOP_ENTIRE"; key: string; state: StateOption }
 export type MediaEventTogglePip = { type: "PIP"; state?: StateOption }

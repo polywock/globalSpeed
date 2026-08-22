@@ -1,3 +1,4 @@
+import type { CommandName } from "@/defaults/commands"
 import { svgFilterIsValid } from "@/defaults/filters"
 import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
 import { gvar } from "@/globalVar"
@@ -19,7 +20,9 @@ import {
 	type URLConditionPart,
 } from "../types"
 import { sendToFrame } from "./browserUtils"
-import { clamp, isFirefox, round } from "./helper"
+import { IS_FIREFOX_BUILD } from "./buildFlags"
+import { clamp, round } from "./helper"
+import { supportsItc } from "./itcUtils"
 import { fetchView, pushView } from "./state"
 
 export function conformSpeed(speed: number, rounding = 2) {
@@ -35,7 +38,7 @@ export function formatSpeed(speed: number, snip = false) {
 }
 
 export function formatSpeedForBadge(speed: number) {
-	return formatSpeed(speed).slice(0, isFirefox() ? 3 : 4)
+	return formatSpeed(speed).slice(0, IS_FIREFOX_BUILD ? 3 : 4)
 }
 
 export function formatFilters(filterValues: FilterEntry[]) {
@@ -138,6 +141,13 @@ export function extractURLPartValueKey(part: URLConditionPart): "valueContains" 
 
 export function requestSyncContextMenu(direct?: boolean) {
 	chrome.runtime.sendMessage({ type: "SYNC_CONTEXT_MENUS", direct })
+}
+
+/** The adjust modes a command supports, in the order the editor cycles through them. */
+export function getAdjustModes(command: CommandName): AdjustMode[] {
+	const modes = [AdjustMode.SET, AdjustMode.ADD, AdjustMode.CYCLE]
+	if (supportsItc(command)) modes.push(AdjustMode.ITC)
+	return modes
 }
 
 export function isSeekSmall(kb: Keybind, ref?: ReferenceValues) {

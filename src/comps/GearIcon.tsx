@@ -1,7 +1,7 @@
 import { gvar } from "@/globalVar"
-import { cn } from "@/utils/helper"
 import { Gear } from "./svgs"
 import { Tooltip, TooltipProps } from "./Tooltip"
+import { Button } from "./ui/button"
 
 export function GearIcon(props: {
 	tooltip?: string
@@ -11,9 +11,15 @@ export function GearIcon(props: {
 }) {
 	return (
 		<Tooltip title={props.tooltip || gvar.gsm.token.customize} align={props.align || "top"}>
-			<button aria-label={props.tooltip || gvar.gsm.token.customize} className={cn("icon-button", props.className)} onClick={props.onClick}>
+			<Button
+				variant="icon"
+				size="icon-auto"
+				aria-label={props.tooltip || gvar.gsm.token.customize}
+				className={props.className}
+				onClick={props.onClick}
+			>
 				<Gear size="1.57rem" />
-			</button>
+			</Button>
 		</Tooltip>
 	)
 }

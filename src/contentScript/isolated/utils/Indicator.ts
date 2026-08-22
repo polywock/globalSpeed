@@ -29,15 +29,15 @@ export class Indicator extends Popover {
 		const defaultInit = this.forCircle ? INDICATOR_CIRCLE_INIT : INDICATOR_INIT
 		init = init || {}
 		this.key = init.key
+		this.scaling = init.scaling ?? defaultInit.scaling
 
 		this.main.removeAttribute("style")
 		this.main.style.backgroundColor = init.backgroundColor || defaultInit.backgroundColor
 		this.main.style.color = init.textColor || defaultInit.textColor
-		this.main.style.border = `${3 * this.scaling}px solid color-mix(in oklab, ${init.textColor || defaultInit.textColor} 50%, transparent)`
+		this.main.style.border = `${3 * this.scaling * (init.outlineWidth ?? defaultInit.outlineWidth ?? 1)}px solid color-mix(in oklab, ${init.textColor || defaultInit.textColor} 50%, transparent)`
 
 		this.animation = init.animation || 1
 		this.duration = init.duration ?? 1
-		this.scaling = init.scaling ?? defaultInit.scaling
 		const rounding = (init.rounding ?? defaultInit.rounding) * this.scaling
 
 		this.main.style.padding = `${BASE_PADDING * (this.scaling + rounding * 0.12)}px`

@@ -1,17 +1,21 @@
 import { IndicatorShowOpts } from "@/contentScript/isolated/utils/Indicator"
 import { gvar } from "@/globalVar"
+import { loadGsm } from "@/utils/gsm"
+import { Gsm } from "@/utils/GsmType"
 import { hashWithStoredSalt } from "@/utils/hash"
 import { produce } from "@/utils/helper"
+import { afxContinuousMap, getItcSelector, getItcValues, supportsItc } from "@/utils/itcUtils"
 import type { MediaEvent, MediaEventCinema } from "../../contentScript/isolated/utils/applyMediaEvent"
 import { FlatMediaInfo } from "../../contentScript/isolated/utils/genMediaInfo"
 import { getDefaultAudioFx, getDefaultFx } from "../../defaults"
 import { commandInfos, CommandName } from "../../defaults/commands"
-import { filterInfos } from "../../defaults/filters"
+import { filterInfos, FilterName } from "../../defaults/filters"
 import {
 	AdjustMode,
 	Command,
 	Duration,
 	ItcInit,
+	ItcRelated,
 	Keybind,
 	KeybindMatch,
 	KeybindType,
@@ -19,14 +23,14 @@ import {
 	ReferenceValues,
 	StateView,
 	StateViewSelector,
-	Trigger,
 } from "../../types"
 import { checkContentScript, sendToFrame, TabInfo } from "../../utils/browserUtils"
 import { intoFxFlags, isSeekSmall, sendMediaEvent, sendMessageToConfigSync, triggerToKey } from "../../utils/configUtils"
-import { clamp, createWindowWithSafeBounds, formatDuration, isFirefox, round, timeout, wraparound } from "../../utils/helper"
+import { clamp, createWindowWithSafeBounds, formatDuration, round, timeout } from "../../utils/helper"
 import { fetchView, pushView, PushViewInit } from "../../utils/state"
 import { getAutoMedia } from "./getAutoMedia"
 import { KeepAlive } from "./KeepAlive"
+import { runUserJs } from "./runUserJs"
 import { initTabCapture, isTabCaptured, releaseTabCapture } from "./tabCapture"
 
 let lastSeek: { key: string; time: number; net: number }
@@ -37,8 +41,6 @@ export class ProcessKeybinds {
 	loadedMedia?: { value: FlatMediaInfo }
 	loadedMediaVideo?: { value: FlatMediaInfo }
 	stopped = false
-	itcList: ItcInit[] = []
-	immediateItc = false
 	constructor(
 		private matches: KeybindMatch[],
 		public tabInfo: TabInfo,
@@ -51,14 +53,11 @@ export class ProcessKeybinds {
 	}
 	init = async () => {
 		this.globalHideIndicator = (await gvar.es.getAllUnsafe())["g:hideIndicator"]
-		this.immediateItc = this.matches.some((m) => m.kb.command === "nothing" && m.kb.valueNumber != null)
 
 		for (let match of this.matches) {
 			if (this.stopped) return
 			await this.processKeybindMatch(match)
 		}
-
-		this.flushItcList()
 	}
 	fetch = async (selector: StateViewSelector) => {
 		return fetchView(selector, this.tabInfo?.tabId)
@@ -72,23 +71,9 @@ export class ProcessKeybinds {
 
 		sendMessageToConfigSync({ type: "SHOW_INDICATOR", opts, requiresFocus: this.tabInfo.frameId == null ? true : false }, this.tabInfo.tabId, 0)
 	}
-	processItc = (init: ItcInit) => {
-		if (this.immediateItc) {
-			this.sendItcs([init])
-			return
-		}
-		this.itcList.push(init)
-	}
-	flushItcList = () => {
-		if (!this.itcList.length) return
-		this.sendItcs(this.itcList)
-		this.itcList = []
-	}
+	// The widget only ever lives in the top frame.
 	sendItcs = (inits: ItcInit[]) => {
-		chrome.tabs.sendMessage(this.tabInfo.tabId, {
-			type: "ITC",
-			inits,
-		} as Messages)
+		chrome.tabs.sendMessage(this.tabInfo.tabId, { type: "ITC", inits } as Messages, { frameId: 0 })
 	}
 	applyToMedia = async (e: MediaEvent, requiresVideo = false) => {
 		const media = await this.getMediaAny(requiresVideo)
@@ -176,21 +161,7 @@ const commandHandlers: {
 		const { kb, tabInfo } = args
 		if (!tabInfo || !(await checkContentScript(tabInfo.tabId, tabInfo.frameId || 0))) return
 
-		if (isFirefox()) {
-			chrome.tabs.sendMessage(tabInfo.tabId, { type: "RUN_JS", value: kb.valueString }, { frameId: 0 })
-		} else {
-			try {
-				chrome.userScripts.execute({
-					injectImmediately: true,
-					js: [{ code: kb.valueString }],
-					world: "MAIN",
-					target: {
-						tabId: tabInfo.tabId,
-						frameIds: [0],
-					},
-				})
-			} catch {}
-		}
+		runUserJs(tabInfo.tabId, kb.valueString)
 	},
 	openUrl: async (args) => {
 		const { kb, tabInfo } = args
@@ -377,7 +348,7 @@ const commandHandlers: {
 			text: ` ${kb.valueString}`,
 			small: true,
 		})
-		applyToMedia({ type: "SEEK_MARK", key: jumpTo ?? kb.valueString, fast: kb.fastSeek })
+		applyToMedia({ type: "SEEK_MARK", key: jumpTo ?? kb.valueString })
 	},
 	loopEntire: async (args) => {
 		const { media, kb, applyToMedia, show } = args
@@ -497,7 +468,7 @@ const commandHandlers: {
 		})
 	},
 	fxReset: async (args) => {
-		const { kb, show, override } = args
+		const { kb, override } = args
 		const flags = intoFxFlags(kb.filterTarget)
 		if (flags.element) {
 			override.elementFx = null
@@ -589,17 +560,13 @@ type SessionMark = {
 }
 
 async function processAdjustMode(args: CommandHandlerArgs) {
-	const { fetch, override, kb, commandInfo: command, show, media, applyToMedia, tabInfo } = args
+	const { fetch, kb, commandInfo: command, show, media, applyToMedia, tabInfo } = args
 	const adjustMode = kb.adjustMode || AdjustMode.SET
 
-	if (adjustMode === AdjustMode.ITC || adjustMode === AdjustMode.ITC_REL) {
-		let init = await getItcInit(args)
+	if (adjustMode === AdjustMode.ITC) {
+		const init = tabInfo && (await buildItcInit(kb))
 		if (!init) return
-
-		chrome.tabs.sendMessage(tabInfo.tabId, {
-			type: "ITC",
-			inits: [init],
-		} as Messages)
+		args.sendItcs([init])
 		return
 	}
 
@@ -672,7 +639,6 @@ async function processAdjustMode(args: CommandHandlerArgs) {
 			type: "SEEK",
 			relative: isRelative,
 			value: seconds,
-			fast: kb.fastSeek,
 			autoPause: isSmall ? !kb.skipPauseSmall : kb.autoPause,
 			wraparound: kb.wraparound,
 		})
@@ -706,74 +672,61 @@ async function processAdjustMode(args: CommandHandlerArgs) {
 		valueAlt: secondary,
 		shouldShow: !args.shortcutHideIndicator,
 		ref,
-		wasDirect: true,
 	})
 }
 
-async function getItcInit(args: CommandHandlerArgs): Promise<ItcInit> {
-	const { kb, commandInfo: command, tabInfo, media } = args
+/** Everything a panel row needs. Also served to the page when a row switches command. */
+export async function buildItcInit(kb: Keybind): Promise<ItcInit> {
+	const command = commandInfos[kb.command]
+	if (!command || !supportsItc(kb.command)) return
 	const ref = command.ref || command.getRef(command, kb)
+	const gsm = await loadGsm().catch(() => undefined as Gsm)
 
-	let init: ItcInit = {
-		relative: kb.adjustMode === AdjustMode.ITC_REL,
-		seekOnce: kb.seekOnce,
+	return {
+		kb,
+		label: getItcLabel(kb, gsm),
+		related: getItcRelated(kb, gsm),
 		resetTo: ref.reset ?? ref.default,
 		min: ref.min,
 		max: ref.max,
-		sliderMin: kb.valueItcMin ?? ref.sliderMin,
-		sliderMax: kb.valueItcMax ?? ref.sliderMax,
-		step: kb.valueNumber ?? ref.itcStep,
-		shouldShow: !args.shortcutHideIndicator,
-		dontReleaseKeyUp: (kb.trigger || Trigger.PAGE) === Trigger.PAGE ? kb.noHold : undefined,
-		kb,
+		sliderMin: kb.valueItcMin ?? ref.itcMin ?? ref.sliderMin,
+		sliderMax: kb.valueItcMax ?? ref.itcMax ?? ref.sliderMax,
+		step: ref.sliderStep ?? ref.step,
+	}
+}
+
+/**
+ * The row's title. The content script has no gsm of its own, so resolve it here.
+ * contextLabel is deliberately skipped: it's written for a menu entry, not for this.
+ */
+function getItcLabel(kb: Keybind, gsm?: Gsm) {
+	if (kb.label) return kb.label
+	if (!gsm) return ""
+	if (kb.command === "fxFilter") return gsm.filter[kb.filterOption] || gsm.command.fxFilter
+	return (gsm.command as { [key: string]: string })[kb.command] || ""
+}
+
+/**
+ * What the row's name can be switched to: a filter stays within its own kind, so video
+ * filters offer video filters and transforms offer transforms, and an audio effect offers
+ * the other audio effects. The keybind's filter target rides along untouched, which is what
+ * keeps a page filter row offering page filters.
+ */
+function getItcRelated(kb: Keybind, gsm?: Gsm): ItcRelated[] {
+	if (!gsm) return []
+
+	if (kb.command === "fxFilter") {
+		const isTransform = !!filterInfos[kb.filterOption]?.isTransform
+		return Object.keys(filterInfos)
+			.filter((name) => !!filterInfos[name as FilterName].isTransform === isTransform)
+			.map((name) => ({ key: name, label: gsm.filter[name as FilterName] || name }))
 	}
 
-	if (kb.command === "seek" || kb.command === "volume") {
-		if (!tabInfo || !media.duration) return
-		delete init.resetTo
-
-		let probe = (await chrome.tabs.sendMessage(media.tabInfo.tabId, { type: "MEDIA_PROBE", key: media.key } as Messages, {
-			frameId: media.tabInfo.frameId || 0,
-		})) as MediaProbe
-		if (!probe) return
-
-		init.mediaKey = media.key
-		init.mediaTabInfo = media.tabInfo
-		init.mediaDuration = probe.duration
-
-		if (kb.command === "seek") {
-			// convert context aware units to seconds.
-			init.min = 0
-			delete init.max
-			init.original = probe.currentTime
-			init.wasPaused = probe.paused
-
-			if (kb.duration === Duration.PERCENT) {
-				init.sliderMin = (init.sliderMin / 100) * probe.duration
-				init.sliderMax = (init.sliderMax / 100) * probe.duration
-				init.step = (init.step / 100) * probe.duration
-			} else if (kb.duration === Duration.FRAMES) {
-				let frame = 1 / (probe.fps ?? 24)
-				init.sliderMin = init.sliderMin * frame
-				init.sliderMax = init.sliderMax * frame
-				init.step = init.step * frame
-			}
-
-			if (init.relative && kb.relativeToSpeed) {
-				init.step = init.step * (media.playbackRate || 1)
-			}
-		} else {
-			init.original = probe.volume
-		}
-	} else {
-		let values = await getValues(args)
-		if (!values) return
-
-		if (values.main != null) init.original = values.main
-		if (values.secondary != null) init.originalAlt = values.secondary
-	}
-
-	return init
+	const group = commandInfos[kb.command].group
+	if (group == null) return []
+	return Object.keys(commandInfos)
+		.filter((name) => commandInfos[name as CommandName].group === group && supportsItc(name as CommandName))
+		.map((name) => ({ key: name, label: (gsm.command as { [key: string]: string })[name] || name }))
 }
 
 async function getCycle(args: CommandHandlerArgs) {
@@ -801,37 +754,15 @@ async function getCycle(args: CommandHandlerArgs) {
 }
 
 const afxContinous = new Set(["afxPitch", "afxGain", "afxDelay", "afxPan"])
-const afxMapping: { [key: string]: "pitch" | "volume" | "delay" } = {
-	afxPitch: "pitch",
-	afxGain: "volume",
-	afxDelay: "delay",
-}
 
 async function getValues(args: CommandHandlerArgs): Promise<{ main?: number; secondary?: number }> {
 	const { kb, media, fetch, commandInfo } = args
 	if (kb.command === "volume") {
 		return { main: media.volume }
-	} else if (kb.command === "speed") {
-		return { main: (await fetch({ speed: true })).speed }
-	} else if (kb.command === "fxFilter") {
-		const view = await fetch({ elementFx: true, backdropFx: true })
-		const info = filterInfos[kb.filterOption]
-
-		return {
-			main: (view.elementFx || getDefaultFx())[info.isTransform ? "transforms" : "filters"].find((f) => f.name === kb.filterOption).value,
-			secondary: (view.backdropFx || getDefaultFx())[info.isTransform ? "transforms" : "filters"].find((f) => f.name === kb.filterOption).value,
-		}
-	} else if (afxContinous.has(kb.command)) {
-		const view = await fetch({ audioFx: true, audioFxAlt: true, audioPan: true })
-		if (kb.command === "afxPan") {
-			return { main: view.audioPan ?? commandInfo.ref.default }
-		}
-		let key = afxMapping[kb.command as keyof typeof afxMapping]
-		return {
-			main: (view.audioFx ?? getDefaultAudioFx())[key] ?? commandInfo.ref.default,
-			secondary: view.audioFxAlt ? (view.audioFxAlt[key] ?? commandInfo.ref.default) : undefined,
-		}
 	}
+	const selector = getItcSelector(kb)
+	if (!Object.keys(selector).length) return
+	return getItcValues(kb, await fetch(selector), commandInfo.ref || commandInfo.getRef?.(commandInfo, kb))
 }
 
 export type SetValueInit = {
@@ -843,11 +774,6 @@ export type SetValueInit = {
 	mediaTabInfo?: TabInfo
 	shouldShow?: boolean
 	ref?: ReferenceValues
-	dry?: boolean
-	showAlt?: boolean
-	wasRelative?: boolean
-	wasDirect?: boolean
-	mediaDuration?: number
 }
 
 export async function setValue(init: SetValueInit) {
@@ -855,21 +781,10 @@ export async function setValue(init: SetValueInit) {
 	if (value == null && valueAlt == null) return
 	const command = commandInfos[kb.command]
 
-	ref = ref || command.ref || command.getRef?.(command, kb.command === "seek" ? ({ duration: Duration.SECS } as any) : kb)
-	let max = kb.command === "seek" ? init.mediaDuration : ref.max
+	ref = ref || command.ref || command.getRef?.(command, kb)
 
-	let shouldWrap = init.wasDirect ? kb.wraparound : kb.itcWraparound
-
-	if (value != null) {
-		value =
-			ref.wrappable && init.wasRelative && shouldWrap && max != null && ref.min != null
-				? wraparound(ref.min, max, value)
-				: clamp(ref.min, ref.max, value)
-	}
-
-	if (valueAlt != null) {
-		valueAlt = ref.wrappable && init.wasRelative && shouldWrap ? wraparound(ref.min, ref.max, valueAlt) : clamp(ref.min, ref.max, valueAlt)
-	}
+	if (value != null) value = clamp(ref.min, ref.max, value)
+	if (valueAlt != null) valueAlt = clamp(ref.min, ref.max, valueAlt)
 
 	let override: StateView = {}
 
@@ -878,9 +793,7 @@ export async function setValue(init: SetValueInit) {
 		if (override.lastSpeed === value) delete override.lastSpeed
 		override.speed = value
 	} else if (kb.command === "volume") {
-		init.dry || sendMediaEvent({ type: "SET_VOLUME", value, relative: false }, mediaKey, mediaTabInfo.tabId, mediaTabInfo.frameId)
-	} else if (kb.command === "seek") {
-		init.dry || sendMediaEvent({ type: "SEEK", value, fast: kb.fastSeek }, mediaKey, mediaTabInfo.tabId, mediaTabInfo.frameId)
+		sendMediaEvent({ type: "SET_VOLUME", value, relative: false }, mediaKey, mediaTabInfo.tabId, mediaTabInfo.frameId)
 	} else if (kb.command === "fxFilter") {
 		const view = await fetchView({ elementFx: true, backdropFx: true }, init.tabInfo?.tabId)
 		const { element, backdrop } = intoFxFlags(kb.filterTarget)
@@ -911,22 +824,22 @@ export async function setValue(init: SetValueInit) {
 			(value != null && value?.toFixed(6) !== command.ref.default.toFixed(6)) ||
 			(valueAlt != null && valueAlt.toFixed(6) !== command.ref.default.toFixed(6))
 		)
-			init.dry || initTabCapture(tabInfo.tabId)
+			initTabCapture(tabInfo.tabId)
 
 		if (value != null) {
 			override.audioFx = produce(view.audioFx ?? getDefaultAudioFx(), (d) => {
-				d[afxMapping[kb.command]] = value
+				d[afxContinuousMap[kb.command]] = value
 			})
 		}
 
 		if (view.audioFxAlt && valueAlt != null) {
 			override.audioFxAlt = produce(view.audioFxAlt, (d) => {
-				d[afxMapping[kb.command]] = valueAlt
+				d[afxContinuousMap[kb.command]] = valueAlt
 			})
 		}
 	}
 
-	if (!init.dry && Object.keys(override)) await pushView({ override, tabId: tabInfo.tabId })
+	if (Object.keys(override)) await pushView({ override, tabId: tabInfo.tabId })
 
 	value = value ?? valueAlt
 
@@ -935,8 +848,6 @@ export async function setValue(init: SetValueInit) {
 	let preText: string = ""
 	if (kb.command === "volume" || kb.command === "afxGain") {
 		text = `${round(value * 100, 0)}%`
-	} else if (kb.command === "seek") {
-		text = `${formatDuration(value)}`
 	} else if (kb.command === "speed") {
 		if (!text.includes(".")) {
 			text = `${text}.0`
@@ -944,12 +855,12 @@ export async function setValue(init: SetValueInit) {
 	}
 
 	if (init.shouldShow && text.length + icons.length) {
-		showIndicator({ text: text || "", icons: icons || [], preText }, tabInfo.tabId, init.showAlt)
+		showIndicator({ text: text || "", icons: icons || [], preText }, tabInfo.tabId)
 	}
 }
 
-function showIndicator(opts: IndicatorShowOpts, tabId: number, showAlt?: boolean) {
-	sendMessageToConfigSync({ type: "SHOW_INDICATOR", opts, showAlt }, tabId, 0)
+function showIndicator(opts: IndicatorShowOpts, tabId: number) {
+	sendMessageToConfigSync({ type: "SHOW_INDICATOR", opts }, tabId, 0)
 }
 
 let tempSpeedTimeoutId: number

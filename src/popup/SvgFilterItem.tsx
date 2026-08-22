@@ -1,10 +1,11 @@
 import { useState } from "react"
 import { FaPowerOff } from "react-icons/fa"
 import { GoArrowDown, GoArrowUp, GoX } from "react-icons/go"
+import { LuLink2, LuLink2Off } from "react-icons/lu"
 import { Select } from "@/comps/Select"
 import { SliderPlus } from "@/comps/SliderPlus"
-import { ToggleButton } from "@/comps/ToggleButton"
 import { Tooltip } from "@/comps/Tooltip"
+import { Button } from "@/comps/ui/button"
 import { SVG_COLOR_MATRIX_PRESETS, SVG_MOSAIC_PRESETS, SVG_RGB_PRESETS, SVG_SPECIAL_PRESETS, svgFilterInfos } from "@/defaults/filters"
 import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
 import { gvar } from "@/globalVar"
@@ -44,8 +45,9 @@ export function SvgFilterItem(props: {
 				</div>
 				{(gvar.gsm.filter.otherFilters as any)[filter.type]}
 				<Tooltip title={gvar.gsm.token.moveUp}>
-					<button
-						className="icon-button"
+					<Button
+						variant="icon"
+						size="icon-auto"
 						onClick={() => {
 							listOnChange(
 								produce(list, (d) => {
@@ -55,11 +57,12 @@ export function SvgFilterItem(props: {
 						}}
 					>
 						<GoArrowUp size="1.42rem" />
-					</button>
+					</Button>
 				</Tooltip>
 				<Tooltip title={gvar.gsm.token.moveUp}>
-					<button
-						className="icon-button"
+					<Button
+						variant="icon"
+						size="icon-auto"
 						onClick={() => {
 							listOnChange(
 								produce(list, (d) => {
@@ -69,22 +72,23 @@ export function SvgFilterItem(props: {
 						}}
 					>
 						<GoArrowDown size="1.42rem" />
-					</button>
+					</Button>
 				</Tooltip>
 				<Tooltip title={gvar.gsm.token.delete}>
-					<button className="icon-button">
-						<GoX
-							size="1.6rem"
-							onClick={() => {
-								listOnChange(
-									produce(list, (list) => {
-										const idx = list.findIndex((v) => v.id === filter.id)
-										if (idx >= 0) list.splice(idx, 1)
-									}),
-								)
-							}}
-						/>
-					</button>
+					<Button
+						variant="icon"
+						size="icon-auto"
+						onClick={() => {
+							listOnChange(
+								produce(list, (list) => {
+									const idx = list.findIndex((v) => v.id === filter.id)
+									if (idx >= 0) list.splice(idx, 1)
+								}),
+							)
+						}}
+					>
+						<GoX size="1.6rem" />
+					</Button>
 				</Tooltip>
 			</div>
 			{presetInfo && (
@@ -534,9 +538,16 @@ export function SvgFilterItem(props: {
 function AspectLockButton(props: { active: boolean; onClick: () => void }) {
 	return (
 		<Tooltip title={gvar.gsm.token.aspectLock}>
-			<ToggleButton active={props.active} onClick={props.onClick} className="ml-2.5 px-1.25 py-0">
-				:
-			</ToggleButton>
+			<Button
+				size="control"
+				variant="ghost"
+				aria-pressed={props.active}
+				aria-label={gvar.gsm.token.aspectLock}
+				className="ml-2.5 px-0 py-0 align-middle text-secondary-foreground"
+				onClick={props.onClick}
+			>
+				{props.active ? <LuLink2 className="size-5" /> : <LuLink2Off className="size-5" />}
+			</Button>
 		</Tooltip>
 	)
 }

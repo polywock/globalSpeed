@@ -1,5 +1,6 @@
 import { AdjustMode, Command, CommandGroup, Duration, Keybind, Trigger } from "../types"
-import { getPopupSize, isFirefox, isMobile, randomId } from "../utils/helper"
+import { IS_FIREFOX_BUILD } from "../utils/buildFlags"
+import { getPopupSize, isMobile, randomId } from "../utils/helper"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "./constants"
 import { filterInfos } from "./filters"
 
@@ -101,8 +102,6 @@ export let commandInfos: { [key in CommandName]: Command } = {
 			default: 1,
 			sliderMin: 0.5,
 			sliderMax: 1.5,
-			itcStep: 1,
-			wrappable: true,
 		},
 		generate: () => ({
 			id: randomId(),
@@ -174,11 +173,9 @@ export let commandInfos: { [key in CommandName]: Command } = {
 				return {
 					min: 0,
 					default: 300,
-					itcStep: 60,
 					step: 10,
 					sliderMin: 0,
 					sliderMax: 10 * 60,
-					wrappable: true,
 				}
 			} else if (duration === Duration.PERCENT) {
 				return {
@@ -186,20 +183,16 @@ export let commandInfos: { [key in CommandName]: Command } = {
 					max: 100,
 					default: 50,
 					step: 10,
-					itcStep: 50,
 					sliderMin: 0,
 					sliderMax: 100,
-					wrappable: true,
 				}
 			} else if (duration === Duration.FRAMES) {
 				return {
 					min: 0,
 					default: 240,
 					step: 1,
-					itcStep: 2_400,
 					sliderMin: 0,
 					sliderMax: 14_000,
-					wrappable: true,
 				}
 			}
 		},
@@ -264,8 +257,6 @@ export let commandInfos: { [key in CommandName]: Command } = {
 			default: 0.5,
 			sliderMin: 0,
 			sliderMax: 1,
-			itcStep: 0.5,
-			wrappable: true,
 		},
 		generate: () => ({
 			id: randomId(),
@@ -465,7 +456,6 @@ export let commandInfos: { [key in CommandName]: Command } = {
 			default: 1,
 			sliderMin: 0,
 			sliderMax: 3,
-			itcStep: 1.5,
 		},
 		generate: () => ({
 			id: randomId(),
@@ -487,7 +477,6 @@ export let commandInfos: { [key in CommandName]: Command } = {
 			default: 0,
 			sliderMin: -6,
 			sliderMax: 6,
-			itcStep: 3,
 		},
 		generate: () => ({
 			id: randomId(),
@@ -509,7 +498,6 @@ export let commandInfos: { [key in CommandName]: Command } = {
 			default: 0,
 			sliderMin: 0,
 			sliderMax: 5,
-			itcStep: 2.5,
 		},
 		generate: () => ({
 			id: randomId(),
@@ -531,8 +519,6 @@ export let commandInfos: { [key in CommandName]: Command } = {
 			default: 0,
 			sliderMin: -1,
 			sliderMax: 1,
-			itcStep: 1,
-			wrappable: true,
 		},
 		generate: () => ({
 			id: randomId(),
@@ -733,5 +719,5 @@ export function getDefaultMenuKeybinds(): Keybind[] {
 
 export const availableCommandNames: string[] = Object.entries(commandInfos)
 	.filter((v) => !v[1].requiresTabCapture || (chrome.tabCapture && chrome.offscreen))
-	.filter((v) => !v[1].requiresPiPApi || !isFirefox())
+	.filter((v) => !v[1].requiresPiPApi || !IS_FIREFOX_BUILD)
 	.map((v) => v[0])

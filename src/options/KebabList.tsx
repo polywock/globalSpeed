@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react"
 import { IoEllipsisVertical } from "react-icons/io5"
 import { Menu, type MenuProps } from "@/comps/Menu"
 import { Tooltip, TooltipProps } from "@/comps/Tooltip"
+import { Button } from "@/comps/ui/button"
 import { gvar } from "@/globalVar"
-import { cn } from "@/utils/helper"
 
 export type KebabListProps = {
 	list: MenuProps["items"]
@@ -53,11 +53,11 @@ export function KebabList(props: KebabListProps) {
 			{props.title}
 			<Tooltip title={props.title || gvar.gsm.token.showMore} align={props.tooltipAlign || "top"}>
 				{/* First child of Tooltip must not have a ref. */}
-				<button className={cn("icon-button", props.buttonClassName)} onClick={onContext}>
+				<Button variant="icon" size="icon-auto" className={props.buttonClassName} onClick={onContext}>
 					<div ref={buttonRef}>
 						<IoEllipsisVertical className="pointer-events-none" size="1.3em" />
 					</div>
-				</button>
+				</Button>
 			</Tooltip>
 			{!menu ? (
 				props.divIfEmpty ? (

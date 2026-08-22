@@ -27,7 +27,7 @@ async function main() {
 	await run(pageConfig({ firefox, outDir, production }))
 	if (!firefox) await run(pageConfig({ firefox, outDir, production, chromiumOffscreen: true }))
 
-	const names = ["isolated", "background", "main", "pageDraw", "pane"]
+	const names = ["isolated", "background", "main", "pageDraw", "pane", "itcPanel"]
 	if (firefox) names.push("mainLoader")
 	else names.push("sound-touch-processor", "reverse-sound-processor")
 

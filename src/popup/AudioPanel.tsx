@@ -1,18 +1,21 @@
 import { useRef, useState } from "react"
 import { FaArrowsAltH, FaMusic, FaVolumeUp } from "react-icons/fa"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
+import { LuMerge } from "react-icons/lu"
 import { MdAccessTime } from "react-icons/md"
 import { initTabCapture, releaseTabCapture } from "@/background/utils/tabCapture"
 import { TabButton } from "@/comps/TabButton"
 import { ToggleButton } from "@/comps/ToggleButton"
 import { Tooltip } from "@/comps/Tooltip"
 import { gvar } from "@/globalVar"
+import { usePageReachable } from "@/hooks/usePageReachable"
 import { produce } from "@/utils/helper"
 import { SliderPlus } from "../comps/SliderPlus"
 import { getDefaultAudioFx } from "../defaults"
 import { useCaptureStatus } from "../hooks/useCaptureStatus"
 import { useStateView } from "../hooks/useStateView"
 import { EqualizerControl } from "./EqualizerControl"
+import { InsertItcButton } from "./InsertItcButton"
 import { ReverseButton } from "./ReverseButton"
 
 export function AudioPanel(props: {}) {
@@ -20,6 +23,7 @@ export function AudioPanel(props: {}) {
 	const env = useRef({ viaButton: true }).current
 	let [rightTab, setRightTab] = useState(false)
 	const status = useCaptureStatus()
+	const pageReachable = usePageReachable()
 
 	if (!view) return <div className="popup-panel" />
 
@@ -38,26 +42,51 @@ export function AudioPanel(props: {}) {
 	}
 
 	return (
-		<div className="popup-panel bg-background text-ui">
-			{/* Capture button */}
-			<ToggleButton
-				active={status}
-				tone="accent"
-				className="mt-2.5 mb-2.5 w-full border-[3px] p-1.25 text-2xl"
-				onClick={(e) => {
-					env.viaButton = true
-					status ? releaseTabCapture(gvar.tabInfo.tabId) : initTabCapture(gvar.tabInfo.tabId)
-				}}
-			>
-				{status ? gvar.gsm.audio.releaseTab : gvar.gsm.command.afxCapture}
-			</ToggleButton>
+		<div className="popup-panel bg-background text-md">
+			{/* Capture button, with the reset that undoes it */}
+			<div className="mt-2.5 mb-2.5 grid grid-cols-[1fr_max-content] gap-x-1">
+				<ToggleButton
+					active={status}
+					tone="accent"
+					className="w-full rounded-xl border-2 p-1.25 text-2xl"
+					onClick={(e) => {
+						env.viaButton = true
+						status ? releaseTabCapture(gvar.tabInfo.tabId) : initTabCapture(gvar.tabInfo.tabId)
+					}}
+				>
+					{status ? gvar.gsm.audio.releaseTab : gvar.gsm.command.afxCapture}
+				</ToggleButton>
 
-			<div className="mb-2.5 grid grid-cols-[1fr_max-content_1fr] gap-x-1">
+				{/* Reset */}
+				<Tooltip title={gvar.gsm.token.resetEverything}>
+					<ToggleButton
+						tone="accent"
+						active={!!(view.audioFx || view.audioFxAlt || status)}
+						className="h-full rounded-xl border-2 px-2.5"
+						aria-label={gvar.gsm.token.resetEverything}
+						onClick={() => {
+							releaseTabCapture(gvar.tabInfo.tabId)
+							setView(
+								produce(view, (d) => {
+									d.audioFx = null
+									d.audioFxAlt = null
+									d.audioPan = null
+									d.monoOutput = null
+								}),
+							)
+						}}
+					>
+						<GiAnticlockwiseRotation size="1.1rem" />
+					</ToggleButton>
+				</Tooltip>
+			</div>
+
+			<div className="mb-2.5 grid grid-cols-2 gap-x-1">
 				{/* Split */}
 				<Tooltip title={gvar.gsm.audio.splitTooltip}>
 					<ToggleButton
 						active={!!view.audioFxAlt}
-						className="w-full border-2"
+						className="w-full rounded-xl border-2"
 						onClick={() => {
 							setView(
 								produce(view, (d) => {
@@ -70,31 +99,11 @@ export function AudioPanel(props: {}) {
 					</ToggleButton>
 				</Tooltip>
 
-				{/* Reset */}
-				<Tooltip title={gvar.gsm.token.reset}>
-					<ToggleButton
-						active={!!(view.audioFx || view.audioFxAlt || status)}
-						className="w-full border-2"
-						onClick={() => {
-							releaseTabCapture(gvar.tabInfo.tabId)
-							setView(
-								produce(view, (d) => {
-									d.audioFx = null
-									d.audioFxAlt = null
-									d.audioPan = null
-								}),
-							)
-						}}
-					>
-						<GiAnticlockwiseRotation size="1.1rem" />
-					</ToggleButton>
-				</Tooltip>
-
 				{/* Mono */}
 				<Tooltip title={gvar.gsm.command.afxMonoTooltip}>
 					<ToggleButton
 						active={view.monoOutput}
-						className="w-full border-2"
+						className="w-full rounded-xl border-2"
 						onClick={() => {
 							setView(
 								produce(view, (d) => {
@@ -140,7 +149,7 @@ export function AudioPanel(props: {}) {
 						<Tooltip title={gvar.gsm.audio.pitchHdTooltip}>
 							<ToggleButton
 								active={!starAudioFx.jungleMode}
-								className="ml-2.5 px-1.25 py-0 text-sm"
+								className="ml-2.5 px-1 py-0 text-xs"
 								onClick={(e) => {
 									setView(
 										produce(view, (d) => {
@@ -152,6 +161,7 @@ export function AudioPanel(props: {}) {
 								HD
 							</ToggleButton>
 						</Tooltip>
+						{pageReachable && <InsertItcButton command="afxPitch" className="ml-2.5" />}
 					</div>
 				}
 				className="mb-5"
@@ -178,6 +188,7 @@ export function AudioPanel(props: {}) {
 					<div>
 						<FaVolumeUp size="1.21rem" />
 						<span className="ml-2.5">{gvar.gsm.command.afxGain}</span>
+						{pageReachable && <InsertItcButton command="afxGain" className="ml-2.5" />}
 					</div>
 				}
 				className="mb-5"
@@ -202,6 +213,7 @@ export function AudioPanel(props: {}) {
 					<div>
 						<FaArrowsAltH size="1.21rem" />
 						<span className="ml-2.5">{gvar.gsm.command.afxPan}</span>
+						{pageReachable && <InsertItcButton command="afxPan" className="ml-2.5" />}
 					</div>
 				}
 				className="mb-5"
@@ -229,7 +241,7 @@ export function AudioPanel(props: {}) {
 						<Tooltip title={gvar.gsm.token.mergeBoth}>
 							<ToggleButton
 								active={starAudioFx.delayMerge}
-								className="ml-2.5 px-1.25 py-0 text-sm"
+								className="ml-2.5 p-1 text-sm"
 								onClick={(e) => {
 									setView(
 										produce(view, (d) => {
@@ -238,9 +250,10 @@ export function AudioPanel(props: {}) {
 									)
 								}}
 							>
-								+
+								<LuMerge className="size-3" />
 							</ToggleButton>
 						</Tooltip>
+						{pageReachable && <InsertItcButton command="afxDelay" className="ml-2.5" />}
 					</div>
 				}
 				className="mb-5"

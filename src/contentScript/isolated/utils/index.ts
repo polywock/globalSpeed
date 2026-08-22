@@ -1,4 +1,4 @@
-import { isFirefox } from "@/utils/helper"
+import { IS_FIREFOX_BUILD } from "@/utils/buildFlags"
 import { getLeaf } from "@/utils/nativeUtils"
 
 export function documentHasFocus() {
@@ -6,7 +6,7 @@ export function documentHasFocus() {
 }
 
 export function injectScript(text: string) {
-	if (!(isFirefox() && text)) return
+	if (!(IS_FIREFOX_BUILD && text)) return
 	const script = document.createElement("script")
 	script.type = "text/javascript"
 	script.text = text

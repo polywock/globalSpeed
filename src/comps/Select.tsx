@@ -1,5 +1,4 @@
 import { ComponentProps } from "react"
-import { cn } from "@/utils/helper"
 
 export type SelectOption = {
 	key: string

@@ -337,10 +337,8 @@ export class Circle extends Popover {
 	toggleSpeed = async () => {
 		let speed = this.init.mainActionSpeed || 3
 		const view = await fetchView({ speed: true, lastSpeed: true }, gvar.tabInfo.tabId)
-		let lastSpeed = view.lastSpeed
-
 		if (view.speed?.toFixed(2) === speed.toFixed(2)) {
-			;[speed, lastSpeed] = [view.lastSpeed, view.speed]
+			speed = view.lastSpeed
 		}
 
 		pushView({ override: { speed, lastSpeed: view.speed }, tabId: gvar.tabInfo.tabId })

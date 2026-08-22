@@ -3,6 +3,7 @@ import { gvar } from "@/globalVar"
 import { produce } from "@/utils/helper"
 import { NumericInput } from "./NumericInput"
 import { Tooltip } from "./Tooltip"
+import { Button } from "./ui/button"
 
 type CycleInputProps = {
 	values: number[]
@@ -56,8 +57,8 @@ export function CycleInput(props: CycleInputProps) {
 						{/* Add button */}
 						<div>
 							<Tooltip title={gvar.gsm.token.create}>
-								<button
-									className="button-control text-4xs"
+								<Button
+									size="icon-xs"
 									onClick={(e) => {
 										props.onChange(
 											produce(props.values, (d) => {
@@ -66,8 +67,8 @@ export function CycleInput(props: CycleInputProps) {
 										)
 									}}
 								>
-									<LuPlus />
-								</button>
+									<LuPlus className="size-3" />
+								</Button>
 							</Tooltip>
 						</div>
 					</>
