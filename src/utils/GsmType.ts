@@ -551,6 +551,10 @@ export type Gsm = {
 			doubleTapThreshold: string
 			/** Double-tap window in seconds. The second tap must land within this time */
 			doubleTapThresholdTooltip: string
+			/** Show promos */
+			showPromos: string
+			/** Occasional suggestions for our other projects, shown at the bottom of the popup. Turning this off hides them for two weeks. */
+			showPromosTooltip: string
 		}
 		editor: {
 			/** Page Shortcuts */

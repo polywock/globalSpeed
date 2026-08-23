@@ -9,6 +9,7 @@ import { State } from "../types"
 import { requestCreateTab } from "../utils/browserUtils"
 import { IS_FIREFOX_BUILD } from "../utils/buildFlags"
 import { areYouSure, isMobile } from "../utils/helper"
+import { isPromoLanguage } from "../utils/promoUtils"
 import { dumpConfig, fetchView, pushView, restoreConfig } from "../utils/state"
 import { OptionsSection } from "./OptionsSection"
 
@@ -91,7 +92,7 @@ function handleSecretMenu(e: MouseEvent) {
 
 /** Passes every promo gate, drops the cached config, then refetches it. */
 async function primePromos() {
-	if (gvar.gsm._lang !== "en") {
+	if (!isPromoLanguage()) {
 		return
 	}
 

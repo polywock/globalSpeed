@@ -1,23 +1,17 @@
 import { useMemo } from "react"
 import { FaRegQuestionCircle } from "react-icons/fa"
 import { Tooltip } from "@/comps/Tooltip"
-import { gvar } from "@/globalVar"
 import { useStateView } from "@/hooks/useStateView"
 import { SelfPromoConfig } from "@/types"
-import { isPromoFresh, meetsPromoConditions, pickPromoEntry } from "@/utils/promoUtils"
+import { isPromoShowing, pickPromoEntry, PROMO_VIEW_KEYS } from "@/utils/promoUtils"
 
 let wasHidden = false
 
 export function SelfPromo() {
-	const [view] = useStateView({ selfPromoCountR: true, selfPromoFirstR: true, selfPromoHideTsR: true, selfPromoData: true })
+	const [view] = useStateView(PROMO_VIEW_KEYS)
 	if (!view || wasHidden) return null
 
-	if (!shouldShow(view.selfPromoCountR, view.selfPromoFirstR, view.selfPromoHideTsR)) {
-		wasHidden = true
-		return null
-	}
-
-	if (!isPromoFresh(view.selfPromoData?.updated)) {
+	if (!isPromoShowing(view)) {
 		wasHidden = true
 		return null
 	}
@@ -57,10 +51,4 @@ function PromoContent({ config }: { config?: SelfPromoConfig }) {
 			</Tooltip>
 		</div>
 	)
-}
-
-/** English only, since the promo text isn't localized. Dismissing hides it for a week. */
-function shouldShow(count: number, firstTs: number, hideTs: number) {
-	if (gvar.gsm._lang !== "en") return false
-	return meetsPromoConditions(count, firstTs, hideTs)
 }

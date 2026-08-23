@@ -1,4 +1,5 @@
-import { AnyDict, SelfPromoConfig, SelfPromoEntry, SelfPromoGroup, SelfPromoPick, SelfPromoStyle } from "@/types"
+import { gvar } from "@/globalVar"
+import { AnyDict, SelfPromoConfig, SelfPromoEntry, SelfPromoGroup, SelfPromoPick, SelfPromoStyle, StateView, StateViewSelector } from "@/types"
 
 const DAY = 24 * 36e5
 
@@ -9,6 +10,28 @@ export const PROMO_EXPIRE_AGE = 7 * DAY
 const MIN_COUNT = 50
 const MIN_AGE = 7 * DAY
 const HIDE_FOR = 14 * DAY
+
+/** Everything isPromoShowing reads. */
+export const PROMO_VIEW_KEYS: StateViewSelector = { selfPromoCountR: true, selfPromoFirstR: true, selfPromoHideTsR: true, selfPromoData: true }
+
+const isEnglishTag = (tag: string) => {
+	const v = (tag || "").toLowerCase()
+	return v === "en" || v.startsWith("en-")
+}
+
+/** English only, since the promo text isn't localized. The browser has to be English, and so does the extension wherever its locale is known (the background has no gvar.gsm). */
+export function isPromoLanguage() {
+	if (!isEnglishTag(navigator.language)) return false
+	const extLang = gvar.gsm?._lang
+	return !extLang || isEnglishTag(extLang)
+}
+
+/** Every gate a promo has to pass to be on screen. */
+export function isPromoShowing(view: StateView) {
+	if (!view || !isPromoLanguage()) return false
+	if (!isPromoFresh(view.selfPromoData?.updated)) return false
+	return meetsPromoConditions(view.selfPromoCountR, view.selfPromoFirstR, view.selfPromoHideTsR)
+}
 
 export function meetsPromoConditions(count: number, firstTs: number, hideTs: number) {
 	if ((count || 0) <= MIN_COUNT) return false

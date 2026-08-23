@@ -551,7 +551,11 @@
 			"doubleTapThreshold": "Double tap duration",
 			"!doubleTapThreshold": "Field label for the time window used to detect double-tap shortcuts",
 			"doubleTapThresholdTooltip": "Double-tap window in seconds. The second tap must land within this time",
-			"!doubleTapThresholdTooltip": "Tooltip explaining the double-tap detection window in seconds"
+			"!doubleTapThresholdTooltip": "Tooltip explaining the double-tap detection window in seconds",
+			"showPromos": "Show promos",
+			"!showPromos": "Options > Flags toggle label (under Show more) for the occasional promo shown at the bottom of the popup for our other projects",
+			"showPromosTooltip": "Occasional suggestions for our other projects, shown at the bottom of the popup. Turning this off hides them for two weeks.",
+			"!showPromosTooltip": "Tooltip for the Show promos toggle. Explains what promos are and that dismissing them is temporary (two weeks)"
 		},
 		"editor": {
 			"pageShortcuts": "Page Shortcuts",

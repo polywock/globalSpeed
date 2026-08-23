@@ -16,6 +16,7 @@ import { gvar } from "@/globalVar"
 import { systemIsDark } from "@/hooks/useThemeSync"
 import { Context, CONTEXT_KEYS, InitialContext, StateView } from "@/types"
 import { clamp, cn, isMobile, produce } from "@/utils/helper"
+import { isPromoShowing, PROMO_VIEW_KEYS } from "@/utils/promoUtils"
 import { fetchView } from "@/utils/state"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "../defaults/constants"
 import { SetView, useStateView } from "../hooks/useStateView"
@@ -506,10 +507,35 @@ export function SectionFlags(props: {}) {
 							<span>{gvar.gsm.options.flags.speedPresets}</span>
 							<GearIcon className="text-foreground" onClick={(e) => setShowPresetModal(true)} />
 						</OptionField>
+
+						{/* Show promos */}
+						<PromoDismiss />
 					</>
 				)}
 			</div>
 		</OptionsSection>
+	)
+}
+
+/** Only rendered while promos are actually being shown. Toggling it off dismisses them for two weeks. */
+function PromoDismiss() {
+	const [view, setView] = useStateView(PROMO_VIEW_KEYS)
+	if (!isPromoShowing(view)) return null
+
+	return (
+		<OptionField>
+			<OptionFieldLabel>
+				<span>{gvar.gsm.options.flags.showPromos}</span>
+				<RegularTooltip title={gvar.gsm.options.flags.showPromosTooltip} align="right" />
+			</OptionFieldLabel>
+			<Toggle
+				aria-label={gvar.gsm.options.flags.showPromos}
+				value={true}
+				onChange={() => {
+					setView({ selfPromoHideTsR: Date.now() })
+				}}
+			/>
+		</OptionField>
 	)
 }
 
