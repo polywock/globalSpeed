@@ -289,17 +289,15 @@ export class ConfigSync {
 
 		this.blockKeyUp = false
 
-		// stop if input fields
+		// Let editing surfaces receive their keys before matching page shortcuts.
 		const target = e.target as HTMLElement
-		if (["INPUT", "TEXTAREA"].includes(target.tagName) || target.isContentEditable || document.pointerLockElement) {
+		if (isEditingElement(target) || document.pointerLockElement) {
 			return
 		}
 
 		const active = getLeaf(document, "activeElement")
-		if (target !== active) {
-			if (["INPUT", "TEXTAREA"].includes(active.tagName) || (active as HTMLElement).isContentEditable) {
-				return
-			}
+		if (target !== active && isEditingElement(active)) {
+			return
 		}
 
 		if (this.checkUrlRuntime() === "Off") return
@@ -429,6 +427,15 @@ export class ConfigSync {
 			this.fastForwardHeld = { code: e?.code }
 		}
 	}
+}
+
+function isEditingElement(element: Element | null | undefined): boolean {
+	if (!element) return false
+	if (element.tagName === "INPUT" || element.tagName === "TEXTAREA") return true
+	// EditContext hosts (e.g. Monaco) accept text without being contenteditable.
+	// The native property is also visible in the content script's isolated world.
+	const htmlElement = element as HTMLElement & { editContext?: unknown }
+	return !!(htmlElement.isContentEditable || htmlElement.editContext)
 }
 
 function websiteCanBeStaticTested(entry: URLConditionPart, runtimeUrl: string) {
