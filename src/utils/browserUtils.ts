@@ -48,6 +48,15 @@ export async function checkContentScript(tabId: number, frameId: number) {
 	} catch (err) {}
 }
 
+/** True/false if known, undefined if it couldn't be determined. */
+export async function frameExists(tabId: number, frameId: number) {
+	try {
+		const frames = await chrome.webNavigation?.getAllFrames({ tabId })
+		if (!frames) return
+		return frames.some((f) => f.frameId === (frameId || 0))
+	} catch {}
+}
+
 // Sends to a specific frame, optimistically (no upfront liveness ping). If delivery fails because the
 // frame id is stale (e.g. iframe recreated), drop its cached scope and retry on the top frame. Frozen
 // tabs are left untouched — their media is real and recovers on unfreeze, so we must not evict them.
@@ -63,7 +72,10 @@ export async function sendToFrame(tabId: number, frameId: number, payload: Messa
 	} catch {}
 	if (tab?.frozen) return
 
-	chrome.storage.session.remove(`m:scope:${tabId}:${frameId}`)
+	// A failed delivery alone does not prove the frame is gone. Keep its snapshot
+	// and avoid replaying an action in another frame unless the original is gone.
+	if (tab && !tab.discarded && (await frameExists(tabId, frameId)) !== false) return
+	await chrome.storage.session.remove(`m:scope:${tabId}:${frameId}`)
 	if (tab && !tab.discarded && frameId !== 0) {
 		try {
 			await chrome.tabs.sendMessage(tabId, payload, { frameId: 0 })

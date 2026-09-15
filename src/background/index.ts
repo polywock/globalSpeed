@@ -236,7 +236,11 @@ chrome.runtime.onMessage.addListener((msg: Messages, sender, reply) => {
 	} else if (msg.type === "RELEASED_TEMPORARY_SPEED") {
 		releaseTemporarySpeed()
 	} else if (msg.type === "SET_SESSION") {
-		chrome.storage.session.set(msg.override)
+		chrome.storage.session.set(msg.override).then(
+			() => reply(true),
+			() => reply(false),
+		)
+		return true
 	} else if (msg.type === "GET_SESSION") {
 		;(chrome.storage.session.get(msg.keys) as any).then(
 			(v: any) => reply(v),

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { gvar } from "@/globalVar"
-import { checkContentScript } from "@/utils/browserUtils"
+import { checkContentScript, frameExists } from "@/utils/browserUtils"
 import { flattenMediaInfos, MediaData, MediaPath, MediaScope } from "../contentScript/isolated/utils/genMediaInfo"
 
 type Env = {
@@ -34,6 +34,7 @@ export class SubscribeMedia {
 	released = false
 	seenMedia: Set<string> = new Set()
 	seenMediaArr: string[] = []
+	private pendingChanges: chrome.storage.StorageChanges = {}
 
 	constructor(
 		private tabId: number,
@@ -43,10 +44,16 @@ export class SubscribeMedia {
 		this.start()
 	}
 	start = async () => {
-		const raw = await chrome.storage.session.get()
-		await Promise.all(Object.entries(raw).map(([key, value]) => this.processKeyForStart(key, value)))
+		// Subscribe before reading/checking the snapshot so updates during startup are
+		// replayed after it, including removals and changes to the pinned video.
 		chrome.storage.session.onChanged.addListener(this.handleChange)
-		this.handleChange(null)
+		const raw = await chrome.storage.session.get()
+		if (this.released) return
+		await Promise.all(Object.entries(raw).map(([key, value]) => this.processKeyForStart(key, value)))
+		if (this.released) return
+		const changes = this.pendingChanges
+		this.pendingChanges = null
+		this.handleChange(Object.keys(changes).length ? changes : null)
 	}
 	processKeyForStart = async (key: string, value: any) => {
 		if (!key.startsWith("m:")) return
@@ -55,12 +62,14 @@ export class SubscribeMedia {
 		} else if (key.startsWith("m:scope:")) {
 			let info = value as MediaScope
 			if (!info) return
-			let status: boolean
-			// False means frozen, null means no content script, and true is all good.
-			if ((status = await checkContentScript(info.tabInfo?.tabId, info.tabInfo.frameId))) {
+			const status = await checkContentScript(info.tabInfo?.tabId, info.tabInfo.frameId)
+			const gone = status == null && (await frameExists(info.tabInfo?.tabId, info.tabInfo.frameId)) === false
+			if (this.released || key in this.pendingChanges) return
+			if (gone) {
+				// A failed ping alone is insufficient evidence to delete shared media.
+				await chrome.storage.session.remove(key)
+			} else {
 				this.scopes[key] = value
-			} else if (status == null) {
-				chrome.storage.session.remove(key)
 			}
 		}
 	}
@@ -72,6 +81,11 @@ export class SubscribeMedia {
 		this.cbs.clear()
 	}
 	handleChange = async (changes: chrome.storage.StorageChanges) => {
+		if (this.released) return
+		if (this.pendingChanges) {
+			Object.assign(this.pendingChanges, changes)
+			return
+		}
 		let hadChanges = !changes
 		changes = changes ?? {}
 

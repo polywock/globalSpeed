@@ -15,6 +15,7 @@ declare global {
 		temporarySpeed: { type: "SET_TEMPORARY_SPEED"; factor?: number }
 		mediaProbe: { type: "MEDIA_PROBE"; key: string; formatted?: boolean }
 		csAlive: { type: "CS_ALIVE" }
+		resyncMedia: { type: "RESYNC_MEDIA" }
 		runJs: { type: "RUN_JS"; value: string }
 		bgSpeedOverride: { type: "BG_SPEED_OVERRIDE"; value: { speed: number; freePitch: boolean } }
 
@@ -34,6 +35,13 @@ export class MessageTower {
 			realizeMediaEvent(msg.key, msg.event)
 			reply(true)
 			return
+		} else if (msg.type === "RESYNC_MEDIA") {
+			// Asked when the background finds no media for this tab; answer only once the snapshot is written.
+			Promise.resolve(gvar.os?.mediaTower?.sendUpdate()).then(
+				(result) => reply(result !== false),
+				() => reply(false),
+			)
+			return true
 		} else if (msg.type === "SET_TEMPORARY_SPEED") {
 			reply(true)
 			gvar.os.speedSync?.processTemporarySpeed(msg.factor)

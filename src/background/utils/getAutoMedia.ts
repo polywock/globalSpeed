@@ -1,5 +1,5 @@
 import { FlatMediaInfo, flattenMediaInfos, MediaData, MediaDataWithScopes, MediaPath, MediaScope } from "@/contentScript/isolated/utils/genMediaInfo"
-import { checkContentScript, compareFrame, TabInfo } from "@/utils/browserUtils"
+import { checkContentScript, compareFrame, frameExists, TabInfo } from "@/utils/browserUtils"
 import { fetchView } from "@/utils/state"
 
 const WEIGHTS = {
@@ -51,6 +51,33 @@ export async function getMediaData() {
 }
 
 export async function getAutoMedia(tabInfo: TabInfo, videoOnly?: boolean) {
+	const media = await resolveAutoMedia(tabInfo, videoOnly)
+	if (media || !tabInfo?.tabId) return media
+
+	// Recover a missing snapshot without waiting for the next periodic media update.
+	await requestMediaResync(tabInfo.tabId)
+	return resolveAutoMedia(tabInfo, videoOnly)
+}
+
+async function requestMediaResync(tabId: number) {
+	let timer: ReturnType<typeof setTimeout>
+	try {
+		const refresh = async () => {
+			const frames = await chrome.webNavigation.getAllFrames({ tabId })
+			// A broadcast answers as soon as any frame replies, possibly before the video
+			// frame has written its snapshot. Wait for each frame's write explicitly.
+			await Promise.allSettled(
+				(frames || []).map(({ frameId }) => chrome.tabs.sendMessage(tabId, { type: "RESYNC_MEDIA" } as Messages, { frameId })),
+			)
+		}
+		await Promise.race([refresh(), new Promise<void>((resolve) => (timer = setTimeout(resolve, 300)))])
+	} catch {
+	} finally {
+		clearTimeout(timer)
+	}
+}
+
+async function resolveAutoMedia(tabInfo: TabInfo, videoOnly?: boolean) {
 	let [{ ignorePiP }, { infos, pinned }] = await Promise.all([fetchView({ ignorePiP: true }), getMediaData()])
 
 	infos = infos.filter((info) => info.readyState)
@@ -122,9 +149,20 @@ export async function getAutoMedia(tabInfo: TabInfo, videoOnly?: boolean) {
 }
 
 async function cleanupStaleScope(info: FlatMediaInfo) {
-	const status = await checkContentScript(info.tabInfo.tabId, info.tabInfo.frameId)
-	// true = alive (keep), false = frozen (keep), null/undefined = discarded or dead frame (evict).
-	if (status == null) {
-		chrome.storage.session.remove(`m:scope:${info.tabInfo.tabId}:${info.tabInfo.frameId}`)
-	}
+	const { tabId, frameId } = info.tabInfo
+	const status = await checkContentScript(tabId, frameId)
+	// true = alive, false = frozen, null/undefined = unreachable (needs verification).
+	if (status != null) return
+
+	let tab: chrome.tabs.Tab
+	try {
+		tab = await chrome.tabs.get(tabId)
+	} catch {}
+	if (tab?.frozen) return
+
+	// Only evict a gone/discarded tab or a confirmed missing frame. A failed ping
+	// must not erase a playing video until its next periodic snapshot.
+	if (tab && !tab.discarded && (await frameExists(tabId, frameId)) !== false) return
+
+	chrome.storage.session.remove(`m:scope:${tabId}:${frameId}`)
 }

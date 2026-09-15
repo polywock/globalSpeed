@@ -124,6 +124,7 @@ export class MediaTower {
 		doc.addEventListener("ratechange", this.handleMediaEvent, { capture: true, passive: true })
 	}
 	private ensureMediaEventListeners = (elem: HTMLMediaElement) => {
+		elem.addEventListener("timeupdate", this.handleMediaEventTimeUpdate, { capture: true, passive: true })
 		elem.addEventListener("play", this.handleMediaEvent, { capture: true, passive: true })
 		elem.addEventListener("playing", this.handleInterrupt, { capture: true, passive: true })
 		elem.addEventListener("pause", this.handleMediaEvent, { capture: true, passive: true })
@@ -143,8 +144,12 @@ export class MediaTower {
 		this.forceSpeedCallbacks.forEach((cb) => cb())
 	}
 	private handleMediaEventTimeUpdate = (e: Event) => {
+		if (!e.isTrusted || e.processed) return
 		if (!(e.target instanceof HTMLMediaElement)) return
+		e.processed = true
 		assertType<HTMLVideoElement>(e.target)
+		e.target.gsLastPlayed = Date.now()
+		this.processMedia(e.target)
 
 		if (this.trackFps) {
 			const tu = {
@@ -158,7 +163,9 @@ export class MediaTower {
 			delete this.previousTimeUpdate
 		}
 
-		this.handleMediaEventDeb(e)
+		// A shadow-root event can lose its target after dispatch. Process it now and
+		// debounce only publishing the media snapshot, never the Event itself.
+		this.sendTimeUpdateDeb()
 	}
 	hiddenSpeedUpdateTimeout: number
 	private handleMediaEvent = (e: Event) => {
@@ -169,6 +176,7 @@ export class MediaTower {
 		let elem = e.target as HTMLMediaElement
 		if (!elem || !(elem instanceof HTMLMediaElement)) return
 
+		if (EVENTS_LAST_PLAYED.has(e.type)) elem.gsLastPlayed = Date.now()
 		this.processMedia(elem)
 		this.sendUpdate()
 
@@ -185,13 +193,10 @@ export class MediaTower {
 			this.handleInterrupt(e)
 		}
 
-		if (EVENTS_LAST_PLAYED.has(e.type)) elem.gsLastPlayed = Date.now()
-
 		if (gvar.os.circle && (e.type === "playing" || e.type === "loadedmetadata") && elem instanceof HTMLVideoElement) {
 			this.reobserve(elem)
 		}
 	}
-	private handleMediaEventDeb = debounce(this.handleMediaEvent, 5000, { leading: true, trailing: true, maxWait: 5000 })
 	sendUpdate = () => {
 		if (!chrome.runtime?.id) return gvar.os.handleOrphan()
 		if (!gvar.tabInfo) return
@@ -201,12 +206,13 @@ export class MediaTower {
 		const scope = generateScopeState(gvar.tabInfo, [...this.media])
 		const override = { [this.scopeStorageKey]: scope }
 		if (chrome.storage.session) {
-			chrome.storage.session.set(override)
+			return chrome.storage.session.set(override)
 		} else {
-			chrome.runtime.sendMessage({ type: "SET_SESSION", override } as Messages)
+			return chrome.runtime.sendMessage({ type: "SET_SESSION", override } as Messages)
 		}
 	}
 	private sendUpdateDeb = debounce(this.sendUpdate, 500, { leading: true, trailing: true, maxWait: 2000 })
+	private sendTimeUpdateDeb = debounce(this.sendUpdate, 5000, { leading: true, trailing: true, maxWait: 5000 })
 	applyMediaEventTo = (event: MediaEvent, key?: string, longest?: boolean) => {
 		let targets = [...this.media].filter((v) => v.readyState)
 
