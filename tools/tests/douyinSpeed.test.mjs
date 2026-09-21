@@ -165,7 +165,8 @@ function syncEnv({ douyin = true, initialized = true } = {}) {
 			"@/globalVar": { gvar: { os: { stratumServer: server, mediaTower: tower } } },
 			"@/utils/configUtils": { conformSpeed: (speed) => Math.max(0.07, Math.min(16, Math.round(speed * 100) / 100)) },
 			"@/utils/helper": { between: (a, b, value) => value >= a && value <= b },
-			"../douyin": { IS_DOUYIN: douyin },
+			"./utils/siteAdapters/douyin": { IS_DOUYIN: douyin },
+			"./utils/siteAdapters/youtube": { IS_YOUTUBE: false },
 		},
 		{
 			window: events,

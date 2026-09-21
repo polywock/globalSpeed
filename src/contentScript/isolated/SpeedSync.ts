@@ -2,7 +2,8 @@ import { gvar } from "@/globalVar"
 import { conformSpeed } from "@/utils/configUtils"
 import { between } from "@/utils/helper"
 import { SubscribeView } from "@/utils/state"
-import { DouyinSpeedMessage, IS_DOUYIN } from "../douyin"
+import { DouyinSpeedMessage, IS_DOUYIN } from "./utils/siteAdapters/douyin"
+import { IS_YOUTUBE, YoutubeCaptionsMessage } from "./utils/siteAdapters/youtube"
 
 export class SpeedSync {
 	intervalId: number
@@ -13,6 +14,7 @@ export class SpeedSync {
 	pointerDownAt: number
 	keyDownAt: number
 	private douyinSpeed: number | null = null
+	private youtubeCaptionsEnabled = false
 	constructor() {
 		window.addEventListener("pointerdown", this.handlePointerDown, { capture: true, passive: true })
 		window.addEventListener("pointerup", this.handlePointerUp, { capture: true, passive: true })
@@ -23,7 +25,9 @@ export class SpeedSync {
 	release = () => {
 		delete this.latest
 		this.syncDouyinSpeed(null)
+		this.syncYoutubeCaptions(false)
 		gvar.os.stratumServer.initCbs.delete(this.sendDouyinSpeed)
+		gvar.os.stratumServer.initCbs.delete(this.sendYoutubeCaptions)
 		gvar.os.mediaTower.forceSpeedCallbacks.delete(this.realize)
 		clearInterval(this.intervalId)
 		delete this.intervalId
@@ -41,6 +45,7 @@ export class SpeedSync {
 		} else {
 			this.intervalId = (clearInterval(this.intervalId), null)
 			this.syncDouyinSpeed(null)
+			this.syncYoutubeCaptions(false)
 		}
 	}
 	private syncDouyinSpeed = (speed: number | null) => {
@@ -52,6 +57,16 @@ export class SpeedSync {
 	}
 	private sendDouyinSpeed = () => {
 		gvar.os.stratumServer.send({ type: "DOUYIN_SPEED", speed: this.douyinSpeed } satisfies DouyinSpeedMessage)
+	}
+	private syncYoutubeCaptions = (enabled: boolean) => {
+		if (!IS_YOUTUBE) return
+		this.youtubeCaptionsEnabled = enabled
+		const server = gvar.os.stratumServer
+		if (server.initialized) this.sendYoutubeCaptions()
+		else server.initCbs.add(this.sendYoutubeCaptions)
+	}
+	private sendYoutubeCaptions = () => {
+		gvar.os.stratumServer.send({ type: "YOUTUBE_CAPTIONS", enabled: this.youtubeCaptionsEnabled } satisfies YoutubeCaptionsMessage)
 	}
 	handlePointerDown = (e: PointerEvent) => {
 		if (this.holdToSpeed && isLeftPointerOrMiddleMouse(e) && !this.keyDownActive()) {
@@ -123,6 +138,7 @@ export class SpeedSync {
 
 			gvar.os.mediaTower.applySpeedToAll(speed, this.latest.freePitch)
 			this.syncDouyinSpeed(conformSpeed(speed))
+			this.syncYoutubeCaptions(true)
 		}
 
 		// Unrelated to speed: Update all other frames if top frame's URL changes.
