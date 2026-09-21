@@ -1,6 +1,8 @@
 import { gvar } from "@/globalVar"
+import { conformSpeed } from "@/utils/configUtils"
 import { between } from "@/utils/helper"
 import { SubscribeView } from "@/utils/state"
+import { DouyinSpeedMessage, IS_DOUYIN } from "../douyin"
 
 export class SpeedSync {
 	intervalId: number
@@ -10,6 +12,7 @@ export class SpeedSync {
 	speedClient?: SubscribeView
 	pointerDownAt: number
 	keyDownAt: number
+	private douyinSpeed: number | null = null
 	constructor() {
 		window.addEventListener("pointerdown", this.handlePointerDown, { capture: true, passive: true })
 		window.addEventListener("pointerup", this.handlePointerUp, { capture: true, passive: true })
@@ -18,6 +21,10 @@ export class SpeedSync {
 		window.addEventListener("keyup", this.handleKeyUp, { capture: true })
 	}
 	release = () => {
+		delete this.latest
+		this.syncDouyinSpeed(null)
+		gvar.os.stratumServer.initCbs.delete(this.sendDouyinSpeed)
+		gvar.os.mediaTower.forceSpeedCallbacks.delete(this.realize)
 		clearInterval(this.intervalId)
 		delete this.intervalId
 		window.removeEventListener("pointerdown", this.handlePointerDown, true)
@@ -33,7 +40,18 @@ export class SpeedSync {
 			this.realize()
 		} else {
 			this.intervalId = (clearInterval(this.intervalId), null)
+			this.syncDouyinSpeed(null)
 		}
+	}
+	private syncDouyinSpeed = (speed: number | null) => {
+		if (!IS_DOUYIN) return
+		this.douyinSpeed = speed
+		const server = gvar.os.stratumServer
+		if (server.initialized) this.sendDouyinSpeed()
+		else server.initCbs.add(this.sendDouyinSpeed)
+	}
+	private sendDouyinSpeed = () => {
+		gvar.os.stratumServer.send({ type: "DOUYIN_SPEED", speed: this.douyinSpeed } satisfies DouyinSpeedMessage)
 	}
 	handlePointerDown = (e: PointerEvent) => {
 		if (this.holdToSpeed && isLeftPointerOrMiddleMouse(e) && !this.keyDownActive()) {
@@ -91,6 +109,7 @@ export class SpeedSync {
 	}
 	handleKeyUp = () => {
 		delete this.keyDownAt
+		this.realize()
 	}
 	previousUrl: string
 	realize = () => {
@@ -103,6 +122,7 @@ export class SpeedSync {
 			}
 
 			gvar.os.mediaTower.applySpeedToAll(speed, this.latest.freePitch)
+			this.syncDouyinSpeed(conformSpeed(speed))
 		}
 
 		// Unrelated to speed: Update all other frames if top frame's URL changes.

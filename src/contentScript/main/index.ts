@@ -1,5 +1,7 @@
 import { IS_FIREFOX_BUILD } from "../../utils/buildFlags"
 import { randomId } from "../../utils/helper"
+import { IS_DOUYIN } from "../douyin"
+import { DouyinSpeed } from "./utils/DouyinSpeed"
 import { native } from "./utils/nativeCodes"
 import { seekNetflix } from "./utils/seekNetflix"
 
@@ -13,6 +15,7 @@ let mediaReferences: HTMLMediaElement[] = []
 let shadowRoots: ShadowRoot[] = []
 let client: StratumClient
 let ghostMode: GhostMode
+let douyinSpeed: DouyinSpeed
 
 function main() {
 	if (IS_FIREFOX_BUILD) {
@@ -193,6 +196,9 @@ class StratumClient {
 			seekNetflix(data.value)
 		} else if (data.type === "GHOST") {
 			data.off ? ghostMode.deactivate() : ghostMode.activate()
+		} else if (data.type === "DOUYIN_SPEED" && IS_DOUYIN) {
+			douyinSpeed = douyinSpeed || new DouyinSpeed()
+			douyinSpeed.update(data.speed)
 		}
 	}
 	send = (data: any) => {
