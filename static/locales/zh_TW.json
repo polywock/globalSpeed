@@ -248,6 +248,7 @@
 			"showBadge": "顯示標記",
 			"showBadgeTooltip": "標記是擴充功能圖示上的文字",
 			"showMediaView": "顯示媒體清單",
+			"showSeekBar": "顯示進度條",
 			"showIndicator": "顯示指示器",
 			"showIndicatorTooltip": "指示器是使用快捷鍵時的視覺回饋",
 			"ghostMode": "幽靈模式",

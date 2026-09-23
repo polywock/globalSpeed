@@ -24,6 +24,7 @@ function load(path, imports = {}, globals = {}) {
 		exports,
 		require: (name) => {
 			if (name in imports) return imports[name]
+			if (name === "@/utils/mediaProgress") return load("src/utils/mediaProgress.ts")
 			if (!name.startsWith(".") && !name.startsWith("@/")) return require(name)
 			throw new Error(`Missing test dependency: ${name}`)
 		},
@@ -271,7 +272,7 @@ test("shadow media timeupdates publish after their Event target has been cleared
 			HTMLMediaElement: Media,
 			HTMLVideoElement: class extends Media {},
 			ShadowRoot: class {},
-			chrome: { runtime: { id: "extension" }, storage: { session: { set: (value) => writes.push(value) } } },
+			chrome: { runtime: { id: "extension", onConnect: { addListener() {} } }, storage: { session: { set: (value) => writes.push(value) } } },
 		},
 	)
 	const tower = new MediaTower()
@@ -290,6 +291,173 @@ test("shadow media timeupdates publish after their Event target has been cleared
 	} finally {
 		tower.sendTimeUpdateDeb?.cancel()
 		tower.handleMediaEventDeb?.cancel()
+		tower.sendUpdateDeb.cancel()
+	}
+})
+
+function eventChannel() {
+	const listeners = new Set()
+	return {
+		listeners,
+		addListener: (cb) => listeners.add(cb),
+		removeListener: (cb) => listeners.delete(cb),
+		emit: (...args) => [...listeners].forEach((cb) => cb(...args)),
+	}
+}
+
+function progressPort() {
+	return {
+		name: "media-progress",
+		onMessage: eventChannel(),
+		onDisconnect: eventChannel(),
+		messages: [],
+		disconnected: false,
+		postMessage(message) {
+			this.messages.push(message)
+		},
+		disconnect() {
+			this.disconnected = true
+		},
+	}
+}
+
+test("progress clients share each frame port, route seeks, and clean up disappearing frames", () => {
+	const ports = []
+	const updates = []
+	const chrome = {
+		runtime: {},
+		tabs: {
+			connect: (tabId, options) => {
+				const port = Object.assign(progressPort(), { tabId, ...options })
+				ports.push(port)
+				return port
+			},
+		},
+	}
+	const { MediaProgressClient } = load("src/hooks/useMediaProgress.ts", {}, { chrome })
+	const client = new MediaProgressClient((value) => updates.push(value))
+	const first = { key: "first", tabInfo }
+	const sameFrame = { key: "second", tabInfo }
+	const otherFrame = { key: "third", tabInfo: { ...tabInfo, frameId: 3 } }
+	client.sync([first, sameFrame, otherFrame])
+	client.sync([first, sameFrame, otherFrame])
+	assert.equal(ports.length, 2)
+	assert.deepEqual(
+		ports.map((p) => p.frameId),
+		[2, 3],
+	)
+	ports[0].onMessage.emit({ type: "PROGRESS", media: [{ key: "first", currentTime: 42, duration: 100 }] })
+	assert.equal(updates.at(-1).first.currentTime, 42)
+	client.seek(otherFrame, 75)
+	assert.equal(ports[1].messages[0].key, "third")
+	assert.equal(ports[1].messages[0].time, 75)
+	assert.equal(ports[0].messages.length, 0)
+	client.sync([otherFrame])
+	assert.equal(ports[0].disconnected, true)
+	assert.equal(ports[0].onMessage.listeners.size, 0)
+	assert.equal(updates.at(-1).first, undefined)
+	ports[1].onDisconnect.emit()
+	assert.equal(ports[1].onMessage.listeners.size, 0)
+	assert.deepEqual(Object.keys(updates.at(-1)), [])
+	client.sync([otherFrame]) // A newly discovered document can reconnect after navigation.
+	assert.equal(ports.length, 3)
+	client.sync([]) // Disabling the setting closes the remaining subscription.
+	assert.equal(ports[2].disconnected, true)
+	client.sync([first])
+	client.release()
+	assert.equal(ports[3].disconnected, true)
+	assert.equal(ports[3].onDisconnect.listeners.size, 0)
+})
+
+test("MediaTower streams time without extra storage writes and stops after the last port closes", () => {
+	class Media {
+		gsKey = "video"
+		currentTime = 12
+		duration = 100
+		readyState = 4
+		addEventListener() {}
+		getRootNode() {
+			return {}
+		}
+	}
+	const onConnect = eventChannel()
+	const writes = []
+	const seeks = []
+	const { MediaTower } = load(
+		"src/contentScript/isolated/MediaTower.ts",
+		{
+			"@/globalVar": { gvar: { tabInfo, os: { stratumServer: { wiggleCbs: new Set() }, detectOpen: { cbs: new Set() } } } },
+			"@/utils/IterableWeakSet": { IterableWeakSet: Set },
+			"@/utils/nativeUtils": {},
+			"../../utils/configUtils": {},
+			"../../utils/helper": { assertType() {}, randomId: () => "video" },
+			"./utils/applyMediaEvent": {
+				applyMediaEvent: (media, event) => {
+					media.currentTime = event.value
+					seeks.push(event)
+				},
+			},
+			"./utils/genMediaInfo": { generateScopeState: () => ({}) },
+		},
+		{
+			window: { addEventListener() {} },
+			HTMLMediaElement: Media,
+			HTMLVideoElement: class extends Media {},
+			ShadowRoot: class {},
+			chrome: { runtime: { id: "extension", onConnect }, storage: { session: { set: (value) => writes.push(value) } } },
+		},
+	)
+	const tower = new MediaTower()
+	tower.trackFps = false
+	const media = new Media()
+	tower.media.add(media)
+	const first = progressPort()
+	const second = progressPort()
+	try {
+		onConnect.emit(first)
+		onConnect.emit(second)
+		assert.equal(first.messages[0].media[0].currentTime, 12, "paused media is sent immediately on connection")
+		assert.equal(first.messages.length, 1, "opening another popup does not rebroadcast to existing clients")
+		tower.handleMediaEventTimeUpdate({ target: media, type: "timeupdate", isTrusted: true })
+		const baselineWrites = writes.length
+		for (let current = 13; current <= 20; current++) {
+			media.currentTime = current
+			const event = { target: media, type: "timeupdate", isTrusted: true }
+			tower.handleMediaEventTimeUpdate(event)
+			event.target = null
+		}
+		tower.sendProgressDeb.flush()
+		assert.equal(first.messages.at(-1).media[0].currentTime, 20)
+		assert.equal(writes.length, baselineWrites, "granular progress must not publish more storage snapshots")
+		first.onMessage.emit({ type: "SEEK", key: "video", time: 200 })
+		assert.equal(seeks.at(-1).value, 100)
+		first.onMessage.emit({ type: "SEEK", key: "missing", time: 40 })
+		first.onMessage.emit({ type: "SEEK", key: "video", time: NaN })
+		assert.equal(seeks.length, 1)
+		media.duration = Infinity
+		tower.handleProgressEvent({ target: media, type: "durationchange", isTrusted: true })
+		tower.sendProgressDeb.flush()
+		assert.equal(first.messages.at(-1).media[0].duration, null)
+		first.onMessage.emit({ type: "SEEK", key: "video", time: 30 })
+		assert.equal(seeks.length, 1, "live media is not sought using a finite timeline")
+		first.onDisconnect.emit()
+		const firstCount = first.messages.length
+		media.currentTime = 45
+		tower.handleProgressEvent({ target: media, type: "seeked", isTrusted: true })
+		tower.sendProgressDeb.flush()
+		assert.equal(first.messages.length, firstCount)
+		assert.equal(second.messages.at(-1).media[0].currentTime, 45)
+		second.onDisconnect.emit()
+		const secondCount = second.messages.length
+		tower.handleProgressEvent({ target: media, type: "seeked", isTrusted: true })
+		tower.sendProgressDeb.flush()
+		assert.equal(second.messages.length, secondCount)
+		assert.equal(tower.progressPorts.size, 0)
+		assert.equal(first.onMessage.listeners.size, 0)
+		assert.equal(writes.length, baselineWrites)
+	} finally {
+		tower.sendProgressDeb.cancel()
+		tower.sendTimeUpdateDeb.cancel()
 		tower.sendUpdateDeb.cancel()
 	}
 })

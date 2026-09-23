@@ -63,6 +63,7 @@ export type State = {
 	hideIndicator?: boolean
 	hideBadge?: boolean
 	hideMediaView?: boolean
+	showSeekBar?: boolean
 	darkTheme?: boolean
 	pageKeybinds?: Keybind[]
 	browserKeybinds?: Keybind[]

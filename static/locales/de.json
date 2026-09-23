@@ -248,6 +248,7 @@
 			"showBadge": "Abzeichen anzeigen",
 			"showBadgeTooltip": "Das Abzeichen ist der Text auf dem Erweiterungssymbol",
 			"showMediaView": "Medienliste anzeigen",
+			"showSeekBar": "Fortschrittsleiste anzeigen",
 			"showIndicator": "Indikator anzeigen",
 			"showIndicatorTooltip": "Der Indikator ist visuelles Feedback beim Verwenden von Tastenkombinationen",
 			"ghostMode": "Geistermodus",

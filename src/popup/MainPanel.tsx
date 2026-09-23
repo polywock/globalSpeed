@@ -1,3 +1,4 @@
+import { useMediaProgress } from "../hooks/useMediaProgress"
 import { useMediaWatch } from "../hooks/useMediaWatch"
 import { useStateView } from "../hooks/useStateView"
 import { conformSpeed } from "../utils/configUtils"
@@ -30,13 +31,22 @@ export function MainPanel(props: {}) {
 
 export function MediaViews(props: {}) {
 	const watchInfo = useMediaWatch()
+	const [view] = useStateView({ showSeekBar: true })
+	const { progress, seek } = useMediaProgress(watchInfo?.infos, !!view?.showSeekBar)
 
 	if (!watchInfo?.infos?.length) return
 
 	return (
 		<div className="pl-1.25 select-none">
 			{watchInfo.infos.map((info) => (
-				<MediaView key={info.key} info={info} pinned={info.key === watchInfo.pinned?.key} />
+				<MediaView
+					key={info.key}
+					info={info}
+					pinned={info.key === watchInfo.pinned?.key}
+					showSeekBar={!!view?.showSeekBar}
+					progress={progress[info.key]}
+					onSeek={(time) => seek(info, time)}
+				/>
 			))}
 		</div>
 	)

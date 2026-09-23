@@ -247,6 +247,7 @@
 			"showBadge": "عرض الشارة",
 			"showBadgeTooltip": "الشارة هي النص الموجود على أيقونة الإضافة",
 			"showMediaView": "عرض قائمة الوسائط",
+			"showSeekBar": "إظهار شريط التقديم",
 			"showIndicator": "عرض المؤشر",
 			"showIndicatorTooltip": "المؤشر هو ردود الفعل البصرية عند استخدام الاختصارات",
 			"ghostMode": "وضع الشبح",

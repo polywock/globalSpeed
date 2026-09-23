@@ -475,6 +475,8 @@ export type Gsm = {
 			showBadgeTooltip: string
 			/** Show media list */
 			showMediaView: string
+			/** Show seek bar */
+			showSeekBar: string
 			/** Show indicator */
 			showIndicator: string
 			/** The indicator is visual feedback when using shortcuts */

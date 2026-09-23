@@ -1,6 +1,7 @@
 import debounce from "lodash.debounce"
 import { gvar } from "@/globalVar"
 import { IterableWeakSet } from "@/utils/IterableWeakSet"
+import { MEDIA_PROGRESS_PORT, MediaProgressMessage, MediaSeekMessage } from "@/utils/mediaProgress"
 import { getShadow } from "@/utils/nativeUtils"
 import { conformSpeed } from "../../utils/configUtils"
 import { assertType, between, randomId } from "../../utils/helper"
@@ -18,13 +19,65 @@ export class MediaTower {
 	observer: IntersectionObserver
 	trackFps = true
 	previousTimeUpdate: TimeUpdateInfo
+	private progressPorts = new Set<chrome.runtime.Port>()
 
 	constructor() {
+		chrome.runtime.onConnect.addListener(this.handleProgressConnect)
 		this.processDoc(window)
 		gvar.os.stratumServer.wiggleCbs.add(this.handleWiggle)
 		gvar.os.detectOpen.cbs.add(this.handleDetectOpen)
 		window.addEventListener("beforeunload", this.handleUnload, { capture: true })
 		window.addEventListener("blur", this.handleBlur, { capture: true, passive: true })
+	}
+	private handleProgressConnect = (port: chrome.runtime.Port) => {
+		if (port.name !== MEDIA_PROGRESS_PORT) return
+		this.progressPorts.add(port)
+		const handleMessage = (message: MediaSeekMessage) => {
+			if (message?.type !== "SEEK" || typeof message.key !== "string" || !Number.isFinite(message.time)) return
+			const media = [...this.media].find((m) => m.gsKey === message.key)
+			if (!media?.readyState || !Number.isFinite(media.duration) || media.duration <= 0) return
+			try {
+				applyMediaEvent(media, { type: "SEEK", value: Math.max(0, Math.min(media.duration, message.time)), relative: false })
+			} catch {
+				// A source can become unavailable between the snapshot and the seek.
+			} finally {
+				this.sendProgressDeb()
+			}
+		}
+		const disconnect = () => {
+			this.progressPorts.delete(port)
+			port.onMessage.removeListener(handleMessage)
+			port.onDisconnect.removeListener(disconnect)
+			if (!this.progressPorts.size) this.sendProgressDeb.cancel()
+		}
+		port.onMessage.addListener(handleMessage)
+		port.onDisconnect.addListener(disconnect)
+		this.sendProgress(port)
+	}
+	private sendProgress = (onlyPort?: chrome.runtime.Port) => {
+		if (!this.progressPorts.size) return
+		const message: MediaProgressMessage = {
+			type: "PROGRESS",
+			media: [...this.media].map((m) => ({
+				key: m.gsKey,
+				currentTime: Number.isFinite(m.currentTime) ? m.currentTime : 0,
+				duration: m.readyState && Number.isFinite(m.duration) && m.duration > 0 ? m.duration : null,
+			})),
+		}
+		for (const port of onlyPort ? [onlyPort] : this.progressPorts) {
+			try {
+				port.postMessage(message)
+			} catch {
+				this.progressPorts.delete(port)
+			}
+		}
+	}
+	private sendProgressDeb = debounce(() => this.sendProgress(), 100, { leading: true, trailing: true, maxWait: 250 })
+	private handleProgressEvent = (e: Event) => {
+		if (!e.isTrusted || e.processed || !(e.target instanceof HTMLMediaElement)) return
+		e.processed = true
+		this.processMedia(e.target)
+		if (this.progressPorts.size) this.sendProgressDeb()
 	}
 	private handleDetectOpen = () => {
 		this.observer?.disconnect()
@@ -106,10 +159,14 @@ export class MediaTower {
 		elem instanceof HTMLVideoElement && this.observe(elem)
 		this.media.add(elem)
 		this.sendUpdate()
+		if (this.progressPorts.size) this.sendProgressDeb()
 
 		this.forceSpeedCallbacks.forEach((cb) => cb())
 	}
 	private ensureDocEventListeners = (doc: Window | ShadowRoot) => {
+		for (const event of ["seeking", "seeked", "durationchange", "ended"]) {
+			doc.addEventListener(event, this.handleProgressEvent, { capture: true, passive: true })
+		}
 		doc.addEventListener("play", this.handleMediaEvent, { capture: true, passive: true })
 		doc.addEventListener("playing", this.handleInterrupt, { capture: true, passive: true })
 		doc.addEventListener("timeupdate", this.handleMediaEventTimeUpdate, { capture: true, passive: true })
@@ -124,6 +181,9 @@ export class MediaTower {
 		doc.addEventListener("ratechange", this.handleMediaEvent, { capture: true, passive: true })
 	}
 	private ensureMediaEventListeners = (elem: HTMLMediaElement) => {
+		for (const event of ["seeking", "seeked", "durationchange", "ended"]) {
+			elem.addEventListener(event, this.handleProgressEvent, { capture: true, passive: true })
+		}
 		elem.addEventListener("timeupdate", this.handleMediaEventTimeUpdate, { capture: true, passive: true })
 		elem.addEventListener("play", this.handleMediaEvent, { capture: true, passive: true })
 		elem.addEventListener("playing", this.handleInterrupt, { capture: true, passive: true })
@@ -166,6 +226,7 @@ export class MediaTower {
 		// A shadow-root event can lose its target after dispatch. Process it now and
 		// debounce only publishing the media snapshot, never the Event itself.
 		this.sendTimeUpdateDeb()
+		if (this.progressPorts.size) this.sendProgressDeb()
 	}
 	hiddenSpeedUpdateTimeout: number
 	private handleMediaEvent = (e: Event) => {
@@ -179,6 +240,7 @@ export class MediaTower {
 		if (EVENTS_LAST_PLAYED.has(e.type)) elem.gsLastPlayed = Date.now()
 		this.processMedia(elem)
 		this.sendUpdate()
+		if (this.progressPorts.size) this.sendProgressDeb()
 
 		if (e.type === "ratechange") {
 			gvar.ghostMode && e.stopImmediatePropagation()

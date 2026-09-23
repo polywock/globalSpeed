@@ -247,6 +247,7 @@
 			"showBadge": "Mostrar distintivo",
 			"showBadgeTooltip": "El distintivo es el texto en el ícono de la extensión",
 			"showMediaView": "Mostrar lista de medios",
+			"showSeekBar": "Mostrar barra de progreso",
 			"showIndicator": "Mostrar indicador",
 			"showIndicatorTooltip": "El indicador es una retroalimentación visual al usar atajos",
 			"ghostMode": "Modo fantasma",

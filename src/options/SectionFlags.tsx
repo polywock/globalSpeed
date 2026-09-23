@@ -23,6 +23,7 @@ import { SetView, useStateView } from "../hooks/useStateView"
 import { getValidLocale, LOCALE_MAP } from "../utils/gsm"
 import { IndicatorModal } from "./IndicatorModal"
 import { LocalFilesField } from "./LocalFilesField"
+import { MediaViewModal } from "./MediaViewModal"
 import { OptionField } from "./OptionField"
 import { OptionFieldLabel } from "./OptionFieldLabel"
 import { OptionsSection } from "./OptionsSection"
@@ -36,6 +37,7 @@ function FloatingFieldValue({ className, ...props }: ComponentPropsWithoutRef<"d
 
 export function SectionFlags(props: {}) {
 	const [showIndicatorModal, setShowIndicatorModal] = useState(false)
+	const [showMediaViewModal, setShowMediaViewModal] = useState(false)
 	const [showGhostModal, setShowGhostModal] = useState(false)
 	const [showPresetModal, setShowPresetModal] = useState(false)
 	const [showWidgetModal, setShowWidgetModal] = useState(false)
@@ -77,6 +79,7 @@ export function SectionFlags(props: {}) {
 
 	return (
 		<OptionsSection>
+			{showMediaViewModal && <MediaViewModal onClose={() => setShowMediaViewModal(false)} />}
 			{showIndicatorModal && (
 				<IndicatorModal
 					indicator={viewAlt.indicatorInit}
@@ -249,13 +252,16 @@ export function SectionFlags(props: {}) {
 				{!isMobile() && (
 					<OptionField>
 						<span>{gvar.gsm.options.flags.showMediaView}</span>
-						<Toggle
-							aria-label={gvar.gsm.options.flags.showMediaView}
-							value={!view.hideMediaView}
-							onChange={(e) => {
-								setView({ hideMediaView: !view.hideMediaView })
-							}}
-						/>
+						<FloatingFieldValue>
+							<Toggle
+								aria-label={gvar.gsm.options.flags.showMediaView}
+								value={!view.hideMediaView}
+								onChange={() => setView({ hideMediaView: !view.hideMediaView })}
+							/>
+							<div className="field-gear">
+								{!view.hideMediaView && <GearIcon className="text-foreground" onClick={() => setShowMediaViewModal(true)} />}
+							</div>
+						</FloatingFieldValue>
 					</OptionField>
 				)}
 
@@ -525,14 +531,14 @@ function PromoDismiss() {
 	return (
 		<OptionField>
 			<OptionFieldLabel>
-				<span>{"Show promos"}</span>
+				<span id="show-promos-label">{"Show promos"}</span>
 				<RegularTooltip
 					title={"Occasional suggestions for our other projects, shown at the bottom of the popup. Turning this off hides them for two weeks."}
 					align="right"
 				/>
 			</OptionFieldLabel>
 			<Toggle
-				aria-label={gvar.gsm.options.flags.showPromos}
+				aria-labelledby="show-promos-label"
 				value={true}
 				onChange={() => {
 					setView({ selfPromoHideTsR: Date.now() })

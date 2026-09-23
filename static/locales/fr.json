@@ -248,6 +248,7 @@
 			"showBadge": "Afficher le badge",
 			"showBadgeTooltip": "Le badge est le texte sur l’icône de l’extension",
 			"showMediaView": "Afficher la liste des médias",
+			"showSeekBar": "Afficher la barre de progression",
 			"showIndicator": "Afficher l’indicateur",
 			"showIndicatorTooltip": "L’indicateur est un retour visuel lors de l’utilisation des raccourcis",
 			"ghostMode": "Mode fantôme",

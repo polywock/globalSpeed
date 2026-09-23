@@ -249,6 +249,7 @@
 			"showBadge": "显示徽章",
 			"showBadgeTooltip": "徽章是扩展图标上的文字",
 			"showMediaView": "显示媒体列表",
+			"showSeekBar": "显示进度条",
 			"showIndicator": "显示指示器",
 			"showIndicatorTooltip": "指示器是使用快捷键时的视觉反馈",
 			"ghostMode": "幽灵模式",

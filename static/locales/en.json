@@ -476,6 +476,8 @@
 			"!showBadgeTooltip": "Tooltip explaining the extension-icon badge setting on the Options page",
 			"showMediaView": "Show media list",
 			"!showMediaView": "Setting label on the Options page for showing the media list in the popup",
+			"showSeekBar": "Show seek bar",
+			"!showSeekBar": "Toggle in the media view settings dialog. Shows a playback timeline with elapsed and total time in the popup.",
 			"showIndicator": "Show indicator",
 			"!showIndicator": "Setting label for visual shortcut feedback on the Options page and per-shortcut menus",
 			"showIndicatorTooltip": "The indicator is visual feedback when using shortcuts",

@@ -248,6 +248,7 @@
 			"showBadge": "배지 표시",
 			"showBadgeTooltip": "배지는 확장 프로그램 아이콘의 텍스트입니다",
 			"showMediaView": "미디어 목록 표시",
+			"showSeekBar": "탐색 막대 표시",
 			"showIndicator": "인디케이터 표시",
 			"showIndicatorTooltip": "인디케이터는 단축키 사용 시 시각적 피드백입니다",
 			"ghostMode": "고스트 모드",

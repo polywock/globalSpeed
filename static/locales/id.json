@@ -247,6 +247,7 @@
 			"showBadge": "Tampilkan badge",
 			"showBadgeTooltip": "Badge adalah teks pada ikon ekstensi",
 			"showMediaView": "Tampilkan daftar media",
+			"showSeekBar": "Tampilkan bilah progres",
 			"showIndicator": "Tampilkan indikator",
 			"showIndicatorTooltip": "Indikator adalah umpan balik visual saat menggunakan pintasan",
 			"ghostMode": "Mode hantu",

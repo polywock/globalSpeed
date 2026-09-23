@@ -247,6 +247,7 @@
 			"showBadge": "バッジを表示",
 			"showBadgeTooltip": "バッジは拡張機能のアイコン上のテキストです",
 			"showMediaView": "メディアリストを表示",
+			"showSeekBar": "シークバーを表示",
 			"showIndicator": "インジケーターを表示",
 			"showIndicatorTooltip": "インジケーターはショートカットを使用した時の視覚的フィードバックです",
 			"ghostMode": "ゴーストモード",

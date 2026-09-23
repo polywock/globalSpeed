@@ -1,4 +1,4 @@
-import { type CSSProperties } from "react"
+import { useEffect, useRef, useState, type CSSProperties } from "react"
 import { FaBackward, FaForward, FaMousePointer, FaPause, FaPlay } from "react-icons/fa"
 import { GrRevert } from "react-icons/gr"
 import { IoMdVolumeHigh, IoMdVolumeLow, IoMdVolumeOff } from "react-icons/io"
@@ -7,6 +7,7 @@ import { SliderInput } from "@/comps/Slider"
 import { Tooltip } from "@/comps/Tooltip"
 import { Button } from "@/comps/ui/button"
 import { gvar } from "@/globalVar"
+import { MediaProgress } from "@/utils/mediaProgress"
 import type { MediaEvent } from "../contentScript/isolated/utils/applyMediaEvent"
 import { FlatMediaInfo, MediaPath } from "../contentScript/isolated/utils/genMediaInfo"
 import { sendMediaEvent } from "../utils/configUtils"
@@ -15,15 +16,23 @@ import { clamp, cn, feedbackText, formatDomain, formatDuration } from "../utils/
 const HAS_REQUEST_PIP = !!HTMLVideoElement.prototype.requestPictureInPicture
 const CONTROL_BUTTON_CLASS = "p-1.25 first:-ml-1.25 hover:bg-accent"
 
-export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
+export function MediaView(props: {
+	info: FlatMediaInfo
+	pinned: boolean
+	showSeekBar: boolean
+	progress?: MediaProgress
+	onSeek: (time: number) => void
+}) {
 	const { info, pinned } = props
 	const { tabId, frameId, windowId } = info.tabInfo
 
 	let parts: string[] = [info.displayDomain || formatDomain(info.domain)]
 
-	if (!info.infinity && info.duration) parts.push(formatDuration(info.duration))
+	if (!props.showSeekBar && !info.infinity && info.duration) parts.push(formatDuration(info.duration))
 
 	const differentTab = gvar.tabInfo && gvar.tabInfo.tabId !== tabId
+	const currentTab = gvar.tabInfo?.tabId === tabId
+	const displayedVolume = info.muted ? 0 : clamp(0, 1, info.volume)
 
 	return (
 		<div className="border-t border-border px-1.25 py-2.5 first:mt-4">
@@ -142,8 +151,9 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 							)}
 						</Button>
 						<SliderInput
+							variant="seek"
 							className="min-w-0"
-							style={{ "--slider-progress": `${clamp(0, 1, info.volume) * 100}%` } as CSSProperties}
+							style={{ "--slider-progress": `${displayedVolume * 100}%` } as CSSProperties}
 							onChange={(e) => {
 								const event: MediaEvent = { type: "SET_VOLUME", value: e.target.valueAsNumber, relative: false }
 								sendMediaEvent(event, info.key, tabId, frameId)
@@ -151,7 +161,7 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 							min={0}
 							max={1}
 							step={0.1}
-							value={info.volume}
+							value={displayedVolume}
 						/>
 					</>
 				)}
@@ -198,6 +208,59 @@ export function MediaView(props: { info: FlatMediaInfo; pinned: boolean }) {
 					</Button>
 				</Tooltip>
 			</div>
+			{props.showSeekBar && <MediaSeekBar progress={props.progress} onSeek={props.onSeek} accent={currentTab} />}
+		</div>
+	)
+}
+
+function MediaSeekBar({ progress, onSeek, accent }: { progress?: MediaProgress; onSeek: (time: number) => void; accent: boolean }) {
+	const [preview, setPreview] = useState<number | null>(null)
+	const dragging = useRef(false)
+	const duration = progress?.duration
+	const canSeek = Number.isFinite(duration) && duration > 0
+	const currentTime = canSeek ? clamp(0, duration, preview ?? progress.currentTime) : Math.max(0, progress?.currentTime ?? 0)
+
+	useEffect(() => {
+		if (!dragging.current || !canSeek) setPreview(null)
+	}, [progress, canSeek])
+
+	return (
+		<div className="mt-1.5 flex items-center gap-3 text-[0.75rem] text-foreground/75 tabular-nums">
+			<span className="min-w-8 text-center">{formatDuration(currentTime)}</span>
+			<SliderInput
+				variant="seek"
+				accent={accent}
+				className="min-w-0 flex-1"
+				style={{ "--slider-progress": `${canSeek ? (currentTime / duration) * 100 : 0}%` } as CSSProperties}
+				aria-label={gvar.gsm.command.seek}
+				aria-valuetext={`${formatDuration(currentTime)} / ${canSeek ? formatDuration(duration) : "—"}`}
+				disabled={!canSeek}
+				min={0}
+				max={canSeek ? duration : 1}
+				step={0.1}
+				value={canSeek ? currentTime : 0}
+				onPointerDown={(e) => {
+					dragging.current = true
+					e.currentTarget.setPointerCapture(e.pointerId)
+				}}
+				onPointerUp={(e) => {
+					dragging.current = false
+					onSeek(e.currentTarget.valueAsNumber)
+				}}
+				onPointerCancel={() => {
+					dragging.current = false
+					setPreview(null)
+				}}
+				onBlur={() => {
+					dragging.current = false
+					setPreview(null)
+				}}
+				onChange={(e) => {
+					setPreview(e.target.valueAsNumber)
+					onSeek(e.target.valueAsNumber)
+				}}
+			/>
+			<span className="min-w-8 text-center">{canSeek ? formatDuration(duration) : "—"}</span>
 		</div>
 	)
 }

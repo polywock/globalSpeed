@@ -1,10 +1,34 @@
+import { cva, type VariantProps } from "class-variance-authority"
 import debounce from "lodash.debounce"
 import { useCallback, useEffect, useMemo, useState, type ComponentProps, type CSSProperties } from "react"
 import { gvar } from "@/globalVar"
 import { clamp, cn, inverseLerp, lerp } from "../utils/helper"
 
-export function SliderInput({ className, ...props }: Omit<ComponentProps<"input">, "type">) {
-	return <input {...props} className={cn("slider grayscale-75", className)} type="range" />
+export const sliderVariants = cva("slider grayscale-75", {
+	variants: {
+		variant: {
+			default: "",
+			seek: [
+				"h-[20px] [--slider-track-height:4px] [--slider-thumb-size:12px] [--slider-fill-color:var(--input)] [--slider-thumb-color:var(--muted-foreground)] focus:outline-none disabled:cursor-default disabled:opacity-40",
+				"[&::-webkit-slider-thumb]:w-[4px] [&::-webkit-slider-thumb]:rounded-[2px] [&::-webkit-slider-thumb]:border-0 [&::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--background)]",
+				"[&::-moz-range-thumb]:w-[4px] [&::-moz-range-thumb]:rounded-[2px] [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:shadow-[0_0_0_4px_var(--background)]",
+				"[&:focus-visible::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--background)] [&:focus-visible::-moz-range-thumb]:shadow-[0_0_0_4px_var(--background)]",
+			],
+		},
+		accent: {
+			true: "grayscale-0 [--slider-fill-color:var(--primary)] [--slider-thumb-color:var(--primary)]",
+		},
+	},
+	defaultVariants: { variant: "default" },
+})
+
+export function SliderInput({
+	className,
+	variant = "default",
+	accent,
+	...props
+}: Omit<ComponentProps<"input">, "type"> & VariantProps<typeof sliderVariants>) {
+	return <input {...props} className={cn(sliderVariants({ variant, accent, className }))} type="range" />
 }
 
 type SliderProps = {
@@ -17,7 +41,7 @@ type SliderProps = {
 	maxWait?: number
 	wait?: number
 	className?: string
-}
+} & VariantProps<typeof sliderVariants>
 
 export function Slider(props: SliderProps) {
 	const [anchor, setAnchor] = useState(null as [number])
@@ -67,6 +91,8 @@ export function Slider(props: SliderProps) {
 
 	return (
 		<SliderInput
+			variant={props.variant}
+			accent={props.accent}
 			className={cn(anchor && "origin-center scale-y-[1.5] outline-2 outline-[red]", props.className)}
 			title={gvar.gsm.warnings.sliderTooltip}
 			style={sliderStyle}
