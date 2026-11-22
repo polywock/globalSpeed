@@ -123,6 +123,25 @@ function Faqs(props: {}) {
 						</div>
 					}
 				/>
+				<Item
+					q={"Why does the speed drop to 1x on live streams? "}
+					a={
+						<div>
+							Once you catch up to the live point, there's nothing ahead to play faster, so Global Speed plays at 1x there instead of
+							stuttering. Your chosen speed stays set, so if you rewind or pause, it speeds up again until you catch up.
+						</div>
+					}
+				/>
+				<Item
+					q={"How do I make the speed change the pitch? "}
+					a={
+						<div>
+							Turn on <i>Allow pitch shift</i> in the popup's three-dot menu <IoEllipsisVertical className="align-middle" size="1.2em" />.
+							While it's on, the popup also shows the speed slider with a quick toggle next to it. Like speed, it's per tab when the tab is
+							pinned.
+						</div>
+					}
+				/>
 			</Group>
 			<Group label="shortcuts">
 				<Item
@@ -143,6 +162,10 @@ function Faqs(props: {}) {
 							<li>
 								4. It should show an option to disable shortcuts for <InlineCode>geforcenow.com</InlineCode>.
 							</li>
+							<li className="mt-2.5">
+								To use shortcuts everywhere except a few websites, turn on <i>Allow shortcuts by default</i> in the options page and add
+								websites to block with the gear icon next to it.
+							</li>
 						</ul>
 					}
 				/>
@@ -155,7 +178,7 @@ function Faqs(props: {}) {
 									Suspend Global Speed using the <FaPowerOff color={"#02a"} size="1.21rem" /> button.
 								</li>
 								<li>
-									For a permenant solution, while on the website, open Global Speed, click the three-dot menu, and disable shortcuts for that
+									For a permanent solution, while on the website, open Global Speed, click the three-dot menu, and disable shortcuts for that
 									website
 								</li>
 							</ol>
@@ -167,7 +190,7 @@ function Faqs(props: {}) {
 					a={
 						<div>
 							Global Speed uses a QWERTY input by default. If using a non-QWERTY keyboard, you change the keyboard input type to virtual in the
-							options page. The option is hidden under the 3 dots. <InlineCode>[...]</InlineCode>
+							options page. The option is under <i>Show more</i>.
 						</div>
 					}
 				/>
@@ -175,8 +198,18 @@ function Faqs(props: {}) {
 					q={"Why do hotkeys not work for me? "}
 					a={
 						<div>
-							Global Speed uses a QWERTY input by default, which causes issues with some virtual keyboards. You can try changing the keyboard
-							input type to virtual in the options page. The option is hidden under the 3 dots. <InlineCode>[...]</InlineCode>
+							By default, shortcuts only work on a list of allowed websites. To allow the current website, open Global Speed's popup, click the
+							three-dot menu <IoEllipsisVertical className="align-middle" size="1.2em" /> and allow shortcuts for it. To use shortcuts on every
+							website instead, turn on <i>Allow shortcuts by default</i> in the options page.
+						</div>
+					}
+				/>
+				<Item
+					q={"Hotkeys are allowed but still don't work. Are you using a non-QWERTY or virtual keyboard? "}
+					a={
+						<div>
+							Global Speed uses a QWERTY input by default, which causes issues with some keyboard layouts and virtual keyboards. Try changing
+							the keyboard input type to virtual in the options page. The option is under <i>Show more</i>.
 						</div>
 					}
 				/>
