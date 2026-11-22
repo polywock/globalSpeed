@@ -60,6 +60,7 @@ export function Header(props: HeaderProps) {
 		isPinned: true,
 		superDisable: true,
 		circleWidget: true,
+		freePitch: true,
 		keybindsUrlCondition: true,
 		sawEnableShortcutOverlayCount: true,
 	})
@@ -70,7 +71,7 @@ export function Header(props: HeaderProps) {
 		showAlert: boolean
 	} = useMemo(() => {
 		return getKebabList(view, setView)
-	}, [!!view, view?.keybindsUrlCondition, view?.circleWidget])
+	}, [!!view, view?.keybindsUrlCondition, view?.circleWidget, view?.freePitch])
 
 	if (!view) return <div></div>
 
@@ -318,6 +319,12 @@ function getKebabList(
 		fns["widget"] = () => {
 			setView({ circleWidget: !view.circleWidget })
 		}
+	}
+
+	// Per tab when pinned, like speed.
+	list.push({ label: gvar.gsm.command.speedChangesPitch, name: "freePitch", checked: !!view.freePitch })
+	fns["freePitch"] = () => {
+		setView({ freePitch: !view.freePitch })
 	}
 
 	// Only shown if on http(s) protocol and have local shortcuts.

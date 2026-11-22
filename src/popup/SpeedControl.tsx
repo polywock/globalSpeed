@@ -5,7 +5,7 @@ import { NumericInput } from "@/comps/NumericInput"
 import { SliderInput } from "@/comps/Slider"
 import { Tooltip } from "@/comps/Tooltip"
 import { Button } from "@/comps/ui/button"
-import { getDefaultSpeedPresets } from "@/defaults/constants"
+import { getDefaultSpeedPresets, getDefaultSpeedSlider } from "@/defaults/constants"
 import { gvar } from "@/globalVar"
 import { clamp, cn, isMobile } from "@/utils/helper"
 import { MAX_SPEED_CHROMIUM, MIN_SPEED_CHROMIUM } from "../defaults/constants"
@@ -44,8 +44,10 @@ export function SpeedControl(props: SpeedControlProps) {
 
 	const smallStep = view.speedSmallStep || 0.01
 	const largeStep = view.speedBigStep || 0.1
-	const speedSliderMin = view.speedSlider?.min ?? MIN_SPEED_CHROMIUM
-	const speedSliderMax = view.speedSlider?.max ?? MAX_SPEED_CHROMIUM
+	// Pitch shift brings the slider along (with its quick toggle), even when the slider setting is off.
+	const slider = view.speedSlider ?? (view.freePitch ? getDefaultSpeedSlider() : null)
+	const speedSliderMin = slider?.min ?? MIN_SPEED_CHROMIUM
+	const speedSliderMax = slider?.max ?? MAX_SPEED_CHROMIUM
 	const speedSliderProgress = speedSliderMax === speedSliderMin ? 0 : clamp(0, 1, (props.speed - speedSliderMin) / (speedSliderMax - speedSliderMin))
 
 	let padding = (view.speedPresetPadding ?? 0) * (view.fontSize ?? 1)
@@ -128,7 +130,7 @@ export function SpeedControl(props: SpeedControlProps) {
 			</div>
 
 			{/* Slider */}
-			{!!view.speedSlider && (
+			{!!slider && (
 				<div className="mt-3.75 grid grid-cols-[max-content_1fr] items-center gap-x-1.25">
 					<Tooltip title={gvar.gsm.command.speedChangesPitch}>
 						<BsMusicNoteList

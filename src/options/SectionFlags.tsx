@@ -61,7 +61,6 @@ export function SectionFlags(props: {}) {
 		ghostMode: true,
 		ghostModeUrlCondition: true,
 		hideMediaView: true,
-		freePitch: true,
 		speedSlider: true,
 		virtualInput: true,
 		circleWidget: true,
@@ -268,23 +267,6 @@ export function SectionFlags(props: {}) {
 					</FloatingFieldValue>
 				</OptionField>
 
-				{/* Show media view */}
-				{!isMobile() && (
-					<OptionField>
-						<span>{gvar.gsm.options.flags.showMediaView}</span>
-						<FloatingFieldValue>
-							<Toggle
-								aria-label={gvar.gsm.options.flags.showMediaView}
-								value={!view.hideMediaView}
-								onChange={() => setView({ hideMediaView: !view.hideMediaView })}
-							/>
-							<div className="field-gear">
-								{!view.hideMediaView && <GearIcon className="text-foreground" onClick={() => setShowMediaViewModal(true)} />}
-							</div>
-						</FloatingFieldValue>
-					</OptionField>
-				)}
-
 				{/* Circle widget */}
 				<CircleWidget setView={setView} active={view.circleWidget} setShowWidgetModal={setShowWidgetModal} />
 
@@ -351,61 +333,6 @@ export function SectionFlags(props: {}) {
 					</FloatingFieldValue>
 				</OptionField>
 
-				{/* Speed changes pitch */}
-				<OptionField className="mt-7.5">
-					<OptionFieldLabel>
-						<span>{gvar.gsm.command.speedChangesPitch}</span>
-						<RegularTooltip title={gvar.gsm.command.speedChangesPitchTooltip} align="right" />
-					</OptionFieldLabel>
-					<Toggle
-						aria-label={gvar.gsm.command.speedChangesPitch}
-						value={!!view.freePitch}
-						onChange={(e) => {
-							setView({ freePitch: !view.freePitch })
-						}}
-					/>
-				</OptionField>
-
-				{/* Speed slider  */}
-				<OptionField className="mb-2.5">
-					<span>{gvar.gsm.options.flags.speedSlider}</span>
-					{view.speedSlider ? (
-						<div className="grid grid-cols-[8rem_max-content] gap-x-1.25">
-							<Minmax
-								realMin={MIN_SPEED_CHROMIUM}
-								realMax={MAX_SPEED_CHROMIUM}
-								min={view.speedSlider?.min ?? defaultSlider.min}
-								max={view.speedSlider?.max ?? defaultSlider.max}
-								onChange={(min: number, max: number) => {
-									setView({
-										speedSlider: { min, max },
-									})
-								}}
-								defaultMin={defaultSlider.min}
-								defaultMax={defaultSlider.max}
-							/>
-							<Tooltip title={gvar.gsm.token.delete}>
-								<Button
-									variant="icon"
-									size="icon-auto"
-									aria-label={gvar.gsm.token.delete}
-									onClick={() => {
-										setView({ speedSlider: null })
-									}}
-								>
-									<GoX size="1.6rem" />
-								</Button>
-							</Tooltip>
-						</div>
-					) : (
-						<Toggle
-							aria-label={gvar.gsm.options.flags.speedSlider}
-							value={!!view.speedSlider}
-							onChange={(v) => setView({ speedSlider: view.speedSlider ? null : getDefaultSpeedSlider() })}
-						/>
-					)}
-				</OptionField>
-
 				{/* Hold to speed  */}
 				<OptionField className="mb-7.5">
 					<OptionFieldLabel>
@@ -438,95 +365,85 @@ export function SectionFlags(props: {}) {
 					</Button>
 				) : (
 					<>
-						{/* Long-press threshold */}
-						{!isMobile() && hasLongPressKey && (
-							<OptionField>
-								<OptionFieldLabel>
-									<span>{gvar.gsm.options.flags.longPressThreshold}</span>
-									<RegularTooltip title={gvar.gsm.options.flags.longPressThresholdTooltip} align="right" />
-								</OptionFieldLabel>
-
-								<div className="grid grid-cols-[max-content_max-content] items-center gap-x-1.25">
-									<NumericInput
-										noNull={true}
-										min={0.1}
-										max={3}
-										value={(view.longPressThreshold ?? DEFAULT_LONG_PRESS_THRESHOLD) / 1000}
-										onChange={(v) => setView({ longPressThreshold: Math.round(v * 1000) })}
-									/>
-									<Reset
-										active={view.longPressThreshold != undefined}
-										onClick={() => {
-											setView({ longPressThreshold: null })
-										}}
-									/>
-								</div>
-							</OptionField>
-						)}
-
-						{!isMobile() && hasDoubleTap && (
-							<OptionField>
-								<OptionFieldLabel>
-									<span>{gvar.gsm.options.flags.doubleTapThreshold}</span>
-									<RegularTooltip title={gvar.gsm.options.flags.doubleTapThresholdTooltip} align="right" />
-								</OptionFieldLabel>
-
-								<div className="grid grid-cols-[max-content_max-content] items-center gap-x-1.25">
-									<NumericInput
-										noNull={true}
-										min={0.06}
-										max={3}
-										value={(view.doubleTapThreshold ?? DEFAULT_DOUBLE_TAP_THRESHOLD) / 1000}
-										onChange={(v) => setView({ doubleTapThreshold: Math.round(v * 1000) })}
-									/>
-									<Reset
-										active={view.doubleTapThreshold != undefined}
-										onClick={() => {
-											setView({ doubleTapThreshold: null })
-										}}
-									/>
-								</div>
-							</OptionField>
-						)}
-
+						{/* Font size */}
 						{!isMobile() && (
-							<>
-								{/* Font size */}
-								<OptionField>
-									<span>{gvar.gsm.options.flags.textSize}</span>
-									<SliderMicro
-										value={view.fontSize ?? 1.0}
-										onChange={(v) => {
-											setView({ fontSize: clamp(0.9, 1.1, v) })
-											// setView({fontSize: clamp(0.5, 3, v)})
-										}}
-										default={1.0}
-										sliderMin={0.9}
-										sliderMax={1.1}
-										sliderStep={0.01}
-									/>
-								</OptionField>
-
-								{/* Keyboard input */}
-								<OptionField>
-									<OptionFieldLabel>
-										<span>{gvar.gsm.options.flags.keyboardInput}</span>
-										<RegularTooltip title={gvar.gsm.options.flags.keyboardInputTooltip} align="right" />
-									</OptionFieldLabel>
-									<Select
-										aria-label={gvar.gsm.options.flags.keyboardInput}
-										value={view.virtualInput ? "v" : "q"}
-										onChanged={(newValue) => {
-											setView({ virtualInput: newValue === "v" })
-										}}
-										options={[
-											{ key: "q", value: gvar.gsm.options.flags.qwerty },
-											{ key: "v", value: gvar.gsm.options.flags.virtual },
-										]}
-									/>
-								</OptionField>
-							</>
+							<OptionField>
+								<span>{gvar.gsm.options.flags.textSize}</span>
+								<SliderMicro
+									value={view.fontSize ?? 1.0}
+									onChange={(v) => {
+										setView({ fontSize: clamp(0.9, 1.1, v) })
+										// setView({fontSize: clamp(0.5, 3, v)})
+									}}
+									default={1.0}
+									sliderMin={0.9}
+									sliderMax={1.1}
+									sliderStep={0.01}
+								/>
+							</OptionField>
 						)}
+						{/* Show media view */}
+						{!isMobile() && (
+							<OptionField>
+								<span>{gvar.gsm.options.flags.showMediaView}</span>
+								<FloatingFieldValue>
+									<Toggle
+										aria-label={gvar.gsm.options.flags.showMediaView}
+										value={!view.hideMediaView}
+										onChange={() => setView({ hideMediaView: !view.hideMediaView })}
+									/>
+									<div className="field-gear">
+										{!view.hideMediaView && <GearIcon className="text-foreground" onClick={() => setShowMediaViewModal(true)} />}
+									</div>
+								</FloatingFieldValue>
+							</OptionField>
+						)}
+
+						{/* Speed slider  */}
+						<OptionField>
+							<span>{gvar.gsm.options.flags.speedSlider}</span>
+							{view.speedSlider ? (
+								<div className="grid grid-cols-[8rem_max-content] gap-x-1.25">
+									<Minmax
+										realMin={MIN_SPEED_CHROMIUM}
+										realMax={MAX_SPEED_CHROMIUM}
+										min={view.speedSlider?.min ?? defaultSlider.min}
+										max={view.speedSlider?.max ?? defaultSlider.max}
+										onChange={(min: number, max: number) => {
+											setView({
+												speedSlider: { min, max },
+											})
+										}}
+										defaultMin={defaultSlider.min}
+										defaultMax={defaultSlider.max}
+									/>
+									<Tooltip title={gvar.gsm.token.delete}>
+										<Button
+											variant="icon"
+											size="icon-auto"
+											aria-label={gvar.gsm.token.delete}
+											onClick={() => {
+												setView({ speedSlider: null })
+											}}
+										>
+											<GoX size="1.6rem" />
+										</Button>
+									</Tooltip>
+								</div>
+							) : (
+								<Toggle
+									aria-label={gvar.gsm.options.flags.speedSlider}
+									value={!!view.speedSlider}
+									onChange={(v) => setView({ speedSlider: view.speedSlider ? null : getDefaultSpeedSlider() })}
+								/>
+							)}
+						</OptionField>
+
+						{/* Speed presets */}
+						<OptionField>
+							<span>{gvar.gsm.options.flags.speedPresets}</span>
+							<GearIcon className="text-foreground" onClick={(e) => setShowPresetModal(true)} />
+						</OptionField>
 
 						{/* Show badge */}
 						{!isMobile() && (
@@ -545,11 +462,78 @@ export function SectionFlags(props: {}) {
 							</OptionField>
 						)}
 
-						{/* Speed presets */}
-						<OptionField>
-							<span>{gvar.gsm.options.flags.speedPresets}</span>
-							<GearIcon className="text-foreground" onClick={(e) => setShowPresetModal(true)} />
-						</OptionField>
+						{!isMobile() && (
+							<>
+								{/* Keyboard input */}
+								<OptionField>
+									<OptionFieldLabel>
+										<span>{gvar.gsm.options.flags.keyboardInput}</span>
+										<RegularTooltip title={gvar.gsm.options.flags.keyboardInputTooltip} align="right" />
+									</OptionFieldLabel>
+									<Select
+										aria-label={gvar.gsm.options.flags.keyboardInput}
+										value={view.virtualInput ? "v" : "q"}
+										onChanged={(newValue) => {
+											setView({ virtualInput: newValue === "v" })
+										}}
+										options={[
+											{ key: "q", value: gvar.gsm.options.flags.qwerty },
+											{ key: "v", value: gvar.gsm.options.flags.virtual },
+										]}
+									/>
+								</OptionField>
+								{/* Long-press threshold */}
+								{!isMobile() && hasLongPressKey && (
+									<OptionField>
+										<OptionFieldLabel>
+											<span>{gvar.gsm.options.flags.longPressThreshold}</span>
+											<RegularTooltip title={gvar.gsm.options.flags.longPressThresholdTooltip} align="right" />
+										</OptionFieldLabel>
+
+										<div className="grid grid-cols-[max-content_max-content] items-center gap-x-1.25">
+											<NumericInput
+												noNull={true}
+												min={0.1}
+												max={3}
+												value={(view.longPressThreshold ?? DEFAULT_LONG_PRESS_THRESHOLD) / 1000}
+												onChange={(v) => setView({ longPressThreshold: Math.round(v * 1000) })}
+											/>
+											<Reset
+												active={view.longPressThreshold != undefined}
+												onClick={() => {
+													setView({ longPressThreshold: null })
+												}}
+											/>
+										</div>
+									</OptionField>
+								)}
+
+								{!isMobile() && hasDoubleTap && (
+									<OptionField>
+										<OptionFieldLabel>
+											<span>{gvar.gsm.options.flags.doubleTapThreshold}</span>
+											<RegularTooltip title={gvar.gsm.options.flags.doubleTapThresholdTooltip} align="right" />
+										</OptionFieldLabel>
+
+										<div className="grid grid-cols-[max-content_max-content] items-center gap-x-1.25">
+											<NumericInput
+												noNull={true}
+												min={0.06}
+												max={3}
+												value={(view.doubleTapThreshold ?? DEFAULT_DOUBLE_TAP_THRESHOLD) / 1000}
+												onChange={(v) => setView({ doubleTapThreshold: Math.round(v * 1000) })}
+											/>
+											<Reset
+												active={view.doubleTapThreshold != undefined}
+												onClick={() => {
+													setView({ doubleTapThreshold: null })
+												}}
+											/>
+										</div>
+									</OptionField>
+								)}
+							</>
+						)}
 
 						{/* Show promos */}
 						<PromoDismiss />

@@ -76,7 +76,6 @@ export type State = {
 	ghostModeUrlCondition?: URLCondition
 	rules?: URLRule[]
 	indicatorInit?: IndicatorInit
-	freePitch?: boolean
 	superDisable?: boolean
 	firstUse?: number
 	clickedRating?: number
@@ -177,6 +176,7 @@ export type Context = {
 	audioFx?: AudioFx
 	audioFxAlt?: AudioFx
 	audioPan?: number
+	freePitch?: boolean
 }
 
 export const CONTEXT_KEYS: (keyof Context)[] = [
@@ -190,6 +190,7 @@ export const CONTEXT_KEYS: (keyof Context)[] = [
 	"audioFx",
 	"audioFxAlt",
 	"audioPan",
+	"freePitch",
 ]
 
 export const CONTEXT_KEYS_SET = new Set(CONTEXT_KEYS)
