@@ -1,25 +1,24 @@
 import { useRef, useState } from "react"
-import { FaArrowsAltH, FaMusic, FaVolumeUp } from "react-icons/fa"
+import { FaMusic, FaVolumeUp } from "react-icons/fa"
 import { GiAnticlockwiseRotation } from "react-icons/gi"
-import { LuMerge } from "react-icons/lu"
-import { MdAccessTime } from "react-icons/md"
 import { initTabCapture, releaseTabCapture } from "@/background/utils/tabCapture"
 import { TabButton } from "@/comps/TabButton"
 import { ToggleButton } from "@/comps/ToggleButton"
 import { Tooltip } from "@/comps/Tooltip"
 import { gvar } from "@/globalVar"
 import { usePageReachable } from "@/hooks/usePageReachable"
+import { isEffectActive } from "@/utils/audioFx"
 import { produce } from "@/utils/helper"
 import { SliderPlus } from "../comps/SliderPlus"
 import { getDefaultAudioFx } from "../defaults"
 import { useCaptureStatus } from "../hooks/useCaptureStatus"
 import { useStateView } from "../hooks/useStateView"
-import { EqualizerControl } from "./EqualizerControl"
+import { AudioEffectList } from "./AudioEffectList"
 import { InsertItcButton } from "./InsertItcButton"
 import { ReverseButton } from "./ReverseButton"
 
 export function AudioPanel(props: {}) {
-	const [view, setView] = useStateView({ audioFx: true, audioFxAlt: true, monoOutput: true, audioPan: true })
+	const [view, setView] = useStateView({ audioFx: true, audioFxAlt: true, monoOutput: true })
 	const env = useRef({ viaButton: true }).current
 	let [rightTab, setRightTab] = useState(false)
 	const status = useCaptureStatus()
@@ -70,7 +69,6 @@ export function AudioPanel(props: {}) {
 								produce(view, (d) => {
 									d.audioFx = null
 									d.audioFxAlt = null
-									d.audioPan = null
 									d.monoOutput = null
 								}),
 							)
@@ -207,86 +205,21 @@ export function AudioPanel(props: {}) {
 				}}
 			/>
 
-			{/* Pan control */}
-			<SliderPlus
-				label={
-					<div>
-						<FaArrowsAltH size="1.21rem" />
-						<span className="ml-2.5">{gvar.gsm.command.afxPan}</span>
-						{pageReachable && <InsertItcButton command="afxPan" className="ml-2.5" />}
-					</div>
-				}
-				className="mb-5"
-				value={view.audioPan ?? 0}
-				sliderMin={-1}
-				sliderMax={1}
-				min={-1}
-				default={0}
-				onChange={(newValue) => {
-					setView(
-						produce(view, (d) => {
-							d.audioPan = newValue
-						}),
-					)
-					newValue !== 0 && ensureCaptured()
-				}}
-			/>
-
-			{/* Delay control */}
-			<SliderPlus
-				label={
-					<div>
-						<MdAccessTime size="1.42rem" />
-						<span className="ml-2.5">{gvar.gsm.command.afxDelay}</span>
-						<Tooltip title={gvar.gsm.token.mergeBoth}>
-							<ToggleButton
-								active={starAudioFx.delayMerge}
-								className="ml-2.5 p-1 text-sm"
-								onClick={(e) => {
-									setView(
-										produce(view, (d) => {
-											ensureStar(d).delayMerge = !starAudioFx.delayMerge
-										}),
-									)
-								}}
-							>
-								<LuMerge className="size-3" />
-							</ToggleButton>
-						</Tooltip>
-						{pageReachable && <InsertItcButton command="afxDelay" className="ml-2.5" />}
-					</div>
-				}
-				className="mb-5"
-				value={starAudioFx.delay ?? 0}
-				sliderMin={0}
-				sliderMax={5}
-				min={0}
-				max={179}
-				default={0}
-				onChange={(newValue) => {
-					setView(
-						produce(view, (d) => {
-							ensureStar(d).delay = newValue
-						}),
-					)
-					newValue !== 0 && ensureCaptured()
-				}}
-			/>
-
 			{/* Reverse */}
 			<ReverseButton className="mb-2.5" onActivate={ensureCaptured} />
 
-			{/* EQ */}
-			<EqualizerControl
-				className="mb-2.5"
-				value={starAudioFx.eq}
-				onChange={(newValue) => {
+			{/* Effects: EQ, filters, delay and pan, in chain order */}
+			<AudioEffectList
+				effects={starAudioFx.effects ?? []}
+				allowPan={!rightTab}
+				showItc={pageReachable}
+				onChange={(effects) => {
 					setView(
 						produce(view, (d) => {
-							ensureStar(d).eq = newValue
+							ensureStar(d).effects = effects
 						}),
 					)
-					newValue.enabled && ensureCaptured()
+					effects.some(isEffectActive) && ensureCaptured()
 				}}
 			/>
 		</div>

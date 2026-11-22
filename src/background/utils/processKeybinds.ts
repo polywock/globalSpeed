@@ -4,7 +4,8 @@ import { loadGsm } from "@/utils/gsm"
 import { Gsm } from "@/utils/GsmType"
 import { hashWithStoredSalt } from "@/utils/hash"
 import { produce } from "@/utils/helper"
-import { afxContinuousMap, getItcSelector, getItcValues, supportsItc } from "@/utils/itcUtils"
+import { hasActiveAudioFx, setShortcutEffectValue } from "@/utils/audioFx"
+import { afxContinuousMap, afxEffectMap, getItcSelector, getItcValues, supportsItc } from "@/utils/itcUtils"
 import type { MediaEvent, MediaEventCinema } from "../../contentScript/isolated/utils/applyMediaEvent"
 import { FlatMediaInfo } from "../../contentScript/isolated/utils/genMediaInfo"
 import { getDefaultAudioFx, getDefaultFx } from "../../defaults"
@@ -422,7 +423,7 @@ const commandHandlers: {
 			const captured = await isTabCaptured(tabInfo.tabId)
 			if (captured) {
 				let view = await fetch({ audioFx: true, audioFxAlt: true })
-				if (view.audioFx && (view.audioFx.pitch !== 0 || view.audioFx.volume !== 1 || view.audioFx.delay !== 0 || view.audioFx.eq.enabled)) {
+				if (hasActiveAudioFx(view.audioFx)) {
 					captureMode = true
 					await releaseTabCapture(tabInfo.tabId)
 					await timeout(100)
@@ -553,7 +554,7 @@ const commandHandlers: {
 		const captured = await isTabCaptured(tabInfo.tabId)
 		captured ? releaseTabCapture(tabInfo.tabId) : initTabCapture(tabInfo.tabId)
 		override.audioFx = null
-		override.audioFxAlt = override.audioPan = null
+		override.audioFxAlt = null
 		show({ icons: ["reset"] })
 	},
 }
@@ -762,7 +763,7 @@ async function getCycle(args: CommandHandlerArgs) {
 	return kb.valueCycle?.[newIndex]
 }
 
-const afxContinous = new Set(["afxPitch", "afxGain", "afxDelay", "afxPan"])
+const afxContinous = new Set(["afxPitch", "afxGain"])
 
 async function getValues(args: CommandHandlerArgs): Promise<{ main?: number; secondary?: number }> {
 	const { kb, media, fetch, commandInfo } = args
@@ -820,11 +821,20 @@ export async function setValue(init: SetValueInit) {
 				if (valueAlt.toFixed(6) !== ref.default.toFixed(6)) d.enabled = true
 			})
 		}
-	} else if (kb.command === "afxPan") {
-		override.audioPan = value
+	} else if (afxEffectMap[kb.command]) {
+		// Delay and pan live in the effect list: change the first one, add it if missing, remove it on reset.
+		const type = afxEffectMap[kb.command]
+		const view = await fetchView({ audioFx: true, audioFxAlt: true }, tabInfo?.tabId)
+		const isDefault = (v: number) => v.toFixed(6) === ref.default.toFixed(6)
 
-		let command = commandInfos[kb.command]
-		if (value?.toFixed(6) !== command.ref.default.toFixed(6)) initTabCapture(tabInfo.tabId)
+		if ((value != null && !isDefault(value)) || (valueAlt != null && !isDefault(valueAlt))) initTabCapture(tabInfo.tabId)
+
+		if (value != null) {
+			override.audioFx = setShortcutEffectValue(view.audioFx ?? getDefaultAudioFx(), type, value, isDefault(value))
+		}
+		if (type === "delay" && view.audioFxAlt && valueAlt != null) {
+			override.audioFxAlt = setShortcutEffectValue(view.audioFxAlt, type, valueAlt, isDefault(valueAlt))
+		}
 	} else if (afxContinous.has(kb.command)) {
 		const view = await fetchView({ audioFx: true, audioFxAlt: true }, tabInfo?.tabId)
 		let command = commandInfos[kb.command]

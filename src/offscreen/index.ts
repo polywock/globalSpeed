@@ -1,6 +1,7 @@
 import { gvar } from "@/globalVar"
 import { AudioFx, StateView } from "../types"
 import { MessageCallback } from "../utils/browserUtils"
+import { FREQUENCY_MAX, FREQUENCY_MIN, isEffectActive, Q_DEFAULT } from "../utils/audioFx"
 import { clamp, round } from "../utils/helper"
 import { Jungle } from "./Jungle"
 import { ReverseNode } from "./ReverseNode"
@@ -229,12 +230,12 @@ class CaptureManager {
 	}
 	handleChange = (info: CaptureInfo) => {
 		const { streamSrc } = info
-		const { enabled, audioFx, audioFxAlt, monoOutput, audioPan } = info.latestData
+		const { enabled, audioFx, audioFxAlt, monoOutput } = info.latestData
 
 		streamSrc.disconnect()
 		info.fx = info.fx || new AudioEffectComplex(this.audioCtx)
 
-		info.fx.updateFx(enabled, audioFx, audioFxAlt, monoOutput, audioPan)
+		info.fx.updateFx(enabled, audioFx, audioFxAlt, monoOutput)
 
 		streamSrc.connect(info.fx.input)
 		info.fx.output.connect(info.outputNode)
@@ -277,14 +278,18 @@ class AudioEffectComplex {
 		this.main?.release()
 		this.alt?.release()
 	}
-	updateFx = async (enabled: boolean, audioFx: AudioFx, audioFxAlt: AudioFx, monoOutput: boolean, pan: number) => {
+	updateFx = async (enabled: boolean, audioFx: AudioFx, audioFxAlt: AudioFx, monoOutput: boolean) => {
 		let head = this.input as AudioNode
 		this.estrange()
 
-		this.main = this.main || new AudioEffect(this.ctx)
-		this.main.updateFx(enabled, audioFx)
+		// Each split side carries one channel, which a panner can't place, so pan the merged output instead.
+		const split = enabled && !!audioFxAlt
+		const pan = split ? (audioFx?.effects?.find((e) => e.type === "pan" && isEffectActive(e))?.pan ?? 0) : 0
 
-		if (enabled && audioFxAlt) {
+		this.main = this.main || new AudioEffect(this.ctx)
+		this.main.updateFx(enabled, audioFx, split)
+
+		if (split) {
 			head.channelCount = 2
 			head.channelCountMode = "explicit"
 
@@ -292,7 +297,7 @@ class AudioEffectComplex {
 			head.connect(this.splitter)
 
 			this.alt = this.alt || new AudioEffect(this.ctx)
-			this.alt.updateFx(enabled, audioFxAlt)
+			this.alt.updateFx(enabled, audioFxAlt, true)
 
 			this.splitter.connect(this.main.input, 0)
 			this.splitter.connect(this.alt.input, 1)
@@ -343,14 +348,22 @@ class AudioEffectComplex {
 	}
 }
 
+type EffectNodes = {
+	filters?: BiquadFilterNode[]
+	filter?: BiquadFilterNode
+	delay?: DelayNode
+	mix?: GainNode
+	panner?: StereoPannerNode
+}
+
 class AudioEffect {
 	input: GainNode
 	output: GainNode
 
-	filterNodes?: BiquadFilterNode[]
 	jungle?: Jungle
 	soundTouchNode?: SoundTouchNode
-	delayNode?: DelayNode
+	/** Nodes per effect id, reused so a delay keeps its buffer while values change. */
+	effectNodes = new Map<string, EffectNodes>()
 
 	constructor(public ctx: AudioContext) {
 		this.input = ctx.createGain()
@@ -361,6 +374,7 @@ class AudioEffect {
 		this.jungle?.release()
 		this.soundTouchNode?.release()
 		delete this.jungle
+		this.effectNodes.clear()
 	}
 	errorCount = 0
 	handleProcessorError = (err: Event) => {
@@ -370,8 +384,8 @@ class AudioEffect {
 		if (this.errorCount++ < 10) this.latestUpdateFx?.()
 	}
 	latestUpdateFx: () => void
-	updateFx = async (enabled: boolean, audioFx?: AudioFx) => {
-		this.latestUpdateFx = () => this.updateFx(enabled, audioFx)
+	updateFx = async (enabled: boolean, audioFx?: AudioFx, skipPan?: boolean) => {
+		this.latestUpdateFx = () => this.updateFx(enabled, audioFx, skipPan)
 		this.estrange()
 
 		let head = this.input as AudioNode
@@ -381,8 +395,7 @@ class AudioEffect {
 			delete this.jungle
 			this.soundTouchNode?.release()
 			delete this.soundTouchNode
-			delete this.filterNodes
-			delete this.delayNode
+			this.effectNodes.clear()
 			head.connect(this.output)
 			this.output.gain.value = 1
 			return
@@ -422,64 +435,61 @@ class AudioEffect {
 			delete this.soundTouchNode
 		}
 
-		// eq
-		if (audioFx.eq?.enabled && audioFx.eq.values.some((v) => v !== 0)) {
-			const { eq } = audioFx
-			this.filterNodes = this.filterNodes || []
-			const newFilterNodes: BiquadFilterNode[] = []
+		// effects, in list order
+		const used = new Set<string>()
+		for (const effect of audioFx.effects ?? []) {
+			if (!isEffectActive(effect) || (skipPan && effect.type === "pan")) continue
+			used.add(effect.id)
+			const nodes = this.effectNodes.get(effect.id) ?? {}
+			this.effectNodes.set(effect.id, nodes)
 
-			const createFilter = () => {
-				return this.filterNodes.shift() ?? this.ctx.createBiquadFilter()
-			}
-
-			const Q = 1.41 * (eq.values.length / 10)
-			audioFx.eq.values.forEach((v, i) => {
-				if (v === 0) return
-				v = v * (eq.factor ?? 1)
-				const freq = round(31.25 * 2 ** (i / Math.round(eq.values.length / 10)), 2)
-				const node = createFilter()
-				newFilterNodes.push(node)
-
+			if (effect.type === "eq") {
+				const { eq } = effect
+				const pool = nodes.filters ?? []
+				const filters: BiquadFilterNode[] = []
+				const Q = 1.41 * (eq.values.length / 10)
+				eq.values.forEach((v, i) => {
+					if (v === 0) return
+					const node = pool.shift() ?? this.ctx.createBiquadFilter()
+					filters.push(node)
+					node.type = i === 0 ? "lowshelf" : i === eq.values.length - 1 ? "highshelf" : "peaking"
+					node.frequency.value = round(31.25 * 2 ** (i / Math.round(eq.values.length / 10)), 2)
+					node.gain.value = v * (eq.factor ?? 1)
+					node.Q.value = Q
+					head.connect(node)
+					head = node
+				})
+				nodes.filters = filters
+			} else if (effect.type === "lowpass" || effect.type === "highpass") {
+				const node = (nodes.filter = nodes.filter ?? this.ctx.createBiquadFilter())
+				node.type = effect.type
+				node.frequency.value = clamp(FREQUENCY_MIN, FREQUENCY_MAX, effect.frequency ?? FREQUENCY_MAX)
+				node.Q.value = clamp(0.0001, 30, effect.q ?? Q_DEFAULT)
 				head.connect(node)
 				head = node
-				node.frequency.value = freq
-				node.gain.value = v
-				node.Q.value = Q
-				if (i === 0) {
-					node.type = "lowshelf"
-				} else if (i === eq.values.length - 1) {
-					node.type = "highshelf"
-				} else {
-					node.type = "peaking"
+			} else if (effect.type === "delay") {
+				if (!nodes.delay || effect.delay > nodes.delay.delayTime.maxValue) {
+					nodes.delay = this.ctx.createDelay(effect.delay > 10 ? 179.99 : 10)
 				}
-			})
-			delete this.filterNodes
-			this.filterNodes = newFilterNodes
-		} else {
-			delete this.filterNodes
+				nodes.delay.delayTime.value = clamp(0, nodes.delay.delayTime.maxValue, effect.delay)
+				const mix = (nodes.mix = nodes.mix ?? this.ctx.createGain())
+				head.connect(nodes.delay)
+				nodes.delay.connect(mix)
+				// Merge keeps the undelayed audio alongside the delayed copy.
+				if (effect.delayMerge) head.connect(mix)
+				head = mix
+			} else if (effect.type === "pan") {
+				const node = (nodes.panner = nodes.panner ?? this.ctx.createStereoPanner())
+				node.pan.value = clamp(-1, 1, effect.pan ?? 0)
+				head.connect(node)
+				head = node
+			}
 		}
-
-		// delay
-		let secondHead: AudioNode
-		if (audioFx.delay > 0) {
-			this.delayNode = this.delayNode ?? this.ctx.createDelay(10)
-			if (audioFx.delay > this.delayNode.delayTime.maxValue) {
-				this.delayNode = this.ctx.createDelay(179.99)
-			}
-			this.delayNode.delayTime.value = clamp(0, this.delayNode.delayTime.maxValue, audioFx.delay)
-
-			if (audioFx.delayMerge) {
-				secondHead = head
-			}
-
-			head.connect(this.delayNode)
-			head = this.delayNode
-		} else {
-			delete this.delayNode
+		for (const id of [...this.effectNodes.keys()]) {
+			if (!used.has(id)) this.effectNodes.delete(id)
 		}
 
 		head.connect(this.output)
-		secondHead && secondHead.connect(this.output)
 
 		// gain
 		if (audioFx.volume != null && audioFx.volume !== 1) {
@@ -490,9 +500,12 @@ class AudioEffect {
 	}
 	estrange = () => {
 		this.input.disconnect()
-		this.delayNode?.disconnect()
-		this.filterNodes?.forEach((f) => {
-			f.disconnect()
+		this.effectNodes.forEach((nodes) => {
+			nodes.filters?.forEach((f) => f.disconnect())
+			nodes.filter?.disconnect()
+			nodes.delay?.disconnect()
+			nodes.mix?.disconnect()
+			nodes.panner?.disconnect()
 		})
 		this.jungle?.output?.disconnect()
 		this.soundTouchNode?.disconnect()

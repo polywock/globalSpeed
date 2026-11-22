@@ -175,7 +175,6 @@ export type Context = {
 	monoOutput?: boolean
 	audioFx?: AudioFx
 	audioFxAlt?: AudioFx
-	audioPan?: number
 	freePitch?: boolean
 }
 
@@ -189,7 +188,6 @@ export const CONTEXT_KEYS: (keyof Context)[] = [
 	"monoOutput",
 	"audioFx",
 	"audioFxAlt",
-	"audioPan",
 	"freePitch",
 ]
 
@@ -206,7 +204,7 @@ export const REVERSE_ORL_GROUP = Object.fromEntries(ORL_CONTEXT_KEYS.map((k) => 
 	[key in keyof Context]: (keyof Context)[]
 }
 
-export const AUDIO_CONTEXT_KEYS = ["enabled", "monoOutput", "audioFx", "audioFxAlt", "audioPan"] as (keyof Context)[]
+export const AUDIO_CONTEXT_KEYS = ["enabled", "monoOutput", "audioFx", "audioFxAlt"] as (keyof Context)[]
 export const AUDIO_CONTEXT_KEYS_SET = new Set(AUDIO_CONTEXT_KEYS)
 
 export type EqPreset = {
@@ -222,18 +220,38 @@ export type EqPresetOverlay = {
 	removed?: string[]
 }
 
+export type EqSettings = {
+	name?: string
+	factor: number
+	values: number[]
+}
+
+export type AudioEffectType = "eq" | "lowpass" | "highpass" | "delay" | "pan"
+
+/** One step of the audio chain. Effects run in list order, after pitch. */
+export type AudioEffect = {
+	id: string
+	type: AudioEffectType
+	enabled: boolean
+	/** eq */
+	eq?: EqSettings
+	/** lowpass, highpass: cutoff in Hz */
+	frequency?: number
+	/** lowpass, highpass: resonance */
+	q?: number
+	/** delay: seconds */
+	delay?: number
+	/** delay: also keep the undelayed audio */
+	delayMerge?: boolean
+	/** pan: -1 (left) to 1 (right) */
+	pan?: number
+}
+
 export type AudioFx = {
 	pitch: number
 	jungleMode?: boolean
 	volume: number
-	delay: number
-	delayMerge?: boolean
-	eq: {
-		name?: string
-		enabled: boolean
-		factor: number
-		values: number[]
-	}
+	effects?: AudioEffect[]
 }
 
 export enum AdjustMode {

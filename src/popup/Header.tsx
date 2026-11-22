@@ -252,7 +252,6 @@ export function AudioIcon(props: AudioIconProps) {
 						override: {
 							audioFx: null,
 							audioFxAlt: null,
-							audioPan: null,
 						},
 						tabId: gvar.tabInfo.tabId,
 					})

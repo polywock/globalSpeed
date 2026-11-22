@@ -19,6 +19,16 @@ export type Gsm = {
 		reverseTooltip: string
 		/** Equalizer */
 		equalizer: string
+		/** Effects */
+		effects: string
+		/** Low-pass filter */
+		lowpass: string
+		/** High-pass filter */
+		highpass: string
+		/** Cutoff */
+		cutoff: string
+		/** Resonance */
+		resonance: string
 		/** Better quality */
 		pitchHdTooltip: string
 		/** Recording */

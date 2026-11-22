@@ -44,6 +44,10 @@ export function migrateSchema(state?: State) {
 		state = fourteenToFifteen(state)
 	}
 
+	if (state.version === 15) {
+		state = fifteenToSixteen(state)
+	}
+
 	if (!(state?.version === defaultState.version)) {
 		return defaultState
 	}
@@ -338,6 +342,42 @@ function fourteenToFifteen(state: State) {
 	})
 
 	return state
+}
+
+/** EQ, delay and pan became items in an ordered audio effect list. */
+function fifteenToSixteen(state: State) {
+	state.version = 16
+	migrateContextAudio(state)
+	if (state.customContext) migrateContextAudio(state.customContext)
+	return state
+}
+
+/** Converts a context's audio settings to the effect list. Also used for pinned tabs on update. */
+export function migrateContextAudio(ctx: any) {
+	const convert = (fx: any) => {
+		if (!fx || fx.effects) return fx
+		const effects: any[] = []
+		// The old chain ran EQ before delay.
+		if (fx.eq && (fx.eq.enabled || fx.eq.values?.some((v: number) => v !== 0))) {
+			const { enabled, ...eq } = fx.eq
+			effects.push({ id: randomId(), type: "eq", enabled: !!enabled, eq })
+		}
+		if (fx.delay > 0) {
+			effects.push({ id: randomId(), type: "delay", enabled: true, delay: fx.delay, ...(fx.delayMerge ? { delayMerge: true } : {}) })
+		}
+		;(delete fx.eq, delete fx.delay, delete fx.delayMerge)
+		fx.effects = effects
+		return fx
+	}
+	ctx.audioFx = convert(ctx.audioFx)
+	ctx.audioFxAlt = convert(ctx.audioFxAlt)
+	// Pan was applied to the whole output, after everything else.
+	if (ctx.audioPan) {
+		ctx.audioFx = ctx.audioFx || { pitch: 0, volume: 1, effects: [] }
+		ctx.audioFx.effects.push({ id: randomId(), type: "pan", enabled: true, pan: ctx.audioPan })
+	}
+	delete ctx.audioPan
+	return ctx
 }
 
 function migrateForChrome(state: State) {

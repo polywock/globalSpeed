@@ -5,7 +5,7 @@ import "./utils/state"
 import "./badge"
 import "./rules"
 import "notFirefox/background/capture"
-import { migrateSchema } from "@/background/utils/migrateSchema"
+import { migrateContextAudio, migrateSchema } from "@/background/utils/migrateSchema"
 import { MediaEvent } from "@/contentScript/isolated/utils/applyMediaEvent"
 import { getDefaultContext, getDefaultState } from "@/defaults"
 import { AnyDict, Context, CONTEXT_KEYS, InitialContext, Keybind, KeybindMatch, KeybindMatchId, State, StateView, URLRule } from "@/types"
@@ -43,7 +43,36 @@ async function onInstallAsync() {
 	stateView = stateView || getDefaultState()
 
 	await restoreConfig(stateView)
+	await migratePinnedTabAudio()
 	delete gvar.installPromise
+}
+
+/** Pinned tabs keep their context across an update, so convert their audio settings too. */
+async function migratePinnedTabAudio() {
+	try {
+		const items = await chrome.storage.local.get()
+		const contexts = new Map<string, any>()
+		for (const key in items) {
+			const m = key.match(/^t:(\d+):(audioFx|audioFxAlt|audioPan)$/)
+			if (!m || items[key] == null) continue
+			const ctx = contexts.get(m[1]) ?? {}
+			ctx[m[2]] = items[key]
+			contexts.set(m[1], ctx)
+		}
+		const set: RecordAny = {}
+		const remove: string[] = []
+		contexts.forEach((ctx, tabId) => {
+			if ((ctx.audioFx?.effects || !ctx.audioFx) && (ctx.audioFxAlt?.effects || !ctx.audioFxAlt) && ctx.audioPan == null) return
+			migrateContextAudio(ctx)
+			if (ctx.audioFx) set[`t:${tabId}:audioFx`] = ctx.audioFx
+			if (ctx.audioFxAlt) set[`t:${tabId}:audioFxAlt`] = ctx.audioFxAlt
+			remove.push(`t:${tabId}:audioPan`)
+		})
+		if (Object.keys(set).length) await chrome.storage.local.set(set)
+		if (remove.length) await chrome.storage.local.remove(remove)
+	} catch (err) {
+		console.log("ERROR", err)
+	}
 }
 
 gvar.sess.installCbs.add(() => {

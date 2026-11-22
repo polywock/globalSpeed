@@ -1,4 +1,4 @@
-import { AnyDict, AudioFx, Context, CONTEXT_KEYS, Fx, IndicatorInit, Keybind, State, URLCondition, URLConditionPart, URLRule } from "../types"
+import { AnyDict, AudioFx, Context, EqSettings, CONTEXT_KEYS, Fx, IndicatorInit, Keybind, State, URLCondition, URLConditionPart, URLRule } from "../types"
 import { chunkByPredicate, isMobile, randomId } from "../utils/helper"
 import { getDefaultMenuKeybinds, getDefaultPageKeybinds } from "./commands"
 import { filterInfos, FilterName } from "./filters"
@@ -70,7 +70,7 @@ export function generateUrlPart(origin: string): URLConditionPart {
 
 export function getDefaultState(): State {
 	let state = {
-		version: 15,
+		version: 16,
 		freshState: true,
 		firstUse: Date.now(),
 		pageKeybinds: getDefaultPageKeybinds(),
@@ -126,14 +126,12 @@ export function getDefaultAudioFx(): AudioFx {
 	return {
 		pitch: 0,
 		volume: 1,
-		delay: 0,
-		eq: getDefaultEq(),
+		effects: [],
 	}
 }
 
-export function getDefaultEq(): AudioFx["eq"] {
+export function getDefaultEq(): EqSettings {
 	return {
-		enabled: false,
 		factor: 1,
 		values: Array(10).fill(0),
 	}

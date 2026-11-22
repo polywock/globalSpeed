@@ -2,11 +2,17 @@ import { getDefaultAudioFx, getDefaultFx } from "@/defaults"
 import type { CommandName } from "@/defaults/commands"
 import { filterInfos } from "@/defaults/filters"
 import { Keybind, ReferenceValues, StateView, StateViewSelector } from "@/types"
+import { getShortcutEffectValue, ShortcutEffectType } from "./audioFx"
 
-export const afxContinuousMap: { [key: string]: "pitch" | "volume" | "delay" } = {
+export const afxContinuousMap: { [key: string]: "pitch" | "volume" } = {
 	afxPitch: "pitch",
 	afxGain: "volume",
+}
+
+/** Shortcuts for these act on the first effect of the type in the audio effect list. */
+export const afxEffectMap: { [key: string]: ShortcutEffectType } = {
 	afxDelay: "delay",
+	afxPan: "pan",
 }
 
 /**
@@ -16,7 +22,7 @@ export const afxContinuousMap: { [key: string]: "pitch" | "volume" | "delay" } =
 const itcSelectors: { [key in CommandName]?: StateViewSelector } = {
 	speed: { speed: true },
 	fxFilter: { elementFx: true, backdropFx: true },
-	afxPan: { audioPan: true },
+	afxPan: { audioFx: true },
 	afxGain: { audioFx: true, audioFxAlt: true },
 	afxPitch: { audioFx: true, audioFxAlt: true },
 	afxDelay: { audioFx: true, audioFxAlt: true },
@@ -44,7 +50,13 @@ export function getItcValues(kb: Keybind, view: StateView, ref?: ReferenceValues
 			secondary: (view.backdropFx || getDefaultFx())[star].find((f) => f.name === kb.filterOption)?.value,
 		}
 	} else if (kb.command === "afxPan") {
-		return { main: view.audioPan ?? ref?.default }
+		// Pan is one value for the whole output, so it only reads the main side.
+		return { main: getShortcutEffectValue(view.audioFx, "pan") ?? ref?.default }
+	} else if (kb.command === "afxDelay") {
+		return {
+			main: getShortcutEffectValue(view.audioFx, "delay") ?? ref?.default,
+			secondary: view.audioFxAlt ? (getShortcutEffectValue(view.audioFxAlt, "delay") ?? ref?.default) : undefined,
+		}
 	} else if (afxContinuousMap[kb.command]) {
 		const key = afxContinuousMap[kb.command]
 		return {

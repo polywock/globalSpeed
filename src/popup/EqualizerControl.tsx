@@ -1,6 +1,4 @@
-import equal from "fast-deep-equal"
 import { useMemo } from "react"
-import { FaPowerOff } from "react-icons/fa"
 import { LuSave, LuTrash } from "react-icons/lu"
 import { Select } from "@/comps/Select"
 import { Tooltip } from "@/comps/Tooltip"
@@ -8,15 +6,13 @@ import { Button } from "@/comps/ui/button"
 import { eqPresetKey, getEqPresets, isBuiltInEqPreset, normalizeEqPresetOverlay } from "@/defaults/eqPresets"
 import { gvar } from "@/globalVar"
 import { areYouSure, cn, produce, round } from "@/utils/helper"
-import { Reset } from "../comps/Reset"
 import { SliderMicro } from "../comps/SliderMicro"
-import { getDefaultEq } from "../defaults"
 import { useStateView } from "../hooks/useStateView"
-import { AudioFx, EqPreset } from "../types"
+import { EqPreset, EqSettings } from "../types"
 
 type EqualizerControlProps = {
-	value: AudioFx["eq"]
-	onChange: (newEq: AudioFx["eq"]) => void
+	value: EqSettings
+	onChange: (newEq: EqSettings) => void
 	className?: string
 }
 
@@ -33,9 +29,6 @@ export function EqualizerControl(props: EqualizerControlProps) {
 
 	// A name no longer in the list leaves the select blank, e.g. a preset deleted from another popup.
 	const selected = eq.name && presets.some((v) => v.name === eq.name) ? eq.name : ""
-
-	const isEmpty = useMemo(() => equal(eq || getDefaultEq(), getDefaultEq()), [eq])
-
 	const savePreset = (rawName: string) => {
 		const name = rawName.trim()
 		if (!name) return
@@ -51,7 +44,6 @@ export function EqualizerControl(props: EqualizerControlProps) {
 		})
 		props.onChange(
 			produce(eq, (d) => {
-				d.enabled = true
 				d.name = name
 			}),
 		)
@@ -88,35 +80,8 @@ export function EqualizerControl(props: EqualizerControlProps) {
 	}
 
 	return (
-		<div className={cn("mt-3.75 rounded-lg border border-border p-2.5 select-none", props.className)}>
-			<div className="mb-2.5 grid grid-cols-[max-content_1fr_max-content] items-center gap-x-1.25 text-xl">
-				<div className={eq.enabled ? "text-primary" : "text-muted-foreground"}>
-					<Tooltip title={eq.enabled ? gvar.gsm.token.off : gvar.gsm.token.on}>
-						<FaPowerOff
-							className="cursor-pointer"
-							size="1.21rem"
-							onClick={() => {
-								props.onChange(
-									produce(eq, (d) => {
-										d.enabled = !d.enabled
-									}),
-								)
-							}}
-						/>
-					</Tooltip>
-				</div>
-				<div>{gvar.gsm.audio.equalizer}</div>
-				<div className="justify-self-end">
-					<Reset
-						active={!isEmpty}
-						className="cursor-pointer"
-						onClick={() => {
-							props.onChange(getDefaultEq())
-						}}
-					/>
-				</div>
-			</div>
-
+		// The effect card around it carries the power, reset and remove controls.
+		<div className={cn("select-none", props.className)}>
 			{/* Band count */}
 			<div className="mb-2.5 grid w-full grid-cols-[max-content_1fr_max-content] items-center gap-x-1.25">
 				<Select
@@ -160,7 +125,6 @@ export function EqualizerControl(props: EqualizerControlProps) {
 						if (!target) return
 						props.onChange(
 							produce(eq, (d) => {
-								d.enabled = true
 								d.name = target.name
 								d.values = [...target.values]
 							}),
@@ -236,9 +200,6 @@ export function EqualizerControl(props: EqualizerControlProps) {
 							onChange={(newValue) => {
 								props.onChange(
 									produce(eq, (d) => {
-										if (newValue !== 0) {
-											d.enabled = true
-										}
 										d.values[i] = newValue
 										delete d.name
 									}),
