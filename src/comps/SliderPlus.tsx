@@ -1,6 +1,7 @@
-import { ReactNode } from "react"
+import { ReactNode, useId } from "react"
 import { clamp, cn } from "@/utils/helper"
 import { NumericInput } from "../comps/NumericInput"
+import { FieldLabelContext } from "./FieldLabel"
 import { Reset } from "./Reset"
 import { Slider } from "./Slider"
 
@@ -24,23 +25,28 @@ export function SliderPlus(props: SliderPlusProps) {
 	}
 
 	const activated = props.default !== props.value
+	const labelId = useId()
 
 	return (
-		<div className={cn("bg-background", props.className)}>
-			<div className="mb-0.5 grid grid-cols-[1fr_60px_max-content] items-center gap-x-1.25">
-				<span className={cn("self-center", activated ? "font-semibold text-primary" : "font-normal text-foreground")}>{props.label}</span>
-				<NumericInput noNull={true} min={props.min} max={props.max} value={props.value} onChange={handleValueChange} />
-				{props.noReset ? <div /> : <Reset active={activated} onClick={() => handleValueChange(props.default)} />}
+		<FieldLabelContext.Provider value={labelId}>
+			<div className={cn("bg-background", props.className)}>
+				<div className="mb-0.5 grid grid-cols-[1fr_60px_max-content] items-center gap-x-1.25">
+					<span id={labelId} className={cn("self-center", activated ? "font-semibold text-primary" : "font-normal text-foreground")}>
+						{props.label}
+					</span>
+					<NumericInput noNull={true} min={props.min} max={props.max} value={props.value} onChange={handleValueChange} />
+					{props.noReset ? <div /> : <Reset active={activated} onClick={() => handleValueChange(props.default)} />}
+				</div>
+				<Slider
+					variant="seekFill"
+					step={props.sliderStep ?? 0.01}
+					min={props.sliderMin}
+					max={props.sliderMax}
+					value={props.value}
+					default={props.default}
+					onChange={handleValueChange}
+				/>
 			</div>
-			<Slider
-				variant="seekFill"
-				step={props.sliderStep ?? 0.01}
-				min={props.sliderMin}
-				max={props.sliderMax}
-				value={props.value}
-				default={props.default}
-				onChange={handleValueChange}
-			/>
-		</div>
+		</FieldLabelContext.Provider>
 	)
 }

@@ -11,3 +11,4 @@ private/
 .claude/
 tools/localeTools/*
 AGENTS.md
+pending-issues.md

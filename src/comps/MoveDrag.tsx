@@ -77,7 +77,13 @@ export function MoveDrag(props: MoveDragProps) {
 	}
 
 	return (
-		<button onPointerDown={handlePointerDown} className={cn("relative icon-button cursor-ns-resize focus:outline-none", props.className)}>
+		// Pointer-only drag handle; keyboard and screen reader users reorder with the move buttons.
+		<button
+			aria-hidden="true"
+			tabIndex={-1}
+			onPointerDown={handlePointerDown}
+			className={cn("relative icon-button cursor-ns-resize focus:outline-none", props.className)}
+		>
 			<VscGripper size="1.42rem" />
 		</button>
 	)

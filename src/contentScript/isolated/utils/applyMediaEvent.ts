@@ -296,9 +296,11 @@ class SetPlaybackRate {
 			}
 		} catch (err) {}
 
-		elem.preservesPitch = !freePitch
-		elem.mozPreservesPitch = !freePitch
-		elem.webkitPreservesPitch = !freePitch
+		// Only on change: this runs every second, and the setter reaches the browser's audio time-stretcher.
+		const preserve = !freePitch
+		if (elem.preservesPitch !== preserve) elem.preservesPitch = preserve
+		if (elem.mozPreservesPitch != null && elem.mozPreservesPitch !== preserve) elem.mozPreservesPitch = preserve
+		if (elem.webkitPreservesPitch != null && elem.webkitPreservesPitch !== preserve) elem.webkitPreservesPitch = preserve
 	}
 	static set = SetPlaybackRate._set
 }

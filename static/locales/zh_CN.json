@@ -108,6 +108,7 @@
 		"smallStep": "小步长",
 		"largeStep": "大步长",
 		"moveUp": "上移",
+		"moveDown": "下移",
 		"jumpToTab": "跳转到标签页",
 		"hide": "隐藏"
 	},

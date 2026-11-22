@@ -19,7 +19,16 @@ export function Reset(props: ResetProps) {
 					props.active ? "visible border-primary text-primary" : "invisible border-secondary-foreground text-secondary-foreground",
 					props.className,
 				)}
+				role="button"
+				aria-label={gvar.gsm.token.reset}
+				tabIndex={props.active ? 0 : -1}
 				onClick={() => props.active && props.onClick()}
+				onKeyDown={(e) => {
+					if (props.active && (e.key === "Enter" || e.key === " ")) {
+						e.preventDefault()
+						props.onClick()
+					}
+				}}
 			/>
 		</Tooltip>
 	)

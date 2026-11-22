@@ -1,7 +1,9 @@
 import debounce from "lodash.debounce"
 import { gvar } from "@/globalVar"
+import { PageDrawInit } from "@/types"
 import { requestGsm } from "@/utils/gsm"
 import { areYouSure, assertType, clamp, createElement as m, randomNumber, replaceArgs } from "@/utils/helper"
+import { fetchView, pushView } from "@/utils/state"
 import {
 	clockwiseIcon,
 	crossIcon,
@@ -30,8 +32,10 @@ declare global {
 }
 
 type Point = { x: number; y: number }
+type Stroke = { path: SVGPathElement; target: Element; color: string; width: number; d: string; end: Point }
 type Rect = { width: number; height: number }
 type Mode = "DRAW" | "ERASE" | "SELECT"
+type ToolMode = Exclude<Mode, "SELECT">
 
 class PageDraw extends Popover {
 	released = false
@@ -39,10 +43,16 @@ class PageDraw extends Popover {
 	latestDimension: Rect = { width: this.scrollElement.scrollWidth, height: this.scrollElement.scrollHeight }
 	mask = createElement("div", { id: "mask" })
 	resist = createElement("div", { id: "resist" })
-	canvas = document.createElement("canvas")
+	// Vector strokes in page coordinates: no full-page bitmap to allocate, and no canvas size limit on long pages.
+	svg = svgElement("svg")
+	defs = this.svg.appendChild(svgElement("defs"))
+	layer = this.svg.appendChild(svgElement("g"))
+	stroke: Stroke = null
+	eraseMask: SVGMaskElement = null
+	maskPrefix = `gsErase${randomNumber(0, 1e9)}_`
+	maskCount = 0
 	style = document.createElement("style")
 	pageStyle = document.createElement("style")
-	ctx = this.canvas.getContext("2d")
 	controls: Controls
 
 	on = false
@@ -70,16 +80,17 @@ class PageDraw extends Popover {
 	drewSomething = false
 
 	mode: Mode = "DRAW"
+	toolMode: ToolMode = "DRAW"
 	color = "red"
 	eraserSize = 44
 	brushSize = 5
 	eraseCursor = getCircleCursor(this.eraserSize / 2)
 	sizeCursor: string
 
-	constructor() {
+	constructor(init: PageDrawInit = {}) {
 		super()
+		this.applyInit(init)
 		window.addEventListener("resize", this.handleResizeDeb, { capture: true, passive: true })
-		this.canvas.addEventListener("contextlost", this.handleContextLost, { capture: true, passive: true })
 		window.addEventListener("wheel", this.handleWheel, { capture: true, passive: true })
 		window.addEventListener("keydown", this.handleKeyDown, true)
 		window.addEventListener("keyup", this.handleKeyUp, true)
@@ -95,15 +106,24 @@ class PageDraw extends Popover {
 		document.documentElement.appendChild(this.pageStyle)
 
 		this.style.textContent = styles
-		this.resist.appendChild(this.canvas)
+		this.resist.appendChild(this.svg)
 		this._div.appendChild(this.style)
 		this._div.appendChild(this.mask)
 		this._div.appendChild(this.resist)
-		this.controls = new Controls(this)
+		this.controls = new Controls(this, init)
 
 		this.sync()
 		this.handleResize()
 		this._update(true)
+		// Placing needs the toolbar's real size, which it only has once shown.
+		this.controls.wrapper.setRatio(init.position)
+	}
+	applyInit = (init: PageDrawInit) => {
+		if (typeof init.color === "string" && init.color) this.color = init.color
+		if (Number.isFinite(init.brushSize)) this.brushSize = clamp(BRUSH_MIN, BRUSH_MAX, init.brushSize)
+		if (Number.isFinite(init.eraserSize)) this.eraserSize = clamp(ERASER_MIN, ERASER_MAX, init.eraserSize)
+		if (init.mode === "DRAW" || init.mode === "ERASE") this.mode = this.toolMode = init.mode
+		this.renewEraserCursor()
 	}
 	release = () => {
 		if (this.released) return
@@ -112,7 +132,6 @@ class PageDraw extends Popover {
 		this.controls.release()
 		delete this.controls
 		window.removeEventListener("resize", this.handleResizeDeb, true)
-		this.canvas.removeEventListener("contextlost", this.handleContextLost, true)
 		window.removeEventListener("wheel", this.handleWheel, true)
 		window.removeEventListener("keydown", this.handleKeyUp, true)
 		window.removeEventListener("keyup", this.handleKeyUp, true)
@@ -125,11 +144,6 @@ class PageDraw extends Popover {
 		document.removeEventListener("pointerleave", this.clearIsDrawing)
 		;(delete this.eraseCursor, delete this.sizeCursor)
 		this._release()
-	}
-	handleContextLost = (e: Event) => {
-		gvar.pageDraw?.release()
-		delete gvar.pageDraw
-		gvar.pageDraw = new PageDraw()
 	}
 	sync = () => {
 		this.syncCursor()
@@ -177,16 +191,6 @@ class PageDraw extends Popover {
 		this.latestDimension = rect
 		this.resist.style.width = this._div.style.width = `${rect.width}px`
 		this.resist.style.height = this._div.style.height = `${rect.height}px`
-		if (this.canvas.width >= rect.width && this.canvas.height >= rect.height) return
-
-		let data: ImageData
-		if (e) data = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height)
-		this.canvas.width = rect.width
-		this.canvas.height = rect.height
-
-		this.canvas.width = this.scrollElement.scrollWidth
-		this.canvas.height = this.scrollElement.scrollHeight
-		data && this.ctx.putImageData(data, 0, 0)
 	}
 	handleResizeDeb = debounce(this.handleResize, 500, { trailing: true })
 	handleKeyUp = (e: KeyboardEvent) => {
@@ -221,6 +225,7 @@ class PageDraw extends Popover {
 		this.clearIsDrawing()
 	}
 	clearIsDrawing = () => {
+		this.stroke = null
 		if (!this.isDrawing) return
 		if (this.isDrawing.scaleMode) {
 			this.renewEraserCursor()
@@ -257,7 +262,7 @@ class PageDraw extends Popover {
 		}
 		if (!this.on) return
 		if (e.target === this.mask) this.handleResize(e)
-		if (e.target !== this.canvas) return
+		if (e.target !== this.svg) return
 
 		this.points = []
 		if (this.isDrawing) {
@@ -333,6 +338,7 @@ class PageDraw extends Popover {
 				this.eraserSize = this.isDrawing.refE
 			}
 			this.controls.syncSize()
+			this.controls.save()
 			this.renewSizeCursor()
 			this.syncCursor()
 			return
@@ -436,27 +442,81 @@ class PageDraw extends Popover {
 		if (this.isDrawing?.scaleMode) this.clearIsDrawing()
 	}
 	drawLine = (og: Point, dest: Point, pressure?: number, oneTimeErase?: boolean) => {
-		this.ctx.lineCap = "round"
-		this.ctx.beginPath()
-		this.ctx.moveTo(og.x, og.y)
-		this.ctx.lineTo(dest.x, dest.y)
-
-		this.ctx.lineWidth = this.brushSize * (pressure != null ? pressure * 2 : 1)
-		this.ctx.strokeStyle = this.color
+		let target: Element = this.layer
+		let color = this.color
+		let width = this.brushSize * (pressure != null ? pressure * 2 : 1)
 
 		if (this.isDrawing?.erase || oneTimeErase) {
+			width = this.eraserSize
 			if (this.eraseColor) {
-				this.ctx.strokeStyle = this.eraseColor
+				color = this.eraseColor
 			} else {
-				this.ctx.globalCompositeOperation = "destination-out"
+				target = this.ensureEraseMask()
+				if (!target) return
+				color = "black"
 			}
-			this.ctx.lineWidth = this.eraserSize
 		} else {
 			this.drewSomething = true
 		}
+		// Quarter-pixel steps keep pen pressure from starting a new path on every move.
+		width = Math.round(width * 4) / 4
 
-		this.ctx.stroke()
-		this.ctx.globalCompositeOperation = "source-over"
+		const s = this.stroke
+		if (s && s.target === target && s.color === color && s.width === width && s.end.x === og.x && s.end.y === og.y) {
+			s.d += ` L${formatPoint(dest)}`
+			s.end = dest
+			s.path.setAttribute("d", s.d)
+		} else {
+			const path = svgElement("path", {
+				fill: "none",
+				stroke: color,
+				"stroke-width": width,
+				"stroke-linecap": "round",
+				"stroke-linejoin": "round",
+			})
+			const d = `M${formatPoint(og)} L${formatPoint(dest)}`
+			path.setAttribute("d", d)
+			this.append(path, target)
+			this.stroke = { path, target, color, width, d, end: dest }
+		}
+	}
+	append = (elem: SVGElement, target: Element = this.layer) => {
+		target.appendChild(elem)
+		// Anything drawn after an erase must stay out of that erase's mask.
+		if (target !== this.eraseMask) this.eraseMask = null
+	}
+	/** Erasing masks everything drawn so far; later strokes go above the masked group. */
+	ensureEraseMask = () => {
+		if (this.eraseMask) return this.eraseMask
+		if (!this.layer.hasChildNodes()) return null
+		const mask = svgElement("mask", {
+			id: `${this.maskPrefix}${this.maskCount++}`,
+			maskUnits: "userSpaceOnUse",
+			x: 0,
+			y: 0,
+			width: "100%",
+			height: "100%",
+		})
+		mask.appendChild(svgElement("rect", { width: "100%", height: "100%", fill: "white" }))
+		this.defs.appendChild(mask)
+
+		const masked = svgElement("g", { mask: `url(#${mask.id})` })
+		const layer = svgElement("g")
+		this.layer.replaceWith(layer)
+		masked.appendChild(this.layer)
+		layer.appendChild(masked)
+		this.layer = layer
+		this.stroke = null
+		return (this.eraseMask = mask)
+	}
+	fillPage = (color: string) => {
+		this.stroke = null
+		this.append(svgElement("rect", { width: "100%", height: "100%", fill: color }))
+	}
+	clearDrawing = () => {
+		this.defs.replaceChildren()
+		this.layer.replaceChildren()
+		this.stroke = this.eraseMask = null
 	}
 	constrainTo45 = (origin: Point, dest: Point): Point => {
 		const dx = dest.x - origin.x
@@ -477,12 +537,15 @@ const COLORS2 = "pink, aquamarine, lightskyblue, white, yellow".split(", ")
 
 class Controls {
 	released = false
-	wrapper = new MoveableWrapper()
+	wrapper = new MoveableWrapper(() => this.save())
 	m = createScaffold(this.wrapper.div)
 	colorMenu: ControlsMenu = null
 	isRandomColors = false
 
-	constructor(private pd: PageDraw) {
+	constructor(
+		private pd: PageDraw,
+		init: PageDrawInit,
+	) {
 		gvar.gsm.pageDraw._labelScale && this.wrapper.div.style.setProperty("--label-scale", gvar.gsm.pageDraw._labelScale.toString())
 		pd._div.appendChild(this.m.wrapper)
 		pd._div.addEventListener("click", this.handleClick, true)
@@ -492,9 +555,42 @@ class Controls {
 		this.m.brushSizeRange.value = pd.brushSize.toString()
 		this.m.eraserSizeRange.value = pd.eraserSize.toString()
 		this.m.colorInput.addEventListener("input", this.handleColorInput, true)
+		this.syncColor()
+		this.syncMode()
+	}
+	save = debounce(
+		() => {
+			const init: PageDrawInit = {
+				color: this.pd.color,
+				brushSize: this.pd.brushSize,
+				eraserSize: this.pd.eraserSize,
+				mode: this.pd.toolMode,
+				position: this.wrapper?.getRatio(),
+			}
+			pushView({ override: { pageDrawInit: init } }).catch(() => {})
+		},
+		500,
+		{ trailing: true },
+	)
+	syncColor = () => {
+		let swatch = false
+		this.m.colors.forEach((c) => {
+			const match = !swatch && c.style.backgroundColor === this.pd.color
+			swatch = swatch || match
+			c.classList.toggle("selected", match)
+		})
+		this.m.dropper.classList.toggle("selected", !swatch)
+		if (!swatch && /^#[0-9a-f]{6}$/i.test(this.pd.color)) this.m.colorInput.value = this.pd.color
+	}
+	syncMode = () => {
+		for (const mode of ["DRAW", "ERASE", "SELECT"] as Mode[]) {
+			const element = this.m[`${mode.toLowerCase()}Mode` as "drawMode" | "eraseMode" | "selectMode"]
+			element.classList.toggle("selected", mode === this.pd.mode)
+		}
 	}
 	release = () => {
 		if (this.released) return
+		this.save.flush()
 		this.released = true
 		this.closeColorMenu()
 		this.pd._div.removeEventListener("click", this.handleClick, true)
@@ -514,11 +610,13 @@ class Controls {
 		this.pd.brushSize = this.m.brushSizeRange.valueAsNumber
 		this.pd.eraserSize = this.m.eraserSizeRange.valueAsNumber
 		if (e.target === this.m.eraserSizeRange) this.pd.renewEraserCursor()
+		this.save()
 	}
 	handleColorInput = (e: Event) => {
 		this.pd.color = this.m.colorInput.value
 		this.m.dropper.classList.add("selected")
 		this.m.colors.forEach((c) => c.classList.remove("selected"))
+		this.save()
 	}
 	handleClick = (e: MouseEvent) => {
 		assertType<HTMLButtonElement>(e.target)
@@ -527,6 +625,7 @@ class Controls {
 			this.m.colors.forEach((c) => c.classList.remove("selected"))
 			this.m.dropper.classList.remove("selected")
 			e.target.classList.add("selected")
+			this.save()
 		} else if (e.target === this.m.remove) {
 			if (!this.pd.drewSomething || document.fullscreenElement || areYouSure()) {
 				gvar.pageDraw?.release()
@@ -534,7 +633,7 @@ class Controls {
 			}
 		} else if (e.target === this.m.clear) {
 			if (!this.pd.drewSomething || document.fullscreenElement || areYouSure()) {
-				this.pd.ctx.clearRect(0, 0, this.pd.canvas.width, this.pd.canvas.height)
+				this.pd.clearDrawing()
 				delete this.pd.eraseColor
 				this.pd.drewSomething = false
 			}
@@ -563,11 +662,10 @@ class Controls {
 			const modes = ["draw", "erase", "select"]
 			if (modes.includes(mode)) {
 				this.pd.mode = mode.toUpperCase() as Mode
+				if (this.pd.mode !== "SELECT") this.pd.toolMode = this.pd.mode
 				this.pd.sync()
-				for (let m of modes) {
-					const element = this.m[`${m}Mode` as keyof ReturnType<typeof createScaffold>] as HTMLElement
-					m === mode ? element.classList.add("selected") : element.classList.remove("selected")
-				}
+				this.syncMode()
+				this.save()
 			}
 		}
 	}
@@ -592,10 +690,7 @@ class Controls {
 				{
 					label: gvar.gsm.pageDraw.floodPage,
 					cb: () => {
-						const color = target.style.backgroundColor
-						this.pd.ctx.fillStyle = color
-						this.pd.ctx.fillRect(0, 0, this.pd.canvas.width, this.pd.canvas.height)
-						this.pd.ctx.fillStyle = ""
+						this.pd.fillPage(target.style.backgroundColor)
 						this.closeColorMenu()
 					},
 				},
@@ -607,9 +702,7 @@ class Controls {
 							delete this.pd.eraseColor
 						} else {
 							this.pd.eraseColor = color
-							this.pd.ctx.fillStyle = color
-							this.pd.ctx.fillRect(0, 0, this.pd.canvas.width, this.pd.canvas.height)
-							this.pd.ctx.fillStyle = ""
+							this.pd.fillPage(color)
 						}
 						this.closeColorMenu()
 					},
@@ -681,6 +774,18 @@ class ControlsMenu {
 	}
 }
 
+const SVG_NS = "http://www.w3.org/2000/svg"
+
+function svgElement<K extends keyof SVGElementTagNameMap>(tag: K, attrs: Record<string, string | number> = {}) {
+	const elem = document.createElementNS(SVG_NS, tag)
+	for (const key in attrs) elem.setAttribute(key, attrs[key].toString())
+	return elem
+}
+
+function formatPoint(p: Point) {
+	return `${Math.round(p.x * 10) / 10} ${Math.round(p.y * 10) / 10}`
+}
+
 type ElementInit = { id?: string; classes?: string[] }
 
 function createElement(tag: string, init?: ElementInit) {
@@ -736,7 +841,6 @@ const createScaffold = (wrapper: HTMLDivElement) => {
 	header.appendChild(remove)
 
 	const drawMode = createModeButton("drawMode", paintIcon, gvar.gsm.pageDraw.draw)
-	drawMode.classList.add("selected")
 	const eraseMode = createModeButton("eraseMode", eraserIcon, gvar.gsm.pageDraw.erase)
 	const selectMode = createModeButton("selectMode", cursorIcon, gvar.gsm.pageDraw.select)
 	selectMode.title = gvar.gsm.pageDraw.selectTooltip
@@ -822,7 +926,6 @@ function generateColors(colors: string[]) {
 		b.classList.add("color")
 		b.style.backgroundColor = c
 		b.textContent = "​"
-		if (c === "red") b.classList.add("selected")
 		return b
 	})
 }
@@ -847,7 +950,7 @@ class MoveableWrapper {
 		cursorY: number
 	}
 	released = false
-	constructor() {
+	constructor(private onMoved?: () => void) {
 		this.sync()
 	}
 	release = () => {
@@ -872,6 +975,7 @@ class MoveableWrapper {
 		window.addEventListener("pointerup", this.handlePointerUp, { capture: true, passive: true })
 	}
 	handlePointerUp = () => {
+		if (this.ref) this.onMoved?.()
 		delete this.ref
 		window.removeEventListener("pointermove", this.handlePointerMove, { capture: true })
 		window.removeEventListener("pointerup", this.handlePointerUp, { capture: true })
@@ -898,12 +1002,25 @@ class MoveableWrapper {
 
 		this.sync()
 	}
+	maxX = () => Math.max(10, window.innerWidth - this.div.clientWidth - 20)
+	maxY = () => Math.max(10, window.innerHeight - this.div.clientHeight - 20)
+	/** Position as a fraction of the room left for the toolbar, so it keeps its side in any window size. */
+	getRatio = () => ({ x: toRatio(this.x, this.maxX()), y: toRatio(this.y, this.maxY()) })
+	setRatio = (ratio?: { x?: number; y?: number }) => {
+		if (Number.isFinite(ratio?.x)) this.x = 10 + clamp(0, 1, ratio.x) * (this.maxX() - 10)
+		if (Number.isFinite(ratio?.y)) this.y = 10 + clamp(0, 1, ratio.y) * (this.maxY() - 10)
+		this.sync()
+	}
 	sync() {
-		this.x = clamp(10, window.innerWidth - this.div.clientWidth - 20, this.x)
-		this.y = clamp(10, window.innerHeight - this.div.clientHeight - 20, this.y)
+		this.x = clamp(10, this.maxX(), this.x)
+		this.y = clamp(10, this.maxY(), this.y)
 		this.div.style.left = `${this.x}px`
 		this.div.style.top = `${this.y}px`
 	}
+}
+
+function toRatio(value: number, max: number) {
+	return max > 10 ? Math.round(clamp(0, 1, (value - 10) / (max - 10)) * 1000) / 1000 : 0
 }
 
 function randomColor() {
@@ -922,6 +1039,10 @@ function randomColor() {
 		} finally {
 			delete gvar.pageDraw
 		}
-		gvar.pageDraw = new PageDraw()
+		let init: PageDrawInit
+		try {
+			init = (await fetchView({ pageDrawInit: true })).pageDrawInit
+		} catch {}
+		gvar.pageDraw = new PageDraw(init)
 	}
 })()

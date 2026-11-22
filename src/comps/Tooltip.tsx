@@ -1,4 +1,4 @@
-import { cloneElement, useEffect, useRef } from "react"
+import { cloneElement, isValidElement, useEffect, useRef } from "react"
 import { clamp } from "@/utils/helper"
 
 const DEFAULT_TIMEOUT = 15_000
@@ -137,7 +137,18 @@ export function Tooltip(props: TooltipProps) {
 		}
 	}, [props.title])
 
-	return cloneElement(props.children as React.ReactElement<any>, { ref })
+	const child = props.children as React.ReactElement<any>
+	// Icon-only controls get the tooltip text as their accessible name; ones with visible text keep it.
+	const label = props.title && !child.props?.["aria-label"] && !child.props?.["aria-labelledby"] && !hasText(child) ? props.title : undefined
+	return cloneElement(child, label ? { ref, "aria-label": label } : { ref })
+}
+
+function hasText(node: React.ReactNode): boolean {
+	if (typeof node === "string") return node.trim().length > 0
+	if (typeof node === "number") return true
+	if (Array.isArray(node)) return node.some(hasText)
+	if (isValidElement(node)) return hasText((node.props as { children?: React.ReactNode }).children)
+	return false
 }
 
 function positionAndPresentPopup(props: TooltipProps, mainBounds: DOMRect) {

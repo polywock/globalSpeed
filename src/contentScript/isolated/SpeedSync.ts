@@ -3,7 +3,7 @@ import { conformSpeed } from "@/utils/configUtils"
 import { between } from "@/utils/helper"
 import { SubscribeView } from "@/utils/state"
 import { DouyinSpeedMessage, IS_DOUYIN } from "./utils/siteAdapters/douyin"
-import { IS_YOUTUBE, YoutubeCaptionsMessage } from "./utils/siteAdapters/youtube"
+import { IS_YOUTUBE, YoutubeLiveMessage, YoutubeSyncMessage } from "./utils/siteAdapters/youtube"
 
 export class SpeedSync {
 	intervalId: number
@@ -14,20 +14,22 @@ export class SpeedSync {
 	pointerDownAt: number
 	keyDownAt: number
 	private douyinSpeed: number | null = null
-	private youtubeCaptionsEnabled = false
+	private youtubeSyncEnabled = false
 	constructor() {
 		window.addEventListener("pointerdown", this.handlePointerDown, { capture: true, passive: true })
 		window.addEventListener("pointerup", this.handlePointerUp, { capture: true, passive: true })
 		window.addEventListener("pointercancel", this.handlePointerCancel, { capture: true, passive: true })
 		document.addEventListener("pointerleave", this.clearPointerDown, { capture: true, passive: true })
 		window.addEventListener("keyup", this.handleKeyUp, { capture: true })
+		IS_YOUTUBE && gvar.os.stratumServer.msgCbs.add(this.handleServerMessage)
 	}
 	release = () => {
 		delete this.latest
 		this.syncDouyinSpeed(null)
-		this.syncYoutubeCaptions(false)
+		this.syncYoutube(false)
 		gvar.os.stratumServer.initCbs.delete(this.sendDouyinSpeed)
-		gvar.os.stratumServer.initCbs.delete(this.sendYoutubeCaptions)
+		gvar.os.stratumServer.initCbs.delete(this.sendYoutubeSync)
+		IS_YOUTUBE && gvar.os.stratumServer.msgCbs.delete(this.handleServerMessage)
 		gvar.os.mediaTower.forceSpeedCallbacks.delete(this.realize)
 		clearInterval(this.intervalId)
 		delete this.intervalId
@@ -45,7 +47,7 @@ export class SpeedSync {
 		} else {
 			this.intervalId = (clearInterval(this.intervalId), null)
 			this.syncDouyinSpeed(null)
-			this.syncYoutubeCaptions(false)
+			this.syncYoutube(false)
 		}
 	}
 	private syncDouyinSpeed = (speed: number | null) => {
@@ -58,15 +60,23 @@ export class SpeedSync {
 	private sendDouyinSpeed = () => {
 		gvar.os.stratumServer.send({ type: "DOUYIN_SPEED", speed: this.douyinSpeed } satisfies DouyinSpeedMessage)
 	}
-	private syncYoutubeCaptions = (enabled: boolean) => {
+	private syncYoutube = (enabled: boolean) => {
 		if (!IS_YOUTUBE) return
-		this.youtubeCaptionsEnabled = enabled
+		this.youtubeSyncEnabled = enabled
 		const server = gvar.os.stratumServer
-		if (server.initialized) this.sendYoutubeCaptions()
-		else server.initCbs.add(this.sendYoutubeCaptions)
+		if (server.initialized) this.sendYoutubeSync()
+		else server.initCbs.add(this.sendYoutubeSync)
 	}
-	private sendYoutubeCaptions = () => {
-		gvar.os.stratumServer.send({ type: "YOUTUBE_CAPTIONS", enabled: this.youtubeCaptionsEnabled } satisfies YoutubeCaptionsMessage)
+	private handleServerMessage = (data: YoutubeLiveMessage) => {
+		if (data?.type !== "YOUTUBE_LIVE") return
+		// The main world tracks the same element: YouTube's main player video.
+		const video = document.getElementById("movie_player")?.querySelector("video")
+		if (!video || !!video.gsLive === data.value) return
+		data.value ? (video.gsLive = true) : delete video.gsLive
+		gvar.os.mediaTower.updateLiveLock(video)
+	}
+	private sendYoutubeSync = () => {
+		gvar.os.stratumServer.send({ type: "YOUTUBE_SYNC", enabled: this.youtubeSyncEnabled } satisfies YoutubeSyncMessage)
 	}
 	handlePointerDown = (e: PointerEvent) => {
 		if (this.holdToSpeed && isLeftPointerOrMiddleMouse(e) && !this.keyDownActive()) {
@@ -138,7 +148,7 @@ export class SpeedSync {
 
 			gvar.os.mediaTower.applySpeedToAll(speed, this.latest.freePitch)
 			this.syncDouyinSpeed(conformSpeed(speed))
-			this.syncYoutubeCaptions(true)
+			this.syncYoutube(true)
 		}
 
 		// Unrelated to speed: Update all other frames if top frame's URL changes.

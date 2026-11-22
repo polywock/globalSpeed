@@ -1,6 +1,7 @@
 import { ChangeEvent, RefObject, useEffect, useState } from "react"
 import { gvar } from "@/globalVar"
 import { cn, round } from "../utils/helper"
+import { useFieldLabelProps } from "./FieldLabel"
 import { FloatTooltip } from "./FloatTooltip"
 
 const NUMERIC_REGEX = /^-?(?=[\d\.])\d*(\.\d+)?$/
@@ -19,11 +20,13 @@ type NumericInputProps = {
 	className?: string
 	inputClassName?: string
 	ref?: RefObject<any>
+	"aria-label"?: string
 }
 
 export const NumericInput = (props: NumericInputProps) => {
 	const [ghostValue, setGhostValue] = useState("")
 	const [problem, setProblem] = useState(null as string)
+	const labelProps = useFieldLabelProps(props)
 
 	const formatValue = (value: number) => {
 		if (value == null) return ""
@@ -83,6 +86,8 @@ export const NumericInput = (props: NumericInputProps) => {
 	return (
 		<div ref={props.ref} className={cn("relative", props.className)}>
 			<input
+				aria-label={props["aria-label"]}
+				{...labelProps}
 				disabled={props.disabled ?? false}
 				onBlur={(e) => {
 					setProblem(null)

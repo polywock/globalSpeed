@@ -1,3 +1,5 @@
+import { useFieldLabelProps } from "./FieldLabel"
+
 type ToggleProps = {
 	value: boolean
 	onChange: (newValue: boolean) => void
@@ -5,14 +7,18 @@ type ToggleProps = {
 }
 
 export function Toggle(props: ToggleProps) {
+	const labelProps = useFieldLabelProps(props)
 	return (
 		<div
 			role="switch"
 			aria-checked={props.value}
 			aria-label={props["aria-label"]}
+			{...labelProps}
 			tabIndex={0}
 			onKeyDown={(e) => {
-				if (e.key === "Enter") {
+				// Space is the standard key for switches; Enter kept for existing users.
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault()
 					props.onChange(!props.value)
 				}
 			}}

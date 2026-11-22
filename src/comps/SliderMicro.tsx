@@ -1,6 +1,7 @@
-import { ReactNode } from "react"
+import { ReactNode, useId } from "react"
 import { clamp, cn } from "@/utils/helper"
 import { NumericInput } from "../comps/NumericInput"
+import { FieldLabelContext } from "./FieldLabel"
 import { Reset } from "./Reset"
 import { Slider } from "./Slider"
 
@@ -20,6 +21,7 @@ type SliderMicroProps = {
 
 export function SliderMicro(props: SliderMicroProps) {
 	const { className, ...pass } = props.pass ?? {}
+	const labelId = useId()
 	const handleValueChange = (value: number) => {
 		props.onChange(clamp(props.min, props.max, value))
 	}
@@ -33,13 +35,17 @@ export function SliderMicro(props: SliderMicroProps) {
 			? "grid-cols-[1fr_60px_max-content]"
 			: "grid-cols-[1fr_max-content]"
 
-	return (
+	const content = (
 		<div
 			{...pass}
 			data-slot="slider-micro"
 			className={cn("mb-0.5 grid items-center gap-x-1.25", gridColumns, props.label && "withLabel", props.withInput && "withInput", className)}
 		>
-			{props.label != null && <span className={activated ? "font-semibold text-primary" : "font-normal text-foreground"}>{props.label}</span>}
+			{props.label != null && (
+				<span id={labelId} className={activated ? "font-semibold text-primary" : "font-normal text-foreground"}>
+					{props.label}
+				</span>
+			)}
 			<Slider
 				step={props.sliderStep ?? 0.01}
 				min={props.sliderMin}
@@ -62,4 +68,6 @@ export function SliderMicro(props: SliderMicroProps) {
 			<Reset active={activated} onClick={() => handleValueChange(props.default)} />
 		</div>
 	)
+	// Without its own label it keeps the surrounding field's label.
+	return props.label != null ? <FieldLabelContext.Provider value={labelId}>{content}</FieldLabelContext.Provider> : content
 }

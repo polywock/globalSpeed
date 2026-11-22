@@ -108,6 +108,7 @@
 		"smallStep": "Küçük adım",
 		"largeStep": "Büyük adım",
 		"moveUp": "Yukarı taşı",
+		"moveDown": "Aşağı taşı",
 		"jumpToTab": "Sekmeye git",
 		"hide": "Gizle"
 	},

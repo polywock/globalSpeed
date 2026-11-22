@@ -82,13 +82,22 @@ export function SpeedControl(props: SpeedControlProps) {
 					props.onChange(clamp(MIN_SPEED_CHROMIUM, MAX_SPEED_CHROMIUM, props.speed + speedDelta))
 				}}
 			>
-				<Button className="px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(-largeStep)}>
+				<Button
+					className="px-0 py-[calc(var(--padding)*0.75)]"
+					aria-label={`${gvar.gsm.command.speed} -${largeStep}`}
+					onClick={() => handleAddDelta(-largeStep)}
+				>
 					<LuChevronsLeft className="size-5" />
 				</Button>
-				<Button className="px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(-smallStep)}>
+				<Button
+					className="px-0 py-[calc(var(--padding)*0.75)]"
+					aria-label={`${gvar.gsm.command.speed} -${smallStep}`}
+					onClick={() => handleAddDelta(-smallStep)}
+				>
 					<LuChevronLeft className="size-5" />
 				</Button>
 				<NumericInput
+					aria-label={gvar.gsm.command.speed}
 					className={STEP_INPUT}
 					inputClassName="font-semibold rounded-lg h-full dark:border-input dark:bg-input/15 dark:hover:bg-input/30"
 					rounding={2}
@@ -101,11 +110,19 @@ export function SpeedControl(props: SpeedControlProps) {
 					}}
 					displayFixed={1}
 				/>
-				<Button className="px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(smallStep)}>
+				<Button
+					className="px-0 py-[calc(var(--padding)*0.75)]"
+					aria-label={`${gvar.gsm.command.speed} +${smallStep}`}
+					onClick={() => handleAddDelta(smallStep)}
+				>
 					{/* <FaAngleRight size={"1.14rem"} /> */}
 					<LuChevronRight className="size-5" />
 				</Button>
-				<Button className="px-0 py-[calc(var(--padding)*0.75)]" onClick={() => handleAddDelta(largeStep)}>
+				<Button
+					className="px-0 py-[calc(var(--padding)*0.75)]"
+					aria-label={`${gvar.gsm.command.speed} +${largeStep}`}
+					onClick={() => handleAddDelta(largeStep)}
+				>
 					<LuChevronsRight className="size-5" />
 				</Button>
 			</div>

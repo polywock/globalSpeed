@@ -26,6 +26,7 @@ const ghostModeStatic = [
 	"mooc1.chaoxing.com",
 	"pc.vkbrother.com",
 	".baijiayun.com",
+	".twitch.tv",
 ].some((site) => (location.hostname || "").includes(site))
 
 const supressShortcuts = (() => {

@@ -7,6 +7,7 @@ import { DouyinSpeed } from "./utils/DouyinSpeed"
 import { native } from "./utils/nativeCodes"
 import { seekNetflix } from "./utils/seekNetflix"
 import { YoutubeCaptions } from "./utils/YoutubeCaptions"
+import { YoutubeLive } from "./utils/YoutubeLive"
 
 declare global {
 	interface Window {
@@ -20,6 +21,7 @@ let client: StratumClient
 let ghostMode: GhostMode
 let douyinSpeed: DouyinSpeed
 let youtubeCaptions: YoutubeCaptions
+let youtubeLive: YoutubeLive
 
 function main() {
 	if (IS_FIREFOX_BUILD) {
@@ -207,10 +209,12 @@ class StratumClient {
 			seekDouyin(data.index, data.value, data.relative, data.autoPause, data.wraparound)
 		} else if (data.type === "DOUYIN_TIME" && IS_DOUYIN) {
 			this.send({ type: "DOUYIN_TIME", index: data.index, timeline: readDouyinTimeline(data.index) })
-		} else if (data.type === "YOUTUBE_CAPTIONS" && IS_YOUTUBE) {
+		} else if (data.type === "YOUTUBE_SYNC" && IS_YOUTUBE) {
 			// Read the saved native getter even when Ghost Mode spoofs the page's rate.
 			youtubeCaptions = youtubeCaptions || new YoutubeCaptions((video) => ghostMode.ogDesc.playbackRate.get.call(video))
 			youtubeCaptions.update(data.enabled === true)
+			youtubeLive = youtubeLive || new YoutubeLive((value) => this.send({ type: "YOUTUBE_LIVE", value }))
+			youtubeLive.update(data.enabled === true)
 		}
 	}
 	send = (data: any) => {

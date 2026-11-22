@@ -107,6 +107,7 @@
 		"smallStep": "小步長",
 		"largeStep": "大步長",
 		"moveUp": "上移",
+		"moveDown": "下移",
 		"jumpToTab": "跳至分頁",
 		"hide": "隱藏"
 	},

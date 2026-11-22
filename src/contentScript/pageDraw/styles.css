@@ -33,6 +33,17 @@
 	height: 100%;
 }
 
+#resist > svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+/* Strokes never take the pointer; drawing listens on the svg itself. */
+#resist > svg * {
+	pointer-events: none;
+}
+
 #wrapper {
 	--label-scale: 1;
 	z-index: 9999999999;

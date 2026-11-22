@@ -56,6 +56,7 @@ export function URLModal(props: Props) {
 
 					{/* Match mode */}
 					<Select
+						aria-label={gvar.gsm.options.rules.conditions}
 						value={value.block ? "BLOCK" : "ALLOW"}
 						onChanged={(newValue) => {
 							props.onChange(
@@ -127,6 +128,7 @@ function ULRConditionPart(props: { part: URLConditionPart; onChange: (part: URLC
 
 			{/* Match type */}
 			<Select
+				aria-label={gvar.gsm.token.mode}
 				value={part.type}
 				onChanged={(newValue) => {
 					onChange(

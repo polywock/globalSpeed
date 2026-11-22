@@ -66,19 +66,48 @@ async function getBadgeInit(tabId: number) {
 	return { badgeText, badgeColor, badgeIcons }
 }
 
+type BadgeField = "text" | "color" | "icon"
+
+// Values last written per tab (undefined = default action). Each write makes the browser
+// repaint its toolbar, and setIcon also reloads the image, so skip unchanged values.
+const written = new Map<number | undefined, Partial<Record<BadgeField, unknown>>>()
+// Bumped when a tab's values are forgotten, so writes in flight across a reset aren't cached.
+const generations = new Map<number, number>()
+
+// Per-tab action values reset on navigation, so forget them. Extra clears only cost a rewrite.
+function forgetTab(tabId: number) {
+	written.delete(tabId)
+	generations.set(tabId, (generations.get(tabId) ?? 0) + 1)
+}
+
 async function writeBadge(init: BadgeInit, tabId?: number) {
+	const generation = generations.get(tabId)
+	const prev = written.get(tabId) ?? {}
+	const next = { text: init.badgeText, color: init.badgeColor, icon: init.badgeIcons }
+	const writers: Record<BadgeField, () => Promise<void>> = {
+		text: () => chrome.action.setBadgeText({ text: next.text, tabId }),
+		color: () => chrome.action.setBadgeBackgroundColor({ color: next.color, tabId }),
+		icon: () => chrome.action.setIcon({ path: next.icon, tabId }),
+	}
+	const fields = (Object.keys(writers) as BadgeField[]).filter((f) => prev[f] !== next[f])
+	if (!fields.length) return
+
 	// A tab may close during a refresh; still wait for every write to settle.
-	await Promise.allSettled([
-		chrome.action.setBadgeText({ text: init.badgeText, tabId }),
-		chrome.action.setBadgeBackgroundColor({ color: init.badgeColor, tabId }),
-		chrome.action.setIcon({ path: init.badgeIcons, tabId }),
-	])
+	const results = await Promise.allSettled(fields.map((f) => writers[f]()))
+	// A navigation during the writes may have reset them; leave this tab uncached to rewrite later.
+	if (generations.get(tabId) !== generation) return
+	const current = written.get(tabId) ?? {}
+	fields.forEach((f, i) => {
+		if (results[i].status === "fulfilled") current[f] = next[f]
+		else delete current[f]
+	})
+	written.set(tabId, current)
 }
 
 const WATCHERS = [
 	/^g:(speed|enabled|superDisable|hideBadge)/,
 	/^[rt]:[\d\w]+:(speed|isPinned|enabled)/,
-	/^[r]:[\d\w]+:(elementFx|backdropFx|latestViaShortcut|)/,
+	/^[r]:[\d\w]+:(elementFx|backdropFx|latestViaShortcut)/,
 ]
 
 if (!isMobile()) {
@@ -86,6 +115,22 @@ if (!isMobile()) {
 		updateVisibleDeb()
 	})
 	gvar.sess.safeCbs.add(() => updateVisible())
-	chrome.webNavigation.onCommitted.addListener(() => updateVisible())
+	chrome.webNavigation.onCommitted.addListener((details) => {
+		// Subframe commits (e.g. ads) don't reset the action; only the tab's own document does.
+		// frameType covers prerendered main frames (nonzero frameId); Firefox omits it.
+		if (details.frameId !== 0 && details.frameType !== "outermost_frame") return
+		forgetTab(details.tabId)
+		updateVisible()
+	})
+	// Also covers navigations without a main-frame commit event, like prerender activation.
+	chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+		if (changeInfo.status !== "loading" && changeInfo.url == null) return
+		forgetTab(tabId)
+		updateVisible()
+	})
+	chrome.tabs.onRemoved.addListener((tabId) => {
+		written.delete(tabId)
+		generations.delete(tabId)
+	})
 	chrome.tabs.onActivated.addListener(() => updateVisible())
 }

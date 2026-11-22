@@ -106,6 +106,7 @@
 		"smallStep": "ขั้นเล็ก",
 		"largeStep": "ขั้นใหญ่",
 		"moveUp": "เลื่อนขึ้น",
+		"moveDown": "เลื่อนลง",
 		"jumpToTab": "ไปยังแท็บ",
 		"hide": "ซ่อน"
 	},

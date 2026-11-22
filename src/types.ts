@@ -36,6 +36,8 @@ declare global {
 		gsRateCounter?: { time: number; count: number }
 		gsRateViolations?: number
 		gsRateBanned?: boolean
+		gsLiveLocked?: boolean
+		gsLive?: boolean
 		gsFpsSum?: number
 		gsFpsCount?: number
 		gsLastPlayed?: number
@@ -92,6 +94,7 @@ export type State = {
 	hideGrant?: boolean
 	circleWidget?: boolean
 	circleInit?: CircleInit
+	pageDrawInit?: PageDrawInit
 	holdToSpeed?: number
 	longPressThreshold?: number
 	doubleTapThreshold?: number
@@ -127,6 +130,16 @@ export type IndicatorInit = {
 	position?: "TL" | "TR" | "BL" | "BR" | "C"
 	animation?: 1 | 2 | 3 | 4 | 5
 	key?: string
+}
+
+/** Draw on Page tool settings, restored the next time it opens. */
+export type PageDrawInit = {
+	color?: string
+	brushSize?: number
+	eraserSize?: number
+	mode?: "DRAW" | "ERASE"
+	/** Toolbar position, 0–1 across the room left for it in the window. */
+	position?: { x: number; y: number }
 }
 
 export type CircleInit = {

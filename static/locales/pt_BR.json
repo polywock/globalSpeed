@@ -108,6 +108,7 @@
 		"smallStep": "Passo pequeno",
 		"largeStep": "Passo grande",
 		"moveUp": "Mover para cima",
+		"moveDown": "Mover para baixo",
 		"jumpToTab": "Ir para a aba",
 		"hide": "Ocultar"
 	},

@@ -18,7 +18,9 @@ export function RegularTooltip(props: {
 				)}
 				style={props.styles}
 			>
-				{props.label || "?"}
+				<span aria-hidden="true">{props.label || "?"}</span>
+				{/* Hover-only help is otherwise invisible to screen readers. */}
+				<span className="sr-only">{props.title}</span>
 			</span>
 		</Tooltip>
 	)

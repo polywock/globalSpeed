@@ -207,6 +207,7 @@ export function Rule(props: RuleProps) {
 
 			{/* Rule type */}
 			<Select
+				aria-label={gvar.gsm.token.mode}
 				value={rule.type}
 				onChanged={(newValue) => {
 					onChange(
@@ -228,6 +229,7 @@ export function Rule(props: RuleProps) {
 				{/* Speed input  */}
 				{rule.type == "SPEED" && (
 					<NumericInput
+						aria-label={gvar.gsm.command.speed}
 						className="w-15"
 						noNull={true}
 						min={1 / 16}

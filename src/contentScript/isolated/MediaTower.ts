@@ -7,6 +7,7 @@ import { conformSpeed } from "../../utils/configUtils"
 import { assertType, between, randomId } from "../../utils/helper"
 import { applyMediaEvent, getMediaTimeline, MediaEvent, resetRateLimit } from "./utils/applyMediaEvent"
 import { generateScopeState } from "./utils/genMediaInfo"
+import { getLiveSafeSpeed, updateLiveLock } from "./utils/liveEdge"
 
 const EVENTS_LAST_PLAYED = new Set(["pause", "playing", "timeupdate"])
 
@@ -79,8 +80,12 @@ export class MediaTower {
 		if (!e.isTrusted || e.processed || !(e.target instanceof HTMLMediaElement)) return
 		e.processed = true
 		this.processMedia(e.target)
+		if (e.type === "seeked" || e.type === "durationchange") this.updateLiveLock(e.target, e.type === "seeked")
 		if (this.progressPorts.size) this.sendProgressDeb()
 		this.refreshCircleTarget()
+	}
+	updateLiveLock = (elem: HTMLMediaElement, canRelease?: boolean) => {
+		if (updateLiveLock(elem, canRelease)) this.forceSpeedCallbacks.forEach((cb) => cb())
 	}
 	private handleDetectOpen = () => {
 		this.observer?.disconnect()
@@ -225,6 +230,7 @@ export class MediaTower {
 		assertType<HTMLVideoElement>(e.target)
 		e.target.gsLastPlayed = Date.now()
 		this.processMedia(e.target)
+		this.updateLiveLock(e.target)
 
 		if (this.trackFps) {
 			const tu = {
@@ -266,7 +272,12 @@ export class MediaTower {
 		} else if (e.type === "emptied") {
 			delete elem.gsMarks
 			delete elem.gsNameless
+			delete elem.gsLiveLocked
+			delete elem.gsLive
 			resetRateLimit(elem)
+		} else if (e.type === "play") {
+			// Resuming after a pause leaves the playhead behind the live point.
+			this.updateLiveLock(elem, true)
 		} else if (e.type === "pause" || e.type === "playing") {
 			this.handleInterrupt(e)
 		}
@@ -315,7 +326,7 @@ export class MediaTower {
 		if (!speed) return
 		speed = conformSpeed(speed)
 		this.media.forEach((media) => {
-			applyMediaEvent(media, { type: "PLAYBACK_RATE", value: speed, freePitch })
+			applyMediaEvent(media, { type: "PLAYBACK_RATE", value: getLiveSafeSpeed(media, speed), freePitch })
 		})
 	}
 }

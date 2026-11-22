@@ -107,6 +107,7 @@
 		"smallStep": "Mały krok",
 		"largeStep": "Duży krok",
 		"moveUp": "Przesuń w górę",
+		"moveDown": "Przesuń w dół",
 		"jumpToTab": "Przejdź do karty",
 		"hide": "Ukryj"
 	},

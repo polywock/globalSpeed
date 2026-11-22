@@ -107,6 +107,7 @@
 		"smallStep": "작은 단계",
 		"largeStep": "큰 단계",
 		"moveUp": "위로 이동",
+		"moveDown": "아래로 이동",
 		"jumpToTab": "탭으로 이동",
 		"hide": "숨기기"
 	},

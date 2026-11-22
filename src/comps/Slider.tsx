@@ -3,6 +3,7 @@ import debounce from "lodash.debounce"
 import { useCallback, useEffect, useMemo, useState, type ComponentProps, type CSSProperties } from "react"
 import { gvar } from "@/globalVar"
 import { clamp, cn, inverseLerp, lerp } from "../utils/helper"
+import { useFieldLabelProps } from "./FieldLabel"
 
 const seekBase = [
 	"h-[20px] [--slider-track-height:4px] [--slider-thumb-size:12px] [--slider-fill-color:var(--input)] [--slider-thumb-color:var(--muted-foreground)] focus:outline-none disabled:cursor-default disabled:opacity-40",
@@ -49,12 +50,14 @@ type SliderProps = {
 	maxWait?: number
 	wait?: number
 	className?: string
+	"aria-label"?: string
 } & VariantProps<typeof sliderVariants>
 
 export function Slider(props: SliderProps) {
 	const [anchor, setAnchor] = useState(null as [number])
 	const env = useMemo(() => ({ props }) as { props: SliderProps; handleChange?: (v: number) => void }, [])
 	env.props = props
+	const labelProps = useFieldLabelProps(props)
 
 	env.handleChange = useCallback(
 		debounce(
@@ -99,6 +102,8 @@ export function Slider(props: SliderProps) {
 
 	return (
 		<SliderInput
+			aria-label={props["aria-label"]}
+			{...labelProps}
 			variant={props.variant}
 			accent={props.accent}
 			className={cn(anchor && "origin-center scale-y-[1.5] outline-2 outline-[red]", props.className)}

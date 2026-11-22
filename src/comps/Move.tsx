@@ -1,4 +1,5 @@
 import { GoArrowDown, GoArrowUp } from "react-icons/go"
+import { gvar } from "@/globalVar"
 import { Button } from "./ui/button"
 
 type MoveProps = {
@@ -8,10 +9,10 @@ type MoveProps = {
 export function Move(props: MoveProps) {
 	return (
 		<div data-slot="move" className="grid grid-flow-row">
-			<Button variant="icon" size="icon-auto" onClick={() => props.onMove(false)}>
+			<Button variant="icon" size="icon-auto" aria-label={gvar.gsm.token.moveUp} onClick={() => props.onMove(false)}>
 				<GoArrowUp size="1.42rem" />
 			</Button>
-			<Button variant="icon" size="icon-auto" onClick={() => props.onMove(true)}>
+			<Button variant="icon" size="icon-auto" aria-label={gvar.gsm.token.moveDown} onClick={() => props.onMove(true)}>
 				<GoArrowDown size="1.42rem" />
 			</Button>
 		</div>

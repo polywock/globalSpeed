@@ -31,7 +31,17 @@ type HeaderActionProps = ComponentPropsWithRef<"div"> & {
 function HeaderAction({ active, beat, className, muted, unpadded, ...props }: HeaderActionProps) {
 	return (
 		<div
+			// Only clickable actions act as buttons; others just wrap a control (e.g. the kebab menu).
+			role={props.onClick ? "button" : undefined}
+			tabIndex={props.onClick ? 0 : undefined}
 			{...props}
+			onKeyDown={(e) => {
+				props.onKeyDown?.(e)
+				if (props.onClick && !e.defaultPrevented && (e.key === "Enter" || e.key === " ")) {
+					e.preventDefault()
+					e.currentTarget.click()
+				}
+			}}
 			className={cn(
 				"cursor-pointer px-1.25 text-secondary-foreground icon-owner hover:opacity-90 [&>svg]:align-baseline",
 				active && "text-primary",

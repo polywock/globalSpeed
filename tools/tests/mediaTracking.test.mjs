@@ -25,6 +25,7 @@ function load(path, imports = {}, globals = {}) {
 		require: (name) => {
 			if (name in imports) return imports[name]
 			if (name === "@/utils/mediaProgress") return load("src/utils/mediaProgress.ts")
+			if (name === "./utils/liveEdge") return load("src/contentScript/isolated/utils/liveEdge.ts")
 			if (!name.startsWith(".") && !name.startsWith("@/")) return require(name)
 			throw new Error(`Missing test dependency: ${name}`)
 		},

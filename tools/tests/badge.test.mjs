@@ -22,7 +22,9 @@ function badgeEnv() {
 		[0, { enabled: true, speed: 1 }],
 		[1, { enabled: true, speed: 2, isPinned: true }],
 	])
-	const env = { icons, texts, colors, state, setIcon: async () => {}, refresh: () => watchers[0]() }
+	const listeners = { committed: [], updated: [], removed: [] }
+	const calls = { icon: 0, text: 0, color: 0 }
+	const env = { icons, texts, colors, state, calls, listeners, setIcon: async () => {}, refresh: () => watchers[0]() }
 	const imports = {
 		"lodash.debounce": (cb) => cb,
 		"@/globalVar": { gvar: { es: { addWatcher: (_keys, cb) => watchers.push(cb) }, sess: { safeCbs: startup } } },
@@ -39,15 +41,21 @@ function badgeEnv() {
 		console,
 		chrome: {
 			action: {
-				setBadgeText: async ({ tabId, text }) => texts.set(tabId, text),
-				setBadgeBackgroundColor: async ({ tabId, color }) => colors.set(tabId, color),
+				setBadgeText: async ({ tabId, text }) => (calls.text++, texts.set(tabId, text)),
+				setBadgeBackgroundColor: async ({ tabId, color }) => (calls.color++, colors.set(tabId, color)),
 				setIcon: async (details) => {
+					calls.icon++
 					await env.setIcon(details)
 					icons.set(details.tabId, details.path[128])
 				},
 			},
-			tabs: { query: async () => [{ id: 1 }], onActivated: { addListener() {} } },
-			webNavigation: { onCommitted: { addListener() {} } },
+			tabs: {
+				query: async () => [{ id: 1 }],
+				onActivated: { addListener() {} },
+				onUpdated: { addListener: (cb) => listeners.updated.push(cb) },
+				onRemoved: { addListener: (cb) => listeners.removed.push(cb) },
+			},
+			webNavigation: { onCommitted: { addListener: (cb) => listeners.committed.push(cb) } },
 		},
 	})
 	env.start = () => [...startup][0]()
@@ -107,5 +115,53 @@ test("an icon write rejected for a closed tab does not block later refreshes", a
 	env.setIcon = async () => {}
 	env.refresh()
 	await settle()
+	assert.equal(env.icons.get(1), "images/128.png")
+})
+
+test("unchanged badge values are not rewritten", async () => {
+	const env = badgeEnv()
+	await env.start()
+	const before = { ...env.calls }
+	env.refresh()
+	await settle()
+	assert.deepEqual(env.calls, before)
+	env.state.set(1, { enabled: true, speed: 3, isPinned: true })
+	env.refresh()
+	await settle()
+	assert.equal(env.calls.text, before.text + 1)
+	assert.equal(env.calls.icon, before.icon)
+	assert.equal(env.texts.get(1), "3")
+})
+
+test("a main frame navigation rewrites the tab's badge, a subframe commit does not", async () => {
+	const env = badgeEnv()
+	await env.start()
+	const before = env.calls.icon
+	env.listeners.committed[0]({ tabId: 1, frameId: 5, frameType: "sub_frame" })
+	env.listeners.committed[0]({ tabId: 1, frameId: 5 }) // Firefox omits frameType.
+	await settle()
+	assert.equal(env.calls.icon, before)
+	env.icons.delete(1) // The browser resets per-tab values on navigation.
+	env.listeners.committed[0]({ tabId: 1, frameId: 0 })
+	await settle()
+	assert.equal(env.icons.get(1), "images/128.png")
+	env.icons.delete(1)
+	env.listeners.updated[0](1, { status: "loading" })
+	await settle()
+	assert.equal(env.icons.get(1), "images/128.png")
+})
+
+test("a navigation during a write leaves the tab uncached", async () => {
+	const env = badgeEnv()
+	const icon = deferred()
+	env.setIcon = ({ tabId }) => (tabId === 1 ? icon.promise : undefined)
+	env.start()
+	await settle()
+	env.setIcon = async () => {}
+	env.listeners.updated[0](1, { status: "loading" }) // Queued behind the in-flight refresh.
+	icon.resolve()
+	await settle()
+	// Global once, then tab 1 twice: the write that raced the reset must not count as cached.
+	assert.equal(env.calls.icon, 3)
 	assert.equal(env.icons.get(1), "images/128.png")
 })

@@ -44,6 +44,7 @@ export function SvgFilterList(props: { svgFilters: SvgFilter[]; onChange: (newSv
 			</div>
 			<div className="mt-2.5 flex gap-x-2.5">
 				<Select
+					aria-label={gvar.gsm.token.filters}
 					value={command}
 					onChanged={(newValue) => {
 						setCommand(newValue)

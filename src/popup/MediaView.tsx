@@ -89,6 +89,7 @@ export function MediaView(props: {
 					variant="icon"
 					size="icon-auto"
 					className={cn(CONTROL_BUTTON_CLASS)}
+					aria-label={`${gvar.gsm.command.seek} -5`}
 					onClick={(e) => {
 						const event: MediaEvent = { type: "SEEK", value: -5, relative: true }
 						sendMediaEvent(event, info.key, tabId, frameId)
@@ -103,6 +104,7 @@ export function MediaView(props: {
 					variant="icon"
 					size="icon-auto"
 					className={CONTROL_BUTTON_CLASS}
+					aria-label={gvar.gsm.command.pause}
 					onClick={(e) => {
 						const event: MediaEvent = { type: "PAUSE", state: "toggle" }
 						sendMediaEvent(event, info.key, tabId, frameId)
@@ -116,6 +118,7 @@ export function MediaView(props: {
 					variant="icon"
 					size="icon-auto"
 					className={cn(CONTROL_BUTTON_CLASS)}
+					aria-label={`${gvar.gsm.command.seek} +5`}
 					onClick={(e) => {
 						const event: MediaEvent = { type: "SEEK", value: 5, relative: true }
 						sendMediaEvent(event, info.key, tabId, frameId)
@@ -137,6 +140,7 @@ export function MediaView(props: {
 							variant="icon"
 							size="icon-auto"
 							className={cn(CONTROL_BUTTON_CLASS, "opacity-85 hover:opacity-100")}
+							aria-label={gvar.gsm.command.mute}
 							onClick={(e) => {
 								const event: MediaEvent = { type: "MUTE", state: "toggle" }
 								sendMediaEvent(event, info.key, tabId, frameId)

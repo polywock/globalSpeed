@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { FaPowerOff } from "react-icons/fa"
 import { GoArrowDown, GoArrowUp, GoX } from "react-icons/go"
 import { LuLink2, LuLink2Off } from "react-icons/lu"
@@ -10,7 +9,7 @@ import { SVG_COLOR_MATRIX_PRESETS, SVG_MOSAIC_PRESETS, SVG_RGB_PRESETS, SVG_SPEC
 import { SVG_FILTER_ADDITIONAL } from "@/defaults/svgFilterAdditional"
 import { gvar } from "@/globalVar"
 import { SvgFilter } from "@/types"
-import { cn, moveItem, produce } from "@/utils/helper"
+import { cn, deepEqual, moveItem, produce } from "@/utils/helper"
 
 const MOSAIC_DEFAULT = svgFilterInfos["mosaic"].generate()
 const NOISE_DEFAULT = svgFilterInfos["noise"].generate()
@@ -28,7 +27,8 @@ export function SvgFilterItem(props: {
 }) {
 	const { filter, list, onChange, listOnChange } = props
 	const presetInfo = SVG_TYPE_TO_PRESET[filter.type]
-	const [currentPreset, setCurrentPreset] = useState("")
+	// Derived from the stored filter so it survives reopening and clears once values are edited by hand.
+	const currentPreset = presetInfo?.options.find((preset) => presetInfo.matches(filter, preset))?.id ?? ""
 
 	return (
 		<div className="mt-3.75 rounded-lg border border-border p-2.5">
@@ -63,7 +63,7 @@ export function SvgFilterItem(props: {
 						<GoArrowUp size="1.42rem" />
 					</Button>
 				</Tooltip>
-				<Tooltip title={gvar.gsm.token.moveUp}>
+				<Tooltip title={gvar.gsm.token.moveDown}>
 					<Button
 						variant="icon"
 						size="icon-auto"
@@ -99,9 +99,9 @@ export function SvgFilterItem(props: {
 				<div className="mt-1.75 grid grid-cols-[max-content_1fr] items-center gap-x-1.25">
 					<div>{gvar.gsm.filter.otherFilters.presets}</div>
 					<Select
-						value={currentPreset ?? ""}
+						aria-label={gvar.gsm.filter.otherFilters.presets}
+						value={currentPreset}
 						onChanged={(newValue) => {
-							setCurrentPreset(newValue || null)
 							const preset = presetInfo.options.find((o) => o.id === newValue)
 							preset && presetInfo.handler(filter, onChange, preset)
 						}}
@@ -768,6 +768,7 @@ export function SvgFilterItem(props: {
 						<div className="mt-2.5">
 							<span className="mr-2.5">{gvar.gsm.token.mode}</span>
 							<Select
+								aria-label={gvar.gsm.token.mode}
 								value={filter.noise.mode}
 								onChanged={(newValue) => {
 									onChange(
@@ -810,29 +811,34 @@ function AspectLockButton(props: { active: boolean; onClick: () => void }) {
 const SVG_TYPE_TO_PRESET: {
 	[key in keyof Partial<typeof SVG_FILTER_ADDITIONAL>]: {
 		options: { id: string; values: any }[]
+		matches: (filter: SvgFilter, preset: { id: string; values: any }) => boolean
 		handler: (filter: SvgFilter, onChange: (filter: SvgFilter) => void, preset: { id: string; values: any }) => void
 	}
 } = {
 	mosaic: {
 		options: SVG_MOSAIC_PRESETS,
+		matches: (filter, preset) => Object.entries(preset.values).every(([key, value]) => (filter.mosaic as any)?.[key] === value),
 		handler: (filter, onChange, preset) => {
 			onChange({ ...filter, mosaic: { ...filter.mosaic, ...preset.values } })
 		},
 	},
 	colorMatrix: {
 		options: SVG_COLOR_MATRIX_PRESETS,
+		matches: (filter, preset) => deepEqual(filter.colorMatrix, preset.values),
 		handler: (filter, onChange, preset) => {
 			onChange({ ...filter, colorMatrix: preset.values })
 		},
 	},
 	rgb: {
 		options: SVG_RGB_PRESETS,
+		matches: (filter, preset) => deepEqual(filter.rgb, preset.values),
 		handler: (filter, onChange, preset) => {
 			onChange({ ...filter, rgb: preset.values })
 		},
 	},
 	special: {
 		options: SVG_SPECIAL_PRESETS,
+		matches: (filter, preset) => filter.text === preset.values,
 		handler: (filter, onChange, preset) => {
 			onChange({ ...filter, text: preset.values })
 		},

@@ -207,6 +207,8 @@ export type Gsm = {
 		largeStep: string
 		/** Move up */
 		moveUp: string
+		/** Move down */
+		moveDown: string
 		/** Jump to tab */
 		jumpToTab: string
 		/** Hide */

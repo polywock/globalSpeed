@@ -1,4 +1,5 @@
 import { ComponentProps } from "react"
+import { useFieldLabelProps } from "./FieldLabel"
 
 export type SelectOption = {
 	key: string
@@ -18,8 +19,10 @@ export function Select({
 	value: string
 	onChanged: (newValue: string) => void
 } & Omit<ComponentProps<"select">, "value" | "onChange" | "children">) {
+	const labelProps = useFieldLabelProps(rest)
 	return (
 		<select
+			{...labelProps}
 			{...rest}
 			className={className}
 			value={value}

@@ -299,6 +299,7 @@ function FilterSelect(props: FilterSelectProps) {
 			<div className="flex items-center gap-x-1">
 				{command.withFilterTarget && (
 					<Select
+						aria-label={`${gvar.gsm.token.video} / ${gvar.gsm.token.page}`}
 						value={value.filterTarget}
 						onChanged={(newValue) => {
 							onChange(
@@ -316,6 +317,7 @@ function FilterSelect(props: FilterSelectProps) {
 				)}
 				{command.withFilterOption && (
 					<Select
+						aria-label={gvar.gsm.token.filters}
 						value={value.filterOption}
 						onChanged={(newValue) => {
 							props.onChange(
@@ -347,6 +349,7 @@ function UrlMode(props: UrlModeProps) {
 		<>
 			{value.command === "openUrl" && (
 				<Select
+					aria-label={gvar.gsm.command.openUrl}
 					value={value.valueUrlMode || "fgTab"}
 					onChanged={(newValue) => {
 						onChange(
@@ -391,6 +394,7 @@ export function DurationSelect(props: DurationSelectProps) {
 	return (
 		<>
 			<Select
+				aria-label={gvar.gsm.token.duration}
 				value={`${value.duration || Duration.SECS}`}
 				onChanged={(newValue) => {
 					onChange(

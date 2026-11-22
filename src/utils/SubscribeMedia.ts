@@ -100,8 +100,8 @@ export class SubscribeMedia {
 		const infos = readyInfos
 			.filter((info) => info.key === pinnedKey || info.duration > MINIMUM_DURATION)
 			.sort((a, b) => {
-				if (a.tabInfo.tabId === this.tabId) return -Infinity
-				return a.tabInfo.tabId - b.tabInfo.tabId
+				const current = Number(b.tabInfo.tabId === this.tabId) - Number(a.tabInfo.tabId === this.tabId)
+				return current || a.tabInfo.tabId - b.tabInfo.tabId
 			})
 
 		// Add pinned videos first.
@@ -156,7 +156,7 @@ export class SubscribeMedia {
 				.filter((info) => info)
 				// Final sort in case new videos are added while open.
 				.sort((a, b) => {
-					return Number(b.tabInfo.tabId === this.tabId || b.key === pinnedKey) - Number(a.tabInfo.tabId === this.tabId || b.key === pinnedKey)
+					return Number(b.tabInfo.tabId === this.tabId || b.key === pinnedKey) - Number(a.tabInfo.tabId === this.tabId || a.key === pinnedKey)
 				}),
 		}
 		if (this.includeRemaining) {

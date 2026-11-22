@@ -662,6 +662,11 @@ async function processAdjustMode(args: CommandHandlerArgs) {
 			main = value + (values.main ?? values.secondary)
 			secondary = value + (values.secondary ?? values.main)
 		}
+
+		// Stepping speed below the floor would clamp to an odd value (e.g. 1 - 1 → 0.07), so keep the current speed.
+		if (kb.command === "speed" && main < ref.min) {
+			main = secondary = values.main ?? values.secondary
+		}
 	} else {
 		main = secondary = value
 	}

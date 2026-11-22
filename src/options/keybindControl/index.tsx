@@ -224,6 +224,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
 			{/* Numeric input */}
 			{showNumericControl && !command.withDuration && (
 				<NumericInput
+					aria-label={(gvar.gsm.command as any)[value.command]}
 					onFocus={
 						valueFocusTooltip
 							? (e) => {
@@ -253,6 +254,7 @@ export const KeybindControl = (props: KeybindControlProps) => {
 			{showNumericControl && command.withDuration && (
 				<div className="grid grid-cols-[1fr_max-content] gap-x-1.25">
 					<NumericInput
+						aria-label={(gvar.gsm.command as any)[value.command]}
 						placeholder={defaultValue?.toString() ?? null}
 						min={min}
 						max={max}
