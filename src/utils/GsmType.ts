@@ -491,6 +491,10 @@ export type Gsm = {
 			ghostMode: string
 			/** Prevents websites from detecting playback speed changes. When enabled, it applies to all websites by default. This may cause issues on some sites. Use the gear icon to limit it to specific websites. */
 			ghostModeTooltip: string
+			/** Allow shortcuts by default */
+			shortcutsEverywhere: string
+			/** When enabled, shortcuts work on all websites except the ones you block. When disabled, they only work on websites you allow. Use the gear icon to edit these lists. */
+			shortcutsEverywhereTooltip: string
 			/** Enable for local files */
 			localFiles: string
 			/** Lets the extension work on local files opened in the browser, such as video files on your device. Clicking opens the browser extension page, where file access can be allowed. */

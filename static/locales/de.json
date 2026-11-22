@@ -256,6 +256,8 @@
 			"showIndicatorTooltip": "Der Indikator ist visuelles Feedback beim Verwenden von Tastenkombinationen",
 			"ghostMode": "Geistermodus",
 			"ghostModeTooltip": "Verhindert, dass Websites Änderungen der Wiedergabegeschwindigkeit erkennen. Wenn aktiviert, gilt dies standardmäßig für alle Websites. Dies kann auf einigen Websites zu Problemen führen. Verwende das Zahnradsymbol, um es auf bestimmte Websites zu beschränken.",
+			"shortcutsEverywhere": "Tastenkürzel standardmäßig erlauben",
+			"shortcutsEverywhereTooltip": "Wenn aktiviert, funktionieren Tastenkürzel auf allen Websites außer den blockierten. Wenn deaktiviert, funktionieren sie nur auf erlaubten Websites. Über das Zahnradsymbol bearbeitest du diese Listen.",
 			"localFiles": "Für lokale Dateien aktivieren",
 			"localFilesTooltip": "Ermöglicht der Erweiterung, mit lokalen Dateien zu arbeiten, die im Browser geöffnet sind, etwa Videodateien auf deinem Gerät. Ein Klick öffnet die Erweiterungsseite des Browsers, auf der du den Dateizugriff erlauben kannst.",
 			"incognito": "Im Inkognitomodus aktivieren",

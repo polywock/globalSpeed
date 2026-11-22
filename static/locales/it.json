@@ -256,6 +256,8 @@
 			"showIndicatorTooltip": "L’indicatore è un feedback visivo quando si usano le scorciatoie",
 			"ghostMode": "Modalità fantasma",
 			"ghostModeTooltip": "Impedisce ai siti web di rilevare le modifiche alla velocità di riproduzione. Quando è abilitato, si applica a tutti i siti web per impostazione predefinita. Questo potrebbe causare problemi su alcuni siti. Usa l’icona dell’ingranaggio per limitarlo a siti specifici.",
+			"shortcutsEverywhere": "Consenti scorciatoie per impostazione predefinita",
+			"shortcutsEverywhereTooltip": "Se attivo, le scorciatoie funzionano su tutti i siti tranne quelli che blocchi. Se disattivo, funzionano solo sui siti che consenti. Usa l'icona dell'ingranaggio per modificare questi elenchi.",
 			"localFiles": "Attiva per i file locali",
 			"localFilesTooltip": "Consente all’estensione di funzionare con i file locali aperti nel browser, come i file video sul tuo dispositivo. Facendo clic si apre la pagina delle estensioni del browser, dove puoi consentire l’accesso ai file.",
 			"incognito": "Attiva in incognito",

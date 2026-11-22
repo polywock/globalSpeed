@@ -257,6 +257,8 @@
 			"showIndicatorTooltip": "Gösterge, kısayollar kullanılırken görsel geri bildirimdir",
 			"ghostMode": "Hayalet modu",
 			"ghostModeTooltip": "Web sitelerinin oynatma hızı değişikliklerini algılamasını engeller. Etkinleştirildiğinde, varsayılan olarak tüm web siteleri için geçerlidir. Bazı sitelerde sorunlara neden olabilir. Belirli sitelerle sınırlandırmak için dişli simgesini kullanın.",
+			"shortcutsEverywhere": "Kısayollara varsayılan olarak izin ver",
+			"shortcutsEverywhereTooltip": "Açıkken kısayollar, engellediğiniz siteler dışında tüm web sitelerinde çalışır. Kapalıyken yalnızca izin verdiğiniz sitelerde çalışır. Bu listeleri düzenlemek için dişli simgesini kullanın.",
 			"localFiles": "Yerel dosyalar için etkinleştir",
 			"localFilesTooltip": "Uzantının tarayıcıda açılan yerel dosyalarda, örneğin cihazınızdaki video dosyalarında çalışmasını sağlar. Tıkladığınızda, dosya erişimine izin verebileceğiniz tarayıcı uzantı sayfası açılır.",
 			"incognito": "Gizli modda etkinleştir",

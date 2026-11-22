@@ -256,6 +256,8 @@
 			"showIndicatorTooltip": "Wskaźnik to wizualna informacja zwrotna podczas używania skrótów",
 			"ghostMode": "Tryb ducha",
 			"ghostModeTooltip": "Zapobiega wykrywaniu przez strony internetowe zmian prędkości odtwarzania. Po włączeniu działa domyślnie na wszystkich stronach. Może powodować problemy na niektórych witrynach. Użyj ikony koła zębatego, aby ograniczyć działanie do konkretnych stron.",
+			"shortcutsEverywhere": "Domyślnie zezwalaj na skróty",
+			"shortcutsEverywhereTooltip": "Po włączeniu skróty działają na wszystkich stronach oprócz zablokowanych. Po wyłączeniu działają tylko na dozwolonych stronach. Użyj ikony koła zębatego, aby edytować te listy.",
 			"localFiles": "Włącz dla plików lokalnych",
 			"localFilesTooltip": "Pozwala rozszerzeniu działać na plikach lokalnych otwartych w przeglądarce, na przykład na plikach wideo na Twoim urządzeniu. Kliknięcie otwiera stronę rozszerzeń przeglądarki, na której można zezwolić na dostęp do plików.",
 			"incognito": "Włącz w trybie incognito",

@@ -256,6 +256,8 @@
 			"showIndicatorTooltip": "指示器是使用快捷鍵時的視覺回饋",
 			"ghostMode": "幽靈模式",
 			"ghostModeTooltip": "防止網站偵測播放速度變更。啟用後，預設套用至所有網站。此功能可能會在某些網站上產生問題。可使用齒輪圖示限制僅套用至特定網站。",
+			"shortcutsEverywhere": "預設允許快捷鍵",
+			"shortcutsEverywhereTooltip": "開啟後，快捷鍵在除已封鎖網站外的所有網站上皆可使用。關閉後，僅在允許的網站上可用。點擊齒輪圖示可編輯這些清單。",
 			"localFiles": "在本機檔案中啟用",
 			"localFilesTooltip": "讓擴充功能可以在瀏覽器中開啟的本機檔案上運作，例如您裝置中的影片檔案。點擊後會開啟瀏覽器的擴充功能頁面，您可以在其中允許存取檔案。",
 			"incognito": "在無痕模式中啟用",

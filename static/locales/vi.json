@@ -256,6 +256,8 @@
 			"showIndicatorTooltip": "Chỉ báo là phản hồi trực quan khi sử dụng phím tắt",
 			"ghostMode": "Chế độ ghost",
 			"ghostModeTooltip": "Ngăn các trang web phát hiện thay đổi tốc độ phát lại. Khi được bật, tính năng này sẽ áp dụng cho tất cả các trang web theo mặc định. Điều này có thể gây ra sự cố trên một số trang. Sử dụng biểu tượng bánh răng để giới hạn cho các trang web cụ thể.",
+			"shortcutsEverywhere": "Cho phép phím tắt theo mặc định",
+			"shortcutsEverywhereTooltip": "Khi bật, phím tắt hoạt động trên mọi trang web trừ những trang bạn chặn. Khi tắt, phím tắt chỉ hoạt động trên những trang bạn cho phép. Dùng biểu tượng bánh răng để chỉnh sửa các danh sách này.",
 			"localFiles": "Bật cho tệp cục bộ",
 			"localFilesTooltip": "Cho phép tiện ích mở rộng hoạt động với các tệp cục bộ được mở trong trình duyệt, chẳng hạn như tệp video trên thiết bị của bạn. Nhấp vào đây sẽ mở trang tiện ích của trình duyệt, nơi bạn có thể cho phép quyền truy cập tệp.",
 			"incognito": "Bật trong chế độ ẩn danh",

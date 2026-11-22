@@ -256,6 +256,8 @@
 			"showIndicatorTooltip": "Penunjuk adalah maklum balas visual semasa menggunakan pintasan",
 			"ghostMode": "Mod hantu",
 			"ghostModeTooltip": "Menghalang laman web daripada mengesan perubahan kelajuan main balik. Apabila diaktifkan, ia digunakan untuk semua laman web secara lalai. Ini mungkin menyebabkan masalah pada sesetengah laman web. Gunakan ikon gear untuk mengehadkannya kepada laman web tertentu.",
+			"shortcutsEverywhere": "Benarkan pintasan secara lalai",
+			"shortcutsEverywhereTooltip": "Apabila dihidupkan, pintasan berfungsi pada semua laman web kecuali yang anda sekat. Apabila dimatikan, pintasan hanya berfungsi pada laman web yang anda benarkan. Gunakan ikon gear untuk menyunting senarai ini.",
 			"localFiles": "Dayakan untuk fail tempatan",
 			"localFilesTooltip": "Membolehkan sambungan berfungsi pada fail tempatan yang dibuka dalam pelayar, seperti fail video pada peranti anda. Mengklik akan membuka halaman sambungan pelayar, tempat akses fail boleh dibenarkan.",
 			"incognito": "Dayakan dalam mod Inkognito",

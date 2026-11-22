@@ -257,6 +257,8 @@
 			"showIndicatorTooltip": "指示器是使用快捷键时的视觉反馈",
 			"ghostMode": "幽灵模式",
 			"ghostModeTooltip": "防止网站检测播放速度的变化。启用后，默认对所有网站生效。某些网站可能会因此出现问题。可使用齿轮图标限制仅对特定网站生效。",
+			"shortcutsEverywhere": "默认允许快捷键",
+			"shortcutsEverywhereTooltip": "开启后，快捷键在除已屏蔽网站外的所有网站上可用。关闭后，仅在允许的网站上可用。点击齿轮图标可编辑这些列表。",
 			"localFiles": "在本地文件中启用",
 			"localFilesTooltip": "让扩展程序能够在浏览器中打开的本地文件上运行，例如您设备中的视频文件。点击后会打开浏览器的扩展程序页面，您可以在其中允许访问文件。",
 			"incognito": "在无痕模式中启用",

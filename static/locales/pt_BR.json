@@ -256,6 +256,8 @@
 			"showIndicatorTooltip": "O indicador é um feedback visual ao usar atalhos",
 			"ghostMode": "Modo fantasma",
 			"ghostModeTooltip": "Impede que os sites detectem alterações na velocidade de reprodução. Quando ativado, é aplicado a todos os sites por padrão. Isso pode causar problemas em alguns sites. Use o ícone de engrenagem para limitá-lo a sites específicos.",
+			"shortcutsEverywhere": "Permitir atalhos por padrão",
+			"shortcutsEverywhereTooltip": "Quando ativado, os atalhos funcionam em todos os sites, exceto os que você bloquear. Quando desativado, só funcionam nos sites que você permitir. Use o ícone de engrenagem para editar essas listas.",
 			"localFiles": "Ativar para arquivos locais",
 			"localFilesTooltip": "Permite que a extensão funcione em arquivos locais abertos no navegador, como arquivos de vídeo do seu dispositivo. Ao clicar, a página de extensões do navegador é aberta, onde o acesso a arquivos pode ser permitido.",
 			"incognito": "Ativar em janelas anônimas",

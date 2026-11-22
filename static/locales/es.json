@@ -255,6 +255,8 @@
 			"showIndicatorTooltip": "El indicador es una retroalimentación visual al usar atajos",
 			"ghostMode": "Modo fantasma",
 			"ghostModeTooltip": "Impide que los sitios web detecten cambios en la velocidad de reproducción. Cuando está activado, se aplica a todos los sitios web por defecto. Esto puede causar problemas en algunos sitios. Usa el ícono de engranaje para limitarlo a sitios web específicos.",
+			"shortcutsEverywhere": "Permitir atajos por defecto",
+			"shortcutsEverywhereTooltip": "Si está activado, los atajos funcionan en todos los sitios web excepto los que bloquees. Si está desactivado, solo funcionan en los sitios que permitas. Usa el icono del engranaje para editar estas listas.",
 			"localFiles": "Habilitar para archivos locales",
 			"localFilesTooltip": "Permite que la extensión funcione con archivos locales abiertos en el navegador, como los archivos de video de tu dispositivo. Al hacer clic se abre la página de extensiones del navegador, donde puedes permitir el acceso a los archivos.",
 			"incognito": "Habilitar en modo incógnito",

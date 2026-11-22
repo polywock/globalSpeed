@@ -30,6 +30,34 @@ export const SHORTCUT_ALLOWED_WEBSITES: WebsiteInfo[] = [
 	{ v: "https://www.bbc.com/video" },
 ]
 
+/** Starting blocklist: sites where shortcut keys are needed for typing or games. */
+export const SHORTCUT_BLOCKED_WEBSITES: WebsiteInfo[] = [
+	{ v: "https://docs.google.com" },
+	{ v: "https://docs.qq.com" },
+	{ v: "https://www.canva.com" },
+	{ v: "https://www.photopea.com" },
+	{ v: "https://excalidraw.com" },
+	{ v: "https://chatgpt.com" },
+	{ v: "https://claude.ai" },
+	{ v: "https://gemini.google.com" },
+	{ v: "https://play.geforcenow.com" },
+	{ v: "https://www.xbox.com" },
+	{ v: "https://remotedesktop.google.com" },
+	{ v: "https://github.dev" },
+]
+
+function websitesToParts(websites: WebsiteInfo[]) {
+	return websites.map((origin) => {
+		const part = generateUrlPart(origin.v)
+		if (origin.contains) part.type = "CONTAINS"
+		return part
+	})
+}
+
+export function getDefaultKeybindsBlockParts() {
+	return websitesToParts(SHORTCUT_BLOCKED_WEBSITES)
+}
+
 export function generateUrlPart(origin: string): URLConditionPart {
 	return {
 		id: randomId(),
@@ -60,12 +88,8 @@ export function getDefaultState(): State {
 export function getDefaultKeybindsUrlConditions(): URLCondition {
 	return {
 		block: false,
-		allowParts: SHORTCUT_ALLOWED_WEBSITES.map((origin) => {
-			const part = generateUrlPart(origin.v)
-			if (origin.contains) part.type = "CONTAINS"
-			return part
-		}),
-		blockParts: [],
+		allowParts: websitesToParts(SHORTCUT_ALLOWED_WEBSITES),
+		blockParts: getDefaultKeybindsBlockParts(),
 	}
 }
 

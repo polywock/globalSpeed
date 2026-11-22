@@ -10,7 +10,7 @@ import { SliderMicro } from "@/comps/SliderMicro"
 import { Toggle } from "@/comps/Toggle"
 import { Tooltip } from "@/comps/Tooltip"
 import { Button } from "@/comps/ui/button"
-import { getDefaultURLCondition } from "@/defaults"
+import { getDefaultKeybindsBlockParts, getDefaultKeybindsUrlConditions, getDefaultURLCondition, getEmptyUrlConditions } from "@/defaults"
 import { DEFAULT_DOUBLE_TAP_THRESHOLD, DEFAULT_LONG_PRESS_THRESHOLD, getDefaultSpeedSlider } from "@/defaults/constants"
 import { gvar } from "@/globalVar"
 import { systemIsDark } from "@/hooks/useThemeSync"
@@ -39,6 +39,7 @@ export function SectionFlags(props: {}) {
 	const [showIndicatorModal, setShowIndicatorModal] = useState(false)
 	const [showMediaViewModal, setShowMediaViewModal] = useState(false)
 	const [showGhostModal, setShowGhostModal] = useState(false)
+	const [showShortcutModal, setShowShortcutModal] = useState(false)
 	const [showPresetModal, setShowPresetModal] = useState(false)
 	const [showWidgetModal, setShowWidgetModal] = useState(false)
 	const [showMore, setShowMore] = useState(false)
@@ -68,6 +69,7 @@ export function SectionFlags(props: {}) {
 		longPressThreshold: true,
 		doubleTapThreshold: true,
 		pageKeybinds: true,
+		keybindsUrlCondition: true,
 	})
 	const [viewAlt] = useStateView({ indicatorInit: true, hideIndicator: true })
 	const hasLongPressKey = useMemo(() => (view?.pageKeybinds || []).some((kb) => kb.longPress), [view?.pageKeybinds])
@@ -97,6 +99,17 @@ export function SectionFlags(props: {}) {
 					onReset={() => setView({ ghostModeUrlCondition: null })}
 					onChange={(v) => {
 						setView({ ghostModeUrlCondition: v })
+					}}
+				/>
+			)}
+			{showShortcutModal && (
+				<URLModal
+					context="keybinds"
+					value={view.keybindsUrlCondition || getEmptyUrlConditions(true)}
+					onClose={() => setShowShortcutModal(false)}
+					onReset={() => setView({ keybindsUrlCondition: null })}
+					onChange={(v) => {
+						setView({ keybindsUrlCondition: v })
 					}}
 				/>
 			)}
@@ -195,23 +208,6 @@ export function SectionFlags(props: {}) {
 					)}
 				</div>
 
-				{/* Show badge */}
-				{!isMobile() && (
-					<OptionField>
-						<OptionFieldLabel>
-							<span>{gvar.gsm.options.flags.showBadge}</span>
-							<RegularTooltip title={gvar.gsm.options.flags.showBadgeTooltip} align="right" />
-						</OptionFieldLabel>
-						<Toggle
-							aria-label={gvar.gsm.options.flags.showBadge}
-							value={!view.hideBadge}
-							onChange={(e) => {
-								setView({ hideBadge: !view.hideBadge })
-							}}
-						/>
-					</OptionField>
-				)}
-
 				{/* Show indicator */}
 				{!isMobile() && (
 					<OptionField>
@@ -247,6 +243,30 @@ export function SectionFlags(props: {}) {
 						</FloatingFieldValue>
 					</OptionField>
 				)}
+
+				{/* Shortcuts on all websites: switches the shortcut URL conditions between blocklist and allowlist */}
+				<OptionField>
+					<OptionFieldLabel>
+						<span>{gvar.gsm.options.flags.shortcutsEverywhere}</span>
+						<RegularTooltip title={gvar.gsm.options.flags.shortcutsEverywhereTooltip} align="right" />
+					</OptionFieldLabel>
+					<FloatingFieldValue>
+						<Toggle
+							// Unset conditions mean shortcuts work everywhere.
+							value={!view.keybindsUrlCondition || !!view.keybindsUrlCondition.block}
+							onChange={(everywhere) => {
+								const next = { ...(view.keybindsUrlCondition || getEmptyUrlConditions(true)), block: everywhere }
+								// Each mode keeps its own list; seed an empty one with the defaults.
+								if (everywhere && !next.blockParts?.length) next.blockParts = getDefaultKeybindsBlockParts()
+								if (!everywhere && !next.allowParts?.length) next.allowParts = getDefaultKeybindsUrlConditions().allowParts
+								setView({ keybindsUrlCondition: next })
+							}}
+						/>
+						<div className="field-gear">
+							<GearIcon className="text-foreground" onClick={() => setShowShortcutModal(true)} />
+						</div>
+					</FloatingFieldValue>
+				</OptionField>
 
 				{/* Show media view */}
 				{!isMobile() && (
@@ -506,6 +526,23 @@ export function SectionFlags(props: {}) {
 									/>
 								</OptionField>
 							</>
+						)}
+
+						{/* Show badge */}
+						{!isMobile() && (
+							<OptionField>
+								<OptionFieldLabel>
+									<span>{gvar.gsm.options.flags.showBadge}</span>
+									<RegularTooltip title={gvar.gsm.options.flags.showBadgeTooltip} align="right" />
+								</OptionFieldLabel>
+								<Toggle
+									aria-label={gvar.gsm.options.flags.showBadge}
+									value={!view.hideBadge}
+									onChange={(e) => {
+										setView({ hideBadge: !view.hideBadge })
+									}}
+								/>
+							</OptionField>
 						)}
 
 						{/* Speed presets */}

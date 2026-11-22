@@ -255,6 +255,8 @@
 			"showIndicatorTooltip": "Indikator adalah umpan balik visual saat menggunakan pintasan",
 			"ghostMode": "Mode hantu",
 			"ghostModeTooltip": "Mencegah situs web mendeteksi perubahan kecepatan pemutaran. Saat diaktifkan, ini berlaku untuk semua situs web secara default. Ini mungkin menyebabkan masalah pada beberapa situs. Gunakan ikon roda gigi untuk membatasinya ke situs-situs tertentu.",
+			"shortcutsEverywhere": "Izinkan pintasan secara default",
+			"shortcutsEverywhereTooltip": "Jika aktif, pintasan berfungsi di semua situs web kecuali yang Anda blokir. Jika nonaktif, pintasan hanya berfungsi di situs yang Anda izinkan. Gunakan ikon roda gigi untuk mengedit daftar ini.",
 			"localFiles": "Aktifkan untuk file lokal",
 			"localFilesTooltip": "Memungkinkan ekstensi bekerja pada file lokal yang dibuka di browser, seperti file video di perangkat Anda. Mengeklik akan membuka halaman ekstensi browser, tempat akses file dapat diizinkan.",
 			"incognito": "Aktifkan di mode Samaran",

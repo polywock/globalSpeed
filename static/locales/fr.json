@@ -256,6 +256,8 @@
 			"showIndicatorTooltip": "L’indicateur est un retour visuel lors de l’utilisation des raccourcis",
 			"ghostMode": "Mode fantôme",
 			"ghostModeTooltip": "Empêche les sites web de détecter les modifications de vitesse de lecture. Lorsqu’elle est activée, cette option s’applique à tous les sites par défaut. Cela peut provoquer des problèmes sur certains sites. Utilisez l’icône en forme d’engrenage pour la limiter à des sites spécifiques.",
+			"shortcutsEverywhere": "Autoriser les raccourcis par défaut",
+			"shortcutsEverywhereTooltip": "Activé, les raccourcis fonctionnent sur tous les sites sauf ceux que vous bloquez. Désactivé, ils ne fonctionnent que sur les sites que vous autorisez. Utilisez l'icône d'engrenage pour modifier ces listes.",
 			"localFiles": "Activer pour les fichiers locaux",
 			"localFilesTooltip": "Permet à l’extension de fonctionner avec les fichiers locaux ouverts dans le navigateur, comme les fichiers vidéo de votre appareil. Un clic ouvre la page des extensions du navigateur, où vous pouvez autoriser l’accès aux fichiers.",
 			"incognito": "Activer en navigation privée",
