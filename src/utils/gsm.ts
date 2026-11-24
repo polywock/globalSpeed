@@ -20,7 +20,24 @@ export async function requestGsm(): Promise<Gsm> {
 	return chrome.runtime.sendMessage({ type: "REQUEST_GSM" })
 }
 
-export async function readLocaleFile(locale: string): Promise<Gsm> {
+/**
+ * Parsed locale files, by locale. The background asks for strings on every page-slider shortcut, and
+ * a locale file is tens of KB. Callers share the object, so they must not modify it.
+ */
+const localeFiles = new Map<string, Promise<Gsm>>()
+
+export function readLocaleFile(locale: string): Promise<Gsm> {
+	let file = localeFiles.get(locale)
+	if (!file) {
+		file = fetchLocaleFile(locale)
+		localeFiles.set(locale, file)
+		// Retry on the next call instead of caching a failure.
+		file.catch(() => localeFiles.delete(locale))
+	}
+	return file
+}
+
+async function fetchLocaleFile(locale: string): Promise<Gsm> {
 	const fetched = await fetch(chrome.runtime.getURL(`locales/${locale}.json`))
 	const json = (await fetched.json()) as Gsm
 	json._lang = locale.replace("_", "-")

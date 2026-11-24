@@ -1,6 +1,6 @@
 import { getDefaultEq } from "@/defaults"
 import { AudioEffect, AudioEffectType, AudioFx, FrequencyFilterType } from "@/types"
-import { produce, randomId } from "./helper"
+import { randomId } from "./helper"
 
 export const AUDIO_EFFECT_TYPES: AudioEffectType[] = ["eq", "freqFilter", "compressor", "delay", "reverb", "modulation", "distortion", "pan", "width"]
 
@@ -44,7 +44,8 @@ export const FILTER_DEFAULTS: { [key in FrequencyFilterType]: { frequency: numbe
 /** Defaults for this effect, following its filter type. */
 export function getEffectDefaults(effect: AudioEffect): AudioEffect {
 	const defaults = createAudioEffect(effect.type)
-	if (effect.type === "freqFilter") Object.assign(defaults, { filterType: effect.filterType ?? "lowpass" }, FILTER_DEFAULTS[effect.filterType ?? "lowpass"])
+	if (effect.type === "freqFilter")
+		Object.assign(defaults, { filterType: effect.filterType ?? "lowpass" }, FILTER_DEFAULTS[effect.filterType ?? "lowpass"])
 	return defaults
 }
 
@@ -189,18 +190,9 @@ export function getShortcutEffectValue(fx: AudioFx, key: ShortcutEffectKey): num
  */
 export function setShortcutEffectValue(fx: AudioFx, key: ShortcutEffectKey, value: number, isDefault: boolean): AudioFx {
 	const type = SHORTCUT_EFFECTS[key]
-	return produce(fx, (d) => {
-		d.effects = d.effects || []
-		let idx = d.effects.findIndex((e) => e.type === type)
-		if (isDefault) {
-			if (idx >= 0) d.effects.splice(idx, 1)
-			return
-		}
-		if (idx < 0) {
-			d.effects.push({ id: randomId(), type, enabled: true })
-			idx = d.effects.length - 1
-		}
-		d.effects[idx].enabled = true
-		d.effects[idx][key] = value
-	})
+	const effects = fx.effects ?? []
+	const idx = effects.findIndex((e) => e.type === type)
+	if (isDefault) return idx < 0 ? fx : { ...fx, effects: effects.filter((_, i) => i !== idx) }
+	const updated: AudioEffect = { ...(effects[idx] ?? { id: randomId(), type }), enabled: true, [key]: value }
+	return { ...fx, effects: idx < 0 ? [...effects, updated] : effects.map((e, i) => (i === idx ? updated : e)) }
 }

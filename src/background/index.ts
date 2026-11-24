@@ -9,7 +9,7 @@ import { migrateContextAudio, migrateSchema } from "@/background/utils/migrateSc
 import { MediaEvent } from "@/contentScript/isolated/utils/applyMediaEvent"
 import { getDefaultContext, getDefaultState } from "@/defaults"
 import { AnyDict, Context, CONTEXT_KEYS, InitialContext, Keybind, KeybindMatch, KeybindMatchId, State, StateView, URLRule } from "@/types"
-import { getLatestActiveTabInfo, tabToTabInfo } from "@/utils/browserUtils"
+import { getLatestActiveTabInfo, TabInfo, tabToTabInfo } from "@/utils/browserUtils"
 import { IS_FIREFOX_BUILD } from "@/utils/buildFlags"
 import { findMatchingBrowserKeybinds, findMatchingMenuKeybinds, hasActiveParts, testURL } from "@/utils/configUtils"
 import { syncContextMenu, syncContextMenuDeb } from "@/utils/contextMenus"
@@ -242,7 +242,9 @@ chrome.runtime.onMessage.addListener((msg: Messages, sender, reply) => {
 		reply({
 			tabId: sender.tab.id,
 			frameId: sender.frameId,
-		})
+			// Saves subframes a round trip through the top frame. Empty without access to the tab's URL.
+			topFrameUrl: sender.frameId ? sender.tab.url || undefined : undefined,
+		} satisfies TabInfo)
 	} else if (msg.type === "GET_TOP_ORIGIN") {
 		chrome.tabs.get(sender.tab.id).then(
 			(tabInfo) => {

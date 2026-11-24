@@ -9,7 +9,14 @@ export async function getLatestActiveTabInfo(): Promise<TabInfo> {
 	}
 }
 
-export type TabInfo = { tabId: number; frameId?: number; windowId: number; url?: string }
+export type TabInfo = {
+	tabId: number
+	frameId?: number
+	windowId?: number
+	url?: string
+	/** For a subframe, the tab's URL as the background last saw it. */
+	topFrameUrl?: string
+}
 
 export function compareFrame(a: TabInfo, b: TabInfo) {
 	return a?.tabId === b?.tabId && (a?.frameId ?? null) === (b?.frameId ?? null)

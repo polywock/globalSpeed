@@ -12,6 +12,12 @@ export class IterableWeakSet<T extends WeakKey> {
 		return this.alive.has(value)
 	}
 
+	/** Whether no value is still alive. */
+	isEmpty() {
+		for (const _ of this) return false
+		return true
+	}
+
 	forEach(cb: (value: T) => void) {
 		this.refs.forEach((ref) => {
 			const v = ref.deref()

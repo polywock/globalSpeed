@@ -156,7 +156,7 @@ function syncEnv({ douyin = true, initialized = true } = {}) {
 	const intervals = new Map()
 	const timeouts = []
 	const server = { initialized, initCbs: new Set(), send: (msg) => messages.push(msg) }
-	const tower = { forceSpeedCallbacks: new Set(), applySpeedToAll() {} }
+	const tower = { forceSpeedCallbacks: new Set(), applySpeedToAll() {}, media: { isEmpty: () => true } }
 	const events = { addEventListener() {}, removeEventListener() {} }
 	let id = 0
 	const { SpeedSync } = load(

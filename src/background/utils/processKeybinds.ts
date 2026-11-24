@@ -3,7 +3,6 @@ import { gvar } from "@/globalVar"
 import { loadGsm } from "@/utils/gsm"
 import { Gsm } from "@/utils/GsmType"
 import { hashWithStoredSalt } from "@/utils/hash"
-import { produce } from "@/utils/helper"
 import { hasActiveAudioFx, setShortcutEffectValue } from "@/utils/audioFx"
 import { afxContinuousMap, afxEffectMap, getItcSelector, getItcValues, supportsItc } from "@/utils/itcUtils"
 import type { MediaEvent, MediaEventCinema } from "../../contentScript/isolated/utils/applyMediaEvent"
@@ -15,6 +14,7 @@ import {
 	AdjustMode,
 	Command,
 	Duration,
+	Fx,
 	ItcInit,
 	ItcRelated,
 	Keybind,
@@ -756,9 +756,7 @@ async function getCycle(args: CommandHandlerArgs) {
 	}
 	newIndex = clamp(0, cycleLength - 1, newIndex)
 
-	override[listKey] = produce(keybinds, (d) => {
-		d.find((v) => v.id === kb.id).cycleIncrement = newIndex
-	})
+	override[listKey] = keybinds.map((v) => (v.id === kb.id ? { ...v, cycleIncrement: newIndex } : v))
 
 	return kb.valueCycle?.[newIndex]
 }
@@ -809,18 +807,14 @@ export async function setValue(init: SetValueInit) {
 		const { element, backdrop } = intoFxFlags(kb.filterTarget)
 		const filterInfo = filterInfos[kb.filterOption]
 		const star = filterInfo.isTransform ? "transforms" : "filters"
-		if (element && value != null) {
-			override.elementFx = produce(view.elementFx || getDefaultFx(), (d) => {
-				d[star].find((f) => f.name === kb.filterOption).value = value
-				if (value.toFixed(6) !== ref.default.toFixed(6)) d.enabled = true
-			})
-		}
-		if (backdrop && valueAlt != null) {
-			override.backdropFx = produce(view.backdropFx || getDefaultFx(), (d) => {
-				d[star].find((f) => f.name === kb.filterOption).value = valueAlt
-				if (valueAlt.toFixed(6) !== ref.default.toFixed(6)) d.enabled = true
-			})
-		}
+		// Changing a filter away from its default turns the effects on.
+		const setFilter = (fx: Fx, value: number): Fx => ({
+			...fx,
+			enabled: fx.enabled || value.toFixed(6) !== ref.default.toFixed(6),
+			[star]: fx[star].map((f) => (f.name === kb.filterOption ? { ...f, value } : f)),
+		})
+		if (element && value != null) override.elementFx = setFilter(view.elementFx || getDefaultFx(), value)
+		if (backdrop && valueAlt != null) override.backdropFx = setFilter(view.backdropFx || getDefaultFx(), valueAlt)
 	} else if (afxEffectMap[kb.command]) {
 		// Delay and pan live in the effect list: change the first one, add it if missing, remove it on reset.
 		const key = afxEffectMap[kb.command]
@@ -846,17 +840,9 @@ export async function setValue(init: SetValueInit) {
 		)
 			initTabCapture(tabInfo.tabId)
 
-		if (value != null) {
-			override.audioFx = produce(view.audioFx ?? getDefaultAudioFx(), (d) => {
-				d[afxContinuousMap[kb.command]] = value
-			})
-		}
-
-		if (view.audioFxAlt && valueAlt != null) {
-			override.audioFxAlt = produce(view.audioFxAlt, (d) => {
-				d[afxContinuousMap[kb.command]] = valueAlt
-			})
-		}
+		const key = afxContinuousMap[kb.command]
+		if (value != null) override.audioFx = { ...(view.audioFx ?? getDefaultAudioFx()), [key]: value }
+		if (view.audioFxAlt && valueAlt != null) override.audioFxAlt = { ...view.audioFxAlt, [key]: valueAlt }
 	}
 
 	if (Object.keys(override).length) await pushView({ override, tabId: tabInfo.tabId })
@@ -885,6 +871,8 @@ function showIndicator(opts: IndicatorShowOpts, tabId: number) {
 
 let tempSpeedTimeoutId: number
 let mediaSped: FlatMediaInfo
+/** Its own instance, so ending it on release leaves a delayed command's keep-alive running. */
+let tempSpeedKeepAlive: KeepAlive
 
 function sendTemporarySpeed(media: FlatMediaInfo, factor?: number) {
 	const payload = (factor == null ? { type: "SET_TEMPORARY_SPEED" } : { type: "SET_TEMPORARY_SPEED", factor }) as Messages
@@ -898,7 +886,8 @@ function activateTemporarySpeed(media: FlatMediaInfo, factor: number, kbType?: K
 	}
 	mediaSped = media
 	clearTimeout(tempSpeedTimeoutId)
-	KeepAlive.start(2)
+	tempSpeedKeepAlive?.release()
+	tempSpeedKeepAlive = new KeepAlive(2)
 
 	tempSpeedTimeoutId = setTimeout(
 		() => {
@@ -913,4 +902,6 @@ export function releaseTemporarySpeed(media?: FlatMediaInfo) {
 	if (!media) return
 	sendTemporarySpeed(media)
 	mediaSped = null
+	tempSpeedKeepAlive?.release()
+	tempSpeedKeepAlive = undefined
 }

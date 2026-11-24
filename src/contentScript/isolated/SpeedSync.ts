@@ -43,7 +43,6 @@ export class SpeedSync {
 	}
 	update = () => {
 		if (this.latest) {
-			this.intervalId = this.intervalId ?? setInterval(this.realize, 1000)
 			gvar.os.mediaTower.forceSpeedCallbacks.add(this.realize)
 			this.realize()
 		} else {
@@ -146,8 +145,18 @@ export class SpeedSync {
 		this.realize()
 	}
 	previousUrl: string
+	/**
+	 * Re-applies speed every second for sites that reset it. The top frame always needs it, to notice URL
+	 * changes; other frames, often ads, only once they have media. New media calls realize, which starts it.
+	 */
+	private ensureInterval = () => {
+		if (this.intervalId == null && (gvar.isTopFrame || !gvar.os.mediaTower.media.isEmpty())) {
+			this.intervalId = setInterval(this.realize, 1000)
+		}
+	}
 	realize = () => {
 		if (this.latest) {
+			this.ensureInterval()
 			let speed = this.latest.speed
 			if (this.holdToSpeed && this.pointerDownActive()) {
 				speed *= this.holdToSpeed

@@ -61,6 +61,23 @@ test("a shortcut pressed in the page reaches a video inside an iframe", async ()
 	await pressUntil(page, frame, "KeyD", "playbackRate", 1.1)
 })
 
+test("a shortcut pressed inside an iframe follows the allowlist of the top page's URL", async () => {
+	// Only the top page's path matches, so the iframe has to know the top frame's URL to allow it.
+	const allowTop = {
+		block: false,
+		blockParts: [],
+		allowParts: [{ id: "p", type: "CONTAINS", valueContains: "/iframe.html", valueStartsWith: "", valueRegex: "" }],
+	}
+	await ext.setStorage({ "g:keybindsUrlCondition": allowTop })
+	try {
+		const { page, frame } = await open("/iframe.html")
+		await frame.locator("body").click()
+		await pressUntil(page, frame, "KeyD", "playbackRate", 1.1)
+	} finally {
+		await ext.setStorage({ "g:keybindsUrlCondition": null })
+	}
+})
+
 test("a shortcut reaches a video inside a closed shadow root", async () => {
 	const { page, frame } = await open("/shadow.html")
 	await pressUntil(page, frame, "KeyD", "playbackRate", 1.1)
