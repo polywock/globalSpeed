@@ -1,0 +1,9 @@
+<!doctype html>
+<title>Video in a shadow root</title>
+<div id="host"></div>
+<script>
+	// A closed root: the page itself can't find the video through the DOM, only through this reference.
+	const root = document.getElementById("host").attachShadow({ mode: "closed" })
+	root.innerHTML = '<video src="/tone.wav" autoplay loop muted></video>'
+	window.getMedia = () => root.querySelector("video")
+</script>

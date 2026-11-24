@@ -26,7 +26,9 @@
 		"release": "node tools/release.js",
 		"lint": "tsc --noEmit",
 		"format": "prettier --check '**/*.{js,ts,tsx,json,css}'",
-		"format:fix": "prettier --write '**/*.{js,ts,tsx,json,css}'"
+		"format:fix": "prettier --write '**/*.{js,ts,tsx,json,css}'",
+		"test": "node --test tools/tests/",
+		"test:e2e": "node --test --test-concurrency=1 --test-timeout=60000 tools/e2e/"
 	},
 	"devDependencies": {
 		"@ianvs/prettier-plugin-sort-imports": "^4.7.1",
@@ -38,6 +40,7 @@
 		"@types/node": "^25.9.3",
 		"@types/react": "^19.2.17",
 		"@types/react-dom": "^19.2.3",
+		"playwright": "1.63.0",
 		"prettier": "^3.8.4",
 		"prettier-plugin-tailwindcss": "^0.8.1",
 		"tailwindcss": "^4.3.3",

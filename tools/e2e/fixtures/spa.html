@@ -1,0 +1,8 @@
+<!doctype html>
+<title>Single-page app</title>
+<video src="/tone.wav" autoplay loop muted></video>
+<script>
+	window.getMedia = () => document.querySelector("video")
+	// Client-side navigation, like YouTube or Reddit moving between pages without a reload.
+	window.navigateTo = (path) => history.pushState({}, "", path)
+</script>

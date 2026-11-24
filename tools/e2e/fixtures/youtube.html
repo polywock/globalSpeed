@@ -1,0 +1,15 @@
+<!doctype html>
+<title>YouTube stand-in</title>
+<video src="/tone.wav" autoplay loop muted></video>
+<script>
+	window.getMedia = () => document.querySelector("video")
+	// Each caption sync in the main world starts by reading YouTube's player registry, so counting reads
+	// counts syncs. Returning nothing makes the sync stop there, as no real player exists.
+	window.ytPlayerReads = 0
+	Object.defineProperty(window, "_yt_player", {
+		get() {
+			window.ytPlayerReads++
+			return undefined
+		},
+	})
+</script>
