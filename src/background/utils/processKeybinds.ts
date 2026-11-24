@@ -823,17 +823,18 @@ export async function setValue(init: SetValueInit) {
 		}
 	} else if (afxEffectMap[kb.command]) {
 		// Delay and pan live in the effect list: change the first one, add it if missing, remove it on reset.
-		const type = afxEffectMap[kb.command]
+		const key = afxEffectMap[kb.command]
 		const view = await fetchView({ audioFx: true, audioFxAlt: true }, tabInfo?.tabId)
 		const isDefault = (v: number) => v.toFixed(6) === ref.default.toFixed(6)
 
 		if ((value != null && !isDefault(value)) || (valueAlt != null && !isDefault(valueAlt))) initTabCapture(tabInfo.tabId)
 
 		if (value != null) {
-			override.audioFx = setShortcutEffectValue(view.audioFx ?? getDefaultAudioFx(), type, value, isDefault(value))
+			override.audioFx = setShortcutEffectValue(view.audioFx ?? getDefaultAudioFx(), key, value, isDefault(value))
 		}
-		if (type === "delay" && view.audioFxAlt && valueAlt != null) {
-			override.audioFxAlt = setShortcutEffectValue(view.audioFxAlt, type, valueAlt, isDefault(valueAlt))
+		// Pan can't sit on a split side, so only delay sets the other one.
+		if (key === "delay" && view.audioFxAlt && valueAlt != null) {
+			override.audioFxAlt = setShortcutEffectValue(view.audioFxAlt, key, valueAlt, isDefault(valueAlt))
 		}
 	} else if (afxContinous.has(kb.command)) {
 		const view = await fetchView({ audioFx: true, audioFxAlt: true }, tabInfo?.tabId)

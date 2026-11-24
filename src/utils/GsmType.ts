@@ -19,16 +19,62 @@ export type Gsm = {
 		reverseTooltip: string
 		/** Equalizer */
 		equalizer: string
-		/** Effects */
+		/** Other effects */
 		effects: string
-		/** Low-pass filter */
+		/** Hear both */
+		hearBoth: string
+		/** Frequency filter */
+		frequencyFilter: string
+		/** Low-pass */
 		lowpass: string
-		/** High-pass filter */
+		/** High-pass */
 		highpass: string
 		/** Cutoff */
 		cutoff: string
 		/** Resonance */
 		resonance: string
+		/** Gain */
+		gain: string
+		/** Notch */
+		notch: string
+		/** Band-pass */
+		bandpass: string
+		/** Low shelf */
+		lowshelf: string
+		/** High shelf */
+		highshelf: string
+		/** Compressor */
+		compressor: string
+		/** Reverb */
+		reverb: string
+		/** Modulation */
+		modulation: string
+		/** Distortion */
+		distortion: string
+		/** Frequency */
+		frequency: string
+		/** Threshold */
+		threshold: string
+		/** Ratio */
+		ratio: string
+		/** Mix */
+		mix: string
+		/** Rate */
+		rate: string
+		/** Volume wobble */
+		volumeWobble: string
+		/** Delay time */
+		delayTime: string
+		/** Feedback */
+		feedback: string
+		/** Pitch wobble */
+		pitchWobble: string
+		/** Drive */
+		drive: string
+		/** Bits */
+		bits: string
+		/** Downsample */
+		downsample: string
 		/** Better quality */
 		pitchHdTooltip: string
 		/** Recording */
@@ -43,6 +89,56 @@ export type Gsm = {
 		presetName: string
 		/** Reset presets */
 		resetPresets: string
+		presets: {
+			/** Muffled */
+			muffled: string
+			/** Telephone */
+			telephone: string
+			/** Rumble cut */
+			rumbleCut: string
+			/** 50 Hz hum */
+			hum50: string
+			/** 60 Hz hum */
+			hum60: string
+			/** Bass boost */
+			bassBoost: string
+			/** Gentle */
+			gentle: string
+			/** Night mode */
+			nightMode: string
+			/** Heavy */
+			heavy: string
+			/** Room */
+			room: string
+			/** Hall */
+			hall: string
+			/** Cathedral */
+			cathedral: string
+			/** Dreamy */
+			dreamy: string
+			/** Chorus */
+			chorus: string
+			/** Vibrato */
+			vibrato: string
+			/** Tremolo */
+			tremolo: string
+			/** Wobble */
+			wobble: string
+			/** Flanger */
+			flanger: string
+			/** Overdrive */
+			overdrive: string
+			/** Fuzz */
+			fuzz: string
+			/** Lo-fi */
+			lofi: string
+			/** 8-bit */
+			eightBit: string
+			/** Radio */
+			radio: string
+		}
+		/** Stereo width */
+		width: string
 	}
 	warnings: {
 		/** Release unused global shortcut keys */
@@ -278,7 +374,7 @@ export type Gsm = {
 		/** RotateZ */
 		rotateZ: string
 		otherFilters: {
-			/** Other filters */
+			/** Other effects */
 			header: string
 			/** Mosaic */
 			mosaic: string

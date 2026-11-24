@@ -16,6 +16,8 @@ type SliderMicroProps = {
 	default: number
 	onChange?: (newValue: number) => void
 	withInput?: boolean
+	/** Leave out the reset button, e.g. when the card's header reset already covers this slider. */
+	noReset?: boolean
 	pass?: React.ComponentProps<"div">
 }
 
@@ -27,13 +29,21 @@ export function SliderMicro(props: SliderMicroProps) {
 	}
 
 	const activated = props.default !== props.value
-	const gridColumns = props.label
-		? props.withInput
-			? "grid-cols-[80px_1fr_60px_max-content]"
-			: "grid-cols-[80px_1fr_max-content]"
-		: props.withInput
-			? "grid-cols-[1fr_60px_max-content]"
-			: "grid-cols-[1fr_max-content]"
+	const gridColumns = props.noReset
+		? props.label
+			? props.withInput
+				? "grid-cols-[80px_1fr_60px]"
+				: "grid-cols-[80px_1fr]"
+			: props.withInput
+				? "grid-cols-[1fr_60px]"
+				: "grid-cols-1"
+		: props.label
+			? props.withInput
+				? "grid-cols-[80px_1fr_60px_max-content]"
+				: "grid-cols-[80px_1fr_max-content]"
+			: props.withInput
+				? "grid-cols-[1fr_60px_max-content]"
+				: "grid-cols-[1fr_max-content]"
 
 	const content = (
 		<div
@@ -65,7 +75,7 @@ export function SliderMicro(props: SliderMicroProps) {
 					}}
 				/>
 			)}
-			<Reset active={activated} onClick={() => handleValueChange(props.default)} />
+			{!props.noReset && <Reset active={activated} onClick={() => handleValueChange(props.default)} />}
 		</div>
 	)
 	// Without its own label it keeps the surrounding field's label.

@@ -15,6 +15,7 @@ const scriptEntries = {
 	mediaPicker: "contentScript/mediaPicker/index.ts",
 	"sound-touch-processor": "offscreen/SoundTouchProcessor.ts",
 	"reverse-sound-processor": "offscreen/ReverseProcessor.ts",
+	"bit-crusher-processor": "offscreen/BitCrusherProcessor.ts",
 	mainLoader: "contentScript/main/loader.ts",
 }
 

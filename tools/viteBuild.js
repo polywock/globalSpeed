@@ -29,7 +29,7 @@ async function main() {
 
 	const names = ["isolated", "background", "main", "pageDraw", "pane", "itcPanel", "mediaPicker"]
 	if (firefox) names.push("mainLoader")
-	else names.push("sound-touch-processor", "reverse-sound-processor")
+	else names.push("sound-touch-processor", "reverse-sound-processor", "bit-crusher-processor")
 
 	for (const name of names) {
 		await run(scriptConfig({ name, firefox, outDir, production }))

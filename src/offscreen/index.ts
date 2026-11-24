@@ -1,7 +1,7 @@
 import { gvar } from "@/globalVar"
 import { AudioFx, StateView } from "../types"
 import { MessageCallback } from "../utils/browserUtils"
-import { FREQUENCY_MAX, FREQUENCY_MIN, isEffectActive, Q_DEFAULT } from "../utils/audioFx"
+import { FREQUENCY_MAX, FREQUENCY_MIN, isEffectActive, Q_DEFAULT, STEREO_EFFECT_TYPES } from "../utils/audioFx"
 import { clamp, round } from "../utils/helper"
 import { Jungle } from "./Jungle"
 import { ReverseNode } from "./ReverseNode"
@@ -267,7 +267,8 @@ class AudioEffectComplex {
 	alt?: AudioEffect
 	splitter?: ChannelSplitterNode
 	merger?: ChannelMergerNode
-	pan?: StereoPannerNode
+	/** In split mode, the left side's stereo effects on the combined output. */
+	post?: AudioEffect
 
 	constructor(public ctx: AudioContext) {
 		this.input = ctx.createGain()
@@ -277,14 +278,14 @@ class AudioEffectComplex {
 		this.estrange()
 		this.main?.release()
 		this.alt?.release()
+		this.post?.release()
 	}
 	updateFx = async (enabled: boolean, audioFx: AudioFx, audioFxAlt: AudioFx, monoOutput: boolean) => {
 		let head = this.input as AudioNode
 		this.estrange()
 
-		// Each split side carries one channel, which a panner can't place, so pan the merged output instead.
+		// Each split side carries one channel, so stereo effects can't run inside a side.
 		const split = enabled && !!audioFxAlt
-		const pan = split ? (audioFx?.effects?.find((e) => e.type === "pan" && isEffectActive(e))?.pan ?? 0) : 0
 
 		this.main = this.main || new AudioEffect(this.ctx)
 		this.main.updateFx(enabled, audioFx, split)
@@ -317,15 +318,16 @@ class AudioEffectComplex {
 			head = this.main.output
 		}
 
-		if (enabled && pan) {
-			this.pan = this.pan || this.ctx.createStereoPanner()
-			this.pan.pan.value = clamp(-1, 1, pan || 0)
-
-			head.connect(this.pan)
-			head = this.pan
+		// The left side's stereo effects run on the combined output instead, in their list order.
+		const stereo = split ? (audioFx?.effects ?? []).filter((e) => STEREO_EFFECT_TYPES.has(e.type)) : []
+		if (stereo.length) {
+			this.post = this.post || new AudioEffect(this.ctx)
+			this.post.updateFx(enabled, { pitch: 0, volume: 1, effects: stereo })
+			head.connect(this.post.input)
+			head = this.post.output
 		} else {
-			this.pan?.disconnect()
-			delete this.pan
+			this.post?.release()
+			delete this.post
 		}
 
 		head.connect(this.output)
@@ -344,7 +346,7 @@ class AudioEffectComplex {
 		this.alt?.output.disconnect()
 		this.splitter?.disconnect()
 		this.merger?.disconnect()
-		this.pan?.disconnect()
+		this.post?.output.disconnect()
 	}
 }
 
@@ -353,7 +355,71 @@ type EffectNodes = {
 	filter?: BiquadFilterNode
 	delay?: DelayNode
 	mix?: GainNode
+	dry?: GainNode
+	wet?: GainNode
 	panner?: StereoPannerNode
+	compressor?: DynamicsCompressorNode
+	convolver?: ConvolverNode
+	convolverSize?: number
+	shaper?: WaveShaperNode
+	shaperDrive?: number
+	osc?: OscillatorNode
+	lfo?: GainNode
+	amp?: GainNode
+	ampLfo?: GainNode
+	feedback?: GainNode
+	crusher?: AudioWorkletNode
+	splitter?: ChannelSplitterNode
+	merger?: ChannelMergerNode
+	gains?: GainNode[]
+}
+
+function disconnectEffectNodes(nodes: EffectNodes) {
+	for (const value of Object.values(nodes)) {
+		if (Array.isArray(value)) value.forEach((n) => n.disconnect())
+		else if (value instanceof AudioNode) value.disconnect()
+	}
+}
+
+function releaseEffectNodes(nodes: EffectNodes) {
+	disconnectEffectNodes(nodes)
+	try {
+		nodes.osc?.stop()
+	} catch {}
+}
+
+/** Decaying noise, which a convolver turns into a reverb tail of about `seconds`. */
+function createImpulse(ctx: BaseAudioContext, seconds: number) {
+	const length = Math.max(1, Math.round(ctx.sampleRate * seconds))
+	const buffer = ctx.createBuffer(2, length, ctx.sampleRate)
+	for (let ch = 0; ch < 2; ch++) {
+		const data = buffer.getChannelData(ch)
+		for (let i = 0; i < length; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / length) ** 3
+	}
+	return buffer
+}
+
+/** Soft clipping; the curve keeps full scale at any drive so distortion doesn't just get louder. */
+function createDistortionCurve(drive: number) {
+	const gain = 1 + drive / 5
+	const curve = new Float32Array(4096)
+	const norm = Math.tanh(gain)
+	for (let i = 0; i < curve.length; i++) {
+		const x = (i * 2) / (curve.length - 1) - 1
+		curve[i] = Math.tanh(gain * x) / norm
+	}
+	return curve
+}
+
+let bitCrusherModule: Promise<boolean>
+function loadBitCrusher(ctx: AudioContext) {
+	bitCrusherModule =
+		bitCrusherModule ??
+		ctx.audioWorklet.addModule("bit-crusher-processor.js").then(
+			() => true,
+			() => false,
+		)
+	return bitCrusherModule
 }
 
 class AudioEffect {
@@ -364,16 +430,23 @@ class AudioEffect {
 	soundTouchNode?: SoundTouchNode
 	/** Nodes per effect id, reused so a delay keeps its buffer while values change. */
 	effectNodes = new Map<string, EffectNodes>()
+	/** Bumped per update so one that finishes loading after a newer one started leaves the graph alone. */
+	updateGen = 0
 
 	constructor(public ctx: AudioContext) {
 		this.input = ctx.createGain()
 		this.output = ctx.createGain()
 	}
 	release = () => {
+		this.updateGen++
 		this.estrange()
 		this.jungle?.release()
 		this.soundTouchNode?.release()
 		delete this.jungle
+		this.clearEffectNodes()
+	}
+	clearEffectNodes = () => {
+		this.effectNodes.forEach(releaseEffectNodes)
 		this.effectNodes.clear()
 	}
 	errorCount = 0
@@ -384,22 +457,34 @@ class AudioEffect {
 		if (this.errorCount++ < 10) this.latestUpdateFx?.()
 	}
 	latestUpdateFx: () => void
-	updateFx = async (enabled: boolean, audioFx?: AudioFx, skipPan?: boolean) => {
-		this.latestUpdateFx = () => this.updateFx(enabled, audioFx, skipPan)
-		this.estrange()
+	updateFx = async (enabled: boolean, audioFx?: AudioFx, skipStereo?: boolean) => {
+		this.latestUpdateFx = () => this.updateFx(enabled, audioFx, skipStereo)
+		const gen = ++this.updateGen
 
 		let head = this.input as AudioNode
 
 		if (!enabled || !audioFx) {
+			this.estrange()
 			this.jungle?.release()
 			delete this.jungle
 			this.soundTouchNode?.release()
 			delete this.soundTouchNode
-			this.effectNodes.clear()
+			this.clearEffectNodes()
 			head.connect(this.output)
 			this.output.gain.value = 1
 			return
 		}
+
+		const effects = (audioFx.effects ?? []).filter((e) => isEffectActive(e) && !(skipStereo && STEREO_EFFECT_TYPES.has(e.type)))
+
+		// Load modules before touching the graph. A newer update may run meanwhile, and two updates
+		// reconnecting at once would leave the older chain wired in, still audible.
+		try {
+			await SoundTouchNode.addModule(this.ctx)
+		} catch (err) {}
+		const crusherReady = effects.some((e) => e.type === "distortion" && ((e.bits ?? 16) < 16 || (e.downsample ?? 1) > 1)) && (await loadBitCrusher(this.ctx))
+		if (gen !== this.updateGen) return
+		this.estrange()
 
 		// jungle pitch
 		if (audioFx.jungleMode && audioFx.pitch !== null && audioFx.pitch !== 0) {
@@ -414,12 +499,6 @@ class AudioEffect {
 
 		// soundtouch pitch
 		const soundTouchActive = !audioFx.jungleMode && audioFx.pitch !== null && audioFx.pitch !== 0
-
-		// try adding module.
-		try {
-			await SoundTouchNode.addModule(this.ctx)
-		} catch (err) {}
-
 		if (SoundTouchNode.addedModule && soundTouchActive && this.errorCount < 10) {
 			if (!this.soundTouchNode) {
 				this.soundTouchNode = new SoundTouchNode(this.ctx)
@@ -436,9 +515,40 @@ class AudioEffect {
 		}
 
 		// effects, in list order
+		const ctx = this.ctx
+
+		/** Splits `from` into dry and wet (through `wetIn` to `wetOut`) and returns the mix. */
+		const wetDry = (nodes: EffectNodes, from: AudioNode, wetIn: AudioNode, wetOut: AudioNode, mix: number) => {
+			const out = (nodes.mix = nodes.mix ?? ctx.createGain())
+			const dry = (nodes.dry = nodes.dry ?? ctx.createGain())
+			const wet = (nodes.wet = nodes.wet ?? ctx.createGain())
+			dry.gain.value = 1 - clamp(0, 1, mix)
+			wet.gain.value = clamp(0, 1, mix)
+			from.connect(dry)
+			dry.connect(out)
+			from.connect(wetIn)
+			wetOut.connect(wet)
+			wet.connect(out)
+			return out
+		}
+		/** The effect's LFO, shared by everything it wobbles so they stay in step. */
+		const oscillator = (nodes: EffectNodes, rate: number) => {
+			if (!nodes.osc) {
+				nodes.osc = ctx.createOscillator()
+				nodes.osc.start()
+			}
+			nodes.osc.frequency.value = clamp(0.05, 20, rate)
+			return nodes.osc
+		}
+		const lfo = (nodes: EffectNodes, rate: number, amount: number) => {
+			nodes.lfo = nodes.lfo ?? ctx.createGain()
+			nodes.lfo.gain.value = amount
+			oscillator(nodes, rate).connect(nodes.lfo)
+			return nodes.lfo
+		}
+
 		const used = new Set<string>()
-		for (const effect of audioFx.effects ?? []) {
-			if (!isEffectActive(effect) || (skipPan && effect.type === "pan")) continue
+		for (const effect of effects) {
 			used.add(effect.id)
 			const nodes = this.effectNodes.get(effect.id) ?? {}
 			this.effectNodes.set(effect.id, nodes)
@@ -450,7 +560,7 @@ class AudioEffect {
 				const Q = 1.41 * (eq.values.length / 10)
 				eq.values.forEach((v, i) => {
 					if (v === 0) return
-					const node = pool.shift() ?? this.ctx.createBiquadFilter()
+					const node = pool.shift() ?? ctx.createBiquadFilter()
 					filters.push(node)
 					node.type = i === 0 ? "lowshelf" : i === eq.values.length - 1 ? "highshelf" : "peaking"
 					node.frequency.value = round(31.25 * 2 ** (i / Math.round(eq.values.length / 10)), 2)
@@ -460,33 +570,123 @@ class AudioEffect {
 					head = node
 				})
 				nodes.filters = filters
-			} else if (effect.type === "lowpass" || effect.type === "highpass") {
-				const node = (nodes.filter = nodes.filter ?? this.ctx.createBiquadFilter())
-				node.type = effect.type
-				node.frequency.value = clamp(FREQUENCY_MIN, FREQUENCY_MAX, effect.frequency ?? FREQUENCY_MAX)
+			} else if (effect.type === "freqFilter") {
+				const node = (nodes.filter = nodes.filter ?? ctx.createBiquadFilter())
+				node.type = effect.filterType ?? "lowpass"
+				node.frequency.value = clamp(FREQUENCY_MIN, FREQUENCY_MAX, effect.frequency ?? 1000)
 				node.Q.value = clamp(0.0001, 30, effect.q ?? Q_DEFAULT)
+				node.gain.value = clamp(-24, 24, effect.gain ?? 0)
+				head.connect(node)
+				head = node
+			} else if (effect.type === "compressor") {
+				const node = (nodes.compressor = nodes.compressor ?? ctx.createDynamicsCompressor())
+				node.threshold.value = clamp(-100, 0, effect.threshold ?? -24)
+				node.ratio.value = clamp(1, 20, effect.ratio ?? 4)
 				head.connect(node)
 				head = node
 			} else if (effect.type === "delay") {
 				if (!nodes.delay || effect.delay > nodes.delay.delayTime.maxValue) {
-					nodes.delay = this.ctx.createDelay(effect.delay > 10 ? 179.99 : 10)
+					nodes.delay = ctx.createDelay(effect.delay > 10 ? 179.99 : 10)
 				}
 				nodes.delay.delayTime.value = clamp(0, nodes.delay.delayTime.maxValue, effect.delay)
-				const mix = (nodes.mix = nodes.mix ?? this.ctx.createGain())
+				const mix = (nodes.mix = nodes.mix ?? ctx.createGain())
 				head.connect(nodes.delay)
 				nodes.delay.connect(mix)
 				// Merge keeps the undelayed audio alongside the delayed copy.
 				if (effect.delayMerge) head.connect(mix)
 				head = mix
+			} else if (effect.type === "reverb") {
+				const size = round(clamp(0.1, 10, effect.size ?? 2), 1)
+				if (!nodes.convolver || nodes.convolverSize !== size) {
+					nodes.convolver?.disconnect()
+					nodes.convolver = ctx.createConvolver()
+					nodes.convolver.buffer = createImpulse(ctx, size)
+					nodes.convolverSize = size
+				}
+				head = wetDry(nodes, head, nodes.convolver, nodes.convolver, effect.mix ?? 0.3)
+			} else if (effect.type === "modulation") {
+				// One LFO wobbles a short delay's length (pitch) and the gain (volume).
+				const rate = effect.rate ?? 1.5
+				const pitchDepth = clamp(0, 1, effect.pitchDepth ?? 0)
+				const volumeDepth = clamp(0, 1, effect.volumeDepth ?? 0)
+				if (pitchDepth > 0) {
+					nodes.delay = nodes.delay ?? ctx.createDelay(0.1)
+					nodes.delay.delayTime.value = clamp(1, 30, effect.delayTime ?? 20) / 1000
+					lfo(nodes, rate, pitchDepth * 0.008).connect(nodes.delay.delayTime)
+					const feedback = clamp(0, 0.9, effect.feedback ?? 0)
+					if (feedback > 0) {
+						nodes.feedback = nodes.feedback ?? ctx.createGain()
+						nodes.feedback.gain.value = feedback
+						nodes.delay.connect(nodes.feedback)
+						nodes.feedback.connect(nodes.delay)
+					}
+					head = wetDry(nodes, head, nodes.delay, nodes.delay, effect.mix ?? 0.5)
+				}
+				if (volumeDepth > 0) {
+					// Gain swings between 1 - depth and 1.
+					const amp = (nodes.amp = nodes.amp ?? ctx.createGain())
+					amp.gain.value = 1 - volumeDepth / 2
+					nodes.ampLfo = nodes.ampLfo ?? ctx.createGain()
+					nodes.ampLfo.gain.value = volumeDepth / 2
+					oscillator(nodes, rate).connect(nodes.ampLfo)
+					nodes.ampLfo.connect(amp.gain)
+					head.connect(amp)
+					head = amp
+				}
+			} else if (effect.type === "distortion") {
+				// Soft clipping, then bit crushing, both inside one wet path.
+				const drive = clamp(0, 100, effect.drive ?? 0)
+				const bits = clamp(1, 16, effect.bits ?? 16)
+				const downsample = clamp(1, 40, effect.downsample ?? 1)
+				const stages: AudioNode[] = []
+				if (drive > 0) {
+					if (!nodes.shaper || nodes.shaperDrive !== drive) {
+						nodes.shaper = nodes.shaper ?? ctx.createWaveShaper()
+						nodes.shaper.curve = createDistortionCurve(drive)
+						nodes.shaper.oversample = "4x"
+						nodes.shaperDrive = drive
+					}
+					stages.push(nodes.shaper)
+				}
+				if (crusherReady && (bits < 16 || downsample > 1)) {
+					const node = (nodes.crusher = nodes.crusher ?? new AudioWorkletNode(ctx, "bit-crusher-processor"))
+					node.parameters.get("bits").value = bits
+					node.parameters.get("downsample").value = downsample
+					stages.push(node)
+				}
+				if (!stages.length) continue
+				for (let i = 1; i < stages.length; i++) stages[i - 1].connect(stages[i])
+				head = wetDry(nodes, head, stages[0], stages[stages.length - 1], effect.mix ?? 1)
 			} else if (effect.type === "pan") {
-				const node = (nodes.panner = nodes.panner ?? this.ctx.createStereoPanner())
+				const node = (nodes.panner = nodes.panner ?? ctx.createStereoPanner())
 				node.pan.value = clamp(-1, 1, effect.pan ?? 0)
 				head.connect(node)
 				head = node
+			} else if (effect.type === "width") {
+				const w = clamp(0, 4, effect.width ?? 1)
+				// Mid/side: each output is mid + width * side, written as left/right cross gains.
+				const splitter = (nodes.splitter = nodes.splitter ?? ctx.createChannelSplitter(2))
+				const merger = (nodes.merger = nodes.merger ?? ctx.createChannelMerger(2))
+				const [ll, rl, lr, rr] = (nodes.gains = nodes.gains ?? [0, 1, 2, 3].map(() => ctx.createGain()))
+				ll.gain.value = rr.gain.value = (1 + w) / 2
+				rl.gain.value = lr.gain.value = (1 - w) / 2
+				head.connect(splitter)
+				splitter.connect(ll, 0)
+				splitter.connect(rl, 1)
+				splitter.connect(lr, 0)
+				splitter.connect(rr, 1)
+				ll.connect(merger, 0, 0)
+				rl.connect(merger, 0, 0)
+				lr.connect(merger, 0, 1)
+				rr.connect(merger, 0, 1)
+				head = merger
 			}
 		}
-		for (const id of [...this.effectNodes.keys()]) {
-			if (!used.has(id)) this.effectNodes.delete(id)
+		for (const [id, nodes] of [...this.effectNodes]) {
+			if (!used.has(id)) {
+				releaseEffectNodes(nodes)
+				this.effectNodes.delete(id)
+			}
 		}
 
 		head.connect(this.output)
@@ -500,13 +700,7 @@ class AudioEffect {
 	}
 	estrange = () => {
 		this.input.disconnect()
-		this.effectNodes.forEach((nodes) => {
-			nodes.filters?.forEach((f) => f.disconnect())
-			nodes.filter?.disconnect()
-			nodes.delay?.disconnect()
-			nodes.mix?.disconnect()
-			nodes.panner?.disconnect()
-		})
+		this.effectNodes.forEach(disconnectEffectNodes)
 		this.jungle?.output?.disconnect()
 		this.soundTouchNode?.disconnect()
 	}

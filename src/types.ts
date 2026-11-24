@@ -226,19 +226,60 @@ export type EqSettings = {
 	values: number[]
 }
 
-export type AudioEffectType = "eq" | "lowpass" | "highpass" | "delay" | "pan"
+export type FrequencyFilterType = "lowpass" | "highpass" | "bandpass" | "notch" | "lowshelf" | "highshelf"
 
-/** One step of the audio chain. Effects run in list order, after pitch. */
+export type AudioEffectType =
+	| "eq"
+	| "freqFilter"
+	| "compressor"
+	| "delay"
+	| "reverb"
+	| "modulation"
+	| "distortion"
+	| "pan"
+	| "width"
+
+/** One step of the audio chain. Effects run in list order, after pitch. Only the fields of its type are set. */
 export type AudioEffect = {
 	id: string
 	type: AudioEffectType
 	enabled: boolean
 	/** eq */
 	eq?: EqSettings
-	/** lowpass, highpass: cutoff in Hz */
+	/** freqFilter */
+	filterType?: FrequencyFilterType
+	/** freqFilter: cutoff or center, in Hz */
 	frequency?: number
-	/** lowpass, highpass: resonance */
+	/** freqFilter: resonance (low/high-pass) or width (band-pass, notch); shelves ignore it */
 	q?: number
+	/** freqFilter: shelf boost or cut in dB */
+	gain?: number
+	/** compressor: dB */
+	threshold?: number
+	/** compressor */
+	ratio?: number
+	/** reverb: decay in seconds */
+	size?: number
+	/** modulation: LFO speed in Hz */
+	rate?: number
+	/** modulation: pitch wobble (chorus, vibrato), 0 to 1 */
+	pitchDepth?: number
+	/** modulation: volume wobble (tremolo), 0 to 1 */
+	volumeDepth?: number
+	/** modulation: base length of the wobbling delay in ms; short (flanger) to longer (chorus) */
+	delayTime?: number
+	/** modulation: share of the wobbling delay fed back into itself, 0 to 0.9 */
+	feedback?: number
+	/** distortion: soft clipping, 0 to 100 */
+	drive?: number
+	/** distortion: bit depth, 1 to 16 (16 leaves it untouched) */
+	bits?: number
+	/** distortion: hold each sample for this many frames (1 leaves it untouched) */
+	downsample?: number
+	/** reverb, modulation (pitch wobble), distortion: wet share, 0 to 1 */
+	mix?: number
+	/** width: 0 (mono), 1 (unchanged), up to 4 (extra wide) */
+	width?: number
 	/** delay: seconds */
 	delay?: number
 	/** delay: also keep the undelayed audio */

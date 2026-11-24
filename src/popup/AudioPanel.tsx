@@ -211,7 +211,7 @@ export function AudioPanel(props: {}) {
 			{/* Effects: EQ, filters, delay and pan, in chain order */}
 			<AudioEffectList
 				effects={starAudioFx.effects ?? []}
-				allowPan={!rightTab}
+				allowStereo={!rightTab}
 				showItc={pageReachable}
 				onChange={(effects) => {
 					setView(
