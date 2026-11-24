@@ -200,6 +200,7 @@ export class SubscribeView {
 	cbs: Set<SubViewCallback> = new Set()
 	private rawMap?: AnyDict
 	private latestView?: StateView
+	/** Writes this view made itself and already applied, so their storage echo can be skipped. */
 	processedChangeIds: Set<string> = new Set()
 	view?: StateView
 	watchKeys: Set<string>
@@ -247,14 +248,8 @@ export class SubscribeView {
 		changes = changes ?? {}
 		const changeId = changes["changeId"]?.newValue as string
 
-		if (changeId) {
-			if (this.processedChangeIds.has(changeId)) {
-				this.processedChangeIds.delete(changeId)
-				return
-			} else {
-				this.processedChangeIds.add(changeId)
-			}
-		}
+		// The echo of our own pushPreCog write, already applied.
+		if (changeId && this.processedChangeIds.delete(changeId)) return
 
 		let hadChanges = forOnLaunch
 		let instantTrigger = this.tabId && changes[`t:${this.tabId}:isPinned`]
@@ -307,19 +302,19 @@ export class SubscribeView {
 		return pushView({ override, tabId: this.tabId })
 	}
 	pushPreCog = async (override: StateView, knownPinStatus: boolean) => {
+		const changeId = randomId()
 		const base = await pushViewGhost({
 			override,
 			tabId: this.tabId,
 			knownPinStatus,
-			overrideRaw: {
-				changeId: randomId(),
-			},
+			overrideRaw: { changeId },
 		})
 		const changes = {} as chrome.storage.StorageChanges
 		for (let key in base) {
-			if (base[key] === undefined) continue
+			if (base[key] === undefined || key === "changeId") continue
 			changes[key] = { newValue: base[key] }
 		}
+		this.processedChangeIds.add(changeId)
 
 		return Promise.all([this.handleChange(changes, true), chrome.storage.local.set(base)])
 	}

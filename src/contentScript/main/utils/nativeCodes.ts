@@ -13,9 +13,13 @@ export const native = {
 	},
 	array: {
 		push: Array.prototype.push,
-		includes: Array.prototype.includes,
+	},
+	weakSet: {
+		has: WeakSet.prototype.has,
+		add: WeakSet.prototype.add,
 	},
 	Map,
+	WeakSet,
 	ShadowRoot,
 	HTMLMediaElement,
 	CustomEvent,

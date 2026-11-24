@@ -169,19 +169,26 @@ export class EntireState {
 	set = async (override: AnyDict) => {
 		await this.init()
 
-		override["changeId"] = randomId()
-
+		const items: AnyDict = {}
 		const changes = {} as chrome.storage.StorageChanges
 		for (let key in override) {
-			if (override[key] === undefined) continue
-			changes[key] = { newValue: override[key], oldValue: this.rawMap[key] }
+			const value = override[key]
+			if (value === undefined || key === "changeId") continue
+			items[key] = value
+			changes[key] = { newValue: value, oldValue: this.rawMap[key] }
 		}
+		// Every write is broadcast to every frame of every tab, so skip one with nothing in it. Values aren't
+		// compared to the cache: it trails writes made elsewhere until their change events arrive.
+		if (!Object.keys(items).length) return
 
-		const changeId = override["changeId"] as string
+		const changeId = randomId()
+		items["changeId"] = changeId
+		changes["changeId"] = { newValue: changeId, oldValue: this.rawMap["changeId"] }
+
 		this.pendingChanges.set(changeId, changes)
 		this.applyChanges(changes)
 		try {
-			await chrome.storage.local.set(override)
+			await chrome.storage.local.set(items)
 		} catch (err) {
 			this.pendingChanges.delete(changeId)
 			await this.reconcile(changes)

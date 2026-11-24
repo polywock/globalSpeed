@@ -15,8 +15,11 @@ declare global {
 	}
 }
 
+// Ghost Mode iterates the media it has seen. The sets make the per-call duplicate checks constant time;
+// pages can attach thousands of shadow roots, and a weak set doesn't keep them alive either.
 let mediaReferences: HTMLMediaElement[] = []
-let shadowRoots: ShadowRoot[] = []
+const seenMedia: WeakSet<HTMLMediaElement> = new native.WeakSet()
+const seenShadowRoots: WeakSet<ShadowRoot> = new native.WeakSet()
 let client: StratumClient
 let ghostMode: GhostMode
 let douyinSpeed: DouyinSpeed
@@ -57,15 +60,16 @@ function overridePrototypeMethod(type: any, methodName: string, eventCb: (args: 
 
 function handleOverrideMedia(args: any, _this: HTMLMediaElement, _return: any) {
 	if (!(_this instanceof native.HTMLMediaElement)) return
-	if (native.array.includes.call(mediaReferences, _this)) return
+	if (native.weakSet.has.call(seenMedia, _this)) return
+	native.weakSet.add.call(seenMedia, _this)
 	native.array.push.call(mediaReferences, _this)
 	client.wiggleOn(_this)
 }
 
 function handleOverrideShadow(args: [ShadowRootInit], _this: Element, _return: ShadowRoot) {
 	if (!(_return instanceof native.ShadowRoot)) return
-	if (native.array.includes.call(shadowRoots, _return)) return
-	native.array.push.call(shadowRoots, _return)
+	if (native.weakSet.has.call(seenShadowRoots, _return)) return
+	native.weakSet.add.call(seenShadowRoots, _return)
 	client.wiggleOn(_return)
 }
 

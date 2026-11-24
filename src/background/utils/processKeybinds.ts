@@ -859,7 +859,7 @@ export async function setValue(init: SetValueInit) {
 		}
 	}
 
-	if (Object.keys(override)) await pushView({ override, tabId: tabInfo.tabId })
+	if (Object.keys(override).length) await pushView({ override, tabId: tabInfo.tabId })
 
 	value = value ?? valueAlt
 

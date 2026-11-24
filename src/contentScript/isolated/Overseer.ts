@@ -68,9 +68,9 @@ export class Overseer {
 			if (!gvar.tabInfo) return
 		}
 
-		const view = (await fetchView({ indicatorInit: true })) || {}
-
+		// Only the top frame shows the indicator.
 		if (gvar.isTopFrame) {
+			const view = (await fetchView({ indicatorInit: true })) || {}
 			this.indicator = new Indicator()
 			this.indicator.setInit(view.indicatorInit || {})
 		}

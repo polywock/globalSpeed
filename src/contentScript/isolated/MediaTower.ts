@@ -15,7 +15,7 @@ export class MediaTower {
 	scopeStorageKey: string
 	media = new IterableWeakSet<HTMLMediaElement>()
 	docs = new IterableWeakSet<Window | ShadowRoot>()
-	newDocCallbacks: Set<() => void> = new Set()
+	newDocCallbacks: Set<(doc: Window | ShadowRoot) => void> = new Set()
 	forceSpeedCallbacks: Set<() => void> = new Set()
 	observer: IntersectionObserver
 	trackFps = true
@@ -164,7 +164,7 @@ export class MediaTower {
 		if (this.docs.has(doc)) return
 		this.docs.add(doc)
 		this.ensureDocEventListeners(doc)
-		this.newDocCallbacks.forEach((cb) => cb())
+		this.newDocCallbacks.forEach((cb) => cb(doc))
 	}
 	private processMedia = (elem: HTMLMediaElement) => {
 		if (this.media.has(elem)) return
@@ -177,7 +177,7 @@ export class MediaTower {
 		this.ensureMediaEventListeners(elem)
 		elem instanceof HTMLVideoElement && this.observe(elem)
 		this.media.add(elem)
-		this.sendUpdate()
+		this.queueUpdate()
 		if (this.progressPorts.size) this.sendProgressDeb()
 
 		this.forceSpeedCallbacks.forEach((cb) => cb())
@@ -261,7 +261,7 @@ export class MediaTower {
 		if (EVENTS_LAST_PLAYED.has(e.type)) elem.gsLastPlayed = Date.now()
 		if (e.type === "play") this.circlePlayOrder.set(elem, ++this.circlePlayCounter)
 		this.processMedia(elem)
-		this.sendUpdate()
+		this.queueUpdate()
 		if (this.progressPorts.size) this.sendProgressDeb()
 
 		if (e.type === "ratechange") {
@@ -300,6 +300,20 @@ export class MediaTower {
 		} else {
 			return chrome.runtime.sendMessage({ type: "SET_SESSION", override } as Messages)
 		}
+	}
+	private updateQueued = false
+	/**
+	 * Sends one update for everything changed in the current task, such as a page revealing many videos at
+	 * once, since each update measures every media element. Unlike a debounce it isn't delayed, because
+	 * shortcuts read values like volume from this snapshot.
+	 */
+	queueUpdate = () => {
+		if (this.updateQueued) return
+		this.updateQueued = true
+		queueMicrotask(() => {
+			this.updateQueued = false
+			this.sendUpdate()
+		})
 	}
 	private sendUpdateDeb = debounce(this.sendUpdate, 500, { leading: true, trailing: true, maxWait: 2000 })
 	private sendTimeUpdateDeb = debounce(this.sendUpdate, 5000, { leading: true, trailing: true, maxWait: 5000 })

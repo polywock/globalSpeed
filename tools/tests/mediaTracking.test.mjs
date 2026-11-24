@@ -31,6 +31,7 @@ function load(path, imports = {}, globals = {}) {
 		},
 		setTimeout,
 		clearTimeout,
+		queueMicrotask,
 		...globals,
 	})
 	return exports

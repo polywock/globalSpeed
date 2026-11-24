@@ -49,7 +49,8 @@ async function handleNavigation(deets: chrome.webNavigation.WebNavigationTransit
 
 	let override = {} as AnyDict
 	let fakeOverride = {} as AnyDict
-	const removeKeys = new Set(CONTEXT_KEYS.map((k) => `r:${deets.tabId}:${k}`))
+	// Only overrides an earlier rule left behind need clearing. Only the background adds them, so the cache is accurate.
+	const removeKeys = new Set(CONTEXT_KEYS.map((k) => `r:${deets.tabId}:${k}`).filter((k) => raw[k] != null))
 	let pageTitle: string = undefined
 
 	for (let rule of rules) {
@@ -68,12 +69,14 @@ async function handleNavigation(deets: chrome.webNavigation.WebNavigationTransit
 			}
 		}
 		if (match) {
-			override[isOnKey] = new URL(deets.url).hostname
+			const host = new URL(deets.url).hostname
+			// Only the background adds these keys, so the cache is authoritative; skip rewriting an unchanged host.
+			if (host !== oldHost) override[isOnKey] = host
 			let apply = oldHost
 				? shouldReApply(
 						rule.type === "JS" ? URLStrictness.EVERY_COMMIT : rule.strictness || URLStrictness.DIFFERENT_HOST,
 						oldHost,
-						override[isOnKey],
+						host,
 						isCommit,
 					)
 				: true

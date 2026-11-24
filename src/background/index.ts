@@ -75,7 +75,9 @@ async function migratePinnedTabAudio() {
 	}
 }
 
+let installedThisSession = false
 gvar.sess.installCbs.add(() => {
+	installedThisSession = true
 	gvar.installPromise = onInstallAsync()
 })
 
@@ -90,8 +92,9 @@ gvar.sess.safeCbs.add(async () => {
 	}
 	if (keys.size) await chrome.storage.local.remove([...keys])
 
-	IS_FIREFOX_BUILD || ensureContentScripts()
 	chrome.storage.session?.setAccessLevel?.({ accessLevel: chrome.storage.AccessLevel.TRUSTED_AND_UNTRUSTED_CONTEXTS })
+	// Tabs opened before an install or update lack the content script. At browser startup Chrome injects it itself.
+	if (installedThisSession && !IS_FIREFOX_BUILD) ensureContentScripts()
 })
 
 let pendingStartupTabs: Map<number, chrome.tabs.Tab>

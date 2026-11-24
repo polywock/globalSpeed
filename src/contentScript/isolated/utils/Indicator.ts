@@ -13,7 +13,11 @@ const BASE_OFFSET = 30
 
 export class Indicator extends Popover {
 	main = document.createElement("div")
-	icons = createOverlayIcons()
+	private _icons?: ReturnType<typeof createOverlayIcons>
+	/** Parsed on first use: the top frame of every page builds an Indicator, but few ever show one. */
+	get icons() {
+		return (this._icons ??= createOverlayIcons())
+	}
 	scaling = 1
 	duration = 1
 	animation = 1
@@ -60,7 +64,7 @@ export class Indicator extends Popover {
 		this.main.style[isLeft ? "left" : "right"] = `${offset}px`
 	}
 	release = () => {
-		delete this.icons
+		delete this._icons
 		clearTimeout(this.timeoutId)
 		this._release()
 	}

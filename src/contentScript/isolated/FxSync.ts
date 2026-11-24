@@ -189,11 +189,12 @@ class TemporaryStyle {
 	released = false
 	constructor(public styleInfo: ReturnType<typeof calculateStyle>) {
 		this.processAll()
+		gvar.os.mediaTower.newDocCallbacks.add(this.processNewDoc)
 	}
 	release = () => {
 		if (this.released) return
 		this.released = true
-		gvar.os.mediaTower.newDocCallbacks.delete(this.processAll)
+		gvar.os.mediaTower.newDocCallbacks.delete(this.processNewDoc)
 		this.appended.forEach((s) => s.remove())
 		delete this.appended
 		this.processed.clear()
@@ -203,6 +204,10 @@ class TemporaryStyle {
 		this.process(document.documentElement)
 		let shadowRoots = ([...gvar.os.mediaTower.docs].filter((v) => v instanceof ShadowRoot) as ShadowRoot[]).filter((v) => v.host.isConnected)
 		shadowRoots.forEach(this.process)
+	}
+	/** Shadow roots found later, such as a player that renders after the filter was set. */
+	processNewDoc = (doc: Window | ShadowRoot) => {
+		if (doc instanceof ShadowRoot && doc.host.isConnected) this.process(doc)
 	}
 	process = (doc: ShadowRoot | HTMLElement) => {
 		if (this.processed.has(doc)) return

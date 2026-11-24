@@ -15,6 +15,8 @@ export class SpeedSync {
 	keyDownAt: number
 	private douyinSpeed: number | null = null
 	private youtubeSyncEnabled = false
+	/** The speed last synced to YouTube's captions, or null when the sync is off. */
+	private youtubeSyncedSpeed: number | null | undefined
 	constructor() {
 		window.addEventListener("pointerdown", this.handlePointerDown, { capture: true, passive: true })
 		window.addEventListener("pointerup", this.handlePointerUp, { capture: true, passive: true })
@@ -60,8 +62,13 @@ export class SpeedSync {
 	private sendDouyinSpeed = () => {
 		gvar.os.stratumServer.send({ type: "DOUYIN_SPEED", speed: this.douyinSpeed } satisfies DouyinSpeedMessage)
 	}
-	private syncYoutube = (enabled: boolean) => {
+	private syncYoutube = (enabled: boolean, speed?: number) => {
 		if (!IS_YOUTUBE) return
+		// Captions only need rescheduling when the sync turns on or the speed changes; new videos resync on
+		// play. Resyncing on every realize patched YouTube's player prototype every second.
+		const synced = enabled ? speed : null
+		if (synced === this.youtubeSyncedSpeed) return
+		this.youtubeSyncedSpeed = synced
 		this.youtubeSyncEnabled = enabled
 		const server = gvar.os.stratumServer
 		if (server.initialized) this.sendYoutubeSync()
@@ -133,6 +140,8 @@ export class SpeedSync {
 		this.realize()
 	}
 	handleKeyUp = () => {
+		// Only a held temporary-speed key changes anything on release.
+		if (this.keyDownAt == null) return
 		delete this.keyDownAt
 		this.realize()
 	}
@@ -147,8 +156,9 @@ export class SpeedSync {
 			}
 
 			gvar.os.mediaTower.applySpeedToAll(speed, this.latest.freePitch)
-			this.syncDouyinSpeed(conformSpeed(speed))
-			this.syncYoutube(true)
+			const conformed = conformSpeed(speed)
+			this.syncDouyinSpeed(conformed)
+			this.syncYoutube(true, conformed)
 		}
 
 		// Unrelated to speed: Update all other frames if top frame's URL changes.
