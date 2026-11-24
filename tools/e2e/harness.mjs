@@ -85,23 +85,61 @@ export const sleep = (ms) => new Promise((ok) => setTimeout(ok, ms))
 
 export async function launch() {
 	if (!existsSync(join(EXTENSION_DIR, "manifest.json"))) throw new Error("No build found. Run `npm run dev` first.")
-	const userDataDir = mkdtempSync(join(tmpdir(), "gs-e2e-"))
-	const context = await chromium.launchPersistentContext(userDataDir, {
-		// The full Chromium build; the headless shell can't load extensions.
-		channel: "chromium",
-		headless: !process.env.HEADED,
-		args: [`--disable-extensions-except=${EXTENSION_DIR}`, `--load-extension=${EXTENSION_DIR}`, "--autoplay-policy=no-user-gesture-required"],
-	})
-	const ext = new Extension(context, userDataDir)
+	const ext = new Extension(mkdtempSync(join(tmpdir(), "gs-e2e-")))
+	await ext.open()
 	// Install writes the default state; wait for it so tests start from a settled extension.
 	await waitFor(async () => Object.keys(await ext.storage()).some((k) => k.startsWith("g:")), { message: "default state" })
 	return ext
 }
 
 class Extension {
-	constructor(context, userDataDir) {
-		this.context = context
+	constructor(userDataDir) {
 		this.userDataDir = userDataDir
+	}
+
+	/** Starts the browser on this profile. A profile that already has the extension starts it via onStartup. */
+	async open() {
+		this.context = await chromium.launchPersistentContext(this.userDataDir, {
+			// The full Chromium build; the headless shell can't load extensions.
+			channel: "chromium",
+			headless: !process.env.HEADED,
+			args: [`--disable-extensions-except=${EXTENSION_DIR}`, `--load-extension=${EXTENSION_DIR}`, "--autoplay-policy=no-user-gesture-required"],
+		})
+	}
+
+	/**
+	 * Closes and reopens the browser on the same profile. Storage survives, but Chrome reports a
+	 * command-line-loaded extension as freshly installed on every launch (onInstalled, never onStartup).
+	 * Our install handler migrates whatever is stored regardless of reason, so this runs the same code as a
+	 * real update. The onStartup-only path stays covered by tools/tests/startup.test.mjs alone.
+	 */
+	async restart() {
+		await this.context.close()
+		await this.open()
+	}
+
+	/** The extension's id for a page's tab. */
+	async tabId(page) {
+		return (await this.worker()).evaluate(async (url) => (await chrome.tabs.query({})).find((t) => t.url === url)?.id, page.url())
+	}
+
+	/**
+	 * Fires a browser-level shortcut (chrome.commands, such as "commandA") for a page's tab. Automation can't
+	 * press these, so it calls the background's handler through the dev-build hook.
+	 */
+	async command(name, page) {
+		const tabId = await this.tabId(page)
+		await (
+			await this.worker()
+		).evaluate(async ([name, tabId]) => globalThis.gsTest.handleCommand(name, await chrome.tabs.get(tabId)), [name, tabId])
+	}
+
+	/** Clicks a context menu item for a page's tab, through the dev-build hook. */
+	async menuClick(menuItemId, page) {
+		const tabId = await this.tabId(page)
+		await (
+			await this.worker()
+		).evaluate(async ([menuItemId, tabId]) => globalThis.gsTest.handleMenuClick({ menuItemId }, await chrome.tabs.get(tabId)), [menuItemId, tabId])
 	}
 
 	/** The live service worker. After it's stopped, the next event wakes a new one, which this waits for. */

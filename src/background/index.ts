@@ -164,48 +164,53 @@ async function processNewTab(tab: chrome.tabs.Tab, view?: StateView, ignorePrevi
 	})
 }
 
-!IS_FIREFOX_BUILD &&
-	!isMobile() &&
-	chrome.commands?.onCommand.addListener(async (command: string, tab: chrome.tabs.Tab) => {
-		const view = await fetchView(
-			{ enabled: true, superDisable: true, browserKeybinds: true, keybindsUrlCondition: true, latestViaShortcut: true },
-			tab?.id,
-		)
-		if (view.superDisable) return
+async function handleCommand(command: string, tab?: chrome.tabs.Tab) {
+	const view = await fetchView(
+		{ enabled: true, superDisable: true, browserKeybinds: true, keybindsUrlCondition: true, latestViaShortcut: true },
+		tab?.id,
+	)
+	if (view.superDisable) return
 
-		let keybinds: Keybind[] = view.browserKeybinds || []
-		if (!view.enabled) {
-			keybinds = keybinds.filter((kb) => kb.command === "state" && kb.enabled && (view.latestViaShortcut || kb.alwaysOn))
-			if (!keybinds.length) return
+	let keybinds: Keybind[] = view.browserKeybinds || []
+	if (!view.enabled) {
+		keybinds = keybinds.filter((kb) => kb.command === "state" && kb.enabled && (view.latestViaShortcut || kb.alwaysOn))
+		if (!keybinds.length) return
+	}
+
+	let matches = findMatchingBrowserKeybinds(keybinds, command)
+
+	if (!matches.length) return
+	let tabInfo = tab ? tabToTabInfo(tab) : await getLatestActiveTabInfo()
+
+	const url = tabInfo?.url || ""
+
+	if (view.keybindsUrlCondition && !testURL(url, view.keybindsUrlCondition, true)) {
+		return
+	}
+
+	matches = matches.filter((match) => {
+		if (match.kb.condition && hasActiveParts(match.kb.condition)) {
+			return testURL(url, match.kb.condition, true)
 		}
-
-		let matches = findMatchingBrowserKeybinds(keybinds, command)
-
-		if (!matches.length) return
-		let tabInfo = tab ? tabToTabInfo(tab) : await getLatestActiveTabInfo()
-
-		const url = tabInfo?.url || ""
-
-		if (view.keybindsUrlCondition && !testURL(url, view.keybindsUrlCondition, true)) {
-			return
-		}
-
-		matches = matches.filter((match) => {
-			if (match.kb.condition && hasActiveParts(match.kb.condition)) {
-				return testURL(url, match.kb.condition, true)
-			}
-			return true
-		})
-
-		new ProcessKeybinds(matches, tabInfo, "browserKeybinds")
+		return true
 	})
 
-chrome.contextMenus?.onClicked.addListener(async (item, tab) => {
+	new ProcessKeybinds(matches, tabInfo, "browserKeybinds")
+}
+
+async function handleMenuClick(item: Pick<chrome.contextMenus.OnClickData, "menuItemId">, tab: chrome.tabs.Tab) {
 	const keybinds = (await fetchView({ menuKeybinds: true })).menuKeybinds
 	const matches = findMatchingMenuKeybinds(keybinds, item.menuItemId as string)
 	if (matches.length !== 1) return
 	new ProcessKeybinds([matches[0]], tabToTabInfo(tab), "menuKeybinds")
-})
+}
+
+!IS_FIREFOX_BUILD && !isMobile() && chrome.commands?.onCommand.addListener(handleCommand)
+chrome.contextMenus?.onClicked.addListener(handleMenuClick)
+
+// Dev builds only: automation can't press browser shortcuts or click context menus, so the end-to-end
+// tests call the same handlers through this.
+if (IS_DEV_BUILD) Object.assign(globalThis, { gsTest: { handleCommand, handleMenuClick } })
 
 declare global {
 	interface Message {

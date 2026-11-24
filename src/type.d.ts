@@ -1,5 +1,8 @@
 declare module "soundtouchjs"
 
+/** True in dev builds (`npm run dev`). Release builds replace it with false and drop the code behind it. */
+declare const IS_DEV_BUILD: boolean
+
 declare namespace chrome.storage {
 	export type StorageChanges = {
 		[key: string]: { newValue?: any; oldValue?: any }

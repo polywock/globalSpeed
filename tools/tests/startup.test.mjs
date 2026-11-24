@@ -116,6 +116,7 @@ function startupEnv({ pinned = false, overrides = {} } = {}) {
 			exports,
 			chrome,
 			console: { ...console, error: (error) => errors.push(error) },
+			IS_DEV_BUILD: false,
 			setTimeout: () => {},
 			require: (name) => {
 				if (name in stubs) return stubs[name]

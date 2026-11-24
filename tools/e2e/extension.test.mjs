@@ -129,3 +129,63 @@ test("on YouTube, caption sync doesn't re-run while nothing changes", async () =
 	const syncs = (await page.evaluate(() => window.ytPlayerReads)) - before
 	assert.equal(syncs, 0, `caption sync ran ${syncs} times in 3 idle seconds`)
 })
+
+test("a browser-level shortcut (chrome.commands) changes the speed", async () => {
+	const { page, frame } = await open("/video.html")
+	const speedUp = { id: "e2e-browser", command: "speed", enabled: true, greedy: true, adjustMode: 2, valueNumber: 0.25, globalKey: "commandB" }
+	await ext.setStorage({ "g:browserKeybinds": [speedUp] })
+	await ext.command("commandB", page)
+	await waitFor(async () => (await mediaProp(frame, "playbackRate")) === 1.25, { message: "speed 1.25" })
+})
+
+test("a context menu item changes the speed", async () => {
+	const { page, frame } = await open("/video.html")
+	const setTwo = { id: "e2e-menu", command: "speed", enabled: true, greedy: true, adjustMode: 1, valueNumber: 2 }
+	await ext.setStorage({ "g:menuKeybinds": [setTwo] })
+	await ext.menuClick("e2e-menu", page)
+	await waitFor(async () => (await mediaProp(frame, "playbackRate")) === 2, { message: "speed 2" })
+})
+
+test("settings survive a browser restart, and per-session keys are cleared", async () => {
+	await ext.setStorage({ "g:speed": 1.7, "s:e2e": 1, "t:999:speed": 2, "r:999:speed": 3 })
+	await ext.restart()
+	const stored = await waitFor(
+		async () => {
+			const st = await ext.storage(["g:speed", "s:e2e", "t:999:speed", "r:999:speed"])
+			return st["s:e2e"] == null && st
+		},
+		{ message: "session keys cleared" },
+	)
+	assert.equal(stored["t:999:speed"] ?? null, null)
+	assert.equal(stored["r:999:speed"] ?? null, null)
+	const { frame } = await open("/video.html")
+	await waitFor(async () => (await mediaProp(frame, "playbackRate")) === 1.7, { message: "restored speed 1.7" })
+})
+
+test("settings saved by an older version are migrated when the extension loads", async () => {
+	// Version 15 kept EQ and delay inside audioFx, and pan in its own key.
+	await ext.setStorage({
+		"g:version": 15,
+		"g:audioPan": -0.5,
+		"g:audioFx": { pitch: 0, volume: 1, delay: 0.5, delayMerge: true, eq: { enabled: true, factor: 1, values: [3, 0, 0, 0, 0, 0, 0, 0, 0, 0] } },
+	})
+	await ext.restart()
+	const stored = await waitFor(
+		async () => {
+			const st = await ext.storage(["g:version", "g:audioFx", "g:audioPan"])
+			return st["g:version"] === 16 && st
+		},
+		{ message: "migration to version 16" },
+	)
+	const effects = stored["g:audioFx"].effects
+	assert.deepEqual(
+		effects.map((e) => e.type),
+		["eq", "delay", "pan"],
+	)
+	assert.deepEqual(effects[0].eq.values.slice(0, 2), [3, 0])
+	assert.equal(effects[1].delay, 0.5)
+	assert.equal(effects[1].delayMerge, true)
+	assert.equal(effects[2].pan, -0.5)
+	assert.equal(stored["g:audioPan"] ?? null, null)
+	assert.equal(stored["g:audioFx"].delay, undefined)
+})

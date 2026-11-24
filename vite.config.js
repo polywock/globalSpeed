@@ -115,6 +115,7 @@ function sharedConfig({ firefox, outDir, production }) {
 		// and tripped the extension CSP. Webpack used to provide this shim for free.
 		define: {
 			global: "globalThis",
+			IS_DEV_BUILD: JSON.stringify(!production),
 		},
 		build: {
 			target: firefox ? "firefox125" : "chrome116",
